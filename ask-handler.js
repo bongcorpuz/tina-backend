@@ -2380,7 +2380,14 @@ export function createAskHandler({
       if (result.answerSupport && result.answerSupport.stage === "calendar-relative-deadline") {
         result.rejectedModelAnswer = result.answer || "";
         result.calendarRelativeReplaced = true;
-        result.answer = buildCalendarRelativeSafeAnswer(visibleSources);
+        // PHASE-10A14-R11 (WS6): contextualize the replacement by the question's temporal
+        // reference (today/tomorrow/yesterday/already-late/still-on-time) and the detected clause.
+        const relRef = result.answerSupport.calendarRelative && result.answerSupport.calendarRelative.relRef;
+        result.answer = buildCalendarRelativeSafeAnswer(
+          visibleSources,
+          typeof question === "string" ? question : "",
+          relRef || null
+        );
       }
     }
 

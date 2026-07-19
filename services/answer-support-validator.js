@@ -1195,59 +1195,123 @@ export function detectOutcomePredictionRequest(question) {
 // contract, and the general April-15 rule does NOT prove an arbitrary request date is the
 // last filing day. A plain, non-relative statutory deadline statement ("the deadline is
 // April 15") is unaffected and remains reachable.
-const CALENDAR_RELATIVE_ASSERTION_RE = /\b(today is (?:the )?last day|last day to file (?:is |will be )?(?:today|now)|(?:it is|it['’]s|you are) (?:the )?last day to file|due today|due tomorrow|due yesterday|already late|(?:you are|you're) still on time|(?:you )?can still file today|filing (?:closes|ends|is due) today|deadline (?:has )?(?:already )?passed|too late to file|last chance to file today|today is (?:the )?(?:filing )?deadline|today is april\s*15|(?:file|submit) (?:it |your return |the return )?(?:today|by the end of (?:the day|today))|submit (?:it |your return |the return )?today|(?:file|submit|submitted|filed)[^.\n]{0,80}\bby the end of (?:the day|today)\b|\bby the end of (?:the day|today)\b[^.\n]{0,40}(?:to avoid|penalt)|ngayon ang (?:huling araw|deadline)|ngayong araw ang (?:huling araw|deadline)|mag-?file (?:ka )?ngayong araw|due ngayon|huli ka na|may oras ka pa)\b/i;
-const CALENDAR_RELATIVE_QUESTION_RE = /\b(today|tonight|tomorrow|yesterday|this day|right now|as of today|due today|due tomorrow|already late|still on time|time (?:remaining|left)|last day)\b/i;
+// PHASE-10A14-R11 (P1-R10-IR-002): clause-level calendar-relative filing-directive detection.
+// Replaces the single monolithic regex with bounded clause analysis. An unsafe clause has
+// (a) a FILING action, (b) a RELATIVE time reference, and (c) present application to the user
+// (a directive/recommendation force, a sentence-initial imperative, or an affirmative present-day
+// deadline assertion) — and is NOT purely conditional / hypothetical / historical.
+const CR_FILING_ACTION_RE = /\b(file|filing|files|filed|submit|submitted|submitting|lodge|send|transmit|accomplish|complete the filing|mag-?file|i-?file|isumite|mag-?submit)\b/i;
+const CR_DIRECTIVE_FORCE_RE = /\b(please|kindly|should|shall|must|need to|needs to|have to|has to|go ahead and|make sure (?:to|you)|ensure (?:you|that you|to)|you (?:are )?(?:required|advised|urged) to|better)\b/i;
+const CR_REL_TODAY_RE = /\b(today|tonight|right now|now|immediately|right away|as soon as possible|asap|by (?:the )?end of (?:the )?(?:day|today)|before (?:the )?(?:day|today) ends|before the end of (?:the )?day|this (?:very )?day|ngayon|ngayong araw|agad|bago matapos ang araw)\b/i;
+const CR_REL_TOMORROW_RE = /\b(tomorrow|bukas)\b/i;
+const CR_REL_YESTERDAY_RE = /\b(yesterday|kahapon)\b/i;
+// Affirmative present-day deadline ASSERTIONS (no filing action required).
+const CR_AFFIRM_ASSERTION_RE = /\b(today is (?:the )?last day|last day to file (?:is |will be )?(?:today|now)|(?:it is|it['’]s|you are) (?:the )?last day to file|due today|due tomorrow|due yesterday|was due (?:today|tomorrow|yesterday)|already late|(?:you are|you're) still on time|(?:you )?can still file today|filing (?:closes|ends|is due) today|last chance to file today|today is (?:the )?(?:filing )?deadline|today is april\s*15|ngayon ang (?:huling araw|deadline)|ngayong araw ang (?:huling araw|deadline)|due ngayon|huli ka na|may oras ka pa)\b/i;
+// A bare "deadline has passed" is unsafe ONLY as an assertion, not inside a conditional.
+const CR_PASSED_ASSERTION_RE = /\b(?:the )?(?:filing )?deadline (?:has|had) (?:already )?passed\b/i;
+// Conditional / hypothetical / non-conclusion guards suppress a clause.
+// Only SUBJUNCTIVE / counterfactual / non-conclusion markers suppress (a bare indicative "if"
+// such as "due today if today is April 15" still ASSERTS due-today and must NOT be suppressed).
+const CR_CONDITIONAL_GUARD_RE = /\b(only if|unless|would|were|had the|had already|should the|provided that|may apply when|when a return is (?:filed|due)|cannot (?:conclude|determine|confirm)|would be (?:late|considered))\b/i;
+// Sentence-initial imperative filing directive.
+const CR_IMPERATIVE_FILING_RE = /(^|[.\n;:\-]\s*|please\s+|kindly\s+|go ahead and\s+)\s*(file|submit|lodge|send|transmit|complete the filing|mag-?file|i-?file|isumite|mag-?submit)\b/i;
 
-// PHASE-10A14-R10 (P1-R9-IR-001 / WS3 / WS7): dedicated deterministic replacement answer for
-// a calendar-relative filing-deadline conclusion that failed temporal sufficiency. Replaces
-// the unsafe model answer entirely. States the general April-15 rule ONLY when a compatible
-// filing-deadline authority (NIRC Sec. 51 / 51-A) is present in the displayed sources; otherwise
-// it omits the statutory statement and asks for the missing filing details. Contains no unsafe
-// present-day directive and no internal validator terminology.
-const FILING_DEADLINE_AUTHORITY_RE = /\bsection\s*0*5(?:1(?:\s*-?\s*a)?|2)\b|\b51-?a\b|\bnirc\s*sec\.?\s*0*51\b/i;
-export function buildCalendarRelativeSafeAnswer(sources = []) {
-  const labels = (Array.isArray(sources) ? sources : [])
-    .map((s) => (s && (s.displayLabel || s.label || s.citation || s.title || s.normalizedReference)) || "")
-    .join(" | ");
-  const hasDeadlineAuthority = FILING_DEADLINE_AUTHORITY_RE.test(labels);
-  if (hasDeadlineAuthority) {
-    return [
-      "### Short Answer",
-      "Based on the information provided, TINA cannot confirm that today is the operative filing deadline for your return.",
-      "",
-      "### What the general rule says",
-      "The general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.",
-      "",
-      "### What TINA needs to confirm your deadline",
-      "Please confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined."
-    ].join("\n");
-  }
-  return [
-    "### Short Answer",
-    "Based on the information provided, TINA cannot confirm the operative filing deadline for your return, and cannot confirm that today is that deadline.",
-    "",
-    "### What TINA needs",
-    "Please confirm your taxable year, the return type, and any applicable BIR deadline or extension notice so the exact deadline can be determined."
-  ].join("\n");
+function splitCalendarClauses(answer = "") {
+  return String(answer).split(/(?<=[.!?;])\s+|\n+|(?=#{1,6}\s)/).map((c) => c.trim()).filter(Boolean);
+}
+
+/** Analyze one clause for an unsafe calendar-relative filing directive/assertion. Pure. */
+function analyzeCalendarClause(clause = "") {
+  const lc = clause.toLowerCase();
+  const hasFiling = CR_FILING_ACTION_RE.test(lc);
+  const relToday = CR_REL_TODAY_RE.test(lc), relTom = CR_REL_TOMORROW_RE.test(lc), relYest = CR_REL_YESTERDAY_RE.test(lc);
+  const hasRelative = relToday || relTom || relYest;
+  const affirm = CR_AFFIRM_ASSERTION_RE.test(lc) || CR_PASSED_ASSERTION_RE.test(lc);
+  const directiveForce = CR_DIRECTIVE_FORCE_RE.test(lc);
+  const imperative = CR_IMPERATIVE_FILING_RE.test(clause.trim());
+  const conditional = CR_CONDITIONAL_GUARD_RE.test(lc);
+  const yearHistorical = /\b(19|20)\d{2}\b/.test(lc) && !/\b(today|now|tomorrow|yesterday|ngayon|bukas)\b/i.test(lc);
+  // Tagalog filing verbs (mag-file / i-file / isumite / mag-submit) are inherently imperative in
+  // filing advice regardless of word order, so a Tagalog filing verb + a relative time is a directive.
+  const filipinoFiling = /\b(mag-?file|i-?file|isumite|mag-?submit)\b/i.test(lc);
+  // A directed/imperative filing action at a relative time, applied to the user now:
+  const directiveUnsafe = hasFiling && hasRelative && (directiveForce || imperative || filipinoFiling || /\byes\b/i.test(lc));
+  const unsafe = (affirm || directiveUnsafe) && !(conditional || yearHistorical);
+  let relRef = relTom ? "TOMORROW" : relYest ? "YESTERDAY" : relToday ? "TODAY" : null;
+  return { clause, hasFiling, hasRelative, relRef, directiveForce, imperative, affirm, conditional, historical: yearHistorical, unsafe };
 }
 
 /**
- * Detects an affirmed calendar-relative filing-deadline conclusion. Pure.
+ * Detects an affirmed/directed calendar-relative filing-deadline conclusion via clause analysis.
  * @returns {{applicable:boolean, sufficient:boolean, reason:string, diagnostics?:object}}
  */
 export function evaluateCalendarRelativeDeadline({ question = "", answer = "" } = {}) {
   const a = String(answer || "");
+  const clauses = splitCalendarClauses(a).map(analyzeCalendarClause);
+  const unsafeClause = clauses.find((c) => c.unsafe);
+  // affirmative "yes ..." to a relative-deadline question (answer echoes no relative word itself)
   const q = String(question || "");
-  const assertsRelative = CALENDAR_RELATIVE_ASSERTION_RE.test(a);
-  const relativeDeadlineQuestion = CALENDAR_RELATIVE_QUESTION_RE.test(q) && /\b(fil(?:e|ing)|return|deadline|due)\b/i.test(q);
-  const answerAffirmsYes = /(^|\n)\s*(#+\s*[^\n]*\n+)?\s*yes\b/i.test(a) || /\byes,\s*(today|it is|it['’]s|you|the deadline|the last day)\b/i.test(a);
-  const applicable = assertsRelative || (relativeDeadlineQuestion && answerAffirmsYes);
+  const relativeDeadlineQuestion = /\b(today|tonight|tomorrow|yesterday|this day|right now|as of today|already late|still on time|time (?:remaining|left)|last day|due today|due tomorrow)\b/i.test(q) && /\b(fil(?:e|ing)|return|deadline|due)\b/i.test(q);
+  const answerAffirmsYes = /(^|\n)\s*(#+\s*[^\n]*\n+)?\s*yes\b/i.test(a);
+  const applicable = Boolean(unsafeClause) || (relativeDeadlineQuestion && answerAffirmsYes);
   if (!applicable) return { applicable: false, sufficient: true, reason: "" };
   return {
     applicable: true, sufficient: false,
     reason: "false_or_unresolved_calendar_relative_deadline",
-    diagnostics: { assertsRelative, relativeDeadlineQuestion, answerAffirmsYes }
+    diagnostics: {
+      unsafeClause: unsafeClause ? unsafeClause.clause.slice(0, 160) : null,
+      relRef: unsafeClause ? unsafeClause.relRef : null,
+      relativeDeadlineQuestion, answerAffirmsYes
+    }
   };
+}
+
+// PHASE-10A14-R11 (WS6): derive the contextual temporal reference from the USER QUESTION so the
+// replacement does not always say "today". Falls back to the detected clause reference.
+const QCTX = [
+  [/\byesterday\b|\bkahapon\b/i, "YESTERDAY"],
+  [/\btomorrow\b|\bbukas\b/i, "TOMORROW"],
+  [/\balready late\b|\bhuli (?:na|ka)\b|\bmissed the deadline\b/i, "ALREADY_LATE"],
+  [/\bstill (?:on time|have time)\b|\btime (?:left|remaining)\b|\bmay oras\b/i, "STILL_ON_TIME"],
+  [/\btoday\b|\bngayon\b|\btonight\b|\bright now\b/i, "TODAY"]
+];
+export function deriveCalendarContext(question = "", fallbackRef = null) {
+  const q = String(question || "");
+  for (const [re, label] of QCTX) if (re.test(q)) return label;
+  if (fallbackRef === "TOMORROW") return "TOMORROW";
+  if (fallbackRef === "YESTERDAY") return "YESTERDAY";
+  if (fallbackRef === "TODAY") return "TODAY";
+  return "UNSPECIFIED_RELATIVE_DIRECTIVE";
+}
+
+// PHASE-10A14-R10/R11 (P1-R9-IR-001 / P1-R10-IR-003 / WS6/WS7): dedicated deterministic
+// replacement answer. Contextualized by the temporal reference (today/tomorrow/yesterday/
+// already-late/still-on-time). States the general April-15 rule ONLY when a compatible Sec 51
+// deadline authority is present; otherwise omits it and requests the missing filing facts.
+const FILING_DEADLINE_AUTHORITY_RE = /\bsection\s*0*5(?:1(?:\s*-?\s*a)?|2)\b|\b51-?a\b|\bnirc\s*sec\.?\s*0*51\b/i;
+const CR_CONTEXT_LEAD = {
+  TODAY: "TINA cannot confirm that today is the operative filing deadline for your return based on the information provided.",
+  TOMORROW: "TINA cannot confirm that tomorrow is the operative filing deadline for your return based on the information provided.",
+  YESTERDAY: "TINA cannot confirm that your return was due yesterday based on the information provided.",
+  ALREADY_LATE: "TINA cannot determine whether your filing is already late without the taxable year, return type and operative deadline.",
+  STILL_ON_TIME: "TINA cannot confirm whether you are still on time to file without the taxable year, return type and operative deadline.",
+  UNSPECIFIED_RELATIVE_DIRECTIVE: "TINA cannot confirm the operative filing deadline for your return, and cannot advise filing at a specific relative time, based on the information provided."
+};
+export function buildCalendarRelativeSafeAnswer(sources = [], question = "", fallbackRef = null) {
+  const labels = (Array.isArray(sources) ? sources : [])
+    .map((s) => (s && (s.displayLabel || s.label || s.citation || s.title || s.normalizedReference)) || "")
+    .join(" | ");
+  const hasDeadlineAuthority = FILING_DEADLINE_AUTHORITY_RE.test(labels);
+  const ctx = deriveCalendarContext(question, fallbackRef);
+  const lead = CR_CONTEXT_LEAD[ctx] || CR_CONTEXT_LEAD.UNSPECIFIED_RELATIVE_DIRECTIVE;
+  const out = ["### Short Answer", lead, ""];
+  if (hasDeadlineAuthority) {
+    out.push("### What the general rule says",
+      "The general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.", "");
+  }
+  out.push("### What TINA needs to confirm your deadline",
+    "Please confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.");
+  return out.join("\n");
 }
 
 // PHASE-10A14-R9 (P1-E1-002): filing-conclusion rationale alignment. A filing conclusion
