@@ -1,0 +1,58 @@
+{
+  "task": "PHASE-10A14-R8-RA12214-QUALIFYING-PUBLICATION-STRICT-TRANSACTION-DATE-AND-FAIL-CLOSED-METADATA-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8 (low speed)",
+  "startingHEAD": "15dae5061026afb0a566d1a59cfb6b46565aa588",
+  "model": "gpt-4o-mini", "vectorRows": 5346,
+  "noReindex": true, "noDbWrite": true, "noVectorMutation": true, "noReEmbedding": true,
+  "decision": "PASS (self-assessed within R8's authorized scope; formal decision belongs to the mandatory independent reviewer)",
+  "officialEffectivity": {
+    "law": "RA 12214 (CMEPA)", "approval": "2025-05-29",
+    "section29Verbatim": "This Act shall take effect after fifteen (15) days following the completion of its publication in the Official Gazette or in at least one (1) newspaper of general circulation.",
+    "section29Disjunctive": true,
+    "qualifyingPublication": "2025-06-04 (Manila Bulletin, newspaper of general circulation, p.9)",
+    "officialGazettePublication": "2025-06-09",
+    "counting": "publication + 15 days = 2025-06-04 + 15 = 2025-06-19 (addLegalCalendarDays verified)",
+    "effectivity": "2025-06-19 (inclusive)",
+    "section28Transitory": "2025-07-01 (financial-instrument rate transitory / STT-rate application date; NOT the Section 29 general effectivity and NOT the 51(C)(2) cutover)",
+    "independence": "Derived from verbatim Section 29 disjunctive clause + confirmed 2025-06-04 Manila Bulletin publication + explicit 15-day counting, not adopted from the packet. Fail-closed fallback (REQUIRES_AUTHORITATIVE_PUBLICATION_CONFIRMATION) was the alternative had publication been unconfirmable; former June 13–Aug 5 interval was NOT reused."
+  },
+  "findings": {
+    "P1-R7-IR-001": {
+      "status": "CLOSED",
+      "evidence": "Qualifying publication (Manila Bulletin 2025-06-04) established; effectivity fixed at 2025-06-19. Ambiguous [2025-06-13, 2025-08-05) window removed. Boundary: 2025-06-18 PRE, 2025-06-19 POST (inclusive), 2025-06-20 POST.",
+      "focusedTests": "phase-10a14-r8 A/B/H"
+    },
+    "P1-R7-IR-002": {
+      "status": "CLOSED",
+      "evidence": "resolveAsOfYear no longer uses new Date(); Section 51(C)(2) material date must pass strictMaterialDate (whole-string strict ISO). Malformed (2026-02-30, 2025-13-01, 2025-00-10, 2025/06/20, 'June 20, 2025', not-a-date, 2025-02-29) -> INVALID_DATE fail closed; blank/null/undefined -> PERIOD_UNRESOLVED fail closed. No malformed date reaches POST_EFFECTIVITY.",
+      "focusedTests": "phase-10a14-r8 C/D"
+    },
+    "P1-R7-IR-003": {
+      "status": "CLOSED",
+      "evidence": "Section 51(C)(2) requires transactionDate (or dispositionDate). taxableYear, legalAsOfDate, filingEventDate never substitute -> PERIOD_UNRESOLVED (section_51c2_transaction_date_required), applicableAmendments [].",
+      "focusedTests": "phase-10a14-r8 E/F/G"
+    },
+    "P1-R7-IR-004": {
+      "status": "CLOSED",
+      "evidence": "Temporal result built fail-closed. Unresolved/invalid/pre-effectivity never expose RA 12214: applicableAmendments [], currentAuthoritySet ['NIRC Sec. 51(C)'], amendingAuthorities [], notYetEffective/historicalAuthoritySet [] on unresolved/invalid. Public source-card (buildSection51AmendmentChainMetadata) carries temporalStatus/temporalSufficient and stays clean.",
+      "focusedTests": "phase-10a14-r8 I/J"
+    }
+  },
+  "materialDateContract": {
+    "required": ["transactionDate", "dispositionDate"],
+    "rejectedSubstitutes": ["taxableYear", "legalAsOfDate", "filingEventDate", "systemDate", "inferredYear", "new Date() parsed strings"],
+    "missing": { "sufficient": false, "temporalStatus": "PERIOD_UNRESOLVED", "reason": "section_51c2_transaction_date_required" },
+    "malformed": { "sufficient": false, "temporalStatus": "INVALID_DATE", "reason": "section_51c2_transaction_date_invalid" }
+  },
+  "priorClosuresPreserved": {
+    "section_51a_origin": "originatingLaw RA 10963, baseCode RA 8424 (R8 K1)",
+    "historical_ordinary_filing": "2023 -> HISTORICAL, RA 11976/12214 not applied (R8 K2)",
+    "ordinary_year_resolution": "filing_obligation still resolves by taxableYear (R8 K4)",
+    "public_card_metadata": "R6 sanitizer re-derivation intact (R6 15/0)",
+    "no_year_only_comparison": "legal-date-utils has no year-only path; 51(C)(2) never resolves by year"
+  },
+  "focusedTests": { "phase-10a14-r8": "26/0", "phase-10a14-r7": "14/0", "phase-10a14-r6": "15/0", "phase-10a14-r5": "25/0" },
+  "gates": { "deterministic": "198/0 x2 clean tree", "staging": "7/0 x2 exit 0" },
+  "security": { "secrets": 0, "envChange": 0, "dbWrite": 0, "vectorMutation": 0, "reindex": 0, "reEmbedding": 0, "protectedPathsTouched": 0, "port5173Touched": 0 },
+  "scopeNote": "R8 is the narrowly-scoped legal-temporal runtime remediation only. The 100+ call governed live safeguard matrix and fresh live all-26 execution are DEFERRED to the dedicated evidence task per the authorization (NOT AUTHORIZED in R8)."
+}
