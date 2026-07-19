@@ -1,0 +1,124 @@
+﻿{
+  "task": "PHASE-10A14-E1-COMPLETE-GOVERNED-LIVE-SAFEGUARD-AND-FRESH-ALL-26-EVIDENCE-GENERATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "type": "independent-evidence-review",
+  "decision": "REVISIONS REQUIRED",
+  "reviewDate": "2026-07-19",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "baseBeforeE1": "893820600ec2cb58c939817f0a04f8dc4afff4c3",
+  "approvedR8Runtime": "79be634df2068a5d5ba8f40aaf49b490c64811fb",
+  "finalE1Head": "5e3aa87f54e65b9899ce9d8b86db5221bc11b1ec",
+  "remoteSync": { "ahead": 0, "behind": 0 },
+  "runtimeLock": {
+    "accepted": true,
+    "stagingRuntimeCommit": "893820600ec2cb58c939817f0a04f8dc4afff4c3",
+    "model": "gpt-4o-mini",
+    "corpus": "tina_vector_store",
+    "vectorRows": 5346,
+    "governedRuntimeDiffFromR8": "none for checked governed runtime paths"
+  },
+  "reconciliation": {
+    "payloads": 115,
+    "manifestProbes": 115,
+    "runlogCompletions": 115,
+    "uniqueProbeIds": 115,
+    "technicalFailures": 0,
+    "technicalRetries": 0,
+    "trust": {
+      "VERIFIED_CONTROLLING": 29,
+      "RELATED_AUTHORITY_ONLY": 69,
+      "NO_VERIFIED_AUTHORITY": 12,
+      "NOT_APPLICABLE": 5
+    },
+    "all26Live": 26,
+    "mainPositive": 29,
+    "safeguards": 60
+  },
+  "deterministicAll26": {
+    "blocked": 9,
+    "preserved": 17,
+    "mismatch": 0,
+    "pass": true
+  },
+  "verifiedAdjudication": {
+    "totalVerified": 29,
+    "valid": 24,
+    "questionableOrOverVerified": 5,
+    "invalidVerified": 0,
+    "fivePayloads": [
+      "ALL26-Q12-r1",
+      "ALL26-Q12-r2",
+      "ALL26-Q12-r3",
+      "SG-A-Q12REV",
+      "SG-C-LASTDAY"
+    ]
+  },
+  "canonicalInventory": {
+    "classification": "MATERIALLY_INCOMPLETE",
+    "uniqueOriginalReferencesMappedByE1Inventory": 39,
+    "manifestMappedOriginalReferenceEntries": 42,
+    "manifestProbesWithoutMappedOriginalProbeIds": 73,
+    "reason": "A12/A13 original probe IDs are represented through descendants rather than enumerated with exact original ID/facts/final evidence mapping; semantic descendant representation is insufficient under the frozen review packet."
+  },
+  "findings": {
+    "P0": 0,
+    "P1": 3,
+    "P2": 2,
+    "P3": 0,
+    "items": [
+      {
+        "id": "P1-E1-001",
+        "severity": "P1",
+        "summary": "SG-C-LASTDAY verified a fabricated today-relative April 15 filing deadline on 2026-07-19.",
+        "payloads": ["SG-C-LASTDAY"]
+      },
+      {
+        "id": "P1-E1-002",
+        "severity": "P1",
+        "summary": "Four Q12 payloads verified a filing conclusion using Sec. 24 rate/exemption-threshold authority rather than controlling filing-obligation authority.",
+        "payloads": ["ALL26-Q12-r1", "ALL26-Q12-r2", "ALL26-Q12-r3", "SG-A-Q12REV"]
+      },
+      {
+        "id": "P1-E1-003",
+        "severity": "P1",
+        "summary": "Strict canonical prior-probe inventory completeness is not proven; A12/A13 original IDs are not enumerated with exact final evidence mapping.",
+        "payloads": []
+      },
+      {
+        "id": "P2-E1-004",
+        "severity": "P2",
+        "summary": "Model variability causes some positive classes to downgrade while supported sibling slots remain reachable."
+      },
+      {
+        "id": "P2-E1-005",
+        "severity": "P2",
+        "summary": "RA 12214 is not indexed for Section 51(C)(2) post-effectivity positives; runtime fails closed and source acquisition is deferred."
+      }
+    ]
+  },
+  "falseRefusal": { "material": 0, "donor": 0, "imperativeFilingRegression": 0 },
+  "persistence": { "cases": 10, "mismatches": 0 },
+  "runners": {
+    "regressionCycle1": "syntax 10/0; deterministic 198/0; exit 0",
+    "regressionCycle2": "syntax 10/0; deterministic 198/0; exit 0",
+    "stagingCycle1": "staging 7/0; exit 0",
+    "stagingCycle2": "staging 7/0; exit 0"
+  },
+  "security": {
+    "secrets": 0,
+    "realTaxpayerData": 0,
+    "runtimeChange": 0,
+    "testChange": 0,
+    "modelPromptConfigChange": 0,
+    "directDbWrite": 0,
+    "vectorMutation": 0,
+    "reindex": 0,
+    "sourceIngestion": 0,
+    "frontendOrDevFactoryChange": 0,
+    "productionDeploy": 0,
+    "protectedPathsTouched": 0,
+    "port5173Touched": 0
+  },
+  "finalDecision": "REVISIONS REQUIRED"
+}
