@@ -1,0 +1,31 @@
+{
+  "task": "PHASE-10A14-R9-CALENDAR-RELATIVE-DEADLINE-FILING-RATIONALE-ALIGNMENT-AND-CANONICAL-INVENTORY-CLOSURE-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8 (low speed)",
+  "decision": "PASS",
+  "startingHead": "ee46cb511e51c687761f83e01deb003839768422",
+  "reviewedR8Runtime": "79be634df2068a5d5ba8f40aaf49b490c64811fb",
+  "r9RuntimeCommit": "0c80b121451678e8a1565d59bbfe06f36900328c",
+  "stagingRuntimeCommit": "0c80b121451678e8a1565d59bbfe06f36900328c",
+  "model": "gpt-4o-mini",
+  "runtimeChange": ["services/answer-support-validator.js (evaluateCalendarRelativeDeadline + evaluateFilingRationaleAlignment, non-overridable deterministic gates)", "ask-handler.js (narrow WS4 calendar-relative safety note)"],
+  "findings": {
+    "P1-E1-001": "CLOSED — calendar-relative-deadline gate + WS4 safety note; SG-C-LASTDAY/R9-LASTDAY-REPRO/R9-DUETODAY -> RELATED_AUTHORITY_ONLY",
+    "P1-E1-002": "CLOSED — filing-rationale-alignment gate; Q12 x3 + SG-A-Q12REV -> RELATED_AUTHORITY_ONLY (Sec 51 card present, decisive rationale is Sec 24)",
+    "P1-E1-003": "CLOSED — 319-probe literal A12-R8 inventory + test-encoded lineage enumeration"
+  },
+  "focusedTests": { "phase-10a14-r9": "15/0", "phase-10a14-r1": "16/0", "phase-10a14-r5": "25/0", "phase-10a14-r6": "15/0", "phase-10a14-r7": "14/0", "phase-10a14-r8": "26/0", "phase-10a12-r6": "18/0" },
+  "deterministicAll26": { "blocked": 9, "preserved": 17, "mismatch": 0, "pass": true },
+  "differentialLive": { "probes": 103, "technicalFailures": 0, "affectedReruns": 94, "carriedForwardE1": 21, "newProbes": 9,
+    "trust": { "VERIFIED_CONTROLLING": 35, "RELATED_AUTHORITY_ONLY": 58, "NO_VERIFIED_AUTHORITY": 10 } },
+  "freshLiveAll26": { "q12Verified": 0, "q30Verified": 0, "q34Verified": 3, "q34Supported": true, "q12q30UnsupportedVerified": 0 },
+  "verifiedAdjudication": { "total": 35, "valid": 35, "questionable": 0, "overVerified": 0, "invalid": 0,
+    "falseTodayRelativeVerified": 0, "section24FilingLaundering": 0 },
+  "requiredPositivesReachable": { "individual_filing_obligation": true, "individual_filing_deadline": true, "substituted_filing": true, "multiple_employer": true, "mixed_income": true, "self_employed": true },
+  "falseRefusal": { "material": 0 },
+  "persistence": { "cases": 4, "mismatches": 0 },
+  "reconciliation": { "payloads": 103, "runlog": 103, "manifest": 103, "allMatch": true },
+  "canonicalInventory": { "literalProbes": 319, "sources": "A14 50-question bank + 26 slots + A14-R1/R2/R3 payloads + E1 115 probes; A12/A13/R4-R8 test-encoded enumerated" },
+  "gates": { "deterministic": "199/0 x2 clean tree", "staging": "7/0 x2" },
+  "security": { "secrets": 0, "modelChange": 0, "promptChange": 0, "corpusMutation": 0, "reindex": 0, "productionDeploy": 0, "protectedPathsTouched": 0, "port5173Touched": 0 },
+  "note": "Runtime remediation is deterministic and non-overridable; both P1s reproduced pre-fix and confirmed closed live on the R9 runtime. Staging auto-deployed the branch to 0c80b12 (non-production) for the live differential run."
+}

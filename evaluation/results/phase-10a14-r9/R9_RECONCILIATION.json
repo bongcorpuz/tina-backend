@@ -1,0 +1,60 @@
+{
+  "task": "PHASE-10A14-R9 reconciliation",
+  "runtimeCommit": "0c80b121451678e8a1565d59bbfe06f36900328c",
+  "model": "gpt-4o-mini",
+  "differentialProbes": 103,
+  "payloadsWritten": 103,
+  "runlogLines": 103,
+  "technicalFailures": 0,
+  "allMatch": true,
+  "trustStateCounts": {
+    "RELATED_AUTHORITY_ONLY": 58,
+    "VERIFIED_CONTROLLING": 35,
+    "NO_VERIFIED_AUTHORITY": 10
+  },
+  "deterministicAll26": {
+    "blocked": 9,
+    "preserved": 17,
+    "mismatch": 0,
+    "pass": true
+  },
+  "freshLiveAll26": {
+    "q12Verified": 0,
+    "q30Verified": 0,
+    "q34Verified": 3,
+    "q34Supported": true,
+    "q12q30UnsupportedVerified": 0
+  },
+  "verifiedControlling": 35,
+  "verifiedValid": 35,
+  "questionable": 0,
+  "overVerified": 0,
+  "invalid": 0,
+  "p1Closures": {
+    "P1-E1-001": "CLOSED (SG-C-LASTDAY, R9-LASTDAY-REPRO, R9-DUETODAY -> RELATED; WS4 note present)",
+    "P1-E1-002": "CLOSED (Q12 x3 + SG-A-Q12REV -> RELATED)",
+    "P1-E1-003": "CLOSED (319-probe literal inventory + test-map)"
+  },
+  "falseTodayRelativeVerified": 0,
+  "section24FilingLaundering": 0,
+  "materialFalseRefusal": 0,
+  "carriedForwardE1": 21,
+  "persistenceCases": 4,
+  "persistenceMismatches": 0,
+  "requiredPositivesReachable": {
+    "filing_obligation": [
+      "SG-B-COMPONLY",
+      "SG-B-MULTIEMP",
+      "SG-B-SELFEMP",
+      "R9-INDFILE-51"
+    ],
+    "filing_deadline": [
+      "POS-INDDEAD-1",
+      "ALL26-Q34-r1"
+    ],
+    "substituted_filing": [
+      "POS-SUBST-1",
+      "R9-SUBST-COMPLETE"
+    ]
+  }
+}

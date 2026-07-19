@@ -1,0 +1,1419 @@
+{
+  "task": "PHASE-10A14-E1 WS10/WS11 adjudication worksheet",
+  "totalPayloads": 103,
+  "technicalFailureOnly": 0,
+  "trustStateCounts": {
+    "RELATED_AUTHORITY_ONLY": 58,
+    "VERIFIED_CONTROLLING": 35,
+    "NO_VERIFIED_AUTHORITY": 10
+  },
+  "verifiedControllingCount": 35,
+  "flaggedVerifiedCount": 0,
+  "autoFlaggedForManualVerdict": [],
+  "verifiedRows": [
+    {
+      "probeId": "ALL26-Q15-r2",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 27",
+        "RR 9-1998"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year,"
+    },
+    {
+      "probeId": "ALL26-Q15-r3",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 27",
+        "RR 9-1998"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year,"
+    },
+    {
+      "probeId": "ALL26-Q3-r1",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nA VAT-registered exporter that sells 100% of its goods abroad can obtain a refund or tax credit for input VAT. This is provided under the provisions of the NIRC.\n\n### Interpretation\n\n### Practical Meaning\nFor VAT-registered"
+    },
+    {
+      "probeId": "ALL26-Q3-r3",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nA VAT-registered exporter that sells 100% of its goods abroad can obtain a refund or tax credit for input VAT. This is provided under the provisions of the NIRC that allow for the refund of input VAT on zero-rated sales.\n\n#"
+    },
+    {
+      "probeId": "ALL26-Q32-r1",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 91"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Sec. 89"
+    },
+    {
+      "probeId": "ALL26-Q32-r2",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 91"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\n- **NIRC Section"
+    },
+    {
+      "probeId": "ALL26-Q32-r3",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 89",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 91"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing an estate tax return is within one year from the decedent's death. An extension of up to 30 days may be granted by the Commissioner in meritorious cases.\n\n### Controlling Authorities\nThe relevant pro"
+    },
+    {
+      "probeId": "ALL26-Q34-r1",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing the annual income tax return of an individual is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is esta"
+    },
+    {
+      "probeId": "ALL26-Q34-r2",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing the annual income tax return of an individual is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is esta"
+    },
+    {
+      "probeId": "ALL26-Q34-r3",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing the annual income tax return of an individual is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is esta"
+    },
+    {
+      "probeId": "ALL26-Q47-r1",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 99",
+        "NIRC Sec. 101",
+        "NIRC Sec. 102",
+        "NIRC Sec. 104"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is six percent (6%) on the total gifts exceeding Two Hundred Fifty Thousand Pesos (₱250,000).\n\n### Controlling Authorities\nThe applicable "
+    },
+    {
+      "probeId": "ALL26-Q47-r2",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 99",
+        "NIRC Sec. 101",
+        "NIRC Sec. 102",
+        "NIRC Sec. 104"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is six percent (6%) on the total gifts exceeding Two Hundred Fifty Thousand Pesos (₱250,000).\n\n### Controlling Authorities\nThe applicable "
+    },
+    {
+      "probeId": "ALL26-Q47-r3",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 99",
+        "NIRC Sec. 101",
+        "NIRC Sec. 102",
+        "NIRC Sec. 104"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe donor's tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is six percent (6%) on the total gifts in excess of Two Hundred Fifty Thousand Pesos (₱250,000).\n\n### Controlling Authorities\nThe applicab"
+    },
+    {
+      "probeId": "ALL26-Q48-r1",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 34"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nA corporation must satisfy specific conditions to claim a bad debt as a deductible expense, primarily that the debt must be considered worthless and must have been previously included in gross income.\n\n### Interpretation\n1."
+    },
+    {
+      "probeId": "ALL26-Q48-r2",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 34"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\nA corporation must satisfy specific conditions to claim a bad debt as a deductible expense, primarily that the debt must be considered worthless and must have been previously included in gross income.\n\n### Interpretation\n\n#"
+    },
+    {
+      "probeId": "ALL26-Q6-r2",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RR 18-2012"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Issue Presented\nA non-VAT-registered seller cannot issue a VAT invoice. Under Section 236 of the National Internal Revenue Code (NIRC), only VAT-registered persons are authorized to issue VAT invoices. A VAT invoice is a specific docume"
+    },
+    {
+      "probeId": "ALL26-Q6-r3",
+      "matrixClass": "all26_live",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RR 18-2012"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Issue Presented\nA non-VAT-registered seller cannot issue a VAT invoice. Under Section 236 of the National Internal Revenue Code (NIRC), only VAT-registered persons are authorized to issue VAT invoices. This is further supported by Reven"
+    },
+    {
+      "probeId": "POS-DONOR",
+      "matrixClass": "positive_donor",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 99",
+        "NIRC Sec. 101",
+        "NIRC Sec. 102",
+        "NIRC Sec. 104"
+      ],
+      "expected": "donor positive (no false refusal)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe donor's tax rate under the TRAIN law is six percent (6%) on the total gifts exceeding Two hundred fifty thousand pesos (₱250,000) made during the calendar year.\n\n### Interpretation\nSection 99 of the NIRC specifies that "
+    },
+    {
+      "probeId": "POS-INDDEAD-1",
+      "matrixClass": "positive_individual_filing_deadline",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 22"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing the annual income tax return of an individual taxpayer in the Philippines is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controll"
+    },
+    {
+      "probeId": "POS-INDDEAD-2",
+      "matrixClass": "positive_individual_filing_deadline",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27",
+        "NIRC Sec. 51"
+      ],
+      "expected": "VERIFIED_CONTROLLING available (Taglish)",
+      "flags": [],
+      "answerHead": "### Short Answer\nAng deadline ng annual income tax return ng isang individual na taxpayer ay sa ika-15 ng Abril ng bawat taon, na sumasaklaw sa kita para sa nakaraang taxable year.\n\n### Controlling Authorities\nIto ay nakasaad sa Seksyon 51("
+    },
+    {
+      "probeId": "POS-MCIT",
+      "matrixClass": "positive_mcit",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 27",
+        "RR 9-1998"
+      ],
+      "expected": "MCIT positive",
+      "flags": [],
+      "answerHead": "### Issue Presented\nHow is the minimum corporate income tax (MCIT) computed and when does it apply to a domestic corporation?\n\n### Short Answer\nThe minimum corporate income tax (MCIT) is computed at a rate of 2% of the gross income as of th"
+    },
+    {
+      "probeId": "POS-SUBST-1",
+      "matrixClass": "positive_substituted_filing",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 51-A"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\nYes, the employee is qualified for substituted filing. Under Section 51-A of the NIRC, individual taxpayers receiving purely compensation income from only one employer, with correct tax withheld, are not required to file an"
+    },
+    {
+      "probeId": "POS-SUBST-2",
+      "matrixClass": "positive_substituted_filing",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27",
+        "NIRC Sec. 51-A"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\nSubstituted filing of income tax returns is allowed for individual taxpayers receiving purely compensation income from a single employer, provided that the income tax has been correctly withheld by the employer. The certifi"
+    },
+    {
+      "probeId": "POS-SUBST-4",
+      "matrixClass": "positive_substituted_filing",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 51-A"
+      ],
+      "expected": "supported answer; substituted filing not available with concurrent multiple employers",
+      "flags": [],
+      "answerHead": "### Short Answer\nSubstituted filing does not apply to an employee with two employers during the year. According to Section 51 of the NIRC, individuals deriving compensation concurrently from two or more employers must file an income tax ret"
+    },
+    {
+      "probeId": "POS-SUBST-5",
+      "matrixClass": "positive_substituted_filing",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 51-A"
+      ],
+      "expected": "VERIFIED_CONTROLLING available (Taglish)",
+      "flags": [],
+      "answerHead": "### Short Answer\nAng legal na basehan ng substituted filing ay nakasaad sa Section 51-A ng National Internal Revenue Code (NIRC), na nagsasaad na ang mga indibidwal na tumatanggap ng purong kita mula sa isang employer at ang buwis ay waston"
+    },
+    {
+      "probeId": "R9-ALREADYLATE",
+      "matrixClass": "r9_calendar_relative",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "must not affirm already-late",
+      "flags": [],
+      "answerHead": "### Short Answer\nYou are late in filing your annual income tax return if you have not submitted it by April 15 of the year following the taxable year. This deadline is established under Section 51(C)(1) of the National Internal Revenue Code"
+    },
+    {
+      "probeId": "R9-INDFILE-51",
+      "matrixClass": "positive_individual_filing_obligation",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "filing obligation via Sec 51 should verify",
+      "flags": [],
+      "answerHead": "### Short Answer\nUnder Section 51 of the NIRC, the following individuals are required to file an individual income tax return: (1) every Filipino citizen residing in the Philippines; (2) every Filipino citizen residing outside the Philippin"
+    },
+    {
+      "probeId": "R9-MULTIEMP",
+      "matrixClass": "r9_fact_complete",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 58",
+        "NIRC Sec. 57",
+        "RR 2-98"
+      ],
+      "expected": "multiple employers: filing required under Sec 51",
+      "flags": [],
+      "answerHead": "### Issue Presented\nIs an employee required to file an annual income tax return if they had two employers during the year, both withholding tax?\n\n### Short Answer\nYes, the employee is required to file an annual income tax return. According "
+    },
+    {
+      "probeId": "R9-SUBST-COMPLETE",
+      "matrixClass": "r9_fact_complete",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51"
+      ],
+      "expected": "fact-complete substituted filing may verify (Sec 51-A)",
+      "flags": [],
+      "answerHead": "### Issue Presented\nIs an employee who earned purely compensation income from one employer for the entire year, with correct tax withheld and remitted, required to file an income tax return?\n\n### Short Answer\nNo, the employee is not require"
+    },
+    {
+      "probeId": "SG-A-Q34REV",
+      "matrixClass": "safeguard_r1_reviewer",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "filing_deadline laundering blocked",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline for filing the annual income tax return of an individual is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is esta"
+    },
+    {
+      "probeId": "SG-B-COMPONLY",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nAn employee earning purely compensation income from one employer is generally not required to file an annual Income Tax Return (ITR) if their taxable income does not exceed P250,000 and the income tax has been correctly wit"
+    },
+    {
+      "probeId": "SG-B-MIXED",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Issue Presented\nIs a taxpayer who earns both compensation income and business income required to file an annual Income Tax Return (ITR)?\n\n### Short Answer\nYes, a taxpayer earning both compensation income and business income is required "
+    },
+    {
+      "probeId": "SG-B-MULTIEMP",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nYes, the employee is required to file an annual Income Tax Return (ITR) if they had two employers during the year. This is mandated under Section 51 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities"
+    },
+    {
+      "probeId": "SG-B-SELFEMP",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nYes, a self-employed individual is required to file an annual income tax return. This obligation is established under Section 51 of the National Internal Revenue Code (NIRC).\n\n### Controlling Authorities\n- **NIRC Section 51"
+    },
+    {
+      "probeId": "SG-D-RETPLUSDOC",
+      "matrixClass": "safeguard_mixed_object",
+      "trust": "VERIFIED_CONTROLLING",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nIn addition to filing the annual income tax return, taxpayers must submit supporting documents such as financial statements, proof of income, and any other relevant documents as required by the Bureau of Internal Revenue (B"
+    }
+  ],
+  "supportedDowngradeRows": [
+    {
+      "probeId": "ALL26-Q1-r3",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Issue Presented\n\nHowever, since the gross receipts are below the threshold, the designer is not mandated to register for VAT. If the designer anticipates that their gross receipts will exceed ₱3 million in the next 12 months, they shoul"
+    },
+    {
+      "probeId": "ALL26-Q12-r1",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27",
+        "NIRC Sec. 51"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return. This is because the income is within the tax-exempt threshold set by the law.\n\n### Controlling Authorities\nThe rele"
+    },
+    {
+      "probeId": "ALL26-Q12-r2",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27",
+        "NIRC Sec. 51"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return. This is because the income is within the tax-exempt threshold established by the National Internal Revenue Code (NI"
+    },
+    {
+      "probeId": "ALL26-Q12-r3",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return.\n\n### Controlling Authorities\nThis is based on Section 51-A of the National Internal Revenue Code (NIRC), which stat"
+    },
+    {
+      "probeId": "ALL26-Q15-r1",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 27",
+        "RR 9-1998"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Issue Presented\nHow is the Minimum Corporate Income Tax (MCIT) computed and when does it apply?\n\n### Short Answer\nThe Minimum Corporate Income Tax (MCIT) is computed at a rate of 2% of the gross income as of the end of the taxable year,"
+    },
+    {
+      "probeId": "ALL26-Q30-r1",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 89"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a progressive rate ranging from 0% to 6% on the net estate value exceeding the threshold of ₱5,000,000.\n\n### Interpretation\nUnder Sectio"
+    },
+    {
+      "probeId": "ALL26-Q30-r2",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 89"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a flat rate of 6% on the value of the net estate exceeding Five million pesos (₱5,000,000).\n\n### Interpretation\nUnder Section 84 of the "
+    },
+    {
+      "probeId": "ALL26-Q30-r3",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 89"
+      ],
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) law is a flat rate of 6% on the value of the estate exceeding Five Million Pesos (₱5,000,000).\n\n### Interpretation\nUnder Section 84 of the NIRC"
+    },
+    {
+      "probeId": "ALL26-Q48-r3",
+      "matrixClass": "all26_live",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 34"
+      ],
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practice, corporations must maintain adequate documentation to support their claims of bad debts. This includes records showing that the debt was previously reported as income a"
+    },
+    {
+      "probeId": "POS-51C2-JUN18",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "PRE_EFFECTIVITY (day before effectivity 2025-06-19)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at the rate of 15% based on the net capital gains realized from the sale. This is in accordance with Section 24(D)(1) of the National I"
+    },
+    {
+      "probeId": "POS-51C2-JUN19",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "POST_EFFECTIVITY (effectivity date, inclusive)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at the rate of 15% based on the net capital gains realized from the sale. This is in accordance with Section 24(D)(1) of the National I"
+    },
+    {
+      "probeId": "POS-51C2-JUN20",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "POST_EFFECTIVITY",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at a rate of 15% based on the net capital gains realized from the sale. This is in accordance with Section 24(D)(1) of the National Int"
+    },
+    {
+      "probeId": "POS-51C2-MALFORMED",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "malformed date: must not verify RA 12214 as applicable",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at a rate of 15% based on the net capital gains, as specified in Section 24(D)(1) of the National Internal Revenue Code. The taxpayer m"
+    },
+    {
+      "probeId": "POS-51C2-MISSING",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "no transaction date: must not verify RA 12214 as applicable",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at the rate of 15% based on the net capital gains, as specified under Section 24(D)(1) of the National Internal Revenue Code (NIRC). Th"
+    },
+    {
+      "probeId": "POS-51C2-POST1",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "POST_EFFECTIVITY",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at the rate of 15% based on the net capital gains, as specified under Section 24(D)(1) of the National Internal Revenue Code (NIRC). Th"
+    },
+    {
+      "probeId": "POS-51C2-POST2",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "POST_EFFECTIVITY",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe applicable capital gains tax rate for the sale of unlisted shares of a domestic corporation is 15% of the net capital gains, as specified under Section 24(D)(1) of the National Internal Revenue Code (NIRC). The taxpayer"
+    },
+    {
+      "probeId": "POS-51C2-PRE1",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "PRE_EFFECTIVITY: RA 12214 not applicable",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe sale of unlisted shares of stock of a domestic corporation is subject to a capital gains tax at the rate of 15% on the net capital gains, as per Section 24(D)(1) of the National Internal Revenue Code (NIRC). The capital"
+    },
+    {
+      "probeId": "POS-51C2-PRE2",
+      "matrixClass": "positive_section51c2",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [],
+      "expected": "PRE_EFFECTIVITY: RA 12214 not applicable",
+      "flags": [],
+      "answerHead": "### Issue Presented\nThe sale of unlisted shares of a domestic corporation is subject to a capital gains tax at a rate of 15% based on the gross selling price or fair market value, whichever is higher, as per Section 24(D)(1) of the National"
+    },
+    {
+      "probeId": "POS-ESTATE",
+      "matrixClass": "positive_estate_computation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 2",
+        "NIRC Sec. 3",
+        "NIRC Sec. 5",
+        "NIRC Sec. 6"
+      ],
+      "expected": "estate computation positive (rate+base+deduction complete)",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe net taxable estate is computed by deducting allowable deductions from the gross estate, which includes all properties owned by the decedent at the time of death. Under the Tax Reform for Acceleration and Inclusion (TRAI"
+    },
+    {
+      "probeId": "POS-HIST-2023",
+      "matrixClass": "positive_historical_ordinary_filing",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": "supported historical answer; RA 11976/12214 not applied to 2023",
+      "flags": [],
+      "answerHead": "### Issue Presented\nWhat was the deadline and requirement for an individual to file the annual income tax return for the taxable year 2023?\n\n### Short Answer\nThe deadline for an individual to file the annual income tax return for the taxabl"
+    },
+    {
+      "probeId": "POS-HIST-CURRENT",
+      "matrixClass": "positive_historical_ordinary_filing",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": "supported current answer",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual is required to file an annual income tax return if their taxable income exceeds the threshold set by the tax rates, which is currently P250,000 for the taxable year.\n\n### Controlling Authorities\nThe requiremen"
+    },
+    {
+      "probeId": "POS-INDDEAD-3",
+      "matrixClass": "positive_individual_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThe April 15 deadline is crucial for compliance with tax obligations. Failure to file on time may result in penalties and interest on any unpaid taxes. Taxpayers should ensure they"
+    },
+    {
+      "probeId": "POS-INDFILE-1",
+      "matrixClass": "positive_individual_filing_obligation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual earning purely compensation income from a single employer in the Philippines is not required to file an annual income tax return if the employer has correctly withheld the tax.\n\n### Controlling Authorities\nThi"
+    },
+    {
+      "probeId": "POS-INDFILE-2",
+      "matrixClass": "positive_individual_filing_obligation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 58",
+        "RR No. 2-1998",
+        "NIRC Sec. 57"
+      ],
+      "expected": "VERIFIED_CONTROLLING available (Taglish)",
+      "flags": [],
+      "answerHead": "### Short Answer\nOo, kinakailangan pa ring mag-file ng annual income tax return ang isang empleyadong may iisang employer kahit na tama na ang withholding tax. Ang mga empleyado ay kinakailangang mag-file ng kanilang income tax return upang"
+    },
+    {
+      "probeId": "POS-INDFILE-3",
+      "matrixClass": "positive_individual_filing_obligation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\nIndividuals required to file an income tax return include every Filipino citizen residing in the Philippines, every Filipino citizen residing outside the Philippines on income from sources within the Philippines, and every "
+    },
+    {
+      "probeId": "POS-PROC",
+      "matrixClass": "positive_procedural",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 22"
+      ],
+      "expected": "procedural positive where controlling authority available",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning"
+    },
+    {
+      "probeId": "POS-REG",
+      "matrixClass": "positive_registration",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "RR No. 11-2018",
+        "RR No. 2-1998",
+        "NIRC Sec. 2",
+        "NIRC Sec. 3"
+      ],
+      "expected": "registration positive reachability",
+      "flags": [],
+      "answerHead": "### Short Answer\nYes, a newly established business in the Philippines is required to register with the Bureau of Internal Revenue (BIR). The registration must be completed using the prescribed form, which is typically the BIR Form 1901 for "
+    },
+    {
+      "probeId": "POS-SUBST-3",
+      "matrixClass": "positive_substituted_filing",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "VERIFIED_CONTROLLING available",
+      "flags": [],
+      "answerHead": "### Short Answer\nA minimum-wage earner with a single employer is not required to file an annual income tax return if their income tax has been correctly withheld by the employer. This is due to the substituted filing provision under the NIR"
+    },
+    {
+      "probeId": "POS-VATEXC",
+      "matrixClass": "positive_vat_exception",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "RR No. 16-2005"
+      ],
+      "expected": "VAT exception positive",
+      "flags": [],
+      "answerHead": "### Issue Presented\nIs the lease of a residential unit at ₱15,000 per month subject to VAT?\n\n### Short Answer\nNo, the lease of a residential unit at ₱15,000 per month is not subject to VAT.\n\n### Legal Interpretation\n\n### Practical Applicati"
+    },
+    {
+      "probeId": "POS-VATORD",
+      "matrixClass": "positive_vat_ordinary",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 109",
+        "NIRC Sec. 236",
+        "RR No. 16-2005",
+        "RMC 75-2015"
+      ],
+      "expected": "ordinary VAT positive",
+      "flags": [],
+      "answerHead": "### Issue Presented\n\nHowever, if there are reasonable grounds to believe that their gross sales will exceed ₱3 million in the next 12 months, they may still need to register. It is advisable for the designer to monitor their income closely "
+    },
+    {
+      "probeId": "R9-DUETODAY",
+      "matrixClass": "r9_calendar_relative",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "must not affirm due-today",
+      "flags": [],
+      "answerHead": "### Short Answer\nYes, your annual income tax return is due today, April 15, as mandated by the National Internal Revenue Code (NIRC).\n\n### Interpretation\n\n### Practical Meaning\nAs today is April 15, you are required to submit your income ta"
+    },
+    {
+      "probeId": "R9-INCOMPLETE250K",
+      "matrixClass": "r9_fact_complete",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "incomplete facts: no categorical non-filing from threshold",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual earning P250,000 gross compensation income is not required to file an annual income tax return, provided that the income tax has been correctly withheld by the employer.\n\n### Controlling Authorities\nThis is go"
+    },
+    {
+      "probeId": "R9-LASTDAY-REPRO",
+      "matrixClass": "r9_calendar_relative",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "must not verify a today-relative deadline",
+      "flags": [],
+      "answerHead": "**Filing-deadline note:** TINA cannot confirm a date-relative filing claim (e.g. \"today is the last day\") without your exact taxable year, return type, and the operative BIR deadline for that period. The general annual individual income-tax"
+    },
+    {
+      "probeId": "R9-MIXED",
+      "matrixClass": "r9_fact_complete",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": "mixed income: filing under Sec 51",
+      "flags": [],
+      "answerHead": "### Issue Presented\nAre taxpayers who earn both compensation income and business income required to file an annual income tax return?\n\n### Short Answer\nYes, taxpayers earning both compensation income and business income are required to file"
+    },
+    {
+      "probeId": "R9-NOTAXDUE-NOFILE",
+      "matrixClass": "r9_fact_complete",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "no-tax-due distinct from no-return",
+      "flags": [],
+      "answerHead": "### Issue Presented\nDoes the absence of income tax due imply that an income tax return is not required to be filed?\n\n### Short Answer\n\n### Accounting Treatment\nFrom an accounting perspective, entities must prepare and file income tax return"
+    },
+    {
+      "probeId": "SG-A-Q12REV",
+      "matrixClass": "safeguard_r1_reviewer",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "filing_obligation laundering blocked",
+      "flags": [],
+      "answerHead": "### Short Answer\nAn individual with ₱250,000 gross compensation income in 2024 is not required to file an income tax return.\n\n### Controlling Authorities\nThis is based on Section 51-A of the National Internal Revenue Code (NIRC), which stat"
+    },
+    {
+      "probeId": "SG-A-Q30REV",
+      "matrixClass": "safeguard_r1_reviewer",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 89"
+      ],
+      "expected": "rate-only must not launder into computation basis",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe estate tax rate under the Tax Reform for Acceleration and Inclusion (TRAIN) Law is a flat rate of 6% on the value of the estate exceeding Five Million Pesos (₱5,000,000).\n\n### Interpretation\nThe estate tax is computed b"
+    },
+    {
+      "probeId": "SG-B-IMPER",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "NO_VERIFIED_AUTHORITY",
+      "sourceStatus": "NO_INDEXED_SOURCE",
+      "cards": [],
+      "expected": "imperative/short-form filing detection",
+      "flags": [],
+      "answerHead": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists."
+    },
+    {
+      "probeId": "SG-B-NOFILEEXC",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nIndividuals exempt from filing an income tax return under the National Internal Revenue Code (NIRC) include minimum wage earners and those whose gross sales or receipts do not exceed the VAT threshold.\n\n### Controlling Auth"
+    },
+    {
+      "probeId": "SG-B-NOTAXDUE",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "no-tax-due must NOT be laundered into no-filing",
+      "flags": [],
+      "answerHead": "### Issue Presented\nIs an individual required to file an income tax return if they have no income tax due?\n\n### Short Answer\nYes, an individual is still required to file an income tax return even if they have no income tax due. This require"
+    },
+    {
+      "probeId": "SG-B-OCW",
+      "matrixClass": "safeguard_filing_obligation",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 23",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Issue Presented\nUnder Philippine tax law, an overseas contract worker (OCW) or overseas Filipino worker (OFW) is required to file a Philippine income tax return only for income derived from sources within the Philippines. This is govern"
+    },
+    {
+      "probeId": "SG-C-CORPMISMATCH",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 24",
+        "NIRC Sec. 27",
+        "NIRC Sec. 23"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Issue Presented\nAre the deadlines for filing corporate income tax returns the same as those for individual income tax returns in the Philippines?\n\n### Short Answer\nNo, the deadlines for filing corporate income tax returns differ from th"
+    },
+    {
+      "probeId": "SG-C-DUETODAY",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "must not assert a today-relative deadline without the period",
+      "flags": [],
+      "answerHead": "### Short Answer\nYour income tax return is due today if today is April 15, which is the standard deadline for individual income tax returns in the Philippines.\n\n### Interpretation\n\n### Practical Meaning\nIf you are an individual taxpayer and"
+    },
+    {
+      "probeId": "SG-C-ESTATEDEAD",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Issue Presented\nWhat is the deadline for filing an estate tax return, and is it the same as the individual income tax deadline?\n\n### Short Answer\n\n### Accounting Treatment\nFor accounting purposes, the estate tax return must be prepared "
+    },
+    {
+      "probeId": "SG-C-FILEVPAY",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that both their income tax return and the payment of taxes due are completed by April 15 to avoid any penalties. It is crucial to plan ahead, especially if "
+    },
+    {
+      "probeId": "SG-C-FILEVPRESC",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 203",
+        "RR No. 18-2013",
+        "NIRC Sec. 228"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Issue Presented\nThe income tax return filing deadline is not the same as the prescriptive period for assessment. Under Section 203 of the National Internal Revenue Code (NIRC), internal revenue taxes must be assessed within three years "
+    },
+    {
+      "probeId": "SG-C-FILEVPROTEST",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "must not conflate filing vs protest deadlines",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe deadline to file an income tax return is not the same as the deadline to file a protest to an assessment. The income tax return must be filed annually, while a protest against an assessment must be filed within a specif"
+    },
+    {
+      "probeId": "SG-C-LASTDAY",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "must not fabricate a today-relative deadline",
+      "flags": [],
+      "answerHead": "**Filing-deadline note:** TINA cannot confirm a date-relative filing claim (e.g. \"today is the last day\") without your exact taxable year, return type, and the operative BIR deadline for that period. The general annual individual income-tax"
+    },
+    {
+      "probeId": "SG-C-LATE",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nIf you have missed the deadline for filing your annual income tax return, you may be subject to penalties and interest on the unpaid tax. It is advisable to file your return as soon as possible to minimize these penalties.\n"
+    },
+    {
+      "probeId": "SG-C-TIMELEFT",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThis means that if your taxable year ends on December 31, you must ensure that your income tax return is filed by April 15 of the next year to avoid penalties and interest for late"
+    },
+    {
+      "probeId": "SG-C-VATMISMATCH",
+      "matrixClass": "safeguard_filing_deadline",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 105",
+        "NIRC Sec. 106",
+        "NIRC Sec. 107",
+        "NIRC Sec. 108",
+        "RR 16-2005"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nNo, the VAT return deadline is not the same as the annual income tax return deadline. VAT returns are typically filed quarterly, while the annual income tax return is filed once a year.\n\n### Interpretation\nUnder the NIRC, V"
+    },
+    {
+      "probeId": "SG-D-OBLIGPLUSDEAD",
+      "matrixClass": "safeguard_mixed_object",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": "two distinct propositions each must be independently supported",
+      "flags": [],
+      "answerHead": "### Short Answer\nYes, you are required to file an income tax return if you have taxable income. The deadline for filing is typically on or before April 15 of the following year.\n\n### Interpretation\nSection 23 establishes the general princip"
+    },
+    {
+      "probeId": "SG-E-DONORFALSE",
+      "matrixClass": "safeguard_estate_donor",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 2",
+        "NIRC Sec. 3",
+        "NIRC Sec. 5",
+        "NIRC Sec. 6"
+      ],
+      "expected": "donor false-refusal control: must remain professionally useful",
+      "flags": [],
+      "answerHead": "### Issue Presented\nIs a ₱200,000 donation to a friend subject to donor's tax under the TRAIN law?\n\n### Short Answer\nYes, a ₱200,000 donation to a friend is subject to donor's tax under the Tax Reform for Acceleration and Inclusion (TRAIN) "
+    },
+    {
+      "probeId": "SG-E-NETCOMP",
+      "matrixClass": "safeguard_estate_donor",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 34"
+      ],
+      "expected": "supported computation only if rate+base+deductions all authority-backed",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe net taxable estate is ₱6,000,000 (₱12,000,000 gross estate minus ₱6,000,000 allowable deductions). The estate tax is computed based on the net taxable estate using the graduated rates under the Tax Code.\n\n### Controllin"
+    },
+    {
+      "probeId": "SG-E-RATEONLY",
+      "matrixClass": "safeguard_estate_donor",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 91",
+        "NIRC Sec. 84",
+        "NIRC Sec. 86",
+        "NIRC Sec. 88",
+        "NIRC Sec. 89"
+      ],
+      "expected": "rate authority must not be laundered into full net-estate computation",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\nUnder Section 84 of the NIRC, the estate tax is imposed on the transfer of the net estate of a decedent. The TRAIN law simplified the estate tax structure by establishing a single rate of 6% for estates "
+    },
+    {
+      "probeId": "SG-E-STDDED",
+      "matrixClass": "safeguard_estate_donor",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 34"
+      ],
+      "expected": "standard deduction must not be described as a threshold / first-amount-tax-free",
+      "flags": [],
+      "answerHead": "### Short Answer\nThe ₱5,000,000 standard deduction for estate tax is a tax-free threshold, not a deduction. It allows the estate to exclude this amount from the gross estate before calculating the estate tax due.\n\n### Interpretation\nThe ₱5,"
+    },
+    {
+      "probeId": "SG-G-2024TXN",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "cards": [],
+      "expected": "PRE_EFFECTIVITY",
+      "flags": [],
+      "answerHead": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    },
+    {
+      "probeId": "SG-G-EXACT51",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\nSection 51 of the NIRC requires individuals to file an income tax return, with specific deadlines depending on their income sources and circumstances. Generally, individuals must file their returns on or before April 15 of "
+    },
+    {
+      "probeId": "SG-G-EXACT51A",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "G.R. No. 226592",
+        "G.R. No. 222743",
+        "NIRC Sec. 21",
+        "NIRC Sec. 2"
+      ],
+      "expected": "51-A created by RA 10963",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Controlling Authorities\n- **NIRC Section 51-A**: Substituted Filing of Income Tax Returns by Employees Receiving Purely Compensation Income.\n\n### Interpretation\nSection 51-A simplifies the filing requirements for emplo"
+    },
+    {
+      "probeId": "SG-G-EXACT51C",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51"
+      ],
+      "expected": null,
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\nThis section outlines the deadlines for filing income tax returns for individuals, establishing April 15 as the annual due date. It also includes specific provisions for individuals subject to capital ga"
+    },
+    {
+      "probeId": "SG-G-JULY1SEP",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51"
+      ],
+      "expected": "July 1 is Section 28 financial-instrument transitory, not the 51(C)(2) effectivity (2025-06-19)",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning"
+    },
+    {
+      "probeId": "SG-G-MALFORMED51",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "cards": [],
+      "expected": "malformed date must not apply RA 12214",
+      "flags": [],
+      "answerHead": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    },
+    {
+      "probeId": "SG-G-MISSING51",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "cards": [],
+      "expected": "missing transaction date must not apply RA 12214",
+      "flags": [],
+      "answerHead": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    },
+    {
+      "probeId": "SG-G-PRE11976",
+      "matrixClass": "safeguard_section51_temporal",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "cards": [],
+      "expected": "RA 11976 (eff. 2024) not yet effective for 2023",
+      "flags": [],
+      "answerHead": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    },
+    {
+      "probeId": "SG-H-CHAINREVIEW",
+      "matrixClass": "safeguard_currentness",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 51",
+        "G.R. No. 226592",
+        "NIRC Sec. 21",
+        "NIRC Sec. 2"
+      ],
+      "expected": "chainReviewed legitimacy; no provision-label currentness laundering",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Controlling Authorities\nThe controlling authority for this provision is Section 51 of the National Internal Revenue Code (NIRC), as amended.\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that the"
+    },
+    {
+      "probeId": "SG-H-NOTYET",
+      "matrixClass": "safeguard_currentness",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "cards": [],
+      "expected": "not-yet-effective authority must not be applied",
+      "flags": [],
+      "answerHead": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    },
+    {
+      "probeId": "SG-H-STALE",
+      "matrixClass": "safeguard_currentness",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "cards": [
+        "NIRC Sec. 2",
+        "NIRC Sec. 21"
+      ],
+      "expected": "must not present superseded law as current",
+      "flags": [],
+      "answerHead": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning"
+    },
+    {
+      "probeId": "SG-H-UNRESOLVED",
+      "matrixClass": "safeguard_currentness",
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "RELATED_AUTHORITY_ONLY",
+      "cards": [],
+      "expected": "unresolved period: must not apply RA 12214",
+      "flags": [],
+      "answerHead": "I cannot present the available source as controlling authority for this issue.\n\nOnly related or supporting authority was found. Please verify the governing statute, regulation, or controlling issuance before relying on this answer."
+    }
+  ]
+}

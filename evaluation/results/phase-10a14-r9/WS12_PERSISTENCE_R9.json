@@ -1,0 +1,38 @@
+{
+  "cases": 4,
+  "mismatches": 0,
+  "rows": [
+    {
+      "cls": "filing_obligation_valid",
+      "immT": "VERIFIED_CONTROLLING",
+      "perT": "VERIFIED_CONTROLLING",
+      "immS": "AUTHORITY_FOUND",
+      "perS": "AUTHORITY_FOUND",
+      "consistent": true
+    },
+    {
+      "cls": "q12_corrected",
+      "immT": "RELATED_AUTHORITY_ONLY",
+      "perT": "RELATED_AUTHORITY_ONLY",
+      "immS": "AUTHORITY_FOUND",
+      "perS": "AUTHORITY_FOUND",
+      "consistent": true
+    },
+    {
+      "cls": "calendar_relative_corrected",
+      "immT": "RELATED_AUTHORITY_ONLY",
+      "perT": "RELATED_AUTHORITY_ONLY",
+      "immS": "AUTHORITY_FOUND",
+      "perS": "AUTHORITY_FOUND",
+      "consistent": true
+    },
+    {
+      "cls": "substituted_valid",
+      "immT": "VERIFIED_CONTROLLING",
+      "perT": "VERIFIED_CONTROLLING",
+      "immS": "AUTHORITY_FOUND",
+      "perS": "AUTHORITY_FOUND",
+      "consistent": true
+    }
+  ]
+}
