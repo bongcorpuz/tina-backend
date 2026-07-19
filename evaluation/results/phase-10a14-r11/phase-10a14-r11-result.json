@@ -1,0 +1,24 @@
+{
+  "task": "PHASE-10A14-R11-IMMUTABLE-PRE-FIX-EVIDENCE-CALENDAR-DIRECTIVE-COMPLETENESS-AND-CONTEXTUAL-SAFE-ANSWER-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8 (low speed)",
+  "decision": "PASS",
+  "startingHead": "ccebd0648606c1506745231dcf24fa4e86845d12",
+  "preFixEvidenceCommit": "16205d2b9890e3854a589bbf13c6f84ac655b13d",
+  "r11RuntimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "stagingRuntimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "model": "gpt-4o-mini",
+  "findings": {
+    "P1-R10-IR-002": "CLOSED — clause-level directive detection; pre-fix 18 misses -> post-fix 0; F32 false-positive closed.",
+    "P1-R10-IR-001": "SUPERSEDED BY COMPLETE R11 PROSPECTIVE EVIDENCE (self-assessed; reviewer decides). Original R10 intermediate payload NOT recovered/reconstructed.",
+    "P2-R10-IR-003": "CLOSED — contextual safe-answer builder (today/tomorrow/yesterday/already-late/still-on-time)."
+  },
+  "preFix": { "runtime": "05faa60", "unsafeMisses": 18, "safeFalsePositives": 1, "committedBeforeRemediation": true },
+  "postFix": { "runtime": "90d70fe", "unsafeMisses": 0, "safeFalsePositives": 0, "mapping1to1": true, "totalProbes": 38 },
+  "liveSubset": { "probes": 9, "realUnsafePublicAnswer": 0, "realUnsafeHistory": 0, "rejectedExposed": 0, "apiEqualsHistory": true },
+  "focusedTests": { "phase-10a14-r11": "39/0", "phase-10a14-r10": "22/0", "phase-10a14-r9": "15/0" },
+  "deterministicAll26": { "blocked": 9, "preserved": 17, "mismatch": 0, "pass": true },
+  "priorClosuresPreserved": { "fourAffectedR9": true, "q12FilingRationale": true, "ordinaryDeadlineReachable": true, "modelValidatorNonOverride": true },
+  "gates": { "deterministic": "201/0 x2 clean tree", "staging": "7/0 x2" },
+  "security": { "fabricatedHistoricalEvidence": 0, "backdatedPayload": 0, "overwrittenPreFix": 0, "secrets": 0, "modelChange": 0, "promptChange": 0, "filingRationaleRedesign": 0, "corpusMutation": 0, "productionDeploy": 0, "protectedPathsTouched": 0, "port5173Touched": 0 },
+  "scopeNote": "P1-R9-IR-002 reserved for E2. P2-R9-IR-003 remains bounded."
+}
