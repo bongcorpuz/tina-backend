@@ -20,24 +20,32 @@
 
 "use strict";
 
-import { parseLegalDate, compareLegalDates, extractIsoDate } from "./legal-date-utils.js";
+import { parseLegalDate, compareLegalDates, strictMaterialDate } from "./legal-date-utils.js";
 
-// PHASE-10A14-R7 (P1-R6-IR-001): exact-date effectivity for RA 12214 (CMEPA).
-// Officially verified (lawphil ra_12214_2025; see WS2 record): approved 2025-05-29;
-// Section 29 general effectivity = 15 days after completion of publication; Section 28
-// July 1, 2025 is a FINANCIAL-INSTRUMENT rate transitory (NOT the general effectivity
-// and NOT Section 51(C)(2)'s cutover). The exact publication date is not officially
-// resolvable from available primary sources, so the exact general-effectivity day is
-// undetermined. Firm bounds: effectivity CANNOT precede approval + 15 days
-// (2025-06-13); the law is definitely operative by the BIR implementing regulations
-// (RR 20/21-2025 issued 2025-08-05). Transactions in the [earliest, established) window
-// are temporally NOT ADJUDICABLE -> fail closed (never apply RA 12214 prematurely).
+// PHASE-10A14-R8 (P1-R7-IR-001): EXACT, officially-established effectivity for RA 12214.
+// Independently verified against primary sources:
+//  - Approval: 2025-05-29 (lawphil ra_12214_2025; signed copy on bir-cdn).
+//  - Section 29 (verbatim, lawphil): "This Act shall take effect after fifteen (15) days
+//    following the completion of its publication in the Official Gazette or in at least
+//    one (1) newspaper of general circulation." The clause is DISJUNCTIVE — complete
+//    publication in a single newspaper of general circulation independently satisfies it.
+//  - Qualifying publication: Manila Bulletin (newspaper of general circulation),
+//    2025-06-04 (also Official Gazette 2025-06-09). The June 4 newspaper publication is
+//    the earlier qualifying event.
+//  - Effectivity = publication + 15 days = 2025-06-04 + 15 = 2025-06-19 (inclusive: the
+//    Act "takes effect" on that day). Adjudicated by full YYYY-MM-DD comparison.
+//  - Section 28 "July 1, 2025" is a FINANCIAL-INSTRUMENT RATE transitory ONLY (and the
+//    STT-rate application date for Exchange transactions); it is NOT the Section 29
+//    general effectivity and NOT Section 51(C)(2)'s cutover. It never governs 51(C)(2).
+// There is no longer an unresolved effectivity window: a valid transaction date is
+// adjudicated definitively against 2025-06-19.
 const RA12214_EFFECTIVITY = Object.freeze({
   approval: "2025-05-29",
-  earliestPossible: "2025-06-13",   // approval + 15 days (firm lower bound)
-  establishedOperative: "2025-08-05", // BIR implementing RRs issued; definitely effective by
-  transitoryFinancialInstruments: "2025-07-01", // Section 28 (rate transitory; NOT 51(C)(2))
-  generalEffectivityClause: "15 days after completion of publication (Section 29)"
+  qualifyingPublication: "2025-06-04",           // Manila Bulletin (newspaper of general circulation)
+  officialGazettePublication: "2025-06-09",
+  effectivity: "2025-06-19",                     // qualifyingPublication + 15 days (Section 29)
+  transitoryFinancialInstruments: "2025-07-01",  // Section 28 (rate transitory; NOT 51(C)(2))
+  generalEffectivityClause: "after 15 days following completion of publication (Section 29)"
 });
 
 // Official amendment records (identifiers + canonical URLs + effectivity only).
@@ -45,7 +53,7 @@ export const SECTION51_OFFICIAL_LAWS = Object.freeze({
   "RA 8424": Object.freeze({ title: "NIRC of 1997", approved: "1997-12-11", effectivity: "1998-01-01", effectivityYear: 1998, url: "https://lawphil.net/statutes/repacts/ra1997/ra_8424_1997.html" }),
   "RA 10963": Object.freeze({ title: "TRAIN Law", approved: "2017-12-19", effectivity: "2018-01-01", effectivityYear: 2018, url: "https://lawphil.net/statutes/repacts/ra2017/ra_10963_2017.html" }),
   "RA 11976": Object.freeze({ title: "Ease of Paying Taxes (EOPT) Act", approved: "2024-01-05", effectivity: "2024-01-22", effectivityYear: 2024, url: "https://lawphil.net/statutes/repacts/ra2024/ra_11976_2024.html" }),
-  "RA 12214": Object.freeze({ title: "Capital Markets Efficiency Promotion Act (CMEPA)", approved: "2025-05-29", effectivity: "2025-07-01", effectivityYear: 2025, url: "https://lawphil.net/statutes/repacts/ra2025/ra_12214_2025.html" })
+  "RA 12214": Object.freeze({ title: "Capital Markets Efficiency Promotion Act (CMEPA)", approved: "2025-05-29", effectivity: "2025-06-19", effectivityYear: 2025, url: "https://lawphil.net/statutes/repacts/ra2025/ra_12214_2025.html" })
 });
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -117,9 +125,13 @@ function lawRecord(id) {
 // ordinary-period case. Returns a year (number) or null when unresolved.
 function resolveAsOfYear({ taxableYear, filingEventDate, transactionDate, legalAsOfDate } = {}) {
   if (taxableYear != null && Number.isFinite(Number(taxableYear))) return Number(taxableYear);
+  // PHASE-10A14-R8 (P1-R7-IR-002): NO `new Date()` fallback. A year may be derived only
+  // from a strictly valid ISO calendar date (rejects slash dates, free text, impossible
+  // calendar dates). Used for ORDINARY propositions only; Section 51(C)(2) uses the strict
+  // material-date contract below and never derives applicability from a bare year.
   for (const d of [transactionDate, filingEventDate, legalAsOfDate]) {
-    const y = d ? new Date(d).getUTCFullYear() : NaN;
-    if (Number.isFinite(y)) return y;
+    const p = parseLegalDate(d);
+    if (p) return p.y;
   }
   return null;
 }
@@ -184,65 +196,86 @@ export function resolveSection51AuthorityChain(input = {}) {
     officialLaws
   };
 
-  // Later-amendment propositions (51(C)(2)): resolve RA 12214 applicability by EXACT
-  // legal DATE, not by year (P1-R6-IR-001). The relevant event date is the transaction /
-  // disposition date; taxableYear alone is insufficient for a transaction-timing
-  // proposition when the year contains the effectivity boundary.
+  // Later-amendment propositions (Section 51(C)(2)): resolve RA 12214 applicability by
+  // EXACT legal DATE against the established effectivity (2025-06-19).
+  //
+  // STRICT MATERIAL-DATE CONTRACT (P1-R7-IR-002/003):
+  //  - The ONLY acceptable material date is a strictly valid ISO transactionDate (or
+  //    dispositionDate). taxableYear, legalAsOfDate, filingEventDate, the system date,
+  //    inferred years, and JavaScript-parsed / malformed strings are NEVER substitutes.
+  //  - Missing required date -> PERIOD_UNRESOLVED, fail closed.
+  //  - Malformed required date -> INVALID_DATE, fail closed.
+  //
+  // FAIL-CLOSED METADATA (P1-R7-IR-004): the temporal result is BUILT clean. A failed or
+  // pre-effectivity adjudication NEVER exposes RA 12214 as applicable or controlling.
   if (entry.baseStatus === "LATER_AMENDMENT_REQUIRED") {
-    const eventDate = extractIsoDate(input.transactionDate) || extractIsoDate(input.dispositionDate)
-      || extractIsoDate(input.filingEventDate) || null;
     const eff = RA12214_EFFECTIVITY;
-    const temporalBase = {
+    const effectivityMeta = {
+      approval: eff.approval,
+      qualifyingPublication: eff.qualifyingPublication,
+      officialGazettePublication: eff.officialGazettePublication,
+      effectivity: eff.effectivity,
+      transitoryFinancialInstruments: eff.transitoryFinancialInstruments,
+      clause: eff.generalEffectivityClause
+    };
+    // Clean fail-closed base: RA 12214 is neither applicable nor controlling.
+    const failClosedBase = {
       ...base,
-      effectivity: {
-        approval: eff.approval, earliestPossible: eff.earliestPossible,
-        establishedOperative: eff.establishedOperative,
-        transitoryFinancialInstruments: eff.transitoryFinancialInstruments,
-        clause: eff.generalEffectivityClause
-      },
-      selectedDateField: eventDate ? (input.transactionDate ? "transactionDate" : input.dispositionDate ? "dispositionDate" : "filingEventDate") : null,
-      selectedDate: eventDate
+      currentAuthoritySet: ["NIRC Sec. 51(C)"],
+      amendingAuthorities: [],
+      applicableAmendments: [],
+      reviewedButNotApplicable: [],
+      notYetEffective: [],
+      historicalAuthoritySet: [],
+      effectivity: effectivityMeta,
+      chainReviewed: true,
+      selectedDateField: null,
+      selectedDate: null
     };
 
-    if (eventDate) {
-      const beforeEarliest = compareLegalDates(eventDate, eff.earliestPossible) < 0;
-      const onOrAfterEstablished = compareLegalDates(eventDate, eff.establishedOperative) >= 0;
-      if (beforeEarliest) {
-        // Definitively pre-effectivity: RA 12214 not applicable; pre-amendment form applied.
-        return { ...temporalBase, chainStatus: "HISTORICAL_COMPLETE_CHAIN",
-          currentAuthoritySet: ["NIRC Sec. 51(C)"], applicableAmendments: [], notYetEffective: ["RA 12214"],
-          temporalStatus: "PRE_EFFECTIVITY", sufficient: true, reason: null };
-      }
-      if (onOrAfterEstablished) {
-        return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
-          currentAuthoritySet: ["NIRC Sec. 51(C)", "RA 12214"], applicableAmendments: ["RA 12214"],
-          temporalStatus: "POST_EFFECTIVITY", sufficient: true, reason: null };
-      }
-      // Event falls in the [earliestPossible, establishedOperative) window where the exact
-      // general effectivity date is not officially resolvable -> fail closed (do NOT apply
-      // RA 12214 prematurely; require authoritative effectivity confirmation).
-      return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
-        applicableAmendments: [], notYetEffective: ["RA 12214"], temporalStatus: "EFFECTIVITY_WINDOW_AMBIGUOUS",
-        sufficient: false, reason: "section_51c2_effectivity_date_unresolved" };
+    // Required material date: transactionDate, else dispositionDate. No other field.
+    const rawField = (input.transactionDate != null && input.transactionDate !== "") ? "transactionDate"
+      : (input.dispositionDate != null && input.dispositionDate !== "") ? "dispositionDate"
+      : null;
+    const rawValue = rawField === "transactionDate" ? input.transactionDate
+      : rawField === "dispositionDate" ? input.dispositionDate : null;
+
+    if (rawField == null) {
+      return { ...failClosedBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
+        temporalStatus: "PERIOD_UNRESOLVED", sufficient: false,
+        reason: "section_51c2_transaction_date_required" };
     }
 
-    // No exact event date. A bare year cannot resolve a transaction-timing boundary.
-    // (reason kept as filing_period_not_resolved for continuity with R5/R6 controls.)
-    if (resolvedYear == null) {
-      return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED", sufficient: false, reason: "filing_period_not_resolved" };
+    const eventDate = strictMaterialDate(rawValue); // canonical YYYY-MM-DD or null
+    if (eventDate == null) {
+      return { ...failClosedBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
+        selectedDateField: rawField, selectedDate: null,
+        temporalStatus: "INVALID_DATE", sufficient: false,
+        reason: "section_51c2_transaction_date_invalid" };
     }
-    if (resolvedYear < 2025) {
-      return { ...temporalBase, chainStatus: "HISTORICAL_COMPLETE_CHAIN",
-        currentAuthoritySet: ["NIRC Sec. 51(C)"], applicableAmendments: [], notYetEffective: ["RA 12214"],
+
+    const cmp = compareLegalDates(eventDate, eff.effectivity); // both strictly valid
+    if (cmp < 0) {
+      // Definitively pre-effectivity: pre-amendment form applied; RA 12214 not applicable.
+      return { ...failClosedBase,
+        selectedDateField: rawField, selectedDate: eventDate,
+        chainStatus: "HISTORICAL_COMPLETE_CHAIN",
+        historicalAuthoritySet: ["NIRC Sec. 51(C)"],
+        notYetEffective: ["RA 12214"],
         temporalStatus: "PRE_EFFECTIVITY", sufficient: true, reason: null };
     }
-    if (resolvedYear > 2025) {
-      return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED",
-        currentAuthoritySet: ["NIRC Sec. 51(C)", "RA 12214"], applicableAmendments: ["RA 12214"],
-        temporalStatus: "POST_EFFECTIVITY", sufficient: true, reason: null };
-    }
-    // 2025 with no exact date straddles the effectivity boundary -> exact date required.
-    return { ...temporalBase, chainStatus: "LATER_AMENDMENT_REQUIRED", temporalStatus: "PERIOD_UNRESOLVED", sufficient: false, reason: "section_51c2_transaction_date_required" };
+    // On or after effectivity (inclusive): RA 12214 applicable and controlling.
+    return { ...base,
+      effectivity: effectivityMeta, chainReviewed: true,
+      selectedDateField: rawField, selectedDate: eventDate,
+      currentAuthoritySet: ["NIRC Sec. 51(C)", "RA 12214"],
+      amendingAuthorities: ["RA 12214"],
+      applicableAmendments: ["RA 12214"],
+      reviewedButNotApplicable: [],
+      notYetEffective: [],
+      historicalAuthoritySet: [],
+      chainStatus: "LATER_AMENDMENT_REQUIRED",
+      temporalStatus: "POST_EFFECTIVITY", sufficient: true, reason: null };
   }
 
   // Ordinary propositions: unchanged through the chain. If the resolved period predates
@@ -279,6 +312,13 @@ export function buildSection51AmendmentChainMetadata(ref = "", input = {}) {
     applicableAmendments: resolved.applicableAmendments,
     reviewedButNotApplicable: resolved.reviewedButNotApplicable,
     notYetEffective: resolved.notYetEffective,
+    // PHASE-10A14-R8 (P1-R7-IR-004): carry the temporal adjudication verdict onto the
+    // source-card summary / validator input so a failed or pre-effectivity adjudication
+    // cannot be read as applying RA 12214. `applicableAmendments`/`currentAuthoritySet`
+    // above are already clean because the resolver builds the result fail-closed.
+    temporalStatus: resolved.temporalStatus ?? null,
+    temporalSufficient: resolved.sufficient !== false,
+    historicalAuthoritySet: resolved.historicalAuthoritySet ?? [],
     officialAmendmentLaws: resolved.officialLaws
   };
 }

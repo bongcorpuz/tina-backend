@@ -28,6 +28,24 @@ export function parseLegalDate(value) {
 
 export function isValidLegalDate(value) { return parseLegalDate(value) !== null; }
 
+/** Canonical YYYY-MM-DD from a strictly valid ISO calendar date, else null. */
+export function toCanonicalLegalDate(value) {
+  const p = parseLegalDate(value);
+  return p ? `${String(p.y).padStart(4, "0")}-${String(p.m).padStart(2, "0")}-${String(p.d).padStart(2, "0")}` : null;
+}
+
+/**
+ * PHASE-10A14-R8 (P1-R7-IR-002): strict material-date gate for legal adjudication.
+ * Returns a canonical YYYY-MM-DD ONLY for a strictly valid, whole-string ISO calendar
+ * date. Everything else — `new Date()`-parsable strings, slash-separated dates, free
+ * text ("June 20, 2025"), impossible calendar dates (2026-02-30), blank/null/undefined,
+ * non-strings — returns null and must fail closed. NO fallback parsing of any kind.
+ */
+export function strictMaterialDate(value) {
+  if (typeof value !== "string") return null;
+  return toCanonicalLegalDate(value);
+}
+
 /** compareLegalDates(a,b): -1 if a<b, 0 if equal, 1 if a>b, null if either invalid. */
 export function compareLegalDates(a, b) {
   const pa = parseLegalDate(a), pb = parseLegalDate(b);
@@ -73,6 +91,6 @@ export function extractIsoDate(text = "") {
 }
 
 export default {
-  parseLegalDate, isValidLegalDate, compareLegalDates,
+  parseLegalDate, isValidLegalDate, toCanonicalLegalDate, strictMaterialDate, compareLegalDates,
   isBeforeEffectivity, isOnOrAfterEffectivity, addLegalCalendarDays, extractIsoDate
 };

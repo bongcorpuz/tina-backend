@@ -57,10 +57,13 @@ await test("current ordinary obligation: all reviewed laws effective", () => {
   assert.equal(r.notYetEffective.length, 0);
   assert.equal(r.chainStatus, "BASE_PROVISION_UNCHANGED_BUT_CHAIN_REVIEWED");
 });
-await test("transaction 51(C)(2): pre-2025 historical, 2026 later-amendment required, no-period fails", () => {
-  assert.equal(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2024 }).chainStatus, "HISTORICAL_COMPLETE_CHAIN");
-  assert.equal(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2026 }).chainStatus, "LATER_AMENDMENT_REQUIRED");
-  assert.equal(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction" }).reason, "filing_period_not_resolved");
+// R8 (P1-R7-IR-003): 51(C)(2) resolves by strict transactionDate, not by taxableYear.
+await test("transaction 51(C)(2): pre-effectivity historical, post-effectivity later-amendment, no-date fails closed", () => {
+  assert.equal(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", transactionDate: "2024-06-01" }).chainStatus, "HISTORICAL_COMPLETE_CHAIN");
+  assert.equal(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", transactionDate: "2026-01-15" }).chainStatus, "LATER_AMENDMENT_REQUIRED");
+  const noDate = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2026 });
+  assert.equal(noDate.reason, "section_51c2_transaction_date_required");
+  assert.deepEqual(noDate.applicableAmendments, []);
 });
 await test("filing-event date drives resolution when no taxableYear", () => {
   const r = resolveSection51AuthorityChain({ propositionClass: "filing_obligation", filingEventDate: "2023-04-10" });

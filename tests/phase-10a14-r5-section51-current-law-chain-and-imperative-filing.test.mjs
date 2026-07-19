@@ -41,20 +41,23 @@ await test("resolver: substituted -> current complete chain", () => {
   assert.equal(r.chainStatus, "CURRENT_COMPLETE_CHAIN");
   assert.equal(r.sufficient, true);
 });
-await test("resolver: transaction timing -> later amendment (RA 12214) required", () => {
+// R8 (P1-R7-IR-003/004): Section 51(C)(2) applicability requires a strict transactionDate;
+// a bare year or missing date fails closed and never exposes RA 12214 as applicable.
+await test("resolver: transaction timing with no material date -> fail closed (no RA 12214)", () => {
   const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction" });
   assert.equal(r.chainStatus, "LATER_AMENDMENT_REQUIRED");
-  assert.ok(r.amendingAuthorities.includes("RA 12214"));
   assert.equal(r.sufficient, false);
-  assert.equal(r.reason, "filing_period_not_resolved");
+  assert.equal(r.reason, "section_51c2_transaction_date_required");
+  assert.deepEqual(r.applicableAmendments, []);
+  assert.ok(!r.currentAuthoritySet.includes("RA 12214"));
 });
-await test("resolver: transaction timing pre-2025 -> historical complete chain", () => {
-  const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2024 });
+await test("resolver: transaction timing pre-effectivity date -> historical complete chain", () => {
+  const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", transactionDate: "2024-06-01" });
   assert.equal(r.chainStatus, "HISTORICAL_COMPLETE_CHAIN");
   assert.equal(r.sufficient, true);
 });
-await test("resolver: transaction timing 2026 -> later amendment required, sufficient with period", () => {
-  const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2026 });
+await test("resolver: transaction timing post-effectivity date -> later amendment required, applicable", () => {
+  const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", transactionDate: "2026-01-15" });
   assert.equal(r.chainStatus, "LATER_AMENDMENT_REQUIRED");
   assert.equal(r.sufficient, true);
   assert.ok(r.currentAuthoritySet.includes("RA 12214"));

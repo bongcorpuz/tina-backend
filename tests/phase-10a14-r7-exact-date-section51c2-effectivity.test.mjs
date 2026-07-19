@@ -61,12 +61,17 @@ await test("2025-06-01 transaction -> PRE_EFFECTIVITY, RA 12214 NOT applicable (
 await test("effectivity-earliest minus one day -> PRE_EFFECTIVITY", () => {
   assert.equal(txn("2025-06-12").temporalStatus, "PRE_EFFECTIVITY");
 });
-await test("ambiguous window [earliest, established) -> fail closed (unresolved)", () => {
-  for (const d of ["2025-06-13", "2025-07-01", "2025-07-15", "2025-08-04"]) {
+// R8 (P1-R7-IR-001): the former [2025-06-13, 2025-08-05) "unresolved effectivity window"
+// is SUPERSEDED — RA 12214's qualifying publication (Manila Bulletin 2025-06-04) is now
+// established, so effectivity is the firm date 2025-06-19. Dates in the former window are
+// adjudicated definitively (PRE before 06-19, POST on/after). See the R8 suite.
+await test("former ambiguous-window dates now adjudicate against firm effectivity 2025-06-19", () => {
+  assert.equal(txn("2025-06-13").temporalStatus, "PRE_EFFECTIVITY");
+  assert.equal(txn("2025-06-18").temporalStatus, "PRE_EFFECTIVITY");
+  for (const d of ["2025-06-19", "2025-07-01", "2025-07-15", "2025-08-04"]) {
     const r = txn(d);
-    assert.equal(r.sufficient, false, `${d} must fail closed`);
-    assert.equal(r.reason, "section_51c2_effectivity_date_unresolved");
-    assert.deepEqual(r.applicableAmendments, [], `${d} must not apply RA 12214`);
+    assert.equal(r.temporalStatus, "POST_EFFECTIVITY", `${d} is on/after effectivity`);
+    assert.ok(r.applicableAmendments.includes("RA 12214"));
   }
 });
 await test("post-established -> RA 12214 applicable", () => {
@@ -75,20 +80,34 @@ await test("post-established -> RA 12214 applicable", () => {
   assert.ok(r.applicableAmendments.includes("RA 12214"));
   assert.ok(r.currentAuthoritySet.includes("RA 12214"));
 });
-await test("2024 transaction -> PRE_EFFECTIVITY; 2026 -> POST_EFFECTIVITY applicable", () => {
-  assert.equal(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2024 }).temporalStatus, "PRE_EFFECTIVITY");
-  assert.ok(resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2026 }).applicableAmendments.includes("RA 12214"));
+// R8 (P1-R7-IR-003): taxableYear is NOT a substitute for a required transactionDate on a
+// Section 51(C)(2) proposition; a bare year fails closed and never applies RA 12214.
+await test("taxableYear alone does NOT resolve 51(C)(2) applicability (fail closed)", () => {
+  for (const y of [2024, 2026]) {
+    const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: y });
+    assert.equal(r.sufficient, false, `taxableYear ${y} must fail closed`);
+    assert.equal(r.reason, "section_51c2_transaction_date_required");
+    assert.deepEqual(r.applicableAmendments, []);
+  }
+  // With an actual transaction date the boundary resolves definitively.
+  assert.equal(txn("2024-05-01").temporalStatus, "PRE_EFFECTIVITY");
+  assert.ok(txn("2026-01-01").applicableAmendments.includes("RA 12214"));
 });
 await test("2025 with no exact date -> transaction date required (fail closed)", () => {
   const r = resolveSection51AuthorityChain({ propositionClass: "filing_deadline_transaction", taxableYear: 2025 });
   assert.equal(r.sufficient, false);
   assert.equal(r.reason, "section_51c2_transaction_date_required");
 });
-await test("July 1 is a financial-instrument transitory, NOT auto-applied as 51(C)(2) effectivity", () => {
-  // 2025-07-01 must NOT verify RA 12214 as applicable (it is in the ambiguous window).
+await test("July 1 is modeled as the Section 28 financial-instrument transitory (not the 51(C)(2) cutover)", () => {
+  // R8: 2025-07-01 is AFTER general effectivity (2025-06-19), so RA 12214 is applicable —
+  // but by the Section 29 general effectivity, NOT by the Section 28 July-1 transitory,
+  // which remains a distinct financial-instrument rate rule surfaced on the metadata.
   const r = txn("2025-07-01");
-  assert.deepEqual(r.applicableAmendments, []);
+  assert.equal(r.temporalStatus, "POST_EFFECTIVITY");
   assert.equal(r.effectivity.transitoryFinancialInstruments, "2025-07-01");
+  assert.equal(r.effectivity.effectivity, "2025-06-19");
+  // Pre-effectivity July-adjacent date is NOT swept in by the July-1 transitory:
+  assert.equal(txn("2025-06-18").temporalStatus, "PRE_EFFECTIVITY");
 });
 
 // ── F. prior closures preserved ───────────────────────────────────────────
