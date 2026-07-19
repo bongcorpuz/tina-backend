@@ -1,0 +1,26 @@
+{
+  "task": "PHASE-10A14-R12-SEMANTIC-FILING-DIRECTIVE-COVERAGE-NOT-APPLICABLE-HISTORY-CONSISTENCY-AND-EVIDENCE-MANIFEST-HYGIENE-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8 (low speed)",
+  "decision": "PASS",
+  "startingHead": "b4575bacfd941967132caacffd0ff792057025e4",
+  "preFixEvidenceCommit": "70790c3158cd32a877e87d9a401354878d383cd0",
+  "r12RuntimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "stagingRuntimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "model": "gpt-4o-mini",
+  "findings": {
+    "P1-R11-IR-001": "CLOSED — structured directive classification; pre-fix 25 misses -> post-fix 0; recommendation/advice/urgency/inverted/passive/permission-pressure/Taglish covered; scope-sensitive conditional suppression.",
+    "P1-R11-IR-002": "CLOSED — domain-boundary NOT_APPLICABLE responses now PERSISTED (explicit persistenceStatus); apiEqualsHistory false -> true.",
+    "P3-R11-IR-003": "CORRECTED prospectively — R12 manifests exclude themselves (0 self-entries); R11 historical manifests unmodified."
+  },
+  "preFix": { "runtime": "90d70fe", "unsafeDirectiveMisses": 25, "safeFalsePositives": 0, "domainBoundaryApiEqualsHistory": false, "committedBeforeRemediation": true },
+  "postFix": { "runtime": "d91b697", "unsafeDirectiveMisses": 0, "safeFalsePositives": 0, "mapping1to1": true, "totalDetectorProbes": 80 },
+  "liveCampaign": { "probes": 20, "apiUnsafe": 0, "historyUnsafe": 0, "apiNotEqualHistory": 0, "rejectedExposed": 0, "domainBoundaryPersisted": true, "domainBoundaryApiEqualsHistory": true },
+  "focusedTests": { "phase-10a14-r12": "47/0", "phase-10a14-r11": "39/0", "phase-10a14-r10": "22/0", "phase-10a14-r9": "15/0" },
+  "deterministicAll26": { "blocked": 9, "preserved": 17, "mismatch": 0, "pass": true },
+  "persistenceContract": "Domain-boundary user-visible responses PERSISTED via saveConversationTurn when conversationId present; explicit persistenceStatus (PERSISTED / NOT_PERSISTED_NO_CONVERSATION) in ordinary application behavior.",
+  "governanceSupersession": "SUPERSEDED BY COMPLETE R11/R12 PROSPECTIVE EVIDENCE (self-assessed; reviewer decides). Original R10 payload NOT recovered.",
+  "manifestHygiene": "R12 prefix/postfix/final manifests exclude themselves; 0 self-entries; R11 historical manifests unmodified.",
+  "gates": { "deterministic": "202/0 x2 clean tree", "staging": "7/0 x2" },
+  "security": { "fabricatedEvidence": 0, "historicalPayloadModified": 0, "secrets": 0, "modelChange": 0, "promptChange": 0, "filingRationaleRedesign": 0, "corpusMutation": 0, "directDbWrite": 0, "productionDeploy": 0, "protectedPathsTouched": 0, "port5173Touched": 0 },
+  "scopeNote": "P1-R9-IR-002 reserved for E2. P2-R9-IR-003 remains a bounded filing-rationale limitation."
+}
