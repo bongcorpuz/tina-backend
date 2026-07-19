@@ -1,0 +1,27 @@
+{
+  "task": "PHASE-10A14-R10-CALENDAR-RELATIVE-PUBLIC-ANSWER-REPLACEMENT-AND-PERSISTENCE-SAFETY-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8 (low speed)",
+  "decision": "PASS",
+  "startingHead": "a6e6a54cd6db4fea48f16cc30eb2f4c10bf8a370",
+  "r10RuntimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "stagingRuntimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "model": "gpt-4o-mini",
+  "finding": "P1-R9-IR-001 CLOSED",
+  "rootCause": "R9 prepended a safety note but retained the unsafe model answer (SG-C-LASTDAY, R9-LASTDAY-REPRO); the due-today variants (R9-DUETODAY, SG-C-DUETODAY) returned proposition-source-sufficiency BEFORE the calendar-relative gate and got no note. Persistence/history propagated the unsafe answer via payload.answer.",
+  "remediation": {
+    "validator": "calendar-relative gate reordered to run BEFORE proposition-source-sufficiency; detector broadened (due today / file today / submit by end of day / today is April 15 / directives / conditional-with-immediate-directive / Taglish); buildCalendarRelativeSafeAnswer() deterministic replacement (April 15 only when Sec 51 present).",
+    "askHandler": "REPLACE result.answer with the safe response (was prepend+retain); rejected model output retained only in internal result.rejectedModelAnswer (non-public). Covers API + persistence + history because payload.answer and persisted answerText both read result.answer."
+  },
+  "focusedTests": { "phase-10a14-r10": "22/0", "phase-10a14-r9": "15/0" },
+  "deterministicAll26": { "blocked": 9, "preserved": 17, "mismatch": 0, "pass": true },
+  "differentialLive": {
+    "runtime": "05faa60", "probes": 15, "technicalFailures": 0,
+    "unsafePublicAnswer": 0, "unsafeHistory": 0, "rejectedExposed": 0, "apiNotEqualHistory": 0, "trustInconsistent": 0,
+    "calendarRelativeReplaced": 9, "neutralPositivesVerified": 2
+  },
+  "wsAdjudication": { "unsafePublicAnswer": 0, "contradictory": 0, "falsePresentDayDeadline": 0, "rejectedTextExposed": 0, "invalidVerified": 0, "questionableVerified": 0, "overVerified": 0, "materialFalseRefusal": 0 },
+  "priorClosuresPreserved": { "q12FilingRationale": true, "deterministicAll26": "9/17/0", "ordinaryDeadlineReachable": true, "modelValidatorNonOverride": true },
+  "gates": { "deterministic": "200/0 x2 clean tree", "staging": "7/0 x2" },
+  "security": { "secrets": 0, "taxpayerData": 0, "modelChange": 0, "promptChange": 0, "filingRationaleRedesign": 0, "retrievalChange": 0, "corpusMutation": 0, "reindex": 0, "productionDeploy": 0, "protectedPathsTouched": 0, "port5173Touched": 0 },
+  "scopeNote": "P1-R9-IR-002 (strict canonical inventory) deliberately reserved for a separate evidence-only task. P2-R9-IR-003 remains a bounded limitation."
+}
