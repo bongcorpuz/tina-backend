@@ -7,11 +7,24 @@ edited afterwards.**
 
 ## Journal location
 
-`evaluation/results/phase-10a14-r14/journal/<campaignId>/<attemptId>.json`
+`evaluation/results/phase-10a14-r14/journal/<campaignId>/attempts.jsonl`
 
-The journal is append-only at the filesystem level: one immutable file per attempt.
-There is no aggregate file that is rewritten in place; aggregates
-(`*_SUMMARY.json`, manifests) are **derived** artifacts regenerated from the journal.
+The journal is append-only at the **byte** level: each attempt is one JSON line appended
+with `O_APPEND`. The file is never rewritten, never truncated, and never edited in place.
+
+> **Revision recorded at COMMIT 2.** COMMIT 1 specified one file per attempt. The frozen
+> campaign is 488 attempts per generation across at least three generations (`PREFIX`,
+> post-fix, `FINAL`), i.e. well over a thousand files, which obscures rather than
+> preserves the chronology. Append-only JSONL is strictly *more* faithful to the
+> append-only requirement — an append cannot silently overwrite a prior record, whereas
+> a per-attempt file write can — and keeps each campaign's chronology in one readable,
+> diffable, hashable artifact. No attempt content, field or rule is weakened by this
+> change. Material human-readable evidence (explicit probes, live probes) is additionally
+> emitted as individual files.
+
+There is no aggregate file that is rewritten in place; aggregates (`SUMMARY.json`,
+manifests) are **derived** artifacts regenerated from the journal and are never a
+substitute for it.
 
 ## Attempt identity
 
