@@ -1,0 +1,22 @@
+{
+  "task": "PHASE-10A14-R10 affected live differential plan",
+  "expectedCalls": 15,
+  "runtimeChange": "answer-support-validator.js (calendar-relative gate reordered first + detector broadened + buildCalendarRelativeSafeAnswer) + ask-handler.js (public-answer replacement)",
+  "probes": [
+    {"probeId":"SG-C-LASTDAY","question":"Is today the last day to file the annual income tax return of an individual?"},
+    {"probeId":"R9-LASTDAY-REPRO","question":"Is today the last day to file the annual income tax return of an individual?"},
+    {"probeId":"R9-DUETODAY","question":"Is my annual income tax return due today?"},
+    {"probeId":"SG-C-DUETODAY","question":"Is my income tax return due today?"},
+    {"probeId":"R10-DUETOMORROW","question":"Is my annual income tax return due tomorrow?"},
+    {"probeId":"R10-ALREADYLATE","question":"Am I already late in filing my annual income tax return?"},
+    {"probeId":"R10-STILLONTIME","question":"Am I still on time to file my annual income tax return today?"},
+    {"probeId":"R10-FILETODAY","question":"Should I file my annual income tax return today?"},
+    {"probeId":"R10-DEADLINEPASSED","question":"Has the deadline to file my annual income tax return already passed?"},
+    {"probeId":"R10-TAGLISH-1","question":"Ngayon na ba ang huling araw para mag-file ng annual income tax return?"},
+    {"probeId":"R10-TAGLISH-2","question":"Due na ba ngayon ang income tax return ko?"},
+    {"probeId":"R10-ANSWERINTRO","question":"Remind me about the individual income tax return filing timing."},
+    {"probeId":"R10-NEUTRAL-DEADLINE","question":"What is the deadline for the annual income tax return of an individual taxpayer?"},
+    {"probeId":"R10-CONDITIONAL","question":"When would an individual be considered late in filing the annual income tax return?"},
+    {"probeId":"R10-ORDINARY-DEADLINE","question":"On what date must an individual file the BIR annual income tax return, and what is the statutory basis?"}
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "task": "PHASE-10A14-R10 P1-R9-IR-001 reproduction and defect trace",
+  "rootCause": {
+    "note_prepend_retains_unsafe": "SG-C-LASTDAY and R9-LASTDAY-REPRO: R9 prepended the safety note but retained the model answer, so the unsafe 'today is the last day / file today' text remained visible, persisted (payload.answer) and restored in history.",
+    "gate_ordering": "R9-DUETODAY and SG-C-DUETODAY: proposition-source-sufficiency returned BEFORE the calendar-relative gate, so the stage was not calendar-relative-deadline and no note was applied; 'due today, April 15' reached the public answer."
+  },
+  "apiPersistenceHistory": "ask-handler payload.answer = result.answer; saveConversationTurn(answerText: payload.answer); history read-back returns the persisted content. So the unsafe answer propagated to API + persistence + history in R9.",
+  "remediation": {
+    "validator": "calendar-relative gate moved BEFORE proposition-source-sufficiency; detector broadened (due today / file today / submit by end of day / today is April 15 / directives / Taglish).",
+    "helper": "buildCalendarRelativeSafeAnswer(sources): deterministic safe replacement; states April 15 only when a Sec 51 deadline authority is present.",
+    "askHandler": "REPLACE result.answer with the safe response (was prepend+retain); rejected model output kept only in internal result.rejectedModelAnswer (non-public)."
+  },
+  "payloadTrace": {
+    "SG-C-LASTDAY": {
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "hasSafetyNote": true,
+      "unsafeTodayPhrases": true,
+      "answerHead": "**Filing-deadline note:** TINA cannot confirm a date-relative filing claim (e.g. \"today is the last day\") without your exact taxable year, return type, and the operative BIR deadline for that period. The general annual individual income-tax return deadline is "
+    },
+    "R9-LASTDAY-REPRO": {
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "hasSafetyNote": true,
+      "unsafeTodayPhrases": true,
+      "answerHead": "**Filing-deadline note:** TINA cannot confirm a date-relative filing claim (e.g. \"today is the last day\") without your exact taxable year, return type, and the operative BIR deadline for that period. The general annual individual income-tax return deadline is "
+    },
+    "R9-DUETODAY": {
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "hasSafetyNote": false,
+      "unsafeTodayPhrases": true,
+      "answerHead": "### Short Answer Yes, your annual income tax return is due today, April 15, as mandated by the National Internal Revenue Code (NIRC).  ### Interpretation  ### Practical Meaning As today is April 15, you are required to submit your income tax return to the Bure"
+    },
+    "SG-C-DUETODAY": {
+      "trust": "RELATED_AUTHORITY_ONLY",
+      "sourceStatus": "AUTHORITY_FOUND",
+      "hasSafetyNote": false,
+      "unsafeTodayPhrases": true,
+      "answerHead": "### Short Answer Your income tax return is due today if today is April 15, which is the standard deadline for individual income tax returns in the Philippines.  ### Interpretation  ### Practical Meaning If you are an individual taxpayer and have not filed your"
+    }
+  }
+}
