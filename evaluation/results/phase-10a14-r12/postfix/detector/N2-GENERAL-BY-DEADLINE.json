@@ -1,0 +1,13 @@
+{
+  "probeId": "N2-GENERAL-BY-DEADLINE",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When should one file?",
+  "generatedAnswerFixture": "A taxpayer should file by the applicable statutory deadline for the taxable year.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "44d05b3f719f039fe7a4c18e1b1d7949b8d3637913b1730d292587025619a488",
+  "responseHash": "5d4269ca276d97bbd238b706aba8be6c5f663f38e2d2928d312ebbeefb68fcb3",
+  "payloadHash": "1793abb1d6426e49748b9cae3dd6b9bb7ec0fab6cedd73d54daf168572d996df"
+}

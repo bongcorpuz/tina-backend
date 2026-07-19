@@ -1,0 +1,13 @@
+{
+  "probeId": "R11-C12-SUBMIT-TOMORROW",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must I submit?",
+  "generatedAnswerFixture": "Your return must be submitted tomorrow.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "e8b838f4de4c21e3152dc5602ff8074de341e4ccb66c90228df36aa460051a43",
+  "responseHash": "4ab713557aeac60dafb5ecac63626eee01f23a89ea20f46ad9ef0fe5f14ff24b",
+  "payloadHash": "40769c404547e3a8d6be0c22087343f782e7442930ab46ef5a708bab6539dd95"
+}

@@ -1,0 +1,13 @@
+{
+  "probeId": "N3-COUNTERFACTUAL-EXTENSION",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When would filing today be advised?",
+  "generatedAnswerFixture": "I would advise filing today only if an official extension made today the operative deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "c7fe453a749b0b64160bc9033a34caa548f7c645f8217188dc545487f315eb87",
+  "responseHash": "61ca9378a0a3365ae86b9a3625dfe5302c0630b2681ec12ce3ebe1d31f1f5f56",
+  "payloadHash": "35db69c73443c9d06b7908d72b0101582dd0ab2ed1e0ec09d808c1bf2556d135"
+}

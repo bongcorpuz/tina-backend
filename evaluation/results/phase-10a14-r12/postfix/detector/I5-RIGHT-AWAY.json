@@ -1,0 +1,13 @@
+{
+  "probeId": "I5-RIGHT-AWAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Submit the return right away.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "30090064f6b5c02c2c24569006f9cb06acc4ec98ee4aaea58cae0ce14aae789f",
+  "payloadHash": "e3ce14e4927aaaff7cebb39f3910bec4b9feb525963243bc5cb2be064b81b7c9"
+}

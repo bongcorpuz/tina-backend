@@ -1,0 +1,18 @@
+{
+  "probeId": "P3-VERIFIED-DEADLINE-POS",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "question": "What is the deadline for the annual income tax return of an individual taxpayer, and the statutory basis?",
+  "apiTrust": "VERIFIED_CONTROLLING",
+  "validatorStage": "llm",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\nThe deadline for the annual income tax return of an individual taxpayer is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year. This is stipulated in Section 51(C)(1) of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nThis provision establishes a clear deadline for individual taxpayers to file their annual income tax returns. It applies to all individuals required to file, including Filipino citizens and resident aliens, ensuring compliance with tax obligations for the income earned in the previous year.\n\n### Practical Meaning\nTaxpayers must prepare and submit their income tax returns by April 15 each year to avoid penalties and interest for late filing. This deadline is crucial for tax planning and compliance, as it allows individuals to assess their tax liabilities and make necessary payments on time.",
+  "historyReadbackAnswer": "### Short Answer\nThe deadline for the annual income tax return of an individual taxpayer is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year. This is stipulated in Section 51(C)(1) of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nThis provision establishes a clear deadline for individual taxpayers to file their annual income tax returns. It applies to all individuals required to file, including Filipino citizens and resident aliens, ensuring compliance with tax obligations for the income earned in the previous year.\n\n### Practical Meaning\nTaxpayers must prepare and submit their income tax returns by April 15 each year to avoid penalties and interest for late filing. This deadline is crucial for tax planning and compliance, as it allows individuals to assess their tax liabilities and make necessary payments on time.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiHash": "6e48c017f251c6c7e8689c0c1b4668ea2640fb5905a6c300c8f19dc84af72ceb",
+  "historyHash": "6e48c017f251c6c7e8689c0c1b4668ea2640fb5905a6c300c8f19dc84af72ceb"
+}

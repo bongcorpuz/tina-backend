@@ -1,0 +1,13 @@
+{
+  "probeId": "R11-F28-ORDINARY-PENALTY",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "What penalties apply to late filing?",
+  "generatedAnswerFixture": "A surcharge, interest and compromise penalty may apply when a return is filed after the statutory deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "024aed3bebb8a6b69cce48b8414ddf0d6bbe49621d354f9946f2877153798a86",
+  "responseHash": "6fc497cb012cb71967893a443f83d09e446c17055cbef589425eab1d22df75a6",
+  "payloadHash": "15b64c564ac54a12233ae0bbd6985c8a656ab8b0273bebe41066aaf0266ecbc9"
+}

@@ -1,0 +1,30 @@
+{
+  "task": "PHASE-10A14-R12 pre/post reconciliation",
+  "detectorProbes": 81,
+  "preFix": {
+    "unsafeMisses": 25,
+    "safeFalsePositives": 0
+  },
+  "postFix": {
+    "unsafeMisses": 0,
+    "safeFalsePositives": 0
+  },
+  "mapping1to1": true,
+  "f32DomainBoundaryPersistence": {
+    "pre": {
+      "apiEqualsHistory": false,
+      "class": "EMPTY_HISTORY"
+    },
+    "post": {
+      "apiEqualsHistory": true,
+      "persistenceStatus": "PERSISTED"
+    }
+  },
+  "liveCampaign": {
+    "probes": 20,
+    "apiUnsafe": 0,
+    "historyUnsafe": 0,
+    "apiNotEqualHistory": 0,
+    "rejectedExposed": 0
+  }
+}

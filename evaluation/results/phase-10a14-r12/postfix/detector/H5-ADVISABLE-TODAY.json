@@ -1,0 +1,13 @@
+{
+  "probeId": "H5-ADVISABLE-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "It is advisable to file today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "e00958f5879e8bb8f9ab76517fafca9f3c61ef6399d4e4767b023f9c809007ce",
+  "payloadHash": "7f8517f71c92f5e01a59ca777925ffed92ed2dcb6c76631046909df14bf3f9e3"
+}

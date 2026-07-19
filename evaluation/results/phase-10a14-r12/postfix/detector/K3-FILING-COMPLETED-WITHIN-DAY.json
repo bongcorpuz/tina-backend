@@ -1,0 +1,13 @@
+{
+  "probeId": "K3-FILING-COMPLETED-WITHIN-DAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Filing should be completed within the day.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "139775b7efad6beec2b90e3a2afb8c827b06275e765aced3239f1cd84c07e2fa",
+  "payloadHash": "1eb26cb6e6aae29f0b18c26929f96a5137a81efaa6291485efa135b04d91fba2"
+}

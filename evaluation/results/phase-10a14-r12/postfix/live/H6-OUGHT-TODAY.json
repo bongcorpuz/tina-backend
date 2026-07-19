@@ -1,0 +1,18 @@
+{
+  "probeId": "H6-OUGHT-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "question": "When must an individual file the annual income tax return?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this means that all income earned in the previous year must be reported by April 15 of the current year. Failure to file on time may result in penalties and interest on any taxes owed. It is crucial for taxpayers to maintain accurate records of their income and expenses throughout the year to ensure compliance and avoid issues with the BIR.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this means that all income earned in the previous year must be reported by April 15 of the current year. Failure to file on time may result in penalties and interest on any taxes owed. It is crucial for taxpayers to maintain accurate records of their income and expenses throughout the year to ensure compliance and avoid issues with the BIR.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiHash": "e300a9e7a13e56f5318e37240c38818d45a84ab6f2c852ba1939b8818c0ddee4",
+  "historyHash": "e300a9e7a13e56f5318e37240c38818d45a84ab6f2c852ba1939b8818c0ddee4"
+}

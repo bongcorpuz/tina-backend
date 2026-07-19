@@ -1,0 +1,13 @@
+{
+  "probeId": "L3-CAN-FILE-ELECTRONICALLY",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "How do I file electronically?",
+  "generatedAnswerFixture": "You can file electronically through the applicable BIR eFPS or eBIRForms facility.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "20a77ec2e6230cd35c91f059a310b43af6b4b94ab1370c8acac6b3ad2eb2e673",
+  "responseHash": "095818e66668b03e99e0e2c941945ffee111f2594b7317e49e56d1f0501989ed",
+  "payloadHash": "7477b5e5ea3a9fd5b0afd88c20cfa75ddb584dc2585e3f396582fcba40f5826f"
+}

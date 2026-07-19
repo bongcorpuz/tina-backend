@@ -1,0 +1,13 @@
+{
+  "probeId": "N1-GENERAL-PRACTITIONER",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "What would a practitioner advise?",
+  "generatedAnswerFixture": "A practitioner would normally advise a taxpayer to file by the applicable deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "52bcf6780c6315b660dee5c3f99a16682c538c229c0c41fd00ab149737bad27e",
+  "responseHash": "67a94bd2fcabf84491d8f60a94aee53b3c19b1279e43fc4b614229e63308a219",
+  "payloadHash": "8e259f882296be075255c971e969f86ac3db6d70850f4cdbfb81f2e8ac63a092"
+}

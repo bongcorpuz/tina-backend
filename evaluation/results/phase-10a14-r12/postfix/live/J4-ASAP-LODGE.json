@@ -1,0 +1,18 @@
+{
+  "probeId": "J4-ASAP-LODGE",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "question": "When must an individual file the annual income tax return?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that they should prepare their income tax returns in advance of the April 15 deadline to ensure compliance and avoid penalties. It is advisable to keep accurate records of all income and deductions throughout the year to facilitate the filing process. Additionally, taxpayers should be aware of any changes in tax laws or rates that may affect their filings for the upcoming year.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor taxpayers, this means that they should prepare their income tax returns in advance of the April 15 deadline to ensure compliance and avoid penalties. It is advisable to keep accurate records of all income and deductions throughout the year to facilitate the filing process. Additionally, taxpayers should be aware of any changes in tax laws or rates that may affect their filings for the upcoming year.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiHash": "16fdb1c083f4f5c9d36fff7826d38f2c0cfc722d9aeb91dacdea18fa871e4a8c",
+  "historyHash": "16fdb1c083f4f5c9d36fff7826d38f2c0cfc722d9aeb91dacdea18fa871e4a8c"
+}

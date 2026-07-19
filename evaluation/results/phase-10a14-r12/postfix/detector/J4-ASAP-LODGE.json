@@ -1,0 +1,13 @@
+{
+  "probeId": "J4-ASAP-LODGE",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "As soon as possible, lodge the return.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "5ee9f732dbf9dca22c6dbb3867eb1694ab2de8a1f0b327ea0434a37cd63c2b4c",
+  "payloadHash": "2cfae1e4ff130246789fbdd077cbb0dbc14cb10c0edf0f803318deb2cf19837e"
+}

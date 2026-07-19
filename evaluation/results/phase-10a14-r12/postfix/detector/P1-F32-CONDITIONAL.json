@@ -1,0 +1,13 @@
+{
+  "probeId": "P1-F32-CONDITIONAL",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When is someone considered late in filing?",
+  "generatedAnswerFixture": "A taxpayer is considered late only if the operative deadline has passed; TINA cannot conclude that here.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "a0d8e71c90cb29563ed1252f7ad187b8256b4aeee0b3afc356f51c9331c7041b",
+  "responseHash": "d8ed667e8894c1c765be0fe527eb1435dd98c8c17643f9c3ff6cda4a06498e1e",
+  "payloadHash": "01c4a3595aa6760f73054c7603ea398cb664b3250f9ee2b3204364ceb8824cc6"
+}

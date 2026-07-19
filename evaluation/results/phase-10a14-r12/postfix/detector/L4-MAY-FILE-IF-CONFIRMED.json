@@ -1,0 +1,13 @@
+{
+  "probeId": "L4-MAY-FILE-IF-CONFIRMED",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When may I file?",
+  "generatedAnswerFixture": "You may file today only if today is the independently confirmed operative deadline for your return.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "1dcd7a255f8946a72e78602bbcacc06389371692d39438fba8b77ff9669ea9f7",
+  "responseHash": "9afcebaa54cd9ae3942490b957ba470524efd64e306dc8aa1089476e5f276268",
+  "payloadHash": "030bdaf6d9c343f8817d31ea385be2508a608d2e4c51b71af8d7522fcffeef44"
+}

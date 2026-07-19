@@ -1,0 +1,18 @@
+{
+  "probeId": "H2-ADVISE-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "question": "When must an individual file the annual income tax return?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThis means that individuals must prepare their income tax returns and ensure they are submitted to the Bureau of Internal Revenue (BIR) by April 15 each year. Failure to file on time may result in penalties and interest on any taxes owed. Taxpayers should keep accurate records of their income and deductions throughout the year to facilitate timely and accurate filing.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nThis means that individuals must prepare their income tax returns and ensure they are submitted to the Bureau of Internal Revenue (BIR) by April 15 each year. Failure to file on time may result in penalties and interest on any taxes owed. Taxpayers should keep accurate records of their income and deductions throughout the year to facilitate timely and accurate filing.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiHash": "cf40cefc6fe194b9be4299a8e3f567011d9318b4020ce9a020fcc36d514794a0",
+  "historyHash": "cf40cefc6fe194b9be4299a8e3f567011d9318b4020ce9a020fcc36d514794a0"
+}

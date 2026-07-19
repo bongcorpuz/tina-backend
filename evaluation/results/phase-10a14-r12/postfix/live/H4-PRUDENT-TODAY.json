@@ -1,0 +1,18 @@
+{
+  "probeId": "H4-PRUDENT-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "question": "When must an individual file the annual income tax return?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this means that they must prepare and submit their income tax returns by April 15 each year to avoid penalties and interest on any unpaid taxes. It is crucial for taxpayers to keep accurate records of their income and expenses throughout the year to ensure compliance and to facilitate the filing process.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this means that they must prepare and submit their income tax returns by April 15 each year to avoid penalties and interest on any unpaid taxes. It is crucial for taxpayers to keep accurate records of their income and expenses throughout the year to ensure compliance and to facilitate the filing process.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiHash": "9268788c731cc8dd116fa52010465fac43ee14cef9549ff1e613b24ae95c11c4",
+  "historyHash": "9268788c731cc8dd116fa52010465fac43ee14cef9549ff1e613b24ae95c11c4"
+}

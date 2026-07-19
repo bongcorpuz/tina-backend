@@ -1,0 +1,13 @@
+{
+  "probeId": "I7-THIS-MORNING",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Please file this morning.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "559dd02eca07d1743e4be5544affecf717c509c2f6602831bd0af67118780daf",
+  "payloadHash": "9d200ec8239b3fe24dd72ca7225039193e344fc993aa74289bcf05413a333029"
+}

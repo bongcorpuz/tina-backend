@@ -1,0 +1,13 @@
+{
+  "probeId": "R11-C14-DUE-YESTERDAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "Was the return due yesterday?",
+  "generatedAnswerFixture": "The return was due yesterday.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "c04f625c0a14e204ae27a4155f384c074fa415ccd2efc257837c09809d1f6c6c",
+  "responseHash": "a329c7bad85afc4c11f657b9410c9e2ce3857ca88dd4d48fb3710c11d87149c1",
+  "payloadHash": "f9d1c1e01835949a85dafc2eebef6bb3ec77e8363a6964b994d07e272152c848"
+}

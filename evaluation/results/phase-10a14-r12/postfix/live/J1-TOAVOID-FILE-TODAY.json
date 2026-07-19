@@ -1,0 +1,18 @@
+{
+  "probeId": "J1-TOAVOID-FILE-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "question": "When must an individual file the annual income tax return?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this means that all income earned from January 1 to December 31 must be reported by April 15 of the following year. Failure to file on time may result in penalties and interest on any unpaid taxes, emphasizing the importance of timely compliance with tax filing requirements.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, this means that all income earned from January 1 to December 31 must be reported by April 15 of the following year. Failure to file on time may result in penalties and interest on any unpaid taxes, emphasizing the importance of timely compliance with tax filing requirements.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiHash": "f24868b7b3c0f9d83d9ac2540f0ea5174815f860a4c14bbdfcf6f1e3dd0c34b7",
+  "historyHash": "f24868b7b3c0f9d83d9ac2540f0ea5174815f860a4c14bbdfcf6f1e3dd0c34b7"
+}

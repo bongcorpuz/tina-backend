@@ -1,0 +1,13 @@
+{
+  "probeId": "R11-B9-COMPLETE-BEFORE-DAY-ENDS",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must I complete filing?",
+  "generatedAnswerFixture": "Complete the filing before the day ends.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "3ed4040e84fa4fea8f63d8599d407ded196da73b8d64cdb8be8d76f4d3748d63",
+  "responseHash": "b13410d89e24f20acbd5b5772bf0b6bb9de794e2182f1f597e5275bcb6e1dcc5",
+  "payloadHash": "4d986f4f3d85484e20caa72d9d6f63f600d2b091edac15aaa4dd13169e7bad9c"
+}
