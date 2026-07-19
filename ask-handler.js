@@ -3253,6 +3253,23 @@ export function createAskHandler({
             openAIReached:   false,
           });
 
+          // PHASE-10A14-R12 (P1-R11-IR-002 / WS8 persistence contract): a user-visible
+          // domain-boundary answer must follow the explicit persistence contract. Previously
+          // this early return omitted saveConversationTurn, so the public API answer was
+          // non-empty while conversation history was empty (apiEqualsHistory=false). We now
+          // PERSIST the boundary turn when a conversationId is present (ordinary application
+          // behavior) and declare an explicit persistenceStatus in every case.
+          const _boundaryTrust = buildResponseTrust({ domainBoundary: true }, 0, _boundaryStatus);
+          const _boundaryPersisted = Boolean(conversationId && userId);
+          if (_boundaryPersisted) {
+            await saveConversationTurn({
+              conversationId,
+              userId,
+              question: compactHookConfig.originalQuestion || _boundaryQuery || "",
+              answerText: _boundaryMsg,
+              trust: _boundaryTrust
+            });
+          }
           return res.json({
             success:                true,
             engine:                 "TINA_ASK_HANDLER",
@@ -3277,6 +3294,7 @@ export function createAskHandler({
             askHandlerVersion:      ENGINE_VERSION,
             contextOrchestrationEnabled: true,
             trust:                  buildResponseTrust({ domainBoundary: true }, 0, _boundaryStatus),
+            persistenceStatus:      _boundaryPersisted ? "PERSISTED" : "NOT_PERSISTED_NO_CONVERSATION",
           });
         }
       }
