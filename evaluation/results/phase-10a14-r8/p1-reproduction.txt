@@ -1,0 +1,45 @@
+PHASE-10A14-R8 — P1 reproduction against starting HEAD 15dae5061026afb0a566d1a59cfb6b46565aa588
+(captured BEFORE any R8 code change; section51-authority-chain.js R7 behavior)
+
+== P1-R7-IR-002 malformed txn dates bypass strict util ==
+2026-02-30 -> POST_EFFECTIVITY sufficient=true applic=["RA 12214"] current=["NIRC Sec. 51(C)","RA 12214"]
+2026/01/15 -> POST_EFFECTIVITY sufficient=true applic=["RA 12214"] current=["NIRC Sec. 51(C)","RA 12214"]
+not-a-date -> PERIOD_UNRESOLVED sufficient=false applic=["RA 12214"] current=["NIRC Sec. 51(C)","RA 12214"]
+== P1-R7-IR-003 taxableYear/legalAsOfDate substitute for missing txnDate ==
+taxableYear:2026 -> ["RA 12214"]
+legalAsOfDate:2026-01-01 -> ["RA 12214"]
+== P1-R7-IR-004 fail-closed leaks RA 12214 ==
+card(no date) chainStatus=LATER_AMENDMENT_REQUIRED applic=["RA 12214"] current=["NIRC Sec. 51(C)","RA 12214"]
+2025-07-01 window sufficient=false current=["NIRC Sec. 51(C)","RA 12214"]
+
+P1-R7-IR-001 (effectivity): R7 treated publication as unavailable and modeled an unresolved
+[2025-06-13, 2025-08-05) window; txn("2025-07-01") -> sufficient=false,
+reason=section_51c2_effectivity_date_unresolved. R8 establishes qualifying publication
+Manila Bulletin 2025-06-04 -> effectivity 2025-06-19 (no ambiguous window).
+
+------------------------------------------------------------------------------
+Post-remediation verification (R8 HEAD) — all four findings CLOSED:
+
+== IR-002 malformed fail closed ==
+"2025-02-29" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"2026-02-30" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"2025-13-01" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"2025-00-10" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"2025/06/20" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"June 20, 2025" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"not-a-date" -> INVALID_DATE suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+"" / null / undefined -> PERIOD_UNRESOLVED suff=false applic=[] cur=["NIRC Sec. 51(C)"]
+== IR-003 no substitution ==
+taxableYear:2026 -> PERIOD_UNRESOLVED applic=[]
+legalAsOfDate:2026-01-01 -> PERIOD_UNRESOLVED applic=[]
+filingEventDate:2026-01-01 -> PERIOD_UNRESOLVED applic=[]
+== IR-004 card no date fail closed ==
+card: LATER_AMENDMENT_REQUIRED temporal=PERIOD_UNRESOLVED applic=[] cur=["NIRC Sec. 51(C)"]
+== boundary (eff=2025-06-19) ==
+2025-06-18 -> PRE_EFFECTIVITY applic=[]
+2025-06-19 -> POST_EFFECTIVITY applic=["RA 12214"]
+2025-06-20 -> POST_EFFECTIVITY applic=["RA 12214"]
+2025-06-04 -> PRE_EFFECTIVITY applic=[]  (qualifying-publication day; effectivity is +15)
+2025-07-01 -> POST_EFFECTIVITY applic=["RA 12214"]  (via Section 29 general effectivity, not Section 28)
+2024-12-31 -> PRE_EFFECTIVITY applic=[]
+2026-01-01 -> POST_EFFECTIVITY applic=["RA 12214"]
