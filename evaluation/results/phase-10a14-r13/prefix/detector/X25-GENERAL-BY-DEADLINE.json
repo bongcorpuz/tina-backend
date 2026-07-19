@@ -1,0 +1,13 @@
+{
+  "probeId": "X25-GENERAL-BY-DEADLINE",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixture": "A taxpayer should file by the applicable statutory deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "ad5a54dcd4242669e5b7d6407a5da8b70f258032b6319ee28825d3383f59651b",
+  "payloadHash": "81970106b00d6af0c01e09adadec52054277de6cee96b54fb4ed2b6c7c59fb8e"
+}

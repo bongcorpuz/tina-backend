@@ -1,0 +1,13 @@
+{
+  "probeId": "X22-CF-ONLY-IF",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixture": "You may file today only if today is the independently confirmed operative deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "def2a82d4cccbc27f63ae50783c0097c6ce277c153f1e157ac1b7fd12185f633",
+  "payloadHash": "1bfef77a079ec8cd78aadc94dafb5fc3366e8277606c5cb89ed69d87058810ac"
+}

@@ -1,0 +1,18 @@
+{
+  "probeId": "PS7-timeout",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS7-timeout",
+    "conversationId": "c1",
+    "userId": "u1",
+    "timedOut": true,
+    "expectedStatus": "PERSISTENCE_TIMEOUT"
+  },
+  "conversationIdPresent": true,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "PERSISTED",
+  "expectedStatus": "PERSISTENCE_TIMEOUT",
+  "falsePersistedClaim": true,
+  "mismatchReason": "R12 reports PERSISTED despite failed/partial/timeout save",
+  "payloadHash": "104c8947f71f64fd06df68bda599cb7d3749d47b0c5a2ef84d1d159826766a40"
+}

@@ -1,0 +1,19 @@
+{
+  "probeId": "PS4-no-rows",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS4-no-rows",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": null,
+    "assistantMessageData": null,
+    "expectedStatus": "PERSISTENCE_FAILED"
+  },
+  "conversationIdPresent": true,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "PERSISTED",
+  "expectedStatus": "PERSISTENCE_FAILED",
+  "falsePersistedClaim": true,
+  "mismatchReason": "R12 reports PERSISTED despite failed/partial/timeout save",
+  "payloadHash": "b6b7a0e5ab13d6a7d790944d67f5cf2ecbfc93e54e6db6cb95fc3601a9785467"
+}

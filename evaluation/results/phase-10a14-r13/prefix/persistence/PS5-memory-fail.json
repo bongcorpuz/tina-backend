@@ -1,0 +1,24 @@
+{
+  "probeId": "PS5-memory-fail",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS5-memory-fail",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": {
+      "id": 1
+    },
+    "assistantMessageData": {
+      "id": 2
+    },
+    "memoryHookOk": false,
+    "expectedStatus": "PERSISTED"
+  },
+  "conversationIdPresent": true,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "PERSISTED",
+  "expectedStatus": "PERSISTED",
+  "falsePersistedClaim": false,
+  "mismatchReason": "",
+  "payloadHash": "d981754545cea7a28f0a325b127c283d0986cf45b4f20c9c4af4986b185b712e"
+}

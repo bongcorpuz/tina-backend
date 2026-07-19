@@ -1,0 +1,18 @@
+{
+  "probeId": "PS6-threw",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS6-threw",
+    "conversationId": "c1",
+    "userId": "u1",
+    "threw": true,
+    "expectedStatus": "PERSISTENCE_FAILED"
+  },
+  "conversationIdPresent": true,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "PERSISTED",
+  "expectedStatus": "PERSISTENCE_FAILED",
+  "falsePersistedClaim": true,
+  "mismatchReason": "R12 reports PERSISTED despite failed/partial/timeout save",
+  "payloadHash": "731e131e63af7150871e14486864c338d3cffdc37a5976c1f9c42fd90530aee4"
+}

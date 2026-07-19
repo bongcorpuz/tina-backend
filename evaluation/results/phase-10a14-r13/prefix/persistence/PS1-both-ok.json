@@ -1,0 +1,24 @@
+{
+  "probeId": "PS1-both-ok",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS1-both-ok",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": {
+      "id": 1
+    },
+    "assistantMessageData": {
+      "id": 2
+    },
+    "memoryHookOk": true,
+    "expectedStatus": "PERSISTED"
+  },
+  "conversationIdPresent": true,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "PERSISTED",
+  "expectedStatus": "PERSISTED",
+  "falsePersistedClaim": false,
+  "mismatchReason": "",
+  "payloadHash": "cc793dbe727cb5d01653527c0af54afb4c7e8f829005e78751d117da6d54769e"
+}

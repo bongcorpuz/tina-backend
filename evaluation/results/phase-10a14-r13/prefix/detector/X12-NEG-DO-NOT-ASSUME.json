@@ -1,0 +1,13 @@
+{
+  "probeId": "X12-NEG-DO-NOT-ASSUME",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixture": "Do not assume that today is the filing deadline.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": true,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "ba919692b5800d5f525d5ee7b63419ce4cc1803da21c74bd8025a6dc2faac767",
+  "payloadHash": "d36c6449d868017363c06842f7bf754f983199cb68f2a9837c3bbdd2ad11cefc"
+}

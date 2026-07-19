@@ -1,0 +1,13 @@
+{
+  "probeId": "X23-CF-EXTENSION",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixture": "I would advise filing today only if an official extension made today the operative deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "61ca9378a0a3365ae86b9a3625dfe5302c0630b2681ec12ce3ebe1d31f1f5f56",
+  "payloadHash": "0edf6a1b977b3c53e0d37ed5bd7f4e99ac80f2424505a5bbc8da3ba58bf8c32e"
+}

@@ -1,0 +1,13 @@
+{
+  "probeId": "X8-COMPLETE-BEFORE-COB",
+  "kind": "unsafe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixture": "Complete the filing before close of business.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": true,
+  "isSafeOverfire": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "d5eb6dd58ec70ad83960c15360fd67b36bf063c6bc581f074c500bcc1aef3618",
+  "payloadHash": "7be4725a882be0c9a45efcc804b293de35533dbf8a447c6afac5167310372694"
+}

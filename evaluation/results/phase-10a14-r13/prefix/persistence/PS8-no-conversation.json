@@ -1,0 +1,17 @@
+{
+  "probeId": "PS8-no-conversation",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS8-no-conversation",
+    "conversationId": null,
+    "userId": "u1",
+    "expectedStatus": "NOT_PERSISTED_NO_CONVERSATION"
+  },
+  "conversationIdPresent": false,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "NOT_PERSISTED_NO_CONVERSATION",
+  "expectedStatus": "NOT_PERSISTED_NO_CONVERSATION",
+  "falsePersistedClaim": false,
+  "mismatchReason": "",
+  "payloadHash": "384d59c9e20305283b0fedcfc9c803e441ea7fdc9aabd2c2adc2bf769e693107"
+}

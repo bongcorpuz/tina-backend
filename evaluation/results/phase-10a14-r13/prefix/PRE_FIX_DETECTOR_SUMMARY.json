@@ -1,0 +1,155 @@
+{
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "explicitMisses": 14,
+  "explicitOverfires": 3,
+  "grammarMisses": 40,
+  "grammarFalsePositives": 25,
+  "metamorphicFailures": 3,
+  "invResults": [
+    {
+      "id": "M1-punctuation",
+      "ok": true,
+      "results": [
+        {
+          "text": "Please file today.",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "Please file today!",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "### Note\nPlease file today.",
+          "expected": true,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M2-order-penalty",
+      "ok": true,
+      "results": [
+        {
+          "text": "File today to avoid penalties.",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "To avoid penalties, file today.",
+          "expected": true,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M3-relative-to-legal",
+      "ok": true,
+      "results": [
+        {
+          "text": "You should file today.",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "You should file by the applicable legal deadline.",
+          "expected": false,
+          "actual": false
+        }
+      ]
+    },
+    {
+      "id": "M4-add-negation",
+      "ok": false,
+      "results": [
+        {
+          "text": "You must file today.",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "The authority does not establish that you must file today.",
+          "expected": false,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M5-do-not-delay",
+      "ok": true,
+      "results": [
+        {
+          "text": "Do not delay; file today.",
+          "expected": true,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M6-direct-to-passive",
+      "ok": true,
+      "results": [
+        {
+          "text": "I advise you to file today.",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "Filing today is advisable.",
+          "expected": true,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M7-taglish",
+      "ok": true,
+      "results": [
+        {
+          "text": "File now.",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "text": "Mag-file ka ngayon.",
+          "expected": true,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M8-coreference",
+      "ok": true,
+      "results": [
+        {
+          "text": "Prepare the return. Submit it today.",
+          "expected": true,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M9-embedded-negation",
+      "ok": false,
+      "results": [
+        {
+          "text": "Do not assume that today is the filing deadline.",
+          "expected": false,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "id": "M10-unless-pressure",
+      "ok": false,
+      "results": [
+        {
+          "text": "Unless you file today, penalties may apply.",
+          "expected": true,
+          "actual": false
+        }
+      ]
+    }
+  ]
+}

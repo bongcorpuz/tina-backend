@@ -1,0 +1,13 @@
+{
+  "probeId": "X24-GENERAL-PRACTITIONER",
+  "kind": "safe",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixture": "A practitioner would normally advise a taxpayer to file by the applicable deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "67a94bd2fcabf84491d8f60a94aee53b3c19b1279e43fc4b614229e63308a219",
+  "payloadHash": "4861759677f17045c88f3321aeedc7734e4d317927aa814296a846d7833605af"
+}

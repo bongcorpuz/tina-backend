@@ -1,0 +1,21 @@
+{
+  "probeId": "PS2-first-fail",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "saveSimulation": {
+    "simId": "PS2-first-fail",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": null,
+    "assistantMessageData": {
+      "id": 2
+    },
+    "expectedStatus": "PARTIAL_PERSISTENCE"
+  },
+  "conversationIdPresent": true,
+  "userIdPresent": true,
+  "r12PersistenceStatus": "PERSISTED",
+  "expectedStatus": "PARTIAL_PERSISTENCE",
+  "falsePersistedClaim": true,
+  "mismatchReason": "R12 reports PERSISTED despite failed/partial/timeout save",
+  "payloadHash": "3e7958381dcf66ea47154bca7cf35461088ce7adfb45a11680fc94d6b11ec7e5"
+}
