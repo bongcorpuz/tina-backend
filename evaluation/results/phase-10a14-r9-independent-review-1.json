@@ -1,0 +1,111 @@
+﻿{
+  "task": "PHASE-10A14-R9-CALENDAR-RELATIVE-DEADLINE-FILING-RATIONALE-ALIGNMENT-AND-CANONICAL-INVENTORY-CLOSURE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "type": "independent-evidence-review",
+  "decision": "REVISIONS REQUIRED",
+  "reviewDate": "2026-07-19",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "r9Base": "ee46cb511e51c687761f83e01deb003839768422",
+  "finalR9ExecutionHead": "c9dbba52e592de5c8e20b36933e08d93dd6cffa1",
+  "r9RuntimeCommit": "0c80b121451678e8a1565d59bbfe06f36900328c",
+  "remoteSyncBeforeReviewCommit": { "ahead": 0, "behind": 0 },
+  "runtimeLock": {
+    "payloadRuntimeCommitUniform": true,
+    "payloadRuntimeCommit": "0c80b121451678e8a1565d59bbfe06f36900328c",
+    "model": "gpt-4o-mini",
+    "stagingDeploymentClass": "AUTHORIZED_NON_PRODUCTION_EVALUATION_DEPLOYMENT",
+    "productionDeploymentFound": false
+  },
+  "reconciliation": {
+    "payloads": 103,
+    "runlogLines": 103,
+    "uniqueProbeIds": 103,
+    "technicalFailures": 0,
+    "trust": {
+      "VERIFIED_CONTROLLING": 35,
+      "RELATED_AUTHORITY_ONLY": 58,
+      "NO_VERIFIED_AUTHORITY": 10
+    },
+    "affectedReruns": 94,
+    "carriedForwardE1": 21,
+    "newProbes": 9
+  },
+  "freshAll26": {
+    "q12Verified": 0,
+    "q30Verified": 0,
+    "q34Verified": 3,
+    "q34Supported": true
+  },
+  "verifiedAdjudication": {
+    "total": 35,
+    "validAccepted": 35,
+    "questionableVerified": 0,
+    "invalidVerified": 0,
+    "overVerified": 0
+  },
+  "p1Closure": {
+    "P1-E1-001": "NOT_CLOSED_PUBLIC_ANSWER_CONTRADICTION",
+    "P1-E1-002": "CLOSED_FOR_OBSERVED_Q12_LIVE_VARIANTS",
+    "P1-E1-003": "NOT_CLOSED_STRICT_LITERAL_INVENTORY"
+  },
+  "canonicalInventory": {
+    "rows": 319,
+    "uniqueOriginalProbeIds": 319,
+    "a12StructuredRows": 0,
+    "a13StructuredRows": 0,
+    "propositionClassNull": 204,
+    "expectedTrustBehaviorNull": 319,
+    "rowsWithoutFinalR9ExecutionIdOrExistingE1Payload": 178,
+    "classification": "MATERIALLY_INCOMPLETE_FOR_STRICT_PASS"
+  },
+  "findings": {
+    "P0": 0,
+    "P1": 2,
+    "P2": 1,
+    "P3": 0,
+    "items": [
+      {
+        "id": "P1-R9-IR-001",
+        "severity": "P1",
+        "summary": "Calendar-relative safety responses remain contradictory or absent; false due-today/last-day statements remain visible in public RELATED_AUTHORITY_ONLY answers.",
+        "payloads": ["SG-C-LASTDAY", "R9-LASTDAY-REPRO", "R9-DUETODAY", "SG-C-DUETODAY"]
+      },
+      {
+        "id": "P1-R9-IR-002",
+        "severity": "P1",
+        "summary": "Strict 319-probe inventory does not individually enumerate A12/A13 structured probe rows and leaves material fields null/unjustified.",
+        "payloads": []
+      },
+      {
+        "id": "P2-R9-IR-003",
+        "severity": "P2",
+        "summary": "Standalone filing-rationale regex has bounded bypass limitations, though broader answer-support probes still failed closed in this review."
+      }
+    ]
+  },
+  "persistence": { "cases": 4, "mismatches": 0, "answerTextCaveat": "artifact records trust/source consistency but does not cure visible safety-response contradiction" },
+  "runners": {
+    "regressionCycle1": "syntax 10/0; deterministic 199/0; exit 0",
+    "regressionCycle2": "syntax 10/0; deterministic 199/0; exit 0",
+    "restrictedStagingInitial": "7 suites run; 1 reachability failure preserved in phase-09r tax memo staging smoke",
+    "stagingCycle1NetworkEnabled": "staging 7/0; exit 0",
+    "stagingCycle2NetworkEnabled": "staging 7/0; exit 0"
+  },
+  "security": {
+    "secrets": 0,
+    "realTaxpayerData": 0,
+    "rawCredentials": 0,
+    "productionDeployment": 0,
+    "modelPromptChange": 0,
+    "retrievalRerankerChange": 0,
+    "corpusVectorMutation": 0,
+    "reindex": 0,
+    "directDbWrite": 0,
+    "schemaMigration": 0,
+    "frontendOrDevFactoryChange": 0,
+    "protectedPathsTouched": 0,
+    "port5173Touched": 0
+  },
+  "finalDecision": "REVISIONS REQUIRED"
+}
