@@ -1,0 +1,106 @@
+{
+  "task": "PHASE-10A14-R10-CALENDAR-RELATIVE-PUBLIC-ANSWER-REPLACEMENT-AND-PERSISTENCE-SAFETY-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "type": "independent-evidence-review",
+  "decision": "REVISIONS REQUIRED",
+  "reviewDate": "2026-07-19",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "r10Base": "a6e6a54cd6db4fea48f16cc30eb2f4c10bf8a370",
+  "finalR10ExecutionHead": "40271fc81458928c7a3911ffca2de4ef01185e97",
+  "r10RuntimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "remoteSyncBeforeReviewCommit": { "ahead": 0, "behind": 0 },
+  "commitChronology": {
+    "linearCommits": 6,
+    "commit2b": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+    "commit2bScope": "services/answer-support-validator.js one-line detector amendment"
+  },
+  "finalPayloadReconciliation": {
+    "payloads": 15,
+    "runlogLines": 15,
+    "uniqueProbeIds": 15,
+    "runtimeCommitUniform": true,
+    "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+    "technicalFailures": 0,
+    "unsafePublicAnswers": 0,
+    "unsafeHistoryAnswers": 0,
+    "apiHistoryMismatch": 0,
+    "trustMismatch": 0,
+    "rejectedOutputExposureFlags": 0,
+    "trust": {
+      "VERIFIED_CONTROLLING": 2,
+      "RELATED_AUTHORITY_ONLY": 13
+    },
+    "stages": {
+      "llm": 2,
+      "proposition-source-sufficiency": 4,
+      "calendar-relative-deadline": 9
+    }
+  },
+  "p1Closure": {
+    "P1-R9-IR-001": "CLOSED_FOR_OBSERVED_FINAL_RUNTIME_PAYLOADS",
+    "P1-R9-IR-002": "OUT_OF_SCOPE_REMAINS_OPEN_FOR_E2",
+    "P2-R9-IR-003": "CARRIED_FORWARD_BOUNDED_LIMITATION"
+  },
+  "midRunGovernance": {
+    "classification": "NOT_ADJUDICABLE",
+    "reason": "No preserved raw/intermediate R10-DUETOMORROW defect payload or equivalent immutable first-run record was found in committed evidence."
+  },
+  "detectorCompleteness": {
+    "classification": "P1_GAP",
+    "missedForms": [
+      "Please file your annual income tax return today.",
+      "File now to avoid penalties."
+    ],
+    "risk": "Missed forms do not route to calendar-relative-deadline, so public replacement would not run."
+  },
+  "tests": {
+    "focusedR10": "22/0",
+    "focusedR9": "15/0",
+    "regressionCycle1": "syntax 10/0, deterministic 200/0, exit 0",
+    "regressionCycle2": "syntax 10/0, deterministic 200/0, exit 0",
+    "stagingRestrictedAttempt": "7 run, 1 failed due staging reachability/sandbox network limitation",
+    "stagingCycle1NetworkEnabled": "7/0, exit 0",
+    "stagingCycle2NetworkEnabled": "7/0, exit 0"
+  },
+  "manifestValidation": {
+    "r10ManifestEntries": 33,
+    "r10ManifestHashMatches": 33,
+    "missing": 0,
+    "mismatch": 0
+  },
+  "securityAndScope": {
+    "productionDeploymentFound": false,
+    "modelChanged": false,
+    "promptChanged": false,
+    "retrievalOrRerankerChanged": false,
+    "corpusOrVectorMutationFound": false,
+    "sourceIngestionFound": false,
+    "frontendOrDevFactoryChange": false,
+    "protectedPathsTouched": false,
+    "port5173Touched": false,
+    "backendListenerLeftRunning": false
+  },
+  "findings": {
+    "P0": 0,
+    "P1": 2,
+    "P2": 1,
+    "items": [
+      {
+        "id": "P1-R10-IR-001",
+        "severity": "P1",
+        "summary": "Reported mid-run R10-DUETOMORROW defect is not preserved as objective raw/intermediate evidence; discover-fix-rerun chronology is not adjudicable."
+      },
+      {
+        "id": "P1-R10-IR-002",
+        "severity": "P1",
+        "summary": "Calendar-relative detector misses material unsafe filing directives such as file your annual income tax return today and file now to avoid penalties."
+      },
+      {
+        "id": "P2-R10-IR-003",
+        "severity": "P2",
+        "summary": "R10-DUETOMORROW replacement wording is safe but mis-tailored because it says today rather than tomorrow."
+      }
+    ]
+  }
+}
