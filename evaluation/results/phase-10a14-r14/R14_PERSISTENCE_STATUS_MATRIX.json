@@ -1,0 +1,189 @@
+{
+  "task": "PHASE-10A14-R14-NEGATED-NONPERFORMANCE-DIRECTIVE-COVERAGE-UNIVERSAL-PERSISTENCE-STATUS-AND-IMMUTABLE-ATTEMPT-JOURNAL-REMEDIATION-1",
+  "allowedStatuses": [
+    "PERSISTED",
+    "PARTIAL_PERSISTENCE",
+    "PERSISTENCE_FAILED",
+    "PERSISTENCE_TIMEOUT",
+    "NOT_PERSISTED_NO_CONVERSATION",
+    "NOT_PERSISTED_NO_USER",
+    "NOT_PERSISTED_BY_POLICY",
+    "NOT_ATTEMPTED_INTERNAL_ONLY"
+  ],
+  "nullRule": "Null, undefined or omitted persistenceStatus is NOT permitted for any public ask response.",
+  "internalOnlyRule": "NOT_ATTEMPTED_INTERNAL_ONLY must never be returned for an ordinary user-visible chat answer unless a documented internal-only response branch is involved.",
+  "inferenceRule": "PERSISTED may be derived ONLY from an acknowledged receipt, NEVER inferred from a later history lookup.",
+  "simulations": [
+    {
+      "simId": "PS1-both-ok",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": {
+          "id": 2
+        },
+        "memoryHookOk": true
+      },
+      "expectedStatus": "PERSISTED"
+    },
+    {
+      "simId": "PS2-user-msg-fail",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "userMessageData": null,
+        "assistantMessageData": {
+          "id": 2
+        }
+      },
+      "expectedStatus": "PARTIAL_PERSISTENCE"
+    },
+    {
+      "simId": "PS3-assistant-msg-fail",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": null
+      },
+      "expectedStatus": "PARTIAL_PERSISTENCE"
+    },
+    {
+      "simId": "PS4-no-rows",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "userMessageData": null,
+        "assistantMessageData": null
+      },
+      "expectedStatus": "PERSISTENCE_FAILED"
+    },
+    {
+      "simId": "PS5-threw",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "threw": true
+      },
+      "expectedStatus": "PERSISTENCE_FAILED"
+    },
+    {
+      "simId": "PS6-timeout",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "timedOut": true
+      },
+      "expectedStatus": "PERSISTENCE_TIMEOUT"
+    },
+    {
+      "simId": "PS7-no-conversation",
+      "input": {
+        "conversationId": null,
+        "userId": "u1"
+      },
+      "expectedStatus": "NOT_PERSISTED_NO_CONVERSATION"
+    },
+    {
+      "simId": "PS8-no-user",
+      "input": {
+        "conversationId": "c1",
+        "userId": null
+      },
+      "expectedStatus": "NOT_PERSISTED_NO_USER"
+    },
+    {
+      "simId": "PS9-memory-hook-fail-still-persisted",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": {
+          "id": 2
+        },
+        "memoryHookOk": false
+      },
+      "expectedStatus": "PERSISTED"
+    },
+    {
+      "simId": "PS10-timeout-then-late-completion",
+      "input": {
+        "conversationId": "c1",
+        "userId": "u1",
+        "timedOut": true,
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": {
+          "id": 2
+        }
+      },
+      "expectedStatus": "PERSISTENCE_TIMEOUT",
+      "note": "P2-R13-IR-004 bounded limitation: a late completion after timeout must NOT be reported as PERSISTED."
+    }
+  ],
+  "responseCategories": [
+    {
+      "categoryId": "RC1-verified-controlling",
+      "trustState": "VERIFIED_CONTROLLING",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC2-related-authority-only",
+      "trustState": "RELATED_AUTHORITY_ONLY",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC3-no-verified-authority",
+      "trustState": "NO_VERIFIED_AUTHORITY",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC4-not-applicable",
+      "trustState": "NOT_APPLICABLE",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC5-clarification",
+      "trustState": "CLARIFICATION",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC6-safe-calendar-replacement",
+      "trustState": "SAFE_REPLACEMENT",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC7-ordinary-tax-answer",
+      "trustState": "ANY",
+      "persistenceExpected": "RECEIPT_DERIVED"
+    },
+    {
+      "categoryId": "RC8-no-conversation-id",
+      "trustState": "ANY",
+      "persistenceExpected": "NOT_PERSISTED_NO_CONVERSATION"
+    },
+    {
+      "categoryId": "RC9-no-user-id",
+      "trustState": "ANY",
+      "persistenceExpected": "NOT_PERSISTED_NO_USER"
+    },
+    {
+      "categoryId": "RC10-validation-failure",
+      "trustState": "ERROR",
+      "persistenceExpected": "RECEIPT_DERIVED_OR_POLICY"
+    },
+    {
+      "categoryId": "RC11-controlled-error",
+      "trustState": "ERROR",
+      "persistenceExpected": "RECEIPT_DERIVED_OR_POLICY"
+    }
+  ]
+}

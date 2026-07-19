@@ -1,0 +1,17 @@
+{
+  "task": "PHASE-10A14-R14-NEGATED-NONPERFORMANCE-DIRECTIVE-COVERAGE-UNIVERSAL-PERSISTENCE-STATUS-AND-IMMUTABLE-ATTEMPT-JOURNAL-REMEDIATION-1",
+  "r13Runtime": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "model": "gpt-4o-mini",
+  "counts": {
+    "explicit": 38,
+    "explicitUnsafe": 23,
+    "explicitSafe": 15,
+    "matrix": 420,
+    "matrixUnsafe": 192,
+    "matrixSafe": 228,
+    "metamorphic": 10,
+    "persistenceSims": 10,
+    "responseCategories": 11
+  },
+  "frozenSpecSha256": "d99c87b1cd634cc5fec35f5a79676ed775ba9524a238cbb4c047f77792af47ea"
+}

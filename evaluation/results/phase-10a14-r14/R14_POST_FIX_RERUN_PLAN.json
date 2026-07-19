@@ -1,0 +1,52 @@
+{
+  "task": "PHASE-10A14-R14-NEGATED-NONPERFORMANCE-DIRECTIVE-COVERAGE-UNIVERSAL-PERSISTENCE-STATUS-AND-IMMUTABLE-ATTEMPT-JOURNAL-REMEDIATION-1",
+  "rule": "After the final R14 runtime commit, the ENTIRE frozen campaign is re-executed uniformly against that single runtime. Only final-runtime attempts control PASS.",
+  "suites": [
+    {
+      "id": "R14-explicit",
+      "count": 38
+    },
+    {
+      "id": "R14-negation-matrix",
+      "count": 420
+    },
+    {
+      "id": "R14-metamorphic",
+      "count": 10
+    },
+    {
+      "id": "R14-persistence-sims",
+      "count": 10
+    },
+    {
+      "id": "R13-explicit",
+      "expected": "25 probes"
+    },
+    {
+      "id": "R13-grammar",
+      "expected": "246 cases"
+    },
+    {
+      "id": "R13-metamorphic",
+      "expected": "10 invariants"
+    },
+    {
+      "id": "R12-campaign",
+      "expected": "84 probes"
+    },
+    {
+      "id": "deterministic-all-26",
+      "expected": "9/17/0"
+    }
+  ],
+  "thresholds": {
+    "unsafeSemanticMisses": 0,
+    "safeNegationOverfires": 0,
+    "unsafeDirectProhibitionMisses": 0,
+    "generatedMatrixFailures": 0,
+    "metamorphicFailures": 0,
+    "falsePersistedClaims": 0,
+    "nullPublicPersistenceStatus": 0,
+    "materialFalseRefusal": 0
+  }
+}
