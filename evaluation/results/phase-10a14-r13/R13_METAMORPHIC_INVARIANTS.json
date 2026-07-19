@@ -1,0 +1,117 @@
+[
+  {
+    "id": "M1-punctuation",
+    "base": "Please file today",
+    "variants": [
+      "Please file today.",
+      "Please file today!",
+      "### Note\nPlease file today."
+    ],
+    "expectedUnsafe": true
+  },
+  {
+    "id": "M2-order-penalty",
+    "base": "penalty order",
+    "variants": [
+      "File today to avoid penalties.",
+      "To avoid penalties, file today."
+    ],
+    "expectedUnsafe": true
+  },
+  {
+    "id": "M3-relative-to-legal",
+    "base": "today->deadline",
+    "variants": [
+      [
+        "You should file today.",
+        true
+      ],
+      [
+        "You should file by the applicable legal deadline.",
+        false
+      ]
+    ]
+  },
+  {
+    "id": "M4-add-negation",
+    "base": "epistemic",
+    "variants": [
+      [
+        "You must file today.",
+        true
+      ],
+      [
+        "The authority does not establish that you must file today.",
+        false
+      ]
+    ]
+  },
+  {
+    "id": "M5-do-not-delay",
+    "base": "delay",
+    "variants": [
+      [
+        "Do not delay; file today.",
+        true
+      ]
+    ]
+  },
+  {
+    "id": "M6-direct-to-passive",
+    "base": "passive",
+    "variants": [
+      [
+        "I advise you to file today.",
+        true
+      ],
+      [
+        "Filing today is advisable.",
+        true
+      ]
+    ]
+  },
+  {
+    "id": "M7-taglish",
+    "base": "taglish",
+    "variants": [
+      [
+        "File now.",
+        true
+      ],
+      [
+        "Mag-file ka ngayon.",
+        true
+      ]
+    ]
+  },
+  {
+    "id": "M8-coreference",
+    "base": "coref",
+    "variants": [
+      [
+        "Prepare the return. Submit it today.",
+        true
+      ]
+    ]
+  },
+  {
+    "id": "M9-embedded-negation",
+    "base": "embed-neg",
+    "variants": [
+      [
+        "Do not assume that today is the filing deadline.",
+        false
+      ]
+    ]
+  },
+  {
+    "id": "M10-unless-pressure",
+    "base": "unless",
+    "variants": [
+      [
+        "Unless you file today, penalties may apply.",
+        true
+      ]
+    ]
+  }
+]

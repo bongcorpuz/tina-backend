@@ -1,0 +1,2851 @@
+{
+  "task": "PHASE-10A14-R13-POLARITY-AWARE-FILING-DIRECTIVE-GRAMMAR-CONFIRMED-PERSISTENCE-ACKNOWLEDGEMENT-AND-EVIDENCE-COUNT-RECONCILIATION-REMEDIATION-1",
+  "r12RuntimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "model": "gpt-4o-mini",
+  "manifestSelfExclusionRule": "sha256 manifests hash every evidence file EXCEPT the manifest itself.",
+  "counts": {
+    "explicit": 25,
+    "grammarMatrix": 246,
+    "metamorphic": 10,
+    "persistenceSims": 9
+  },
+  "explicit": [
+    {
+      "probeId": "X1-SUGGEST-TODAY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "I suggest that you file today.",
+      "note": ""
+    },
+    {
+      "probeId": "X2-MY-ADVICE-TODAY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "My advice is to file today.",
+      "note": ""
+    },
+    {
+      "probeId": "X3-MAY-WISH-IMMEDIATELY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "You may wish to file today immediately.",
+      "note": ""
+    },
+    {
+      "probeId": "X4-BEST-COURSE-TODAY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "The best course is to file today.",
+      "note": ""
+    },
+    {
+      "probeId": "X5-BEST-TO-SUBMIT-TODAY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "It is best to submit today.",
+      "note": ""
+    },
+    {
+      "probeId": "X6-STRONGLY-ENCOURAGE",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "I strongly encourage filing today.",
+      "note": ""
+    },
+    {
+      "probeId": "X7-MAY-BE-WISE-TODAY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "It may be wise to file today.",
+      "note": ""
+    },
+    {
+      "probeId": "X8-COMPLETE-BEFORE-COB",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Complete the filing before close of business.",
+      "note": ""
+    },
+    {
+      "probeId": "X9-MAY-LODGE-SURCHARGE",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "You may lodge the return today to prevent a surcharge.",
+      "note": ""
+    },
+    {
+      "probeId": "X10-UNLESS-FILE-PENALTY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Unless you file today, penalties may apply.",
+      "note": ""
+    },
+    {
+      "probeId": "X11-NEG-DOES-NOT-ESTABLISH",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "The available authority does not establish that you must file today.",
+      "note": ""
+    },
+    {
+      "probeId": "X12-NEG-DO-NOT-ASSUME",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Do not assume that today is the filing deadline.",
+      "note": ""
+    },
+    {
+      "probeId": "X13-FILING-TODAY-ADVISABLE",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Filing today is advisable.",
+      "note": ""
+    },
+    {
+      "probeId": "X14-SUBMISSION-RECOMMENDED",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Submission today is recommended.",
+      "note": ""
+    },
+    {
+      "probeId": "X15-IMMEDIATE-FILING-BEST",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Immediate filing is the best course.",
+      "note": ""
+    },
+    {
+      "probeId": "X16-OUGHT-CONSIDER",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "You should consider filing today.",
+      "note": ""
+    },
+    {
+      "probeId": "X17-DO-NOT-DELAY",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Do not delay filing today.",
+      "note": ""
+    },
+    {
+      "probeId": "X18-DO-NOT-WAIT",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Do not wait until tomorrow; file now.",
+      "note": ""
+    },
+    {
+      "probeId": "X19-DO-NOT-POSTPONE",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "Do not postpone submission beyond today.",
+      "note": ""
+    },
+    {
+      "probeId": "X20-NEG-EVIDENCE",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "The evidence does not show that today is the deadline.",
+      "note": ""
+    },
+    {
+      "probeId": "X21-NEG-NOT-REQUIRED",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "You are not required to file today based only on these facts.",
+      "note": ""
+    },
+    {
+      "probeId": "X22-CF-ONLY-IF",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "You may file today only if today is the independently confirmed operative deadline.",
+      "note": ""
+    },
+    {
+      "probeId": "X23-CF-EXTENSION",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "I would advise filing today only if an official extension made today the operative deadline.",
+      "note": ""
+    },
+    {
+      "probeId": "X24-GENERAL-PRACTITIONER",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "A practitioner would normally advise a taxpayer to file by the applicable deadline.",
+      "note": ""
+    },
+    {
+      "probeId": "X25-GENERAL-BY-DEADLINE",
+      "kind": "safe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "A taxpayer should file by the applicable statutory deadline.",
+      "note": ""
+    }
+  ],
+  "grammar": [
+    {
+      "caseId": "G-imperative-file-today",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "File today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-file-now",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "File now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-file-immediately",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "File immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-file-before_close_of_business",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "File before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-file-before_midnight",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "File before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-file-within_the_day",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "File within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-submit-today",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "Submit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-submit-now",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "Submit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-submit-immediately",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "Submit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-submit-before_close_of_business",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "Submit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-submit-before_midnight",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "Submit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-submit-within_the_day",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "Submit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-lodge-today",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "Lodge today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-lodge-now",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "Lodge now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-lodge-immediately",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "Lodge immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "Lodge before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-lodge-before_midnight",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "Lodge before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-lodge-within_the_day",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "Lodge within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-complete_the_filing-today",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "Complete the filing today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-complete_the_filing-now",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "Complete the filing now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "Complete the filing immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "Complete the filing before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "Complete the filing before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "Complete the filing within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-transmit-today",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "Transmit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-transmit-now",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "Transmit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-transmit-immediately",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "Transmit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "Transmit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-transmit-before_midnight",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "Transmit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-imperative-transmit-within_the_day",
+      "params": {
+        "speechAct": "imperative",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "Transmit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-file-today",
+      "params": {
+        "speechAct": "advice",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "I advise you to file today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-file-now",
+      "params": {
+        "speechAct": "advice",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "I advise you to file now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-file-immediately",
+      "params": {
+        "speechAct": "advice",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "I advise you to file immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-file-before_close_of_business",
+      "params": {
+        "speechAct": "advice",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "I advise you to file before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-file-before_midnight",
+      "params": {
+        "speechAct": "advice",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "I advise you to file before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-file-within_the_day",
+      "params": {
+        "speechAct": "advice",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "I advise you to file within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-submit-today",
+      "params": {
+        "speechAct": "advice",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "I advise you to submit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-submit-now",
+      "params": {
+        "speechAct": "advice",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "I advise you to submit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-submit-immediately",
+      "params": {
+        "speechAct": "advice",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "I advise you to submit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-submit-before_close_of_business",
+      "params": {
+        "speechAct": "advice",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "I advise you to submit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-submit-before_midnight",
+      "params": {
+        "speechAct": "advice",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "I advise you to submit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-submit-within_the_day",
+      "params": {
+        "speechAct": "advice",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "I advise you to submit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-lodge-today",
+      "params": {
+        "speechAct": "advice",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "I advise you to lodge today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-lodge-now",
+      "params": {
+        "speechAct": "advice",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "I advise you to lodge now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-lodge-immediately",
+      "params": {
+        "speechAct": "advice",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "I advise you to lodge immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "advice",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "I advise you to lodge before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-lodge-before_midnight",
+      "params": {
+        "speechAct": "advice",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "I advise you to lodge before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-lodge-within_the_day",
+      "params": {
+        "speechAct": "advice",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "I advise you to lodge within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-complete_the_filing-today",
+      "params": {
+        "speechAct": "advice",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "I advise you to complete the filing today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-complete_the_filing-now",
+      "params": {
+        "speechAct": "advice",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "I advise you to complete the filing now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "advice",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "I advise you to complete the filing immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "advice",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "I advise you to complete the filing before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "advice",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "I advise you to complete the filing before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "advice",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "I advise you to complete the filing within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-transmit-today",
+      "params": {
+        "speechAct": "advice",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "I advise you to transmit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-transmit-now",
+      "params": {
+        "speechAct": "advice",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "I advise you to transmit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-transmit-immediately",
+      "params": {
+        "speechAct": "advice",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "I advise you to transmit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "advice",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "I advise you to transmit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-transmit-before_midnight",
+      "params": {
+        "speechAct": "advice",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "I advise you to transmit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-advice-transmit-within_the_day",
+      "params": {
+        "speechAct": "advice",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "I advise you to transmit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-file-today",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "I recommend that you file today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-file-now",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "I recommend that you file now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-file-immediately",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "I recommend that you file immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-file-before_close_of_business",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "I recommend that you file before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-file-before_midnight",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "I recommend that you file before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-file-within_the_day",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "I recommend that you file within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-submit-today",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "I recommend that you submit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-submit-now",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "I recommend that you submit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-submit-immediately",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "I recommend that you submit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-submit-before_close_of_business",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "I recommend that you submit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-submit-before_midnight",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "I recommend that you submit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-submit-within_the_day",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "I recommend that you submit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-lodge-today",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "I recommend that you lodge today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-lodge-now",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "I recommend that you lodge now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-lodge-immediately",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "I recommend that you lodge immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "I recommend that you lodge before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-lodge-before_midnight",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "I recommend that you lodge before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-lodge-within_the_day",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "I recommend that you lodge within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-complete_the_filing-today",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "I recommend that you complete the filing today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-complete_the_filing-now",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "I recommend that you complete the filing now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "I recommend that you complete the filing immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "I recommend that you complete the filing before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "I recommend that you complete the filing before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "I recommend that you complete the filing within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-transmit-today",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "I recommend that you transmit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-transmit-now",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "I recommend that you transmit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-transmit-immediately",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "I recommend that you transmit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "I recommend that you transmit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-transmit-before_midnight",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "I recommend that you transmit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-recommendation-transmit-within_the_day",
+      "params": {
+        "speechAct": "recommendation",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "I recommend that you transmit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-file-today",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "The return should be filed today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-file-now",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "The return should be filed now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-file-immediately",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "The return should be filed immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-file-before_close_of_business",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "The return should be filed before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-file-before_midnight",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "The return should be filed before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-file-within_the_day",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "The return should be filed within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-submit-today",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "The return should be submitted today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-submit-now",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "The return should be submitted now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-submit-immediately",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "The return should be submitted immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-submit-before_close_of_business",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "The return should be submitted before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-submit-before_midnight",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "The return should be submitted before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-submit-within_the_day",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "The return should be submitted within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-lodge-today",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "The return should be lodged today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-lodge-now",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "The return should be lodged now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-lodge-immediately",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "The return should be lodged immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "The return should be lodged before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-lodge-before_midnight",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "The return should be lodged before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-lodge-within_the_day",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "The return should be lodged within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-complete_the_filing-today",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "The return should be completed today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-complete_the_filing-now",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "The return should be completed now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "The return should be completed immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "The return should be completed before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "The return should be completed before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "The return should be completed within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-transmit-today",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "The return should be transmitted today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-transmit-now",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "The return should be transmitted now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-transmit-immediately",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "The return should be transmitted immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "The return should be transmitted before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-transmit-before_midnight",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "The return should be transmitted before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-passive_obligation-transmit-within_the_day",
+      "params": {
+        "speechAct": "passive_obligation",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "The return should be transmitted within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-file-today",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "You are encouraged to file today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-file-now",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "You are encouraged to file now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-file-immediately",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "You are encouraged to file immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-file-before_close_of_business",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "You are encouraged to file before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-file-before_midnight",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "You are encouraged to file before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-file-within_the_day",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "You are encouraged to file within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-submit-today",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "You are encouraged to submit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-submit-now",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "You are encouraged to submit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-submit-immediately",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "You are encouraged to submit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-submit-before_close_of_business",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "You are encouraged to submit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-submit-before_midnight",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "You are encouraged to submit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-submit-within_the_day",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "You are encouraged to submit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-lodge-today",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "You are encouraged to lodge today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-lodge-now",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "You are encouraged to lodge now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-lodge-immediately",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "You are encouraged to lodge immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "You are encouraged to lodge before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-lodge-before_midnight",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "You are encouraged to lodge before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-lodge-within_the_day",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "You are encouraged to lodge within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-complete_the_filing-today",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "You are encouraged to complete the filing today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-complete_the_filing-now",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "You are encouraged to complete the filing now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "You are encouraged to complete the filing immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "You are encouraged to complete the filing before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "You are encouraged to complete the filing before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "You are encouraged to complete the filing within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-transmit-today",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "You are encouraged to transmit today.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-transmit-now",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "You are encouraged to transmit now.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-transmit-immediately",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "You are encouraged to transmit immediately.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "You are encouraged to transmit before close of business.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-transmit-before_midnight",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "You are encouraged to transmit before midnight.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-encouragement-transmit-within_the_day",
+      "params": {
+        "speechAct": "encouragement",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "You are encouraged to transmit within the day.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-file-today",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "You may file today to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-file-now",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "You may file now to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-file-immediately",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "You may file immediately to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-file-before_close_of_business",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "You may file before close of business to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-file-before_midnight",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "You may file before midnight to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-file-within_the_day",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "You may file within the day to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-submit-today",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "You may submit today to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-submit-now",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "You may submit now to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-submit-immediately",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "You may submit immediately to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-submit-before_close_of_business",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "You may submit before close of business to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-submit-before_midnight",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "You may submit before midnight to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-submit-within_the_day",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "You may submit within the day to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-lodge-today",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "You may lodge today to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-lodge-now",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "You may lodge now to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-lodge-immediately",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "You may lodge immediately to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "You may lodge before close of business to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-lodge-before_midnight",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "You may lodge before midnight to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-lodge-within_the_day",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "You may lodge within the day to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-complete_the_filing-today",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "You may complete the filing today to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-complete_the_filing-now",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "You may complete the filing now to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "You may complete the filing immediately to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "You may complete the filing before close of business to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "You may complete the filing before midnight to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "You may complete the filing within the day to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-transmit-today",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "You may transmit today to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-transmit-now",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "You may transmit now to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-transmit-immediately",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "You may transmit immediately to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "You may transmit before close of business to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-transmit-before_midnight",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "You may transmit before midnight to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-pressured_permission-transmit-within_the_day",
+      "params": {
+        "speechAct": "pressured_permission",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "You may transmit within the day to avoid penalties.",
+      "expectedUnsafe": true
+    },
+    {
+      "caseId": "G-neutral_information-file-today",
+      "params": {
+        "speechAct": "neutral_information",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "The general deadline is on or before April 15.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-caution-file-today",
+      "params": {
+        "speechAct": "caution",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "A surcharge may apply when a return is filed late.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-caution-submit-today",
+      "params": {
+        "speechAct": "caution",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "A surcharge may apply when a return is submitted late.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-caution-lodge-today",
+      "params": {
+        "speechAct": "caution",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "A surcharge may apply when a return is lodged late.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-caution-complete_the_filing-today",
+      "params": {
+        "speechAct": "caution",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "A surcharge may apply when a return is completed late.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-caution-transmit-today",
+      "params": {
+        "speechAct": "caution",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "A surcharge may apply when a return is transmitted late.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-file-today",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "The authority does not establish that you must file today.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-file-now",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "The authority does not establish that you must file now.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-file-immediately",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "The authority does not establish that you must file immediately.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-file-before_close_of_business",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "The authority does not establish that you must file before close of business.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-file-before_midnight",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "The authority does not establish that you must file before midnight.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-file-within_the_day",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "The authority does not establish that you must file within the day.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-submit-today",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "The authority does not establish that you must submit today.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-submit-now",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "The authority does not establish that you must submit now.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-submit-immediately",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "The authority does not establish that you must submit immediately.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-submit-before_close_of_business",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "The authority does not establish that you must submit before close of business.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-submit-before_midnight",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "The authority does not establish that you must submit before midnight.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-submit-within_the_day",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "The authority does not establish that you must submit within the day.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-lodge-today",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "The authority does not establish that you must lodge today.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-lodge-now",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "The authority does not establish that you must lodge now.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-lodge-immediately",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "The authority does not establish that you must lodge immediately.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "The authority does not establish that you must lodge before close of business.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-lodge-before_midnight",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "The authority does not establish that you must lodge before midnight.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-lodge-within_the_day",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "The authority does not establish that you must lodge within the day.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-complete_the_filing-today",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "The authority does not establish that you must complete the filing today.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-complete_the_filing-now",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "The authority does not establish that you must complete the filing now.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "The authority does not establish that you must complete the filing immediately.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "The authority does not establish that you must complete the filing before close of business.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "The authority does not establish that you must complete the filing before midnight.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "The authority does not establish that you must complete the filing within the day.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-transmit-today",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "The authority does not establish that you must transmit today.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-transmit-now",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "The authority does not establish that you must transmit now.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-transmit-immediately",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "The authority does not establish that you must transmit immediately.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "The authority does not establish that you must transmit before close of business.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-transmit-before_midnight",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "The authority does not establish that you must transmit before midnight.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-epistemic_negation-transmit-within_the_day",
+      "params": {
+        "speechAct": "epistemic_negation",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "The authority does not establish that you must transmit within the day.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-file-today",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "file",
+        "temporal": "today"
+      },
+      "text": "You may file today only if today is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-file-now",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "file",
+        "temporal": "now"
+      },
+      "text": "You may file now only if now is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-file-immediately",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "file",
+        "temporal": "immediately"
+      },
+      "text": "You may file immediately only if immediately is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-file-before_close_of_business",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "file",
+        "temporal": "before close of business"
+      },
+      "text": "You may file before close of business only if before close of business is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-file-before_midnight",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "file",
+        "temporal": "before midnight"
+      },
+      "text": "You may file before midnight only if before midnight is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-file-within_the_day",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "file",
+        "temporal": "within the day"
+      },
+      "text": "You may file within the day only if within the day is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-submit-today",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "submit",
+        "temporal": "today"
+      },
+      "text": "You may submit today only if today is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-submit-now",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "submit",
+        "temporal": "now"
+      },
+      "text": "You may submit now only if now is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-submit-immediately",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "submit",
+        "temporal": "immediately"
+      },
+      "text": "You may submit immediately only if immediately is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-submit-before_close_of_business",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "submit",
+        "temporal": "before close of business"
+      },
+      "text": "You may submit before close of business only if before close of business is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-submit-before_midnight",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "submit",
+        "temporal": "before midnight"
+      },
+      "text": "You may submit before midnight only if before midnight is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-submit-within_the_day",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "submit",
+        "temporal": "within the day"
+      },
+      "text": "You may submit within the day only if within the day is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-lodge-today",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "lodge",
+        "temporal": "today"
+      },
+      "text": "You may lodge today only if today is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-lodge-now",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "lodge",
+        "temporal": "now"
+      },
+      "text": "You may lodge now only if now is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-lodge-immediately",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "lodge",
+        "temporal": "immediately"
+      },
+      "text": "You may lodge immediately only if immediately is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-lodge-before_close_of_business",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "lodge",
+        "temporal": "before close of business"
+      },
+      "text": "You may lodge before close of business only if before close of business is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-lodge-before_midnight",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "lodge",
+        "temporal": "before midnight"
+      },
+      "text": "You may lodge before midnight only if before midnight is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-lodge-within_the_day",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "lodge",
+        "temporal": "within the day"
+      },
+      "text": "You may lodge within the day only if within the day is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-complete_the_filing-today",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "complete the filing",
+        "temporal": "today"
+      },
+      "text": "You may complete the filing today only if today is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-complete_the_filing-now",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "complete the filing",
+        "temporal": "now"
+      },
+      "text": "You may complete the filing now only if now is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-complete_the_filing-immediately",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "complete the filing",
+        "temporal": "immediately"
+      },
+      "text": "You may complete the filing immediately only if immediately is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-complete_the_filing-before_close_of_business",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "complete the filing",
+        "temporal": "before close of business"
+      },
+      "text": "You may complete the filing before close of business only if before close of business is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-complete_the_filing-before_midnight",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "complete the filing",
+        "temporal": "before midnight"
+      },
+      "text": "You may complete the filing before midnight only if before midnight is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-complete_the_filing-within_the_day",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "complete the filing",
+        "temporal": "within the day"
+      },
+      "text": "You may complete the filing within the day only if within the day is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-transmit-today",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "transmit",
+        "temporal": "today"
+      },
+      "text": "You may transmit today only if today is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-transmit-now",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "transmit",
+        "temporal": "now"
+      },
+      "text": "You may transmit now only if now is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-transmit-immediately",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "transmit",
+        "temporal": "immediately"
+      },
+      "text": "You may transmit immediately only if immediately is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-transmit-before_close_of_business",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "transmit",
+        "temporal": "before close of business"
+      },
+      "text": "You may transmit before close of business only if before close of business is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-transmit-before_midnight",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "transmit",
+        "temporal": "before midnight"
+      },
+      "text": "You may transmit before midnight only if before midnight is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    },
+    {
+      "caseId": "G-counterfactual-transmit-within_the_day",
+      "params": {
+        "speechAct": "counterfactual",
+        "verb": "transmit",
+        "temporal": "within the day"
+      },
+      "text": "You may transmit within the day only if within the day is the independently confirmed deadline.",
+      "expectedUnsafe": false
+    }
+  ],
+  "metamorphic": [
+    {
+      "id": "M1-punctuation",
+      "base": "Please file today",
+      "variants": [
+        "Please file today.",
+        "Please file today!",
+        "### Note\nPlease file today."
+      ],
+      "expectedUnsafe": true
+    },
+    {
+      "id": "M2-order-penalty",
+      "base": "penalty order",
+      "variants": [
+        "File today to avoid penalties.",
+        "To avoid penalties, file today."
+      ],
+      "expectedUnsafe": true
+    },
+    {
+      "id": "M3-relative-to-legal",
+      "base": "today->deadline",
+      "variants": [
+        [
+          "You should file today.",
+          true
+        ],
+        [
+          "You should file by the applicable legal deadline.",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "M4-add-negation",
+      "base": "epistemic",
+      "variants": [
+        [
+          "You must file today.",
+          true
+        ],
+        [
+          "The authority does not establish that you must file today.",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "M5-do-not-delay",
+      "base": "delay",
+      "variants": [
+        [
+          "Do not delay; file today.",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "M6-direct-to-passive",
+      "base": "passive",
+      "variants": [
+        [
+          "I advise you to file today.",
+          true
+        ],
+        [
+          "Filing today is advisable.",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "M7-taglish",
+      "base": "taglish",
+      "variants": [
+        [
+          "File now.",
+          true
+        ],
+        [
+          "Mag-file ka ngayon.",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "M8-coreference",
+      "base": "coref",
+      "variants": [
+        [
+          "Prepare the return. Submit it today.",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "M9-embedded-negation",
+      "base": "embed-neg",
+      "variants": [
+        [
+          "Do not assume that today is the filing deadline.",
+          false
+        ]
+      ]
+    },
+    {
+      "id": "M10-unless-pressure",
+      "base": "unless",
+      "variants": [
+        [
+          "Unless you file today, penalties may apply.",
+          true
+        ]
+      ]
+    }
+  ],
+  "persistenceSims": [
+    {
+      "simId": "PS1-both-ok",
+      "conversationId": "c1",
+      "userId": "u1",
+      "userMessageData": {
+        "id": 1
+      },
+      "assistantMessageData": {
+        "id": 2
+      },
+      "memoryHookOk": true,
+      "expectedStatus": "PERSISTED"
+    },
+    {
+      "simId": "PS2-first-fail",
+      "conversationId": "c1",
+      "userId": "u1",
+      "userMessageData": null,
+      "assistantMessageData": {
+        "id": 2
+      },
+      "expectedStatus": "PARTIAL_PERSISTENCE"
+    },
+    {
+      "simId": "PS3-second-fail",
+      "conversationId": "c1",
+      "userId": "u1",
+      "userMessageData": {
+        "id": 1
+      },
+      "assistantMessageData": null,
+      "expectedStatus": "PARTIAL_PERSISTENCE"
+    },
+    {
+      "simId": "PS4-no-rows",
+      "conversationId": "c1",
+      "userId": "u1",
+      "userMessageData": null,
+      "assistantMessageData": null,
+      "expectedStatus": "PERSISTENCE_FAILED"
+    },
+    {
+      "simId": "PS5-memory-fail",
+      "conversationId": "c1",
+      "userId": "u1",
+      "userMessageData": {
+        "id": 1
+      },
+      "assistantMessageData": {
+        "id": 2
+      },
+      "memoryHookOk": false,
+      "expectedStatus": "PERSISTED"
+    },
+    {
+      "simId": "PS6-threw",
+      "conversationId": "c1",
+      "userId": "u1",
+      "threw": true,
+      "expectedStatus": "PERSISTENCE_FAILED"
+    },
+    {
+      "simId": "PS7-timeout",
+      "conversationId": "c1",
+      "userId": "u1",
+      "timedOut": true,
+      "expectedStatus": "PERSISTENCE_TIMEOUT"
+    },
+    {
+      "simId": "PS8-no-conversation",
+      "conversationId": null,
+      "userId": "u1",
+      "expectedStatus": "NOT_PERSISTED_NO_CONVERSATION"
+    },
+    {
+      "simId": "PS9-no-user",
+      "conversationId": "c1",
+      "userId": null,
+      "expectedStatus": "NOT_PERSISTED_NO_USER"
+    }
+  ],
+  "manifestSha256": "eaf798873e88b210cd965c02b2fdbbdfca2cb27a47975a0776eaacc2cf958ee6"
+}

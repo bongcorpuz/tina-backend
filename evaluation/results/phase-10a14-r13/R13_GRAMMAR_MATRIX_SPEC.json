@@ -1,0 +1,30 @@
+{
+  "speechActs": [
+    "imperative",
+    "advice",
+    "recommendation",
+    "passive_obligation",
+    "encouragement",
+    "pressured_permission",
+    "neutral_information",
+    "caution",
+    "epistemic_negation",
+    "counterfactual"
+  ],
+  "verbs": [
+    "file",
+    "submit",
+    "lodge",
+    "complete the filing",
+    "transmit"
+  ],
+  "temporals": [
+    "today",
+    "now",
+    "immediately",
+    "before close of business",
+    "before midnight",
+    "within the day"
+  ],
+  "generatedCases": 246
+}

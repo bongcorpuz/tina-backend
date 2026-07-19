@@ -1,0 +1,29 @@
+{
+  "detectorFields": [
+    "probeId",
+    "exactQuestion",
+    "answerFixture",
+    "clauseFrames",
+    "expectedClassification",
+    "detectorResult",
+    "answerSupportStage",
+    "runtimeCommit",
+    "requestHash",
+    "responseHash",
+    "payloadHash",
+    "timestamp"
+  ],
+  "persistenceFields": [
+    "probeId",
+    "saveSimulation",
+    "conversationIdPresent",
+    "userIdPresent",
+    "saveAttempted",
+    "saveAcknowledged",
+    "saveResult",
+    "persistenceStatus",
+    "expectedStatus",
+    "mismatchReason",
+    "payloadHash"
+  ]
+}
