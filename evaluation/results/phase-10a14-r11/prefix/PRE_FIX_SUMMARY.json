@@ -1,0 +1,7 @@
+{
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "totalProbes": 38,
+  "unsafeDetected": 12,
+  "unsafeMissed": 18,
+  "safeFalsePositives": 1
+}

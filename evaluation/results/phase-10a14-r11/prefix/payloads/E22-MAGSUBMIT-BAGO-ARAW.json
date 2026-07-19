@@ -1,0 +1,18 @@
+{
+  "probeId": "E22-MAGSUBMIT-BAGO-ARAW",
+  "category": "E",
+  "kind": "unsafe",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "exactQuestion": "Kailan ang huling oras?",
+  "injectedOrGeneratedAnswer": "Mag-submit ka bago matapos ang araw.",
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "verifiedEligible": false,
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "ee0cf15f5925fd80d4abfd8976d85adccf9c6bb8ab6a6cc9420d6de953865280",
+  "responseHash": "1ca0404fad6080642e9082fbdadf5edd7d366e3ea60654ce7418434b0b36cf6b",
+  "timestamp": "2026-07-19T09:32:08.501Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "3a7da5a6e96d6bc74433f8e4e3ed61c87608ece54a3d7d10e26b1686e7107696"
+}

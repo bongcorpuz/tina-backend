@@ -1,0 +1,18 @@
+{
+  "probeId": "F26-SAFE-HYPOTHETICAL",
+  "category": "F",
+  "kind": "safe",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "exactQuestion": "When would a taxpayer be late?",
+  "injectedOrGeneratedAnswer": "A taxpayer would be late if the operative filing deadline for that taxable year had already passed.",
+  "detectorResult": "MISS",
+  "answerSupportStage": "proposition-source-sufficiency",
+  "verifiedEligible": false,
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "5ccc6df5c5a985e1852e779d59b456adf2a1c4fe3c8c5e0a9df1d9edeba7eaef",
+  "responseHash": "fc183bad7deeda1d455dfb659b1bb962d1cf4705c897896f19235362f74e3c09",
+  "timestamp": "2026-07-19T09:32:08.506Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "839a800ac39b5de21c366dbf6d11311ed70ec3cae8967c95ab7536192e3f90c8"
+}

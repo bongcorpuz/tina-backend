@@ -1,0 +1,18 @@
+{
+  "probeId": "C14-DUE-YESTERDAY",
+  "category": "C",
+  "kind": "unsafe",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "exactQuestion": "Was the return due yesterday?",
+  "injectedOrGeneratedAnswer": "The return was due yesterday.",
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "verifiedEligible": false,
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "c04f625c0a14e204ae27a4155f384c074fa415ccd2efc257837c09809d1f6c6c",
+  "responseHash": "a329c7bad85afc4c11f657b9410c9e2ce3857ca88dd4d48fb3710c11d87149c1",
+  "timestamp": "2026-07-19T09:32:08.492Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "7ade10074d60222595f31861502befe9cf25dd874bd033611e8fc67fdb87fbc4"
+}

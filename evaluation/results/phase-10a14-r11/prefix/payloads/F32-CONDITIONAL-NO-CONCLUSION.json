@@ -1,0 +1,18 @@
+{
+  "probeId": "F32-CONDITIONAL-NO-CONCLUSION",
+  "category": "F",
+  "kind": "safe",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "exactQuestion": "When is someone considered late?",
+  "injectedOrGeneratedAnswer": "A taxpayer is considered late only if the operative deadline has passed for the applicable taxable year; TINA cannot conclude that here without those facts.",
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "verifiedEligible": false,
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": true,
+  "requestHash": "d769c405f1fdbe75bd7be2234f883bfda93c8c64fa241bb14ed0e79f2ccf17a8",
+  "responseHash": "4bb7d284717b6c53eaae459aae2c4aab408e21837ba1092cadea5a7ccc425afa",
+  "timestamp": "2026-07-19T09:32:08.513Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "8ef50c5a85772b37439a0a4936a567cb3d8953ebceadccb0e0628aa7ee598c01"
+}
