@@ -1195,8 +1195,41 @@ export function detectOutcomePredictionRequest(question) {
 // contract, and the general April-15 rule does NOT prove an arbitrary request date is the
 // last filing day. A plain, non-relative statutory deadline statement ("the deadline is
 // April 15") is unaffected and remains reachable.
-const CALENDAR_RELATIVE_ASSERTION_RE = /\b(today is (?:the )?last day|last day to file (?:is |will be )?(?:today|now)|(?:it is|it['’]s|you are) (?:the )?last day to file|due today|due tomorrow|due yesterday|already late|(?:you are|you're) still on time|can still file today|filing (?:closes|ends|is due) today|deadline (?:has )?(?:already )?passed|too late to file)\b/i;
+const CALENDAR_RELATIVE_ASSERTION_RE = /\b(today is (?:the )?last day|last day to file (?:is |will be )?(?:today|now)|(?:it is|it['’]s|you are) (?:the )?last day to file|due today|due tomorrow|due yesterday|already late|(?:you are|you're) still on time|(?:you )?can still file today|filing (?:closes|ends|is due) today|deadline (?:has )?(?:already )?passed|too late to file|last chance to file today|today is (?:the )?(?:filing )?deadline|today is april\s*15|(?:file|submit) (?:it |your return |the return )?(?:today|by the end of (?:the day|today))|submit (?:it |your return |the return )?today|(?:required to |should |must )?(?:file|submit)[^.\n]{0,40}\bby the end of (?:the day|today)\b|ngayon ang (?:huling araw|deadline)|ngayong araw ang (?:huling araw|deadline)|mag-?file (?:ka )?ngayong araw|due ngayon|huli ka na|may oras ka pa)\b/i;
 const CALENDAR_RELATIVE_QUESTION_RE = /\b(today|tonight|tomorrow|yesterday|this day|right now|as of today|due today|due tomorrow|already late|still on time|time (?:remaining|left)|last day)\b/i;
+
+// PHASE-10A14-R10 (P1-R9-IR-001 / WS3 / WS7): dedicated deterministic replacement answer for
+// a calendar-relative filing-deadline conclusion that failed temporal sufficiency. Replaces
+// the unsafe model answer entirely. States the general April-15 rule ONLY when a compatible
+// filing-deadline authority (NIRC Sec. 51 / 51-A) is present in the displayed sources; otherwise
+// it omits the statutory statement and asks for the missing filing details. Contains no unsafe
+// present-day directive and no internal validator terminology.
+const FILING_DEADLINE_AUTHORITY_RE = /\bsection\s*0*5(?:1(?:\s*-?\s*a)?|2)\b|\b51-?a\b|\bnirc\s*sec\.?\s*0*51\b/i;
+export function buildCalendarRelativeSafeAnswer(sources = []) {
+  const labels = (Array.isArray(sources) ? sources : [])
+    .map((s) => (s && (s.displayLabel || s.label || s.citation || s.title || s.normalizedReference)) || "")
+    .join(" | ");
+  const hasDeadlineAuthority = FILING_DEADLINE_AUTHORITY_RE.test(labels);
+  if (hasDeadlineAuthority) {
+    return [
+      "### Short Answer",
+      "Based on the information provided, TINA cannot confirm that today is the operative filing deadline for your return.",
+      "",
+      "### What the general rule says",
+      "The general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.",
+      "",
+      "### What TINA needs to confirm your deadline",
+      "Please confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined."
+    ].join("\n");
+  }
+  return [
+    "### Short Answer",
+    "Based on the information provided, TINA cannot confirm the operative filing deadline for your return, and cannot confirm that today is that deadline.",
+    "",
+    "### What TINA needs",
+    "Please confirm your taxable year, the return type, and any applicable BIR deadline or extension notice so the exact deadline can be determined."
+  ].join("\n");
+}
 
 /**
  * Detects an affirmed calendar-relative filing-deadline conclusion. Pure.
@@ -1279,6 +1312,18 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
   if (exemptionOmission.contradiction) {
     return { verifiedEligible: false, schemaValid: false, stage: "material-exception-omission", gates: { structural: true, materialExceptionsCovered: false }, reason: exemptionOmission.reason };
   }
+  // PHASE-10A14-R9/R10 (P1-E1-001 / P1-R9-IR-001): an affirmed calendar-relative filing-
+  // deadline conclusion cannot verify (temporal sufficiency not establishable). Evaluated
+  // EARLY — before proposition-source-sufficiency — so ANY affirmed today/last-day/due-today
+  // conclusion resolves to the calendar-relative-deadline stage (R10: the "due today"
+  // variants previously returned proposition-source-sufficiency first and were never routed
+  // to the public-answer replacement). Deterministic; non-overridable by the model validator.
+  const calendarRelative = evaluateCalendarRelativeDeadline({ question, answer });
+  if (calendarRelative.applicable && !calendarRelative.sufficient) {
+    return { verifiedEligible: false, schemaValid: false, stage: "calendar-relative-deadline",
+      gates: { structural: true, calendarRelativeResolved: false }, reason: calendarRelative.reason,
+      calendarRelative: calendarRelative.diagnostics };
+  }
   // PHASE-10A12-R3: Q5 source-sufficiency gate. An incentive treatment
   // (exemption / zero-rating) granted on generic VAT authority alone, without a
   // specific incentive authority (RA 12066 / CREATE MORE / equivalent), fails
@@ -1322,14 +1367,6 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
       propositionSufficiency: propositionSufficiency.diagnostics,
       reason: propositionSufficiency.reason
     };
-  }
-  // PHASE-10A14-R9 (P1-E1-001): affirmed calendar-relative filing-deadline conclusion
-  // cannot verify (temporal sufficiency not established). Deterministic; non-overridable.
-  const calendarRelative = evaluateCalendarRelativeDeadline({ question, answer });
-  if (calendarRelative.applicable && !calendarRelative.sufficient) {
-    return { verifiedEligible: false, schemaValid: false, stage: "calendar-relative-deadline",
-      gates: { structural: true, calendarRelativeResolved: false }, reason: calendarRelative.reason,
-      calendarRelative: calendarRelative.diagnostics };
   }
   // PHASE-10A14-R9 (P1-E1-002): filing conclusion whose decisive rationale is a rate/
   // threshold rule (Sec 24) rather than a filing rule fails closed even if a Section 51
