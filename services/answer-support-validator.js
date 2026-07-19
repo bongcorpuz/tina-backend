@@ -1205,33 +1205,38 @@ export function detectOutcomePredictionRequest(question) {
 // (directive force / recommendation-advice / sentence-initial or post-comma imperative /
 // Tagalog filing verb / penalty pressure / affirmative present-day assertion), and NOT a
 // genuine counterfactual / hypothetical / historical / negated statement (scope-sensitive).
-const CR_FILING_ACTION_RE = /\b(file|filing|files|filed|submit|submitted|submitting|lodge|lodged|send|sent|transmit|accomplish|complete the filing|mag-?file|i-?file|isumite|mag-?submit)\b/i;
+// PHASE-10A14-R13 (P1-R12-IR-001/002): bounded, polarity-aware clause-FRAME classifier.
+// Each clause is decomposed into an inspectable frame (action / temporal / speech-act /
+// polarity+negation-scope / pressure / conditional scope) and the unsafe decision is derived
+// from the frame, not from one growing regex. Safe epistemic/legal NEGATION of the filing
+// conclusion/deadline/recommendation suppresses; negation of DELAY/POSTPONEMENT does not.
+const CR_FILING_ACTION_RE = /\b(file|filing|files|filed|submit|submitted|submitting|submission|lodge|lodged|send|sent|transmit|transmitted|transmitting|accomplish|accomplished|complete the filing|(?:return|filing|submission|it) (?:must|should|shall|has to|is to|needs to) be completed|mag-?file|i-?file|isumite|mag-?submit)\b/i;
 const CR_DIRECTIVE_FORCE_RE = /\b(please|kindly|should|shall|must|need to|needs to|have to|has to|go ahead and|make sure (?:to|you)|ensure (?:you|that you|to))\b/i;
-// Recommendation / advice / obligation aimed at the user (not general/counterfactual).
-const CR_RECOMMEND_RE = /\b(i (?:would )?recommend|my recommendation is|i (?:would )?advise (?:you )?|(?:it (?:is|would be) )?advisable|(?:it (?:is|would be) )?prudent|the prudent course|you ought to|you are (?:encouraged|urged|advised) to|you would need to|you would have to|better (?:to )?file|better file)\b/i;
-const CR_REL_TODAY_RE = /\b(today|tonight|right now|now|immediately|right away|promptly|at once|without delay|as soon as possible|asap|before midnight|within the day|by (?:the )?end of (?:the )?(?:day|today)|before (?:the )?(?:day|today) ends|before the end of (?:the )?day|by close of business|this morning|this afternoon|this (?:very )?day|ngayon|ngayong araw|agad|kaagad|bago matapos ang araw|bago maghatinggabi|sa loob ng araw)\b/i;
+// Recommendation / advice / encouragement families (WS4), incl. nominalized/passive forms.
+const CR_RECOMMEND_RE = /\b(i (?:would |strongly )?(?:recommend|suggest|advise|encourage|urge)|my (?:advice|recommendation|suggestion) is|(?:it (?:is|would be|may be) )?(?:advisable|preferable|best|wise|prudent|sensible|recommended)\b|the (?:best|prudent|appropriate|sensible|safest|recommended) course|best to (?:file|submit|lodge|complete|transmit)|you (?:may|might) wish to|you should consider|you ought to|you are (?:encouraged|urged|advised) to|you would (?:need|have) to|i (?:believe|think) you (?:need|should)|(?:filing|submission|lodging|completing the filing)[^.\n]{0,20}(?:is|are)[^.\n]{0,20}(?:advisable|recommended|the best course|preferable|best)|(?:is|are) (?:recommended|advisable) for filing|better (?:to )?file|better file)\b/i;
+const CR_REL_TODAY_RE = /\b(today|tonight|right now|now|immediately|promptly|at once|without delay|right away|as soon as (?:possible|practicable)|asap|before midnight|before the office closes|before (?:the )?close of business|before the end of business hours|by close of business|within the day|within business hours|this morning|this afternoon|this (?:very )?day|by (?:the )?end of (?:the )?(?:day|today)|before (?:the )?(?:day|today) ends|before the end of (?:the )?day|do so now|complete it immediately|do not wait|cannot wait until tomorrow|ngayon|ngayong araw|agad|kaagad|bago maghatinggabi|bago matapos ang araw|bago magsara ang opisina|sa loob ng araw)\b/i;
 const CR_REL_TOMORROW_RE = /\b(tomorrow|bukas)\b/i;
 const CR_REL_YESTERDAY_RE = /\b(yesterday|kahapon)\b/i;
-// Affirmative present-day deadline ASSERTIONS (no filing action required).
 const CR_AFFIRM_ASSERTION_RE = /\b(today is (?:the )?last day|last day to file (?:is |will be )?(?:today|now)|(?:it is|it['’]s|you are) (?:the )?last day to file|due today|due tomorrow|due yesterday|was due (?:today|tomorrow|yesterday)|already late|(?:you are|you're) still on time|(?:you )?can still file today|filing (?:closes|ends|is due) today|last chance to file today|today is (?:the )?(?:filing )?deadline|today is april\s*15|ngayon ang (?:huling araw|deadline)|ngayong araw ang (?:huling araw|deadline)|due ngayon|huli ka na|may oras ka pa)\b/i;
 const CR_PASSED_ASSERTION_RE = /\b(?:the )?(?:filing )?deadline (?:has|had) (?:already )?passed\b/i;
-// Penalty / deadline pressure coupling.
-const CR_PENALTY_PRESSURE_RE = /\bto avoid (?:penalt\w*|surcharg\w*|interest)|so penalties will not|to prevent penalt\w*|para maiwasan ang penalty|avoid surcharg\w*/i;
-// Tagalog imperative filing verbs beyond mag-file/i-file/isumite/mag-submit.
+// Penalty/deadline pressure (positive + inverted + "unless ... file ... penalt").
+const CR_PENALTY_PRESSURE_RE = /\bto avoid (?:penalt\w*|surcharg\w*|interest)|avoid penalt\w* by filing|so penalties will not|to prevent (?:penalt\w*|a surcharg\w*)|(?:or|otherwise) (?:penalt\w*|a surcharg\w*)|will (?:prevent|avoid) (?:penalt\w*|surcharg\w*)|para (?:iwas|maiwasan)\w* penalty|avoid surcharg\w*|unless you (?:file|submit|lodge)[^.\n]{0,30}(?:penalt|surcharg)|if you do not (?:file|submit)[^.\n]{0,30}(?:penalt|surcharg)/i;
 const CR_TAGALOG_IMPERATIVE_RE = /\b(tapusin|kumpletuhin|ihain|ipasa)\b/i;
-// SCOPE-SENSITIVE suppression: only genuine counterfactual / hypothetical / historical / negated
-// / general-advisory statements suppress. A bare indicative "if"/"would"/"can" does NOT suppress.
-const CR_COUNTERFACTUAL_RE = /\b(only if|unless|had the|had already|would have been|were the|provided that|would (?:normally|typically|generally|usually)|a practitioner would|practitioners would|cannot (?:confirm|conclude|determine)|if an (?:official )?extension|if today is (?:the )?(?:independently )?confirmed|made today the operative|if .{0,40}\bmade\b.{0,20}operative deadline|may apply when|when a return is (?:filed|due))\b/i;
-// Imperative filing directive: sentence-initial OR after . ; : - , OR after please/kindly/go ahead.
+// Genuine counterfactual / hypothetical / historical / general-advisory scope (WS8). NOTE: bare
+// "unless"/"if"/"would"/"may" do NOT suppress; only these scoped forms do.
+const CR_COUNTERFACTUAL_RE = /\b(only if|had the|had already|would have been|were the|provided that|would (?:normally|typically|generally|usually)|a practitioner would|practitioners would|an adviser might|if an (?:official )?extension|if today (?:is|were) (?:the )?(?:independently )?confirmed|independently confirmed as the operative|made today the (?:legal |operative )|if .{0,40}\bmade\b.{0,25}(?:operative|legal) deadline|may apply when|when a return is (?:filed|due))\b/i;
 const CR_IMPERATIVE_FILING_RE = /(^|[.\n;:,\-]\s*|please\s+|kindly\s+|go ahead and\s+)\s*(file|submit|lodge|send|transmit|complete the filing|accomplish|mag-?file|i-?file|isumite|mag-?submit)\b/i;
-// Passive obligation: "the return must/should be filed/submitted".
-const CR_PASSIVE_OBLIGATION_RE = /\b(?:the )?(?:return|filing|it) (?:must|should|shall|has to|is to|needs to) be (?:filed|submitted|lodged|completed|accomplished)\b/i;
+const CR_PASSIVE_OBLIGATION_RE = /\b(?:the )?(?:return|filing|submission|it) (?:must|should|shall|has to|is to|needs to) be (?:filed|submitted|lodged|completed|accomplished)\b/i;
+// WS7 — negation scope. SAFE: negates the filing conclusion / deadline assertion / recommendation.
+const CR_SAFE_NEGATION_RE = /\b(do(?:es)? not (?:establish|show|prove|mean|indicate|require|obligate|confirm|conclude|say)|(?:does|do|did) n['’]t (?:establish|show|prove|require|confirm)|is not established|are not established|not established|not shown|no authority|cannot (?:confirm|conclude|determine|establish|verify)|do not (?:assume|conclude|think|presume)|the (?:available )?(?:facts|evidence|authority) do(?:es)? not|not required to file (?:today|now|by)|not obligated to file (?:today|now)|are not required to file (?:today|now)|you are not required to file (?:today|now))\b/i;
+// UNSAFE negation: negates DELAY / POSTPONEMENT (i.e. still pressures acting now).
+const CR_DELAY_NEGATION_RE = /\b(do not (?:delay|wait|postpone|defer|hold off|risk)|don['’]t (?:delay|wait|postpone|defer)|do not wait until tomorrow|huwag (?:nang |na )?(?:ipagpaliban|maghintay|mag-?antay|magpaliban))\b/i;
 
 function splitCalendarClauses(answer = "") {
   return String(answer).split(/(?<=[.!?;])\s+|\n+|(?=#{1,6}\s)/).map((c) => c.trim()).filter(Boolean);
 }
 
-/** Structured analysis of one clause for an unsafe current-user calendar-relative filing directive. Pure. */
+/** Polarity-aware clause-frame classifier for calendar-relative filing directives. Pure, deterministic. */
 function analyzeCalendarClause(clause = "") {
   const lc = clause.toLowerCase();
   const hasFiling = CR_FILING_ACTION_RE.test(lc);
@@ -1246,17 +1251,33 @@ function analyzeCalendarClause(clause = "") {
   const penaltyPressure = CR_PENALTY_PRESSURE_RE.test(lc);
   const counterfactual = CR_COUNTERFACTUAL_RE.test(lc);
   const yearHistorical = /\b(19|20)\d{2}\b/.test(lc) && !/\b(today|now|tomorrow|yesterday|ngayon|bukas|tonight|midnight)\b/i.test(lc);
+  // WS7 polarity: which proposition does a negation govern?
+  const safeNegation = CR_SAFE_NEGATION_RE.test(lc);
+  const delayNegation = CR_DELAY_NEGATION_RE.test(lc);
+  let negationScope = safeNegation ? "NEGATES_FILING_CONCLUSION"
+    : delayNegation ? "NEGATES_DELAY" : "NONE";
   // present-user application of a filing action at a relative time:
-  const directiveUnsafe = hasFiling && hasRelative &&
+  const presentUserDirective = hasFiling && hasRelative &&
     (directiveForce || recommend || passiveObligation || imperative || filipinoFiling || penaltyPressure || /\byes\b/i.test(lc));
-  const unsafe = (affirm || directiveUnsafe) && !(counterfactual || yearHistorical);
+  let unsafe = (affirm || presentUserDirective) && !(counterfactual || yearHistorical);
+  // Safe negation of the filing conclusion / deadline assertion / recommendation wins.
+  if (safeNegation && !delayNegation) unsafe = false;
+  // Negated delay/postponement re-pressures acting now: keep/mark unsafe when filing+relative present.
+  if (delayNegation && hasFiling && hasRelative) { unsafe = true; negationScope = "NEGATES_DELAY"; }
   const relRef = relTom ? "TOMORROW" : relYest ? "YESTERDAY" : relToday ? "TODAY" : null;
-  const directiveType = affirm ? "ASSERTION"
+  const speechAct = safeNegation ? "NEGATION" : affirm ? "ASSERTION"
     : recommend ? "RECOMMENDATION" : passiveObligation ? "OBLIGATION"
-    : directiveForce ? "OBLIGATION" : penaltyPressure ? "URGENCY"
-    : imperative || filipinoFiling ? "IMPERATIVE" : "NEUTRAL_INFORMATION";
-  return { clause, hasFiling, hasRelative, relRef, directiveType, directiveForce, recommend, passiveObligation,
-    imperative, penaltyPressure, affirm, counterfactual, historical: yearHistorical, unsafe };
+    : directiveForce ? "OBLIGATION" : penaltyPressure ? "PRESSURED_PERMISSION"
+    : imperative || filipinoFiling ? "IMPERATIVE"
+    : counterfactual ? "COUNTERFACTUAL" : yearHistorical ? "HISTORICAL" : "NEUTRAL_INFORMATION";
+  const actionFamily = !hasFiling ? "NON_FILING_ACTION"
+    : /\bsubmit|submission|isumite|mag-?submit\b/i.test(lc) ? "SUBMIT_RETURN"
+    : /\blodge/i.test(lc) ? "LODGE_RETURN" : /\btransmit\b/i.test(lc) ? "TRANSMIT_RETURN"
+    : /\bcomplete the filing\b/i.test(lc) ? "COMPLETE_FILING" : "FILE_RETURN";
+  return { clause, hasFiling, hasRelative, relRef, actionFamily, speechAct, negationScope,
+    directiveForce, recommend, passiveObligation, imperative, penaltyPressure, affirm,
+    counterfactual, historical: yearHistorical, safeNegation, delayNegation,
+    directiveType: speechAct, unsafe };
 }
 
 /**

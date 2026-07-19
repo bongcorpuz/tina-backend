@@ -80,6 +80,7 @@ import {
   buildSourceFallbackDisclosureMeta
 } from "./services/source-fallback-disclosure.js";
 import { evaluateAnswerSupport, buildCalendarRelativeSafeAnswer } from "./services/answer-support-validator.js";
+import { derivePersistenceReceipt } from "./services/persistence-receipt.js";
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -1905,11 +1906,16 @@ export function createAskHandler({
     fallbackReferences = [],
     trust = null
   }) {
-    if (!conversationId || !userId) return;
-
+    // PHASE-10A14-R13 (P1-R12-IR-003): return an ACKNOWLEDGED persistence receipt derived from
+    // the actual saveMessage results (not from ID presence). Existing callers that ignore the
+    // return value remain compatible; the domain-boundary path uses it to set persistenceStatus.
+    if (!conversationId || !userId) {
+      return derivePersistenceReceipt({ conversationId, userId });
+    }
+    let userMessageData = null, assistantMessageData = null, memoryHookOk = false, threw = false;
     try {
-      await saveMessage(supabase, { conversationId, userId, role: "user", content: question });
-      await saveMessage(supabase, {
+      userMessageData = await saveMessage(supabase, { conversationId, userId, role: "user", content: question });
+      assistantMessageData = await saveMessage(supabase, {
         conversationId,
         userId,
         role: "assistant",
@@ -1918,11 +1924,13 @@ export function createAskHandler({
         fallbackReferences,
         trustMetadata: trust
       });
-
-      await saveMemoryHooks(supabase, userId, extractMemoryHooks(question));
+      try { await saveMemoryHooks(supabase, userId, extractMemoryHooks(question)); memoryHookOk = true; }
+      catch (hookError) { console.warn("Memory-hook save skipped:", hookError.message); memoryHookOk = false; }
     } catch (error) {
-      console.error("Conversation save skipped:", error.message);
+      console.error("Conversation save failed:", error.message);
+      threw = true;
     }
+    return derivePersistenceReceipt({ conversationId, userId, userMessageData, assistantMessageData, memoryHookOk, threw });
   }
 
   async function handleFeedback({ userId, conversationId, correction, feedbackType, originalAnswer, hookConfig }) {
@@ -3260,16 +3268,15 @@ export function createAskHandler({
           // PERSIST the boundary turn when a conversationId is present (ordinary application
           // behavior) and declare an explicit persistenceStatus in every case.
           const _boundaryTrust = buildResponseTrust({ domainBoundary: true }, 0, _boundaryStatus);
-          const _boundaryPersisted = Boolean(conversationId && userId);
-          if (_boundaryPersisted) {
-            await saveConversationTurn({
-              conversationId,
-              userId,
-              question: compactHookConfig.originalQuestion || _boundaryQuery || "",
-              answerText: _boundaryMsg,
-              trust: _boundaryTrust
-            });
-          }
+          // PHASE-10A14-R13 (P1-R12-IR-003): derive persistenceStatus from the ACKNOWLEDGED receipt.
+          const _boundaryReceipt = await saveConversationTurn({
+            conversationId,
+            userId,
+            question: compactHookConfig.originalQuestion || _boundaryQuery || "",
+            answerText: _boundaryMsg,
+            trust: _boundaryTrust
+          });
+          const _boundaryPersistenceStatus = (_boundaryReceipt && _boundaryReceipt.status) || "NOT_PERSISTED_NO_CONVERSATION";
           return res.json({
             success:                true,
             engine:                 "TINA_ASK_HANDLER",
@@ -3294,7 +3301,7 @@ export function createAskHandler({
             askHandlerVersion:      ENGINE_VERSION,
             contextOrchestrationEnabled: true,
             trust:                  buildResponseTrust({ domainBoundary: true }, 0, _boundaryStatus),
-            persistenceStatus:      _boundaryPersisted ? "PERSISTED" : "NOT_PERSISTED_NO_CONVERSATION",
+            persistenceStatus:      _boundaryPersistenceStatus,
           });
         }
       }
