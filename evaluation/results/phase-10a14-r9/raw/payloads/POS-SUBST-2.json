@@ -1,0 +1,670 @@
+{
+  "probeId": "POS-SUBST-2",
+  "mappedOriginalProbeIds": [],
+  "matrixClass": "positive_substituted_filing",
+  "expected": "VERIFIED_CONTROLLING available",
+  "runtimeCommit": "0c80b121451678e8a1565d59bbfe06f36900328c",
+  "stagingDeploymentId": "tina-backend-staging",
+  "model": "gpt-4o-mini",
+  "exactQuestion": "What are the conditions for substituted filing of the income tax return under the NIRC and its regulations?",
+  "materialFacts": null,
+  "taxpayerType": null,
+  "returnType": null,
+  "taxType": null,
+  "taxablePeriod": null,
+  "transactionDate": null,
+  "dispositionDate": null,
+  "legalAsOfDate": null,
+  "requestTimestamp": "2026-07-19T05:51:11.784Z",
+  "answer": "### Short Answer\nSubstituted filing of income tax returns is allowed for individual taxpayers receiving purely compensation income from a single employer, provided that the income tax has been correctly withheld by the employer. The certificate of withholding from the employer, stamped by the BIR, serves as the substituted filing.\n\n### Controlling Authorities\nThe relevant provision is found in **Section 51-A of the NIRC**, which states the conditions for substituted filing of income tax returns by employees receiving purely compensation income.\n\n### Interpretation\nAccording to **Section 51-A of the NIRC**, individual taxpayers who receive purely compensation income from only one employer in the Philippines for the calendar year, where the tax due equals the tax withheld, are not required to file an annual income tax return. Instead, the certificate of withholding issued by the employer, when duly stamped by the BIR, is considered sufficient for compliance.\n\n### Practical Meaning\nThis provision simplifies the tax compliance process for employees with straightforward income situations, reducing the administrative burden of filing a return when the employer has already withheld the correct amount of tax. It ensures that employees can rely on their employer's withholding certificate as proof of tax compliance, streamlining the process for both taxpayers and the BIR.",
+  "responseType": null,
+  "sourceStatus": "AUTHORITY_FOUND",
+  "sourceAvailability": "AUTHORITY_FOUND",
+  "displayedSourceCount": 5,
+  "retrievedSourceCount": 12,
+  "sourceCards": [
+    {
+      "label": "NIRC Sec. 51",
+      "title": "NIRC Sec. 51",
+      "citation": "NIRC Sec. 51",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 51",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+      "amendmentChainReviewed": true,
+      "chainReviewed": true,
+      "amendmentChain": {
+        "reviewed": true,
+        "chainStatus": "BASE_PROVISION_UNCHANGED_BUT_CHAIN_REVIEWED",
+        "baseCode": "RA 8424",
+        "originatingLaw": "RA 8424",
+        "currentAuthoritySet": [
+          "NIRC Sec. 51"
+        ],
+        "reviewedAmendments": [
+          "RA 10963",
+          "RA 11976",
+          "RA 12214"
+        ],
+        "applicableAmendments": [],
+        "reviewedButNotApplicable": [
+          "RA 10963",
+          "RA 11976",
+          "RA 12214"
+        ],
+        "officialLaws": [
+          {
+            "id": "RA 8424",
+            "title": "NIRC of 1997",
+            "url": "https://lawphil.net/statutes/repacts/ra1997/ra_8424_1997.html"
+          },
+          {
+            "id": "RA 10963",
+            "title": "TRAIN Law",
+            "url": "https://lawphil.net/statutes/repacts/ra2017/ra_10963_2017.html"
+          },
+          {
+            "id": "RA 11976",
+            "title": "Ease of Paying Taxes (EOPT) Act",
+            "url": "https://lawphil.net/statutes/repacts/ra2024/ra_11976_2024.html"
+          },
+          {
+            "id": "RA 12214",
+            "title": "Capital Markets Efficiency Promotion Act (CMEPA)",
+            "url": "https://lawphil.net/statutes/repacts/ra2025/ra_12214_2025.html"
+          }
+        ]
+      }
+    },
+    {
+      "label": "NIRC Sec. 23",
+      "title": "NIRC Sec. 23",
+      "citation": "NIRC Sec. 23",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 23",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "NIRC Sec. 24",
+      "title": "NIRC Sec. 24",
+      "citation": "NIRC Sec. 24",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 24",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "NIRC Sec. 27",
+      "title": "NIRC Sec. 27",
+      "citation": "NIRC Sec. 27",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 27",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+    },
+    {
+      "label": "NIRC Sec. 51-A",
+      "title": "NIRC Sec. 51-A",
+      "citation": "NIRC Sec. 51-A",
+      "authorityType": "STATUTE",
+      "displayLabel": "NIRC Sec. 51-A",
+      "limitationRequired": false,
+      "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk",
+      "amendmentChainReviewed": true,
+      "chainReviewed": true,
+      "amendmentChain": {
+        "reviewed": true,
+        "chainStatus": "CURRENT_COMPLETE_CHAIN",
+        "baseCode": "RA 8424",
+        "originatingLaw": "RA 10963",
+        "currentAuthoritySet": [
+          "NIRC Sec. 51-A"
+        ],
+        "reviewedAmendments": [
+          "RA 11976",
+          "RA 12214"
+        ],
+        "applicableAmendments": [],
+        "reviewedButNotApplicable": [
+          "RA 11976",
+          "RA 12214"
+        ],
+        "officialLaws": [
+          {
+            "id": "RA 8424",
+            "title": "NIRC of 1997",
+            "url": "https://lawphil.net/statutes/repacts/ra1997/ra_8424_1997.html"
+          },
+          {
+            "id": "RA 10963",
+            "title": "TRAIN Law",
+            "url": "https://lawphil.net/statutes/repacts/ra2017/ra_10963_2017.html"
+          },
+          {
+            "id": "RA 11976",
+            "title": "Ease of Paying Taxes (EOPT) Act",
+            "url": "https://lawphil.net/statutes/repacts/ra2024/ra_11976_2024.html"
+          },
+          {
+            "id": "RA 12214",
+            "title": "Capital Markets Efficiency Promotion Act (CMEPA)",
+            "url": "https://lawphil.net/statutes/repacts/ra2025/ra_12214_2025.html"
+          }
+        ]
+      }
+    }
+  ],
+  "trust": {
+    "version": "1.0",
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "legalConclusion": "ALLOWED",
+    "humanReviewRequired": false,
+    "filingReadyDocumentGenerated": false,
+    "automaticSubmission": false,
+    "hasConflict": false,
+    "conflictState": "NO_CONFLICT",
+    "limitations": [],
+    "responseKind": "GENERAL_TAX",
+    "specificAuthorityNotFound": false
+  },
+  "finalTrustState": "VERIFIED_CONTROLLING",
+  "legalConclusion": "ALLOWED",
+  "limitations": [],
+  "openaiCalls": [
+    {
+      "purpose": "generation",
+      "model": "gpt-4o-mini",
+      "startedAt": 1784440265555,
+      "status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "startedAt": 1784440265555,
+          "completedAt": 1784440268300,
+          "durationMs": 2745,
+          "status": "success",
+          "freshClientUsed": false
+        }
+      ],
+      "completedAt": 1784440268300,
+      "durationMs": 2745,
+      "attempt": 1,
+      "retrySucceeded": false
+    }
+  ],
+  "metadata": {
+    "engine": "TINA_CONTEXT_ORCHESTRATION_ENGINE",
+    "version": "5.0.0",
+    "complexity": "moderate",
+    "mode": "LEGAL_ANALYSIS",
+    "responseStyle": null,
+    "modeFlags": {
+      "isQuiz": false,
+      "isReviewer": false,
+      "isReview": false,
+      "isSource": false,
+      "isCase": false,
+      "isAudit": false,
+      "isPatch": false,
+      "isDebug": false,
+      "isNonAFMode": false,
+      "isStandardLegal": true,
+      "shouldForceAFStructure": false,
+      "modeValues": [
+        "TECHNICAL",
+        "LEGAL_ANALYSIS",
+        "/ASK",
+        "STANDARD_TAX_MODE",
+        "TECHNICAL",
+        "LEGAL_ANALYSIS",
+        "TECHNICAL",
+        "LEGAL_ANALYSIS",
+        "LEGAL_ANALYSIS",
+        "STANDARD",
+        "STANDARD_TAX"
+      ]
+    },
+    "estimatedInputTokens": 9138,
+    "maxCompletionTokens": 2200,
+    "sourceCount": 8,
+    "wasTrimmed": false,
+    "authoritySummary": {
+      "controlling": 8,
+      "jurisprudence": 0,
+      "administrative": 0,
+      "accounting": 0,
+      "secondary": 0,
+      "targetAuthorityMatches": 8,
+      "issueMatches": 8,
+      "exactAuthorityMatches": 8,
+      "indexedGoogleDriveAuthorities": 8
+    },
+    "taxEngineContext": {
+      "domainCode": "CIT",
+      "domainName": "Income Tax",
+      "supportedDomain": true,
+      "primaryIssue": "INCOME_TAX",
+      "subIssue": "INCOME_TAX_OVERVIEW",
+      "retrievalStrategy": "ISSUE_AUTHORITY_HIERARCHY_SEMANTIC",
+      "targetAuthorities": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27",
+        "NIRC Sec. 31",
+        "NIRC Sec. 32",
+        "NIRC Sec. 34"
+      ],
+      "controllingAuthorities": [
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27",
+        "NIRC Sec. 31",
+        "NIRC Sec. 32",
+        "NIRC Sec. 34"
+      ],
+      "supportingAuthorities": [],
+      "supportingJurisprudence": [],
+      "requiredAnswerSections": [],
+      "doctrinalRules": null,
+      "conflictRules": null
+    },
+    "sanitizedConflicts": null,
+    "diagnostics": {
+      "requestId": "route-1784440255162-c6b634d0",
+      "route": "/ask",
+      "model": "gpt-4o-mini",
+      "budgetMs": 90000,
+      "pipelineTimings": {
+        "requestStartedAt": 1784440255162,
+        "classificationStartedAt": 1784440255163,
+        "classificationCompletedAt": 1784440255163,
+        "retrievalStartedAt": 1784440255165,
+        "retrievalCompletedAt": 1784440264890,
+        "authorityResolutionStartedAt": 1784440264966,
+        "authorityResolutionCompletedAt": 1784440264966,
+        "generationStartedAt": 1784440265551,
+        "generationCompletedAt": 1784440268300,
+        "renderingStartedAt": 1784440268300,
+        "renderingCompletedAt": 1784440268301,
+        "complianceStartedAt": 1784440268301,
+        "complianceCompletedAt": 1784440268302,
+        "sourceSelectionStartedAt": 1784440268302,
+        "sourceSelectionCompletedAt": 1784440268305,
+        "responseCompletedAt": 1784440268408,
+        "totalMs": 13246
+      },
+      "pipelineStageDurations": {
+        "classificationMs": 0,
+        "retrievalMs": 9725,
+        "authorityResolutionMs": 0,
+        "sourceSelectionMs": 3,
+        "generationMs": 2749,
+        "complianceMs": 1,
+        "renderingMs": 1,
+        "totalMs": 13246
+      },
+      "partialPipelineState": {
+        "retrievalCompleted": true,
+        "classificationCompleted": true,
+        "generationStarted": true,
+        "generationCompleted": true,
+        "complianceStarted": true,
+        "complianceCompleted": true,
+        "retrievedCount": 12,
+        "retrievalLayerCounts": {
+          "exactAuthorityMatches": 12,
+          "citationVariantMatches": 0,
+          "metadataMatches": 0,
+          "contentKeywordMatches": 0,
+          "semanticMatches": 0,
+          "fallbackMatches": 0,
+          "supabaseFallbackMatches": 0
+        },
+        "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+        "sourceLabelsBeforeTimeout": [
+          "NIRC Sec. 51",
+          "NIRC Sec. 23",
+          "NIRC Sec. 24",
+          "NIRC Sec. 27",
+          "NIRC Sec. 51-A"
+        ],
+        "displayedSourceCardCount": 5
+      },
+      "openaiCalls": [
+        {
+          "purpose": "generation",
+          "model": "gpt-4o-mini",
+          "startedAt": 1784440265555,
+          "status": "success",
+          "attempts": [
+            {
+              "attempt": 1,
+              "startedAt": 1784440265555,
+              "completedAt": 1784440268300,
+              "durationMs": 2745,
+              "status": "success",
+              "freshClientUsed": false
+            }
+          ],
+          "completedAt": 1784440268300,
+          "durationMs": 2745,
+          "attempt": 1,
+          "retrySucceeded": false
+        }
+      ],
+      "checkpoints": [
+        {
+          "checkpoint": "CLASSIFICATION_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 1,
+          "remainingBudgetMs": 89999,
+          "model": "gpt-4o-mini",
+          "mode": "",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "",
+          "retrievedCount": 0,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "CLASSIFICATION_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 1,
+          "remainingBudgetMs": 89999,
+          "model": "gpt-4o-mini",
+          "mode": "",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "",
+          "retrievedCount": 0,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "RETRIEVAL_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 3,
+          "remainingBudgetMs": 89997,
+          "model": "gpt-4o-mini",
+          "mode": "STANDARD_TAX_MODE",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "",
+          "retrievedCount": 0,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "RETRIEVAL_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 9728,
+          "remainingBudgetMs": 80272,
+          "model": "gpt-4o-mini",
+          "mode": "STANDARD_TAX_MODE",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "AUTHORITY_RESOLUTION_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 9804,
+          "remainingBudgetMs": 80196,
+          "model": "gpt-4o-mini",
+          "mode": "STANDARD_TAX_MODE",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "AUTHORITY_RESOLUTION_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 9804,
+          "remainingBudgetMs": 80196,
+          "model": "gpt-4o-mini",
+          "mode": "STANDARD_TAX_MODE",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "GENERATION_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 10389,
+          "remainingBudgetMs": 79611,
+          "model": "gpt-4o-mini",
+          "mode": "STANDARD_TAX_MODE",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "GENERATION_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13138,
+          "remainingBudgetMs": 76862,
+          "model": "gpt-4o-mini",
+          "mode": "STANDARD_TAX_MODE",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "RENDERING_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13138,
+          "remainingBudgetMs": 76862,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "RENDERING_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13139,
+          "remainingBudgetMs": 76861,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "COMPLIANCE_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13139,
+          "remainingBudgetMs": 76861,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "COMPLIANCE_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13140,
+          "remainingBudgetMs": 76860,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "SOURCE_SELECTION_STARTED",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13140,
+          "remainingBudgetMs": 76860,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 0
+        },
+        {
+          "checkpoint": "SOURCE_SELECTION_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13143,
+          "remainingBudgetMs": 76857,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 5
+        },
+        {
+          "checkpoint": "RESPONSE_COMPLETE",
+          "requestId": "route-1784440255162-c6b634d0",
+          "elapsedMs": 13246,
+          "remainingBudgetMs": 76754,
+          "model": "gpt-4o-mini",
+          "mode": "LEGAL_ANALYSIS",
+          "route": "/ask",
+          "sourceAvailabilityStatus": "AUTHORITY_FOUND",
+          "retrievedCount": 12,
+          "displayedSourceCardCount": 5
+        }
+      ]
+    },
+    "openAiModel": "gpt-4o-mini",
+    "openAiProjectAccessFailure": false,
+    "askHandlerVersion": "9.0.0",
+    "pipelineSupremacy": true,
+    "pipelineVersion": "1.0.0",
+    "correctFlowEnabled": true,
+    "issueClassificationEngineCalled": true,
+    "retrievalEngineCalled": true,
+    "rerankerEngineCalled": true,
+    "fourPartDoctrineTestApplied": true,
+    "retrievalLayerCounts": {
+      "exactAuthorityMatches": 12,
+      "citationVariantMatches": 0,
+      "metadataMatches": 0,
+      "contentKeywordMatches": 0,
+      "semanticMatches": 0,
+      "fallbackMatches": 0,
+      "supabaseFallbackMatches": 0
+    },
+    "firstSourceLabels": [
+      "NIRC Sec. 51",
+      "NIRC Sec. 23",
+      "NIRC Sec. 24",
+      "NIRC Sec. 27",
+      "NIRC Sec. 51-A"
+    ],
+    "pipelineTimings": {
+      "requestStartedAt": 1784440255162,
+      "classificationStartedAt": 1784440255163,
+      "classificationCompletedAt": 1784440255163,
+      "retrievalStartedAt": 1784440255165,
+      "retrievalCompletedAt": 1784440264890,
+      "authorityResolutionStartedAt": 1784440264966,
+      "authorityResolutionCompletedAt": 1784440264966,
+      "generationStartedAt": 1784440265551,
+      "generationCompletedAt": 1784440268300,
+      "renderingStartedAt": 1784440268300,
+      "renderingCompletedAt": 1784440268301,
+      "complianceStartedAt": 1784440268301,
+      "complianceCompletedAt": 1784440268302,
+      "sourceSelectionStartedAt": 1784440268302,
+      "sourceSelectionCompletedAt": 1784440268305,
+      "responseCompletedAt": 1784440268408,
+      "totalMs": 13246
+    },
+    "pipelineStageDurations": {
+      "classificationMs": 0,
+      "retrievalMs": 9725,
+      "authorityResolutionMs": 0,
+      "sourceSelectionMs": 3,
+      "generationMs": 2749,
+      "complianceMs": 1,
+      "renderingMs": 1,
+      "totalMs": 13246
+    },
+    "partialPipelineState": {
+      "retrievalCompleted": true,
+      "classificationCompleted": true,
+      "generationStarted": true,
+      "generationCompleted": true,
+      "complianceStarted": true,
+      "complianceCompleted": true,
+      "retrievedCount": 12,
+      "retrievalLayerCounts": {
+        "exactAuthorityMatches": 12,
+        "citationVariantMatches": 0,
+        "metadataMatches": 0,
+        "contentKeywordMatches": 0,
+        "semanticMatches": 0,
+        "fallbackMatches": 0,
+        "supabaseFallbackMatches": 0
+      },
+      "sourceAvailabilityStatusBeforeTimeout": "AUTHORITY_FOUND",
+      "sourceLabelsBeforeTimeout": [
+        "NIRC Sec. 51",
+        "NIRC Sec. 23",
+        "NIRC Sec. 24",
+        "NIRC Sec. 27",
+        "NIRC Sec. 51-A"
+      ],
+      "displayedSourceCardCount": 5
+    },
+    "openaiCalls": [
+      {
+        "purpose": "generation",
+        "model": "gpt-4o-mini",
+        "startedAt": 1784440265555,
+        "status": "success",
+        "attempts": [
+          {
+            "attempt": 1,
+            "startedAt": 1784440265555,
+            "completedAt": 1784440268300,
+            "durationMs": 2745,
+            "status": "success",
+            "freshClientUsed": false
+          }
+        ],
+        "completedAt": 1784440268300,
+        "durationMs": 2745,
+        "attempt": 1,
+        "retrySucceeded": false
+      }
+    ],
+    "routeControllerOnly": true,
+    "noLegalReasoningInsideAskHandler": true,
+    "noSourceRankingInsideAskHandler": true,
+    "noRenderingInsideAskHandler": true,
+    "orchestrationFirstArchitecture": true,
+    "noDirectOpenAICall": true,
+    "noPromptAssembly": true,
+    "tpmConscious": true
+  },
+  "httpStatus": 200,
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": 200,
+      "ms": 18639,
+      "failType": null,
+      "error": null
+    }
+  ],
+  "attemptNumber": 1,
+  "retryReason": [],
+  "technicalFailureOnly": false,
+  "requestHash": "cd5c50be27a87790be41b8edc2466b94eb741089e956a42de67b02a7810021be",
+  "responseHash": "92e4b0638d6718b03569c74c2510f659433d0c77cb91ab07222a66de73f2a1c5",
+  "adjudicationStatus": "PENDING",
+  "payloadHash": "295f48888e51ceb8574a6e5a9b985b967ea4943cb620100b5fa5daef773f511e"
+}
