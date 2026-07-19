@@ -1,0 +1,5 @@
+# PHASE-10A14-R13 — WS20 Security & Scope
+- No fabricated/backdated evidence; no modification of R10/R11/R12 historical evidence; pre-fix committed at 65781b0 before remediation (runtime files were R12 at that commit).
+- No secrets / real taxpayer data (scan clean). No raw persistence-error disclosure — the receipt exposes only a status/reasonCode/safeDiagnostic (no SQL/credentials/stack).
+- No model/prompt/temperature change; no filing-rationale redesign; no retrieval/reranker change; no source ingestion; no corpus/vector mutation; no reindex/re-embed; no manual direct DB write; no schema migration; no frontend/Dev-Factory change; no production deployment.
+- Persistence uses ordinary application-layer saveConversationTurn returning an acknowledged receipt. Staging auto-deployed the branch to the R13 commit (non-production). App-layer synthetic persistence only. Protected paths preserved; port 5173 untouched; tracked tree clean; sync 0 0; no local backend listener started. Manifests self-exclude.

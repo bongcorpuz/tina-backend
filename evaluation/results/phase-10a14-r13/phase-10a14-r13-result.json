@@ -1,0 +1,26 @@
+{
+  "task": "PHASE-10A14-R13-POLARITY-AWARE-FILING-DIRECTIVE-GRAMMAR-CONFIRMED-PERSISTENCE-ACKNOWLEDGEMENT-AND-EVIDENCE-COUNT-RECONCILIATION-REMEDIATION-1",
+  "executor": "Claude Code — Opus 4.8 (low speed)",
+  "decision": "PASS",
+  "startingHead": "16ad1a59ece80a34f4bf94549321bb98105cdc1e",
+  "preFixEvidenceCommit": "65781b016b838fb03e44ddc5ccdd91caf0731bc7",
+  "r13RuntimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "stagingRuntimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "model": "gpt-4o-mini",
+  "findings": {
+    "P1-R12-IR-001": "CLOSED — polarity-aware clause-frame classifier; pre-fix 14 explicit + 40 grammar misses -> 0; recommendation/advice/urgency/inverted/passive/permission-pressure/Taglish covered.",
+    "P1-R12-IR-002": "CLOSED — negation-scope: safe epistemic/legal negation of the filing conclusion/deadline/recommendation suppresses; pre-fix 3 overfires -> 0. Delay/postponement negation stays unsafe.",
+    "P1-R12-IR-003": "CLOSED — acknowledged persistence receipt (derivePersistenceReceipt); PERSISTED only on acknowledged double insert; pre-fix 5 false-PERSISTED -> 0.",
+    "P3-R12-IR-004": "CORRECTED — evidence counts separated (explicit/grammar/metamorphic/persistence/detector-payload/live)."
+  },
+  "preFix": { "runtime": "d91b697", "explicitMisses": 14, "explicitOverfires": 3, "grammarMisses": 40, "grammarFalsePositives": 25, "metamorphicFailures": 3, "falsePersistedClaims": 5, "committedBeforeRemediation": true },
+  "postFix": { "runtime": "a311e97", "explicitMisses": 0, "explicitOverfires": 0, "grammarMisses": 0, "grammarFalsePositives": 0, "metamorphicFailures": 0, "falsePersistedClaims": 0, "persistenceStatusMismatch": 0, "singleRuntime": true },
+  "liveCampaign": { "probes": 28, "apiUnsafe": 0, "historyUnsafe": 0, "apiNotEqualHistory": 0, "rejectedExposed": 0, "domainBoundaryPersisted": true },
+  "evidenceCounts": { "uniqueExplicitProbeIds": 25, "grammarMatrixCaseCount": 246, "metamorphicCaseCount": 10, "persistenceSimCount": 9, "detectorPayloadCount": 25, "persistencePayloadCount": 9, "uniqueLiveProbeIds": 28 },
+  "focusedTests": { "phase-10a14-r13": "32/0", "phase-10a14-r12": "47/0", "phase-10a14-r11": "39/0", "phase-10a14-r10": "22/0", "phase-10a14-r9": "15/0" },
+  "deterministicAll26": { "blocked": 9, "preserved": 17, "mismatch": 0, "pass": true },
+  "governanceSupersession": "SUPERSEDED BY COMPLETE R11/R12/R13 PROSPECTIVE EVIDENCE (self-assessed; reviewer decides). Original R10 payload NOT recovered.",
+  "gates": { "deterministic": "203/0 x2 clean tree", "staging": "7/0 x2" },
+  "security": { "fabricatedEvidence": 0, "historicalEvidenceModified": 0, "secrets": 0, "rawDbErrorDisclosure": 0, "modelChange": 0, "promptChange": 0, "filingRationaleRedesign": 0, "corpusMutation": 0, "manualDbWrite": 0, "productionDeploy": 0, "protectedPathsTouched": 0, "port5173Touched": 0 },
+  "scopeNote": "P1-R9-IR-002 reserved for E2. P2-R9-IR-003 remains a bounded filing-rationale limitation."
+}
