@@ -1,0 +1,93 @@
+{
+  "phase": "PHASE-10A14-R12-SEMANTIC-FILING-DIRECTIVE-COVERAGE-NOT-APPLICABLE-HISTORY-CONSISTENCY-AND-EVIDENCE-MANIFEST-HYGIENE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "reviewDate": "2026-07-19",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "decision": "REVISIONS_REQUIRED",
+  "reviewedHead": "af4baabe8a52230e2b3e3fd65a13af1d17daa1a3",
+  "baseCommit": "b4575bacfd941967132caacffd0ff792057025e4",
+  "preFixEvidenceCommit": "70790c3158cd32a877e87d9a401354878d383cd0",
+  "runtimeCommit": "d91b6978cda1ed3e31740566de8ef5f2061868ce",
+  "findingCounts": {
+    "P0": 0,
+    "P1": 3,
+    "P2": 0,
+    "P3": 1
+  },
+  "findings": [
+    {
+      "id": "P1-R12-IR-001",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Semantic directive coverage remains incomplete",
+      "summary": "Independent advice/recommendation/urgency variants still bypass calendar-relative-deadline replacement."
+    },
+    {
+      "id": "P1-R12-IR-002",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Safe negation overfire remains possible",
+      "summary": "Safe cautionary statements such as do-not-assume/authority-does-not-establish forms trigger calendar-relative-deadline."
+    },
+    {
+      "id": "P1-R12-IR-003",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Domain-boundary persistenceStatus can falsely claim PERSISTED on save failure",
+      "summary": "The status is based on conversationId/userId rather than confirmed save success, while saveConversationTurn swallows errors."
+    },
+    {
+      "id": "P3-R12-IR-004",
+      "severity": "P3",
+      "status": "OPEN_NON_MATERIAL",
+      "title": "Non-material detector count label inconsistency",
+      "summary": "Result JSON says 80 detector probes, while evidence contains and reconciles 81 detector payloads plus 4 persistence payloads with P1 overlap for 84 unique IDs."
+    }
+  ],
+  "acceptedEvidence": {
+    "linearChronology": true,
+    "preFixAncestorOfRuntime": true,
+    "preFixPayloadsUnchangedAfterCommit2": true,
+    "manifestUniqueProbeIds": 84,
+    "preFixDetectorPayloads": 81,
+    "preFixUnsafeMisses": 25,
+    "preFixSafeFalsePositives": 0,
+    "postFixDetectorPayloads": 81,
+    "postFixUnsafeMissesFrozenSet": 0,
+    "postFixSafeFalsePositivesFrozenSet": 0,
+    "livePayloads": 20,
+    "liveApiUnsafe": 0,
+    "liveHistoryUnsafe": 0,
+    "liveApiHistoryMismatch": 0,
+    "manifestSelfEntries": 0,
+    "manifestHashMismatches": 0,
+    "governanceSupersession": "NOT_SUPERSEDED"
+  },
+  "independentProbeResults": {
+    "semanticUnsafeProbeCount": 19,
+    "semanticUnsafeMisses": 10,
+    "safeProbeCount": 10,
+    "safeOverfires": 2,
+    "falsePersistenceClaimPossibleOnSaveFailure": true
+  },
+  "independentGates": {
+    "focusedR12": "47 passed, 0 failed",
+    "focusedR11": "39 passed, 0 failed",
+    "focusedR10": "22 passed, 0 failed",
+    "focusedR9": "15 passed, 0 failed",
+    "deterministicAll26": "blocked 9, preserved 17, mismatch 0",
+    "regressionsCycle1": "syntax 10/0; deterministic suites 202/0",
+    "regressionsCycle2": "syntax 10/0; deterministic suites 202/0",
+    "stagingRestrictedAttempt": "7 run, 1 failed due staging reachability assertion",
+    "stagingNetworkCycle1": "7 run, 0 failed",
+    "stagingNetworkCycle2": "7 run, 0 failed"
+  },
+  "securityScope": {
+    "productionDeploymentFound": false,
+    "secretExposureFound": false,
+    "protectedPathTouched": false,
+    "port5173Touched": false,
+    "backendListenerLeftRunning": false
+  }
+}
