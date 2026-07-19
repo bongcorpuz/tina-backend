@@ -1,0 +1,17 @@
+{
+  "probeId": "PS9-no-user",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "saveSimulation": {
+    "simId": "PS9-no-user",
+    "conversationId": "c1",
+    "userId": null,
+    "expectedStatus": "NOT_PERSISTED_NO_USER"
+  },
+  "saveAttempted": false,
+  "saveAcknowledged": false,
+  "persistenceStatus": "NOT_PERSISTED_NO_USER",
+  "expectedStatus": "NOT_PERSISTED_NO_USER",
+  "match": true,
+  "falsePersistedClaim": false,
+  "payloadHash": "8686dee2f38611292cf3a6ba5374f00f5431be8c8dff9c943553390d872bfbb6"
+}

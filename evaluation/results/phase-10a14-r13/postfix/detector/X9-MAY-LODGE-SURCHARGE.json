@@ -1,0 +1,10 @@
+{
+  "probeId": "X9-MAY-LODGE-SURCHARGE",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "You may lodge the return today to prevent a surcharge.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "c0e88a7c9cb21e9585c30dd6e0376dff1d6028f3c82a7e66d70c54861122c81d"
+}

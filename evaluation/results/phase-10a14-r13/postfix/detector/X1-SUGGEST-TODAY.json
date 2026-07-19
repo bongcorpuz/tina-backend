@@ -1,0 +1,10 @@
+{
+  "probeId": "X1-SUGGEST-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "I suggest that you file today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "115b7c2fc5dbcd6203bcfffe7153ee8a29f355f0fd719c7816f027e4bef4117d"
+}

@@ -1,0 +1,15 @@
+{
+  "probeId": "CAUTION-2",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "What penalties apply to late filing of an income tax return?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\nPenalties for late filing of an income tax return include a fine of PHP 1,000 and an additional penalty of 25% of the tax due for each month of delay, up to a maximum of 50% of the total tax due.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, taxpayers should ensure that their income tax returns are filed by the due date to avoid incurring significant penalties. The combination of a fixed fine and a percentage-based penalty can lead to substantial costs if the return is filed late, especially if the delay extends over several months. Taxpayers are advised to maintain awareness of filing deadlines and to seek assistance if they anticipate difficulties in meeting these obligations.",
+  "historyReadbackAnswer": "### Short Answer\nPenalties for late filing of an income tax return include a fine of PHP 1,000 and an additional penalty of 25% of the tax due for each month of delay, up to a maximum of 50% of the total tax due.\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, taxpayers should ensure that their income tax returns are filed by the due date to avoid incurring significant penalties. The combination of a fixed fine and a percentage-based penalty can lead to substantial costs if the return is filed late, especially if the delay extends over several months. Taxpayers are advised to maintain awareness of filing deadlines and to seek assistance if they anticipate difficulties in meeting these obligations.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

@@ -1,0 +1,15 @@
+{
+  "probeId": "NEG-ESTABLISH",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "Does the available authority establish that I must file today?",
+  "apiTrust": "NOT_APPLICABLE",
+  "validatorStage": null,
+  "responseType": "DOMAIN_BOUNDARY",
+  "persistenceStatus": "PERSISTED",
+  "publicApiAnswer": "TINA is designed to answer questions about Philippine taxation. Please ask a Philippine tax-related question, such as VAT, income tax, withholding tax, BIR compliance, local tax, customs duties, or tax remedies.",
+  "historyReadbackAnswer": "TINA is designed to answer questions about Philippine taxation. Please ask a Philippine tax-related question, such as VAT, income tax, withholding tax, BIR compliance, local tax, customs duties, or tax remedies.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

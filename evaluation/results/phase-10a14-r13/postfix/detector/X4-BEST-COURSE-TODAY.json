@@ -1,0 +1,10 @@
+{
+  "probeId": "X4-BEST-COURSE-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "The best course is to file today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "8f1060c1f5544a003ba5f209249ea31416bc35c4e189fafe366c4ece9628bcf8"
+}

@@ -1,0 +1,10 @@
+{
+  "probeId": "X14-SUBMISSION-RECOMMENDED",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Submission today is recommended.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "221ace68186cee224bf80e803873e6bc7061d92148748f93d27112ffc652b19f"
+}

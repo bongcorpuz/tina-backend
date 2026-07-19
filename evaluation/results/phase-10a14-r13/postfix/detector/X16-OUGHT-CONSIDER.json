@@ -1,0 +1,10 @@
+{
+  "probeId": "X16-OUGHT-CONSIDER",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "You should consider filing today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "3427bc845d0e86855989486fd7308b2c0c5ea930f0e861930f45741bc37993a3"
+}

@@ -1,0 +1,15 @@
+{
+  "probeId": "TAG-1",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "Kailangan ko bang mag-file ng income tax return ngayon?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\nOo, kailangan mong mag-file ng income tax return kung ikaw ay isang indibidwal na kumikita ng taxable income. Ayon sa Section 24 ng National Internal Revenue Code (NIRC), ang mga indibidwal na mamamayan at residente ay obligadong magbayad ng income tax sa kanilang kita.\n\n### Controlling Authorities\n- **NIRC Sec. 24**: Income Tax Rates on Individuals.\n\n### Interpretation\nAng Section 24 ng NIRC ay nagtatakda ng mga rate ng income tax para sa mga indibidwal, na nag-uutos na ang mga mamamayan at residente ng Pilipinas ay dapat mag-file ng kanilang income tax return para sa bawat taon ng pagbubuwis. Ang mga indibidwal na kumikita ng higit sa P250,000 ay kinakailangang magbayad ng buwis batay sa mga itinakdang rate.\n\n### Practical Meaning\nKung ikaw ay kumikita ng taxable income, dapat mong isumite ang iyong income tax return sa Bureau of Internal Revenue (BIR) sa takdang panahon upang maiwasan ang mga penalty at interes. Ang deadline para sa pag-file ng income tax return ay karaniwang sa ika-15 ng Abril ng bawat taon.",
+  "historyReadbackAnswer": "### Short Answer\nOo, kailangan mong mag-file ng income tax return kung ikaw ay isang indibidwal na kumikita ng taxable income. Ayon sa Section 24 ng National Internal Revenue Code (NIRC), ang mga indibidwal na mamamayan at residente ay obligadong magbayad ng income tax sa kanilang kita.\n\n### Controlling Authorities\n- **NIRC Sec. 24**: Income Tax Rates on Individuals.\n\n### Interpretation\nAng Section 24 ng NIRC ay nagtatakda ng mga rate ng income tax para sa mga indibidwal, na nag-uutos na ang mga mamamayan at residente ng Pilipinas ay dapat mag-file ng kanilang income tax return para sa bawat taon ng pagbubuwis. Ang mga indibidwal na kumikita ng higit sa P250,000 ay kinakailangang magbayad ng buwis batay sa mga itinakdang rate.\n\n### Practical Meaning\nKung ikaw ay kumikita ng taxable income, dapat mong isumite ang iyong income tax return sa Bureau of Internal Revenue (BIR) sa takdang panahon upang maiwasan ang mga penalty at interes. Ang deadline para sa pag-file ng income tax return ay karaniwang sa ika-15 ng Abril ng bawat taon.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

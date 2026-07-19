@@ -1,0 +1,10 @@
+{
+  "probeId": "X8-COMPLETE-BEFORE-COB",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Complete the filing before close of business.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "7be4725a882be0c9a45efcc804b293de35533dbf8a447c6afac5167310372694"
+}

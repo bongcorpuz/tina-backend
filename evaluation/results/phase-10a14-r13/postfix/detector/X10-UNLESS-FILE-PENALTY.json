@@ -1,0 +1,10 @@
+{
+  "probeId": "X10-UNLESS-FILE-PENALTY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Unless you file today, penalties may apply.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "3fde3a176e12ed3bd1f8a4960eea6fb68dc526a63629115c84c7d94f1f31bc9f"
+}

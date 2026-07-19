@@ -1,0 +1,10 @@
+{
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "explicitMisses": 0,
+  "explicitOverfires": 0,
+  "grammarMisses": 0,
+  "grammarFalsePositives": 0,
+  "metamorphicFailures": 0,
+  "persistenceFalsePersisted": 0,
+  "persistenceStatusMismatch": 0
+}

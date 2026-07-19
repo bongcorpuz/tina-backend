@@ -1,0 +1,19 @@
+{
+  "probeId": "PS4-no-rows",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "saveSimulation": {
+    "simId": "PS4-no-rows",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": null,
+    "assistantMessageData": null,
+    "expectedStatus": "PERSISTENCE_FAILED"
+  },
+  "saveAttempted": true,
+  "saveAcknowledged": false,
+  "persistenceStatus": "PERSISTENCE_FAILED",
+  "expectedStatus": "PERSISTENCE_FAILED",
+  "match": true,
+  "falsePersistedClaim": false,
+  "payloadHash": "71f9c3cdd8eebb9084895cb614dba76f890dd1d8f3a7ffb5e47f439aff510a58"
+}

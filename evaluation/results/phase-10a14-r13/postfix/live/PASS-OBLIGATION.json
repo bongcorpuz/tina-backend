@@ -1,0 +1,15 @@
+{
+  "probeId": "PASS-OBLIGATION",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "Should my income tax return be filed today?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "calendar-relative-deadline",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\nTINA cannot confirm that today is the operative filing deadline for your return based on the information provided.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "historyReadbackAnswer": "### Short Answer\nTINA cannot confirm that today is the operative filing deadline for your return based on the information provided.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

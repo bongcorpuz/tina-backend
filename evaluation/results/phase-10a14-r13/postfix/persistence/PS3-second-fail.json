@@ -1,0 +1,21 @@
+{
+  "probeId": "PS3-second-fail",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "saveSimulation": {
+    "simId": "PS3-second-fail",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": {
+      "id": 1
+    },
+    "assistantMessageData": null,
+    "expectedStatus": "PARTIAL_PERSISTENCE"
+  },
+  "saveAttempted": true,
+  "saveAcknowledged": false,
+  "persistenceStatus": "PARTIAL_PERSISTENCE",
+  "expectedStatus": "PARTIAL_PERSISTENCE",
+  "match": true,
+  "falsePersistedClaim": false,
+  "payloadHash": "4f24b282148c2076d0d56a967fc95c9d0041a0a4c2eafb58c22849a7f04cb58c"
+}

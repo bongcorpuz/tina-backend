@@ -1,0 +1,10 @@
+{
+  "probeId": "X5-BEST-TO-SUBMIT-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "It is best to submit today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "952e3681dcd6fa7fe98ab4c2e4d24d7ad5bbc7e8f8b487626f9eef6d01b9d48d"
+}

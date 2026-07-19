@@ -1,0 +1,10 @@
+{
+  "probeId": "X7-MAY-BE-WISE-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "It may be wise to file today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "0dbd3bfbf1f9c93530c0a2d60317fc92407a0b5a73f6ee531b8ee4fb158e05f4"
+}

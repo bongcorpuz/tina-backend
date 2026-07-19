@@ -1,0 +1,15 @@
+{
+  "probeId": "VERIFIED-DEADLINE",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "What is the deadline for the annual income tax return of an individual taxpayer, and the statutory basis?",
+  "apiTrust": "VERIFIED_CONTROLLING",
+  "validatorStage": "llm",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\nThe deadline for the annual income tax return of an individual taxpayer is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year. This is stipulated under Section 51(C)(1) of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nThis provision mandates that individual taxpayers must file their income tax returns by April 15 each year. This deadline applies to all individuals required to file, including Filipino citizens residing in the Philippines and abroad, as well as resident aliens.\n\n### Practical Meaning\nTaxpayers must ensure that their income tax returns are prepared and submitted by the April 15 deadline to avoid penalties and interest for late filing. This deadline is crucial for compliance with tax obligations and for the accurate assessment of tax liabilities for the previous year.",
+  "historyReadbackAnswer": "### Short Answer\nThe deadline for the annual income tax return of an individual taxpayer is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year. This is stipulated under Section 51(C)(1) of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nThis provision mandates that individual taxpayers must file their income tax returns by April 15 each year. This deadline applies to all individuals required to file, including Filipino citizens residing in the Philippines and abroad, as well as resident aliens.\n\n### Practical Meaning\nTaxpayers must ensure that their income tax returns are prepared and submitted by the April 15 deadline to avoid penalties and interest for late filing. This deadline is crucial for compliance with tax obligations and for the accurate assessment of tax liabilities for the previous year.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

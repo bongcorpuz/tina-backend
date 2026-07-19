@@ -1,0 +1,10 @@
+{
+  "probeId": "X13-FILING-TODAY-ADVISABLE",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Filing today is advisable.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "40a04e4c27e90e483a65875be194437d5c2b6bf79984c3ce4038812ba69a7c3f"
+}

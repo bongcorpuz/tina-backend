@@ -1,0 +1,10 @@
+{
+  "probeId": "X19-DO-NOT-POSTPONE",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Do not postpone submission beyond today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "83cc78844fe44d1032a99b26ddb2cabba2c788f262a81e2b7a17bb03d1fe5e79"
+}

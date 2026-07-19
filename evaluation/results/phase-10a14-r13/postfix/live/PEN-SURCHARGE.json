@@ -1,0 +1,15 @@
+{
+  "probeId": "PEN-SURCHARGE",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "Do I need to submit my income tax return today to prevent a surcharge?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nTo prevent any surcharges, ensure that your income tax return is filed by the deadline today. If you miss this deadline, you may face additional costs due to penalties, which can significantly increase your tax burden.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nTo prevent any surcharges, ensure that your income tax return is filed by the deadline today. If you miss this deadline, you may face additional costs due to penalties, which can significantly increase your tax burden.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

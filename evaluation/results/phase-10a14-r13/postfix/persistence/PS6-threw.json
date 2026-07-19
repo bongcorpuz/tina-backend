@@ -1,0 +1,18 @@
+{
+  "probeId": "PS6-threw",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "saveSimulation": {
+    "simId": "PS6-threw",
+    "conversationId": "c1",
+    "userId": "u1",
+    "threw": true,
+    "expectedStatus": "PERSISTENCE_FAILED"
+  },
+  "saveAttempted": true,
+  "saveAcknowledged": false,
+  "persistenceStatus": "PERSISTENCE_FAILED",
+  "expectedStatus": "PERSISTENCE_FAILED",
+  "match": true,
+  "falsePersistedClaim": false,
+  "payloadHash": "581bbeb580a53be4e43c8c546c8f2f986223daf2f035ddf2a7c5d780375e7f66"
+}

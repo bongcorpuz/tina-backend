@@ -1,0 +1,10 @@
+{
+  "probeId": "X24-GENERAL-PRACTITIONER",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "A practitioner would normally advise a taxpayer to file by the applicable deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "4861759677f17045c88f3321aeedc7734e4d317927aa814296a846d7833605af"
+}

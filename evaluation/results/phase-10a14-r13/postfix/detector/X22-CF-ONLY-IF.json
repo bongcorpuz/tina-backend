@@ -1,0 +1,10 @@
+{
+  "probeId": "X22-CF-ONLY-IF",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "You may file today only if today is the independently confirmed operative deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "1bfef77a079ec8cd78aadc94dafb5fc3366e8277606c5cb89ed69d87058810ac"
+}

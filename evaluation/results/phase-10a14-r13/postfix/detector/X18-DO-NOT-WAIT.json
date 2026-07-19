@@ -1,0 +1,10 @@
+{
+  "probeId": "X18-DO-NOT-WAIT",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Do not wait until tomorrow; file now.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "25ec132a938189c6f1186a2a7d0e38ec00b2a2a8ae074b67afe7d88a036bdb17"
+}

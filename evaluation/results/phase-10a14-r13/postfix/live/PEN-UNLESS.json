@@ -1,0 +1,15 @@
+{
+  "probeId": "PEN-UNLESS",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "Will penalties apply unless I file my income tax return today?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIf you do not file your income tax return today, you will incur penalties that could increase the total amount you owe. It is advisable to file your return on time to avoid these additional costs.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIf you do not file your income tax return today, you will incur penalties that could increase the total amount you owe. It is advisable to file your return on time to avoid these additional costs.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}

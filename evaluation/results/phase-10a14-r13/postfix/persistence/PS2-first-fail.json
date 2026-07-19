@@ -1,0 +1,21 @@
+{
+  "probeId": "PS2-first-fail",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "saveSimulation": {
+    "simId": "PS2-first-fail",
+    "conversationId": "c1",
+    "userId": "u1",
+    "userMessageData": null,
+    "assistantMessageData": {
+      "id": 2
+    },
+    "expectedStatus": "PARTIAL_PERSISTENCE"
+  },
+  "saveAttempted": true,
+  "saveAcknowledged": false,
+  "persistenceStatus": "PARTIAL_PERSISTENCE",
+  "expectedStatus": "PARTIAL_PERSISTENCE",
+  "match": true,
+  "falsePersistedClaim": false,
+  "payloadHash": "e16e3c866550299ab83a655209078546ef0d24d6359d0d295d98a5d7b07636f0"
+}

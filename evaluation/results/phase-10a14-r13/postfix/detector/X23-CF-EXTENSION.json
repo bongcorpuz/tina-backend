@@ -1,0 +1,10 @@
+{
+  "probeId": "X23-CF-EXTENSION",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "I would advise filing today only if an official extension made today the operative deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "0edf6a1b977b3c53e0d37ed5bd7f4e99ac80f2424505a5bbc8da3ba58bf8c32e"
+}

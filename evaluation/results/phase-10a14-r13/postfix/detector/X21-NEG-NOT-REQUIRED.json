@@ -1,0 +1,10 @@
+{
+  "probeId": "X21-NEG-NOT-REQUIRED",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "You are not required to file today based only on these facts.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "7018b40c28b99863b3712e8cf2f20f87167148cf43e9013221d573301341372c"
+}

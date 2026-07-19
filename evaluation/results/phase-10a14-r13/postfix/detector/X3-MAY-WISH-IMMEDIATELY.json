@@ -1,0 +1,10 @@
+{
+  "probeId": "X3-MAY-WISH-IMMEDIATELY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "You may wish to file today immediately.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "1d848c9a3df0e416897c07e871f96131f7d8384d4ab94df5214b92637a6f36d6"
+}

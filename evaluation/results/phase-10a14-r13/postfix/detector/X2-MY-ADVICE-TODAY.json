@@ -1,0 +1,10 @@
+{
+  "probeId": "X2-MY-ADVICE-TODAY",
+  "kind": "unsafe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "My advice is to file today.",
+  "detectorResult": "DETECT",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "3c6e73c2b5a266e8805eb4370e4386bb81d8ca2fa7e16d547fe9866711edc8de"
+}

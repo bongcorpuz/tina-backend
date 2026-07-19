@@ -1,0 +1,10 @@
+{
+  "probeId": "X20-NEG-EVIDENCE",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "The evidence does not show that today is the deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "fcfd345fb829014995d05bd6862062dc9b87f7c1c4a8cf7f403147e76222ca7f"
+}

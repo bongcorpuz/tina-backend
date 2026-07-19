@@ -1,0 +1,18 @@
+{
+  "probeId": "PS7-timeout",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "saveSimulation": {
+    "simId": "PS7-timeout",
+    "conversationId": "c1",
+    "userId": "u1",
+    "timedOut": true,
+    "expectedStatus": "PERSISTENCE_TIMEOUT"
+  },
+  "saveAttempted": true,
+  "saveAcknowledged": false,
+  "persistenceStatus": "PERSISTENCE_TIMEOUT",
+  "expectedStatus": "PERSISTENCE_TIMEOUT",
+  "match": true,
+  "falsePersistedClaim": false,
+  "payloadHash": "9675fb27270b47655d14369cb8408a4a27bd9ee181cbfe75be756675273330ba"
+}

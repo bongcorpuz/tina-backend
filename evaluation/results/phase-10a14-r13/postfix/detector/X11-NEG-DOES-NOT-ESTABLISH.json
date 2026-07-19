@@ -1,0 +1,10 @@
+{
+  "probeId": "X11-NEG-DOES-NOT-ESTABLISH",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "The available authority does not establish that you must file today.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "412bfcdac08ca6c8da128dd917a49c5c0d0b0310c7bc0fa873e2e31f59f74f71"
+}

@@ -1,0 +1,10 @@
+{
+  "probeId": "X12-NEG-DO-NOT-ASSUME",
+  "kind": "safe",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "answerFixture": "Do not assume that today is the filing deadline.",
+  "detectorResult": "MISS",
+  "isDetectorMiss": false,
+  "isSafeOverfire": false,
+  "payloadHash": "d36c6449d868017363c06842f7bf754f983199cb68f2a9837c3bbdd2ad11cefc"
+}

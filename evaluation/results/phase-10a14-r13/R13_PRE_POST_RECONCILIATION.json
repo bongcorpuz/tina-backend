@@ -1,0 +1,39 @@
+{
+  "task": "PHASE-10A14-R13 pre/post reconciliation + evidence counts",
+  "evidenceCounts": {
+    "uniqueExplicitProbeIds": 25,
+    "grammarMatrixCaseCount": 246,
+    "metamorphicCaseCount": 10,
+    "persistenceSimCount": 9,
+    "detectorPayloadCount": 25,
+    "persistencePayloadCount": 9,
+    "uniqueLiveProbeIds": 28,
+    "note": "detectorPayloadCount != uniqueTotalProbeCount; each category counted separately (corrects P3-R12-IR-004)."
+  },
+  "preFix": {
+    "explicitMisses": 14,
+    "explicitOverfires": 3,
+    "grammarMisses": 40,
+    "grammarFalsePositives": 25,
+    "metamorphicFailures": 3,
+    "falsePersistedClaims": 5
+  },
+  "postFix": {
+    "explicitMisses": 0,
+    "explicitOverfires": 0,
+    "grammarMisses": 0,
+    "grammarFalsePositives": 0,
+    "metamorphicFailures": 0,
+    "falsePersistedClaims": 0,
+    "persistenceStatusMismatch": 0
+  },
+  "liveCampaign": {
+    "probes": 28,
+    "apiUnsafe": 0,
+    "historyUnsafe": 0,
+    "apiNotEqualHistory": 0,
+    "rejectedExposed": 0,
+    "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0"
+  },
+  "singleRuntimeEvidence": true
+}

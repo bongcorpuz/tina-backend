@@ -1,0 +1,15 @@
+{
+  "probeId": "PEN-AVOID",
+  "runtimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "question": "Should I file my income tax return today to avoid penalties?",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "publicApiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFiling your income tax return today ensures compliance with the law and helps you avoid penalties associated with late filing. It is advisable to submit your return electronically or manually to the Bureau of Internal Revenue (BIR) or through authorized agents to meet the deadline.",
+  "historyReadbackAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFiling your income tax return today ensures compliance with the law and helps you avoid penalties associated with late filing. It is advisable to submit your return electronically or manually to the Bureau of Internal Revenue (BIR) or through authorized agents to meet the deadline.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false
+}
