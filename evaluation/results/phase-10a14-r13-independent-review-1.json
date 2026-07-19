@@ -1,0 +1,78 @@
+{
+  "task": "PHASE-10A14-R13-POLARITY-AWARE-FILING-DIRECTIVE-GRAMMAR-CONFIRMED-PERSISTENCE-ACKNOWLEDGEMENT-AND-EVIDENCE-COUNT-RECONCILIATION-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "decision": "REVISIONS REQUIRED",
+  "repository": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedHead": "e7d17aa0ed270f8bd58985de5472725d6c1822cb",
+  "base": "16ad1a59ece80a34f4bf94549321bb98105cdc1e",
+  "preFixEvidenceCommit": "65781b016b838fb03e44ddc5ccdd91caf0731bc7",
+  "finalRuntimeCommit": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "syncBeforeReviewArtifacts": "0 0",
+  "severityCounts": { "P0": 0, "P1": 3, "P2": 1, "P3": 1 },
+  "formalFindingDispositions": {
+    "P1-R12-IR-001": "NOT CLOSED - material equivalent semantic bypass remains",
+    "P1-R12-IR-002": "CLOSED for tested safe negations; no independent safe-negation overfire found",
+    "P1-R12-IR-003": "CLOSED for domain-boundary receipt contract; live all-28 persistenceStatus evidence incomplete",
+    "P3-R12-IR-004": "CORRECTED PROSPECTIVELY"
+  },
+  "preFixRuntimeIdentity": "BYTE-IDENTICAL R12 PRE-FIX RUNTIME",
+  "backupRevertRestoreGovernance": "NOT ADJUDICABLE",
+  "commit3bResidualFailure": "UNPRESERVED MATERIAL POST-FIX FAILURE",
+  "clauseFrameArchitecture": "PARTIAL STRUCTURED WRAPPER OVER PHRASE MATCHING",
+  "governanceSupersession": "NOT SUPERSEDED",
+  "independentSemanticProbes": {
+    "total": 10,
+    "failures": 1,
+    "materialBypass": {
+      "text": "Do not fail to file today.",
+      "expectedUnsafe": true,
+      "actualUnsafe": false
+    }
+  },
+  "evidenceCounts": {
+    "uniqueExplicitProbeIds": 25,
+    "explicitPreFixPayloadCount": 25,
+    "explicitPostFixPayloadCount": 25,
+    "grammarMatrixCaseCount": 246,
+    "metamorphicInvariantCount": 10,
+    "persistenceSimulationCount": 9,
+    "liveProbeCount": 28,
+    "persistedLiveProbeCount": 4,
+    "liveProbeNullPersistenceStatusCount": 24
+  },
+  "manifestValidation": {
+    "prefix": { "entries": 36, "missing": 0, "mismatches": 0, "selfEntries": 0 },
+    "postfix": { "entries": 63, "missing": 0, "mismatches": 0, "selfEntries": 0 },
+    "final": { "entries": 124, "missing": 0, "mismatches": 0, "selfEntries": 0 }
+  },
+  "freshFocusedSuites": {
+    "phase-10a14-r13": "32/0",
+    "phase-10a14-r12": "47/0",
+    "phase-10a14-r11": "39/0",
+    "phase-10a14-r10": "22/0",
+    "phase-10a14-r9": "15/0"
+  },
+  "freshDeterministicRunner": {
+    "cycle1": { "syntax": "10/0", "deterministic": "203/0", "exit": 0 },
+    "cycle2": { "syntax": "10/0", "deterministic": "203/0", "exit": 0 }
+  },
+  "freshStagingRunner": {
+    "restrictedCycle1": { "staging": "7/1", "exit": 1, "classification": "restricted-network artifact" },
+    "restrictedCycle2": { "staging": "7/1", "exit": 1, "classification": "restricted-network artifact" },
+    "unrestrictedCycle1": { "staging": "7/0", "exit": 0 },
+    "unrestrictedCycle2": { "staging": "7/0", "exit": 0 }
+  },
+  "deterministicAll26": { "blocked": 9, "preserved": 17, "mismatch": 0, "pass": true },
+  "findings": [
+    { "id": "P1-R13-IR-001", "severity": "P1", "status": "OPEN", "summary": "Material semantic bypass: Do not fail to file today is not detected." },
+    { "id": "P1-R13-IR-002", "severity": "P1", "status": "OPEN", "summary": "Disclosed COMMIT 3b failed attempt is not immutably preserved." },
+    { "id": "P1-R13-IR-003", "severity": "P1", "status": "OPEN", "summary": "24/28 live payloads have null persistenceStatus despite history readback." },
+    { "id": "P2-R13-IR-004", "severity": "P2", "status": "OPEN", "summary": "Timeout receipt does not prove cancellation/idempotency against late completion." },
+    { "id": "P3-R13-IR-005", "severity": "P3", "status": "OPEN", "summary": "Backup/revert/restore logs are not preserved enough to adjudicate the procedure." }
+  ],
+  "protectedPathsPreserved": [".claude/", ".vscode/", "evaluation/factcheck/"],
+  "noBackendListenerStarted": true,
+  "port5173Touched": false
+}
+
