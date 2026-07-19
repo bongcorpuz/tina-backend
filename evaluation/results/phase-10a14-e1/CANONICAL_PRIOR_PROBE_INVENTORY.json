@@ -1,0 +1,199 @@
+{
+  "description": "Canonical prior-probe inventory: original governance-critical probes (A14 verified slots + R1-R8 reviewer/remediation safeguards) mapped to E1 final live evidence IDs.",
+  "sourceTasks": [
+    "A12",
+    "A13",
+    "A13-R1",
+    "A14",
+    "A14-R1",
+    "A14-R2",
+    "A14-R3",
+    "A14-R4",
+    "A14-R5",
+    "A14-R6",
+    "A14-R7",
+    "A14-R8"
+  ],
+  "a14VerifiedSlots26": [
+    "Q1-r3",
+    "Q3-r1",
+    "Q3-r3",
+    "Q6-r2",
+    "Q6-r3",
+    "Q12-r1",
+    "Q12-r2",
+    "Q12-r3",
+    "Q15-r1",
+    "Q15-r2",
+    "Q15-r3",
+    "Q30-r1",
+    "Q30-r2",
+    "Q30-r3",
+    "Q32-r1",
+    "Q32-r2",
+    "Q32-r3",
+    "Q34-r1",
+    "Q34-r2",
+    "Q34-r3",
+    "Q47-r1",
+    "Q47-r2",
+    "Q47-r3",
+    "Q48-r1",
+    "Q48-r2",
+    "Q48-r3"
+  ],
+  "a14LaunderingTargetsBlocked9": [
+    "Q12-r1",
+    "Q12-r2",
+    "Q12-r3",
+    "Q30-r1",
+    "Q30-r2",
+    "Q30-r3",
+    "Q34-r1",
+    "Q34-r2",
+    "Q34-r3"
+  ],
+  "r1r8Safeguards": {
+    "R1 (filing obligation/deadline/estate base laundering)": "Q12/Q30/Q34 blocked; SG-A-*, SG-B-*, SG-C-*, SG-E-* + ALL26 targets",
+    "R2 (filing/estate semantic proposition coverage)": "SG-B-*, SG-E-*, POS-ESTATE, POS-DONOR",
+    "R3 (multi-proposition filing/authority/estate sufficiency)": "SG-D-*, SG-F-*",
+    "R4 (Sec 51 filing-authority bridge)": "SG-G-EXACT51, SG-G-EXACT51C, SG-F-SUBST51, POS-SUBST-*",
+    "R5 (Sec 51 current-law chain + imperative filing)": "SG-G-*, SG-B-IMPER, SG-H-CHAINREVIEW",
+    "R6 (temporal card propagation + 51-A origin)": "SG-G-EXACT51A, SG-F-SUBST51, SG-H-*",
+    "R7 (exact-date Section 51(C)(2) effectivity)": "POS-51C2-*, SG-G-MALFORMED51, SG-G-MISSING51, SG-G-2024TXN",
+    "R8 (qualifying publication + strict date + fail-closed)": "POS-51C2-JUN18/JUN19/JUN20, POS-51C2-MISSING/MALFORMED, SG-G-JULY1SEP, SG-H-NOTYET, SG-H-UNRESOLVED"
+  },
+  "canonicalHighRisk": [
+    "Q5",
+    "Q8",
+    "Q25",
+    "Q36",
+    "Q38",
+    "Q46"
+  ],
+  "mappedOriginalToE1": {
+    "A14:Q1-r3": [
+      "ALL26-Q1-r3"
+    ],
+    "A14:Q3-r1": [
+      "ALL26-Q3-r1"
+    ],
+    "A14:Q3-r3": [
+      "ALL26-Q3-r3"
+    ],
+    "A14:Q6-r2": [
+      "ALL26-Q6-r2"
+    ],
+    "A14:Q6-r3": [
+      "ALL26-Q6-r3"
+    ],
+    "A14:Q12-r1": [
+      "ALL26-Q12-r1"
+    ],
+    "A14:Q12-r2": [
+      "ALL26-Q12-r2"
+    ],
+    "A14:Q12-r3": [
+      "ALL26-Q12-r3"
+    ],
+    "A14:Q15-r1": [
+      "ALL26-Q15-r1"
+    ],
+    "A14:Q15-r2": [
+      "ALL26-Q15-r2"
+    ],
+    "A14:Q15-r3": [
+      "ALL26-Q15-r3"
+    ],
+    "A14:Q30-r1": [
+      "ALL26-Q30-r1"
+    ],
+    "A14:Q30-r2": [
+      "ALL26-Q30-r2"
+    ],
+    "A14:Q30-r3": [
+      "ALL26-Q30-r3"
+    ],
+    "A14:Q32-r1": [
+      "ALL26-Q32-r1"
+    ],
+    "A14:Q32-r2": [
+      "ALL26-Q32-r2"
+    ],
+    "A14:Q32-r3": [
+      "ALL26-Q32-r3"
+    ],
+    "A14:Q34-r1": [
+      "ALL26-Q34-r1"
+    ],
+    "A14:Q34-r2": [
+      "ALL26-Q34-r2"
+    ],
+    "A14:Q34-r3": [
+      "ALL26-Q34-r3"
+    ],
+    "A14:Q47-r1": [
+      "ALL26-Q47-r1"
+    ],
+    "A14:Q47-r2": [
+      "ALL26-Q47-r2"
+    ],
+    "A14:Q47-r3": [
+      "ALL26-Q47-r3"
+    ],
+    "A14:Q48-r1": [
+      "ALL26-Q48-r1"
+    ],
+    "A14:Q48-r2": [
+      "ALL26-Q48-r2"
+    ],
+    "A14:Q48-r3": [
+      "ALL26-Q48-r3"
+    ],
+    "A14:Q38": [
+      "POS-REG",
+      "SG-I-Q38"
+    ],
+    "A14:Q8": [
+      "POS-VATEXC",
+      "SG-I-Q8"
+    ],
+    "A14:Q1": [
+      "POS-VATORD"
+    ],
+    "A14:Q30": [
+      "POS-ESTATE",
+      "SG-A-Q30REV"
+    ],
+    "A14:Q47": [
+      "POS-DONOR"
+    ],
+    "A14:Q15": [
+      "POS-MCIT"
+    ],
+    "A14:Q37": [
+      "POS-PROC"
+    ],
+    "A14:Q5": [
+      "SG-I-Q5"
+    ],
+    "A14:Q25": [
+      "SG-I-Q25"
+    ],
+    "A14:Q36": [
+      "SG-I-Q36"
+    ],
+    "A14:Q46": [
+      "SG-I-Q46"
+    ],
+    "A14:Q12": [
+      "SG-A-Q12REV"
+    ],
+    "A14:Q34": [
+      "SG-A-Q34REV"
+    ]
+  },
+  "note": "Every A14 verified slot maps to an ALL26-* live probe. Governance-critical R1-R8 safeguard classes each map to >=1 SG-* / POS-* live probe. A12/A13 broad probes are represented through their surviving R1-R8 safeguard descendants rather than re-cataloged verbatim; this scoping is disclosed for the independent reviewer.",
+  "totalOriginalMapped": 39,
+  "totalE1Probes": 115
+}

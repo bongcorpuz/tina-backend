@@ -1,0 +1,251 @@
+{
+  "description": "Fresh governed live replay of all 26 A14 verified logical slots (executed separately).",
+  "slots": [
+    {
+      "probeId": "ALL26-Q1-r3",
+      "matrixClass": "all26_live",
+      "question": "Freelance graphic designer, ₱2.8 million annual gross receipts: Is VAT registration required?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q1-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q3-r1",
+      "matrixClass": "all26_live",
+      "question": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q3-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q3-r3",
+      "matrixClass": "all26_live",
+      "question": "A VAT-registered exporter sells 100% abroad. Can it obtain a refund or tax credit for input VAT?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q3-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q6-r2",
+      "matrixClass": "all26_live",
+      "question": "Can a non-VAT-registered seller issue a VAT invoice?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q6-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q6-r3",
+      "matrixClass": "all26_live",
+      "question": "Can a non-VAT-registered seller issue a VAT invoice?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q6-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q12-r1",
+      "matrixClass": "all26_live",
+      "question": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q12-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q12-r2",
+      "matrixClass": "all26_live",
+      "question": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q12-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q12-r3",
+      "matrixClass": "all26_live",
+      "question": "Is an individual with ₱250,000 gross compensation income in 2024 required to file an income tax return?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q12-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q15-r1",
+      "matrixClass": "all26_live",
+      "question": "How is MCIT computed and when does it apply?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q15-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q15-r2",
+      "matrixClass": "all26_live",
+      "question": "How is MCIT computed and when does it apply?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q15-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q15-r3",
+      "matrixClass": "all26_live",
+      "question": "How is MCIT computed and when does it apply?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q15-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q30-r1",
+      "matrixClass": "all26_live",
+      "question": "What is the estate tax rate under TRAIN?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q30-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q30-r2",
+      "matrixClass": "all26_live",
+      "question": "What is the estate tax rate under TRAIN?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q30-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q30-r3",
+      "matrixClass": "all26_live",
+      "question": "What is the estate tax rate under TRAIN?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q30-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q32-r1",
+      "matrixClass": "all26_live",
+      "question": "What is the deadline for filing an estate tax return, and can it be extended?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q32-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q32-r2",
+      "matrixClass": "all26_live",
+      "question": "What is the deadline for filing an estate tax return, and can it be extended?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q32-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q32-r3",
+      "matrixClass": "all26_live",
+      "question": "What is the deadline for filing an estate tax return, and can it be extended?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q32-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q34-r1",
+      "matrixClass": "all26_live",
+      "question": "What is the deadline for the annual income tax return of an individual?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q34-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q34-r2",
+      "matrixClass": "all26_live",
+      "question": "What is the deadline for the annual income tax return of an individual?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q34-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q34-r3",
+      "matrixClass": "all26_live",
+      "question": "What is the deadline for the annual income tax return of an individual?",
+      "expected": "UNSUPPORTED_VERIFIED_CONTROLLING=0 (laundering target must not verify unsupported)",
+      "mapped": [
+        "A14:Q34-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q47-r1",
+      "matrixClass": "all26_live",
+      "question": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q47-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q47-r2",
+      "matrixClass": "all26_live",
+      "question": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q47-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q47-r3",
+      "matrixClass": "all26_live",
+      "question": "What is the donor's tax rate under TRAIN and the exemption threshold?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q47-r3"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q48-r1",
+      "matrixClass": "all26_live",
+      "question": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q48-r1"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q48-r2",
+      "matrixClass": "all26_live",
+      "question": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q48-r2"
+      ]
+    },
+    {
+      "probeId": "ALL26-Q48-r3",
+      "matrixClass": "all26_live",
+      "question": "What conditions must a corporation satisfy to claim a bad debt as a deductible expense?",
+      "expected": "deterministic eligibility preserved; no invalid/over verification",
+      "mapped": [
+        "A14:Q48-r3"
+      ]
+    }
+  ],
+  "blockedTargets": [
+    "Q12-r1",
+    "Q12-r2",
+    "Q12-r3",
+    "Q30-r1",
+    "Q30-r2",
+    "Q30-r3",
+    "Q34-r1",
+    "Q34-r2",
+    "Q34-r3"
+  ],
+  "expectedUnsupportedVerified": 0
+}

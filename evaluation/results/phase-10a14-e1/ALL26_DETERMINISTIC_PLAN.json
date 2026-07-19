@@ -1,0 +1,43 @@
+{
+  "description": "Deterministic replay of the 26 original A14 VERIFIED_CONTROLLING payloads through the frozen R8 gate.",
+  "expectedBlocked": 9,
+  "expectedPreserved": 17,
+  "blocked": [
+    "Q12-r1",
+    "Q12-r2",
+    "Q12-r3",
+    "Q30-r1",
+    "Q30-r2",
+    "Q30-r3",
+    "Q34-r1",
+    "Q34-r2",
+    "Q34-r3"
+  ],
+  "preserved": [
+    "Q1-r3",
+    "Q3-r1",
+    "Q3-r3",
+    "Q6-r2",
+    "Q6-r3",
+    "Q15-r1",
+    "Q15-r2",
+    "Q15-r3",
+    "Q32-r1",
+    "Q32-r2",
+    "Q32-r3",
+    "Q47-r1",
+    "Q47-r2",
+    "Q47-r3",
+    "Q48-r1",
+    "Q48-r2",
+    "Q48-r3"
+  ],
+  "overfireCheck": [
+    "Q3",
+    "Q47"
+  ],
+  "eligibilityCheck": [
+    "Q32"
+  ],
+  "method": "deterministic evaluateAnswerSupport replay of committed A14 payloads; see WS8 artifact"
+}

@@ -1,0 +1,227 @@
+{
+  "description": "Governed main positive matrix.",
+  "required_verified_classes": [
+    "individual_filing_obligation",
+    "individual_filing_deadline",
+    "substituted_filing"
+  ],
+  "probes": [
+    {
+      "probeId": "POS-INDFILE-1",
+      "matrixClass": "positive_individual_filing_obligation",
+      "question": "Is an individual earning purely compensation income from a single employer in the Philippines required to file an annual income tax return if the employer withheld the correct tax?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-INDFILE-2",
+      "matrixClass": "positive_individual_filing_obligation",
+      "question": "Kailangan pa bang mag-file ng annual income tax return ang isang empleyadong may iisang employer lang at tama na ang withholding tax?",
+      "expected": "VERIFIED_CONTROLLING available (Taglish)",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-INDFILE-3",
+      "matrixClass": "positive_individual_filing_obligation",
+      "question": "Under the NIRC, who is required to file an individual income tax return and who is exempt?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-INDDEAD-1",
+      "matrixClass": "positive_individual_filing_deadline",
+      "question": "What is the deadline for filing the annual income tax return of an individual taxpayer in the Philippines?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-INDDEAD-2",
+      "matrixClass": "positive_individual_filing_deadline",
+      "question": "Kailan ang deadline ng annual income tax return ng isang individual na taxpayer?",
+      "expected": "VERIFIED_CONTROLLING available (Taglish)",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-INDDEAD-3",
+      "matrixClass": "positive_individual_filing_deadline",
+      "question": "On what date must an individual file the BIR annual income tax return for a given taxable year, and what is the statutory basis?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-SUBST-1",
+      "matrixClass": "positive_substituted_filing",
+      "question": "An employee earned purely compensation income from one employer for the whole year and the employer withheld and remitted the correct tax. Is the employee qualified for substituted filing?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-SUBST-2",
+      "matrixClass": "positive_substituted_filing",
+      "question": "What are the conditions for substituted filing of the income tax return under the NIRC and its regulations?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-SUBST-3",
+      "matrixClass": "positive_substituted_filing",
+      "question": "Is a minimum-wage earner with a single employer required to file an annual income tax return, or is filing substituted?",
+      "expected": "VERIFIED_CONTROLLING available",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-SUBST-4",
+      "matrixClass": "positive_substituted_filing",
+      "question": "Employee with two employers during the year: does substituted filing still apply?",
+      "expected": "supported answer; substituted filing not available with concurrent multiple employers",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-SUBST-5",
+      "matrixClass": "positive_substituted_filing",
+      "question": "Ano ang legal na basehan ng substituted filing at sino ang qualified dito?",
+      "expected": "VERIFIED_CONTROLLING available (Taglish)",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-HIST-2023",
+      "matrixClass": "positive_historical_ordinary_filing",
+      "question": "For taxable year 2023, what was the deadline and requirement for an individual to file the annual income tax return?",
+      "expected": "supported historical answer; RA 11976/12214 not applied to 2023",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-HIST-CURRENT",
+      "matrixClass": "positive_historical_ordinary_filing",
+      "question": "What is the current requirement for an individual to file the annual income tax return?",
+      "expected": "supported current answer",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-PRE1",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of stock of a domestic corporation on January 15, 2025. What capital gains tax return and rate apply, and by when must it be filed?",
+      "expected": "PRE_EFFECTIVITY: RA 12214 not applicable",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-PRE2",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation on June 1, 2025. Which capital gains tax return and rate govern the transaction?",
+      "expected": "PRE_EFFECTIVITY: RA 12214 not applicable",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-JUN18",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation on June 18, 2025. Which capital gains tax return and rate apply?",
+      "expected": "PRE_EFFECTIVITY (day before effectivity 2025-06-19)",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-JUN19",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation on June 19, 2025. Which capital gains tax return and rate apply?",
+      "expected": "POST_EFFECTIVITY (effectivity date, inclusive)",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-JUN20",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation on June 20, 2025. Which capital gains tax return and rate apply?",
+      "expected": "POST_EFFECTIVITY",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-POST1",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation on August 5, 2025. Which capital gains tax return and rate apply?",
+      "expected": "POST_EFFECTIVITY",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-POST2",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer disposed of unlisted shares of a domestic corporation on March 3, 2026. Which capital gains tax return and rate apply?",
+      "expected": "POST_EFFECTIVITY",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-MISSING",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation. Which capital gains tax return and rate apply and by when must it be filed?",
+      "expected": "no transaction date: must not verify RA 12214 as applicable",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-51C2-MALFORMED",
+      "matrixClass": "positive_section51c2",
+      "question": "A taxpayer sold unlisted shares of a domestic corporation on 2025-13-45. Which capital gains tax return and rate apply?",
+      "expected": "malformed date: must not verify RA 12214 as applicable",
+      "mapped": []
+    },
+    {
+      "probeId": "POS-REG",
+      "matrixClass": "positive_registration",
+      "question": "Is a newly established business in the Philippines required to register with the BIR, and what form is used?",
+      "expected": "registration positive reachability",
+      "mapped": [
+        "A14:Q38"
+      ]
+    },
+    {
+      "probeId": "POS-VATEXC",
+      "matrixClass": "positive_vat_exception",
+      "question": "Is the lease of a residential unit at ₱15,000 per month subject to VAT?",
+      "expected": "VAT exception positive",
+      "mapped": [
+        "A14:Q8"
+      ]
+    },
+    {
+      "probeId": "POS-VATORD",
+      "matrixClass": "positive_vat_ordinary",
+      "question": "A freelance graphic designer has ₱2.8 million annual gross receipts. Is VAT registration required?",
+      "expected": "ordinary VAT positive",
+      "mapped": [
+        "A14:Q1"
+      ]
+    },
+    {
+      "probeId": "POS-ESTATE",
+      "matrixClass": "positive_estate_computation",
+      "question": "How is the net taxable estate computed and what estate tax rate applies under the TRAIN law?",
+      "expected": "estate computation positive (rate+base+deduction complete)",
+      "mapped": [
+        "A14:Q30"
+      ]
+    },
+    {
+      "probeId": "POS-DONOR",
+      "matrixClass": "positive_donor",
+      "question": "What is the donor's tax rate under the TRAIN law and the annual exemption threshold?",
+      "expected": "donor positive (no false refusal)",
+      "mapped": [
+        "A14:Q47"
+      ]
+    },
+    {
+      "probeId": "POS-MCIT",
+      "matrixClass": "positive_mcit",
+      "question": "How is the minimum corporate income tax (MCIT) computed and when does it apply to a domestic corporation?",
+      "expected": "MCIT positive",
+      "mapped": [
+        "A14:Q15"
+      ]
+    },
+    {
+      "probeId": "POS-PROC",
+      "matrixClass": "positive_procedural",
+      "question": "What is the BIR assessment period when a taxpayer has filed a return?",
+      "expected": "procedural positive where controlling authority available",
+      "mapped": [
+        "A14:Q37"
+      ]
+    }
+  ]
+}
