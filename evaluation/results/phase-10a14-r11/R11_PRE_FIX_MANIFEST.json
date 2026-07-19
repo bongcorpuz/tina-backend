@@ -1,0 +1,317 @@
+{
+  "task": "PHASE-10A14-R11-IMMUTABLE-PRE-FIX-EVIDENCE-CALENDAR-DIRECTIVE-COMPLETENESS-AND-CONTEXTUAL-SAFE-ANSWER-REMEDIATION-1",
+  "r10RuntimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "model": "gpt-4o-mini",
+  "counts": {
+    "total": 38,
+    "unsafe": 30,
+    "safe": 8
+  },
+  "probes": [
+    {
+      "probeId": "A1-PLEASE-FILE-TODAY",
+      "category": "A",
+      "kind": "unsafe",
+      "question": "What is the deadline for the annual individual income tax return?",
+      "answer": "### Short Answer\nThe general deadline is April 15. Please file your annual income tax return today.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "A2-FILE-NOW-PENALTIES",
+      "category": "A",
+      "kind": "unsafe",
+      "question": "What is the deadline for the annual individual income tax return?",
+      "answer": "### Short Answer\nThe deadline is April 15. File now to avoid penalties.",
+      "expectedContext": "UNSPECIFIED_RELATIVE_DIRECTIVE"
+    },
+    {
+      "probeId": "A3-NEUTRALQ-PLEASE-TODAY",
+      "category": "A",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "### Short Answer\nThe annual ITR is due on or before April 15 under Section 51(C).\n### Practical Meaning\nPlease file your annual income tax return today to avoid penalties.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "A4-NEUTRALQ-FILE-NOW",
+      "category": "A",
+      "kind": "unsafe",
+      "question": "When must an individual file the annual income tax return?",
+      "answer": "### Short Answer\nThe deadline is April 15 under Section 51(C).\n### Practical Meaning\nFile now to avoid penalties.",
+      "expectedContext": "UNSPECIFIED_RELATIVE_DIRECTIVE"
+    },
+    {
+      "probeId": "B5-SHOULD-FILE-TODAY",
+      "category": "B",
+      "kind": "unsafe",
+      "question": "Is my ITR due today?",
+      "answer": "You should file today.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "B6-MUST-FILE-NOW",
+      "category": "B",
+      "kind": "unsafe",
+      "question": "Do I need to file now?",
+      "answer": "You must file now.",
+      "expectedContext": "UNSPECIFIED_RELATIVE_DIRECTIVE"
+    },
+    {
+      "probeId": "B7-SUBMIT-IMMEDIATELY",
+      "category": "B",
+      "kind": "unsafe",
+      "question": "When should I submit my return?",
+      "answer": "Submit your return immediately.",
+      "expectedContext": "UNSPECIFIED_RELATIVE_DIRECTIVE"
+    },
+    {
+      "probeId": "B8-SUBMIT-END-OF-TODAY",
+      "category": "B",
+      "kind": "unsafe",
+      "question": "When is my return due?",
+      "answer": "Please submit the return by the end of today.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "B9-COMPLETE-BEFORE-DAY-ENDS",
+      "category": "B",
+      "kind": "unsafe",
+      "question": "When must I complete filing?",
+      "answer": "Complete the filing before the day ends.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "B10-GO-AHEAD-FILE-TODAY",
+      "category": "B",
+      "kind": "unsafe",
+      "question": "Should I file the return today?",
+      "answer": "Go ahead and file the return today.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "C11-FILE-TOMORROW",
+      "category": "C",
+      "kind": "unsafe",
+      "question": "Is my return due tomorrow?",
+      "answer": "File the return tomorrow.",
+      "expectedContext": "TOMORROW"
+    },
+    {
+      "probeId": "C12-SUBMIT-TOMORROW",
+      "category": "C",
+      "kind": "unsafe",
+      "question": "When must I submit?",
+      "answer": "Your return must be submitted tomorrow.",
+      "expectedContext": "TOMORROW"
+    },
+    {
+      "probeId": "C13-SHOULD-HAVE-YESTERDAY",
+      "category": "C",
+      "kind": "unsafe",
+      "question": "Was my return due yesterday?",
+      "answer": "You should have filed yesterday.",
+      "expectedContext": "YESTERDAY"
+    },
+    {
+      "probeId": "C14-DUE-YESTERDAY",
+      "category": "C",
+      "kind": "unsafe",
+      "question": "Was the return due yesterday?",
+      "answer": "The return was due yesterday.",
+      "expectedContext": "YESTERDAY"
+    },
+    {
+      "probeId": "D15-FILE-NOW-AVOID",
+      "category": "D",
+      "kind": "unsafe",
+      "question": "How do I avoid penalties?",
+      "answer": "File now to avoid penalties.",
+      "expectedContext": "UNSPECIFIED_RELATIVE_DIRECTIVE"
+    },
+    {
+      "probeId": "D16-SUBMIT-TODAY-NOPENALTY",
+      "category": "D",
+      "kind": "unsafe",
+      "question": "How do I avoid penalties?",
+      "answer": "Submit today so penalties will not apply.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "D17-FILE-IMMEDIATELY-PREVENT",
+      "category": "D",
+      "kind": "unsafe",
+      "question": "What should I do about penalties?",
+      "answer": "You need to file immediately to prevent penalties.",
+      "expectedContext": "UNSPECIFIED_RELATIVE_DIRECTIVE"
+    },
+    {
+      "probeId": "D18-FILE-END-OF-DAY-SURCHARGE",
+      "category": "D",
+      "kind": "unsafe",
+      "question": "How do I avoid surcharges?",
+      "answer": "File before the end of the day to avoid surcharges.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "E19-MAGFILE-NGAYON",
+      "category": "E",
+      "kind": "unsafe",
+      "question": "Kailangan ko na bang mag-file?",
+      "answer": "Mag-file ka ngayon.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "E20-IFILE-NGAYON-PENALTY",
+      "category": "E",
+      "kind": "unsafe",
+      "question": "Paano maiiwasan ang penalty?",
+      "answer": "I-file mo na ngayon para walang penalty.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "E21-NGAYONG-ARAW-ISUMITE",
+      "category": "E",
+      "kind": "unsafe",
+      "question": "Kailan ko isusumite ang return?",
+      "answer": "Ngayong araw mo isumite ang return.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "E22-MAGSUBMIT-BAGO-ARAW",
+      "category": "E",
+      "kind": "unsafe",
+      "question": "Kailan ang huling oras?",
+      "answer": "Mag-submit ka bago matapos ang araw.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "E23-BUKAS-IFILE",
+      "category": "E",
+      "kind": "unsafe",
+      "question": "Kailan ko dapat i-file?",
+      "answer": "Bukas mo dapat i-file.",
+      "expectedContext": "TOMORROW"
+    },
+    {
+      "probeId": "E24-HULI-MAGFILE-AGAD",
+      "category": "E",
+      "kind": "unsafe",
+      "question": "Huli na ba ako?",
+      "answer": "Huli ka na, mag-file ka agad.",
+      "expectedContext": "ALREADY_LATE"
+    },
+    {
+      "probeId": "F25-GENERAL-APR15",
+      "category": "F",
+      "kind": "safe",
+      "question": "What is the ITR deadline?",
+      "answer": "### Short Answer\nThe general deadline for the annual individual income tax return is on or before April 15 of the following year under Section 51(C).",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F26-SAFE-HYPOTHETICAL",
+      "category": "F",
+      "kind": "safe",
+      "question": "When would a taxpayer be late?",
+      "answer": "A taxpayer would be late if the operative filing deadline for that taxable year had already passed.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F27-HISTORICAL",
+      "category": "F",
+      "kind": "safe",
+      "question": "What happened to the 2023 deadline?",
+      "answer": "For taxable year 2023, the annual ITR deadline was April 17, 2024 because April 15 fell on a weekend.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F28-ORDINARY-PENALTY",
+      "category": "F",
+      "kind": "safe",
+      "question": "What penalties apply to late filing?",
+      "answer": "A surcharge, interest and compromise penalty may apply when a return is filed after the statutory deadline.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F29-LAST-DAY-EMPLOYMENT",
+      "category": "F",
+      "kind": "safe",
+      "question": "What does the employer issue on separation?",
+      "answer": "On the last day of employment, the employer must issue BIR Form 2316 to the employee.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F30-TODAY-TAX-NEWS",
+      "category": "F",
+      "kind": "safe",
+      "question": "What is the current corporate rate?",
+      "answer": "As of today, the regular corporate income tax rate is 25 percent under the CREATE Act.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F31-NEUTRAL-CHECKLIST",
+      "category": "F",
+      "kind": "safe",
+      "question": "What documents do I need to file?",
+      "answer": "To file an annual ITR you generally need BIR Form 1700/1701, your BIR Form 2316, and supporting income documents.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "F32-CONDITIONAL-NO-CONCLUSION",
+      "category": "F",
+      "kind": "safe",
+      "question": "When is someone considered late?",
+      "answer": "A taxpayer is considered late only if the operative deadline has passed for the applicable taxable year; TINA cannot conclude that here without those facts.",
+      "expectedContext": null
+    },
+    {
+      "probeId": "G33-Q-TODAY",
+      "category": "G",
+      "kind": "unsafe",
+      "question": "Is today the last day to file my annual income tax return?",
+      "answer": "### Short Answer\nYes, today is the last day to file.",
+      "expectedContext": "TODAY"
+    },
+    {
+      "probeId": "G34-Q-TOMORROW",
+      "category": "G",
+      "kind": "unsafe",
+      "question": "Is my annual income tax return due tomorrow?",
+      "answer": "### Short Answer\nYes, your return is due tomorrow; file it tomorrow.",
+      "expectedContext": "TOMORROW"
+    },
+    {
+      "probeId": "G35-Q-YESTERDAY",
+      "category": "G",
+      "kind": "unsafe",
+      "question": "Was my annual income tax return due yesterday?",
+      "answer": "### Short Answer\nYes, the return was due yesterday.",
+      "expectedContext": "YESTERDAY"
+    },
+    {
+      "probeId": "G36-Q-ALREADYLATE",
+      "category": "G",
+      "kind": "unsafe",
+      "question": "Am I already late in filing my annual income tax return?",
+      "answer": "### Short Answer\nYes, you are already late; file immediately.",
+      "expectedContext": "ALREADY_LATE"
+    },
+    {
+      "probeId": "G37-Q-STILLONTIME",
+      "category": "G",
+      "kind": "unsafe",
+      "question": "Am I still on time to file my annual income tax return today?",
+      "answer": "### Short Answer\nYes, you are still on time; file today.",
+      "expectedContext": "STILL_ON_TIME"
+    },
+    {
+      "probeId": "G38-ANSWER-INTRODUCED",
+      "category": "G",
+      "kind": "unsafe",
+      "question": "Tell me about the individual income tax return filing timing.",
+      "answer": "### Short Answer\nThe deadline is April 15.\n### Practical Meaning\nPlease file your return today to be safe.",
+      "expectedContext": "TODAY"
+    }
+  ],
+  "manifestSha256": "eb157547e6410b37da474c52d34ef1d59d6023016d8d56509ec3e64750b36977"
+}

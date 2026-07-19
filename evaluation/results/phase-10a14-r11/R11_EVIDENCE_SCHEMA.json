@@ -1,0 +1,22 @@
+{
+  "fields": [
+    "probeId",
+    "runtimeCommit",
+    "exactQuestion",
+    "injectedOrGeneratedAnswer",
+    "detectorResult",
+    "answerSupportStage",
+    "publicAnswer",
+    "finalTrustState",
+    "requestHash",
+    "responseHash",
+    "payloadHash",
+    "timestamp",
+    "executionMode"
+  ],
+  "executionModes": [
+    "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+    "LIVE_MODEL_REQUEST",
+    "HANDLER_INTEGRATION_REPRODUCTION"
+  ]
+}
