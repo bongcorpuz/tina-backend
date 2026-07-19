@@ -1,0 +1,33 @@
+{
+  "detectorFields": [
+    "probeId",
+    "exactQuestion",
+    "generatedAnswerFixture",
+    "detectorResult",
+    "answerSupportStage",
+    "finalTrustState",
+    "runtimeCommit",
+    "requestHash",
+    "responseHash",
+    "payloadHash",
+    "timestamp"
+  ],
+  "persistenceFields": [
+    "probeId",
+    "publicApiAnswer",
+    "publicApiAnswerHash",
+    "persistenceAttempted",
+    "persistenceResult",
+    "persistedAnswer",
+    "persistedAnswerHash",
+    "historyReadbackAnswer",
+    "historyReadbackAnswerHash",
+    "apiTrust",
+    "persistedTrust",
+    "historyTrust",
+    "responseType",
+    "persistenceStatus",
+    "exclusionReason",
+    "mismatchClassification"
+  ]
+}
