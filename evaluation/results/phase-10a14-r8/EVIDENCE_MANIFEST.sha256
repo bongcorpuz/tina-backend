@@ -1,0 +1,12 @@
+5138850f94dd1909e48c533fbcde30c3a19f54861537d258cbb954cae5030585 *evaluation/results/phase-10a14-r8/MANIFEST-AND-EFFECTIVITY.md
+baf51bd6e2c4debcb123788b158a138960c6d5c32ad6c2abb4f32c057fdc1969 *evaluation/results/phase-10a14-r8/p1-reproduction.txt
+c19d512d3741e93ecc2aee9b9dbffbd51f5d5f5225467de1847009cba38ff14e *evaluation/results/phase-10a14-r8/security-and-scope-review.md
+fd4d2c43e1dd7b7f15abe166af54812899fde6204f4aa8608fb9a93de0586eb1 *evaluation/results/phase-10a14-r8/phase-10a14-r8-result.json
+c40c77aa35a91c5f3a0d9e00fdb19c35fdfdf5323a964f54ed8cb508c5d277aa *evaluation/results/phase-10a14-r8/deterministic-gate-cycle1.txt
+ec153b6a6b809607b38a738f2e92a41cdc31b9f9008e2c12f0451356f0559db6 *evaluation/results/phase-10a14-r8/deterministic-gate-cycle2.txt
+655b81e37ff5f967d0c986d4ef912aac508185fa85adeef956fc1dd9e4f80600 *evaluation/results/phase-10a14-r8/staging-gate-cycle1.txt
+636f23041bd44f2ce17146450f410891d22c3fbc8364eeb2371180ddd9c0b7cc *evaluation/results/phase-10a14-r8/staging-gate-cycle2.txt
+7b98fbe4fe1ad3cfb9f717b6d25f11ece3cd5c603bada6b67be767a2eed609f9 *PHASE-10A14-R8-RA12214-QUALIFYING-PUBLICATION-STRICT-TRANSACTION-DATE-AND-FAIL-CLOSED-METADATA-REMEDIATION-1_REPORT.md
+3b211daa1c65ac7cc9842f77d005baace4d294a9a30b4854c455325c55488adf *legal-date-utils.js
+1c258f2e59c1137d63826ebab861fa989ecca676015105750f8e54c9453004ce *section51-authority-chain.js
+1c6bc1cf7aeed39cd901e439fa4a053ff8e265141a0f0d47c1ef5904969fba0e *tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs
