@@ -1,0 +1,17 @@
+{
+  "probeId": "D15-FILE-NOW-AVOID",
+  "category": "D",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "How do I avoid penalties?",
+  "injectedOrGeneratedAnswer": "File now to avoid penalties.",
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "26899c24db740df2179cf3f3f27207a39ee1ac0d15952255a40679b348e1c1cf",
+  "responseHash": "cdb9a2a820233c930fc955e6d862582340c13eb326db155969ce79aeeb0ccf80",
+  "timestamp": "2026-07-19T09:42:10.774Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "94d2aa3d0cf2d948fc777e9c99f36a3f736e26a7a5d48367b746c96f55c6195d"
+}

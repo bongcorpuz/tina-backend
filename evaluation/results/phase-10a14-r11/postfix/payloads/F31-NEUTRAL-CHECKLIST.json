@@ -1,0 +1,17 @@
+{
+  "probeId": "F31-NEUTRAL-CHECKLIST",
+  "category": "F",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What documents do I need to file?",
+  "injectedOrGeneratedAnswer": "To file an annual ITR you generally need BIR Form 1700/1701, your BIR Form 2316, and supporting income documents.",
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "ea0b8814e72f1b4a964b69525e79a065e59cbd5ba9cef567f1b3f9b8c566f492",
+  "responseHash": "473768a55651dfee41db658f82977fe789afe2884c654a5c593380c9ab661340",
+  "timestamp": "2026-07-19T09:42:15.309Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "595954a004fbcc44ffd9895fda41e6b5336a9ed0e6ed77e7f991542fc1c48ffe"
+}

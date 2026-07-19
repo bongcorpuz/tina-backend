@@ -1,0 +1,16 @@
+{
+  "probeId": "A1-PLEASE-FILE-TODAY",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "question": "What is the deadline for the annual individual income tax return?",
+  "kind": "unsafe",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "llm",
+  "apiAnswer": "### Short Answer\nThe deadline for filing the annual individual income tax return is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is established under Section 51(C)(1) of the National Internal Revenue Code (NIRC), which states that the return of any individual shall be filed on or before April 15.\n\n### Interpretation\nThe provision mandates that individual taxpayers must submit their income tax returns by April 15 each year. This deadline applies to all individuals required to file, including Filipino citizens and resident aliens, regardless of the source of their income.\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are prepared and submitted by this deadline to avoid penalties and interest for late filing. It is advisable to keep track of income and deductions throughout the year to facilitate timely and accurate filing.",
+  "historyAnswer": "### Short Answer\nThe deadline for filing the annual individual income tax return is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is established under Section 51(C)(1) of the National Internal Revenue Code (NIRC), which states that the return of any individual shall be filed on or before April 15.\n\n### Interpretation\nThe provision mandates that individual taxpayers must submit their income tax returns by April 15 each year. This deadline applies to all individuals required to file, including Filipino citizens and resident aliens, regardless of the source of their income.\n\n### Practical Meaning\nTaxpayers should ensure that their income tax returns are prepared and submitted by this deadline to avoid penalties and interest for late filing. It is advisable to keep track of income and deductions throughout the year to facilitate timely and accurate filing.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiAnswerHash": "1db7a4b3f819118528d6194f30caeeb86422359c1f4b3ac4c656c43435443777",
+  "historyAnswerHash": "1db7a4b3f819118528d6194f30caeeb86422359c1f4b3ac4c656c43435443777"
+}

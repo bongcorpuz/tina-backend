@@ -1,0 +1,16 @@
+{
+  "probeId": "F25-GENERAL-APR15",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "question": "What is the ITR deadline?",
+  "kind": "safe",
+  "apiTrust": "VERIFIED_CONTROLLING",
+  "validatorStage": "llm",
+  "apiAnswer": "### Short Answer\nThe deadline for filing the Income Tax Return (ITR) is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is established under Section 51(C)(1) of the National Internal Revenue Code (NIRC), which states that the return of any individual must be filed by this date.\n\n### Interpretation\nThe April 15 deadline applies to individual taxpayers, including Filipino citizens and resident aliens, who are required to report their income from all sources. This provision ensures that taxpayers comply with their obligation to report and pay any taxes due for the previous year.\n\n### Practical Meaning\nTaxpayers must prepare and submit their ITR by April 15 to avoid penalties and interest for late filing. It is advisable for individuals to gather all necessary documentation and calculate their tax liabilities well in advance of this deadline to ensure compliance.",
+  "historyAnswer": "### Short Answer\nThe deadline for filing the Income Tax Return (ITR) is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is established under Section 51(C)(1) of the National Internal Revenue Code (NIRC), which states that the return of any individual must be filed by this date.\n\n### Interpretation\nThe April 15 deadline applies to individual taxpayers, including Filipino citizens and resident aliens, who are required to report their income from all sources. This provision ensures that taxpayers comply with their obligation to report and pay any taxes due for the previous year.\n\n### Practical Meaning\nTaxpayers must prepare and submit their ITR by April 15 to avoid penalties and interest for late filing. It is advisable for individuals to gather all necessary documentation and calculate their tax liabilities well in advance of this deadline to ensure compliance.",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiAnswerHash": "11aa9a1afcb4974f6d37e234f7ea5d2cd8c8a62c391f6a71914c07c4a5aacbac",
+  "historyAnswerHash": "11aa9a1afcb4974f6d37e234f7ea5d2cd8c8a62c391f6a71914c07c4a5aacbac"
+}

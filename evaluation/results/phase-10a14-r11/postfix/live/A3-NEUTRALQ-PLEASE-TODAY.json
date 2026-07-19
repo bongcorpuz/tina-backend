@@ -1,0 +1,16 @@
+{
+  "probeId": "A3-NEUTRALQ-PLEASE-TODAY",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "question": "When must an individual file the annual income tax return?",
+  "kind": "unsafe",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "apiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, individuals should prepare their financial records and tax documents well in advance of the April 15 deadline to ensure compliance with the tax laws. Failure to file on time may result in penalties and interest on any unpaid taxes. It is advisable for taxpayers to be aware of any changes in tax regulations or deadlines that may occur, especially in light of any special circumstances or extensions that may be granted by the Bureau of Internal Revenue (BIR).",
+  "historyAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nIn practical terms, individuals should prepare their financial records and tax documents well in advance of the April 15 deadline to ensure compliance with the tax laws. Failure to file on time may result in penalties and interest on any unpaid taxes. It is advisable for taxpayers to be aware of any changes in tax regulations or deadlines that may occur, especially in light of any special circumstances or extensions that may be granted by the Bureau of Internal Revenue (BIR).",
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "rejectedExposed": false,
+  "apiAnswerHash": "fb6e39277f9b38b6cf3103e04bcde524f863214f7ee7689faeadc69d0d2e09b5",
+  "historyAnswerHash": "fb6e39277f9b38b6cf3103e04bcde524f863214f7ee7689faeadc69d0d2e09b5"
+}

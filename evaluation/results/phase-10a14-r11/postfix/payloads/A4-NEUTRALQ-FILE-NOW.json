@@ -1,0 +1,17 @@
+{
+  "probeId": "A4-NEUTRALQ-FILE-NOW",
+  "category": "A",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "injectedOrGeneratedAnswer": "### Short Answer\nThe deadline is April 15 under Section 51(C).\n### Practical Meaning\nFile now to avoid penalties.",
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "4bd38bd3324e0c08b63c9c0024f08992905d624b44bac0dce7f90b80b395541c",
+  "timestamp": "2026-07-19T09:42:10.741Z",
+  "executionMode": "DETERMINISTIC_GENERATED_ANSWER_REPRODUCTION",
+  "payloadHash": "019f2ae7f27742720efc92dbf7ce795b6d03386e29b3cdf00f687c7ee882a400"
+}
