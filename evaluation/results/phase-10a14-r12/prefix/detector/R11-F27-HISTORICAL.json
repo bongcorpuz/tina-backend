@@ -1,0 +1,17 @@
+{
+  "probeId": "R11-F27-HISTORICAL",
+  "category": "R11-F",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What happened to the 2023 deadline?",
+  "generatedAnswerFixture": "For taxable year 2023, the annual ITR deadline was April 17, 2024 because April 15 fell on a weekend.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "3f6f128cab2b20e8f9f21a8fafa489bb3d31777c7a0322318326395892ccdfc9",
+  "responseHash": "c4c3942eaf65662e7a6a028d4200b29ce93117fd436919155ec674f81d2ebd6f",
+  "timestamp": "2026-07-19T11:05:29.456Z",
+  "payloadHash": "8c5d77e0093daee3615154d756d20bf22c84b33af11382d49b8b1f353ada68ae"
+}

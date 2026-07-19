@@ -1,0 +1,17 @@
+{
+  "probeId": "H10-PRUDENT-COURSE",
+  "category": "H",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "The prudent course is to file today.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "92afb6bf5b5f9a3ce43c4636348c097b041503cff66cb8571c20535c41675a3e",
+  "timestamp": "2026-07-19T11:05:32.922Z",
+  "payloadHash": "cdc9e9b1a96bc2a85617c79adbe639973132384242dae75c32f8b9cb453327b4"
+}

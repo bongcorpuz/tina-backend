@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-A3-NEUTRALQ-PLEASE-TODAY",
+  "category": "R11-A",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "### Short Answer\nThe annual ITR is due on or before April 15 under Section 51(C).\n### Practical Meaning\nPlease file your annual income tax return today to avoid penalties.",
+  "clauseAnalysis": {
+    "unsafeClause": "Please file your annual income tax return today to avoid penalties.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "5eeca41ecf093243b91f2e810823dde9946cb4e7883f6010633d30f737399a0a",
+  "timestamp": "2026-07-19T11:05:24.958Z",
+  "payloadHash": "a7144a6cfe7fea15c915b27086badc4e49a1def6b7ce792de8aa228c11b22cb2"
+}

@@ -1,0 +1,17 @@
+{
+  "probeId": "I1-BEFORE-MIDNIGHT",
+  "category": "I",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Send the return before midnight.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "9c01fab522dd1483f5bd584772f13cbfbb4ddf5f8bbc987451eecf1f66477d1e",
+  "timestamp": "2026-07-19T11:05:32.927Z",
+  "payloadHash": "f1365413eac0440c6636f7fd200352efb1f6fca7a0ac62afc91e37033af94e4f"
+}

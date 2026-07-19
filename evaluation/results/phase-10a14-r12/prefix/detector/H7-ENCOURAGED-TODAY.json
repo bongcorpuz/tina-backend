@@ -1,0 +1,17 @@
+{
+  "probeId": "H7-ENCOURAGED-TODAY",
+  "category": "H",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "You are encouraged to file today.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "6b1941ecc18c9a7fb849c9390c7cccb15c90c09e624c8c7ab575e28f3dbb47dc",
+  "timestamp": "2026-07-19T11:05:32.917Z",
+  "payloadHash": "c6affec804abd5e08dfe9feaf9c660ec6e3f9bb7ac1538d6fb40e9fe1ef25b28"
+}

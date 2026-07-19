@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-A2-FILE-NOW-PENALTIES",
+  "category": "R11-A",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What is the deadline for the annual individual income tax return?",
+  "generatedAnswerFixture": "### Short Answer\nThe deadline is April 15. File now to avoid penalties.",
+  "clauseAnalysis": {
+    "unsafeClause": "File now to avoid penalties.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "e5d1c4ac0cdfd1787a5adbca14a932e483b77f8e9df5a12e6b6aa2cc6c88a198",
+  "responseHash": "81168de1959d3612ea39e90ac8ae311d4b655eb20ef86f88ea27a944dbb5834a",
+  "timestamp": "2026-07-19T11:05:24.944Z",
+  "payloadHash": "810b697140db726d838e9b362849a983711719c310f45a227879cb9739806d2b"
+}

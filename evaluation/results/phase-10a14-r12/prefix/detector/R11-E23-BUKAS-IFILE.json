@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-E23-BUKAS-IFILE",
+  "category": "R11-E",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Kailan ko dapat i-file?",
+  "generatedAnswerFixture": "Bukas mo dapat i-file.",
+  "clauseAnalysis": {
+    "unsafeClause": "Bukas mo dapat i-file.",
+    "relRef": "TOMORROW",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "c9525bf035d5bf05b8200dc3c69617045b31c783f5f3f921abc7d30fea1f3840",
+  "responseHash": "01e7a8cff10e806e15809c2707a26a22c0119307fe2ff3d7332cc67bd8ae8e8a",
+  "timestamp": "2026-07-19T11:05:25.014Z",
+  "payloadHash": "041c02d863f20002f2986283e3f687958ab2401db739b22dfdc763e89968b70a"
+}

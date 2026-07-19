@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-D15-FILE-NOW-AVOID",
+  "category": "R11-D",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "How do I avoid penalties?",
+  "generatedAnswerFixture": "File now to avoid penalties.",
+  "clauseAnalysis": {
+    "unsafeClause": "File now to avoid penalties.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "26899c24db740df2179cf3f3f27207a39ee1ac0d15952255a40679b348e1c1cf",
+  "responseHash": "cdb9a2a820233c930fc955e6d862582340c13eb326db155969ce79aeeb0ccf80",
+  "timestamp": "2026-07-19T11:05:25.003Z",
+  "payloadHash": "374b5da3c8e46f5938827417883ab627d62021b55146b4aa4acf65c476702203"
+}

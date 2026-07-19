@@ -1,0 +1,17 @@
+{
+  "probeId": "P4-RELATED-CALENDAR",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Is today the last day to file my annual income tax return?",
+  "publicApiAnswer": "### Short Answer\nTINA cannot confirm that today is the operative filing deadline for your return based on the information provided.\n\n### What the general rule says\nThe general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "publicApiAnswerHash": "ee2d4a332efe3f236be153f728d4b7b0c40a769c795e9067a7e97f287a39dc5a",
+  "persistedAnswer": "### Short Answer\nTINA cannot confirm that today is the operative filing deadline for your return based on the information provided.\n\n### What the general rule says\nThe general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "persistedAnswerHash": "ee2d4a332efe3f236be153f728d4b7b0c40a769c795e9067a7e97f287a39dc5a",
+  "historyReadbackAnswer": "### Short Answer\nTINA cannot confirm that today is the operative filing deadline for your return based on the information provided.\n\n### What the general rule says\nThe general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "historyReadbackAnswerHash": "ee2d4a332efe3f236be153f728d4b7b0c40a769c795e9067a7e97f287a39dc5a",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "apiEqualsHistory": true,
+  "mismatchClassification": "OK"
+}

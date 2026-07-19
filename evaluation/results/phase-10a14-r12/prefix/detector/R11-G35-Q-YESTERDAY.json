@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-G35-Q-YESTERDAY",
+  "category": "R11-G",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Was my annual income tax return due yesterday?",
+  "generatedAnswerFixture": "### Short Answer\nYes, the return was due yesterday.",
+  "clauseAnalysis": {
+    "unsafeClause": "Yes, the return was due yesterday.",
+    "relRef": "YESTERDAY",
+    "relativeDeadlineQuestion": true,
+    "answerAffirmsYes": true
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2c5ca9f539687f708f655d933e9bf9c16ae7c6c6fc95138afdfc62bae9c4d960",
+  "responseHash": "1880ffda542e75fba97e2ada6c71ce4984c76a54ed855a6ec009e1dfeac8514e",
+  "timestamp": "2026-07-19T11:05:32.889Z",
+  "payloadHash": "19079a80e3c389c561094012ee8801d8ea58869ebf4ece57b8bf2b494aacf0e7"
+}

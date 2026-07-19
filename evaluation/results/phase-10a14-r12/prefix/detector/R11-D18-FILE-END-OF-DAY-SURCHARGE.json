@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-D18-FILE-END-OF-DAY-SURCHARGE",
+  "category": "R11-D",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "How do I avoid surcharges?",
+  "generatedAnswerFixture": "File before the end of the day to avoid surcharges.",
+  "clauseAnalysis": {
+    "unsafeClause": "File before the end of the day to avoid surcharges.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "a435512a535d20b0e5e33a4745d85e4ddfd975c9bbca15d71de64d708cd49c3c",
+  "responseHash": "7092455d0131a4e3cc55b4992ba59a29c189a10077f983d1cbe7daa5e9183664",
+  "timestamp": "2026-07-19T11:05:25.007Z",
+  "payloadHash": "ea377b475e183f778b2d422918298a1bcb70363a28b162483d7363304a669395"
+}

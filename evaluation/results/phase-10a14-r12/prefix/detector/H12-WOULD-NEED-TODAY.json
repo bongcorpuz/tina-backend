@@ -1,0 +1,17 @@
+{
+  "probeId": "H12-WOULD-NEED-TODAY",
+  "category": "H",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "You would need to file today.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "184ac15af10fe10fcc0b97e95cc068194bb7ee2baff64aead12c1f3c2de2b367",
+  "timestamp": "2026-07-19T11:05:32.926Z",
+  "payloadHash": "9929800b1475474024b471d122b49b5c84a6e7bc3392d7d8f333fbb4b6fe8ce1"
+}

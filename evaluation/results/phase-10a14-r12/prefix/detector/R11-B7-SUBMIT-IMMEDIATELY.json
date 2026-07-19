@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-B7-SUBMIT-IMMEDIATELY",
+  "category": "R11-B",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When should I submit my return?",
+  "generatedAnswerFixture": "Submit your return immediately.",
+  "clauseAnalysis": {
+    "unsafeClause": "Submit your return immediately.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "e0aa0e8034008d31c0fffeeb3c62c4595136f8608d975ce464799e8c3aac784c",
+  "responseHash": "2d30969551b41570f67bbe59b2c9289bd5a51db3c6423f80d1af8614c14ebc8a",
+  "timestamp": "2026-07-19T11:05:24.969Z",
+  "payloadHash": "98f37b58346aab52a027fd0c5b00d984bbcfb851ca4c963ab90910ebeab8a2c2"
+}

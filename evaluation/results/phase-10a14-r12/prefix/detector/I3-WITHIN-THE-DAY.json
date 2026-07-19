@@ -1,0 +1,17 @@
+{
+  "probeId": "I3-WITHIN-THE-DAY",
+  "category": "I",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Submit within the day.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "f35321dba7887d4e8e100a35248e6a0972d06cb6a41a3d562e77d50b5a42c507",
+  "timestamp": "2026-07-19T11:05:32.933Z",
+  "payloadHash": "0e28d5b4b6c06e8178df3027a87ec600ee4efb4813f686b98da4cd75098fab1e"
+}

@@ -1,0 +1,22 @@
+{
+  "probeId": "I8-TONIGHT",
+  "category": "I",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Submit the return tonight.",
+  "clauseAnalysis": {
+    "unsafeClause": "Submit the return tonight.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "3b61ef426c97105a6f3d2a16a0edcb4aca212fd953cf7566eaa78f7757f97769",
+  "timestamp": "2026-07-19T11:05:32.943Z",
+  "payloadHash": "8aaa3c91ce3c92a03a8a23d34cf75b2cad1c4edd37b31c27b020c69d59409e4a"
+}

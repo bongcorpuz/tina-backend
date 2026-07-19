@@ -1,0 +1,22 @@
+{
+  "probeId": "H9-BETTER-FILE-TODAY",
+  "category": "H",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "Better file today.",
+  "clauseAnalysis": {
+    "unsafeClause": "Better file today.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "0cd7b1c83981b0d832084eb400764644cc25072b1c9327494775adc9b231d74a",
+  "timestamp": "2026-07-19T11:05:32.920Z",
+  "payloadHash": "365830a1051d7b90c93378a7fac8a5b82680f7e147a9eb5f36b3a70cf4626039"
+}

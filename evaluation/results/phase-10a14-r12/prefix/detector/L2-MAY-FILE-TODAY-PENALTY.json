@@ -1,0 +1,17 @@
+{
+  "probeId": "L2-MAY-FILE-TODAY-PENALTY",
+  "category": "L",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "You may file today to avoid penalties.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "91586308cf79d16653c8c776f89e70bf54a2bf4affeb59081f96dc113f43ec12",
+  "timestamp": "2026-07-19T11:05:32.976Z",
+  "payloadHash": "bb4df13cd188d8bec87e2bdda5a0ff609cfe7b74f455e50c0b8ba7b273dc2a06"
+}

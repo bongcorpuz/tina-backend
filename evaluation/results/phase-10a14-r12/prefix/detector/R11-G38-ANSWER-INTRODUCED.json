@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-G38-ANSWER-INTRODUCED",
+  "category": "R11-G",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Tell me about the individual income tax return filing timing.",
+  "generatedAnswerFixture": "### Short Answer\nThe deadline is April 15.\n### Practical Meaning\nPlease file your return today to be safe.",
+  "clauseAnalysis": {
+    "unsafeClause": "Please file your return today to be safe.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "c2ac385aa797b083597c2c1f327361f8edde4618ae67909198d92f1438a86585",
+  "responseHash": "22f1681785e162369cc127c76a6a75c148391900f702097e210d872c5752f145",
+  "timestamp": "2026-07-19T11:05:32.902Z",
+  "payloadHash": "96aab69355ff339d782c2e3aefecb243fa02347f9879d3ec4585488439e3fa3f"
+}

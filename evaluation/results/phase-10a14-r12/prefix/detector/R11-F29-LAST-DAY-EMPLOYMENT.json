@@ -1,0 +1,17 @@
+{
+  "probeId": "R11-F29-LAST-DAY-EMPLOYMENT",
+  "category": "R11-F",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What does the employer issue on separation?",
+  "generatedAnswerFixture": "On the last day of employment, the employer must issue BIR Form 2316 to the employee.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "435d8833713a23948a537111fb338a8159b9e4ce6865597cb5f3013dc7f31432",
+  "responseHash": "0f0123b69a120a49a5f19ae38797ff2e690b21b7fc7d05a8ccd086c480599007",
+  "timestamp": "2026-07-19T11:05:29.459Z",
+  "payloadHash": "9599db7b089dee3dd77b31200df9d52858ffc723a78f0c7765443a3999a6075d"
+}

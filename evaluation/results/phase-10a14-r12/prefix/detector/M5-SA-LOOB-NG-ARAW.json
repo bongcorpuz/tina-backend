@@ -1,0 +1,17 @@
+{
+  "probeId": "M5-SA-LOOB-NG-ARAW",
+  "category": "M",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Kailan ko tatapusin?",
+  "generatedAnswerFixture": "Sa loob ng araw, tapusin ang filing.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "bf2bbb6ce2316bc59edff48f3191f91fd4d3bfad0f4f628227f79192d762fb2c",
+  "responseHash": "d8c92cd256d248244128acb548025ec1e03d3bbcdd5a3cd0c6f09bdbe4b4b489",
+  "timestamp": "2026-07-19T11:05:32.992Z",
+  "payloadHash": "42459d4f7fed22df06f65a831eae26a885398f032f71e558707ca1fe152b697f"
+}

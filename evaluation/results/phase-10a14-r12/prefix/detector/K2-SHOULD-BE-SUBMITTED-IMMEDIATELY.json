@@ -1,0 +1,22 @@
+{
+  "probeId": "K2-SHOULD-BE-SUBMITTED-IMMEDIATELY",
+  "category": "K",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "The return should be submitted immediately.",
+  "clauseAnalysis": {
+    "unsafeClause": "The return should be submitted immediately.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "ca2fab533d0b95f8f11360133a2cb3053700b28906e0437d3d5c827380f973b1",
+  "timestamp": "2026-07-19T11:05:32.959Z",
+  "payloadHash": "0a5c670a8c54c46aedf4a9f40a70a859fa987151b089bfa14149478082fde290"
+}

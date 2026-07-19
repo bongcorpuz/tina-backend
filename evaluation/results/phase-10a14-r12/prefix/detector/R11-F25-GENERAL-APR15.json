@@ -1,0 +1,17 @@
+{
+  "probeId": "R11-F25-GENERAL-APR15",
+  "category": "R11-F",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What is the ITR deadline?",
+  "generatedAnswerFixture": "### Short Answer\nThe general deadline for the annual individual income tax return is on or before April 15 of the following year under Section 51(C).",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "llm",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "ec236bc933c7b61ac42ae8491275b0bf63f360ed90c3da19adf9c1905bb2181f",
+  "responseHash": "dcfd058c3114ada2c3c0f3e448aed16a7acce089571bc50a8e0a739fd6570c91",
+  "timestamp": "2026-07-19T11:05:29.446Z",
+  "payloadHash": "f62d44cc8808cc1cfecb5bfbeb1bb29826705e50e3f8ee7d373778dd508d2b3d"
+}

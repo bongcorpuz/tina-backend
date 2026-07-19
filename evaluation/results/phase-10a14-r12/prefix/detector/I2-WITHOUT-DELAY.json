@@ -1,0 +1,17 @@
+{
+  "probeId": "I2-WITHOUT-DELAY",
+  "category": "I",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "File without delay.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "8b8f7126038ac8c660306909a3f1b765208480cc12c71ddbd770f3a46e33dc4d",
+  "timestamp": "2026-07-19T11:05:32.929Z",
+  "payloadHash": "162a730f564c17788adc9fe7b687aa9f1c4d680891f05ede2b4aa1d7891c16bf"
+}

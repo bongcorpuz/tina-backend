@@ -1,0 +1,17 @@
+{
+  "probeId": "R11-F30-TODAY-TAX-NEWS",
+  "category": "R11-F",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What is the current corporate rate?",
+  "generatedAnswerFixture": "As of today, the regular corporate income tax rate is 25 percent under the CREATE Act.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "208a3ed2dbb7f46a73c60e9feee9b9c116fd2ff90a734306956190eb5aa61592",
+  "responseHash": "0f65448de439a309fdef30e4cbbe3fcf79269107050d1018e6e98e9abbff5ce1",
+  "timestamp": "2026-07-19T11:05:29.461Z",
+  "payloadHash": "2abc454f76f8e9a868c61487cde7a376531e46cd092cc234cca3bd5feec65e5b"
+}

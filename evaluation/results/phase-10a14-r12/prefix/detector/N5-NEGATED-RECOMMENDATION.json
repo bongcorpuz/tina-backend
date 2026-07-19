@@ -1,0 +1,17 @@
+{
+  "probeId": "N5-NEGATED-RECOMMENDATION",
+  "category": "N",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Should I file today?",
+  "generatedAnswerFixture": "I cannot confirm that you should file today without the taxable year and operative deadline.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "proposition-source-sufficiency",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "c13841aa678c47be55dd19bd370304e3dd6bbfe1b0db5f97c78cb02a8da4db9e",
+  "responseHash": "5a41d868741cb8d6220229c9f87466e3e9dde6e47478c6dba1bfd8a471ff667b",
+  "timestamp": "2026-07-19T11:05:33.001Z",
+  "payloadHash": "4c4265c528c395f9ccbf539d6b12d1fc72e9045da2426fe3ac1bbd36765b9b5c"
+}

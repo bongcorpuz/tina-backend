@@ -1,0 +1,17 @@
+{
+  "probeId": "I4-AT-ONCE",
+  "category": "I",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "File at once.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "168cf45b97813ebbb70408e193f2f8a9728baabec1104a5f7df9cd832438c48c",
+  "timestamp": "2026-07-19T11:05:32.935Z",
+  "payloadHash": "37db9c775e9767a366c97bd75e1440916e97b483b56440e490b66d6339331251"
+}

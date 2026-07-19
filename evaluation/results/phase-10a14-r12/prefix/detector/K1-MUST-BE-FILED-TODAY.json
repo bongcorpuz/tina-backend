@@ -1,0 +1,22 @@
+{
+  "probeId": "K1-MUST-BE-FILED-TODAY",
+  "category": "K",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "The return must be filed today.",
+  "clauseAnalysis": {
+    "unsafeClause": "The return must be filed today.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "986dd7643cbe7db0d0801b204bf3aa29f5f88f495889c745f1ee11c2a7d67a52",
+  "timestamp": "2026-07-19T11:05:32.955Z",
+  "payloadHash": "bdb2e677ab898bbccb58f5ac63576ec85ed372fe6e307c93c4a7315655494c80"
+}

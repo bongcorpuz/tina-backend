@@ -1,0 +1,17 @@
+{
+  "probeId": "M4-BAGO-HATINGGABI",
+  "category": "M",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Kailan ang deadline?",
+  "generatedAnswerFixture": "Bago maghatinggabi, i-file mo ang return.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "45614dae0992f225656313fba9509e165a959d2b71f6995e7679afe80838d287",
+  "responseHash": "6016de9abcb09021aed02948e704496e524dd086ea751b65132d4acc14e1938c",
+  "timestamp": "2026-07-19T11:05:32.991Z",
+  "payloadHash": "af4215b8a2015e04d413fb16544fd1ca78b648c71b11b73d9c72e2bf1d7d4020"
+}

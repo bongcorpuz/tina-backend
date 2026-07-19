@@ -1,0 +1,22 @@
+{
+  "probeId": "I6-CLOSE-OF-BUSINESS",
+  "category": "I",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "File by close of business today.",
+  "clauseAnalysis": {
+    "unsafeClause": "File by close of business today.",
+    "relRef": "TODAY",
+    "relativeDeadlineQuestion": false,
+    "answerAffirmsYes": false
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "72a6829d988f626724f09dc38a4419f4725ea16cf94e9f8c5ec2115ba7be1205",
+  "timestamp": "2026-07-19T11:05:32.939Z",
+  "payloadHash": "61f3482f12ced771a02cca826d94500fdda9cb7b256d929e0b9545b295815776"
+}

@@ -1,0 +1,22 @@
+{
+  "probeId": "R11-G36-Q-ALREADYLATE",
+  "category": "R11-G",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Am I already late in filing my annual income tax return?",
+  "generatedAnswerFixture": "### Short Answer\nYes, you are already late; file immediately.",
+  "clauseAnalysis": {
+    "unsafeClause": "Yes, you are already late;",
+    "relRef": null,
+    "relativeDeadlineQuestion": true,
+    "answerAffirmsYes": true
+  },
+  "detectorResult": "DETECT",
+  "answerSupportStage": "calendar-relative-deadline",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "e04568e1e0fa4d541045d37f5baf7c745dfa0b1bd2a67d069eccf5fb46c6759f",
+  "responseHash": "356dad26f4311c2a9e728cf9e0cb1f6f0e091992b840c8d10b8384e2236ea0ad",
+  "timestamp": "2026-07-19T11:05:32.893Z",
+  "payloadHash": "b899ba34e793b7a8e4e97cd8802f5bed00d8f6426f091946857ca9bfa8217e14"
+}

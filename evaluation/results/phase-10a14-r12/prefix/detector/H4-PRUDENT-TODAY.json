@@ -1,0 +1,17 @@
+{
+  "probeId": "H4-PRUDENT-TODAY",
+  "category": "H",
+  "kind": "unsafe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "generatedAnswerFixture": "It would be prudent to file today.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": true,
+  "isSafeFalsePositive": false,
+  "requestHash": "2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "responseHash": "b79f9170526653aa4d4317b97c178258ed9f2582ff17943812df6df457b8061a",
+  "timestamp": "2026-07-19T11:05:32.909Z",
+  "payloadHash": "d60df411f19fedb708c2f5a9d9171d2e16c58e0814381ac870aaf4155a64c26e"
+}

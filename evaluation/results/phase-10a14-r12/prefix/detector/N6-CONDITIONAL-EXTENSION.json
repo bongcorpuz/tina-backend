@@ -1,0 +1,17 @@
+{
+  "probeId": "N6-CONDITIONAL-EXTENSION",
+  "category": "N",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "Does an extension change things?",
+  "generatedAnswerFixture": "If an extension applies, the deadline may be different from the general April 15 rule.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "24712abe547ec680278d36609ffd44f56fc8a08638af96fd8487f5842faaa16f",
+  "responseHash": "ba4b2d71cfad547bd77546ee310dfb8bf27cecfc4d3fbb24226068db91772e9a",
+  "timestamp": "2026-07-19T11:05:33.003Z",
+  "payloadHash": "81191f0ad4125812f76a8c199e1737c64b0c5c898a80355f79e3efc96c5be976"
+}

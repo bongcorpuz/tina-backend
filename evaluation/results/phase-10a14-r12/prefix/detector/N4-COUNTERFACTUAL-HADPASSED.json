@@ -1,0 +1,17 @@
+{
+  "probeId": "N4-COUNTERFACTUAL-HADPASSED",
+  "category": "N",
+  "kind": "safe",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "What if the deadline had passed?",
+  "generatedAnswerFixture": "Had the deadline passed, you would have been late.",
+  "clauseAnalysis": null,
+  "detectorResult": "MISS",
+  "answerSupportStage": "structural",
+  "isDetectorMiss": false,
+  "isSafeFalsePositive": false,
+  "requestHash": "46ad2cb2e91ba73773d97d7ecec52ff1162fec3d554415d344e5295ae59f9f0d",
+  "responseHash": "b1854abc22504b63e561d78b4b0427798c967bdaf5e8a9d7e5092eff6e62e7d3",
+  "timestamp": "2026-07-19T11:05:33.000Z",
+  "payloadHash": "24a98f173ee8cd6beb1f945b2d3532e9065bc4ec34c1432e7c855362952dc11f"
+}

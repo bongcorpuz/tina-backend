@@ -1,0 +1,17 @@
+{
+  "probeId": "P1-F32-CONDITIONAL",
+  "runtimeCommit": "90d70fec2dde9e9985c0b2a17c2c19f199923fa6",
+  "exactQuestion": "When is someone considered late in filing?",
+  "publicApiAnswer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "publicApiAnswerHash": "a7e94b3f3f5a335d8ef88164f0773a4c028f1b017b7e850e6d19da2edb7a6098",
+  "persistedAnswer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "persistedAnswerHash": "a7e94b3f3f5a335d8ef88164f0773a4c028f1b017b7e850e6d19da2edb7a6098",
+  "historyReadbackAnswer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "historyReadbackAnswerHash": "a7e94b3f3f5a335d8ef88164f0773a4c028f1b017b7e850e6d19da2edb7a6098",
+  "apiTrust": "NO_VERIFIED_AUTHORITY",
+  "persistedTrust": "NO_VERIFIED_AUTHORITY",
+  "responseType": "NORMAL_RAG",
+  "persistenceStatus": null,
+  "apiEqualsHistory": true,
+  "mismatchClassification": "OK"
+}
