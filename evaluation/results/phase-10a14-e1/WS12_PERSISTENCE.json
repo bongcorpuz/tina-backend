@@ -1,0 +1,127 @@
+{
+  "task": "PHASE-10A14-E1 WS12 persistence & history consistency",
+  "cases": 10,
+  "mismatches": 0,
+  "rows": [
+    {
+      "cls": "individual_filing_obligation",
+      "conversationId": "fdadbf58-28e0-4144-9cd0-9698540805fa",
+      "immTrust": "VERIFIED_CONTROLLING",
+      "perTrust": "VERIFIED_CONTROLLING",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 2,
+      "perCards": 2,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "filing_deadline",
+      "conversationId": "15a75cc9-1aa1-4afd-b350-ee39172c07aa",
+      "immTrust": "VERIFIED_CONTROLLING",
+      "perTrust": "VERIFIED_CONTROLLING",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 4,
+      "perCards": 4,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "substituted_filing",
+      "conversationId": "d675862e-26c7-4274-8db4-3c7e3cc1cbdb",
+      "immTrust": "VERIFIED_CONTROLLING",
+      "perTrust": "VERIFIED_CONTROLLING",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 5,
+      "perCards": 5,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "historical_ordinary_filing",
+      "conversationId": "4cebfa36-2dce-4683-b391-78194c91b637",
+      "immTrust": "NO_VERIFIED_AUTHORITY",
+      "perTrust": "NO_VERIFIED_AUTHORITY",
+      "immSource": "NO_INDEXED_SOURCE",
+      "perSource": "NO_INDEXED_SOURCE",
+      "immCards": 0,
+      "perCards": 0,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "section51c2_post",
+      "conversationId": "cc415301-999f-4319-ac73-28e5ddb9addb",
+      "immTrust": "NO_VERIFIED_AUTHORITY",
+      "perTrust": "NO_VERIFIED_AUTHORITY",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 0,
+      "perCards": 0,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "section51c2_pre",
+      "conversationId": "990cdd3c-b010-48d8-b8ea-52b53927c490",
+      "immTrust": "NO_VERIFIED_AUTHORITY",
+      "perTrust": "NO_VERIFIED_AUTHORITY",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 0,
+      "perCards": 0,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "section51c2_malformed",
+      "conversationId": "c1e6aa6f-67f0-42a7-95ef-72a9af9996fe",
+      "immTrust": "NO_VERIFIED_AUTHORITY",
+      "perTrust": "NO_VERIFIED_AUTHORITY",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 0,
+      "perCards": 0,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "estate_safeguard",
+      "conversationId": "1d494317-caba-4322-a2db-4a7b522aa71a",
+      "immTrust": "RELATED_AUTHORITY_ONLY",
+      "perTrust": "RELATED_AUTHORITY_ONLY",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 5,
+      "perCards": 5,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "vat_safeguard",
+      "conversationId": "a0707de0-d5f8-43be-9bee-aa16727bd392",
+      "immTrust": "RELATED_AUTHORITY_ONLY",
+      "perTrust": "RELATED_AUTHORITY_ONLY",
+      "immSource": "AUTHORITY_FOUND",
+      "perSource": "AUTHORITY_FOUND",
+      "immCards": 5,
+      "perCards": 5,
+      "persistedMessages": 2,
+      "consistent": true
+    },
+    {
+      "cls": "canonical_unsafe",
+      "conversationId": "46bebdc2-05cb-4d5a-8fe0-f28c62476ac7",
+      "immTrust": "NOT_APPLICABLE",
+      "perTrust": "NOT_APPLICABLE",
+      "immSource": "NOT_APPLICABLE",
+      "perSource": "NOT_APPLICABLE",
+      "immCards": 0,
+      "perCards": 0,
+      "persistedMessages": 2,
+      "consistent": true
+    }
+  ]
+}

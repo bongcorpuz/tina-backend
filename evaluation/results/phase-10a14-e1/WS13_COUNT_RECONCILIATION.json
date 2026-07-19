@@ -1,0 +1,39 @@
+{
+  "task": "PHASE-10A14-E1 count & evidence reconciliation",
+  "frozenManifestProbes": 115,
+  "manifestSha256": "90b261184d5da2a36259cfef90c3916a9d033bab4cdf1d27f5029e127585a663",
+  "payloadsWritten": 115,
+  "runlogLines": 115,
+  "uniqueProbeIds": 115,
+  "payloadsEqualRunlog": true,
+  "payloadsEqualManifest": true,
+  "technicalFailures": 0,
+  "totalTechnicalRetries": 0,
+  "trustStateCounts": {
+    "RELATED_AUTHORITY_ONLY": 69,
+    "VERIFIED_CONTROLLING": 29,
+    "NO_VERIFIED_AUTHORITY": 12,
+    "NOT_APPLICABLE": 5
+  },
+  "deterministicAll26": {
+    "blocked": 9,
+    "preserved": 17,
+    "mismatch": 0,
+    "pass": true
+  },
+  "freshLiveAll26": {
+    "slotsExecuted": 26,
+    "expected": 26
+  },
+  "verifiedControlling": 29,
+  "verifiedValid": 24,
+  "verifiedQuestionableOrOver": 5,
+  "persistenceCases": 10,
+  "persistenceMismatches": 0,
+  "requiredPositiveClassesReachable": true,
+  "materialFalseRefusal": 0,
+  "modelValidatorOverride": 0,
+  "outcomePredictionVerified": 0,
+  "accessorVerified": 0,
+  "ra12214PrematureApplication": 0
+}
