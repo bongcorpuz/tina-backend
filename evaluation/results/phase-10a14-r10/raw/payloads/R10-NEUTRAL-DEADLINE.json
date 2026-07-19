@@ -1,0 +1,21 @@
+{
+  "probeId": "R10-NEUTRAL-DEADLINE",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "What is the deadline for the annual income tax return of an individual taxpayer?",
+  "apiAnswer": "### Short Answer\nThe deadline for the annual income tax return of an individual taxpayer is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is established under Section 51(C)(1) of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nSection 51(C)(1) of the NIRC specifies that individual taxpayers must file their income tax returns by April 15 each year. This requirement applies to all individuals subject to income tax, ensuring that they report their income from the previous year within the stipulated timeframe.\n\n### Practical Meaning\nFor individual taxpayers, this means they must prepare and submit their income tax returns by April 15 to avoid penalties and interest for late filing. It is essential for taxpayers to keep track of their income and expenses throughout the year to ensure accurate reporting by the deadline.",
+  "apiTrust": "VERIFIED_CONTROLLING",
+  "validatorStage": "llm",
+  "publicSourceCards": [
+    "NIRC Sec. 51",
+    "NIRC Sec. 22"
+  ],
+  "historyAnswer": "### Short Answer\nThe deadline for the annual income tax return of an individual taxpayer is on or before the fifteenth (15th) day of April of each year, covering income for the preceding taxable year.\n\n### Controlling Authorities\nThis is established under Section 51(C)(1) of the National Internal Revenue Code (NIRC).\n\n### Interpretation\nSection 51(C)(1) of the NIRC specifies that individual taxpayers must file their income tax returns by April 15 each year. This requirement applies to all individuals subject to income tax, ensuring that they report their income from the previous year within the stipulated timeframe.\n\n### Practical Meaning\nFor individual taxpayers, this means they must prepare and submit their income tax returns by April 15 to avoid penalties and interest for late filing. It is essential for taxpayers to keep track of their income and expenses throughout the year to ensure accurate reporting by the deadline.",
+  "persistedTrust": "VERIFIED_CONTROLLING",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "05555a320054a524421daf53a09f1a4349d85d6c649c24cda6bb86a1e7002039",
+  "historyAnswerHash": "05555a320054a524421daf53a09f1a4349d85d6c649c24cda6bb86a1e7002039"
+}

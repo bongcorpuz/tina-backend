@@ -1,0 +1,15 @@
+{"ts":"2026-07-19T08:35:20.323Z","probeId":"SG-C-LASTDAY","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:35:38.705Z","probeId":"R9-LASTDAY-REPRO","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:35:57.290Z","probeId":"R9-DUETODAY","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:36:13.937Z","probeId":"SG-C-DUETODAY","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:36:29.697Z","probeId":"R10-DUETOMORROW","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:36:53.819Z","probeId":"R10-ALREADYLATE","trust":"VERIFIED_CONTROLLING","stage":"llm","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:37:11.643Z","probeId":"R10-STILLONTIME","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:37:26.599Z","probeId":"R10-FILETODAY","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:37:44.451Z","probeId":"R10-DEADLINEPASSED","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:38:01.007Z","probeId":"R10-TAGLISH-1","trust":"RELATED_AUTHORITY_ONLY","stage":"calendar-relative-deadline","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:38:17.408Z","probeId":"R10-TAGLISH-2","trust":"RELATED_AUTHORITY_ONLY","stage":"proposition-source-sufficiency","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:38:34.414Z","probeId":"R10-ANSWERINTRO","trust":"RELATED_AUTHORITY_ONLY","stage":"proposition-source-sufficiency","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:38:53.846Z","probeId":"R10-NEUTRAL-DEADLINE","trust":"VERIFIED_CONTROLLING","stage":"llm","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:39:11.265Z","probeId":"R10-CONDITIONAL","trust":"RELATED_AUTHORITY_ONLY","stage":"proposition-source-sufficiency","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}
+{"ts":"2026-07-19T08:39:28.567Z","probeId":"R10-ORDINARY-DEADLINE","trust":"RELATED_AUTHORITY_ONLY","stage":"proposition-source-sufficiency","apiUnsafe":false,"historyUnsafe":false,"apiEqualsHistory":true}

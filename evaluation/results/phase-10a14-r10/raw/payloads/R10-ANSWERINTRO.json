@@ -1,0 +1,22 @@
+{
+  "probeId": "R10-ANSWERINTRO",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "Remind me about the individual income tax return filing timing.",
+  "apiAnswer": "### Short Answer\nThe deadline for filing individual income tax returns in the Philippines is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers must ensure that their income tax returns are filed by the April 15 deadline to avoid penalties and interest on unpaid taxes. It is advisable for individuals to prepare their returns in advance to ensure compliance and to take advantage of any deductions or credits available to them.",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "publicSourceCards": [
+    "NIRC Sec. 24",
+    "NIRC Sec. 23",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\nThe deadline for filing individual income tax returns in the Philippines is April 15 of the following year after the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers must ensure that their income tax returns are filed by the April 15 deadline to avoid penalties and interest on unpaid taxes. It is advisable for individuals to prepare their returns in advance to ensure compliance and to take advantage of any deductions or credits available to them.",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "65a49c1c0c8b6e7a75c393d025e5177870854a2997d0c541aa2c3fc39405549c",
+  "historyAnswerHash": "65a49c1c0c8b6e7a75c393d025e5177870854a2997d0c541aa2c3fc39405549c"
+}

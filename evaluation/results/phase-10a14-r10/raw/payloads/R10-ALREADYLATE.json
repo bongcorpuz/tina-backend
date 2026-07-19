@@ -1,0 +1,23 @@
+{
+  "probeId": "R10-ALREADYLATE",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "Am I already late in filing my annual income tax return?",
+  "apiAnswer": "### Short Answer\nYou are late in filing your annual income tax return if you have not submitted it by April 15 of the current year, as mandated by Section 51(C)(1) of the NIRC.\n\n### Interpretation\nThe law requires individuals to file their income tax returns by April 15 each year for the income earned in the previous taxable year. If you have not filed by this date, you are considered late.\n\n### Practical Meaning\nFiling late may result in penalties and interest on the unpaid tax due. It is advisable to file as soon as possible to minimize any additional charges. If you have missed the deadline, consider consulting with a tax professional to understand your options for compliance and any potential penalties.",
+  "apiTrust": "VERIFIED_CONTROLLING",
+  "validatorStage": "llm",
+  "publicSourceCards": [
+    "NIRC Sec. 51",
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\nYou are late in filing your annual income tax return if you have not submitted it by April 15 of the current year, as mandated by Section 51(C)(1) of the NIRC.\n\n### Interpretation\nThe law requires individuals to file their income tax returns by April 15 each year for the income earned in the previous taxable year. If you have not filed by this date, you are considered late.\n\n### Practical Meaning\nFiling late may result in penalties and interest on the unpaid tax due. It is advisable to file as soon as possible to minimize any additional charges. If you have missed the deadline, consider consulting with a tax professional to understand your options for compliance and any potential penalties.",
+  "persistedTrust": "VERIFIED_CONTROLLING",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "744d4607ffafd6c5578424334be158f6456c3204033b363d4a5fef3009baed98",
+  "historyAnswerHash": "744d4607ffafd6c5578424334be158f6456c3204033b363d4a5fef3009baed98"
+}

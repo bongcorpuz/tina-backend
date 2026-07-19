@@ -1,0 +1,22 @@
+{
+  "probeId": "R10-TAGLISH-2",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "Due na ba ngayon ang income tax return ko?",
+  "apiAnswer": "### Short Answer\n\n### Interpretation\nThe due date for filing your income tax return is set by the NIRC, which mandates that individuals and corporations must submit their returns by April 15. This applies to income earned in the previous calendar year. If April 15 falls on a weekend or holiday, the deadline is typically extended to the next business day.\n\n### Practical Meaning\nAs a taxpayer, you should ensure that your income tax return is filed by the deadline to avoid penalties and interest on any unpaid taxes. It is advisable to prepare your documents and calculations in advance to facilitate timely filing. If you anticipate being unable to file on time, consider applying for an extension, which may be granted under certain conditions.",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "publicSourceCards": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\n\n### Interpretation\nThe due date for filing your income tax return is set by the NIRC, which mandates that individuals and corporations must submit their returns by April 15. This applies to income earned in the previous calendar year. If April 15 falls on a weekend or holiday, the deadline is typically extended to the next business day.\n\n### Practical Meaning\nAs a taxpayer, you should ensure that your income tax return is filed by the deadline to avoid penalties and interest on any unpaid taxes. It is advisable to prepare your documents and calculations in advance to facilitate timely filing. If you anticipate being unable to file on time, consider applying for an extension, which may be granted under certain conditions.",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "c18e48e41ae397b7ec19bbc69f41190349ce686e08eb6a757b4e33e922bef73c",
+  "historyAnswerHash": "c18e48e41ae397b7ec19bbc69f41190349ce686e08eb6a757b4e33e922bef73c"
+}

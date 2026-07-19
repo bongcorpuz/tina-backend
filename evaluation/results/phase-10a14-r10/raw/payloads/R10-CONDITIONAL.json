@@ -1,0 +1,22 @@
+{
+  "probeId": "R10-CONDITIONAL",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "When would an individual be considered late in filing the annual income tax return?",
+  "apiAnswer": "### Short Answer\nAn individual is considered late in filing the annual income tax return if the return is not filed on or before the deadline set by the Bureau of Internal Revenue (BIR), which is typically April 15 of the following year for the preceding taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, timely filing is crucial to avoid additional costs associated with late penalties. It is advisable to prepare and submit the income tax return well in advance of the deadline to ensure compliance and mitigate any risks of incurring penalties.",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "publicSourceCards": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\nAn individual is considered late in filing the annual income tax return if the return is not filed on or before the deadline set by the Bureau of Internal Revenue (BIR), which is typically April 15 of the following year for the preceding taxable year.\n\n### Interpretation\n\n### Practical Meaning\nFor individuals, timely filing is crucial to avoid additional costs associated with late penalties. It is advisable to prepare and submit the income tax return well in advance of the deadline to ensure compliance and mitigate any risks of incurring penalties.",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "624a38aea3b0ba135573207ddb1ac98f259f7912394a5a76c70c5beea9e5f599",
+  "historyAnswerHash": "624a38aea3b0ba135573207ddb1ac98f259f7912394a5a76c70c5beea9e5f599"
+}

@@ -1,0 +1,23 @@
+{
+  "probeId": "R9-LASTDAY-REPRO",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "Is today the last day to file the annual income tax return of an individual?",
+  "apiAnswer": "### Short Answer\nBased on the information provided, TINA cannot confirm that today is the operative filing deadline for your return.\n\n### What the general rule says\nThe general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "calendar-relative-deadline",
+  "publicSourceCards": [
+    "NIRC Sec. 51",
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\nBased on the information provided, TINA cannot confirm that today is the operative filing deadline for your return.\n\n### What the general rule says\nThe general deadline for an individual annual income-tax return is on or before April 15 following the taxable year (NIRC Sec. 51(C)), subject to any applicable BIR extension and any weekend or holiday adjustment.\n\n### What TINA needs to confirm your deadline\nPlease confirm your taxable year, the return type, and any relevant BIR extension or special deadline notice so the operative deadline can be determined.",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "a32ea02ba05f823997d4a39d4f35b2e8d0b5876b7f767c82dd78f4c52deff8f6",
+  "historyAnswerHash": "a32ea02ba05f823997d4a39d4f35b2e8d0b5876b7f767c82dd78f4c52deff8f6"
+}

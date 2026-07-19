@@ -1,0 +1,22 @@
+{
+  "probeId": "SG-C-DUETODAY",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "Is my income tax return due today?",
+  "apiAnswer": "### Short Answer\nBased on the information provided, TINA cannot confirm the operative filing deadline for your return, and cannot confirm that today is that deadline.\n\n### What TINA needs\nPlease confirm your taxable year, the return type, and any applicable BIR deadline or extension notice so the exact deadline can be determined.",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "calendar-relative-deadline",
+  "publicSourceCards": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\nBased on the information provided, TINA cannot confirm the operative filing deadline for your return, and cannot confirm that today is that deadline.\n\n### What TINA needs\nPlease confirm your taxable year, the return type, and any applicable BIR deadline or extension notice so the exact deadline can be determined.",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "012cf191065b258203d4a974fc95dd93c269d23121feae711b92d787c19a55e0",
+  "historyAnswerHash": "012cf191065b258203d4a974fc95dd93c269d23121feae711b92d787c19a55e0"
+}

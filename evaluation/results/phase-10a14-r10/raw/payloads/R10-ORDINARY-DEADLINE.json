@@ -1,0 +1,22 @@
+{
+  "probeId": "R10-ORDINARY-DEADLINE",
+  "runtimeCommit": "05faa60dadc1b52214c162c51fae2c317d46f9af",
+  "question": "On what date must an individual file the BIR annual income tax return, and what is the statutory basis?",
+  "apiAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor tax practitioners and individuals alike, this means that all income earned during the calendar year must be reported by April 15 of the following year. Failure to file by this deadline may result in penalties and interest on any unpaid taxes, emphasizing the importance of timely compliance with tax obligations.",
+  "apiTrust": "RELATED_AUTHORITY_ONLY",
+  "validatorStage": "proposition-source-sufficiency",
+  "publicSourceCards": [
+    "NIRC Sec. 23",
+    "NIRC Sec. 24",
+    "NIRC Sec. 27"
+  ],
+  "historyAnswer": "### Short Answer\n\n### Interpretation\n\n### Practical Meaning\nFor tax practitioners and individuals alike, this means that all income earned during the calendar year must be reported by April 15 of the following year. Failure to file by this deadline may result in penalties and interest on any unpaid taxes, emphasizing the importance of timely compliance with tax obligations.",
+  "persistedTrust": "RELATED_AUTHORITY_ONLY",
+  "rejectedModelAnswerExposed": false,
+  "apiUnsafe": false,
+  "historyUnsafe": false,
+  "apiEqualsHistory": true,
+  "trustConsistent": true,
+  "apiAnswerHash": "7b3bc79a43a1085d499fbd4cb240399c7fc3a514d191568d3d48926d10867722",
+  "historyAnswerHash": "7b3bc79a43a1085d499fbd4cb240399c7fc3a514d191568d3d48926d10867722"
+}
