@@ -1,0 +1,82 @@
+{
+  "task": "PHASE-10A14-R9 P1 reproduction (post-remediation verification)",
+  "findings": {
+    "P1-E1-001": {
+      "desc": "SG-C-LASTDAY false today-relative deadline",
+      "before": "E1: VERIFIED_CONTROLLING",
+      "after": {
+        "id": "SG-C-LASTDAY",
+        "e1Trust": "VERIFIED_CONTROLLING",
+        "r9VerifiedEligible": false,
+        "r9Stage": "calendar-relative-deadline",
+        "r9Reason": "false_or_unresolved_calendar_relative_deadline"
+      }
+    },
+    "P1-E1-002": {
+      "desc": "Q12/SG-A-Q12REV Section-24 filing laundering",
+      "before": "E1: VERIFIED_CONTROLLING",
+      "after": [
+        {
+          "id": "ALL26-Q12-r1",
+          "e1Trust": "VERIFIED_CONTROLLING",
+          "r9VerifiedEligible": false,
+          "r9Stage": "filing-rationale-alignment",
+          "r9Reason": "filing_conclusion_supported_only_by_rate_or_threshold_authority"
+        },
+        {
+          "id": "ALL26-Q12-r2",
+          "e1Trust": "VERIFIED_CONTROLLING",
+          "r9VerifiedEligible": false,
+          "r9Stage": "filing-rationale-alignment",
+          "r9Reason": "filing_conclusion_supported_only_by_rate_or_threshold_authority"
+        },
+        {
+          "id": "ALL26-Q12-r3",
+          "e1Trust": "VERIFIED_CONTROLLING",
+          "r9VerifiedEligible": false,
+          "r9Stage": "filing-rationale-alignment",
+          "r9Reason": "filing_conclusion_supported_only_by_rate_or_threshold_authority"
+        },
+        {
+          "id": "SG-A-Q12REV",
+          "e1Trust": "VERIFIED_CONTROLLING",
+          "r9VerifiedEligible": false,
+          "r9Stage": "filing-rationale-alignment",
+          "r9Reason": "filing_conclusion_supported_only_by_rate_or_threshold_authority"
+        }
+      ]
+    }
+  },
+  "controls": {
+    "valid_preserved": [
+      {
+        "id": "SG-B-COMPONLY",
+        "e1Trust": "VERIFIED_CONTROLLING",
+        "r9VerifiedEligible": false,
+        "r9Stage": "unavailable",
+        "r9Reason": "validator_unavailable_fail_closed"
+      },
+      {
+        "id": "POS-SUBST-1",
+        "e1Trust": "VERIFIED_CONTROLLING",
+        "r9VerifiedEligible": false,
+        "r9Stage": "unavailable",
+        "r9Reason": "validator_unavailable_fail_closed"
+      },
+      {
+        "id": "POS-INDDEAD-1",
+        "e1Trust": "VERIFIED_CONTROLLING",
+        "r9VerifiedEligible": false,
+        "r9Stage": "unavailable",
+        "r9Reason": "validator_unavailable_fail_closed"
+      },
+      {
+        "id": "ALL26-Q34-r1",
+        "e1Trust": "VERIFIED_CONTROLLING",
+        "r9VerifiedEligible": false,
+        "r9Stage": "unavailable",
+        "r9Reason": "validator_unavailable_fail_closed"
+      }
+    ]
+  }
+}
