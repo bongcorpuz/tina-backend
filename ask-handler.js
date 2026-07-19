@@ -2369,6 +2369,20 @@ export function createAskHandler({
         answer: result.answer || "",
         sources: visibleSources
       });
+      // PHASE-10A14-R9 (P1-E1-001 / WS4): a deterministically unsupported calendar-relative
+      // filing-deadline assertion must NOT reach the user, even under a downgraded trust
+      // label. Prepend a narrow, deterministic correction limited to the detected
+      // legal-calendar proposition; the rest of the answer is left intact.
+      if (result.answerSupport && result.answerSupport.stage === "calendar-relative-deadline") {
+        const safeNote =
+          "**Filing-deadline note:** TINA cannot confirm a date-relative filing claim " +
+          "(e.g. \"today is the last day\") without your exact taxable year, return type, and " +
+          "the operative BIR deadline for that period. The general annual individual income-tax " +
+          "return deadline is on or before April 15 of the following year; a different date " +
+          "would apply only under a specific BIR extension, weekend/holiday adjustment, or " +
+          "special rule. Please confirm the taxable period and return type.\n\n";
+        result.answer = safeNote + (result.answer || "");
+      }
     }
 
     const payload = {

@@ -1188,6 +1188,73 @@ export function detectOutcomePredictionRequest(question) {
   return typeof question === "string" && OUTCOME_PREDICTION_RE.test(question);
 }
 
+// PHASE-10A14-R9 (P1-E1-001): calendar-relative filing-deadline safeguard. An AFFIRMED
+// today/tomorrow/last-day filing-deadline conclusion cannot be VERIFIED_CONTROLLING: the
+// runtime cannot establish temporal sufficiency (PH-calendar request date + taxable period
+// + return type + operative deadline + weekend/holiday adjustment) inside the answer-support
+// contract, and the general April-15 rule does NOT prove an arbitrary request date is the
+// last filing day. A plain, non-relative statutory deadline statement ("the deadline is
+// April 15") is unaffected and remains reachable.
+const CALENDAR_RELATIVE_ASSERTION_RE = /\b(today is (?:the )?last day|last day to file (?:is |will be )?(?:today|now)|(?:it is|it['’]s|you are) (?:the )?last day to file|due today|due tomorrow|due yesterday|already late|(?:you are|you're) still on time|can still file today|filing (?:closes|ends|is due) today|deadline (?:has )?(?:already )?passed|too late to file)\b/i;
+const CALENDAR_RELATIVE_QUESTION_RE = /\b(today|tonight|tomorrow|yesterday|this day|right now|as of today|due today|due tomorrow|already late|still on time|time (?:remaining|left)|last day)\b/i;
+
+/**
+ * Detects an affirmed calendar-relative filing-deadline conclusion. Pure.
+ * @returns {{applicable:boolean, sufficient:boolean, reason:string, diagnostics?:object}}
+ */
+export function evaluateCalendarRelativeDeadline({ question = "", answer = "" } = {}) {
+  const a = String(answer || "");
+  const q = String(question || "");
+  const assertsRelative = CALENDAR_RELATIVE_ASSERTION_RE.test(a);
+  const relativeDeadlineQuestion = CALENDAR_RELATIVE_QUESTION_RE.test(q) && /\b(fil(?:e|ing)|return|deadline|due)\b/i.test(q);
+  const answerAffirmsYes = /(^|\n)\s*(#+\s*[^\n]*\n+)?\s*yes\b/i.test(a) || /\byes,\s*(today|it is|it['’]s|you|the deadline|the last day)\b/i.test(a);
+  const applicable = assertsRelative || (relativeDeadlineQuestion && answerAffirmsYes);
+  if (!applicable) return { applicable: false, sufficient: true, reason: "" };
+  return {
+    applicable: true, sufficient: false,
+    reason: "false_or_unresolved_calendar_relative_deadline",
+    diagnostics: { assertsRelative, relativeDeadlineQuestion, answerAffirmsYes }
+  };
+}
+
+// PHASE-10A14-R9 (P1-E1-002): filing-conclusion rationale alignment. A filing conclusion
+// (required/not-required/exempt/substituted) must be decided by a filing rule (NIRC Sec.
+// 51 / 51-A / 52 / 56 / a controlling amendment), NOT by a rate or income-threshold rule
+// (Sec. 24 / "tax-exempt threshold" / "no tax due"). The presence of a Section 51 SOURCE
+// CARD is insufficient where the answer's DECISIVE rationale (Short Answer + Controlling
+// Authorities clause) remains Section 24 threshold reasoning.
+const FILING_CONCLUSION_RE = /\b(not required to file|required to file|no need to file|exempt from filing|need not file|must file|obligated to file|not obligated to file|substituted filing (?:applies|is allowed)|qualified for substituted filing|no return (?:is )?required|do(?:es)? not (?:have to|need to) file)\b/i;
+const THRESHOLD_RATIONALE_RE = /\bsection\s*0*24\b|\btax[- ]exempt\b|\bexempt from income tax\b|\bwithin the [^.\n]{0,30}threshold\b|\bbelow the [^.\n]{0,30}threshold\b|[₱P]\s*250,?000|\b250,?000\b|\b0%\s*(?:income\s*)?tax\s*rate\b|\bno (?:income )?tax (?:is )?due\b/i;
+const FILING_RULE_RE = /\bsection\s*0*5(?:1(?:\s*-?\s*a)?|2|6)\b|\b51-?a\b|substituted filing under section|under section\s*0*51\b/i;
+
+/** Decisive-rationale text = the answer up to (excluding) the Interpretation section. */
+function extractDecisiveRationaleText(answer = "") {
+  const a = String(answer || "");
+  const cut = a.search(/#+\s*(interpretation|practical meaning|background|discussion)\b/i);
+  return cut > 0 ? a.slice(0, cut) : a.slice(0, 700);
+}
+
+/**
+ * Detects a filing conclusion whose DECISIVE rationale is a rate/threshold rule rather than
+ * a filing rule. Pure. Fails closed regardless of a Section 51 source card being present.
+ * @returns {{applicable:boolean, sufficient:boolean, reason:string, diagnostics?:object}}
+ */
+export function evaluateFilingRationaleAlignment({ question = "", answer = "" } = {}) {
+  const a = String(answer || "");
+  if (!FILING_CONCLUSION_RE.test(a)) return { applicable: false, sufficient: true, reason: "" };
+  const decisive = extractDecisiveRationaleText(a);
+  const thresholdDecisive = THRESHOLD_RATIONALE_RE.test(decisive);
+  const filingRuleDecisive = FILING_RULE_RE.test(decisive);
+  if (thresholdDecisive && !filingRuleDecisive) {
+    return {
+      applicable: true, sufficient: false,
+      reason: "filing_conclusion_supported_only_by_rate_or_threshold_authority",
+      diagnostics: { thresholdDecisive, filingRuleDecisive, decisive: decisive.replace(/\s+/g, " ").slice(0, 240) }
+    };
+  }
+  return { applicable: true, sufficient: true, reason: "", diagnostics: { thresholdDecisive, filingRuleDecisive } };
+}
+
 /**
  * Evaluates whether an answer is eligible for VERIFIED_CONTROLLING. Never throws;
  * any error/unavailability yields verifiedEligible=false (fail closed).
@@ -1255,6 +1322,23 @@ export async function evaluateAnswerSupport({ question, answer, sources = [], mo
       propositionSufficiency: propositionSufficiency.diagnostics,
       reason: propositionSufficiency.reason
     };
+  }
+  // PHASE-10A14-R9 (P1-E1-001): affirmed calendar-relative filing-deadline conclusion
+  // cannot verify (temporal sufficiency not established). Deterministic; non-overridable.
+  const calendarRelative = evaluateCalendarRelativeDeadline({ question, answer });
+  if (calendarRelative.applicable && !calendarRelative.sufficient) {
+    return { verifiedEligible: false, schemaValid: false, stage: "calendar-relative-deadline",
+      gates: { structural: true, calendarRelativeResolved: false }, reason: calendarRelative.reason,
+      calendarRelative: calendarRelative.diagnostics };
+  }
+  // PHASE-10A14-R9 (P1-E1-002): filing conclusion whose decisive rationale is a rate/
+  // threshold rule (Sec 24) rather than a filing rule fails closed even if a Section 51
+  // source card is present. Deterministic; non-overridable.
+  const filingRationale = evaluateFilingRationaleAlignment({ question, answer });
+  if (filingRationale.applicable && !filingRationale.sufficient) {
+    return { verifiedEligible: false, schemaValid: false, stage: "filing-rationale-alignment",
+      gates: { structural: true, filingAuthorityRationaleAligned: false }, reason: filingRationale.reason,
+      filingRationale: filingRationale.diagnostics };
   }
   if (detectOutcomePredictionRequest(question)) {
     return { verifiedEligible: false, schemaValid: false, stage: "outcome-prediction", gates: { structural: true }, reason: "outcome_prediction_request_cannot_be_verified" };
