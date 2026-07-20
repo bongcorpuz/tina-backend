@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:27:36.445Z",
+  "generatedAt": "2026-07-20T07:30:35.040Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r16/attempts",
   "rule": "Machine-generated from immutable attempt directories. Every count in the report, result JSON, CURRENT_STATE, gate summary and attempt reconciliation derives from this file. No manually typed competing total is permitted.",
   "integrity": {
@@ -13,14 +13,14 @@
     "clean": true
   },
   "counts": {
-    "totalAttempts": 42,
-    "runnerInvocations": 1,
+    "totalAttempts": 43,
+    "runnerInvocations": 2,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 37,
     "campaignAttempts": 1,
     "otherAttempts": 3,
     "completedPass": 38,
-    "completedFailures": 4,
+    "completedFailures": 5,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "killedAttempts": 0,
@@ -38,6 +38,13 @@
   },
   "gateCycles": {
     "deterministic": [
+      {
+        "attemptId": "R16-GATE-det-cycle1-A2",
+        "exitCode": 1,
+        "status": "COMPLETED_FAIL",
+        "controlling": false,
+        "retryOf": null
+      },
       {
         "attemptId": "R16-GATE-deterministic-cycle1-A1",
         "exitCode": 1,
@@ -1200,6 +1207,38 @@
       "deploymentId": null,
       "malformed": false,
       "notes": null
+    },
+    {
+      "attemptId": "R16-GATE-det-cycle1-A2",
+      "task": "PHASE-10A14-R16",
+      "attemptType": "DETERMINISTIC_GATE",
+      "campaignId": "R16-GATE-DETERMINISTIC",
+      "generationId": null,
+      "probeId": "deterministic",
+      "command": "node scripts/run-regressions.mjs",
+      "runtimeCommit": "cd160795124e20eec8bd04a21af031b9dcda0d1e",
+      "headAtStart": "cd160795124e20eec8bd04a21af031b9dcda0d1e",
+      "headAtEnd": "cd160795124e20eec8bd04a21af031b9dcda0d1e",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T07:27:42.229Z",
+      "endedAt": "2026-07-20T07:30:01.524Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "COMPLETED_FAIL",
+      "technicalFailure": false,
+      "legalMismatch": true,
+      "environmentFailure": false,
+      "retryOf": null,
+      "supersededBy": null,
+      "controlling": false,
+      "logPath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-det-cycle1-A2/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-det-cycle1-A2",
+      "evidenceHash": "517426387d86067a1d7d32e23f9f979b99eb1a97883973240ddd65e97e8abc04",
+      "serverReportedRuntimeCommit": null,
+      "deploymentId": null,
+      "malformed": false,
+      "notes": "runtime equivalence checked against 0323bb91ac8383e1cbb6800637e4b9b896cdaff1"
     },
     {
       "attemptId": "R16-GATE-deterministic-cycle1-A1",
