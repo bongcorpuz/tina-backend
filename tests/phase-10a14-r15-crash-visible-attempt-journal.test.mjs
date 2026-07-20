@@ -17,7 +17,9 @@ import { fileURLToPath } from "node:url";
 import { AttemptJournal, reviewCampaign, EVENT } from "../evaluation/results/phase-10a14-r15/journal.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const VICTIM = path.join(HERE, "..", "evaluation", "results", "phase-10a14-r15", "journal-crash-victim.mjs");
+// PHASE-10A14-R16: point at the corrected R16 victim. The R15 victim is historical
+// evidence and is deliberately left untouched.
+const VICTIM = path.join(HERE, "..", "evaluation", "results", "phase-10a14-r16", "journal-crash-victim.mjs");
 
 let passed = 0, failed = 0;
 const failures = [];
@@ -66,20 +68,45 @@ await test("a timeout is recorded as its own terminal event", async () => {
   equal(rev.timeouts, 1, "timeout count");
 });
 
-// 4, 5, 6 — REAL process kills.
-// Run concurrently with a generous readiness deadline: this suite also executes inside
-// the full regression gate alongside 200+ other suites, where child-process startup can
-// be much slower than when run alone. A short sequential deadline made the suite
-// load-dependent (it passed standalone and failed under the gate).
-async function crashCase(campaignId, killPoint) {
+// 4, 5, 6 — REAL process kills (PHASE-10A14-R16 remediation of P1-R15-IR-001/002).
+//
+// The R15 harness had two defects that this replaces:
+//   - it killed the child WITHOUT first confirming the child was still alive, so a child
+//     that had already exited normally was silently reported as "killed";
+//   - it attached the exit listener AFTER issuing the kill, so if the child had already
+//     exited the "exit" event had already fired and the awaited promise never settled —
+//     the unsettled top-level await that made the suite exit 13.
+//
+// Here the exit observation is registered BEFORE the kill, liveness is confirmed before
+// the kill, and every wait is bounded so the suite can never hang.
+async function crashCase(campaignId, stage) {
   const marker = path.join(ROOT, `${campaignId}.ready`);
-  const child = spawn(process.execPath, [VICTIM, ROOT, campaignId, "P1", killPoint], { stdio: "ignore" });
+  const child = spawn(process.execPath, [VICTIM, ROOT, campaignId, "P1", stage], { stdio: "ignore" });
+
+  // Register exit observation IMMEDIATELY, before anything can race us.
+  let exited = false, exitInfo = null;
+  const exitPromise = new Promise((resolve) => {
+    child.once("exit", (code, signal) => { exited = true; exitInfo = { code, signal }; resolve(); });
+  });
+
   const deadline = Date.now() + 60000;
-  while (!fs.existsSync(marker) && Date.now() < deadline) await new Promise((r) => setTimeout(r, 10));
-  const ready = fs.existsSync(marker);
-  child.kill("SIGKILL");
-  await new Promise((r) => child.on("exit", r));
-  return { ready, review: reviewCampaign(campDir(campaignId)) };
+  while (!fs.existsSync(marker) && !exited && Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, 10));
+  }
+  const markerRaw = fs.existsSync(marker) ? fs.readFileSync(marker, "utf8") : null;
+  let markerData = null;
+  try { markerData = markerRaw ? JSON.parse(markerRaw) : null; } catch { markerData = "MALFORMED"; }
+
+  const aliveBeforeKill = !exited;
+  const killReturned = aliveBeforeKill ? child.kill("SIGKILL") : false;
+
+  // Bounded wait; exitPromise already resolves even if the child died before we looked.
+  await Promise.race([exitPromise, new Promise((r) => setTimeout(r, 15000))]);
+
+  return {
+    stage, markerData, aliveBeforeKill, killReturned, exitInfo,
+    review: reviewCampaign(campDir(campaignId))
+  };
 }
 
 const [crash4, crash5, crash6] = await Promise.all([
@@ -88,28 +115,87 @@ const [crash4, crash5, crash6] = await Promise.all([
   crashCase("C6", "during-call")
 ]);
 
-await test("process kill AFTER allocation leaves the allocation durably visible", async () => {
-  const { ready, review } = crash4;
-  check(ready, "victim never signalled readiness");
-  equal(review.allocated, 1, "allocation must survive the kill");
-  equal(review.completed, 0, "must have no terminal event");
-  equal(review.incompleteOrCrashed, 1, "must classify as INCOMPLETE_OR_CRASHED");
+/** Every real-kill case must satisfy these, with no exceptions. */
+function assertRealKill(c, label) {
+  check(c.markerData && c.markerData !== "MALFORMED", `${label}: victim never signalled a valid readiness marker`);
+  check(Number.isInteger(c.markerData.pid), `${label}: marker must carry the child PID`);
+  check(typeof c.markerData.attemptId === "string" && c.markerData.attemptId.length > 0, `${label}: marker must carry the attempt ID`);
+  equal(c.markerData.stage, c.stage, `${label}: marker stage`);
+  check(c.aliveBeforeKill, `${label}: child exited BEFORE the kill — this is the R15 defect, not a real kill`);
+  equal(c.killReturned, true, `${label}: kill() must return true`);
+  check(c.exitInfo, `${label}: no exit observed`);
+  equal(c.exitInfo.signal, "SIGKILL", `${label}: exit signal`);
+  equal(c.exitInfo.code, null, `${label}: exit code must be null for a signalled death`);
+}
+
+await test("process kill AFTER allocation is a REAL SIGKILL and the allocation survives", async () => {
+  assertRealKill(crash4, "after-allocated");
+  equal(crash4.review.allocated, 1, "allocation must survive the kill");
+  equal(crash4.review.started, 0, "started must not exist yet");
+  equal(crash4.review.completed, 0, "must have no terminal event");
+  equal(crash4.review.incompleteOrCrashed, 1, "must classify as INCOMPLETE_OR_CRASHED");
 });
 
-await test("process kill AFTER started leaves allocation and started visible, no terminal", async () => {
-  const { ready, review } = crash5;
-  check(ready, "victim never signalled readiness");
-  equal(review.allocated, 1, "allocation must survive");
-  equal(review.started, 1, "started must survive");
-  equal(review.incompleteOrCrashed, 1, "must classify as INCOMPLETE_OR_CRASHED");
+await test("process kill AFTER started is a REAL SIGKILL and both events survive", async () => {
+  assertRealKill(crash5, "after-started");
+  equal(crash5.review.allocated, 1, "allocation must survive");
+  equal(crash5.review.started, 1, "started must survive");
+  equal(crash5.review.completed, 0, "must have no terminal event");
+  equal(crash5.review.incompleteOrCrashed, 1, "must classify as INCOMPLETE_OR_CRASHED");
 });
 
-await test("process kill DURING the governed call leaves the attempt visible with no terminal event", async () => {
-  const { ready, review } = crash6;
-  check(ready, "victim never signalled readiness");
-  check(review.allocated >= 1, "allocation must survive a kill mid-call");
-  check(review.incompleteOrCrashed >= 1, "an interrupted attempt must be visible as incomplete");
-  equal(review.completed, 0, "nothing may be reported completed");
+await test("process kill DURING an awaited governed call is a REAL SIGKILL", async () => {
+  assertRealKill(crash6, "during-call");
+  equal(crash6.review.allocated, 1, "exactly one attempt must be allocated — no extra outer attempt");
+  equal(crash6.review.started, 1, "the governed call must have started");
+  equal(crash6.review.completed, 0, "nothing may be reported completed");
+  equal(crash6.review.technicalFailures, 0, "a kill is not a technical failure event");
+  equal(crash6.review.incompleteOrCrashed, 1, "the interrupted attempt must be visible as incomplete");
+});
+
+// Negative controls — these MUST fail for their expected reason. If they ever pass, the
+// harness has stopped being able to detect a fake kill, which is how R15 reported a
+// during-call "crash" that never happened.
+await test("NEGATIVE CONTROL: a child that exits normally is detected, not counted as killed", async () => {
+  // Deterministic by construction: WAIT for the child's normal exit before attempting the
+  // kill. An earlier version killed as soon as the readiness marker appeared, which is
+  // racy — under concurrent load the SIGKILL can land before the child's own exit(0)
+  // completes, and the control then masquerades as a real kill. That flakiness was found
+  // by the required concurrent-load cycles, which is what they are for.
+  const marker = path.join(ROOT, "CNEG1.ready");
+  const child = spawn(process.execPath, [VICTIM, ROOT, "CNEG1", "P1", "negative-early-exit"], { stdio: "ignore" });
+  let exitInfo = null;
+  const exitPromise = new Promise((r) => child.once("exit", (code, signal) => { exitInfo = { code, signal }; r(); }));
+
+  const deadline = Date.now() + 60000;
+  while (!fs.existsSync(marker) && Date.now() < deadline) await new Promise((r) => setTimeout(r, 10));
+  // Now wait for the NORMAL exit to actually complete.
+  await Promise.race([exitPromise, new Promise((r) => setTimeout(r, 30000))]);
+
+  check(exitInfo, "child must have exited on its own");
+  equal(exitInfo.code, 0, "the negative control must exit normally with code 0");
+  equal(exitInfo.signal, null, "the negative control must not die by signal");
+
+  const killReturned = child.kill("SIGKILL"); // already dead — must not read as a real kill
+  const c = { stage: "negative-early-exit", markerData: JSON.parse(fs.readFileSync(marker, "utf8")),
+    aliveBeforeKill: false, killReturned, exitInfo };
+
+  let detected = false;
+  try { assertRealKill(c, "negative-early-exit"); } catch { detected = true; }
+  check(detected, "assertRealKill MUST reject a child that exited normally — otherwise a fake kill would pass");
+});
+
+await test("NEGATIVE CONTROL: a child that never signals readiness is detected", async () => {
+  const marker = path.join(ROOT, "CNEG2.ready");
+  const child = spawn(process.execPath, [VICTIM, ROOT, "CNEG2", "P1", "negative-marker-timeout"], { stdio: "ignore" });
+  let exited = false;
+  const exitPromise = new Promise((r) => child.once("exit", () => { exited = true; r(); }));
+  const deadline = Date.now() + 3000; // deliberately short: readiness will never arrive
+  while (!fs.existsSync(marker) && !exited && Date.now() < deadline) await new Promise((r) => setTimeout(r, 10));
+  const timedOut = !fs.existsSync(marker);
+  child.kill("SIGKILL");
+  await Promise.race([exitPromise, new Promise((r) => setTimeout(r, 10000))]);
+  check(timedOut, "the harness must observe the missing readiness marker rather than proceeding");
 });
 
 // 7
