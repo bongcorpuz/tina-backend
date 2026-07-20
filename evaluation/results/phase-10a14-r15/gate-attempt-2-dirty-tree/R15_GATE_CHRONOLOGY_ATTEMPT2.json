@@ -2,6 +2,7 @@
   "task": "PHASE-10A14-R15",
   "campaignId": "R15-GATE-c38a073b8145",
   "finalRuntime": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "expectedDeployedCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
   "rule": "Every runner invocation is a journaled attempt, including failures. No gate log is ever deleted. Logs are captured outside the repository and copied into evidence after each runner ends.",
   "runnerInvocations": 4,
   "preservedLogs": 4,
@@ -15,12 +16,15 @@
       "exitCode": 1,
       "outcome": "FAIL",
       "timedOut": false,
-      "durationMs": 167634,
+      "durationMs": 182180,
       "logInEvidence": "evaluation/results/phase-10a14-r15/gate-logs/deterministic-cycle1.txt",
       "identityBefore": null,
       "identityAfter": null,
       "identityStable": null,
       "identityMatchesFinalRuntime": null,
+      "runtimeEquivalenceBefore": null,
+      "runtimeEquivalenceAfter": null,
+      "expectedDeployedCommit": null,
       "controlling": false
     },
     {
@@ -30,12 +34,15 @@
       "exitCode": 1,
       "outcome": "FAIL",
       "timedOut": false,
-      "durationMs": 158765,
+      "durationMs": 152165,
       "logInEvidence": "evaluation/results/phase-10a14-r15/gate-logs/deterministic-cycle2.txt",
       "identityBefore": null,
       "identityAfter": null,
       "identityStable": null,
       "identityMatchesFinalRuntime": null,
+      "runtimeEquivalenceBefore": null,
+      "runtimeEquivalenceAfter": null,
+      "expectedDeployedCommit": null,
       "controlling": false
     },
     {
@@ -45,24 +52,33 @@
       "exitCode": 0,
       "outcome": "PASS",
       "timedOut": false,
-      "durationMs": 8278,
+      "durationMs": 10005,
       "logInEvidence": "evaluation/results/phase-10a14-r15/gate-logs/staging-cycle1.txt",
       "identityBefore": {
         "label": "BEFORE",
         "httpStatus": 200,
-        "runtimeCommit": "7db4f2841672e0940ef6c0690f6e3d9c1bcb7ba3",
+        "runtimeCommit": "07414c8bc57450254049aecb81178917772858d9",
         "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
-        "at": "2026-07-20T04:33:11.120Z"
+        "at": "2026-07-20T04:47:26.818Z"
       },
       "identityAfter": {
         "label": "AFTER",
         "httpStatus": 200,
-        "runtimeCommit": "7db4f2841672e0940ef6c0690f6e3d9c1bcb7ba3",
+        "runtimeCommit": "07414c8bc57450254049aecb81178917772858d9",
         "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
-        "at": "2026-07-20T04:33:35.789Z"
+        "at": "2026-07-20T04:47:53.420Z"
       },
       "identityStable": true,
       "identityMatchesFinalRuntime": false,
+      "runtimeEquivalenceBefore": {
+        "equivalent": false,
+        "reason": "server-reported commit is not present in this repository"
+      },
+      "runtimeEquivalenceAfter": {
+        "equivalent": false,
+        "reason": "server-reported commit is not present in this repository"
+      },
+      "expectedDeployedCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
       "controlling": true
     },
     {
@@ -72,24 +88,33 @@
       "exitCode": 0,
       "outcome": "PASS",
       "timedOut": false,
-      "durationMs": 6470,
+      "durationMs": 7118,
       "logInEvidence": "evaluation/results/phase-10a14-r15/gate-logs/staging-cycle2.txt",
       "identityBefore": {
         "label": "BEFORE",
         "httpStatus": 200,
-        "runtimeCommit": "7db4f2841672e0940ef6c0690f6e3d9c1bcb7ba3",
+        "runtimeCommit": "07414c8bc57450254049aecb81178917772858d9",
         "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
-        "at": "2026-07-20T04:33:50.842Z"
+        "at": "2026-07-20T04:48:08.207Z"
       },
       "identityAfter": {
         "label": "AFTER",
         "httpStatus": 200,
-        "runtimeCommit": "7db4f2841672e0940ef6c0690f6e3d9c1bcb7ba3",
+        "runtimeCommit": "07414c8bc57450254049aecb81178917772858d9",
         "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
-        "at": "2026-07-20T04:34:12.802Z"
+        "at": "2026-07-20T04:48:30.418Z"
       },
       "identityStable": true,
       "identityMatchesFinalRuntime": false,
+      "runtimeEquivalenceBefore": {
+        "equivalent": false,
+        "reason": "server-reported commit is not present in this repository"
+      },
+      "runtimeEquivalenceAfter": {
+        "equivalent": false,
+        "reason": "server-reported commit is not present in this repository"
+      },
+      "expectedDeployedCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
       "controlling": true
     }
   ],

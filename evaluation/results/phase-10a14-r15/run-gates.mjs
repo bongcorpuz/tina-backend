@@ -92,8 +92,11 @@ function runtimeEquivalentToFinal(reportedCommitRaw) {
   const c = reportedCommitRaw;
   if (!c || !/^[0-9a-f]{40}$/i.test(c)) return { equivalent: false, reason: "no server-reported commit" };
   if (equivalenceCache.has(c)) return equivalenceCache.get(c);
-  let known = true;
-  try { execSync(`git cat-file -e ${c}^{commit}`, { stdio: "ignore" }); } catch { known = false; }
+  // NOTE: do NOT use `${c}^{commit}` here. execSync goes through cmd.exe on Windows,
+  // where `^` is the escape character, so the revision expression is mangled and every
+  // commit is reported absent. `git cat-file -t` needs no revision syntax.
+  let known = false;
+  try { known = execSync(`git cat-file -t ${c}`, { encoding: "utf8" }).trim() === "commit"; } catch { known = false; }
   if (!known) { const r = { equivalent: false, reason: "server-reported commit is not present in this repository" }; equivalenceCache.set(c, r); return r; }
   const diffs = RUNTIME_FILES.filter((f) => fileHashAt(c, f) !== fileHashAt(finalRuntime, f));
   const r = diffs.length === 0
