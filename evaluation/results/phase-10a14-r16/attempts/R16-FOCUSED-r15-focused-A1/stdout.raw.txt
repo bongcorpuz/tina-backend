@@ -1,0 +1,49 @@
+[VECTOR INSERT CONFIG] { batchSize: 3, batchDelayMs: 750 }
+[DB IDENTITY] {
+  supabaseUrlHost: 'kjvrgkvooivmtxxkurth.supabase.co',
+  supabaseProjectRef: 'kjvrgkvooivmtxxkurth',
+  VECTOR_TABLE: 'tina_vector_store',
+  LOCK_TABLE: 'tina_reindex_locks',
+  vectorTableFromEnv: null,
+  vectorTableUsingDefault: true,
+  vectorTableMatchExpected: true,
+  NODE_ENV: null,
+  RENDER_SERVICE_NAME: null,
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: 'cb86787489842e8d',
+  pid: 24004,
+  engineVersion: '3.0.0'
+}
+PASS all 30 independent-review semantic probes classify correctly
+PASS the 12 reported mismatches are individually closed
+PASS a safe clause never suppresses an unsafe clause across a coordinator
+PASS action target: verification is not a filing directive, filing is
+PASS two individually safe clauses do not combine into a false positive
+PASS all 90 manual and all 1331 generated composition cases classify correctly
+PASS all 22 metamorphic invariants hold
+PASS attributed assertion is reported; attributed imperative is adopted
+PASS the 7 R14 live false refusals now reach the tax domain
+PASS tax-adjacent positives reach the tax domain
+PASS non-tax uses of 'file' stay out of the tax domain
+PASS fail-closed default is preserved for unrelated queries
+PASS LC5 is detected as a liability computation missing decisive facts
+PASS a fully specified computation is NOT intercepted
+PASS the clarification meets the WS7 contract
+PASS FIN1: a branch pre-populating PERSISTED without a receipt is corrected (the R14 defect)
+PASS FIN2: a receipt without a status yields the correct status
+PASS FIN3: a branch claim contradicting the receipt is overridden
+PASS FIN4: a malformed receipt is replaced
+PASS FIN5: a no-attempt path is never reported as PERSISTENCE_FAILED
+PASS FIN6/FIN7: missing identifiers are reported explicitly
+PASS every PERSISTED response carries a complete sanitized receipt
+PASS status and receipt can never contradict each other
+PASS the finalizer runs on every body shape, including error responses
+PASS receipts never leak raw DB errors, SQL or credentials
+PASS all 10 receipt simulations remain truthful
+PASS request isolation: one request's receipt never appears in another
+PASS runtime identity reports a 40-hex commit or null, never a guess
+PASS public identity exposes only the approved fields
+
+phase-10a14-r15: 29 passed, 0 failed
+PHASE-10A14-R15 PASS — semantic composition, tax adjacency, universal persistence receipt, runtime identity.

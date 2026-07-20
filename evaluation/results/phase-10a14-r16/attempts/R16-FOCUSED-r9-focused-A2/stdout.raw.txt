@@ -1,0 +1,17 @@
+PASS A: SG-C-LASTDAY 'Yes, today is the last day' is calendar-relative unresolved
+PASS B: full evaluateAnswerSupport fails closed at calendar-relative-deadline stage
+PASS C: answer-introduced 'due today' fails closed even if question is neutral
+PASS D: 'already late' and 'due tomorrow' are calendar-relative
+PASS F: plain 'deadline is April 15' (non-relative) is NOT gated
+PASS G/I: Q12 Section-24 filing conclusion fails rationale alignment
+PASS H: full evaluateAnswerSupport fails Q12 at filing-rationale-alignment (Sec 51 card present)
+PASS J: Section 51 mentioned only in Interpretation does NOT cure a Section-24 decisive rationale
+PASS K: incomplete ₱250k compensation categorical non-filing (Sec 24) fails
+PASS L: fact-complete substituted filing on Section 51-A verifies (rationale aligned)
+PASS M/O: filing conclusion citing Section 51 as controlling verifies
+PASS N: SG-B-COMPONLY (conditioned, Section 51 controlling) is NOT gated
+PASS P: 'no tax due' as decisive filing rationale (no filing rule) fails
+PASS R: calendar-relative and filing-rationale fail without any model client
+PASS Q: Taglish threshold rationale still gated
+
+phase-10a14-r9: 15 passed, 0 failed

@@ -1,0 +1,24 @@
+PASS negated nonperformance constructions are unsafe current directives
+PASS negated delay and postponement remain unsafe
+PASS safe negation of the filing conclusion does not over-fire
+PASS direct filing prohibition and deferral are unsafe
+PASS informational failure-to-file statements stay safe
+PASS quoted and rejected directives are not adopted as TINA's own
+PASS a quotation does not shield an unquoted directive in the same clause
+PASS Taglish negated nonperformance and safe negation classify correctly
+PASS effective action polarity distinguishes the negation targets
+PASS frozen negation matrix: all generated cases classify as expected
+PASS frozen metamorphic invariants hold
+PASS persistence receipts report every outcome truthfully
+PASS no false PERSISTED: only an acknowledged double insert qualifies
+PASS a late completion after timeout is never upgraded to PERSISTED
+PASS receipts never leak raw DB errors, SQL or credentials
+PASS every public response category declares a non-null allowed persistenceStatus
+PASS conversationless and userless responses state the reason explicitly
+PASS a non-persisting path never claims PERSISTED
+PASS a negated-nonperformance directive routes to the calendar-relative stage
+PASS a direct filing prohibition routes to the calendar-relative stage
+PASS safe negation still does NOT route to calendar-relative-deadline
+
+phase-10a14-r14: 21 passed, 0 failed
+PHASE-10A14-R14 PASS - negated nonperformance detected, safe negation preserved, universal public persistenceStatus.

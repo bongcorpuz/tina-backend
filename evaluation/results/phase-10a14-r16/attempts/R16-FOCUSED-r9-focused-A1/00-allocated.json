@@ -1,0 +1,16 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R16-FOCUSED-r9-focused-A1",
+  "task": "PHASE-10A14-R16",
+  "attemptType": "FOCUSED_SUITE",
+  "campaignId": "R16-FINAL-FOCUSED",
+  "generationId": null,
+  "probeId": "r9-focused",
+  "runtimeCommit": "a802064a1b32e8a68a0b8c4dd1f8a1b0c9a5e2f7",
+  "retryOf": null,
+  "notes": null,
+  "headAtStart": "a802064a4c26565d506c77f60fbde11abedcac89",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "allocatedAt": "2026-07-20T07:15:54.292Z"
+}

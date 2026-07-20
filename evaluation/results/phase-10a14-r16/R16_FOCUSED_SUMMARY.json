@@ -1,0 +1,75 @@
+{
+  "task": "PHASE-10A14-R16",
+  "runtimeCommit": "a802064a4c26565d506c77f60fbde11abedcac89",
+  "suites": 11,
+  "allPassed": true,
+  "failed": [],
+  "results": [
+    {
+      "probeId": "r16-domain",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "15/0"
+    },
+    {
+      "probeId": "r16-tooling",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "13/0"
+    },
+    {
+      "probeId": "r15-journal-crash",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "21/0"
+    },
+    {
+      "probeId": "r15-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "29/0"
+    },
+    {
+      "probeId": "r14-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "21/0"
+    },
+    {
+      "probeId": "r13-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "32/0"
+    },
+    {
+      "probeId": "r12-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "47/0"
+    },
+    {
+      "probeId": "r11-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "39/0"
+    },
+    {
+      "probeId": "r10-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "22/0"
+    },
+    {
+      "probeId": "r9-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "15/0"
+    },
+    {
+      "probeId": "all26-replay",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json",
+      "counts": "n/a"
+    }
+  ]
+}

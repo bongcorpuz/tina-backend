@@ -1,0 +1,12 @@
+{
+  "event": "RECOVERY_ADJUDICATION",
+  "attemptId": "R16-FOCUSED-r13-focused-A1",
+  "at": "2026-07-20T07:16:29.133Z",
+  "defect": "RUNTIME_COMMIT_FABRICATED_BY_OPERATOR",
+  "recordedRuntimeCommit": "a802064a1b32e8a68a0b8c4dd1f8a1b0c9a5e2f7",
+  "actualRuntimeCommitAtExecution": "a802064a4c26565d506c77f60fbde11abedcac89",
+  "explanation": "The operator passed a full 40-hex commit constructed from the short hash a802064a instead of reading git rev-parse HEAD. The recorded value does not exist as a git object (git cat-file reports no such object). The suite results themselves are unaffected and were produced against the real working tree at a802064a4c26565d506c77f60fbde11abedcac89, but the runtimeCommit field in 00-allocated.json is wrong.",
+  "disposition": "NON_CONTROLLING",
+  "remediation": "These attempts are preserved unmodified. The campaign was re-executed with the verified commit as a new attempt generation (-A2); only those attempts are controlling. No existing event file was edited, and no attempt was deleted, as the frozen contract requires.",
+  "contractBasis": "R16_IMMUTABLE_EVIDENCE_CONTRACT.md section 4 permits ADDING a recovery-adjudication file; existing event files are never modified."
+}

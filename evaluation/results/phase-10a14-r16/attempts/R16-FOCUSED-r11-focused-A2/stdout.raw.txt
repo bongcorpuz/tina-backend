@@ -1,0 +1,41 @@
+PASS detect: confirmed miss: please file today
+PASS detect: confirmed miss: file now to avoid penalties
+PASS detect: polite: please submit by end of today
+PASS detect: imperative: file now
+PASS detect: imperative: submit immediately
+PASS detect: must file now
+PASS detect: should file today
+PASS detect: complete before day ends
+PASS detect: go ahead and file today
+PASS detect: file tomorrow
+PASS detect: submit tomorrow
+PASS detect: should have filed yesterday
+PASS detect: was due yesterday
+PASS detect: submit today no penalty
+PASS detect: file immediately prevent
+PASS detect: file before end of day surcharge
+PASS detect: taglish mag-file ngayon
+PASS detect: taglish i-file ngayon
+PASS detect: taglish ngayong araw isumite
+PASS detect: taglish mag-submit bago araw
+PASS detect: taglish bukas i-file
+PASS detect: taglish huli mag-file agad
+PASS detect: directive only under Practical Meaning
+PASS detect: multiline with heading
+PASS safe control does NOT fire: general April 15
+PASS safe control does NOT fire: safe hypothetical
+PASS safe control does NOT fire: historical
+PASS safe control does NOT fire: ordinary penalty
+PASS safe control does NOT fire: last day of employment
+PASS safe control does NOT fire: today tax news
+PASS safe control does NOT fire: neutral checklist
+PASS safe control does NOT fire: conditional no conclusion
+PASS context derived from question (today/tomorrow/yesterday/already-late/still-on-time)
+PASS builder tomorrow context does not say 'today is the deadline'
+PASS builder yesterday context
+PASS builder states April 15 only when Sec 51 present
+PASS builder carries no unsafe present-day directive / no validator terminology
+PASS evaluateAnswerSupport routes 'please file today' to calendar-relative-deadline
+PASS model-validator non-override (no client) for a directive
+
+phase-10a14-r11: 39 passed, 0 failed

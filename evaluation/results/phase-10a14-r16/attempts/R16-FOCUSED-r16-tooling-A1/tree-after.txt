@@ -1,0 +1,4 @@
+?? .vscode/
+?? evaluation/factcheck/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r16-domain-A1/
+?? evaluation/results/phase-10a14-r16/run-focused-campaign.mjs

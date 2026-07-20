@@ -1,0 +1,11 @@
+{
+  "event": "COMPLETED_PASS",
+  "endedAt": "2026-07-20T07:17:17.901Z",
+  "exitCode": 0,
+  "signal": null,
+  "suitePassed": 39,
+  "suiteFailed": 0,
+  "controlling": true,
+  "headAtEnd": "a802064a4c26565d506c77f60fbde11abedcac89",
+  "treeCleanAfter": null
+}
