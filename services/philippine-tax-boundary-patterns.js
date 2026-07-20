@@ -257,7 +257,19 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   /\bassessment notice\b/i,
   /\bRMC\b|\bRMO\b|\bRR\s*\d|\bRevenue Regulations?\b|\bRevenue Memorandum\b/i,
   /\bBIR ruling\b/i, /\btax refund\b/i, /\btax credit\b/i, /\btax return\b/i,
-  /\bITR\b/i, /\bTIN\b/i, /\bzero-?rated\b/i, /\binput tax\b/i, /\boutput tax\b/i
+  /\bITR\b/i, /\bTIN\b/i, /\bzero-?rated\b/i, /\binput tax\b/i, /\boutput tax\b/i,
+  // PHASE-10A14-R16 correction. Deterministic gate cycle 1 exposed two false REFUSALS
+  // introduced by an over-narrow strong list: named Philippine tax statutes and
+  // tax-practice vocabulary are genuine anchors and were falling through to the weak
+  // path. Caught by patch-06e-003 and phase-10a12-r2, not by my own frozen inventory,
+  // which contained no named-statute or lessor probe.
+  /\bRA\s*\d{4,5}\b/i, /\bRepublic Act\s*(?:No\.?\s*)?\d{4,5}\b/i,
+  /\bTRAIN\s*Law\b/i, /\bCREATE\s*(?:Act|MORE)\b/i, /\bPEZA\b/i, /\bBOI\b/i,
+  /\blessor\b|\blessee\b/i,
+  /\bVAT-?exempt\b|\btax-?exempt\b|\bexempt(?:ion)?\s+threshold\b/i,
+  /\bstatutory\s+(?:threshold|deadline|period|rate|due date)\b/i,
+  /\bgross receipts\b/i, /\bfringe benefit\b/i, /\bde minimis\b/i,
+  /\bCTA\s*Case\b/i, /\bSection\s*\d+\b(?=[^.\n]{0,40}\b(?:NIRC|tax|BIR)\b)/i
 ];
 
 /**
