@@ -1,0 +1,34 @@
+PASS detect: suggest today
+PASS detect: my advice today
+PASS detect: may wish immediately
+PASS detect: best course today
+PASS detect: best to submit today
+PASS detect: strongly encourage
+PASS detect: may be wise today
+PASS detect: complete before COB
+PASS detect: may lodge surcharge
+PASS detect: unless file penalty
+PASS detect: nominalized advisable
+PASS detect: nominalized recommended
+PASS detect: should consider
+PASS detect delay-negation: do not delay
+PASS detect delay-negation: do not wait
+PASS detect delay-negation: do not postpone
+PASS safe negation: does not establish
+PASS safe negation: do not assume
+PASS safe negation: evidence does not show
+PASS safe negation: not required based on facts
+PASS safe negation: cannot confirm should
+PASS safe control: only-if confirmed
+PASS safe control: extension counterfactual
+PASS safe control: general practitioner
+PASS safe control: conditional extension
+PASS grammar matrix: all generated cases classify as expected
+PASS metamorphic invariants hold
+PASS persistence receipt: PERSISTED only on acknowledged double insert
+PASS persistence receipt: memory-hook failure does NOT downgrade PERSISTED
+PASS persistence receipt: no false PERSISTED and no raw DB error leakage
+PASS evaluateAnswerSupport routes a recommendation directive to calendar-relative-deadline
+PASS safe negation does NOT route to calendar-relative-deadline
+
+phase-10a14-r13: 32 passed, 0 failed

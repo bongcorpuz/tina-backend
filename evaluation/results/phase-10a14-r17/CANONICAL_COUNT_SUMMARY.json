@@ -1,0 +1,43 @@
+{
+  "task": "PHASE-10A14-R17",
+  "generatedAt": "2026-07-20T10:04:17.809Z",
+  "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
+  "counts": {
+    "totalAttempts": 32,
+    "runnerInvocations": 0,
+    "stagingRunnerInvocations": 0,
+    "focusedSuiteInvocations": 32,
+    "campaignAttempts": 0,
+    "completedPass": 31,
+    "completedFailures": 1,
+    "technicalFailures": 0,
+    "environmentFailures": 0,
+    "incompleteAttempts": 0,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "controllingAttempts": 31,
+    "nonControllingAttempts": 1,
+    "validLinkedRetries": 0,
+    "unlinkedReruns": 16
+  },
+  "scope": {
+    "includesGateRunnerAttempts": true,
+    "includesStagingRunnerAttempts": true,
+    "includesFocusedSuiteAttempts": true,
+    "includesCampaignAttempts": true,
+    "statement": "All counts are derived from every immutable attempt directory under evaluation/results/phase-10a14-r17/attempts, with no category excluded. A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt. Controlling status requires BOTH valid Git provenance AND a VALID_CONTROLLING disposition — it is never the raw terminal event alone."
+  },
+  "gateCycles": {
+    "deterministic": [],
+    "staging": []
+  },
+  "integrity": {
+    "duplicates": [],
+    "malformed": [],
+    "invalidProvenance": [],
+    "retryErrors": [],
+    "controllingWithInvalidProvenance": [],
+    "controllingWithCorruption": [],
+    "clean": true
+  }
+}

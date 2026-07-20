@@ -1,0 +1,15 @@
+{
+  "event": "COMPLETED_PASS",
+  "headAtEnd": "f03237fee986903338133ca72384f868be83787b",
+  "treeCleanAfter": true,
+  "endedAt": "2026-07-20T10:03:34.390Z",
+  "exitCode": 0,
+  "runtimeCommit": "f03237fee986903338133ca72384f868be83787b",
+  "blocked": 9,
+  "preserved": 17,
+  "mismatch": 0,
+  "expected9_17_0": true,
+  "e1ArtifactHashBefore": "53baf579e7ea723ae01d096f82a6081600f59d2e3d9b79880ad0bf93a3f49443",
+  "e1ArtifactHashAfter": "53baf579e7ea723ae01d096f82a6081600f59d2e3d9b79880ad0bf93a3f49443",
+  "e1ArtifactUntouched": true
+}

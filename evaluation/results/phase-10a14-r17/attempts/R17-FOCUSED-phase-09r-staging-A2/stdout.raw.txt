@@ -1,0 +1,38 @@
+PASS fixture exists and parses as JSON
+PASS patch id, decision, and base commit are valid
+PASS non-runtime patch declaration covers routes/handlers/flags/memory/production/search/mcp/live-activation
+PASS MCP deferral evidence records deferred and unused
+PASS tax memo runtime orchestrator, renderer, and integration policy files exist
+PASS orchestrator, renderer, integration policy, governance gate, and runtime policy self-checks all pass
+PASS runTaxMemoRuntimeScaffold blocks default request
+PASS runTaxMemoRuntimeScaffold blocks missing runtimeOptions
+PASS runTaxMemoRuntimeScaffold blocks featureFlagEnabled false
+PASS runTaxMemoRuntimeScaffold blocks explicit approval false
+PASS runTaxMemoRuntimeScaffold blocks missing sourceCards
+PASS runTaxMemoRuntimeScaffold blocks unsupported mode
+PASS runTaxMemoRuntimeScaffold blocks bir_reply_protest_draft, audit_defense_matrix, client_advisory, compliance_checklist, requirements_request_letter
+PASS runTaxMemoRuntimeScaffold passes only for explicitly safe tax_memo scaffold request
+PASS safe scaffold output has required shape (mode, schemaKey, sourceCards, missingFacts, assumptions, humanReviewNotice)
+PASS safe scaffold output metadata finalFiling and automaticSubmission are false
+PASS safe scaffold output contains no final-filing, automatic-submission, production-ready, or guaranteed-outcome claims
+PASS renderTaxMemoDraftToMarkdown renders safe output
+PASS rendered markdown includes draft-only, human-review, source-card, missing-facts, and assumptions sections
+PASS rendered markdown does not include prohibited claims
+PASS validateTaxMemoRuntimeRenderedOutput passes for safe markdown
+PASS validateTaxMemoIntegrationCandidate validates safe design candidate as design-only, blocked for live execution
+PASS validateTaxMemoIntegrationCandidate fails when any forbidden change-scope field is true
+PASS validateTaxMemoIntegrationCandidate fails for blocked modes
+PASS git diff confirms no route/server/pipeline/ask-handler/package/env/DB/frontend/workflow/MCP files are modified
+PASS static source scan: this test file contains no secrets, forbidden service calls, or auth-header usage
+PASS perform safe staging HTTP smoke checks (health, root, routes, options /ask, unauthenticated post /ask)
+PASS GET /health: 200, status ok, service tina-backend, no commitSha, security headers present, no X-Powered-By
+PASS GET /: 200 safe public response, no route inventory disclosure, security headers present, no X-Powered-By
+PASS GET /routes: safe minimized not_found response, no route inventory disclosure, security headers present, no X-Powered-By
+PASS OPTIONS /ask: safe CORS preflight behavior, not rate-limit-blocked, no X-Powered-By
+PASS POST /ask unauthenticated harmless ping: protected (401/403), no tax memo/workflow output, security headers present, no X-Powered-By
+PASS fixture staging validation summary is consistent with the decision and observed reachability
+PASS if decision FAIL: a failure reason is recorded
+PASS if decision BLOCKED: a blocker reason is recorded
+PASS no secret/token/authorization values are stored anywhere in the fixture
+
+PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1 tests: 36 passed, 0 failed, 178 assertions

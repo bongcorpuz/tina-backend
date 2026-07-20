@@ -127,13 +127,27 @@ const NON_CONTROLLING = new Set([
  * Detect corruption in an evidence file. Deliberately NOT a JSON-parse check: the R16
  * corrupted file was `tree-before.txt`, 186 NUL bytes, which no JSON check could see.
  */
+/**
+ * Files that may legitimately be empty or whitespace-only:
+ *   - *.raw.txt      a process that produced no stderr must still yield a valid file;
+ *   - tree-*.txt     a clean tracked tree produces no porcelain output.
+ * NUL bytes remain corrupt in EVERY file, which is what catches the R16 case.
+ */
+const MAY_BE_EMPTY = (name) => /\.raw\.txt$/.test(name) || /^tree-(before|after)\.txt$/.test(name);
+
 export function detectCorruption(filePath) {
   if (!fs.existsSync(filePath)) return { corrupt: true, reason: "MISSING" };
   const buf = fs.readFileSync(filePath);
-  if (buf.length === 0) return { corrupt: true, reason: "ZERO_LENGTH" };
+  // NUL bytes are corrupt everywhere, with no exemption. This is the rule that catches
+  // the R16 tree-before.txt of 186 NUL bytes.
   if (buf.includes(0)) return { corrupt: true, reason: "CONTAINS_NUL_BYTES" };
+  const name = path.basename(filePath);
+  const emptyAllowed = MAY_BE_EMPTY(name);
+  if (buf.length === 0) {
+    return emptyAllowed ? { corrupt: false, reason: null } : { corrupt: true, reason: "ZERO_LENGTH" };
+  }
   const text = buf.toString("utf8");
-  if (text.trim().length === 0) return { corrupt: true, reason: "ALL_WHITESPACE" };
+  if (text.trim().length === 0 && !emptyAllowed) return { corrupt: true, reason: "ALL_WHITESPACE" };
   if (filePath.endsWith(".json")) {
     try { JSON.parse(text); } catch { return { corrupt: true, reason: "MALFORMED_JSON" }; }
   }

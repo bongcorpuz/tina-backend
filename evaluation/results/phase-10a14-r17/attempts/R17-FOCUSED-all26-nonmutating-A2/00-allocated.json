@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R17-FOCUSED-all26-nonmutating-A2",
+  "task": "PHASE-10A14-R17",
+  "attemptType": "FOCUSED_SUITE",
+  "campaignId": "R17-FINAL-FOCUSED",
+  "probeId": "all26-nonmutating",
+  "cycleKey": "all26",
+  "runtimeCommit": "f03237fee986903338133ca72384f868be83787b",
+  "runtimeCommitSource": "git rev-parse HEAD",
+  "headAtStart": "f03237fee986903338133ca72384f868be83787b",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "retryOf": null,
+  "retryReason": null,
+  "notes": "Non-mutating replay of the E1 all-26 gate. Writes only into R17 evidence; no E1 file is opened for writing.",
+  "allocatedAt": "2026-07-20T10:01:17.444Z"
+}

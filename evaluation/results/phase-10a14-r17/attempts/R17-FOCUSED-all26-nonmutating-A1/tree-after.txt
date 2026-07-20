@@ -1,0 +1,7 @@
+M evaluation/results/phase-10a14-e1/WS8_DETERMINISTIC_ALL26.json
+?? .vscode/
+?? evaluation/factcheck/
+?? evaluation/results/phase-10a14-r17/attempts/
+?? evaluation/results/phase-10a14-r17/build-registry.mjs
+?? evaluation/results/phase-10a14-r17/evidence.mjs
+?? evaluation/results/phase-10a14-r17/run-focused-campaign.mjs

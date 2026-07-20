@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R17-FOCUSED-r16-domain-A2",
+  "task": "PHASE-10A14-R17",
+  "attemptType": "FOCUSED_SUITE",
+  "campaignId": "R17-FINAL-FOCUSED",
+  "probeId": "r16-domain",
+  "cycleKey": "r16-domain",
+  "runtimeCommit": "f03237fee986903338133ca72384f868be83787b",
+  "runtimeCommitSource": "git rev-parse HEAD",
+  "headAtStart": "f03237fee986903338133ca72384f868be83787b",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "retryOf": null,
+  "retryReason": null,
+  "notes": null,
+  "allocatedAt": "2026-07-20T10:00:33.826Z"
+}

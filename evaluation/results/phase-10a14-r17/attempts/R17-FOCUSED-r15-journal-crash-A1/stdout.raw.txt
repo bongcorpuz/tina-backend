@@ -1,0 +1,24 @@
+PASS normal completion writes allocated, started and exactly one terminal event
+PASS a thrown function is recorded as a technical failure, not a legal result
+PASS a timeout is recorded as its own terminal event
+PASS process kill AFTER allocation is a REAL SIGKILL and the allocation survives
+PASS process kill AFTER started is a REAL SIGKILL and both events survive
+PASS process kill DURING an awaited governed call is a REAL SIGKILL
+PASS NEGATIVE CONTROL: a child that exits normally is detected, not counted as killed
+PASS NEGATIVE CONTROL: a child that never signals readiness is detected
+PASS duplicate attempt ID allocation is rejected, never an overwrite
+PASS concurrent allocation produces unique attempt directories
+PASS concurrent event creation across attempts does not interleave or collide
+PASS a partial (truncated) event file is reported as malformed, not skipped
+PASS malformed JSON in the allocation event is reported
+PASS a missing terminal event is counted, never silently dropped
+PASS rewriting an existing event file through the API is impossible
+PASS a second terminal event is rejected
+PASS unauthorized deletion is detectable by reconciliation
+PASS retry linking preserves the failed attempt and links forward
+PASS summary reconciliation reports every category including legal mismatches
+PASS restart and sequence recovery: a new journal instance cannot reuse an ID
+PASS every attempt directory is enumerable for manifest inclusion
+
+phase-10a14-r15-journal: 21 passed, 0 failed
+PHASE-10A14-R15 JOURNAL PASS — crash-visible lifecycle proven with real process kills.

@@ -1,0 +1,154 @@
+{
+  "task": "PHASE-10A14-R17",
+  "generatedAt": "2026-07-20T10:04:17.809Z",
+  "rule": "A retry requires a valid retryOf to an existing prior attempt, an objective reason and an unchanged runtime. An unlinked rerun is not a retry and never counts toward a ceiling.",
+  "validRetryCount": 0,
+  "validRetries": [],
+  "errors": [],
+  "ceiling": {
+    "all26|f03237fee986903338133ca72384f868be83787b": {
+      "key": "all26|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "patch-07b|f03237fee986903338133ca72384f868be83787b": {
+      "key": "patch-07b|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "phase-09r-staging|f03237fee986903338133ca72384f868be83787b": {
+      "key": "phase-09r-staging|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "phase-10a8|f03237fee986903338133ca72384f868be83787b": {
+      "key": "phase-10a8|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r10-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r10-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r11-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r11-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r12-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r12-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r13-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r13-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r14-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r14-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r15-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r15-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r15-journal-crash|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r15-journal-crash|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r16-domain|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r16-domain|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r16-tooling|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r16-tooling|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r17-domain|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r17-domain|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r17-validators|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r17-validators|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    },
+    "r9-focused|f03237fee986903338133ca72384f868be83787b": {
+      "key": "r9-focused|f03237fee986903338133ca72384f868be83787b",
+      "attempts": 2,
+      "linkedRetries": 0,
+      "unlinkedReruns": 1,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": false
+    }
+  }
+}

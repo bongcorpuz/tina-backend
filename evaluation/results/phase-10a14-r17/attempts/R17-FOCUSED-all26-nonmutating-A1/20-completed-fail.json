@@ -1,0 +1,15 @@
+{
+  "event": "COMPLETED_FAIL",
+  "headAtEnd": "f03237fee986903338133ca72384f868be83787b",
+  "treeCleanAfter": false,
+  "endedAt": "2026-07-20T09:58:22.395Z",
+  "exitCode": 0,
+  "runtimeCommit": "f03237fee986903338133ca72384f868be83787b",
+  "blocked": 9,
+  "preserved": 17,
+  "mismatch": 0,
+  "expected9_17_0": true,
+  "e1ArtifactHashBefore": "2bea59218d6fb8d58e86600ee69cb855a17a0933034b1c05bec7953cad9fecd8",
+  "e1ArtifactHashAfter": "88a5ae13d3501a4fb43e7e24cc84763900e1acd061265fe2a9afb6cc42ce5651",
+  "e1ArtifactUnchanged": false
+}

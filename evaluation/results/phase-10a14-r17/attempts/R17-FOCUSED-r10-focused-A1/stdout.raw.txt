@@ -1,0 +1,24 @@
+PASS 1 SG-C-LASTDAY routes to calendar-relative-deadline stage
+PASS 2 R9-LASTDAY-REPRO routes to calendar-relative-deadline stage
+PASS 3 R9-DUETODAY routes to calendar-relative-deadline stage
+PASS 4 SG-C-DUETODAY routes to calendar-relative-deadline stage
+PASS 5/6 replacement contains no unsafe present-day statement
+PASS 7 replacement states April 15 only when Sec 51 deadline authority present
+PASS 8 replacement asks for the missing filing details
+PASS 9 replacement carries no internal validator terminology
+PASS detector: 10 today is the last day
+PASS detector: 11 due today
+PASS detector: 12 file today
+PASS detector: 13 submit by end of today
+PASS detector: 14 already late
+PASS detector: 15 still on time
+PASS detector: 16 today is April 15
+PASS 17 Taglish variants detected
+PASS 18/19 answer-introduced directive under Practical Meaning fires
+PASS 20 neutral non-relative April 15 does NOT fire
+PASS 21 safe conditional statement does NOT fire
+PASS 22 unrelated 'today'/'last day' controls do NOT fire
+PASS 23 calendar-relative fails closed with no model client
+PASS 24 due-today variant no longer stops at proposition-source-sufficiency
+
+phase-10a14-r10: 22 passed, 0 failed

@@ -1,0 +1,89 @@
+{
+  "task": "PHASE-10A14-R17",
+  "generation": "A2",
+  "suites": 16,
+  "allPassed": true,
+  "failed": [],
+  "results": [
+    {
+      "probeId": "r17-validators",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r17-domain",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "phase-10a8",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "patch-07b",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "phase-09r-staging",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r16-domain",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r16-tooling",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r15-journal-crash",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r15-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r14-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r13-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r12-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r11-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r10-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "r9-focused",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    },
+    {
+      "probeId": "all26-nonmutating",
+      "exitCode": 0,
+      "terminal": "20-completed-pass.json"
+    }
+  ]
+}

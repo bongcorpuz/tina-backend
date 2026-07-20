@@ -1,0 +1,26 @@
+PASS F(Q2): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q8): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q9): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q27): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q29): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q31): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q37): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q41): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F(Q49): captured answer fails closed (not VERIFIED_CONTROLLING)
+PASS F10: empty answer with sources is not VERIFIED_CONTROLLING (structural)
+PASS F11: wrong answer with real source retrieved is not VERIFIED_CONTROLLING
+PASS F12: unsupported proposition with valid source card is not VERIFIED_CONTROLLING
+PASS F13: bare source list is not VERIFIED_CONTROLLING (structural)
+PASS F14: previously false-refused valid tax questions now ALLOW (not RESTRICTED/boundary)
+PASS F15: restricted outcome prediction stays RESTRICTED + human review
+PASS F16: correct, supported, complete answer remains VERIFIED_CONTROLLING
+PASS F17: materially incomplete answer is not VERIFIED_CONTROLLING
+PASS F18: complete conflict metadata yields CONFLICTING_AUTHORITY (precedence)
+PASS F19: source-only fallback stays RELATED_AUTHORITY_ONLY with specificAuthorityNotFound
+PASS F20: real citation not supporting the proposition is not VERIFIED_CONTROLLING
+PASS validator: structural failure short-circuits before the LLM stage
+PASS validator: unavailable client fails closed
+PASS validator: malformed LLM output fails closed
+PASS absent answerSupport fails closed to RELATED_AUTHORITY_ONLY (no legacy verified)
+
+PHASE-10A8 trust-calibration tests: 24 passed, 0 failed, 37 assertions

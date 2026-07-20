@@ -1,0 +1,199 @@
+{
+  "task": "PHASE-10A14-R17",
+  "mode": "NON_MUTATING_REPLAY",
+  "statement": "Replays the E1 all-26 gate logic and writes ONLY into R17 evidence. No E1 file is opened for writing.",
+  "totalSlots": 26,
+  "blockedCount": 9,
+  "preservedCount": 17,
+  "mismatchCount": 0,
+  "expectedBlocked": 9,
+  "expectedPreserved": 17,
+  "pass": true,
+  "e1ArtifactHashBefore": "53baf579e7ea723ae01d096f82a6081600f59d2e3d9b79880ad0bf93a3f49443",
+  "e1ArtifactHashAfter": "53baf579e7ea723ae01d096f82a6081600f59d2e3d9b79880ad0bf93a3f49443",
+  "e1ArtifactUntouched": true,
+  "results": [
+    {
+      "slot": "Q1-r3",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q3-r1",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q3-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q6-r2",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q6-r3",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q12-r1",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q12-r2",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q12-r3",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q15-r1",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q15-r2",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q15-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q30-r1",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q30-r2",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q30-r3",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q32-r1",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q32-r2",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q32-r3",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q34-r1",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q34-r2",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q34-r3",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "match": true
+    },
+    {
+      "slot": "Q47-r1",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q47-r2",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q47-r3",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q48-r1",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q48-r2",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    },
+    {
+      "slot": "Q48-r3",
+      "expectBlocked": false,
+      "verifiedEligible": true,
+      "stage": "llm",
+      "match": true
+    }
+  ]
+}
