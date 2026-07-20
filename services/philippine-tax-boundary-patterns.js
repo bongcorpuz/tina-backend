@@ -263,6 +263,46 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   // tax-practice vocabulary are genuine anchors and were falling through to the weak
   // path. Caught by patch-06e-003 and phase-10a12-r2, not by my own frozen inventory,
   // which contained no named-statute or lessor probe.
+  // PHASE-10A14-R17 (P1-R16-IR-003) — CUSTOMS AND CAPITAL-GAIN CATEGORIES.
+  // The R16 strong list anchored on the literal token "tax" and on "capital gains tax"
+  // (which requires "tax" to follow). Customs vocabulary and bare "capital gain" therefore
+  // carried no strong anchor, fell through to the weak-signal path, and clarified. The
+  // frozen 267-probe reproduction found 69 false refusals, of which 29 were customs and
+  // 23 capital-gain. These are category-based, not exact-question, corrections.
+  //
+  // Customs / tariff — Philippine customs duty is a national internal revenue matter.
+  /\bcustoms\b/i, /\bcustom duty\b|\bcustoms dut(?:y|ies)\b/i,
+  /\bimport dut(?:y|ies)\b|\bexport dut(?:y|ies)\b/i,
+  // "tariff" alone is ambiguous (a phone tariff is not tax), so it requires customs or
+  // import context. The frozen inventory expects bare "What is the tariff?" to clarify.
+  /\btariff\b[^.\n]{0,40}\b(?:rate|import(?:ed|ation)?|customs|classification|heading|schedule|goods|kotse|sasakyan)\b/i,
+  /\b(?:import(?:ed|ation)?|customs|classification|heading|schedule|goods)\b[^.\n]{0,40}\btariff\b/i,
+  /\bBOC\b/i, /\bBureau of Customs\b/i, /\bCMTA\b/i,
+  /\bpost-?clearance audit\b/i, /\bdutiable value\b/i, /\bduty drawback\b/i,
+  /\blanded cost\b/i, /\bcustoms broker\b/i, /\bad valorem dut(?:y|ies)\b/i,
+  /\bwarehousing entry\b/i, /\bmisdeclaration\b/i, /\btariff heading\b|\btariff classification\b/i,
+  /\bimport(?:ed|ation)?\b[^.\n]{0,40}\bdut(?:y|ies)\b/i,
+  /\bdut(?:y|ies)\b[^.\n]{0,40}\bimport(?:ed|ation)?\b/i,
+  // Capital gain — the bare term is a tax concept in Philippine practice.
+  /\bcapital gains?\b/i, /\bcapital asset\b/i, /\bordinary asset\b/i,
+  /\bcapital loss\b/i,
+  // "holding period" alone is ambiguous, so it requires a capital/gain/asset context.
+  // The frozen inventory expects bare "What is the holding period?" to clarify.
+  /\bholding[- ]period\b[^.\n]{0,60}\b(?:capital|gain|asset|property|shares?|tax)\b/i,
+  /\b(?:capital|gain|asset|property|shares?|tax)\b[^.\n]{0,60}\bholding[- ]period\b/i,
+  // Filipino tax vocabulary. "buwis" is the ordinary Filipino word for tax and carried no
+  // strong anchor, so Filipino tax questions fell through to fail-closed.
+  /\bbuwis\b/i, /\bimpuwesto\b/i, /\bbayaran ng buwis\b/i,
+  // BIR enforcement programmes. These are unambiguous Philippine tax-administration terms
+  // with no non-tax meaning. "Oplan Kandado" is the second question in the phase-10a8 F14
+  // assertion; the independent review named only the capital-gain probe, but F14 covers
+  // both and must pass.
+  /\bOplan Kandado\b/i, /\bRun After Tax Evaders\b|\bRATE program\b/i,
+  /\bTax Compliance Verification Drive\b|\bTCVD\b/i,
+  /\bLetter Notice\b/i, /\bMission Order\b/i, /\bSubpoena Duces Tecum\b/i,
+  /\bdelinquenc(?:y|ies)\b[^.\n]{0,40}\b(?:tax|BIR)\b/i,
+  /\btaxable gain\b/i, /\bnet capital gain\b/i, /\bstock transaction tax\b/i,
+  /\bprincipal residence\b/i, /\btax-?free exchange\b/i,
   /\bRA\s*\d{4,5}\b/i, /\bRepublic Act\s*(?:No\.?\s*)?\d{4,5}\b/i,
   /\bTRAIN\s*Law\b/i, /\bCREATE\s*(?:Act|MORE)\b/i, /\bPEZA\b/i, /\bBOI\b/i,
   /\blessor\b|\blessee\b/i,
@@ -366,7 +406,12 @@ export const TAX_FILING_ADJACENT_PATTERNS = [
   /\bdeadline\b[^.\n]{0,40}\b(?:file|filing|submit|return)\b/i,
   /\b(?:file|filing|submit)\b[^.\n]{0,40}\bdeadline\b/i,
   // authority / notice / adviser statements about filing
-  /\b(?:authority|notice|letter of authority|assessment|regulation|ruling)\b[^.\n]{0,50}\b(?:file|filing|submit|return|deadline)\b/i,
+  // PHASE-10A14-R17: the object must be a FILING act, not a bare "deadline". "Is a notice
+  // required before the deadline?" has no filing object and must clarify. Verified not to
+  // regress the accepted closures, each of which names a filing act: LQ2 ("notice … File
+  // today"), LS2 ("authority … file today"), RA9 ("authority … filing deadline"), RA4
+  // (BIR is a strong anchor regardless).
+  /\b(?:authority|notice|letter of authority|assessment|regulation|ruling)\b[^.\n]{0,50}\b(?:file|filing|submit|return)\b/i,
   /\b(?:accountant|auditor|adviser|advisor|bookkeeper|cpa)\b[^.\n]{0,60}\b(?:file|filing|submit|return|deadline)\b/i,
   // filing directed at a calendar-relative time (the R14 probe family)
   /\b(?:file|filing|submit|lodge)\b[^.\n]{0,40}\b(?:today|tonight|tomorrow|midnight|right now|immediately)\b/i,
