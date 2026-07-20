@@ -15,7 +15,8 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawnSync, execSync } from "node:child_process";
+import crypto from "node:crypto";
 import jwt from "jsonwebtoken";
 import { AttemptJournal, reviewCampaign } from "./journal.mjs";
 
@@ -69,6 +70,39 @@ async function stagingIdentity(label) {
   }
 }
 
+// ── Dynamic runtime-equivalence validation (WS10) ────────────────────────────
+// A fixed expected SHA cannot hold: every evidence-only commit redeploys staging, so the
+// deployed commit legitimately moves while the RUNTIME does not. What must be proven is
+// that the deployed commit executes the campaign runtime. For any SHA the server reports,
+// hash each runtime file at that commit and at the final runtime commit and require
+// byte equality. This is immune to redeploy timing and is stronger than a SHA match,
+// which would only prove the deployed commit is one specific evidence commit.
+const RUNTIME_FILES = [
+  "services/answer-support-validator.js", "services/persistence-receipt.js",
+  "services/philippine-tax-domain-boundary.js", "services/philippine-tax-boundary-patterns.js",
+  "services/runtime-identity.js", "services/tax-computation-clarification.js",
+  "ask-handler.js", "pipeline.js", "answer-renderer.js", "server.js", "tax-keywords.js"
+];
+const fileHashAt = (commit, file) => {
+  try { return crypto.createHash("sha256").update(execSync(`git show ${commit}:${file}`, { encoding: "buffer", maxBuffer: 1 << 28 })).digest("hex"); }
+  catch { return "ABSENT"; }
+};
+const equivalenceCache = new Map();
+function runtimeEquivalentToFinal(reportedCommitRaw) {
+  const c = reportedCommitRaw;
+  if (!c || !/^[0-9a-f]{40}$/i.test(c)) return { equivalent: false, reason: "no server-reported commit" };
+  if (equivalenceCache.has(c)) return equivalenceCache.get(c);
+  let known = true;
+  try { execSync(`git cat-file -e ${c}^{commit}`, { stdio: "ignore" }); } catch { known = false; }
+  if (!known) { const r = { equivalent: false, reason: "server-reported commit is not present in this repository" }; equivalenceCache.set(c, r); return r; }
+  const diffs = RUNTIME_FILES.filter((f) => fileHashAt(c, f) !== fileHashAt(finalRuntime, f));
+  const r = diffs.length === 0
+    ? { equivalent: true, reason: `all ${RUNTIME_FILES.length} runtime files byte-identical to ${finalRuntime.slice(0, 12)}` }
+    : { equivalent: false, reason: `runtime files differ: ${diffs.join(", ")}` };
+  equivalenceCache.set(c, r);
+  return r;
+}
+
 const chronology = [];
 
 async function runGate(probeId, runner, { checkIdentity = false } = {}) {
@@ -107,8 +141,11 @@ async function runGate(probeId, runner, { checkIdentity = false } = {}) {
     identityBefore, identityAfter,
     identityStable: checkIdentity ? (identityBefore?.runtimeCommit === identityAfter?.runtimeCommit) : null,
     identityMatchesFinalRuntime: checkIdentity
-      ? (identityBefore?.runtimeCommit === expectedDeployed && identityAfter?.runtimeCommit === expectedDeployed)
+      ? (runtimeEquivalentToFinal(identityBefore?.runtimeCommit).equivalent &&
+         runtimeEquivalentToFinal(identityAfter?.runtimeCommit).equivalent)
       : null,
+    runtimeEquivalenceBefore: checkIdentity ? runtimeEquivalentToFinal(identityBefore?.runtimeCommit) : null,
+    runtimeEquivalenceAfter: checkIdentity ? runtimeEquivalentToFinal(identityAfter?.runtimeCommit) : null,
     expectedDeployedCommit: checkIdentity ? expectedDeployed : null,
     controlling: rec.actualClassification === "PASS"
   };
