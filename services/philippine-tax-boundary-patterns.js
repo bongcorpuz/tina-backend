@@ -225,6 +225,75 @@ export const PH_TAX_ALLOW_PATTERNS = [
   /\baudit\b[^.\n]{0,40}(favor|win|succeed|prevail|resolved|outcome|assessment)/i,
 ];
 
+// ─── PHASE-10A14-R16 (P1-R15-IR-003) — STRONG / WEAK / NON-TAX SIGNAL MODEL ───
+//
+// Independent probes found non-tax questions allowed as Philippine tax:
+//   "For a private lease payment, does the weekend rule automatically extend my deadline?"
+//   "Can a court filing deadline that falls on a holiday be moved to the next business day?"
+// The first matched the keyword "vat" INSIDE the word "pri-vat-e", because isTaxRelated
+// does a raw includes() with no word boundary. The second matched only the generic words
+// "filing" and "deadline". A frozen 193-probe reproduction found 88 such false allows.
+//
+// The model below distinguishes three classes. tax-keywords.js is deliberately NOT
+// modified: it is also consumed by tax-classifier.js, so changing its semantics would
+// reach beyond the domain boundary and beyond the authorized findings. Instead the
+// boundary stops treating a bare keyword hit as proof of tax domain.
+
+/**
+ * STRONG signals: an explicit Philippine-tax anchor. Word-boundary matched, so "private"
+ * can never satisfy VAT. A strong signal alone is sufficient for ALLOW, and it overrides
+ * an otherwise non-tax object ("withholding tax on the private lease payment").
+ */
+export const STRONG_TAX_SIGNAL_PATTERNS = [
+  /\btax(?:es|able|ation|payer|payers)?\b/i,
+  /\bBIR\b/i, /\bNIRC\b/i, /\bVAT\b/i, /\bDST\b/i, /\beFPS\b/i, /\beBIR\s?forms?\b/i,
+  /\bCTA\b/i, /\bCourt of Tax Appeals\b/i,
+  /\bwithholding\b/i, /\bexpanded withholding\b/i, /\bfinal withholding\b/i,
+  /\bpercentage tax\b/i, /\bincome tax\b/i, /\bestate tax\b/i, /\bdonor'?s tax\b/i,
+  /\bcapital gains tax\b/i, /\bdocumentary stamp\b/i, /\bexcise tax\b/i,
+  /\bBIR\s*Form\b|\bForm\s*(?:1700|1701|1702|1601|1604|2550|2551|2307|2316|1801|1800)\w*\b/i,
+  /\bLetter of Authority\b|\bLOA\b|\beLA\b/i,
+  /\bFDDA\b|\bPAN\b|\bFAN\b|\bFLD\b/i,
+  /\bassessment notice\b/i,
+  /\bRMC\b|\bRMO\b|\bRR\s*\d|\bRevenue Regulations?\b|\bRevenue Memorandum\b/i,
+  /\bBIR ruling\b/i, /\btax refund\b/i, /\btax credit\b/i, /\btax return\b/i,
+  /\bITR\b/i, /\bTIN\b/i, /\bzero-?rated\b/i, /\binput tax\b/i, /\boutput tax\b/i
+];
+
+/**
+ * WEAK generic compliance vocabulary. These occur constantly outside tax and are never
+ * individually sufficient. Retained for reporting and for the clarify path.
+ */
+export const WEAK_GENERIC_SIGNAL_PATTERNS = [
+  /\bfiling\b/i, /\bfile\b/i, /\bdeadline\b/i, /\bdue date\b/i, /\bdue\b/i,
+  /\binterest\b/i, /\bpayment\b/i, /\breturn\b/i, /\bassessment\b/i, /\brefund\b/i,
+  /\blease\b/i, /\binvoice\b/i, /\bcourt\b/i, /\bpenalty\b/i, /\bregistration\b/i
+];
+
+/**
+ * Explicit NON-TAX objects and domains. Where only weak signals are present, these veto
+ * the match and produce REJECT (or CLARIFY where a tax link stays genuinely plausible).
+ * A STRONG signal is checked first and is never vetoed by these.
+ */
+export const NON_TAX_CONTEXT_PATTERNS = [
+  /\bprivate (?:lease|loan|contract|agreement|arrangement)\b/i,
+  /\b(?:my|the) (?:rent|rental|lease) (?:payment|installment|instalment|due)\b/i,
+  /\brent installment\b|\brental car\b|\bgym membership\b|\blibrary book\b/i,
+  /\bcourt (?:pleading|filing|deadline|appeal|case)\b/i,
+  /\b(?:civil|criminal|labor|labour|custody|divorce|annulment|barangay) (?:case|court|dispute|appeal|complaint)\b/i,
+  /\bpolice complaint\b/i,
+  /\bpayroll (?:cutoff|cut-off|period)\b|\bHR\b/i,
+  /\bpassport\b|\bvisa application\b|\bschool\b|\benrol(?:ment|lment)\b|\bconference\b|\bmarathon\b/i,
+  /\binsurance claim\b/i,
+  /\bpersonal (?:bank )?loan\b|\bbank loan\b/i,
+  /\bcondo(?:minium)? (?:association )?dues\b/i,
+  /\b(?:cancelled|canceled) flight\b/i,
+  /\butility bill\b|\belectric bill\b|\bwater bill\b/i,
+  /\bSEC\b(?![^.\n]{0,30}\btax\b)/i,
+  /\bsupplier\b[^.\n]{0,20}\binvoice\b|\binvoice\b[^.\n]{0,20}\bsupplier\b/i,
+  /\bsprint\b|\bsoftware\b|\brepository\b/i
+];
+
 // ─── PHASE-10A14-R15 (P1-R14-IR-002) — TAX-FILING ADJACENCY ───────────────────
 //
 // R14 rejected filing-adjacent questions as out-of-domain because they named no explicit
@@ -246,6 +315,31 @@ export const NON_TAX_FILE_OBJECT_PATTERNS = [
   /\bfil(?:e|ing)\b[^.\n]{0,30}\b(?:police|criminal|complaint against|custody|divorce|annulment|labor case|estafa)\b/i,
   /\bfil(?:e|ing)\b[^.\n]{0,30}\b(?:court|pleading|motion|petition)\b(?![^.\n]{0,40}\b(?:tax|bir|cta|assessment)\b)/i,
   /\bfile\s+the\s+documents?\b[^.\n]{0,30}\b(?:alphabetically|cabinet|shelf|binder)\b/i,
+];
+
+/**
+ * PHASE-10A14-R16: adjacency CO-SIGNAL. A tax-filing adjacency pattern alone is still too
+ * permissive for a bare generic frame — "What is the filing deadline?", "When is the
+ * return due?", "Can I file next business day?" and "Is the assessment deadline extended?"
+ * are genuinely ambiguous and must clarify rather than silently enter the tax domain.
+ *
+ * Adjacency therefore requires one of these co-signals: a return period, a tax-practice
+ * actor or instrument, a nonperformance-of-filing idiom, or a calendar-relative filing
+ * context. Every accepted R15 closure carries at least one — verified probe by probe
+ * across the seven named false-refusal probes and the ten-case adjacency family — so this
+ * tightening cannot reintroduce the refusals R15 closed.
+ */
+export const TAX_ADJACENCY_COSIGNAL_PATTERNS = [
+  /\b(?:annual|quarterly|monthly)\b/i,
+  /\bITR\b|\bincome\b|\bgross receipts\b|\bcompensation\b/i,
+  /\b(?:authority|notice|letter|assessment notice|ruling|regulation)\b/i,
+  /\b(?:accountant|auditor|adviser|advisor|bookkeeper|cpa|bir)\b/i,
+  /\b(?:fail(?:ure|ing|s|ed)?|forget|forgot|neglect|omit|miss)\s+(?:to\s+)?fil(?:e|ing)\b/i,
+  /\b(?:unfiled|unsubmitted|outstanding|overdue|late)\b/i,
+  /\b(?:today|tonight|tomorrow|midnight|right now|immediately|this week)\b/i,
+  /\b(?:ngayon|ngayong araw|bukas|kaagad|agad)\b/i,
+  /\b(?:mag-?file|i-?file|isumite|mag-?submit|nakakapag-?file|naka-?file|pag-?file)\b/i,
+  /\b(?:penalt\w*|surcharge)\b/i
 ];
 
 export const TAX_FILING_ADJACENT_PATTERNS = [

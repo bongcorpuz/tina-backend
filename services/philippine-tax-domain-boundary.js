@@ -28,9 +28,12 @@ import {
   AUDIT_TAX_SIGNALS,
   BYPASS_HOOKS,
   CLARIFY_PATTERNS,
+  NON_TAX_CONTEXT_PATTERNS,
   NON_TAX_FILE_OBJECT_PATTERNS,
   NON_TAX_REJECT_PATTERNS,
   PH_TAX_ALLOW_PATTERNS,
+  STRONG_TAX_SIGNAL_PATTERNS,
+  TAX_ADJACENCY_COSIGNAL_PATTERNS,
   TAX_FILING_ADJACENT_PATTERNS
 } from "./philippine-tax-boundary-patterns.js";
 
@@ -81,40 +84,48 @@ export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", cont
     return { isPhilippineTax: false, decision: "ALLOW", detectedDomain: "UNKNOWN", reason: "empty_query", confidence: 0.0 };
   }
 
-  // ── 3. Philippine-tax allowlist (ALLOW path) ─────────────────────────────
-  // Check allow patterns first — any match → ALLOW immediately.
-  for (const pattern of PH_TAX_ALLOW_PATTERNS) {
-    if (pattern.test(q)) {
-      return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX", reason: "ph_tax_pattern_match", confidence: 0.98 };
-    }
+  // ── PHASE-10A14-R16 (P1-R15-IR-003) — SIGNAL STRENGTH ────────────────────
+  // A bare allow-pattern or keyword hit is no longer sufficient proof of tax domain.
+  // Independent probes allowed "private lease payment ... deadline" (the keyword "vat"
+  // matched inside "pri-vat-e") and "court filing deadline ... holiday" (only the generic
+  // words "filing" and "deadline"). A frozen 193-probe reproduction found 88 false allows.
+  const hasStrongTaxSignal = STRONG_TAX_SIGNAL_PATTERNS.some((p) => p.test(q));
+  const hasNonTaxContext = NON_TAX_CONTEXT_PATTERNS.some((p) => p.test(q));
+
+  // ── 3. STRONG Philippine-tax signal → ALLOW ──────────────────────────────
+  // An explicit tax anchor controls, and is never vetoed by a non-tax object: e.g.
+  // "Is withholding tax on the private lease payment due this weekend?" is tax.
+  if (hasStrongTaxSignal) {
+    return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX", reason: "strong_tax_signal", confidence: 0.98 };
   }
 
-  // ── 4. isTaxRelated keyword check (broader catch-all) ────────────────────
-  if (isTaxRelated(q)) {
-    return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "TAX_KEYWORD", reason: "tax_keyword_match", confidence: 0.85 };
-  }
-
-  // ── 4b. PHASE-10A14-R15 (P1-R14-IR-002) — TAX-FILING ADJACENCY ───────────
-  // Questions about filing a return, a filing deadline, or an authority/notice/adviser
-  // statement about filing are Philippine-tax questions even when they name no explicit
-  // tax keyword. R14 rejected these as out-of-domain; the R15 pre-fix campaign
-  // reproduced 17 such rejections.
-  //
-  // The non-tax file-object veto is checked FIRST, so adjacency can never be triggered
-  // by the bare token "file": "open the computer file", "file a police complaint",
-  // "save the spreadsheet file" and "file the documents alphabetically" remain outside
-  // the tax domain. Fail-closed remains the default for everything else.
+  // ── 3b. TAX-FILING ADJACENCY (R15 closure, preserved) ────────────────────
+  // Filing/return/authority/notice questions with no explicit tax keyword remain in
+  // domain — this is the accepted P1-R14-IR-002 closure. It is vetoed by an explicit
+  // non-tax file object or non-tax context, so "court filing deadline" cannot enter here.
   const hasNonTaxFileObject = NON_TAX_FILE_OBJECT_PATTERNS.some((p) => p.test(q));
-  if (!hasNonTaxFileObject) {
+  // A co-signal is required: adjacency alone would admit bare ambiguous frames such as
+  // "What is the filing deadline?" or "When is the return due?", which must clarify.
+  const hasAdjacencyCoSignal = TAX_ADJACENCY_COSIGNAL_PATTERNS.some((p) => p.test(q));
+  if (!hasNonTaxFileObject && !hasNonTaxContext && hasAdjacencyCoSignal) {
     for (const pattern of TAX_FILING_ADJACENT_PATTERNS) {
       if (pattern.test(q)) {
-        return {
-          isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX_FILING_ADJACENT",
-          reason: "tax_filing_adjacency", confidence: 0.80
-        };
+        return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX_FILING_ADJACENT", reason: "tax_filing_adjacency", confidence: 0.80 };
       }
     }
   }
+
+  // ── 4. WEAK-ONLY signal → never an automatic ALLOW ───────────────────────
+  // The query matched a tax allowlist pattern or the keyword catch-all, but carries no
+  // strong anchor. Explicit non-tax evidence rejects; otherwise invite clarification.
+  const weakSignalMatched = PH_TAX_ALLOW_PATTERNS.some((p) => p.test(q)) || isTaxRelated(q);
+  if (weakSignalMatched) {
+    if (hasNonTaxContext || hasNonTaxFileObject) {
+      return { isPhilippineTax: false, decision: "REJECT", detectedDomain: "NON_TAX", reason: "weak_signal_with_non_tax_context", confidence: 0.90 };
+    }
+    return { isPhilippineTax: false, decision: "CLARIFY", detectedDomain: "AMBIGUOUS_TAX_ADJACENT", reason: "weak_tax_signal_needs_context", confidence: 0.55 };
+  }
+
 
   // ───────────────────────────────────────────────────────────────────────────
   // Below this line: no Philippine-tax signal was detected.
