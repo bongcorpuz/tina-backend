@@ -1,15 +1,15 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:23:04.978Z",
+  "generatedAt": "2026-07-20T07:27:36.445Z",
   "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
   "counts": {
-    "totalAttempts": 28,
+    "totalAttempts": 42,
     "runnerInvocations": 1,
     "stagingRunnerInvocations": 0,
-    "focusedSuiteInvocations": 23,
+    "focusedSuiteInvocations": 37,
     "campaignAttempts": 1,
     "otherAttempts": 3,
-    "completedPass": 24,
+    "completedPass": 38,
     "completedFailures": 4,
     "technicalFailures": 0,
     "environmentFailures": 0,
@@ -17,7 +17,7 @@
     "incompleteAttempts": 0,
     "cancelledAttempts": 0,
     "retries": 0,
-    "controllingAttempts": 22
+    "controllingAttempts": 36
   },
   "scope": {
     "includesGateRunnerAttempts": true,

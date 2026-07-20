@@ -1,0 +1,11 @@
+?? .vscode/
+?? evaluation/factcheck/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r10-focused-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r11-focused-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r12-focused-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r13-focused-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r14-focused-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r15-focused-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r15-journal-crash-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r16-domain-A4/
+?? evaluation/results/phase-10a14-r16/attempts/R16-FOCUSED-r16-tooling-A4/

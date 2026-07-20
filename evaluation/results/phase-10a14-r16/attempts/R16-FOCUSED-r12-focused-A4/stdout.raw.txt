@@ -1,0 +1,49 @@
+PASS detect: recommend today
+PASS detect: advise today
+PASS detect: would advise today
+PASS detect: would need today
+PASS detect: prudent today
+PASS detect: advisable today
+PASS detect: ought today
+PASS detect: encouraged today
+PASS detect: urged submit today
+PASS detect: better file today
+PASS detect: prudent course
+PASS detect: my recommendation
+PASS detect: before midnight
+PASS detect: without delay
+PASS detect: within the day
+PASS detect: at once
+PASS detect: right away
+PASS detect: close of business
+PASS detect: this morning
+PASS detect: tonight
+PASS detect: inverted to avoid
+PASS detect: inverted before midnight
+PASS detect: inverted within day
+PASS detect: inverted asap
+PASS detect: passive must be filed today
+PASS detect: passive should be submitted immediately
+PASS detect: passive within day
+PASS detect: permission+pressure can
+PASS detect: permission+pressure may
+PASS detect: taglish para maiwasan
+PASS detect: taglish kaagad
+PASS detect: taglish isumite agad
+PASS detect: taglish bago hatinggabi
+PASS detect: taglish sa loob ng araw
+PASS safe: general practitioner would advise
+PASS safe: general by deadline
+PASS safe: counterfactual extension
+PASS safe: counterfactual had passed
+PASS safe: negated recommendation
+PASS safe: conditional extension no directive
+PASS safe: permission electronically
+PASS safe: permission conditional confirmed
+PASS safe: general April 15
+PASS safe: ordinary penalty
+PASS would/should/could/may/can do not auto-suppress current directives
+PASS evaluateAnswerSupport routes a recommendation directive to calendar-relative-deadline
+PASS no model client: directive still fails closed
+
+phase-10a14-r12: 47 passed, 0 failed
