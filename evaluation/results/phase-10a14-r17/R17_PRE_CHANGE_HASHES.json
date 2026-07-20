@@ -1,0 +1,52 @@
+{
+  "task": "PHASE-10A14-R17",
+  "note": "SHA-256 of every candidate file BEFORE any R17 modification.",
+  "baseCommit": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
+  "r16FinalRuntime": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+  "files": {
+    "services/philippine-tax-domain-boundary.js": {
+      "sha256": "a1a85ac7ac213805b4af297adacdd5469c2ad8a431b465643158186c827045ac",
+      "lines": 184
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "sha256": "279618ff0c35b9cdcdc434369e1aec3a832f1e6f652abeb0da823c25a358348b",
+      "lines": 616
+    },
+    "tax-keywords.js": {
+      "sha256": "5dc6924d62eee6d0515885c5ddb17f68a128a15477e79f849174cbf0b12c75dc",
+      "lines": 294
+    },
+    "tax-classifier.js": {
+      "sha256": "48be9559cfb09d52af5df233082dd6e32ee7ebdc9c347dc3cd56b369a5667f8d",
+      "lines": 334
+    },
+    "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs": {
+      "sha256": "38f2b3d7581c250d1ea222329b50b8102def92ff24037f0b91c7375796c1e685",
+      "lines": 310
+    },
+    "tests/phase-10a8-trust-calibration-and-answer-correctness-remediation-1.test.mjs": {
+      "sha256": "9393f269fd0b05f0ec349702843f7a1306080be3038b35474fa70c18bc439f85",
+      "lines": 178
+    },
+    "tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs": {
+      "sha256": "489db28f1f2f62891207f337f7096b9a2c2828f379188911d9ac9aaa3dec5123",
+      "lines": 600
+    },
+    "scripts/run-regressions.mjs": {
+      "sha256": "cbdd0a94a5975ced6f6df33c66770d920acd7ae7a7337158a10e6f74a4902053",
+      "lines": 135
+    },
+    "scripts/run-staging-smokes.mjs": {
+      "sha256": "613823f522bf373fc8919bd7cb5918c14f260bc14164f4116739ba2097d46fdb",
+      "lines": 70
+    },
+    "evaluation/results/phase-10a14-r16/evidence.mjs": {
+      "sha256": "c8b3c01f53338cb4b579a5208fbb6d17713e11e7b2b4f9c0dea2027218f344ce",
+      "lines": 233
+    },
+    "evaluation/results/phase-10a14-r16/build-registry.mjs": {
+      "sha256": "a3a5478980dbfc09337093b3e24fa27719e7a4d0aeabbf247f9b9848472fde2e",
+      "lines": 95
+    }
+  }
+}

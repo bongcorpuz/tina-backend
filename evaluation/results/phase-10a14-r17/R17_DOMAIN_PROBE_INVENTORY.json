@@ -1,0 +1,1905 @@
+{
+  "task": "PHASE-10A14-R17",
+  "frozenSpecRule": "Expectations are authored in build-frozen-inventory.mjs and frozen before any runtime change. The production boundary is NEVER consulted to produce an expectation, and expectations are never retrofitted after outcomes are known.",
+  "decisionVocabulary": {
+    "ALLOW": "reaches the Philippine-tax domain",
+    "NOT_ALLOW": "REJECT or CLARIFY",
+    "CLARIFY_OR_NOT_ALLOW": "must not falsely ALLOW; CLARIFY or REJECT both acceptable"
+  },
+  "requiredMetrics": {
+    "materialFalseTaxAllow": 0,
+    "materialTaxFalseRefusal": 0,
+    "strongCustomsFalseRefusal": 0,
+    "strongCapitalGainFalseRefusal": 0,
+    "substringFalseAllow": 0,
+    "metamorphicFailure": 0
+  },
+  "counts": {
+    "total": 267,
+    "byClass": {
+      "customs_strong": 30,
+      "capital_gain_strong": 30,
+      "private_contract_nontax": 30,
+      "court_labor_sec_nontax": 30,
+      "weak_generic_ambiguity": 30,
+      "filipino_taglish": 30,
+      "substring_trap": 20,
+      "metamorphic": 40,
+      "r15_false_refusal_closed": 7,
+      "r15_adjacency_closed": 10,
+      "explicit_nontax": 10
+    }
+  },
+  "probes": [
+    {
+      "probeId": "CUST-1",
+      "coverageClass": "customs_strong",
+      "text": "What customs duties apply to importing goods into the Philippines?",
+      "expected": "ALLOW",
+      "note": "exact independent-review failure"
+    },
+    {
+      "probeId": "CUST-2",
+      "coverageClass": "customs_strong",
+      "text": "What is the BOC customs duty deadline for imported goods?",
+      "expected": "ALLOW",
+      "note": "exact independent-review failure"
+    },
+    {
+      "probeId": "CUST-3",
+      "coverageClass": "customs_strong",
+      "text": "What are Philippine customs duties?",
+      "expected": "ALLOW",
+      "note": "exact independent-review failure"
+    },
+    {
+      "probeId": "CUST-4",
+      "coverageClass": "customs_strong",
+      "text": "How is customs duty computed on imported machinery?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-5",
+      "coverageClass": "customs_strong",
+      "text": "What is the tariff rate for imported vehicles?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-6",
+      "coverageClass": "customs_strong",
+      "text": "Does the Bureau of Customs require a duty deposit?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-7",
+      "coverageClass": "customs_strong",
+      "text": "What does the CMTA say about post-clearance audit?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-8",
+      "coverageClass": "customs_strong",
+      "text": "When is a customs assessment final?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-9",
+      "coverageClass": "customs_strong",
+      "text": "How do I protest a customs assessment?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-10",
+      "coverageClass": "customs_strong",
+      "text": "What is the prescriptive period for a customs refund claim?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-11",
+      "coverageClass": "customs_strong",
+      "text": "Are imported raw materials exempt from customs duty?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-12",
+      "coverageClass": "customs_strong",
+      "text": "What is the duty drawback procedure?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-13",
+      "coverageClass": "customs_strong",
+      "text": "How does BOC compute dutiable value?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-14",
+      "coverageClass": "customs_strong",
+      "text": "What is the customs bond requirement for a warehousing entry?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-15",
+      "coverageClass": "customs_strong",
+      "text": "Is there an import duty on personal effects?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-16",
+      "coverageClass": "customs_strong",
+      "text": "What tariff heading applies to solar panels?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-17",
+      "coverageClass": "customs_strong",
+      "text": "What are the penalties for customs misdeclaration?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-18",
+      "coverageClass": "customs_strong",
+      "text": "How long does a post-clearance audit cover?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-19",
+      "coverageClass": "customs_strong",
+      "text": "What is the customs duty deadline after arrival of goods?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-20",
+      "coverageClass": "customs_strong",
+      "text": "Does CMTA allow an appeal of a duty assessment?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-21",
+      "coverageClass": "customs_strong",
+      "text": "What is the excise and customs duty treatment of imported fuel?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-22",
+      "coverageClass": "customs_strong",
+      "text": "Are customs duties creditable against income tax?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-23",
+      "coverageClass": "customs_strong",
+      "text": "What is the ad valorem duty on imported liquor?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-24",
+      "coverageClass": "customs_strong",
+      "text": "How is the landed cost computed for customs purposes?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-25",
+      "coverageClass": "customs_strong",
+      "text": "Is a customs broker required for import clearance?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-26",
+      "coverageClass": "customs_strong",
+      "text": "What is the deadline for filing a customs protest?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-27",
+      "coverageClass": "customs_strong",
+      "text": "What documents does the Bureau of Customs require on importation?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-28",
+      "coverageClass": "customs_strong",
+      "text": "Are customs duties refundable on re-exported goods?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-29",
+      "coverageClass": "customs_strong",
+      "text": "What is the tariff classification dispute procedure?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CUST-30",
+      "coverageClass": "customs_strong",
+      "text": "Does the importer pay customs duty before release of goods?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-1",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the holding-period rule for an individual's capital gain on personal property?",
+      "expected": "ALLOW",
+      "note": "exact phase-10a8 F14 question"
+    },
+    {
+      "probeId": "CG-2",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is capital gain on the sale of shares taxed?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-3",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the capital gains rate on real property?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-4",
+      "coverageClass": "capital_gain_strong",
+      "text": "Is the gain on sale of a personal car a capital gain?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-5",
+      "coverageClass": "capital_gain_strong",
+      "text": "What distinguishes an ordinary asset from a capital asset?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-6",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is the taxable gain on personal property computed?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-7",
+      "coverageClass": "capital_gain_strong",
+      "text": "Is capital loss deductible against ordinary income?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-8",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the holding period for long-term capital gains?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-9",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is capital gain treated for a non-resident individual?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-10",
+      "coverageClass": "capital_gain_strong",
+      "text": "Are capital gains on listed shares subject to stock transaction tax?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-11",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the capital gain treatment on the sale of a principal residence?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-12",
+      "coverageClass": "capital_gain_strong",
+      "text": "How do I compute the gain on disposal of a capital asset?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-13",
+      "coverageClass": "capital_gain_strong",
+      "text": "Is the sale of inventory a capital gain or ordinary income?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-14",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the 50 percent rule on capital gains for individuals?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-15",
+      "coverageClass": "capital_gain_strong",
+      "text": "Are capital gains from foreign property taxable in the Philippines?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-16",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is a capital gain on unlisted shares computed?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-17",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the basis for computing capital gain on inherited property?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-18",
+      "coverageClass": "capital_gain_strong",
+      "text": "Is a capital gain realized on an exchange of property?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-19",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is capital gain reported on the annual return?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-20",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the net capital gain for an individual taxpayer?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-21",
+      "coverageClass": "capital_gain_strong",
+      "text": "Does the holding period affect the taxable portion of a capital gain?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-22",
+      "coverageClass": "capital_gain_strong",
+      "text": "Is goodwill a capital asset for gain purposes?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-23",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is capital gain treated in a tax-free exchange?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-24",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the capital gain on a foreclosure sale?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-25",
+      "coverageClass": "capital_gain_strong",
+      "text": "Are capital gains subject to withholding?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-26",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the deadline for paying capital gains on real property?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-27",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is capital gain computed for a partnership interest?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-28",
+      "coverageClass": "capital_gain_strong",
+      "text": "Is a capital gain recognized on a corporate liquidation?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-29",
+      "coverageClass": "capital_gain_strong",
+      "text": "What is the capital asset holding period for personal property?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "CG-30",
+      "coverageClass": "capital_gain_strong",
+      "text": "How is capital gain on jewellery treated?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-1",
+      "coverageClass": "private_contract_nontax",
+      "text": "For a private lease payment, does the weekend rule automatically extend my deadline?",
+      "expected": "NOT_ALLOW",
+      "note": "exact independent-review closure — must not regress"
+    },
+    {
+      "probeId": "PRIV-2",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is my private loan payment deadline?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-3",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is my rent installment due if it falls on a Sunday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-4",
+      "coverageClass": "private_contract_nontax",
+      "text": "Does my lease payment deadline move if it falls on a holiday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-5",
+      "coverageClass": "private_contract_nontax",
+      "text": "Is the interest on my personal bank loan due this weekend?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-6",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is the invoice from my supplier due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-7",
+      "coverageClass": "private_contract_nontax",
+      "text": "What is the penalty for returning the rental car late?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-8",
+      "coverageClass": "private_contract_nontax",
+      "text": "Does the weekend rule extend my gym membership payment?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-9",
+      "coverageClass": "private_contract_nontax",
+      "text": "Is there a penalty if I return the library book after the due date?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-10",
+      "coverageClass": "private_contract_nontax",
+      "text": "Does the payment deadline for my utility bill move on a holiday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-11",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is my condo association dues assessment due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-12",
+      "coverageClass": "private_contract_nontax",
+      "text": "What is the deadline for filing an insurance claim?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-13",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is the refund for my cancelled flight due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-14",
+      "coverageClass": "private_contract_nontax",
+      "text": "Is my mortgage payment deadline extended by a holiday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-15",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is the security deposit refund due on my lease?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-16",
+      "coverageClass": "private_contract_nontax",
+      "text": "What interest applies to my late credit card payment?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-17",
+      "coverageClass": "private_contract_nontax",
+      "text": "Does my phone contract have a payment deadline extension?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-18",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is the balloon payment on my car loan due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-19",
+      "coverageClass": "private_contract_nontax",
+      "text": "Is the deadline for my subscription renewal extended?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-20",
+      "coverageClass": "private_contract_nontax",
+      "text": "What penalty applies to early termination of my lease?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-21",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is my private tuition payment due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-22",
+      "coverageClass": "private_contract_nontax",
+      "text": "Does my supplier contract allow a late payment interest waiver?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-23",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is the deposit due on my apartment lease?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-24",
+      "coverageClass": "private_contract_nontax",
+      "text": "Is my freelance client invoice payment overdue?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-25",
+      "coverageClass": "private_contract_nontax",
+      "text": "What is the due date for my personal loan amortization?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-26",
+      "coverageClass": "private_contract_nontax",
+      "text": "Does a holiday extend my rent-to-own installment?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-27",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is the final payment on my furniture instalment plan?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-28",
+      "coverageClass": "private_contract_nontax",
+      "text": "What is the deadline to return a defective product?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-29",
+      "coverageClass": "private_contract_nontax",
+      "text": "Is my warranty claim deadline extended?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "PRIV-30",
+      "coverageClass": "private_contract_nontax",
+      "text": "When is my private parking fee payment due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-1",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "Can a court filing deadline that falls on a holiday be moved to the next business day?",
+      "expected": "NOT_ALLOW",
+      "note": "exact independent-review closure — must not regress"
+    },
+    {
+      "probeId": "COURT-2",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline for an ordinary civil-court appeal?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-3",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline for filing a labor case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-4",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "Can a court pleading deadline be moved to the next business day?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-5",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline for filing corporate documents with the SEC?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-6",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "Can I file a police complaint after the deadline?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-7",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "How do I file a court pleading for a custody case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-8",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline to file a motion for reconsideration in a civil case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-9",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "When must I file my answer in a labor arbitration?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-10",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the SEC annual report filing deadline for a corporation?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-11",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "Can I file an appeal in my barangay dispute next week?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-12",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline for filing an annulment petition?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-13",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "When is the deadline to file a criminal complaint?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-14",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the reglementary period for a civil appeal?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-15",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "How long do I have to file a labor money claim?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-16",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the SEC deadline for registering a partnership?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-17",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "When must a corporation file its general information sheet with the SEC?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-18",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "Can a labor case filing deadline be extended?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-19",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline to file a small claims case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-20",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "When is the deadline for filing an estafa complaint?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-21",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline to appeal an NLRC decision?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-22",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "How do I file a petition for certiorari and when is it due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-23",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline for filing a replevin case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-24",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "When must I file my position paper in a labor case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-25",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline to file an ejectment case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-26",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "Can I file a motion beyond the court deadline?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-27",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the SEC deadline for amending articles of incorporation?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-28",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "When is the deadline to file an intra-corporate dispute?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-29",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "What is the deadline for a writ of possession application?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "COURT-30",
+      "coverageClass": "court_labor_sec_nontax",
+      "text": "How long do I have to file a civil damages claim?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-1",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What is the filing deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-2",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "When is the return due?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-3",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the assessment deadline extended?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-4",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Can I file next business day?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-5",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Does the holiday move my due date?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-6",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the penalty waived if I pay late?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-7",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What is the deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-8",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "When is payment due?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-9",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the refund processed automatically?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-10",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What interest applies?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-11",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is there an extension available?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-12",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What happens if I miss the deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-13",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Does the due date move on a weekend?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-14",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Can the assessment be contested?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-15",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is a notice required before the deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-16",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What is the registration deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-17",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the payment deadline strict?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-18",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "When does the period start to run?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-19",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "How long is the filing period?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-20",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is late filing penalised?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-21",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Can I request more time to file?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-22",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the deadline the same every year?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-23",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What is the cut-off date?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-24",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Does an extension change the interest?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-25",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the return still due if there is no activity?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-26",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "What is the grace period?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-27",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is a receipt required for payment?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-28",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Does the deadline depend on the amount?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-29",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "When is the final due date?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "WEAK-30",
+      "coverageClass": "weak_generic_ambiguity",
+      "text": "Is the assessment final after the deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-1",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailangan ko bang mag-file ngayon?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-2",
+      "coverageClass": "filipino_taglish",
+      "text": "Magkano ang buwis na babayaran ko?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-3",
+      "coverageClass": "filipino_taglish",
+      "text": "Huwag daw akong mag-file hangga't hindi kumpirmado. Tama ba?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-4",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang deadline ng BIR filing?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-5",
+      "coverageClass": "filipino_taglish",
+      "text": "May penalty ba kapag late mag-file ng income tax?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-6",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang deadline ng VAT return?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-7",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-compute ng withholding tax?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-8",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang customs duty sa mga imported na gamit?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-9",
+      "coverageClass": "filipino_taglish",
+      "text": "May capital gains tax ba sa benta ng lupa?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-10",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailangan ba ng TIN para mag-file?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-11",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang parusa sa hindi pagbayad ng buwis?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-12",
+      "coverageClass": "filipino_taglish",
+      "text": "Mag-file ba ako kahit walang kita?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-13",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang BIR Form para sa quarterly?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-14",
+      "coverageClass": "filipino_taglish",
+      "text": "Exempt ba sa VAT ang residential lease?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-15",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-protest ng assessment ng BIR?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-16",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang deadline ng percentage tax?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-17",
+      "coverageClass": "filipino_taglish",
+      "text": "May refund ba ako sa sobrang withholding?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-18",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang tariff sa imported na kotse?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-19",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailangan bang mag-register sa BIR ang freelancer?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-20",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang epekto ng TRAIN Law sa income tax?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-21",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang huling araw ng bayad ng renta ko?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-22",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang deadline ng kaso sa korte?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-23",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang deadline ng labor case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-24",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang bayad sa utang ko sa bangko?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-25",
+      "coverageClass": "filipino_taglish",
+      "text": "May penalty ba kapag late ang bayad sa kuryente?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-26",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang deadline ng passport appointment?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-27",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang deadline ng enrollment sa paaralan?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-28",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang deadline ng insurance claim ko?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-29",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang deadline ng SEC filing ng korporasyon?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "FIL-30",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang bayad ng condo dues?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "SUB-1",
+      "coverageClass": "substring_trap",
+      "text": "For a private lease payment, when is the deadline?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'private'"
+    },
+    {
+      "probeId": "SUB-2",
+      "coverageClass": "substring_trap",
+      "text": "Is my privacy policy deadline extended?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'privacy'"
+    },
+    {
+      "probeId": "SUB-3",
+      "coverageClass": "substring_trap",
+      "text": "When is the private deadline for the deposit?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'private'"
+    },
+    {
+      "probeId": "SUB-4",
+      "coverageClass": "substring_trap",
+      "text": "What is the deadline to privatise the company?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'privatise'"
+    },
+    {
+      "probeId": "SUB-5",
+      "coverageClass": "substring_trap",
+      "text": "Is the innovation grant payment due?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'innovation'"
+    },
+    {
+      "probeId": "SUB-6",
+      "coverageClass": "substring_trap",
+      "text": "When is the renovation invoice due?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'renovation'"
+    },
+    {
+      "probeId": "SUB-7",
+      "coverageClass": "substring_trap",
+      "text": "What is the deadline for the excavation permit?",
+      "expected": "NOT_ALLOW",
+      "note": "'excise' near-miss"
+    },
+    {
+      "probeId": "SUB-8",
+      "coverageClass": "substring_trap",
+      "text": "Is the reservation payment deadline extended?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'reservation'"
+    },
+    {
+      "probeId": "SUB-9",
+      "coverageClass": "substring_trap",
+      "text": "When is the activation fee due?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'activation'"
+    },
+    {
+      "probeId": "SUB-10",
+      "coverageClass": "substring_trap",
+      "text": "What is the deadline for the observation report?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "SUB-11",
+      "coverageClass": "substring_trap",
+      "text": "Is the elevation survey payment due?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'elevation'"
+    },
+    {
+      "probeId": "SUB-12",
+      "coverageClass": "substring_trap",
+      "text": "When is the motivation workshop fee due?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'motivation'"
+    },
+    {
+      "probeId": "SUB-13",
+      "coverageClass": "substring_trap",
+      "text": "What is the deadline for the cultivation licence?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'cultivation'"
+    },
+    {
+      "probeId": "SUB-14",
+      "coverageClass": "substring_trap",
+      "text": "Is the derivative contract payment due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "SUB-15",
+      "coverageClass": "substring_trap",
+      "text": "When is the conservation fee payment due?",
+      "expected": "NOT_ALLOW",
+      "note": "'vat' inside 'conservation'"
+    },
+    {
+      "probeId": "SUB-16",
+      "coverageClass": "substring_trap",
+      "text": "For VAT on a lease payment, when is the deadline?",
+      "expected": "ALLOW",
+      "note": "explicit VAT anchor must allow"
+    },
+    {
+      "probeId": "SUB-17",
+      "coverageClass": "substring_trap",
+      "text": "Is withholding tax on the private lease payment due this weekend?",
+      "expected": "ALLOW",
+      "note": "strong anchor overrides"
+    },
+    {
+      "probeId": "SUB-18",
+      "coverageClass": "substring_trap",
+      "text": "What is the BIR deadline for the private lease withholding?",
+      "expected": "ALLOW",
+      "note": "strong anchor overrides"
+    },
+    {
+      "probeId": "SUB-19",
+      "coverageClass": "substring_trap",
+      "text": "Is the customs duty on imported goods due?",
+      "expected": "ALLOW",
+      "note": "customs anchor"
+    },
+    {
+      "probeId": "SUB-20",
+      "coverageClass": "substring_trap",
+      "text": "What is the capital gain on the private property sale?",
+      "expected": "ALLOW",
+      "note": "capital-gain anchor"
+    },
+    {
+      "probeId": "MM-1-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-1-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the BIR deadline?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-2-weak",
+      "coverageClass": "metamorphic",
+      "text": "What are the duties on this shipment?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-2-strong",
+      "coverageClass": "metamorphic",
+      "text": "What are the customs duties on this shipment?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-3-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the gain on the sale?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-3-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the capital gain on the sale?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-4-weak",
+      "coverageClass": "metamorphic",
+      "text": "For a private lease payment, when is the deadline?",
+      "expected": "NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-4-strong",
+      "coverageClass": "metamorphic",
+      "text": "For VAT on a private lease payment, when is the deadline?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-5-weak",
+      "coverageClass": "metamorphic",
+      "text": "Can a court filing deadline move?",
+      "expected": "NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-5-strong",
+      "coverageClass": "metamorphic",
+      "text": "Can a CTA filing deadline move?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-6-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the deadline for filing a labor case?",
+      "expected": "NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-6-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the deadline for filing a tax case?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-7-weak",
+      "coverageClass": "metamorphic",
+      "text": "When is the assessment final?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-7-strong",
+      "coverageClass": "metamorphic",
+      "text": "When is the customs assessment final?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-8-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the tariff?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-8-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the import tariff rate?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-9-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the holding period?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-9-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the capital gain holding period?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-10-weak",
+      "coverageClass": "metamorphic",
+      "text": "Is the refund available?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-10-strong",
+      "coverageClass": "metamorphic",
+      "text": "Is the customs duty refund available?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-11-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the SEC filing deadline?",
+      "expected": "NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-11-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the BIR filing deadline?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-12-weak",
+      "coverageClass": "metamorphic",
+      "text": "When is my rent due?",
+      "expected": "NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-12-strong",
+      "coverageClass": "metamorphic",
+      "text": "When is the VAT on my rent due?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-13-weak",
+      "coverageClass": "metamorphic",
+      "text": "Is the penalty waived?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-13-strong",
+      "coverageClass": "metamorphic",
+      "text": "Is the BIR penalty waived?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-14-weak",
+      "coverageClass": "metamorphic",
+      "text": "What duties apply?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-14-strong",
+      "coverageClass": "metamorphic",
+      "text": "What Bureau of Customs duties apply?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-15-weak",
+      "coverageClass": "metamorphic",
+      "text": "Is the gain taxable?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-15-strong",
+      "coverageClass": "metamorphic",
+      "text": "Is the capital gain taxable?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-16-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the appeal deadline?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-16-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the CTA appeal deadline?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-17-weak",
+      "coverageClass": "metamorphic",
+      "text": "When is the audit concluded?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-17-strong",
+      "coverageClass": "metamorphic",
+      "text": "When is the post-clearance audit concluded?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-18-weak",
+      "coverageClass": "metamorphic",
+      "text": "Is the deposit refundable?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-18-strong",
+      "coverageClass": "metamorphic",
+      "text": "Is the customs bond deposit refundable?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-19-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the classification dispute process?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-19-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the tariff classification dispute process?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "MM-20-weak",
+      "coverageClass": "metamorphic",
+      "text": "What is the personal property rule?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "metamorphic pair: without anchor"
+    },
+    {
+      "probeId": "MM-20-strong",
+      "coverageClass": "metamorphic",
+      "text": "What is the capital gain rule on personal property?",
+      "expected": "ALLOW",
+      "note": "metamorphic pair: with anchor"
+    },
+    {
+      "probeId": "LN3",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Tell me not to forget to file my return today.",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "LN5",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Can you confirm I cannot afford to fail to file today?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "LN8",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Must failure to file today be avoided in my case?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "LQ1",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "My accountant said, “Do not fail to file today.” Is that advice supported?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "LQ2",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "The notice says, “File today.” Does that apply to me?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "LS2",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Does the authority establish that I must file today?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "LT1",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Huwag daw akong mag-fail mag-file ngayon. Tama ba iyon?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA1",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Is my annual return due today?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA2",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Should I submit the return before midnight?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA3",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Do I need to file if I had no income?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA4",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "The BIR notice says I must file. Is that correct?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA5",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "My accountant told me the deadline passed. Is that right?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA6",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Kailangan ko bang mag-file ngayon?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA7",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Huwag daw akong mag-file hangga't hindi kumpirmado. Tama ba?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA8",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Is failure to file penalised?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA9",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Does the authority establish a filing deadline for me?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA10",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Is the return still outstanding if I filed late?",
+      "expected": "ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-1",
+      "coverageClass": "explicit_nontax",
+      "text": "Open the computer file.",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-2",
+      "coverageClass": "explicit_nontax",
+      "text": "How do I file a photo in the right folder?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-3",
+      "coverageClass": "explicit_nontax",
+      "text": "Should I file a police complaint?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-4",
+      "coverageClass": "explicit_nontax",
+      "text": "Save the spreadsheet file.",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-5",
+      "coverageClass": "explicit_nontax",
+      "text": "Attach a Word file to the email.",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-6",
+      "coverageClass": "explicit_nontax",
+      "text": "What is the weather in Manila today?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-7",
+      "coverageClass": "explicit_nontax",
+      "text": "When is the HR payroll cutoff?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-8",
+      "coverageClass": "explicit_nontax",
+      "text": "How do I book a passport appointment before the deadline?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-9",
+      "coverageClass": "explicit_nontax",
+      "text": "What is the school filing deadline for enrolment forms?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    },
+    {
+      "probeId": "NF-10",
+      "coverageClass": "explicit_nontax",
+      "text": "What is photosynthesis?",
+      "expected": "NOT_ALLOW",
+      "note": "accepted closure — must not regress"
+    }
+  ],
+  "frozenSpecSha256": "e2e04c0855fa421c659e0f1a08749aaeeb34361550f8b757b5c91a1b1a6b7aed"
+}
