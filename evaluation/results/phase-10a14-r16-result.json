@@ -1,7 +1,44 @@
 {
-  "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:40:06.722Z",
-  "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
+  "task": "PHASE-10A14-R16-CRASH-VISIBLE-DURING-CALL-JOURNAL-NON-TAX-DOMAIN-BOUNDARY-IMMUTABLE-EVIDENCE-CONTRACT-AND-CANONICAL-GATE-ATTEMPT-ACCOUNTING-REMEDIATION-1",
+  "executor": "CLAUDE CODE - OPUS 4.8",
+  "controllingReviewCommit": "aa0550753d1a0a988503123b6bca853a2c193bac",
+  "finalRuntimeCommit": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+  "tinaRuntimeModel": "gpt-4o-mini",
+  "countsDerivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
+  "findings": {
+    "P1-R15-IR-001": {
+      "status": "CLOSED",
+      "evidence": "journal suite exits 0 standalone; 5/5 standalone and 3/3 concurrent stress cycles; 21/0"
+    },
+    "P1-R15-IR-002": {
+      "status": "CLOSED",
+      "evidence": "during-call kill: killReturned=true, code=null, signal=SIGKILL, exactly one attempt, allocated+started survive, no terminal; two negative controls fail for their expected reasons"
+    },
+    "P1-R15-IR-003": {
+      "status": "CLOSED",
+      "evidence": "frozen 193-probe inventory: false tax ALLOW 88->0, material false refusal 0, metamorphic 0 failures"
+    },
+    "P1-R15-IR-004": {
+      "status": "ADDRESSED_PROSPECTIVELY",
+      "evidence": "contract frozen at COMMIT 1 and never amended; tooling exposes no delete/archive/convert path; zero canonical evidence deleted"
+    },
+    "P1-R15-IR-005": {
+      "status": "CLOSED",
+      "evidence": "canonical registry is the single source of every count; scope statement mandatory; R15 four-vs-five reconciled in the erratum"
+    },
+    "P2-R15-IR-006": {
+      "status": "PRESERVED",
+      "evidence": "historical protected-path violation preserved, not denied; R16 never touched evaluation/factcheck/"
+    },
+    "P2-R15-IR-007": {
+      "status": "PRESERVED",
+      "evidence": "stale R15 pre-fix manifest deliberately not regenerated; erratum records why"
+    },
+    "P2-R15-IR-008": {
+      "status": "CLOSED",
+      "evidence": "all clean-tree runners use an external capture root; canonical import only after termination"
+    }
+  },
   "counts": {
     "totalAttempts": 47,
     "runnerInvocations": 4,
@@ -76,6 +113,12 @@
       }
     ]
   },
+  "gateSummary": {
+    "deterministicCyclesPassed": 0,
+    "deterministicCyclesRequired": 2,
+    "stagingCyclesPassed": 2,
+    "stagingCyclesRequired": 2
+  },
   "integrity": {
     "duplicates": [],
     "missingRetryTargets": [],
@@ -84,5 +127,12 @@
     "missingRetryTargetCount": 0,
     "malformedCount": 0,
     "clean": true
-  }
+  },
+  "blockingFailures": [
+    "deterministic gate: 0/2 successful cycles (retry ceiling reached)"
+  ],
+  "decision": "REVISIONS REQUIRED",
+  "r15HistoricalGovernance": "NOT SUPERSEDED",
+  "r16ProspectiveGovernance": "NOT SATISFIED",
+  "stopCondition": "REACHED - independent R16 review is the next task"
 }

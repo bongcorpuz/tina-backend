@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:37:10.985Z",
+  "generatedAt": "2026-07-20T07:40:06.722Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r16/attempts",
   "rule": "Machine-generated from immutable attempt directories. Every count in the report, result JSON, CURRENT_STATE, gate summary and attempt reconciliation derives from this file. No manually typed competing total is permitted.",
   "integrity": {
@@ -13,13 +13,13 @@
     "clean": true
   },
   "counts": {
-    "totalAttempts": 46,
+    "totalAttempts": 47,
     "runnerInvocations": 4,
-    "stagingRunnerInvocations": 1,
+    "stagingRunnerInvocations": 2,
     "focusedSuiteInvocations": 37,
     "campaignAttempts": 1,
     "otherAttempts": 3,
-    "completedPass": 39,
+    "completedPass": 40,
     "completedFailures": 7,
     "technicalFailures": 0,
     "environmentFailures": 0,
@@ -27,7 +27,7 @@
     "incompleteAttempts": 0,
     "cancelledAttempts": 0,
     "retries": 0,
-    "controllingAttempts": 37
+    "controllingAttempts": 38
   },
   "scope": {
     "includesGateRunnerAttempts": true,
@@ -74,6 +74,14 @@
         "status": "COMPLETED_PASS",
         "controlling": true,
         "serverReportedRuntimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+        "retryOf": null
+      },
+      {
+        "attemptId": "R16-GATE-staging-cycle2-A1",
+        "exitCode": 0,
+        "status": "COMPLETED_PASS",
+        "controlling": true,
+        "serverReportedRuntimeCommit": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
         "retryOf": null
       }
     ]
@@ -1387,6 +1395,38 @@
       "evidencePath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-staging-cycle1-A1",
       "evidenceHash": "a007fbaa15b36df31354b3c70559ef594bce131cff66ddca7ffcde8db2617b67",
       "serverReportedRuntimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+      "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
+      "malformed": false,
+      "notes": "runtime equivalence checked against 0323bb91ac8383e1cbb6800637e4b9b896cdaff1"
+    },
+    {
+      "attemptId": "R16-GATE-staging-cycle2-A1",
+      "task": "PHASE-10A14-R16",
+      "attemptType": "STAGING_GATE",
+      "campaignId": "R16-GATE-STAGING",
+      "generationId": null,
+      "probeId": "staging",
+      "command": "node scripts/run-staging-smokes.mjs",
+      "runtimeCommit": "80046909784c06be5bd62612850243f0c8238a9a",
+      "headAtStart": "80046909784c06be5bd62612850243f0c8238a9a",
+      "headAtEnd": "80046909784c06be5bd62612850243f0c8238a9a",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T07:37:33.389Z",
+      "endedAt": "2026-07-20T07:37:56.799Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "COMPLETED_PASS",
+      "technicalFailure": false,
+      "legalMismatch": false,
+      "environmentFailure": false,
+      "retryOf": null,
+      "supersededBy": null,
+      "controlling": true,
+      "logPath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-staging-cycle2-A1/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-staging-cycle2-A1",
+      "evidenceHash": "4e6233bef5a6b9f7a4167e8c44c4f8201e42bc3383ec1416b08cd58bc3890e33",
+      "serverReportedRuntimeCommit": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
       "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
       "malformed": false,
       "notes": "runtime equivalence checked against 0323bb91ac8383e1cbb6800637e4b9b896cdaff1"
