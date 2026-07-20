@@ -1,0 +1,8 @@
+Command: node scripts/run-staging-smokes.mjs
+Mode: network allowed after restricted attempt failed reachability
+Result: exit 0
+
+Summary:
+Staging-smoke suites: 7 run, 0 failed
+Gate: staging smoke passed
+

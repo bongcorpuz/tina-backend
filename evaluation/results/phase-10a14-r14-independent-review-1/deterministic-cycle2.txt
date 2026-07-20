@@ -1,0 +1,8 @@
+Command: node scripts/run-regressions.mjs
+Result: exit 0
+
+Summary:
+Syntax checks: 10 run, 0 failed
+Test suites: 204 run, 0 failed
+Gate: deterministic local lane passed
+

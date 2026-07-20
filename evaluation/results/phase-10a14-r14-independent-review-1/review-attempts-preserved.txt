@@ -1,0 +1,10 @@
+Independent review attempts preserved:
+
+1. node scripts/run-regressions.mjs
+   Result: Codex command timeout after 120s. Process was no longer running afterward.
+   Classification: review harness timeout, not a completed repository runner result.
+
+2. node scripts/run-staging-smokes.mjs
+   Result: exit 1, 7 run, 1 failed. phase-09r staging fixture reported temporary staging unreachable/reachability inconsistency.
+   Classification: restricted-network/reachability technical attempt. Rerun with network allowed passed.
+

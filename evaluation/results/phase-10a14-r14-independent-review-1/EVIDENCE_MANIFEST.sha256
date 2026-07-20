@@ -1,0 +1,17 @@
+a102eb12d2dc407e93d4f55a2991e0f150e6e659fccb53cbe426163286a473c2  evaluation/results/phase-10a14-r14-independent-review-1/README.md
+4ac5483e6f6db6d681110f01086eb5889b9ceaa9e8f59073d28449cf240c5f18  evaluation/results/phase-10a14-r14-independent-review-1/deterministic-cycle1.txt
+4ac5483e6f6db6d681110f01086eb5889b9ceaa9e8f59073d28449cf240c5f18  evaluation/results/phase-10a14-r14-independent-review-1/deterministic-cycle2.txt
+6b48d2f692a3758eae169da0433717588bd1d67d269a994eec140daecab585cf  evaluation/results/phase-10a14-r14-independent-review-1/final-488-and-count-hash-reconciliation.md
+5d9c6a90af6709b7b35a2a573040e6608b31d5a4c6399d010e5351b7cda0c551  evaluation/results/phase-10a14-r14-independent-review-1/findings-register.md
+cd3fd6aee8fde09606a34bf9198f9ebf8dbe7459e2010cf7dd9adcf7cb9dbb71  evaluation/results/phase-10a14-r14-independent-review-1/frozen-plan-and-count-review.md
+7d1e7e2ea9e54f0075656bd8804f7dfea77e4eb2e772c230f994532095ad2a59  evaluation/results/phase-10a14-r14-independent-review-1/gate-attempt-and-runner-evidence.md
+a94020d915d441b82fd780f661a766dc3d0736678f38e646ef48c8703b7a5574  evaluation/results/phase-10a14-r14-independent-review-1/governance-supersession-decision.md
+7083683b5706f8f086c6c13c479a344a18abd91c1d8851be2d587f73c95c73a8  evaluation/results/phase-10a14-r14-independent-review-1/journal-contract-and-crash-preservation-review.md
+d96c24ed608cd199d0adb4f9be2c4d9b180b67874b89a01be528102cc2a01fa2  evaluation/results/phase-10a14-r14-independent-review-1/live-persistence-and-false-refusal-review.md
+b9ed44e94f81cb5947b181bfe168a9277390465fe0bf598438ce90388f9bc099  evaluation/results/phase-10a14-r14-independent-review-1/repository-and-commit-chronology.md
+1a3d772c2a2ab69b399107fe6c76f2d9770449e9fbd1e1e36e67c71aa2c284f7  evaluation/results/phase-10a14-r14-independent-review-1/review-attempts-preserved.txt
+8fdb1c8542d2b0e4af94c4efc4ff4a3a7c18b7e872a274e36c9a28df5ae30879  evaluation/results/phase-10a14-r14-independent-review-1/security-and-cleanup-review.md
+7d95b2250031c51669c26a73ba6edfb42980687641c2837e7309ae278f54240b  evaluation/results/phase-10a14-r14-independent-review-1/semantic-probe-review.md
+6654fc18eda11bacc676427068ae5e1c6d976e2a05338b07a7b1c5e224b27574  evaluation/results/phase-10a14-r14-independent-review-1/staging-cycle1.txt
+ae9b48bb842773c2ef58cd21d8b7a918120d56e3fd2779d24b9f040b30b94815  evaluation/results/phase-10a14-r14-independent-review-1/staging-cycle2.txt
+f3cc7dbd08c97a83b123ac69a3ae26f9a03da10320d8ec09ab8133795016c36d  evaluation/results/phase-10a14-r14-independent-review-1/staging-runtime-identity-review.md

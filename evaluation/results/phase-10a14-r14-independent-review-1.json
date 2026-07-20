@@ -1,0 +1,57 @@
+{
+  "task": "PHASE-10A14-R14-NEGATED-NONPERFORMANCE-DIRECTIVE-COVERAGE-UNIVERSAL-PERSISTENCE-STATUS-AND-IMMUTABLE-ATTEMPT-JOURNAL-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "reviewDate": "2026-07-20",
+  "repository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "startingHead": "1aa7ca5defbfb028eede61cc849318f5378003b5",
+  "reportedFinalRuntime": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "decision": "REVISIONS REQUIRED",
+  "severityCounts": {
+    "P0": 0,
+    "P1": 7,
+    "P2": 2,
+    "P3": 1
+  },
+  "findingDispositions": {
+    "P1-R13-IR-001": "NOT CLOSED",
+    "P1-R13-IR-003": "NOT CLOSED",
+    "P1-R13-IR-002": "NOT SUPERSEDED",
+    "P2-R13-IR-004": "BOUNDED LIMITATION PRESERVED",
+    "P3-R13-IR-005": "UNCHANGED HISTORICAL LIMITATION"
+  },
+  "governanceSupersession": "NOT SUPERSEDED",
+  "semanticProbeSummary": {
+    "total": 30,
+    "mismatches": 12,
+    "unsafeMisses": 9,
+    "safeOverfires": 3
+  },
+  "evidenceAudit": {
+    "finalCampaignAttempts": 488,
+    "finalCampaignUniqueIds": 488,
+    "finalCampaignTechnicalFailures": 0,
+    "finalCampaignRecordedMismatches": 0,
+    "live2Attempts": 34,
+    "live2NullPersistenceStatus": 0,
+    "live2PersistedNullReceiptRecords": 8,
+    "r14ManifestEntries": 108,
+    "r14ManifestMissing": 0,
+    "r14ManifestMismatches": 0
+  },
+  "independentGates": {
+    "deterministicInitialReviewTimeout": true,
+    "deterministicCycle1": "syntax 10/0, suites 204/0, exit 0",
+    "deterministicCycle2": "syntax 10/0, suites 204/0, exit 0",
+    "stagingRestrictedAttempt": "7 run, 1 failed, exit 1",
+    "stagingCycle1": "7/0, exit 0",
+    "stagingCycle2": "7/0, exit 0"
+  },
+  "protectedPathsPreserved": [
+    ".claude/",
+    ".vscode/",
+    "evaluation/factcheck/"
+  ],
+  "runtimeModifiedByReview": false,
+  "phase10AStatus": "OPEN"
+}
