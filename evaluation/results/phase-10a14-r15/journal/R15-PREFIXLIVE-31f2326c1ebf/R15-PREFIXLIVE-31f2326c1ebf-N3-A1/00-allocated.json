@@ -1,0 +1,20 @@
+{
+  "event": "ALLOCATED",
+  "task": "PHASE-10A14-R15",
+  "campaignId": "R15-PREFIXLIVE-31f2326c1ebf",
+  "probeId": "N3",
+  "attemptId": "R15-PREFIXLIVE-31f2326c1ebf-N3-A1",
+  "attemptSequence": 1,
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "deploymentId": "https://tina-backend-staging.onrender.com",
+  "executionMode": "LIVE_HANDLER",
+  "exactQuestion": "What is the weather in Manila today?",
+  "answerFixtureOrRawAnswer": null,
+  "expectedClassification": "SAFE",
+  "retryOf": null,
+  "requestHash": "sha256:d126fbe7e9d339d0986aef73e8ac4629d2471e22b78d5f44718dfcde8d08503e",
+  "allocatedAt": "2026-07-20T03:14:40.204Z",
+  "suite": "live",
+  "category": "negative_nontax",
+  "conversationUsed": true
+}

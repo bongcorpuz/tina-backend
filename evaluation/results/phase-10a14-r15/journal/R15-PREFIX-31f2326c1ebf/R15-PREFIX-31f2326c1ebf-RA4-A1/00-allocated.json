@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "task": "PHASE-10A14-R15",
+  "campaignId": "R15-PREFIX-31f2326c1ebf",
+  "probeId": "RA4",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-RA4-A1",
+  "attemptSequence": 1,
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "deploymentId": null,
+  "executionMode": "DETERMINISTIC",
+  "exactQuestion": "The BIR notice says I must file. Is that correct?",
+  "answerFixtureOrRawAnswer": null,
+  "expectedClassification": "ALLOW",
+  "retryOf": null,
+  "requestHash": "sha256:479335f67adb3f9ea9f4fcb496c56a8aed4998af2dad6c9d9f67b0fe24fd876f",
+  "allocatedAt": "2026-07-20T03:05:10.828Z",
+  "suite": "routing-adjacentPositives"
+}

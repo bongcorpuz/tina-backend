@@ -1,0 +1,20 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIXLIVE-31f2326c1ebf-Q2-A1",
+  "completedAt": "2026-07-20T03:11:28.519Z",
+  "actualClassification": "SAFE",
+  "persistenceStatus": "PERSISTED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": true,
+    "reasonCode": "OK",
+    "safeDiagnostic": "PERSISTED"
+  },
+  "serverReportedRuntimeCommit": null,
+  "publicAnswer": "If you received a BIR LOA/eLA, do not ignore it. Preserve the date and manner of receipt, keep a copy of the notice, and verify it through the available BIR verification process (for example, the REVIE / LOA Verifier process under RMC No. 5-2026) where applicable. Prepare a document compliance matrix, submit through controlled transmittal, and keep proof of submission. Do not fabricate unavailable or non-existent documents; use substitute proof where appropriate. This is procedural guidance only. Human tax/legal review remains required for validity, prescription, finality, appealability, protest strategy, CTA strategy, or legal conclusions. Check the following details: Taxpayer name, TIN, Taxable period, Tax types covered, Issuing office, LOA/eLA number, Audit case number, Revenue Officer (RO), Group Supervisor (GS), Approving/signing official, Documents requested. Avoid unnecessary admissions. Monitor possible next stages: additional document request, NOD/DOD, PAN, FAN/FLD, protest, FDDA, and CTA appeal-watch. Official-source verification is required before relying on any authority referenced in this guidance; no source has been live-verified by this scaffold.",
+  "responseHash": "sha256:381bcae56ba9e2c549f8937f619ac307ba77baf99a0a0c59f307653a2cdca267",
+  "payloadHash": "sha256:9b383c93a5e4153ceafee3ec75fd30b072f8ff50a9b36057f5cde1c4a6cd74df"
+}

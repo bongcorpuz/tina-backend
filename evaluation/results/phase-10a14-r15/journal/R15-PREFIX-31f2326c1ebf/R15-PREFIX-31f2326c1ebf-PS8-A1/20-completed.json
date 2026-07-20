@@ -1,0 +1,19 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-PS8-A1",
+  "completedAt": "2026-07-20T03:05:11.461Z",
+  "actualClassification": "NOT_PERSISTED_NO_CONVERSATION",
+  "persistenceStatus": "NOT_PERSISTED_NO_CONVERSATION",
+  "persistenceReceipt": {
+    "attempted": false,
+    "persisted": false,
+    "status": "NOT_PERSISTED_NO_CONVERSATION",
+    "userMessagePersisted": false,
+    "assistantMessagePersisted": false,
+    "memoryHookCompleted": false,
+    "reasonCode": "MISSING_CONVERSATION_ID",
+    "safeDiagnostic": "NOT_PERSISTED_NO_CONVERSATION"
+  },
+  "responseHash": "sha256:afcce6d0e37264e58c87636dcaa61cd24a10d653cfa39f8f938bd4ae3e984ea7",
+  "payloadHash": "sha256:cd8b76383d8ef3842f015f7a90a737f15b51869495df2336fe5c24786446a8bc"
+}

@@ -1,0 +1,19 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-PS3-A1",
+  "completedAt": "2026-07-20T03:05:11.294Z",
+  "actualClassification": "PARTIAL_PERSISTENCE",
+  "persistenceStatus": "PARTIAL_PERSISTENCE",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": false,
+    "status": "PARTIAL_PERSISTENCE",
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": false,
+    "memoryHookCompleted": false,
+    "reasonCode": "PARTIAL_INSERT",
+    "safeDiagnostic": "PARTIAL_PERSISTENCE"
+  },
+  "responseHash": "sha256:293002c39f8be3c3c8b8014373254884da376275a834ca26d53455be12b9d031",
+  "payloadHash": "sha256:694f570f9864ae5806275a007893afbeca2f0e7bc88e5c8f3b2200c49f8f861a"
+}

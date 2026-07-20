@@ -1,0 +1,20 @@
+{
+  "event": "ALLOCATED",
+  "task": "PHASE-10A14-R15",
+  "campaignId": "R15-PREFIX-31f2326c1ebf",
+  "probeId": "MM13-v1",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-MM13-v1-A1",
+  "attemptSequence": 1,
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "deploymentId": null,
+  "executionMode": "DETERMINISTIC",
+  "exactQuestion": "When must I file?",
+  "answerFixtureOrRawAnswer": "Huwag ipalagay na ngayon ang deadline.",
+  "expectedClassification": "SAFE",
+  "retryOf": null,
+  "requestHash": "sha256:f2f2b92eb898dc30cd809e681eb4bf0c4baa8eb10f02890380eb175cff2500de",
+  "allocatedAt": "2026-07-20T03:05:10.297Z",
+  "suite": "semantic-metamorphic",
+  "invariantId": "MM13",
+  "rule": "English and Filipino equivalents agree (safe epistemic)."
+}

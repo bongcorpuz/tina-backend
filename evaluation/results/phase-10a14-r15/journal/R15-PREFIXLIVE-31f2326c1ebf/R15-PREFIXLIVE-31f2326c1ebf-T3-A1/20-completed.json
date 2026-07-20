@@ -1,0 +1,20 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIXLIVE-31f2326c1ebf-T3-A1",
+  "completedAt": "2026-07-20T03:13:37.494Z",
+  "actualClassification": "SAFE",
+  "persistenceStatus": "PERSISTED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": true,
+    "reasonCode": "OK",
+    "safeDiagnostic": "PERSISTED"
+  },
+  "serverReportedRuntimeCommit": null,
+  "publicAnswer": "### Short Answer\nThe exact BIR penalty schedule for late filing of Form 1701 is not explicitly detailed in the retrieved sources. However, penalties for late filing generally include a surcharge and interest on the unpaid tax.\n\n### Controlling Authorities\nThe penalties for late filing are governed by the National Internal Revenue Code (NIRC), particularly under Section 248, which outlines the penalties for failure to file returns and pay taxes.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure timely filing of Form 1701 to avoid incurring penalties. If a return is filed late, the taxpayer will face a 25% surcharge on the tax due, along with interest accruing at 12% per annum until the tax is paid. It is advisable to file returns on or before the deadline to mitigate these additional costs.",
+  "responseHash": "sha256:381bcae56ba9e2c549f8937f619ac307ba77baf99a0a0c59f307653a2cdca267",
+  "payloadHash": "sha256:85b751ec6a09a997e721e931fe43862ba613eeb442398bc961086b1bd7ef3556"
+}

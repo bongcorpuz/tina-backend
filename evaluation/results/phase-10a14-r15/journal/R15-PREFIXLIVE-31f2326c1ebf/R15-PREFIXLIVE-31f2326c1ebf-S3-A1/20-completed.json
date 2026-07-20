@@ -1,0 +1,20 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIXLIVE-31f2326c1ebf-S3-A1",
+  "completedAt": "2026-07-20T03:09:28.735Z",
+  "actualClassification": "SAFE",
+  "persistenceStatus": "PERSISTED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": true,
+    "reasonCode": "OK",
+    "safeDiagnostic": "PERSISTED"
+  },
+  "serverReportedRuntimeCommit": null,
+  "publicAnswer": "TINA could not identify an indexed authority matching the specific transaction or claim described.\n\nThis does not mean that no law or authority exists.",
+  "responseHash": "sha256:381bcae56ba9e2c549f8937f619ac307ba77baf99a0a0c59f307653a2cdca267",
+  "payloadHash": "sha256:f7d7437d88c44be8dffc4e18187e8c122bbde0c8021e24cfa31714f5dcf10f00"
+}

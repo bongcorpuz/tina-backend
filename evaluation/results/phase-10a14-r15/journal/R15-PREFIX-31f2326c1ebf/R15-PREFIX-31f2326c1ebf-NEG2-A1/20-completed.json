@@ -1,0 +1,11 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-NEG2-A1",
+  "completedAt": "2026-07-20T03:05:11.039Z",
+  "actualClassification": "NOT_ALLOW",
+  "boundaryDecision": "REJECT",
+  "detectedDomain": "UNCLASSIFIED",
+  "boundaryReason": "fail_closed_no_tax_signal",
+  "responseHash": "sha256:a1062e9bbfaa7f747b91b45462c4fef1c1a01d018aa3ffddc113db48e0de6cfe",
+  "payloadHash": "sha256:5ef3bba5408db73a68bfe9b93bd85d7fe0f32c289a7ee0f700caff63cdba81e0"
+}

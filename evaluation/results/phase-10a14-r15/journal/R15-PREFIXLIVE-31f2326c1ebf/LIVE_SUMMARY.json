@@ -1,0 +1,99 @@
+{
+  "campaignId": "R15-PREFIXLIVE-31f2326c1ebf",
+  "phase": "PREFIXLIVE",
+  "expectedRuntime": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "deploymentId": "https://tina-backend-staging.onrender.com",
+  "identityBefore": {
+    "httpStatus": 200,
+    "runtimeCommit": null,
+    "deploymentId": null,
+    "service": "tina-backend",
+    "identityEndpointPresent": false,
+    "queriedAt": "2026-07-20T03:06:34.732Z"
+  },
+  "identityAfter": {
+    "httpStatus": 200,
+    "runtimeCommit": null,
+    "deploymentId": null,
+    "service": "tina-backend",
+    "identityEndpointPresent": false,
+    "queriedAt": "2026-07-20T03:15:03.295Z"
+  },
+  "identityStable": true,
+  "identityMatchesExpected": false,
+  "controllingEvidence": false,
+  "controllingReason": "server does not expose runtimeCommit — identity unproven, campaign is NON-CONTROLLING",
+  "summary": {
+    "total": 40,
+    "persisted": 39,
+    "nonPersisted": 1,
+    "nullStatus": 0,
+    "persistedWithoutReceipt": [
+      "LN3",
+      "LN5",
+      "LN8",
+      "LQ1",
+      "LQ2",
+      "LS2",
+      "LT1",
+      "U1",
+      "U3",
+      "U4",
+      "U6",
+      "U8",
+      "S1",
+      "Q1",
+      "F2",
+      "F3",
+      "F4",
+      "N1",
+      "N2",
+      "N3",
+      "N4"
+    ],
+    "statusReceiptContradiction": [],
+    "unsafeEmitted": [],
+    "historyMismatch": [],
+    "falseRefusals": [
+      "LN3",
+      "LN5",
+      "LN8",
+      "LQ1",
+      "LQ2",
+      "LS2",
+      "LT1",
+      "U1",
+      "U3",
+      "U4",
+      "U6",
+      "U8",
+      "S1",
+      "Q1",
+      "F2",
+      "F3",
+      "F4"
+    ],
+    "nonTaxLeakedIntoTax": []
+  },
+  "review": {
+    "campaignDir": "evaluation\\results\\phase-10a14-r15\\journal\\R15-PREFIXLIVE-31f2326c1ebf",
+    "allocated": 40,
+    "started": 40,
+    "completed": 40,
+    "technicalFailures": 0,
+    "timeouts": 0,
+    "cancelled": 0,
+    "incompleteOrCrashed": 1,
+    "malformed": 1,
+    "retries": 0,
+    "supersessions": 0,
+    "legalMismatches": 0,
+    "incompleteAttemptIds": [
+      "records"
+    ],
+    "malformedAttemptIds": [
+      "records"
+    ],
+    "mismatchProbeIds": []
+  }
+}

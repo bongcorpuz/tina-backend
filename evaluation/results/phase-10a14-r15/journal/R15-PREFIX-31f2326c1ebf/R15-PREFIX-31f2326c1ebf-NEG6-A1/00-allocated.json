@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "task": "PHASE-10A14-R15",
+  "campaignId": "R15-PREFIX-31f2326c1ebf",
+  "probeId": "NEG6",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-NEG6-A1",
+  "attemptSequence": 1,
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "deploymentId": null,
+  "executionMode": "DETERMINISTIC",
+  "exactQuestion": "How do I file a court pleading for a custody case?",
+  "answerFixtureOrRawAnswer": null,
+  "expectedClassification": "NOT_ALLOW",
+  "retryOf": null,
+  "requestHash": "sha256:2db4e73b2f8bddd4137884b655b72cff6e9b4625e6bd790d47cd214b46e14e3d",
+  "allocatedAt": "2026-07-20T03:05:11.118Z",
+  "suite": "routing-negativeControls"
+}

@@ -1,0 +1,20 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIXLIVE-31f2326c1ebf-T4-A1",
+  "completedAt": "2026-07-20T03:13:51.680Z",
+  "actualClassification": "SAFE",
+  "persistenceStatus": "PERSISTED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": true,
+    "reasonCode": "OK",
+    "safeDiagnostic": "PERSISTED"
+  },
+  "serverReportedRuntimeCommit": null,
+  "publicAnswer": "### Short Answer\nAn individual must file the annual income tax return (Form 1701) on or before April 15 of the following year after the end of the taxable year.\n\n### Interpretation\n\n### Practical Meaning\nTaxpayers should ensure that they prepare and submit their income tax returns by the April 15 deadline to avoid penalties for late filing. It is advisable to keep track of any changes in tax regulations or deadlines that may arise, especially in light of any extensions or special provisions that may be announced by the Bureau of Internal Revenue (BIR).",
+  "responseHash": "sha256:381bcae56ba9e2c549f8937f619ac307ba77baf99a0a0c59f307653a2cdca267",
+  "payloadHash": "sha256:d6ae210b1c87416a59a3d332fe72fcd37715c54267eb3423247ade6196eb6be8"
+}

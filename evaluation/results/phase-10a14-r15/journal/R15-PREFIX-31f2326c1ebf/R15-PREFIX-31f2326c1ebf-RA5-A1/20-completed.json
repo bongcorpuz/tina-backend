@@ -1,0 +1,11 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-PREFIX-31f2326c1ebf-RA5-A1",
+  "completedAt": "2026-07-20T03:05:10.867Z",
+  "actualClassification": "ALLOW",
+  "boundaryDecision": "ALLOW",
+  "detectedDomain": "TAX_KEYWORD",
+  "boundaryReason": "tax_keyword_match",
+  "responseHash": "sha256:10ce2e7353278545141cbcafb5d8a98ef0aec65c3e13608246da70530e22b308",
+  "payloadHash": "sha256:ce9b6a627c2ae7b5faca9bc0e3aa2f564957aefbf99773c5b66811b2eab1f9a8"
+}
