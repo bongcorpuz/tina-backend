@@ -1,0 +1,64 @@
+{
+  "text": "Is the gain taxable?",
+  "detector": {
+    "isPhilippineTax": true,
+    "decision": "ALLOW",
+    "detectedDomain": "PHILIPPINE_TAX",
+    "reason": "strong_tax_signal",
+    "confidence": 0.98
+  },
+  "adjudication": {
+    "taxableIsTaxSignal": true,
+    "allowCorrectWithinDeclaredPhilippineTaxScope": true,
+    "frozenExpectationDefective": true,
+    "validWeakSignalMetamorphicControl": false,
+    "affectsOtherRows": [
+      {
+        "probeId": "CG-6",
+        "coverageClass": "capital_gain_strong",
+        "expected": "ALLOW",
+        "got": "ALLOW",
+        "ok": true,
+        "reason": "strong_tax_signal",
+        "text": "How is the taxable gain on personal property computed?"
+      },
+      {
+        "probeId": "CG-15",
+        "coverageClass": "capital_gain_strong",
+        "expected": "ALLOW",
+        "got": "ALLOW",
+        "ok": true,
+        "reason": "strong_tax_signal",
+        "text": "Are capital gains from foreign property taxable in the Philippines?"
+      },
+      {
+        "probeId": "CG-21",
+        "coverageClass": "capital_gain_strong",
+        "expected": "ALLOW",
+        "got": "ALLOW",
+        "ok": true,
+        "reason": "strong_tax_signal",
+        "text": "Does the holding period affect the taxable portion of a capital gain?"
+      },
+      {
+        "probeId": "MM-15-weak",
+        "coverageClass": "metamorphic",
+        "expected": "CLARIFY_OR_NOT_ALLOW",
+        "got": "ALLOW",
+        "ok": false,
+        "reason": "strong_tax_signal",
+        "text": "Is the gain taxable?"
+      },
+      {
+        "probeId": "MM-15-strong",
+        "coverageClass": "metamorphic",
+        "expected": "ALLOW",
+        "got": "ALLOW",
+        "ok": true,
+        "reason": "strong_tax_signal",
+        "text": "Is the capital gain taxable?"
+      }
+    ],
+    "classification": "R17-FIXTURE-001 accepted as frozen oracle/inventory-authoring defect; governance-blocking only as a fixture defect if the frozen contract requires perfect oracle truth, not a runtime false allow."
+  }
+}

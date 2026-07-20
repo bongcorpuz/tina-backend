@@ -1,0 +1,40 @@
+{
+  "independent": {
+    "totalAttempts": 37,
+    "runnerInvocations": 3,
+    "stagingRunnerInvocations": 2,
+    "focusedSuiteInvocations": 32,
+    "campaignAttempts": 0,
+    "completedPass": 33,
+    "completedFailures": 4,
+    "technicalFailures": 0,
+    "environmentFailures": 0,
+    "incompleteAttempts": 0,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "controllingAttempts": 33,
+    "nonControllingAttempts": 4,
+    "validLinkedRetries": 0,
+    "unlinkedReruns": 14,
+    "note": "focusedSuiteInvocations follows frozen registry category R17-FOCUSED-*; unlinkedReruns follows canonical objective grouping, excluding the superseded failed all26 mutating attempt."
+  },
+  "canonical": {
+    "totalAttempts": 37,
+    "runnerInvocations": 3,
+    "stagingRunnerInvocations": 2,
+    "focusedSuiteInvocations": 32,
+    "campaignAttempts": 0,
+    "completedPass": 33,
+    "completedFailures": 4,
+    "technicalFailures": 0,
+    "environmentFailures": 0,
+    "incompleteAttempts": 0,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "controllingAttempts": 33,
+    "nonControllingAttempts": 4,
+    "validLinkedRetries": 0,
+    "unlinkedReruns": 14
+  },
+  "mismatches": []
+}

@@ -1,0 +1,181 @@
+{
+  "task": "PHASE-10A14-R17-INDEPENDENT-REVIEW-1",
+  "generatedAt": "2026-07-20T23:16:51.737Z",
+  "reviewer": "Codex 5.5",
+  "decision": "REVISIONS REQUIRED",
+  "governance": {
+    "r15HistoricalGovernance": "NOT SUPERSEDED",
+    "r16ProspectiveGovernance": "NOT SATISFIED",
+    "r17ProspectiveGovernance": "NOT SATISFIED",
+    "phase10A": "OPEN",
+    "decision": "REVISIONS REQUIRED"
+  },
+  "findings": [
+    {
+      "id": "P1-R17-IR1-001",
+      "severity": "P1",
+      "requirement": "Retry evidence must be governably valid and support the retry ceiling.",
+      "evidence": "A2 retryOf A1 and A3 retryOf A2, but validRetryCount=0 and retryErrors=2 RETRY_RUNTIME_CHANGED under the frozen literal runtimeCommit model.",
+      "reproduction": "Inspect RETRY_LINK_SUMMARY.json and 08_INDEPENDENT_REGISTRY_REGENERATION.json.",
+      "impact": "R17 cannot claim the deterministic retry ceiling was reached or the retry requirement satisfied.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-R17-IR1-002",
+      "severity": "P1",
+      "requirement": "Zero material domain false allows.",
+      "evidence": "Unseen independent campaign found 3 material false allows: IR17-197 (What is the taxable font in a CSS file?); IR17-202 (Is the BOC a band of chords?); IR17-204 (How do I close a VAT color palette?).",
+      "reproduction": "Run independent-static-review.mjs and inspect 06_INDEPENDENT_DOMAIN_CAMPAIGN.json.",
+      "impact": "Non-tax substring contexts are allowed as tax due to strong lexical signals.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-R17-IR1-003",
+      "severity": "P1",
+      "requirement": "Non-mutating all-26 replay must not alter protected/historical evidence.",
+      "evidence": "focused-all26-nonmutating exited 0 but changed evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json from llm/verifiedEligible true to unavailable/false on multiple rows.",
+      "reproduction": "See logs/focused-all26-nonmutating/result.json and 16_PATCH_07B_LIVE_GUARD_PLANTED_REVIEW.json for the separate restored guard technique; the all26 file was restored after diff capture.",
+      "impact": "R17 claim that the replay is non-mutating is false and historical evidence integrity remains unresolved.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-R17-IR1-004",
+      "severity": "P1",
+      "requirement": "Deterministic gate criteria must be satisfied.",
+      "evidence": "Independent clean cycles both exited 1 with Test suites 210 run, 1 failed: phase-09zf-controlled-loa-gate-ordering-remediation-1.",
+      "reproduction": "See external-logs/independent-det-clean-cycle-1/result.json and cycle-2/result.json.",
+      "impact": "Current runtime/evidence state does not satisfy deterministic release gate.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P2-R17-IR1-005",
+      "severity": "P2",
+      "requirement": "Registry count regeneration should be unambiguous.",
+      "evidence": "Naive command-based focused/unlinked counters differed until frozen R17-FOCUSED category definitions were applied.",
+      "reproduction": "See 09_COUNT_RECONCILIATION.json.",
+      "impact": "Non-blocking because canonical counts reconcile under the frozen definitions.",
+      "disposition": "ACCEPTED NON-BLOCKING",
+      "blocksPass": false
+    }
+  ],
+  "summary": {
+    "frozenInventory": {
+      "total": 267,
+      "falseAllow": 1,
+      "falseRefusal": 0
+    },
+    "independentDomainCampaign": {
+      "total": 210,
+      "pass": 207,
+      "fail": 3,
+      "byGroup": {
+        "customs_tariff_tax": {
+          "total": 30,
+          "pass": 30,
+          "fail": 0
+        },
+        "capital_gain_tax": {
+          "total": 30,
+          "pass": 30,
+          "fail": 0
+        },
+        "bir_enforcement_tax": {
+          "total": 20,
+          "pass": 20,
+          "fail": 0
+        },
+        "private_contract_non_tax": {
+          "total": 30,
+          "pass": 30,
+          "fail": 0
+        },
+        "court_labor_sec_non_tax": {
+          "total": 30,
+          "pass": 30,
+          "fail": 0
+        },
+        "generic_ambiguous": {
+          "total": 30,
+          "pass": 30,
+          "fail": 0
+        },
+        "filipino_taglish_mixed": {
+          "total": 20,
+          "pass": 20,
+          "fail": 0
+        },
+        "substring_traps": {
+          "total": 20,
+          "pass": 17,
+          "fail": 3
+        }
+      },
+      "materialFalseAllows": [
+        {
+          "id": "IR17-197",
+          "group": "substring_traps",
+          "expected": "NOT_ALLOW",
+          "text": "What is the taxable font in a CSS file?",
+          "got": "ALLOW",
+          "ok": false,
+          "reason": "strong_tax_signal"
+        },
+        {
+          "id": "IR17-202",
+          "group": "substring_traps",
+          "expected": "NOT_ALLOW",
+          "text": "Is the BOC a band of chords?",
+          "got": "ALLOW",
+          "ok": false,
+          "reason": "strong_tax_signal"
+        },
+        {
+          "id": "IR17-204",
+          "group": "substring_traps",
+          "expected": "NOT_ALLOW",
+          "text": "How do I close a VAT color palette?",
+          "got": "ALLOW",
+          "ok": false,
+          "reason": "strong_tax_signal"
+        }
+      ],
+      "materialFalseRefusals": [],
+      "clarifyMismatches": []
+    },
+    "phase10a8": "PASS 24/0 independent focused run",
+    "patch07b": {
+      "focused": "PASS 8/0",
+      "plantedGuardStatus": 1,
+      "namedOffender": true
+    },
+    "deterministic": {
+      "passCycles": 0,
+      "requiredPassCycles": 2
+    },
+    "staging": {
+      "passCycles": 2,
+      "requiredPassCycles": 2
+    },
+    "manifest": {
+      "entries": 402,
+      "declaredEntries": 402,
+      "selfExcluded": true,
+      "duplicatePaths": [],
+      "mismatches": [
+        {
+          "file": "evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json",
+          "issue": "hash",
+          "expected": "26a6fdd783e04d3da738ae1b4216573ea6983624c52199729cc9111acd0c6e96",
+          "got": "f27db5062124c0642f75d9c7adefcb96ee3080f314a1d51a640d0ba1037ba668"
+        }
+      ],
+      "attemptDirsIncluded": true
+    },
+    "runtimeByteEquivalence": true,
+    "countMismatches": []
+  }
+}

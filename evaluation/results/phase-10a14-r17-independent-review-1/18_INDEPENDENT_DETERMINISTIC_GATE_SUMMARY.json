@@ -1,0 +1,122 @@
+{
+  "cycles": [
+    {
+      "id": "independent-det-clean-cycle-1",
+      "status": 1,
+      "totals": [
+        [
+          "10",
+          "0"
+        ],
+        [
+          "210",
+          "1"
+        ]
+      ],
+      "failures": [
+        "  FAIL  tests\\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs  (1053 ms)",
+        "  PASS  tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs  (20337 ms)",
+        "  PASS  tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs  (20326 ms)",
+        "  PASS  tests\\phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs  (54 ms)",
+        "FAIL no disallowed runtime, package, env, database, frontend, or production files changed"
+      ],
+      "streamPrematureClose": false,
+      "before": {
+        "timestamp": "2026-07-20T23:06:32.433Z",
+        "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+        "branch": "feature/source-availability-engine-v1",
+        "statusShort": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .claude/\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+        "trackedDiffQuiet": true,
+        "cachedDiffQuiet": true,
+        "sync": "0\t0",
+        "port5173": {
+          "status": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "nodeProcesses": {
+          "status": 0,
+          "stdout": "{\"Id\":22064,\"ProcessName\":\"node\",\"Path\":\"C:\\\\Program Files\\\\nodejs\\\\node.exe\"}",
+          "stderr": ""
+        },
+        "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+        "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+      },
+      "after": {
+        "timestamp": "2026-07-20T23:09:41.449Z",
+        "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+        "statusShort": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .claude/\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+        "trackedDiffQuiet": true,
+        "cachedDiffQuiet": true,
+        "sync": "0\t0",
+        "port5173": {
+          "status": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+        "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+      }
+    },
+    {
+      "id": "independent-det-clean-cycle-2",
+      "status": 1,
+      "totals": [
+        [
+          "10",
+          "0"
+        ],
+        [
+          "210",
+          "1"
+        ]
+      ],
+      "failures": [
+        "  FAIL  tests\\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs  (1077 ms)",
+        "  PASS  tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs  (20357 ms)",
+        "  PASS  tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs  (20348 ms)",
+        "  PASS  tests\\phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs  (56 ms)",
+        "FAIL no disallowed runtime, package, env, database, frontend, or production files changed"
+      ],
+      "streamPrematureClose": false,
+      "before": {
+        "timestamp": "2026-07-20T23:09:42.811Z",
+        "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+        "branch": "feature/source-availability-engine-v1",
+        "statusShort": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .claude/\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+        "trackedDiffQuiet": true,
+        "cachedDiffQuiet": true,
+        "sync": "0\t0",
+        "port5173": {
+          "status": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "nodeProcesses": {
+          "status": 0,
+          "stdout": "{\"Id\":22516,\"ProcessName\":\"node\",\"Path\":\"C:\\\\Program Files\\\\nodejs\\\\node.exe\"}",
+          "stderr": ""
+        },
+        "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+        "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+      },
+      "after": {
+        "timestamp": "2026-07-20T23:12:50.956Z",
+        "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+        "statusShort": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .claude/\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+        "trackedDiffQuiet": true,
+        "cachedDiffQuiet": true,
+        "sync": "0\t0",
+        "port5173": {
+          "status": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+        "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+      }
+    }
+  ],
+  "passCycles": 0,
+  "requiredPassCycles": 2
+}

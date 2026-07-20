@@ -1,0 +1,158 @@
+[
+  {
+    "claim": 1,
+    "text": "Final decision is REVISIONS REQUIRED",
+    "disposition": "ACCEPTED",
+    "evidence": "R17 result and independent blockers support REVISIONS REQUIRED."
+  },
+  {
+    "claim": 2,
+    "text": "R15 historical governance remains NOT SUPERSEDED",
+    "disposition": "ACCEPTED",
+    "evidence": "No R17 evidence supersedes R15 history."
+  },
+  {
+    "claim": 3,
+    "text": "R16 prospective governance remains NOT SATISFIED",
+    "disposition": "ACCEPTED",
+    "evidence": "R16 history remains failed/not superseded."
+  },
+  {
+    "claim": 4,
+    "text": "R17 prospective governance is NOT SATISFIED",
+    "disposition": "ACCEPTED",
+    "evidence": "Retry, deterministic, protected-evidence and unseen-domain blockers remain."
+  },
+  {
+    "claim": 5,
+    "text": "Phase 10A remains OPEN",
+    "disposition": "ACCEPTED",
+    "evidence": "CURRENT_STATE and blockers support OPEN."
+  },
+  {
+    "claim": 6,
+    "text": "Runtime files byte-identical from 345f2db5 through final HEAD",
+    "disposition": "ACCEPTED",
+    "evidence": "Runtime-equivalence check complete=true."
+  },
+  {
+    "claim": 7,
+    "text": "P1-R16-IR-001 partially closed",
+    "disposition": "PARTIALLY ACCEPTED",
+    "evidence": "phase-10a8 and patch-07b focused checks pass; deterministic gate remains failed."
+  },
+  {
+    "claim": 8,
+    "text": "P1-R16-IR-002 staging failure is closed",
+    "disposition": "ACCEPTED",
+    "evidence": "Two independent staging cycles exited 0; R17 staging cycles also recorded pass."
+  },
+  {
+    "claim": 9,
+    "text": "P1-R16-IR-003 domain false refusals are closed",
+    "disposition": "PARTIALLY ACCEPTED",
+    "evidence": "Frozen inventory false refusals=0; unseen campaign false refusals=0, but false allows remain."
+  },
+  {
+    "claim": 10,
+    "text": "P1-R16-IR-004 corrupted-import disposition is closed",
+    "disposition": "ACCEPTED",
+    "evidence": "Validator precedence and adversarial corruption cases support adjudication override and universal NUL detection."
+  },
+  {
+    "claim": 11,
+    "text": "P1-R16-IR-005 remains OPEN",
+    "disposition": "ACCEPTED",
+    "evidence": "validRetryCount=0 and retryErrors=2; no valid ceiling."
+  },
+  {
+    "claim": 12,
+    "text": "P1-R16-IR-006 fabricated-SHA detection is closed",
+    "disposition": "ACCEPTED",
+    "evidence": "Git object validation rejects short/nonhex/nonexistent/blob/tree and validates real commits."
+  },
+  {
+    "claim": 13,
+    "text": "Focused campaign passed 16/16",
+    "disposition": "ACCEPTED",
+    "evidence": "Independent focused suite set passed all exit-zero, though all26 replay mutation is a separate governance finding."
+  },
+  {
+    "claim": 14,
+    "text": "Staging passed two cycles at 7/0",
+    "disposition": "ACCEPTED",
+    "evidence": "Independent staging cycles exited 0; R17 staging cycles also recorded pass."
+  },
+  {
+    "claim": 15,
+    "text": "Canonical registry count summary",
+    "disposition": "ACCEPTED",
+    "evidence": "Independent regeneration reconciles after applying frozen category definitions; mismatches=0."
+  },
+  {
+    "claim": 16,
+    "text": "Deterministic gate achieved 0/2",
+    "disposition": "ACCEPTED",
+    "evidence": "R17 0/2 and independent clean cycles 0/2."
+  },
+  {
+    "claim": 17,
+    "text": "Three deterministic attempts A1/A2/A3 preserved",
+    "disposition": "ACCEPTED",
+    "evidence": "All three attempt dirs and terminal files present."
+  },
+  {
+    "claim": 18,
+    "text": "A2/A3 retryOf links fail same-runtime validation because HEAD changed",
+    "disposition": "ACCEPTED",
+    "evidence": "Literal runtimeCommit fields changed across evidence commits."
+  },
+  {
+    "claim": 19,
+    "text": "Runtime itself did not change between A1/A2/A3",
+    "disposition": "ACCEPTED",
+    "evidence": "Runtime file blob equality holds from final runtime onward."
+  },
+  {
+    "claim": 20,
+    "text": "Registry integrity not clean solely because of retry errors",
+    "disposition": "ACCEPTED",
+    "evidence": "Canonical integrity.clean false with retryErrors only."
+  },
+  {
+    "claim": 21,
+    "text": "MM-15-weak fixture defect not material runtime false allow",
+    "disposition": "ACCEPTED",
+    "evidence": "Independent adjudication treats taxable/gain as tax signal and frozen expectation defective."
+  },
+  {
+    "claim": 22,
+    "text": "Material runtime domain false allows are 0",
+    "disposition": "REJECTED",
+    "evidence": "Unseen campaign found 3 material substring false allows: IR17-197, IR17-202, IR17-204."
+  },
+  {
+    "claim": 23,
+    "text": "Protected E1 mutation incident restored/preserved/non-mutating replay introduced",
+    "disposition": "PARTIALLY ACCEPTED",
+    "evidence": "Original incident appears preserved/restored, but independent execution proved the replay still mutates R17_ALL26_NONMUTATING.json."
+  },
+  {
+    "claim": 24,
+    "text": "Corruption detector false positive corrected without weakening NUL",
+    "disposition": "ACCEPTED",
+    "evidence": "Adversarial cases confirm empty raw/tree allowed and NUL remains corrupt."
+  },
+  {
+    "claim": 25,
+    "text": "Final manifest has 402 entries and excludes itself",
+    "disposition": "ACCEPTED",
+    "evidence": "entries=402, selfExcluded=true, mismatches=1."
+  },
+  {
+    "claim": 26,
+    "text": "Protected-path check zero protected staged files for every R17 commit",
+    "disposition": "ACCEPTED",
+    "evidence": "No protected path appears in R17 commit diff inventory."
+  }
+]

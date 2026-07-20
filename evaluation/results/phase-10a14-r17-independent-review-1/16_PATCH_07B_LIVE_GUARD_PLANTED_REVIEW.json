@@ -1,0 +1,30 @@
+{
+  "before": {
+    "status": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "hash": "550e1b4c11fa21dabc42826e35f1e20c597eac87aa2cff19491523c918ba2eaf",
+    "diff": ""
+  },
+  "planted": {
+    "status": " M clarification-boundary-policy.js\n M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "hash": "ac5e14271a14545bb7c12748beeab7e21eb1365908f2f76453ee43e3ecd1bcbc",
+    "diff": "diff --git a/clarification-boundary-policy.js b/clarification-boundary-policy.js\nindex 235fe9e1..ef6cb357 100644\n--- a/clarification-boundary-policy.js\n+++ b/clarification-boundary-policy.js\n@@ -428,3 +428,5 @@ export default {\n   assessClarificationNeed,\n   buildClarificationChecklist\n };\n+\n+// IR17 temporary planted forbidden marker: liveClarificationHandler"
+  },
+  "result": {
+    "status": 1,
+    "signal": null,
+    "error": null,
+    "stdout": "PASS required clarification artifacts exist\nPASS required exports exist and prohibited exports are absent\nPASS helper output remains non-conclusive with approved decisions and postures\nPASS final gate report confirms patch sequence and nine-helper chain\nPASS current patch diff allows only authorized flagged live wiring and protected surfaces remain blocked\nPASS final gate report explicitly defers live integration and later phase work\nPASS CURRENT_STATE marks closure, no live integration, and design-only next task\n\nPATCH-07B-CLARIFICATION-FINAL-GATE-1 track closure tests: 7 passed, 1 failed\n",
+    "stderr": "FAIL no unauthorized live prompt or response-generation marker exists in production files\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'clarification-boundary-policy.js: liveClarificationHandler'\n+ ]\n- []\n\n    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:287:10\n    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:150:11)\n    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:279:7\n",
+    "namedOffender": true
+  },
+  "cleanup": {
+    "status": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "hash": "550e1b4c11fa21dabc42826e35f1e20c597eac87aa2cff19491523c918ba2eaf",
+    "diff": ""
+  },
+  "after": {
+    "restoredExact": true,
+    "noTargetDiff": true,
+    "fullStatus": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/"
+  }
+}

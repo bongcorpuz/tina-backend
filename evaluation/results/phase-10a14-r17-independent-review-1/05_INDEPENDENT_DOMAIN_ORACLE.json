@@ -1,0 +1,1262 @@
+[
+  {
+    "id": "IR17-001",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What customs duties apply when importing medical equipment into the Philippines?"
+  },
+  {
+    "id": "IR17-002",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Explain tariff classification for imported apparel under Philippine customs rules."
+  },
+  {
+    "id": "IR17-003",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Is import duty payable on goods released by the BOC?"
+  },
+  {
+    "id": "IR17-004",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How does BOC assess customs duties on imported machinery?"
+  },
+  {
+    "id": "IR17-005",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What Philippine tax rules govern customs valuation for imports?"
+  },
+  {
+    "id": "IR17-006",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Can a customs broker ask the BOC about tariff classification before entry?"
+  },
+  {
+    "id": "IR17-007",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What are the VAT and customs duty consequences of importing rice?"
+  },
+  {
+    "id": "IR17-008",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "When is customs duty due for an import shipment?"
+  },
+  {
+    "id": "IR17-009",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How are excise tax and customs duty handled on imported alcohol?"
+  },
+  {
+    "id": "IR17-010",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Does the Tariff and Customs Code affect Philippine import duty?"
+  },
+  {
+    "id": "IR17-011",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What is the BOC rule for duty drawback?"
+  },
+  {
+    "id": "IR17-012",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How do I dispute a customs duty assessment?"
+  },
+  {
+    "id": "IR17-013",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Are imported books subject to customs duties?"
+  },
+  {
+    "id": "IR17-014",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What happens if the BOC finds undervaluation for import duty?"
+  },
+  {
+    "id": "IR17-015",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How do customs duties interact with VAT on importation?"
+  },
+  {
+    "id": "IR17-016",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What is the tax treatment of demurrage in customs valuation?"
+  },
+  {
+    "id": "IR17-017",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Can tariff classification change the import duty rate?"
+  },
+  {
+    "id": "IR17-018",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What customs duty applies to imported spare parts?"
+  },
+  {
+    "id": "IR17-019",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How does BOC compute landed cost for tax purposes?"
+  },
+  {
+    "id": "IR17-020",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Are customs duties deductible for Philippine income tax?"
+  },
+  {
+    "id": "IR17-021",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What records support an import duty protest?"
+  },
+  {
+    "id": "IR17-022",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Does BOC impose penalties for unpaid customs duties?"
+  },
+  {
+    "id": "IR17-023",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What are customs tax obligations for temporary importation?"
+  },
+  {
+    "id": "IR17-024",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How is import duty assessed for e-commerce shipments?"
+  },
+  {
+    "id": "IR17-025",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Can a PEZA importer get customs duty exemptions?"
+  },
+  {
+    "id": "IR17-026",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What is the tax effect of post-entry customs audit?"
+  },
+  {
+    "id": "IR17-027",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "How are customs duties paid before goods release?"
+  },
+  {
+    "id": "IR17-028",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Does BOC classify HS codes for tariff tax rates?"
+  },
+  {
+    "id": "IR17-029",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "What is the customs duty base for related-party imports?"
+  },
+  {
+    "id": "IR17-030",
+    "group": "customs_tariff_tax",
+    "expected": "ALLOW",
+    "text": "Are import duties taxes under Philippine law?"
+  },
+  {
+    "id": "IR17-031",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is a gain on sale of a capital asset taxable in the Philippines?"
+  },
+  {
+    "id": "IR17-032",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "How is capital gain tax computed on sale of real property?"
+  },
+  {
+    "id": "IR17-033",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What holding period affects capital gain treatment for personal property?"
+  },
+  {
+    "id": "IR17-034",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is capital gain on shares of stock taxable?"
+  },
+  {
+    "id": "IR17-035",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What is the tax rate for sale of a capital asset by an individual?"
+  },
+  {
+    "id": "IR17-036",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Does the holding period change recognized capital gain?"
+  },
+  {
+    "id": "IR17-037",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "How does Philippine tax law define capital asset?"
+  },
+  {
+    "id": "IR17-038",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is a loss from sale of capital asset deductible?"
+  },
+  {
+    "id": "IR17-039",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What BIR return is used for capital gains tax on real property?"
+  },
+  {
+    "id": "IR17-040",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "When is capital gains tax due after selling land?"
+  },
+  {
+    "id": "IR17-041",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is gain from selling inherited property taxable?"
+  },
+  {
+    "id": "IR17-042",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "How does ordinary asset status affect capital gain tax?"
+  },
+  {
+    "id": "IR17-043",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What tax applies to sale of unlisted shares?"
+  },
+  {
+    "id": "IR17-044",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Can capital gains tax apply even if sale proceeds are unpaid?"
+  },
+  {
+    "id": "IR17-045",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is capital gain on condominium sale taxable?"
+  },
+  {
+    "id": "IR17-046",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What documents support capital gains tax filing?"
+  },
+  {
+    "id": "IR17-047",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "How does zonal value affect capital gains tax?"
+  },
+  {
+    "id": "IR17-048",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is a foreigner's sale of Philippine real property taxable?"
+  },
+  {
+    "id": "IR17-049",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What is the taxability of a gain from selling a capital asset?"
+  },
+  {
+    "id": "IR17-050",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Does a holding period rule apply to capital gains on personal property?"
+  },
+  {
+    "id": "IR17-051",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Can a corporation have capital gain tax on shares?"
+  },
+  {
+    "id": "IR17-052",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What is the capital gains tax deadline for real property sale?"
+  },
+  {
+    "id": "IR17-053",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is gain taxable if the asset was held more than one year?"
+  },
+  {
+    "id": "IR17-054",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "How does BIR assess capital gains tax deficiencies?"
+  },
+  {
+    "id": "IR17-055",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What exemptions apply to capital gains tax on principal residence?"
+  },
+  {
+    "id": "IR17-056",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Is capital gain subject to withholding tax?"
+  },
+  {
+    "id": "IR17-057",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What is taxable gain for sale of capital asset?"
+  },
+  {
+    "id": "IR17-058",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "How are capital losses carried over under Philippine tax rules?"
+  },
+  {
+    "id": "IR17-059",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "Does donor's tax replace capital gains tax on sale?"
+  },
+  {
+    "id": "IR17-060",
+    "group": "capital_gain_tax",
+    "expected": "ALLOW",
+    "text": "What is the tax base for capital gains tax?"
+  },
+  {
+    "id": "IR17-061",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What is Oplan Kandado under BIR enforcement?"
+  },
+  {
+    "id": "IR17-062",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "Can the BIR issue a VAT closure order under Oplan Kandado?"
+  },
+  {
+    "id": "IR17-063",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What due process is required before BIR closure of a business?"
+  },
+  {
+    "id": "IR17-064",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "How does BIR enforce failure to issue receipts?"
+  },
+  {
+    "id": "IR17-065",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What happens after a BIR tax assessment notice?"
+  },
+  {
+    "id": "IR17-066",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "Can BIR close a store for VAT violations?"
+  },
+  {
+    "id": "IR17-067",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "How do I respond to a BIR preliminary assessment notice?"
+  },
+  {
+    "id": "IR17-068",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What is the tax effect of a final assessment notice?"
+  },
+  {
+    "id": "IR17-069",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "Does Oplan Kandado apply to non-VAT taxpayers?"
+  },
+  {
+    "id": "IR17-070",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "Can BIR inspect books during enforcement?"
+  },
+  {
+    "id": "IR17-071",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What penalties apply for BIR tax evasion findings?"
+  },
+  {
+    "id": "IR17-072",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "How does BIR serve a notice of informal conference?"
+  },
+  {
+    "id": "IR17-073",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What is the deadline to protest a BIR assessment?"
+  },
+  {
+    "id": "IR17-074",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "Can BIR garnish bank accounts for unpaid tax?"
+  },
+  {
+    "id": "IR17-075",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "How does BIR compromise a tax assessment?"
+  },
+  {
+    "id": "IR17-076",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What is the taxability issue in a BIR LOA audit?"
+  },
+  {
+    "id": "IR17-077",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "Can a taxpayer contest a BIR closure order?"
+  },
+  {
+    "id": "IR17-078",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What is a BIR mission order in tax enforcement?"
+  },
+  {
+    "id": "IR17-079",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "When can BIR suspend business operations?"
+  },
+  {
+    "id": "IR17-080",
+    "group": "bir_enforcement_tax",
+    "expected": "ALLOW",
+    "text": "What return must be amended after BIR findings?"
+  },
+  {
+    "id": "IR17-081",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "When is rent due under a private lease contract?"
+  },
+  {
+    "id": "IR17-082",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can my landlord terminate the lease for late payment?"
+  },
+  {
+    "id": "IR17-083",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What notice is required to end a private lease?"
+  },
+  {
+    "id": "IR17-084",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I enforce a private supply agreement?"
+  },
+  {
+    "id": "IR17-085",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a contract deadline be extended by email?"
+  },
+  {
+    "id": "IR17-086",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the remedy for breach of a service contract?"
+  },
+  {
+    "id": "IR17-087",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Does a private lease require notarization?"
+  },
+  {
+    "id": "IR17-088",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can I assign my lease to another tenant?"
+  },
+  {
+    "id": "IR17-089",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What happens if a contractor misses a due date?"
+  },
+  {
+    "id": "IR17-090",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do liquidated damages work in a lease?"
+  },
+  {
+    "id": "IR17-091",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a tenant withhold rent for repairs?"
+  },
+  {
+    "id": "IR17-092",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What court handles a private collection case?"
+  },
+  {
+    "id": "IR17-093",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I draft a notice of default?"
+  },
+  {
+    "id": "IR17-094",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Is a non-compete clause enforceable?"
+  },
+  {
+    "id": "IR17-095",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a buyer cancel a private sale agreement?"
+  },
+  {
+    "id": "IR17-096",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Who pays insurance under a lease?"
+  },
+  {
+    "id": "IR17-097",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the deadline to return a security deposit?"
+  },
+  {
+    "id": "IR17-098",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a school filing deadline be moved by contract?"
+  },
+  {
+    "id": "IR17-099",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I make an insurance claim under my policy?"
+  },
+  {
+    "id": "IR17-100",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a private contract require passport submission?"
+  },
+  {
+    "id": "IR17-101",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What happens if a computer file is delivered late?"
+  },
+  {
+    "id": "IR17-102",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a supplier reject a return of goods?"
+  },
+  {
+    "id": "IR17-103",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What notice period applies to a consulting agreement?"
+  },
+  {
+    "id": "IR17-104",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Does a late assessment of damages breach the contract?"
+  },
+  {
+    "id": "IR17-105",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a private lease include a taxable costs clause?"
+  },
+  {
+    "id": "IR17-106",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Who is liable for property maintenance under a lease?"
+  },
+  {
+    "id": "IR17-107",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What if a payment due date falls on a weekend?"
+  },
+  {
+    "id": "IR17-108",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can an employer recover training costs by contract?"
+  },
+  {
+    "id": "IR17-109",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I terminate a gym membership contract?"
+  },
+  {
+    "id": "IR17-110",
+    "group": "private_contract_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a settlement agreement waive future claims?"
+  },
+  {
+    "id": "IR17-111",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the civil court deadline to file an answer?"
+  },
+  {
+    "id": "IR17-112",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How many days to appeal a civil court judgment?"
+  },
+  {
+    "id": "IR17-113",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the labor filing deadline for illegal dismissal?"
+  },
+  {
+    "id": "IR17-114",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can an employee file a labor case after resignation?"
+  },
+  {
+    "id": "IR17-115",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the SEC report deadline for a corporation?"
+  },
+  {
+    "id": "IR17-116",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I file a GIS report with the SEC?"
+  },
+  {
+    "id": "IR17-117",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What notice must an employer give before termination?"
+  },
+  {
+    "id": "IR17-118",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a civil court issue a temporary restraining order?"
+  },
+  {
+    "id": "IR17-119",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the deadline to file a motion for reconsideration?"
+  },
+  {
+    "id": "IR17-120",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How does DOLE handle a labor standards complaint?"
+  },
+  {
+    "id": "IR17-121",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What happens if an SEC report is late?"
+  },
+  {
+    "id": "IR17-122",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a corporation amend its articles with the SEC?"
+  },
+  {
+    "id": "IR17-123",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What filing is required for a civil complaint?"
+  },
+  {
+    "id": "IR17-124",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a labor arbiter order reinstatement?"
+  },
+  {
+    "id": "IR17-125",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the venue for a civil court case?"
+  },
+  {
+    "id": "IR17-126",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I respond to an SEC show cause order?"
+  },
+  {
+    "id": "IR17-127",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the prescriptive period for money claims in labor?"
+  },
+  {
+    "id": "IR17-128",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can a school filing be challenged in court?"
+  },
+  {
+    "id": "IR17-129",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What notice starts the civil court deadline?"
+  },
+  {
+    "id": "IR17-130",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Is a passport needed for court notarization?"
+  },
+  {
+    "id": "IR17-131",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do I file an insurance claim lawsuit?"
+  },
+  {
+    "id": "IR17-132",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What return date appears in a summons?"
+  },
+  {
+    "id": "IR17-133",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can an assessment of damages be appealed?"
+  },
+  {
+    "id": "IR17-134",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What report must a corporation file after board changes?"
+  },
+  {
+    "id": "IR17-135",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can an employee claim unpaid wages?"
+  },
+  {
+    "id": "IR17-136",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the due date for a position paper?"
+  },
+  {
+    "id": "IR17-137",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How do subpoenas work in civil court?"
+  },
+  {
+    "id": "IR17-138",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "Can the SEC revoke a corporation?"
+  },
+  {
+    "id": "IR17-139",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "What is the deadline for a labor appeal bond?"
+  },
+  {
+    "id": "IR17-140",
+    "group": "court_labor_sec_non_tax",
+    "expected": "NOT_ALLOW",
+    "text": "How does small claims court handle contracts?"
+  },
+  {
+    "id": "IR17-141",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "When is the deadline?"
+  },
+  {
+    "id": "IR17-142",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Is the assessment valid?"
+  },
+  {
+    "id": "IR17-143",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can I file a return?"
+  },
+  {
+    "id": "IR17-144",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Is it taxable?"
+  },
+  {
+    "id": "IR17-145",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What notice do I need?"
+  },
+  {
+    "id": "IR17-146",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What is the due date?"
+  },
+  {
+    "id": "IR17-147",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can I appeal the assessment?"
+  },
+  {
+    "id": "IR17-148",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Do I need to submit a report?"
+  },
+  {
+    "id": "IR17-149",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What is the filing requirement?"
+  },
+  {
+    "id": "IR17-150",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can the return be corrected?"
+  },
+  {
+    "id": "IR17-151",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What happens if I miss the deadline?"
+  },
+  {
+    "id": "IR17-152",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Is the gain taxable?"
+  },
+  {
+    "id": "IR17-153",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What documents are required?"
+  },
+  {
+    "id": "IR17-154",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can the office close my case?"
+  },
+  {
+    "id": "IR17-155",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What rate applies?"
+  },
+  {
+    "id": "IR17-156",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Is there an exemption?"
+  },
+  {
+    "id": "IR17-157",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can I ask for reconsideration?"
+  },
+  {
+    "id": "IR17-158",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Who should receive the notice?"
+  },
+  {
+    "id": "IR17-159",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "How is the amount computed?"
+  },
+  {
+    "id": "IR17-160",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What is the penalty?"
+  },
+  {
+    "id": "IR17-161",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can I file online?"
+  },
+  {
+    "id": "IR17-162",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "When does the period start?"
+  },
+  {
+    "id": "IR17-163",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What is the basis?"
+  },
+  {
+    "id": "IR17-164",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can it be deducted?"
+  },
+  {
+    "id": "IR17-165",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Is payment required?"
+  },
+  {
+    "id": "IR17-166",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What form should I use?"
+  },
+  {
+    "id": "IR17-167",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What rule applies?"
+  },
+  {
+    "id": "IR17-168",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "Can I request extension?"
+  },
+  {
+    "id": "IR17-169",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "How is the assessment served?"
+  },
+  {
+    "id": "IR17-170",
+    "group": "generic_ambiguous",
+    "expected": "NOT_ALLOW",
+    "text": "What is the taxability?"
+  },
+  {
+    "id": "IR17-171",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "May customs duty ba sa imported goods sa Pilipinas?"
+  },
+  {
+    "id": "IR17-172",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Kailan due ang capital gains tax pag nagbenta ng lupa?"
+  },
+  {
+    "id": "IR17-173",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Pwede bang isara ng BIR under Oplan Kandado ang tindahan?"
+  },
+  {
+    "id": "IR17-174",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Ano ang BOC tariff classification ng imported shoes?"
+  },
+  {
+    "id": "IR17-175",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Taxable ba ang gain sa sale of capital asset?"
+  },
+  {
+    "id": "IR17-176",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "May VAT ba sa importation?"
+  },
+  {
+    "id": "IR17-177",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Paano mag-protest ng BIR assessment notice?"
+  },
+  {
+    "id": "IR17-178",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Ano ang holding period rule sa capital gain?"
+  },
+  {
+    "id": "IR17-179",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "May import duty ba sa parcel from abroad?"
+  },
+  {
+    "id": "IR17-180",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Paano bayaran ang customs duties sa BOC?"
+  },
+  {
+    "id": "IR17-181",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Kailan ang due date ng private lease rent?"
+  },
+  {
+    "id": "IR17-182",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Paano mag-file ng labor complaint?"
+  },
+  {
+    "id": "IR17-183",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Ano deadline sa civil court answer?"
+  },
+  {
+    "id": "IR17-184",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Kailangan ba passport sa school filing?"
+  },
+  {
+    "id": "IR17-185",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Paano mag-submit ng SEC report?"
+  },
+  {
+    "id": "IR17-186",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Pwede bang mag-return ng defective computer file?"
+  },
+  {
+    "id": "IR17-187",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Ano notice period sa lease termination?"
+  },
+  {
+    "id": "IR17-188",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Paano ang insurance claim?"
+  },
+  {
+    "id": "IR17-189",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "Taxable ba ito?"
+  },
+  {
+    "id": "IR17-190",
+    "group": "filipino_taglish_mixed",
+    "expected": "MIXED",
+    "text": "May assessment ba sa school fees?"
+  },
+  {
+    "id": "IR17-191",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "How do I file a computer taxonomies document?"
+  },
+  {
+    "id": "IR17-192",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Can I return a defective taxicab part?"
+  },
+  {
+    "id": "IR17-193",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "What is the deadline for a syntax assessment?"
+  },
+  {
+    "id": "IR17-194",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Does a taxidermy shop need a school permit?"
+  },
+  {
+    "id": "IR17-195",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "How do I classify a tariff guitar chord?"
+  },
+  {
+    "id": "IR17-196",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Can a passport office assess my photo?"
+  },
+  {
+    "id": "IR17-197",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "What is the taxable font in a CSS file?"
+  },
+  {
+    "id": "IR17-198",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "How do I import a computer file into Excel?"
+  },
+  {
+    "id": "IR17-199",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Can I gain access to a capital city database?"
+  },
+  {
+    "id": "IR17-200",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "What is a notice in a private messaging app?"
+  },
+  {
+    "id": "IR17-201",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "How do I return to the assessment page?"
+  },
+  {
+    "id": "IR17-202",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Is the BOC a band of chords?"
+  },
+  {
+    "id": "IR17-203",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "What is an import statement in JavaScript?"
+  },
+  {
+    "id": "IR17-204",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "How do I close a VAT color palette?"
+  },
+  {
+    "id": "IR17-205",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Can labor day filing be rescheduled by school?"
+  },
+  {
+    "id": "IR17-206",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "What is a SEC in time measurement?"
+  },
+  {
+    "id": "IR17-207",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "How to assess a school project?"
+  },
+  {
+    "id": "IR17-208",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "When is a private lease car returned?"
+  },
+  {
+    "id": "IR17-209",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "What is a due date in project management?"
+  },
+  {
+    "id": "IR17-210",
+    "group": "substring_traps",
+    "expected": "NOT_ALLOW",
+    "text": "Can insurance claim files be uploaded?"
+  }
+]

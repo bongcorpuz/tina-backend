@@ -1,0 +1,31 @@
+{
+  "runtimeChanged": [
+    "services/philippine-tax-boundary-patterns.js",
+    "tests/phase-10a14-r17-customs-capital-gain-domain.test.mjs",
+    "tests/phase-10a14-r17-provenance-recovery-retry.test.mjs"
+  ],
+  "runtimeEquiv": [
+    {
+      "file": "services/philippine-tax-boundary-patterns.js",
+      "blobAtFinalRuntime": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+      "blobAtFinalHead": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+      "equal": true,
+      "laterTouches": []
+    },
+    {
+      "file": "tests/phase-10a14-r17-customs-capital-gain-domain.test.mjs",
+      "blobAtFinalRuntime": "57feab065892941c28e0e1473555991ee2ba040d",
+      "blobAtFinalHead": "57feab065892941c28e0e1473555991ee2ba040d",
+      "equal": true,
+      "laterTouches": []
+    },
+    {
+      "file": "tests/phase-10a14-r17-provenance-recovery-retry.test.mjs",
+      "blobAtFinalRuntime": "9e10a6fd6466225fe299e3530c7abf9c4c475d76",
+      "blobAtFinalHead": "9e10a6fd6466225fe299e3530c7abf9c4c475d76",
+      "equal": true,
+      "laterTouches": []
+    }
+  ],
+  "complete": true
+}

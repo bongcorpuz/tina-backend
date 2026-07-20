@@ -1,0 +1,18 @@
+PASS the two exact independent false allows are closed
+PASS 'private' is never read as containing VAT
+PASS all frozen manual probes match their expectation
+PASS all frozen generated near-neighbour permutations match
+PASS all frozen metamorphic invariants hold
+PASS false tax ALLOW = 0 across the whole inventory
+PASS material tax false refusal = 0 across the whole inventory
+PASS the seven R15 false-refusal probes remain in the tax domain
+PASS the broader R15 adjacency family remains in the tax domain
+PASS a strong tax anchor overrides a non-tax object
+PASS weak generic signals alone never ALLOW
+PASS weak signal with explicit non-tax context is rejected, not clarified
+PASS weak signal without non-tax context invites clarification
+PASS non-tax file-object controls remain out of the tax domain
+PASS fail-closed default preserved for unrelated queries
+
+phase-10a14-r16-domain: 15 passed, 0 failed
+PHASE-10A14-R16 DOMAIN PASS — non-tax false allows closed, R15 closures preserved.

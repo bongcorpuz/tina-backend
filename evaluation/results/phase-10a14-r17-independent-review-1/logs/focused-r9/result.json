@@ -1,0 +1,48 @@
+{
+  "id": "focused-r9",
+  "command": [
+    "node",
+    "tests/phase-10a14-r9-calendar-relative-deadline-and-filing-rationale-alignment.test.mjs"
+  ],
+  "startedAt": "2026-07-20T22:58:12.475Z",
+  "endedAt": "2026-07-20T22:58:12.758Z",
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "before": {
+    "timestamp": "2026-07-20T22:58:12.022Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "branch": "feature/source-availability-engine-v1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "after": {
+    "timestamp": "2026-07-20T22:58:12.759Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "summary": {
+    "totals": [],
+    "nodeTestSummary": [],
+    "failures": [
+      "PASS B: full evaluateAnswerSupport fails closed at calendar-relative-deadline stage",
+      "PASS C: answer-introduced 'due today' fails closed even if question is neutral",
+      "PASS G/I: Q12 Section-24 filing conclusion fails rationale alignment",
+      "PASS H: full evaluateAnswerSupport fails Q12 at filing-rationale-alignment (Sec 51 card present)",
+      "PASS K: incomplete ₱250k compensation categorical non-filing (Sec 24) fails",
+      "PASS P: 'no tax due' as decisive filing rationale (no filing rule) fails",
+      "PASS R: calendar-relative and filing-rationale fail without any model client",
+      "phase-10a14-r9: 15 passed, 0 failed"
+    ],
+    "streamPrematureClose": false,
+    "sevenZero": false,
+    "twentyFourZero": false
+  }
+}

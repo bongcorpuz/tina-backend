@@ -1,0 +1,42 @@
+{
+  "id": "focused-r14",
+  "command": [
+    "node",
+    "tests/phase-10a14-r14-negated-nonperformance-and-universal-persistence-status.test.mjs"
+  ],
+  "startedAt": "2026-07-20T22:58:06.238Z",
+  "endedAt": "2026-07-20T22:58:06.575Z",
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "before": {
+    "timestamp": "2026-07-20T22:58:05.637Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "branch": "feature/source-availability-engine-v1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "after": {
+    "timestamp": "2026-07-20T22:58:06.576Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "summary": {
+    "totals": [],
+    "nodeTestSummary": [],
+    "failures": [
+      "PASS informational failure-to-file statements stay safe",
+      "phase-10a14-r14: 21 passed, 0 failed"
+    ],
+    "streamPrematureClose": false,
+    "sevenZero": false,
+    "twentyFourZero": false
+  }
+}

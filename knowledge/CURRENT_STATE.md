@@ -9880,3 +9880,14 @@ Registry: 37 attempts, 33 controlling, 4 non-controlling, 0 corrupt, 0 invalid p
 Next task: PHASE-10A14-R17-...-REMEDIATION-1-INDEPENDENT-REVIEW-1. Do not execute E2, A15, Phase 10A closure, Phase 10B/10C, Phase 10H, model migration, production deployment, source ingestion, reindexing, frontend changes, Dev Factory changes or Gemini review without separate owner authorization.
 
 Artifacts: PHASE-10A14-R17-...-REMEDIATION-1_REPORT.md; evaluation/results/phase-10a14-r17-result.json; evaluation/results/phase-10a14-r17/ (R17_SCOPE_AND_PLAN.md, R17_EVIDENCE_AND_ACCOUNTING_CONTRACT.md, R17_PRE_CHANGE_HASHES.json, R17_PASS_CRITERIA.md, R17_DOMAIN_PROBE_INVENTORY.json, R17_DOMAIN_RESULT.json, R17_PREFIX_REPRODUCTION.json, R17_FOCUSED_SUMMARY.json, R17_ALL26_NONMUTATING.json, R17_STAGING_ADJUDICATION.md, R17_RUNTIME_EQUIVALENCE.json, R17_SECURITY_AND_CLEANUP.md, CANONICAL_ATTEMPT_REGISTRY.json, CANONICAL_COUNT_SUMMARY.json, PROVENANCE_VALIDATION_SUMMARY.json, RECOVERY_DISPOSITION_SUMMARY.json, RETRY_LINK_SUMMARY.json, attempts/ with 37 immutable attempt directories, evidence.mjs, build-registry.mjs, build-frozen-inventory.mjs, build-result.mjs, run-focused-campaign.mjs, run-gate-cycle.mjs, all26-nonmutating.mjs, check-domain.mjs, check-protected-paths.mjs, EVIDENCE_MANIFEST.sha256). Code: services/philippine-tax-boundary-patterns.js and tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs changed outside evidence, both inside the frozen allowlist; services/philippine-tax-domain-boundary.js was NOT modified.
+
+
+## PHASE-10A14-R17-INDEPENDENT-REVIEW-1 - Codex 5.5 - REVISIONS REQUIRED
+
+- Decision: REVISIONS REQUIRED; Phase 10A remains OPEN.
+- R15 historical governance: NOT SUPERSEDED.
+- R16 prospective governance: NOT SATISFIED.
+- R17 prospective governance: NOT SATISFIED.
+- Accepted: runtime byte-equivalence from 345f2db5 to c358b399; phase-10a8 focused 24/0; patch-07b focused 8/0 and planted-marker guard proof; staging 2/2; manifest 402 entries self-excluding.
+- Open blockers: retry validRetryCount remains 0 with RETRY_RUNTIME_CHANGED errors; independent deterministic clean gates are 0/2; independent unseen domain campaign found material substring false allows IR17-197, IR17-202 and IR17-204; the all-26 replay still mutated protected R17 evidence during independent execution and was restored.
+- Next separately authorized task: remediate the smallest exact R17 blockers without closing Phase 10A or starting Phase 10B/10C.

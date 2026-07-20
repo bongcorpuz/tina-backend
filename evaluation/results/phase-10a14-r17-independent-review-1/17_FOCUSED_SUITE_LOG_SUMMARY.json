@@ -1,0 +1,259 @@
+{
+  "runs": [
+    {
+      "id": "focused-r17-domain",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS the four exact independent-review failures now ALLOW",
+          "phase-10a14-r17-domain: 15 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r17-validators",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "phase-10a14-r17-validators: 21 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-phase-10a8",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS F(Q2): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q8): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q9): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q27): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q29): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q31): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q37): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q41): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS F(Q49): captured answer fails closed (not VERIFIED_CONTROLLING)",
+          "PASS validator: structural failure short-circuits before the LLM stage",
+          "PASS validator: unavailable client fails closed",
+          "PASS validator: malformed LLM output fails closed",
+          "PASS absent answerSupport fails closed to RELATED_AUTHORITY_ONLY (no legacy verified)",
+          "PHASE-10A8 trust-calibration tests: 24 passed, 0 failed, 37 assertions"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-patch-07b",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PATCH-07B-CLARIFICATION-FINAL-GATE-1 track closure tests: 8 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r16-domain",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS fail-closed default preserved for unrelated queries",
+          "phase-10a14-r16-domain: 15 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r16-tooling",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "phase-10a14-r16-tooling: 13 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r15-journal-crash",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS a thrown function is recorded as a technical failure, not a legal result",
+          "PASS retry linking preserves the failed attempt and links forward",
+          "phase-10a14-r15-journal: 21 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r15",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS fail-closed default is preserved for unrelated queries",
+          "PASS FIN5: a no-attempt path is never reported as PERSISTENCE_FAILED",
+          "phase-10a14-r15: 29 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r14",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS informational failure-to-file statements stay safe",
+          "phase-10a14-r14: 21 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r13",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS persistence receipt: memory-hook failure does NOT downgrade PERSISTED",
+          "phase-10a14-r13: 32 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r12",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS no model client: directive still fails closed",
+          "phase-10a14-r12: 47 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r11",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "phase-10a14-r11: 39 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r10",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS 23 calendar-relative fails closed with no model client",
+          "phase-10a14-r10: 22 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-r9",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [
+          "PASS B: full evaluateAnswerSupport fails closed at calendar-relative-deadline stage",
+          "PASS C: answer-introduced 'due today' fails closed even if question is neutral",
+          "PASS G/I: Q12 Section-24 filing conclusion fails rationale alignment",
+          "PASS H: full evaluateAnswerSupport fails Q12 at filing-rationale-alignment (Sec 51 card present)",
+          "PASS K: incomplete ₱250k compensation categorical non-filing (Sec 24) fails",
+          "PASS P: 'no tax due' as decisive filing rationale (no filing rule) fails",
+          "PASS R: calendar-relative and filing-rationale fail without any model client",
+          "phase-10a14-r9: 15 passed, 0 failed"
+        ],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": false
+    },
+    {
+      "id": "focused-all26-nonmutating",
+      "status": 0,
+      "summary": {
+        "totals": [],
+        "nodeTestSummary": [],
+        "failures": [],
+        "streamPrematureClose": false,
+        "sevenZero": false,
+        "twentyFourZero": false
+      },
+      "mutatedHistoricalEvidence": true
+    }
+  ],
+  "allExitZero": true,
+  "all26MutationDetected": true
+}

@@ -1,0 +1,67 @@
+{
+  "valid40Commit": {
+    "sha": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "valid": true,
+    "errors": [],
+    "objectType": "commit",
+    "exists": true
+  },
+  "shortSha": {
+    "sha": "c358b399",
+    "valid": false,
+    "errors": [
+      "SHA_FORMAT_INVALID"
+    ],
+    "objectType": null,
+    "exists": false
+  },
+  "nonHex": {
+    "sha": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+    "valid": false,
+    "errors": [
+      "SHA_FORMAT_INVALID"
+    ],
+    "objectType": null,
+    "exists": false
+  },
+  "nonexistent40": {
+    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "valid": false,
+    "errors": [
+      "SHA_NOT_A_GIT_OBJECT"
+    ],
+    "objectType": null,
+    "exists": false
+  },
+  "blobSha": {
+    "sha": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "valid": false,
+    "errors": [
+      "SHA_WRONG_OBJECT_TYPE:blob"
+    ],
+    "objectType": "blob",
+    "exists": true
+  },
+  "treeSha": {
+    "sha": "62884233e2367d069214d12ab2f6fb634e3c70ac",
+    "valid": false,
+    "errors": [
+      "SHA_WRONG_OBJECT_TYPE:tree"
+    ],
+    "objectType": "tree",
+    "exists": true
+  },
+  "validCommitNotAncestor": null,
+  "validCommitAncestor": {
+    "sha": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
+    "valid": true,
+    "errors": [],
+    "objectType": "commit",
+    "exists": true
+  },
+  "callerDisagreesWithHead": {
+    "supplied": "345f2db5",
+    "gitHead": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "acceptedAsHead": false
+  }
+}

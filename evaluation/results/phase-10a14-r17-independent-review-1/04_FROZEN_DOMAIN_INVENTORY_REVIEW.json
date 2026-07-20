@@ -1,0 +1,126 @@
+{
+  "total": 267,
+  "classCounts": {
+    "customs_strong": {
+      "total": 30,
+      "pass": 30,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "capital_gain_strong": {
+      "total": 30,
+      "pass": 30,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "private_contract_nontax": {
+      "total": 30,
+      "pass": 30,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "court_labor_sec_nontax": {
+      "total": 30,
+      "pass": 30,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "weak_generic_ambiguity": {
+      "total": 30,
+      "pass": 30,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "filipino_taglish": {
+      "total": 30,
+      "pass": 30,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "substring_trap": {
+      "total": 20,
+      "pass": 20,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "metamorphic": {
+      "total": 40,
+      "pass": 39,
+      "falseAllow": 1,
+      "falseRefusal": 0
+    },
+    "r15_false_refusal_closed": {
+      "total": 7,
+      "pass": 7,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "r15_adjacency_closed": {
+      "total": 10,
+      "pass": 10,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    },
+    "explicit_nontax": {
+      "total": 10,
+      "pass": 10,
+      "falseAllow": 0,
+      "falseRefusal": 0
+    }
+  },
+  "falseAllow": 1,
+  "falseRefusal": 0,
+  "failures": [
+    {
+      "probeId": "MM-15-weak",
+      "coverageClass": "metamorphic",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "ok": false,
+      "reason": "strong_tax_signal",
+      "text": "Is the gain taxable?"
+    }
+  ],
+  "requiredExact": [
+    {
+      "text": "What customs duties apply to importing goods into the Philippines?",
+      "result": {
+        "isPhilippineTax": true,
+        "decision": "ALLOW",
+        "detectedDomain": "PHILIPPINE_TAX",
+        "reason": "strong_tax_signal",
+        "confidence": 0.98
+      }
+    },
+    {
+      "text": "What is the BOC customs duty deadline for imported goods?",
+      "result": {
+        "isPhilippineTax": true,
+        "decision": "ALLOW",
+        "detectedDomain": "PHILIPPINE_TAX",
+        "reason": "strong_tax_signal",
+        "confidence": 0.98
+      }
+    },
+    {
+      "text": "What are Philippine customs duties?",
+      "result": {
+        "isPhilippineTax": true,
+        "decision": "ALLOW",
+        "detectedDomain": "PHILIPPINE_TAX",
+        "reason": "strong_tax_signal",
+        "confidence": 0.98
+      }
+    },
+    {
+      "text": "What is the holding-period rule for an individual's capital gain on personal property?",
+      "result": {
+        "isPhilippineTax": true,
+        "decision": "ALLOW",
+        "detectedDomain": "PHILIPPINE_TAX",
+        "reason": "strong_tax_signal",
+        "confidence": 0.98
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "focused-all26-nonmutating",
+  "command": [
+    "node",
+    "evaluation/results/phase-10a14-r17/all26-nonmutating.mjs"
+  ],
+  "startedAt": "2026-07-20T22:58:13.655Z",
+  "endedAt": "2026-07-20T22:58:14.017Z",
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "before": {
+    "timestamp": "2026-07-20T22:58:13.197Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "branch": "feature/source-availability-engine-v1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "after": {
+    "timestamp": "2026-07-20T22:58:14.018Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "statusShort": " M evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": false,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "summary": {
+    "totals": [],
+    "nodeTestSummary": [],
+    "failures": [],
+    "streamPrematureClose": false,
+    "sevenZero": false,
+    "twentyFourZero": false
+  }
+}

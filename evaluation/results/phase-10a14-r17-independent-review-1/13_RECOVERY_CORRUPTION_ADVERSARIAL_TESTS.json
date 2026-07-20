@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "file": "empty.raw.txt",
+      "result": {
+        "corrupt": false,
+        "reason": null
+      }
+    },
+    {
+      "file": "whitespace-tree-before.txt",
+      "result": {
+        "corrupt": true,
+        "reason": "ALL_WHITESPACE"
+      }
+    },
+    {
+      "file": "nul.txt",
+      "result": {
+        "corrupt": true,
+        "reason": "CONTAINS_NUL_BYTES"
+      }
+    },
+    {
+      "file": "malformed.json",
+      "result": {
+        "corrupt": true,
+        "reason": "MALFORMED_JSON"
+      }
+    },
+    {
+      "file": "whitespace.json",
+      "result": {
+        "corrupt": true,
+        "reason": "ALL_WHITESPACE"
+      }
+    },
+    {
+      "file": "valid.json",
+      "result": {
+        "corrupt": false,
+        "reason": null
+      }
+    }
+  ],
+  "r16HistoricalScan": {
+    "corrupt": true,
+    "findings": [
+      {
+        "file": "C:\\Projects\\tina-backend\\evaluation\\results\\phase-10a14-r16\\attempts\\R16-GATE-det-cycle1-A1",
+        "reason": "MISSING_DIRECTORY"
+      }
+    ]
+  }
+}

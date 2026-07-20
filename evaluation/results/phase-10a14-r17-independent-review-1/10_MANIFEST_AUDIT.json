@@ -1,0 +1,15 @@
+{
+  "entries": 402,
+  "declaredEntries": 402,
+  "selfExcluded": true,
+  "duplicatePaths": [],
+  "mismatches": [
+    {
+      "file": "evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json",
+      "issue": "hash",
+      "expected": "26a6fdd783e04d3da738ae1b4216573ea6983624c52199729cc9111acd0c6e96",
+      "got": "f27db5062124c0642f75d9c7adefcb96ee3080f314a1d51a640d0ba1037ba668"
+    }
+  ],
+  "attemptDirsIncluded": true
+}

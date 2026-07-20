@@ -1,0 +1,319 @@
+[
+  {
+    "attemptId": "R17-GATE-det-cycle1-A1",
+    "dir": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A1",
+    "command": "node scripts/run-regressions.mjs",
+    "objective": null,
+    "rawStatus": "COMPLETED_FAIL",
+    "exitCode": 1,
+    "signal": null,
+    "retryOf": null,
+    "retryReason": null,
+    "runtimeCommit": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+    "headAtStart": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+    "headAtEnd": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+    "treeBeforeHash": "447f703dc425e69999461781e3b09ecfbf46daeb56166bff515031a0ffb5172e",
+    "treeAfterHash": "447f703dc425e69999461781e3b09ecfbf46daeb56166bff515031a0ffb5172e",
+    "stdoutHash": "8f3946a8aab48bc18bf31883714ed6630225f116d11166ecc426899ea7a85339",
+    "stderrHash": "33e8ec78e8bdd326e6a2012d38a7e79764273a6d8b260e481d4e94da2386c33e",
+    "provenanceValid": true,
+    "provenanceErrors": [],
+    "headAtStartVerified": true,
+    "headAtEndVerified": true,
+    "runtimeCommitVerified": true,
+    "ancestryVerified": true,
+    "treeEquivalenceVerified": null,
+    "corruption": {
+      "corrupt": false,
+      "findings": []
+    },
+    "disposition": "VALID_NON_CONTROLLING",
+    "controlling": false,
+    "dispositionReasons": [
+      "RAW:COMPLETED_FAIL"
+    ],
+    "outputSummary": {
+      "syntaxMatch": null,
+      "totals": [],
+      "failureLines": [
+        "  FAIL  tests\\patch-027u-openai-transient-retry.test.mjs  (13408 ms)",
+        "  PASS  tests\\patch-027w-openai-error-stack-diagnostic.test.mjs  (1958 ms)",
+        "  FAIL  tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs  (11004 ms)",
+        "  FAIL  tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs  (12365 ms)",
+        "  FAIL  tests\\phase-10a12-validator-competence-remediation-1.test.mjs  (5614 ms)",
+        "  PASS  tests\\phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs  (80 ms)",
+        "Syntax checks: 10 run, 0 failed",
+        "Test suites:   210 run, 4 failed",
+        "GATE FAILED",
+        "  ── output of failing suite tests\\patch-027u-openai-transient-retry.test.mjs ──",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "  errorType: 'system',",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "[PATCH_027U_OPENAI_TRANSIENT_RETRY] { attempt: 2, errorCode: 'ERR_STREAM_PREMATURE_CLOSE', success: true }",
+        "  FAIL  transient failure is attempted twice total",
+        "  FAIL  original transient error is rethrown after retry exhaustion",
+        "  FAIL  diagnostic record ends as error",
+        "  FAIL  diagnostic marks retry exhaustion",
+        "  ── output of failing suite tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs ──",
+        "PHASE-10A10-R1 validator schema fail-closed tests: 21 passed, 1 failed, 37 assertions",
+        "FAIL S18-S20: malformed / unavailable validator -> fail closed",
+        "  ── output of failing suite tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs ──",
+        "PASS A25: source failure + no answerSupport -> NO_VERIFIED_AUTHORITY",
+        "PHASE-10A10-R2 missing-answerSupport fail-closed tests: 26 passed, 1 failed, 33 assertions",
+        "FAIL A19-A21: validator timeout-shape / unavailable / malformed -> not verified",
+        "  ── output of failing suite tests\\phase-10a12-validator-competence-remediation-1.test.mjs ──",
+        "PASS C18-C21: restricted / conflict / missing-authority / source-failure preserved",
+        "PHASE-10A12 validator-competence tests: 18 passed, 1 failed, 42 assertions",
+        "FAIL C13-C14: malformed / unavailable validator -> not verified"
+      ],
+      "streamPrematureClose": true
+    },
+    "suiteMarkers": [
+      {
+        "marker": "patch-027u",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a10-r1",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a10-r2",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a12",
+        "present": true,
+        "directStreamErrorNearby": false
+      },
+      {
+        "marker": "phase-10a8",
+        "present": true,
+        "directStreamErrorNearby": true
+      }
+    ]
+  },
+  {
+    "attemptId": "R17-GATE-det-cycle1-A2",
+    "dir": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A2",
+    "command": "node scripts/run-regressions.mjs",
+    "objective": null,
+    "rawStatus": "COMPLETED_FAIL",
+    "exitCode": 1,
+    "signal": null,
+    "retryOf": "R17-GATE-det-cycle1-A1",
+    "retryReason": "TECHNICAL: ERR_STREAM_PREMATURE_CLOSE on OpenAI connection; all affected suites pass standalone; runtime unchanged",
+    "runtimeCommit": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+    "headAtStart": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+    "headAtEnd": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+    "treeBeforeHash": "447f703dc425e69999461781e3b09ecfbf46daeb56166bff515031a0ffb5172e",
+    "treeAfterHash": "447f703dc425e69999461781e3b09ecfbf46daeb56166bff515031a0ffb5172e",
+    "stdoutHash": "d9a0840b684b42a7c5f944c5eb2303cd8c9ffce8674597f76a70151229683145",
+    "stderrHash": "e653e10e24627a830548106d5ebf7451fbca7183617c878e4051a2563d936e3f",
+    "provenanceValid": true,
+    "provenanceErrors": [],
+    "headAtStartVerified": true,
+    "headAtEndVerified": true,
+    "runtimeCommitVerified": true,
+    "ancestryVerified": true,
+    "treeEquivalenceVerified": null,
+    "corruption": {
+      "corrupt": false,
+      "findings": []
+    },
+    "disposition": "VALID_NON_CONTROLLING",
+    "controlling": false,
+    "dispositionReasons": [
+      "RAW:COMPLETED_FAIL"
+    ],
+    "outputSummary": {
+      "syntaxMatch": null,
+      "totals": [],
+      "failureLines": [
+        "  FAIL  tests\\patch-027u-openai-transient-retry.test.mjs  (13221 ms)",
+        "  PASS  tests\\patch-027w-openai-error-stack-diagnostic.test.mjs  (1947 ms)",
+        "  FAIL  tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs  (13166 ms)",
+        "  FAIL  tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs  (6501 ms)",
+        "  FAIL  tests\\phase-10a10-verified-controlling-residual-and-completeness-remediation-1.test.mjs  (4390 ms)",
+        "  FAIL  tests\\phase-10a12-validator-competence-remediation-1.test.mjs  (6700 ms)",
+        "  PASS  tests\\phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs  (74 ms)",
+        "Syntax checks: 10 run, 0 failed",
+        "Test suites:   210 run, 5 failed",
+        "GATE FAILED",
+        "  ── output of failing suite tests\\patch-027u-openai-transient-retry.test.mjs ──",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "  errorType: 'system',",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "[PATCH_027U_OPENAI_TRANSIENT_RETRY] { attempt: 2, errorCode: 'ERR_STREAM_PREMATURE_CLOSE', success: true }",
+        "  FAIL  transient failure is attempted twice total",
+        "  FAIL  original transient error is rethrown after retry exhaustion",
+        "  FAIL  diagnostic record ends as error",
+        "  FAIL  diagnostic marks retry exhaustion",
+        "  ── output of failing suite tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs ──",
+        "PHASE-10A10-R1 validator schema fail-closed tests: 21 passed, 1 failed, 37 assertions",
+        "FAIL S18-S20: malformed / unavailable validator -> fail closed",
+        "  ── output of failing suite tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs ──",
+        "PASS A25: source failure + no answerSupport -> NO_VERIFIED_AUTHORITY",
+        "PHASE-10A10-R2 missing-answerSupport fail-closed tests: 26 passed, 1 failed, 33 assertions",
+        "FAIL A19-A21: validator timeout-shape / unavailable / malformed -> not verified",
+        "  ── output of failing suite tests\\phase-10a10-verified-controlling-residual-and-completeness-remediation-1.test.mjs ──",
+        "PASS A14: absent answerSupport fails closed to RELATED_AUTHORITY_ONLY",
+        "PHASE-10A10 verified-controlling residual tests: 17 passed, 1 failed, 30 assertions",
+        "FAIL A11-A13: malformed / timeout-shaped / unavailable validator fails closed",
+        "  unavailable -> fail closed",
+        "  ── output of failing suite tests\\phase-10a12-validator-competence-remediation-1.test.mjs ──",
+        "PASS C18-C21: restricted / conflict / missing-authority / source-failure preserved",
+        "PHASE-10A12 validator-competence tests: 18 passed, 1 failed, 42 assertions",
+        "FAIL C13-C14: malformed / unavailable validator -> not verified"
+      ],
+      "streamPrematureClose": true
+    },
+    "suiteMarkers": [
+      {
+        "marker": "patch-027u",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a10-r1",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a10-r2",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a12",
+        "present": true,
+        "directStreamErrorNearby": false
+      },
+      {
+        "marker": "phase-10a8",
+        "present": true,
+        "directStreamErrorNearby": true
+      }
+    ]
+  },
+  {
+    "attemptId": "R17-GATE-det-cycle1-A3",
+    "dir": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A3",
+    "command": "node scripts/run-regressions.mjs",
+    "objective": null,
+    "rawStatus": "COMPLETED_FAIL",
+    "exitCode": 1,
+    "signal": null,
+    "retryOf": "R17-GATE-det-cycle1-A2",
+    "retryReason": "TECHNICAL: persistent ERR_STREAM_PREMATURE_CLOSE; varying failure membership; runtime unchanged",
+    "runtimeCommit": "8a66b92d2d2c967f54016f9352deaa43b48325f7",
+    "headAtStart": "8a66b92d2d2c967f54016f9352deaa43b48325f7",
+    "headAtEnd": "8a66b92d2d2c967f54016f9352deaa43b48325f7",
+    "treeBeforeHash": "447f703dc425e69999461781e3b09ecfbf46daeb56166bff515031a0ffb5172e",
+    "treeAfterHash": "447f703dc425e69999461781e3b09ecfbf46daeb56166bff515031a0ffb5172e",
+    "stdoutHash": "718a89f11552b40afb86ef509e1c2677cc92a26ab8681756b483a3605814be36",
+    "stderrHash": "1b2b6e5269609b2b270a7a1ec1d0837e1ee0758ed496477b7a76b76525effdba",
+    "provenanceValid": true,
+    "provenanceErrors": [],
+    "headAtStartVerified": true,
+    "headAtEndVerified": true,
+    "runtimeCommitVerified": true,
+    "ancestryVerified": true,
+    "treeEquivalenceVerified": null,
+    "corruption": {
+      "corrupt": false,
+      "findings": []
+    },
+    "disposition": "VALID_NON_CONTROLLING",
+    "controlling": false,
+    "dispositionReasons": [
+      "RAW:COMPLETED_FAIL"
+    ],
+    "outputSummary": {
+      "syntaxMatch": null,
+      "totals": [],
+      "failureLines": [
+        "  FAIL  tests\\patch-027u-openai-transient-retry.test.mjs  (14811 ms)",
+        "  PASS  tests\\patch-027w-openai-error-stack-diagnostic.test.mjs  (1970 ms)",
+        "  FAIL  tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs  (5557 ms)",
+        "  FAIL  tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs  (4499 ms)",
+        "  FAIL  tests\\phase-10a12-validator-competence-remediation-1.test.mjs  (6052 ms)",
+        "  PASS  tests\\phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs  (78 ms)",
+        "  FAIL  tests\\phase-10a8-trust-calibration-and-answer-correctness-remediation-1.test.mjs  (5032 ms)",
+        "Syntax checks: 10 run, 0 failed",
+        "Test suites:   210 run, 5 failed",
+        "GATE FAILED",
+        "  ── output of failing suite tests\\patch-027u-openai-transient-retry.test.mjs ──",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "  errorType: 'system',",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',",
+        "[PATCH_027U_OPENAI_TRANSIENT_RETRY] { attempt: 2, errorCode: 'ERR_STREAM_PREMATURE_CLOSE', success: true }",
+        "  FAIL  transient failure is attempted twice total",
+        "  FAIL  original transient error is rethrown after retry exhaustion",
+        "  FAIL  diagnostic record ends as error",
+        "  FAIL  diagnostic marks retry exhaustion",
+        "  ── output of failing suite tests\\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs ──",
+        "PHASE-10A10-R1 validator schema fail-closed tests: 21 passed, 1 failed, 37 assertions",
+        "FAIL S18-S20: malformed / unavailable validator -> fail closed",
+        "  ── output of failing suite tests\\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs ──",
+        "PASS A25: source failure + no answerSupport -> NO_VERIFIED_AUTHORITY",
+        "PHASE-10A10-R2 missing-answerSupport fail-closed tests: 26 passed, 1 failed, 33 assertions",
+        "FAIL A19-A21: validator timeout-shape / unavailable / malformed -> not verified",
+        "  ── output of failing suite tests\\phase-10a12-validator-competence-remediation-1.test.mjs ──",
+        "PASS C18-C21: restricted / conflict / missing-authority / source-failure preserved",
+        "PHASE-10A12 validator-competence tests: 18 passed, 1 failed, 42 assertions",
+        "FAIL C13-C14: malformed / unavailable validator -> not verified",
+        "  ── output of failing suite tests\\phase-10a8-trust-calibration-and-answer-correctness-remediation-1.test.mjs ──",
+        "PASS F(Q2): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q8): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q9): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q27): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q29): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q31): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q37): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q41): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS F(Q49): captured answer fails closed (not VERIFIED_CONTROLLING)",
+        "PASS validator: structural failure short-circuits before the LLM stage",
+        "PASS validator: malformed LLM output fails closed",
+        "PASS absent answerSupport fails closed to RELATED_AUTHORITY_ONLY (no legacy verified)",
+        "PHASE-10A8 trust-calibration tests: 23 passed, 1 failed, 37 assertions",
+        "FAIL validator: unavailable client fails closed",
+        "  no client -> fail closed"
+      ],
+      "streamPrematureClose": true
+    },
+    "suiteMarkers": [
+      {
+        "marker": "patch-027u",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a10-r1",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a10-r2",
+        "present": true,
+        "directStreamErrorNearby": true
+      },
+      {
+        "marker": "phase-10a12",
+        "present": true,
+        "directStreamErrorNearby": false
+      },
+      {
+        "marker": "phase-10a8",
+        "present": true,
+        "directStreamErrorNearby": true
+      }
+    ]
+  }
+]

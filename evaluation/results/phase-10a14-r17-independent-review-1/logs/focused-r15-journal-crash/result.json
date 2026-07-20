@@ -1,0 +1,43 @@
+{
+  "id": "focused-r15-journal-crash",
+  "command": [
+    "node",
+    "tests/phase-10a14-r15-crash-visible-attempt-journal.test.mjs"
+  ],
+  "startedAt": "2026-07-20T22:57:32.837Z",
+  "endedAt": "2026-07-20T22:58:03.144Z",
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "before": {
+    "timestamp": "2026-07-20T22:57:32.320Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "branch": "feature/source-availability-engine-v1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "after": {
+    "timestamp": "2026-07-20T22:58:03.148Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "summary": {
+    "totals": [],
+    "nodeTestSummary": [],
+    "failures": [
+      "PASS a thrown function is recorded as a technical failure, not a legal result",
+      "PASS retry linking preserves the failed attempt and links forward",
+      "phase-10a14-r15-journal: 21 passed, 0 failed"
+    ],
+    "streamPrematureClose": false,
+    "sevenZero": false,
+    "twentyFourZero": false
+  }
+}

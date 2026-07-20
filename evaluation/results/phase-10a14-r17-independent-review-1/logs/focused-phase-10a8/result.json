@@ -1,0 +1,54 @@
+{
+  "id": "focused-phase-10a8",
+  "command": [
+    "node",
+    "tests/phase-10a8-trust-calibration-and-answer-correctness-remediation-1.test.mjs"
+  ],
+  "startedAt": "2026-07-20T22:57:05.814Z",
+  "endedAt": "2026-07-20T22:57:26.657Z",
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "before": {
+    "timestamp": "2026-07-20T22:57:05.344Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "branch": "feature/source-availability-engine-v1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "after": {
+    "timestamp": "2026-07-20T22:57:26.660Z",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+    "diffQuiet": true,
+    "cachedDiffQuiet": true,
+    "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+    "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+  },
+  "summary": {
+    "totals": [],
+    "nodeTestSummary": [],
+    "failures": [
+      "PASS F(Q2): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q8): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q9): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q27): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q29): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q31): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q37): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q41): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS F(Q49): captured answer fails closed (not VERIFIED_CONTROLLING)",
+      "PASS validator: structural failure short-circuits before the LLM stage",
+      "PASS validator: unavailable client fails closed",
+      "PASS validator: malformed LLM output fails closed",
+      "PASS absent answerSupport fails closed to RELATED_AUTHORITY_ONLY (no legacy verified)",
+      "PHASE-10A8 trust-calibration tests: 24 passed, 0 failed, 37 assertions"
+    ],
+    "streamPrematureClose": false,
+    "sevenZero": false,
+    "twentyFourZero": false
+  }
+}

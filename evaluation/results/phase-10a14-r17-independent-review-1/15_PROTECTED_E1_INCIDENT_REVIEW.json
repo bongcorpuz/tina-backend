@@ -1,0 +1,19 @@
+{
+  "path": "evaluation/results/phase-10a14-e1/WS8_DETERMINISTIC_ALL26.json",
+  "finalHash": "53baf579e7ea723ae01d096f82a6081600f59d2e3d9b79880ad0bf93a3f49443",
+  "commitsTouchingE1InR17": [],
+  "nonmutatingReplayAttempts": [
+    {
+      "attemptId": "R17-FOCUSED-all26-nonmutating-A1",
+      "rawStatus": "COMPLETED_FAIL",
+      "controlling": false,
+      "command": "node evaluation/results/phase-10a14-e1/ws8-deterministic-all26.mjs (non-mutating: E1 artifact hash verified unchanged)"
+    },
+    {
+      "attemptId": "R17-FOCUSED-all26-nonmutating-A2",
+      "rawStatus": "COMPLETED_PASS",
+      "controlling": true,
+      "command": "node evaluation/results/phase-10a14-r17/all26-nonmutating.mjs"
+    }
+  ]
+}

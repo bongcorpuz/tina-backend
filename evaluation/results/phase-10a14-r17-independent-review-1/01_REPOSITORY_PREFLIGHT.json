@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-07-20T22:54:56.418Z",
+  "repo": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+  "sync": "0\t0",
+  "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+  "trackedClean": true,
+  "finalRuntimeAncestor": true,
+  "predecessorAncestor": true,
+  "nodeVersion": "v22.18.0",
+  "port5173": "",
+  "nodeListeners": "{\"Id\":23348,\"ProcessName\":\"node\",\"Path\":\"C:\\\\Program Files\\\\nodejs\\\\node.exe\"}",
+  "protectedUntracked": "?? .vscode/\n?? evaluation/factcheck/",
+  "expected": {
+    "branch": "feature/source-availability-engine-v1",
+    "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+    "sync": "0\t0"
+  }
+}

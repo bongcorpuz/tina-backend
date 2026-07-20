@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-07-20T22:58:12.022Z",
+  "head": "c358b399a4b64402148f37bd6bd87fe47997c5c1",
+  "branch": "feature/source-availability-engine-v1",
+  "statusShort": "?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r17-independent-review-1/",
+  "diffQuiet": true,
+  "cachedDiffQuiet": true,
+  "runtimeBlob": "f39c0df9aec027b4a3b61e0601750e20c9debcd4",
+  "runtimeBlobAt345f2db5": "f39c0df9aec027b4a3b61e0601750e20c9debcd4"
+}

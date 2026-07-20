@@ -1,0 +1,15 @@
+{
+  "resultDecision": "REVISIONS REQUIRED",
+  "currentStateHas": {
+    "finalRuntime": true,
+    "finalHead": false,
+    "revisionsRequired": true,
+    "phase10AOpen": true,
+    "retryOpen": true,
+    "deterministic0of2": true,
+    "staging2of2": true
+  },
+  "scopeSearches": {
+    "productionDeploy": false
+  }
+}
