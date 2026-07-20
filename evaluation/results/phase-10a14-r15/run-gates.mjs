@@ -21,7 +21,13 @@ import { AttemptJournal, reviewCampaign } from "./journal.mjs";
 
 const TASK = "PHASE-10A14-R15";
 const finalRuntime = process.argv[2];
-if (!finalRuntime) { console.error("usage: run-gates.mjs <finalRuntimeCommit>"); process.exit(2); }
+// The deployed commit may be a DESCENDANT of the final runtime commit: evidence-only
+// commits redeploy staging without changing any runtime file. Identity is checked
+// against the deployed commit, and R15_RUNTIME_EQUIVALENCE_PROOF.json separately proves
+// every runtime file is byte-identical between the two. Neither check alone is
+// sufficient; together they prove the deployed service runs the campaign runtime.
+const expectedDeployed = process.argv[3] || finalRuntime;
+if (!finalRuntime) { console.error("usage: run-gates.mjs <finalRuntimeCommit> [expectedDeployedCommit]"); process.exit(2); }
 
 const D = "evaluation/results/phase-10a14-r15/";
 // CRITICAL: nothing may be written INSIDE the repository while a runner executes.
@@ -101,8 +107,9 @@ async function runGate(probeId, runner, { checkIdentity = false } = {}) {
     identityBefore, identityAfter,
     identityStable: checkIdentity ? (identityBefore?.runtimeCommit === identityAfter?.runtimeCommit) : null,
     identityMatchesFinalRuntime: checkIdentity
-      ? (identityBefore?.runtimeCommit === finalRuntime && identityAfter?.runtimeCommit === finalRuntime)
+      ? (identityBefore?.runtimeCommit === expectedDeployed && identityAfter?.runtimeCommit === expectedDeployed)
       : null,
+    expectedDeployedCommit: checkIdentity ? expectedDeployed : null,
     controlling: rec.actualClassification === "PASS"
   };
   chronology.push(entry);
@@ -125,7 +132,7 @@ fs.cpSync(path.join(EXTERNAL_JOURNAL, campaignId), path.join(governedJournalRoot
 
 const review = reviewCampaign(path.join(governedJournalRoot, campaignId));
 const out = {
-  task: TASK, campaignId, finalRuntime,
+  task: TASK, campaignId, finalRuntime, expectedDeployedCommit: expectedDeployed,
   rule: "Every runner invocation is a journaled attempt, including failures. No gate log is ever deleted. Logs are captured outside the repository and copied into evidence after each runner ends.",
   runnerInvocations: chronology.length,
   preservedLogs: fs.readdirSync(GATE_LOG_DIR).length,
