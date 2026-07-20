@@ -1,0 +1,34 @@
+{
+  "event": "COMPLETED_PASS",
+  "endedAt": "2026-07-20T07:36:56.151Z",
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 29138,
+  "suitesRun": 7,
+  "suitesFailed": 0,
+  "headAtEnd": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+  "treeCleanAfter": true,
+  "identityBefore": {
+    "label": "BEFORE",
+    "httpStatus": 200,
+    "runtimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+    "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
+    "at": "2026-07-20T07:36:26.442Z"
+  },
+  "identityAfter": {
+    "label": "AFTER",
+    "httpStatus": 200,
+    "runtimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+    "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
+    "at": "2026-07-20T07:36:55.951Z"
+  },
+  "serverReportedRuntimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+  "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
+  "runtimeEquivalence": {
+    "expectRuntime": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+    "headCommit": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+    "allRuntimeFilesIdentical": true,
+    "differingFiles": []
+  },
+  "controlling": true
+}

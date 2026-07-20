@@ -1,0 +1,16 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R16-GATE-staging-cycle1-A1",
+  "task": "PHASE-10A14-R16",
+  "attemptType": "STAGING_GATE",
+  "campaignId": "R16-GATE-STAGING",
+  "generationId": null,
+  "probeId": "staging",
+  "runtimeCommit": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+  "retryOf": null,
+  "notes": "runtime equivalence checked against 0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+  "headAtStart": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "allocatedAt": "2026-07-20T07:36:26.683Z"
+}

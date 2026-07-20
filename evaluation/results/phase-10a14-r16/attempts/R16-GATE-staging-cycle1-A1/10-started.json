@@ -1,0 +1,12 @@
+{
+  "event": "STARTED",
+  "startedAt": "2026-07-20T07:36:26.811Z",
+  "probeId": "staging",
+  "identityBefore": {
+    "label": "BEFORE",
+    "httpStatus": 200,
+    "runtimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+    "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
+    "at": "2026-07-20T07:36:26.442Z"
+  }
+}

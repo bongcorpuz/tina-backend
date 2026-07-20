@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:35:56.733Z",
+  "generatedAt": "2026-07-20T07:37:10.985Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r16/attempts",
   "rule": "Machine-generated from immutable attempt directories. Every count in the report, result JSON, CURRENT_STATE, gate summary and attempt reconciliation derives from this file. No manually typed competing total is permitted.",
   "integrity": {
@@ -13,13 +13,13 @@
     "clean": true
   },
   "counts": {
-    "totalAttempts": 45,
+    "totalAttempts": 46,
     "runnerInvocations": 4,
-    "stagingRunnerInvocations": 0,
+    "stagingRunnerInvocations": 1,
     "focusedSuiteInvocations": 37,
     "campaignAttempts": 1,
     "otherAttempts": 3,
-    "completedPass": 38,
+    "completedPass": 39,
     "completedFailures": 7,
     "technicalFailures": 0,
     "environmentFailures": 0,
@@ -27,7 +27,7 @@
     "incompleteAttempts": 0,
     "cancelledAttempts": 0,
     "retries": 0,
-    "controllingAttempts": 36
+    "controllingAttempts": 37
   },
   "scope": {
     "includesGateRunnerAttempts": true,
@@ -67,7 +67,16 @@
         "retryOf": null
       }
     ],
-    "staging": []
+    "staging": [
+      {
+        "attemptId": "R16-GATE-staging-cycle1-A1",
+        "exitCode": 0,
+        "status": "COMPLETED_PASS",
+        "controlling": true,
+        "serverReportedRuntimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+        "retryOf": null
+      }
+    ]
   },
   "attempts": [
     {
@@ -1349,6 +1358,38 @@
       "deploymentId": null,
       "malformed": false,
       "notes": "runtime equivalence checked against a802064a4c26565d506c77f60fbde11abedcac89"
+    },
+    {
+      "attemptId": "R16-GATE-staging-cycle1-A1",
+      "task": "PHASE-10A14-R16",
+      "attemptType": "STAGING_GATE",
+      "campaignId": "R16-GATE-STAGING",
+      "generationId": null,
+      "probeId": "staging",
+      "command": "node scripts/run-staging-smokes.mjs",
+      "runtimeCommit": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+      "headAtStart": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+      "headAtEnd": "bd98ee3bbae1e4b9d25c680a7e1ab35b0fc4a2ad",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T07:36:26.811Z",
+      "endedAt": "2026-07-20T07:36:56.151Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "COMPLETED_PASS",
+      "technicalFailure": false,
+      "legalMismatch": false,
+      "environmentFailure": false,
+      "retryOf": null,
+      "supersededBy": null,
+      "controlling": true,
+      "logPath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-staging-cycle1-A1/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-staging-cycle1-A1",
+      "evidenceHash": "a007fbaa15b36df31354b3c70559ef594bce131cff66ddca7ffcde8db2617b67",
+      "serverReportedRuntimeCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+      "deploymentId": "srv-d8ifuj0jo6nc73d888c0",
+      "malformed": false,
+      "notes": "runtime equivalence checked against 0323bb91ac8383e1cbb6800637e4b9b896cdaff1"
     },
     {
       "attemptId": "R16-PREFIX-domain-false-allows-A1",
