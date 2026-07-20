@@ -1,0 +1,64 @@
+{
+  "task": "PHASE-10A14-R16",
+  "counts": {
+    "crashProbes": 5
+  },
+  "crashProbes": [
+    {
+      "probeId": "KILL-AFTER-ALLOCATED",
+      "stage": "after-allocated",
+      "expect": {
+        "killReturned": true,
+        "exitCode": null,
+        "signal": "SIGKILL",
+        "allocated": 1,
+        "started": 0,
+        "terminal": 0,
+        "classification": "KILLED_OR_INCOMPLETE"
+      }
+    },
+    {
+      "probeId": "KILL-AFTER-STARTED",
+      "stage": "after-started",
+      "expect": {
+        "killReturned": true,
+        "exitCode": null,
+        "signal": "SIGKILL",
+        "allocated": 1,
+        "started": 1,
+        "terminal": 0,
+        "classification": "KILLED_OR_INCOMPLETE"
+      }
+    },
+    {
+      "probeId": "KILL-DURING-CALL",
+      "stage": "during-call",
+      "expect": {
+        "killReturned": true,
+        "exitCode": null,
+        "signal": "SIGKILL",
+        "allocated": 1,
+        "started": 1,
+        "terminal": 0,
+        "classification": "KILLED_OR_INCOMPLETE",
+        "extraOuterAttempts": 0
+      }
+    },
+    {
+      "probeId": "NEG-EARLY-EXIT",
+      "stage": "negative-early-exit",
+      "expect": {
+        "mustFail": true,
+        "reason": "child exits normally before kill; harness must detect and fail visibly"
+      }
+    },
+    {
+      "probeId": "NEG-MARKER-TIMEOUT",
+      "stage": "negative-marker-timeout",
+      "expect": {
+        "mustFail": true,
+        "reason": "readiness marker never written; harness must time out and fail visibly"
+      }
+    }
+  ]
+}

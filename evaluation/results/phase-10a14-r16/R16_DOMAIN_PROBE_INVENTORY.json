@@ -1,0 +1,2182 @@
+{
+  "task": "PHASE-10A14-R16",
+  "frozenSpecRule": "Expectations are authored in build-frozen-inventories.mjs. The production boundary is NEVER consulted to produce an expectation.",
+  "decisionVocabulary": {
+    "ALLOW": "reaches the Philippine-tax domain",
+    "NOT_ALLOW": "REJECT or CLARIFY",
+    "CLARIFY_OR_NOT_ALLOW": "must not falsely ALLOW; CLARIFY or REJECT both acceptable"
+  },
+  "signalModel": {
+    "strongAllowsAlone": true,
+    "weakAloneAllows": false,
+    "weakPlusNonTaxObject": "NOT_ALLOW",
+    "strongOverridesNonTaxObject": true,
+    "taxFilingAdjacencyRemains": true,
+    "failClosedDefault": true
+  },
+  "counts": {
+    "manual": 81,
+    "generated": 112,
+    "metamorphic": 22,
+    "metamorphicVariants": 35
+  },
+  "manual": [
+    {
+      "probeId": "IR-1",
+      "suite": "domain-manual",
+      "coverageClass": "independent_failure",
+      "text": "For a private lease payment, does the weekend rule automatically extend my deadline?",
+      "expected": "NOT_ALLOW",
+      "note": "no PH-tax anchor; 'vat' matched inside 'private'"
+    },
+    {
+      "probeId": "IR-2",
+      "suite": "domain-manual",
+      "coverageClass": "independent_failure",
+      "text": "Can a court filing deadline that falls on a holiday be moved to the next business day?",
+      "expected": "NOT_ALLOW",
+      "note": "generic court/filing/deadline only"
+    },
+    {
+      "probeId": "NN-1",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "When is my private loan payment deadline?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-2",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "When is my rent installment due if it falls on a Sunday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-3",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the school filing deadline for enrolment forms?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-4",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the deadline for filing corporate documents with the SEC?",
+      "expected": "NOT_ALLOW",
+      "note": "SEC filing without a tax question"
+    },
+    {
+      "probeId": "NN-5",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the deadline for an ordinary civil-court appeal?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-6",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the deadline for filing a labor case?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-7",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "When is the HR payroll cutoff?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-8",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "How do I book a passport appointment before the deadline?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-9",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the software file submission deadline for the sprint?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-10",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the deadline for filing an insurance claim?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-11",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Can I file a police complaint after the deadline?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-12",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Is the interest on my personal bank loan due this weekend?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-13",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the registration deadline for the marathon?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-14",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Does the weekend rule extend my gym membership payment?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-15",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "When is the invoice from my supplier due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-16",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Can a court pleading deadline be moved to the next business day?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-17",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Is the assessment for my condo association dues extended?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-18",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "When is the refund for my cancelled flight due?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-19",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the penalty for returning the rental car late?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-20",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Does my lease payment deadline move if it falls on a holiday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-1",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the deadline for filing the BIR annual income tax return?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-2",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the VAT filing deadline for this quarter?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-3",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "When is the withholding tax payment deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-4",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Does the BIR Form 1701Q deadline move when it falls on a holiday?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-5",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the CTA deadline for filing a petition for review?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-6",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the CTA deadline for appealing an FDDA?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-7",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the deadline for submitting documents under a Letter of Authority?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-8",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the prescriptive period for a tax refund claim?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-9",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Is withholding tax on the private lease payment due this weekend?",
+      "expected": "ALLOW",
+      "note": "strong-tax override of a non-tax word"
+    },
+    {
+      "probeId": "ST-10",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "For VAT on residential lease, does the deadline move?",
+      "expected": "ALLOW",
+      "note": "strong-tax override"
+    },
+    {
+      "probeId": "ST-11",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Does the BIR filing deadline move when the due date is a holiday?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-12",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What does NIRC Section 51 say about the filing deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-13",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "How do I respond to a BIR assessment notice?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-14",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the percentage tax filing deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-15",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Does RMC 2024 change the eFPS filing deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-16",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Is the taxpayer required to file if the deadline falls on a Sunday?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-17",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Is my income tax refund claim still within the prescriptive period?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-18",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the deadline for the quarterly percentage tax return?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "LN3",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Tell me not to forget to file my return today.",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "LN5",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Can you confirm I cannot afford to fail to file today?",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "LN8",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Must failure to file today be avoided in my case?",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "LQ1",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "My accountant said, “Do not fail to file today.” Is that advice supported?",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "LQ2",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "The notice says, “File today.” Does that apply to me?",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "LS2",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Does the authority establish that I must file today?",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "LT1",
+      "suite": "domain-manual",
+      "coverageClass": "r15_false_refusal_closed",
+      "text": "Huwag daw akong mag-fail mag-file ngayon. Tama ba iyon?",
+      "expected": "ALLOW",
+      "note": "R15 accepted closure — must not regress"
+    },
+    {
+      "probeId": "RA1",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Is my annual return due today?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA2",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Should I submit the return before midnight?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA3",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Do I need to file if I had no income?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA4",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "The BIR notice says I must file. Is that correct?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA5",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "My accountant told me the deadline passed. Is that right?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA6",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Kailangan ko bang mag-file ngayon?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA7",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Huwag daw akong mag-file hangga't hindi kumpirmado. Tama ba?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA8",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Is failure to file penalised?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA9",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Does the authority establish a filing deadline for me?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "RA10",
+      "suite": "domain-manual",
+      "coverageClass": "r15_adjacency_closed",
+      "text": "Is the return still outstanding if I filed late?",
+      "expected": "ALLOW",
+      "note": "R15 adjacency family — must not regress"
+    },
+    {
+      "probeId": "AM-1",
+      "suite": "domain-manual",
+      "coverageClass": "ambiguous",
+      "text": "Does my lease deadline move?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": "no tax anchor; must not falsely ALLOW"
+    },
+    {
+      "probeId": "AM-2",
+      "suite": "domain-manual",
+      "coverageClass": "ambiguous",
+      "text": "Can I file next business day?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "AM-3",
+      "suite": "domain-manual",
+      "coverageClass": "ambiguous",
+      "text": "Is the assessment deadline extended?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "AM-4",
+      "suite": "domain-manual",
+      "coverageClass": "ambiguous",
+      "text": "When is the return due?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NF-1",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_file",
+      "text": "Open the computer file.",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NF-2",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_file",
+      "text": "How do I file a photo in the right folder?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NF-3",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_file",
+      "text": "Should I file a police complaint?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NF-4",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_file",
+      "text": "Save the spreadsheet file.",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NF-5",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_file",
+      "text": "Attach a Word file to the email.",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NF-6",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_file",
+      "text": "What is the weather in Manila today?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-21",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Is there a penalty if I return the library book after the due date?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-22",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "What is the filing deadline for my visa application?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-23",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Does the payment deadline for my utility bill move on a holiday?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-24",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "When is the registration deadline for the conference?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "NN-25",
+      "suite": "domain-manual",
+      "coverageClass": "nontax_near",
+      "text": "Can I file an appeal in my barangay dispute next week?",
+      "expected": "NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-19",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Is the eFPS filing deadline extended this month?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-20",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the documentary stamp tax deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-21",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Does RR 2024 change the withholding tax remittance date?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-22",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the estate tax return filing deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-23",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "When is the donor's tax return due?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-24",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "Is a BIR ruling required before the deadline?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "ST-25",
+      "suite": "domain-manual",
+      "coverageClass": "strong_tax",
+      "text": "What is the deadline under an eLA for submitting records?",
+      "expected": "ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "AM-5",
+      "suite": "domain-manual",
+      "coverageClass": "ambiguous",
+      "text": "Is the penalty waived if I pay late?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    },
+    {
+      "probeId": "AM-6",
+      "suite": "domain-manual",
+      "coverageClass": "ambiguous",
+      "text": "Does the holiday move my due date?",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "note": ""
+    }
+  ],
+  "generated": [
+    {
+      "probeId": "G-weak-deadline-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the deadline for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the deadline for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the deadline for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the deadline for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the deadline for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the deadline for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the deadline for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-deadline-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "deadline",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the deadline for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the filing for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the filing for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the filing for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the filing for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the filing for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the filing for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the filing for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-filing-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "filing",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the filing for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the due date for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the due date for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the due date for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the due date for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the due date for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the due date for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the due date for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-due_date-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "due_date",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the due date for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the payment for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the payment for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the payment for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the payment for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the payment for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the payment for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the payment for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-payment-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "payment",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the payment for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the assessment for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the assessment for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the assessment for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the assessment for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the assessment for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the assessment for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the assessment for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-assessment-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "assessment",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the assessment for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the refund for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the refund for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the refund for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the refund for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the refund for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the refund for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the refund for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-refund-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "refund",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the refund for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the interest for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the interest for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the interest for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the interest for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the interest for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the interest for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the interest for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-interest-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "interest",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the interest for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "private_lease",
+        "strong": null
+      },
+      "text": "What is the penalty for my private lease payment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "court",
+        "strong": null
+      },
+      "text": "What is the penalty for my court pleading?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "labor",
+        "strong": null
+      },
+      "text": "What is the penalty for my labor case?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "payroll",
+        "strong": null
+      },
+      "text": "What is the penalty for my payroll cutoff?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "passport",
+        "strong": null
+      },
+      "text": "What is the penalty for my passport appointment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "school",
+        "strong": null
+      },
+      "text": "What is the penalty for my school enrolment?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-insurance",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "insurance",
+        "strong": null
+      },
+      "text": "What is the penalty for my insurance claim?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-weak-penalty-loan",
+      "suite": "domain-generated",
+      "params": {
+        "weak": "penalty",
+        "nonTaxObject": "loan",
+        "strong": null
+      },
+      "text": "What is the penalty for my personal loan?",
+      "expected": "NOT_ALLOW"
+    },
+    {
+      "probeId": "G-strong-bir-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "bir"
+      },
+      "text": "For BIR purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-bir-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "bir"
+      },
+      "text": "For BIR purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-bir-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "bir"
+      },
+      "text": "For BIR purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-bir-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "bir"
+      },
+      "text": "For BIR purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-bir-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "bir"
+      },
+      "text": "For BIR purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-bir-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "bir"
+      },
+      "text": "For BIR purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-vat_word-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "vat_word"
+      },
+      "text": "For VAT purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-vat_word-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "vat_word"
+      },
+      "text": "For VAT purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-vat_word-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "vat_word"
+      },
+      "text": "For VAT purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-vat_word-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "vat_word"
+      },
+      "text": "For VAT purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-vat_word-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "vat_word"
+      },
+      "text": "For VAT purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-vat_word-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "vat_word"
+      },
+      "text": "For VAT purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-income_tax-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "income_tax"
+      },
+      "text": "For income tax purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-income_tax-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "income_tax"
+      },
+      "text": "For income tax purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-income_tax-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "income_tax"
+      },
+      "text": "For income tax purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-income_tax-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "income_tax"
+      },
+      "text": "For income tax purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-income_tax-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "income_tax"
+      },
+      "text": "For income tax purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-income_tax-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "income_tax"
+      },
+      "text": "For income tax purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-withholding_tax-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "withholding_tax"
+      },
+      "text": "For withholding tax purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-withholding_tax-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "withholding_tax"
+      },
+      "text": "For withholding tax purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-withholding_tax-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "withholding_tax"
+      },
+      "text": "For withholding tax purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-withholding_tax-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "withholding_tax"
+      },
+      "text": "For withholding tax purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-withholding_tax-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "withholding_tax"
+      },
+      "text": "For withholding tax purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-withholding_tax-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "withholding_tax"
+      },
+      "text": "For withholding tax purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-cta-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "cta"
+      },
+      "text": "For CTA purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-cta-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "cta"
+      },
+      "text": "For CTA purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-cta-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "cta"
+      },
+      "text": "For CTA purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-cta-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "cta"
+      },
+      "text": "For CTA purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-cta-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "cta"
+      },
+      "text": "For CTA purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-cta-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "cta"
+      },
+      "text": "For CTA purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-nirc-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "nirc"
+      },
+      "text": "For NIRC purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-nirc-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "nirc"
+      },
+      "text": "For NIRC purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-nirc-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "nirc"
+      },
+      "text": "For NIRC purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-nirc-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "nirc"
+      },
+      "text": "For NIRC purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-nirc-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "nirc"
+      },
+      "text": "For NIRC purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-nirc-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "nirc"
+      },
+      "text": "For NIRC purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-taxpayer-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "taxpayer"
+      },
+      "text": "For taxpayer purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-taxpayer-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "taxpayer"
+      },
+      "text": "For taxpayer purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-taxpayer-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "taxpayer"
+      },
+      "text": "For taxpayer purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-taxpayer-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "taxpayer"
+      },
+      "text": "For taxpayer purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-taxpayer-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "taxpayer"
+      },
+      "text": "For taxpayer purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-taxpayer-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "taxpayer"
+      },
+      "text": "For taxpayer purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-percentage_tax-private_lease",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "private_lease",
+        "strong": "percentage_tax"
+      },
+      "text": "For percentage tax purposes, what is the deadline on my private lease payment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-percentage_tax-court",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "court",
+        "strong": "percentage_tax"
+      },
+      "text": "For percentage tax purposes, what is the deadline on my court pleading?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-percentage_tax-labor",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "labor",
+        "strong": "percentage_tax"
+      },
+      "text": "For percentage tax purposes, what is the deadline on my labor case?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-percentage_tax-payroll",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "payroll",
+        "strong": "percentage_tax"
+      },
+      "text": "For percentage tax purposes, what is the deadline on my payroll cutoff?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-percentage_tax-passport",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "passport",
+        "strong": "percentage_tax"
+      },
+      "text": "For percentage tax purposes, what is the deadline on my passport appointment?",
+      "expected": "ALLOW"
+    },
+    {
+      "probeId": "G-strong-percentage_tax-school",
+      "suite": "domain-generated",
+      "params": {
+        "weak": null,
+        "nonTaxObject": "school",
+        "strong": "percentage_tax"
+      },
+      "text": "For percentage tax purposes, what is the deadline on my school enrolment?",
+      "expected": "ALLOW"
+    }
+  ],
+  "metamorphic": [
+    {
+      "id": "MM1",
+      "rule": "Adding a strong tax anchor to a non-tax question flips it to ALLOW.",
+      "variants": [
+        [
+          "Does the weekend rule extend my private lease payment deadline?",
+          "NOT_ALLOW"
+        ],
+        [
+          "Does the weekend rule extend the withholding tax on my private lease payment?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM2",
+      "rule": "Removing the tax anchor flips ALLOW to NOT_ALLOW.",
+      "variants": [
+        [
+          "What is the BIR filing deadline?",
+          "ALLOW"
+        ],
+        [
+          "What is the filing deadline?",
+          "CLARIFY_OR_NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM3",
+      "rule": "Court context alone is never tax.",
+      "variants": [
+        [
+          "Can a court filing deadline that falls on a holiday be moved?",
+          "NOT_ALLOW"
+        ],
+        [
+          "Can a CTA filing deadline that falls on a holiday be moved?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM4",
+      "rule": "'private' must not be read as containing VAT.",
+      "variants": [
+        [
+          "For a private lease payment, does the weekend rule extend my deadline?",
+          "NOT_ALLOW"
+        ],
+        [
+          "For VAT on a lease payment, does the weekend rule extend my deadline?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM5",
+      "rule": "Labor case filing is not tax filing.",
+      "variants": [
+        [
+          "What is the deadline for filing a labor case?",
+          "NOT_ALLOW"
+        ],
+        [
+          "What is the deadline for filing a tax case?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM6",
+      "rule": "Weak word stacking does not create tax domain.",
+      "variants": [
+        [
+          "What is the deadline, due date and penalty for my lease?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM7",
+      "rule": "Tax-filing adjacency survives the weak-signal gate.",
+      "variants": [
+        [
+          "Does the authority establish that I must file today?",
+          "ALLOW"
+        ],
+        [
+          "Tell me not to forget to file my return today.",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM8",
+      "rule": "Filipino filing verbs remain tax-adjacent.",
+      "variants": [
+        [
+          "Kailangan ko bang mag-file ngayon?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM9",
+      "rule": "Non-tax file objects stay out.",
+      "variants": [
+        [
+          "Open the computer file.",
+          "NOT_ALLOW"
+        ],
+        [
+          "How do I file a photo in the right folder?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM10",
+      "rule": "SEC document filing without tax is not tax.",
+      "variants": [
+        [
+          "What is the deadline for filing corporate documents with the SEC?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM11",
+      "rule": "BIR anchors an otherwise generic sentence.",
+      "variants": [
+        [
+          "Is the deadline extended?",
+          "CLARIFY_OR_NOT_ALLOW"
+        ],
+        [
+          "Is the BIR deadline extended?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM12",
+      "rule": "Payroll cutoff is HR, not tax, absent withholding.",
+      "variants": [
+        [
+          "When is the HR payroll cutoff?",
+          "NOT_ALLOW"
+        ],
+        [
+          "When is the withholding tax remittance for payroll due?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM13",
+      "rule": "Insurance claim filing is not tax.",
+      "variants": [
+        [
+          "What is the deadline for filing an insurance claim?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM14",
+      "rule": "Refund alone is not tax.",
+      "variants": [
+        [
+          "When is the refund for my cancelled flight due?",
+          "NOT_ALLOW"
+        ],
+        [
+          "When is my income tax refund due?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM15",
+      "rule": "Assessment alone is not tax.",
+      "variants": [
+        [
+          "Is the assessment for my condo dues extended?",
+          "NOT_ALLOW"
+        ],
+        [
+          "Is the BIR assessment notice period extended?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM16",
+      "rule": "Interest alone is not tax.",
+      "variants": [
+        [
+          "Is the interest on my personal bank loan due this weekend?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM17",
+      "rule": "Case variation does not change the decision.",
+      "variants": [
+        [
+          "WHAT IS THE BIR FILING DEADLINE?",
+          "ALLOW"
+        ],
+        [
+          "what is the deadline for filing a labor case?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM18",
+      "rule": "Punctuation does not change the decision.",
+      "variants": [
+        [
+          "Can a court filing deadline, that falls on a holiday, be moved?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM19",
+      "rule": "NIRC anchors a generic deadline question.",
+      "variants": [
+        [
+          "What does NIRC say about the deadline?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM20",
+      "rule": "Fail-closed survives for unrelated queries.",
+      "variants": [
+        [
+          "What is photosynthesis?",
+          "NOT_ALLOW"
+        ],
+        [
+          "Who won the game last night?",
+          "NOT_ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM21",
+      "rule": "A tax form number anchors the domain.",
+      "variants": [
+        [
+          "Does the Form 1701Q deadline move on a holiday?",
+          "ALLOW"
+        ]
+      ]
+    },
+    {
+      "id": "MM22",
+      "rule": "eFPS is a tax system anchor.",
+      "variants": [
+        [
+          "Is the eFPS filing deadline extended?",
+          "ALLOW"
+        ]
+      ]
+    }
+  ],
+  "frozenSpecSha256": "38a54b5fc044dea5ae38cabc3ef0f019aeffdbece488da52bcc5f81546313f38"
+}
