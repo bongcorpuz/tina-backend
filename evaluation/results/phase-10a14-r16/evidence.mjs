@@ -135,7 +135,21 @@ export function importCanonical(attemptId) {
   if (!fs.existsSync(src)) throw new Error(`NO_EXTERNAL_ATTEMPT: ${src}`);
   if (fs.existsSync(dest)) throw new Error(`CANONICAL_ATTEMPT_EXISTS: ${attemptId} — canonical evidence is never overwritten.`);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.cpSync(src, dest, { recursive: true, errorOnExist: true, force: false });
+  fs.mkdirSync(dest, { recursive: false });
+  // Copy file-by-file with an explicit read/write and fsync, NOT fs.cpSync.
+  // cpSync produced a corrupted copy here: a 186-byte file arrived as 186 space
+  // characters, an NTFS lazy-write artifact where allocated-but-unflushed data was read.
+  // The post-copy hash check caught it, but a copy that can silently corrupt evidence is
+  // not acceptable even with verification behind it. Each file is read into memory,
+  // written, fsynced, and compared to the source bytes before moving on.
+  for (const name of fs.readdirSync(src).sort()) {
+    const from = path.join(src, name), to = path.join(dest, name);
+    const bytes = fs.readFileSync(from);
+    const fd = fs.openSync(to, "wx");
+    try { fs.writeFileSync(fd, bytes); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+    const back = fs.readFileSync(to);
+    if (!back.equals(bytes)) throw new Error(`IMPORT_COPY_CORRUPTED: ${name} — written bytes do not match source`);
+  }
 
   // Post-copy verification against the pre-import hash file.
   const hashFile = path.join(dest, "hashes.sha256");

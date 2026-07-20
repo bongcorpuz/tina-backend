@@ -1,0 +1,11 @@
+{
+  "event": "RECOVERY_ADJUDICATION",
+  "attemptId": "R16-FOCUSED-r15-journal-crash-A3",
+  "at": "2026-07-20T07:26:15.452Z",
+  "defect": "ABORTED_IMPORT_CORRUPTED_COPY",
+  "explanation": "The canonical import of this attempt ABORTED because post-copy hash verification detected that tree-before.txt arrived as 186 space characters instead of its real 186 bytes of content. This is an NTFS lazy-write artifact of fs.cpSync reading allocated-but-unflushed data. The verification behaved exactly as intended: corrupted evidence was refused, not accepted.",
+  "disposition": "INVALID_PARTIAL_IMPORT_NON_CONTROLLING",
+  "remediation": "This partial directory is preserved rather than deleted, because the contract forbids deleting canonical attempts and an aborted import must remain visible. importCanonical was changed to copy file-by-file with an explicit read, write, fsync and byte comparison instead of fs.cpSync. The focused campaign was then re-executed as a new attempt generation; only that generation is controlling.",
+  "externalSourceIntact": true,
+  "contractBasis": "R16_IMMUTABLE_EVIDENCE_CONTRACT.md section 4 permits ADDING a recovery-adjudication file; existing files are never modified."
+}

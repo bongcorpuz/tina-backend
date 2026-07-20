@@ -1,0 +1,16 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R16-FOCUSED-r16-tooling-A3",
+  "task": "PHASE-10A14-R16",
+  "attemptType": "FOCUSED_SUITE",
+  "campaignId": "R16-FINAL-FOCUSED",
+  "generationId": null,
+  "probeId": "r16-tooling",
+  "runtimeCommit": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+  "retryOf": null,
+  "notes": null,
+  "headAtStart": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "allocatedAt": "2026-07-20T07:24:06.274Z"
+}

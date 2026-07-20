@@ -1,0 +1,16 @@
+PASS writeImmutable creates, fsyncs and reads back durable content
+PASS writeImmutable refuses to overwrite an existing event
+PASS a second terminal event is rejected
+PASS a non-terminal file cannot be used as a terminal
+PASS finalize writes hashes covering every other file
+PASS a tampered file is detected by its recorded hash
+PASS readCanonicalAttempt classifies a killed attempt with no terminal event
+PASS readCanonicalAttempt reports each terminal status correctly
+PASS malformed JSON in an event is reported, not silently skipped
+PASS attempt enumeration finds every attempt directory
+PASS the tooling exposes NO delete, archive, convert or compact function
+PASS evidence.mjs source contains no unlink/rm of canonical attempts
+PASS the tooling never touches historical R13/R14/R15 evidence paths
+
+phase-10a14-r16-tooling: 13 passed, 0 failed
+PHASE-10A14-R16 TOOLING PASS — immutable capture, hash verification, no destructive path.
