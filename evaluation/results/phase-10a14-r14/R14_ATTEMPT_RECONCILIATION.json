@@ -1,0 +1,56 @@
+{
+  "campaigns": {
+    "R14-FINAL-31f2326c1ebf": {
+      "attempts": 488,
+      "technicalFailures": 0,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "controlsPass": true
+    },
+    "R14-LIVE-31f2326c1ebf": {
+      "attempts": 34,
+      "technicalFailures": 0,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "controlsPass": false
+    },
+    "R14-LIVE2-31f2326c1ebf": {
+      "attempts": 34,
+      "technicalFailures": 0,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "controlsPass": true
+    },
+    "R14-POSTFIX1-WORKING-TREE": {
+      "attempts": 488,
+      "technicalFailures": 0,
+      "mismatches": 42,
+      "unsafeMisses": 42,
+      "safeOverfires": 0,
+      "controlsPass": false
+    },
+    "R14-POSTFIX2-WORKING-TREE": {
+      "attempts": 488,
+      "technicalFailures": 0,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "controlsPass": false
+    },
+    "R14-PREFIX-a311e97f91d6": {
+      "attempts": 488,
+      "technicalFailures": 0,
+      "mismatches": 135,
+      "unsafeMisses": 109,
+      "safeOverfires": 26,
+      "controlsPass": false
+    }
+  },
+  "totals": {
+    "attempts": 2020,
+    "technicalFailures": 0
+  }
+}

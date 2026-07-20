@@ -1,0 +1,42 @@
+{
+  "campaignId": "R14-FINAL-31f2326c1ebf",
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "executionMode": "DETERMINISTIC",
+  "totalAttempts": 488,
+  "technicalFailures": 0,
+  "legalAttempts": 488,
+  "mismatches": 0,
+  "unsafeMisses": 0,
+  "safeOverfires": 0,
+  "mismatchProbeIds": [],
+  "bySuite": {
+    "explicit": {
+      "total": 38,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "ids": []
+    },
+    "matrix": {
+      "total": 420,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "ids": []
+    },
+    "metamorphic": {
+      "total": 20,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "ids": []
+    },
+    "persistence": {
+      "total": 10,
+      "mismatches": 0,
+      "unsafeMisses": 0,
+      "safeOverfires": 0,
+      "ids": []
+    }
+  }
+}

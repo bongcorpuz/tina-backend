@@ -1,0 +1,12 @@
+{
+  "campaignId": "R14-LIVE-31f2326c1ebf",
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "deploymentId": "https://tina-backend-staging.onrender.com",
+  "total": 34,
+  "persisted": 33,
+  "nonPersisted": 1,
+  "nullStatus": 0,
+  "unsafeEmitted": [],
+  "historyMismatch": [],
+  "falsePersisted": []
+}
