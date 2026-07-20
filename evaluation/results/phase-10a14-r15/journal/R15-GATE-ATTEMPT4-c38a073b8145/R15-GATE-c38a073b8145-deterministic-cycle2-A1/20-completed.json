@@ -1,0 +1,13 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-GATE-c38a073b8145-deterministic-cycle2-A1",
+  "completedAt": "2026-07-20T05:05:14.302Z",
+  "actualClassification": "FAIL",
+  "exitCode": 1,
+  "timedOut": false,
+  "durationMs": 188168,
+  "technicalFailure": false,
+  "failureReason": null,
+  "responseHash": "sha256:55e8cabb36939bf13023f272670ca6b2530769484a5f6d1c932f58202f9e9955",
+  "payloadHash": "sha256:cb0f0e000edb804ccd660066f2780acc46dd27900170a7bcee2c24d64a85e3e5"
+}
