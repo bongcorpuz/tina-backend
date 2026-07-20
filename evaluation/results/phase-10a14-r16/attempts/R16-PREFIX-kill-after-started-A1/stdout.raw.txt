@@ -1,0 +1,10 @@
+{
+  "stage": "after-started",
+  "ready": true,
+  "aliveBeforeKill": true,
+  "killReturned": true,
+  "exitInfo": {
+    "code": null,
+    "signal": "SIGKILL"
+  }
+}

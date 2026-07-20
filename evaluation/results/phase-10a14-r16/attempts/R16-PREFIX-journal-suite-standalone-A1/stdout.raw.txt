@@ -1,0 +1,3 @@
+PASS normal completion writes allocated, started and exactly one terminal event
+PASS a thrown function is recorded as a technical failure, not a legal result
+PASS a timeout is recorded as its own terminal event

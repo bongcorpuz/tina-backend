@@ -1,0 +1,42 @@
+{
+  "task": "PHASE-10A14-R16",
+  "generatedAt": "2026-07-20T06:59:51.899Z",
+  "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
+  "counts": {
+    "totalAttempts": 5,
+    "runnerInvocations": 0,
+    "stagingRunnerInvocations": 0,
+    "focusedSuiteInvocations": 1,
+    "campaignAttempts": 1,
+    "otherAttempts": 3,
+    "completedPass": 2,
+    "completedFailures": 3,
+    "technicalFailures": 0,
+    "environmentFailures": 0,
+    "killedAttempts": 0,
+    "incompleteAttempts": 0,
+    "cancelledAttempts": 0,
+    "retries": 0,
+    "controllingAttempts": 0
+  },
+  "scope": {
+    "includesGateRunnerAttempts": true,
+    "includesStagingRunnerAttempts": true,
+    "includesFocusedSuiteAttempts": true,
+    "includesCampaignAttempts": true,
+    "statement": "All counts above are derived from every immutable attempt directory under evaluation/results/phase-10a14-r16/attempts, with no category excluded. A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt."
+  },
+  "gateCycles": {
+    "deterministic": [],
+    "staging": []
+  },
+  "integrity": {
+    "duplicates": [],
+    "missingRetryTargets": [],
+    "malformed": [],
+    "duplicateCount": 0,
+    "missingRetryTargetCount": 0,
+    "malformedCount": 0,
+    "clean": true
+  }
+}

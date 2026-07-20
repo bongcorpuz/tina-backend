@@ -1,0 +1,16 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R16-PREFIX-domain-false-allows-A1",
+  "task": "PHASE-10A14-R16",
+  "attemptType": "CAMPAIGN",
+  "campaignId": "R16-PREFIX",
+  "generationId": null,
+  "probeId": "DOMAIN-PREFIX",
+  "runtimeCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "retryOf": null,
+  "notes": "Reproduce non-tax false allows against the unchanged boundary.",
+  "headAtStart": "190dae64b7f17abf7ba4320f52364e537b0086ea",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "allocatedAt": "2026-07-20T06:59:15.003Z"
+}

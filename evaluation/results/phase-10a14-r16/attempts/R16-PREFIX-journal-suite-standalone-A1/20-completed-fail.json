@@ -1,0 +1,9 @@
+{
+  "event": "COMPLETED_FAIL",
+  "endedAt": "2026-07-20T06:59:12.517Z",
+  "reproducedUnsettledTopLevelAwait": true,
+  "expectation": "exit 13 with unsettled top-level await",
+  "exitCode": 13,
+  "signal": null,
+  "controlling": false
+}

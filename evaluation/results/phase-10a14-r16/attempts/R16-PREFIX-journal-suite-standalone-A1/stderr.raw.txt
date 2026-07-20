@@ -1,0 +1,6 @@
+Warning: Detected unsettled top-level await at file:///C:/Projects/tina-backend/tests/phase-10a14-r15-crash-visible-attempt-journal.test.mjs:85
+const [crash4, crash5, crash6] = await Promise.all([
+                                 ^
+
+
+

@@ -1,0 +1,1 @@
+node -e '<domain boundary probe over frozen inventory>'

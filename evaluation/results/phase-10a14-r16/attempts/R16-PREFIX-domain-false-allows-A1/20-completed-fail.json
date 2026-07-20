@@ -1,0 +1,541 @@
+{
+  "event": "COMPLETED_FAIL",
+  "endedAt": "2026-07-20T06:59:15.275Z",
+  "totalProbes": 193,
+  "falseAllow": 88,
+  "falseRefusal": 0,
+  "mismatches": [
+    {
+      "probeId": "IR-1",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "IR-2",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-1",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-3",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-4",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-5",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-6",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-8",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-9",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-10",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-11",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-12",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-13",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-15",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "NN-16",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-17",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-18",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-19",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "NN-20",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "AM-1",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "AM-2",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_filing_adjacency"
+    },
+    {
+      "probeId": "AM-3",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "AM-4",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_filing_adjacency"
+    },
+    {
+      "probeId": "NN-21",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "NN-22",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-23",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-24",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "NN-25",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_filing_adjacency"
+    },
+    {
+      "probeId": "AM-5",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "AM-6",
+      "expected": "CLARIFY_OR_NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-deadline-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-filing-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-due_date-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-payment-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-payment-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-assessment-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-refund-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-interest-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "tax_keyword_match"
+    },
+    {
+      "probeId": "G-weak-penalty-private_lease",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-court",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-labor",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-payroll",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-passport",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-school",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-insurance",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    },
+    {
+      "probeId": "G-weak-penalty-loan",
+      "expected": "NOT_ALLOW",
+      "got": "ALLOW",
+      "reason": "ph_tax_pattern_match"
+    }
+  ],
+  "expectation": "pre-fix: at least the two independent false allows reproduce",
+  "exitCode": 1,
+  "signal": null,
+  "controlling": false
+}

@@ -1,0 +1,10 @@
+{
+  "stage": "during-call",
+  "ready": true,
+  "aliveBeforeKill": false,
+  "killReturned": false,
+  "exitInfo": {
+    "code": 0,
+    "signal": null
+  }
+}

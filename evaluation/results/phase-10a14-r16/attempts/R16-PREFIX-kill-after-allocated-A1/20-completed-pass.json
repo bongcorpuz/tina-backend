@@ -1,0 +1,17 @@
+{
+  "event": "COMPLETED_PASS",
+  "endedAt": "2026-07-20T06:59:13.243Z",
+  "stage": "after-allocated",
+  "ready": true,
+  "aliveBeforeKill": true,
+  "killReturned": true,
+  "exitInfo": {
+    "code": null,
+    "signal": "SIGKILL"
+  },
+  "realKillObserved": true,
+  "expectation": "real SIGKILL",
+  "exitCode": null,
+  "signal": "SIGKILL",
+  "controlling": false
+}
