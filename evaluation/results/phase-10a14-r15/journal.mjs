@@ -203,9 +203,17 @@ export function reviewCampaign(campaignDir) {
     incompleteAttemptIds: [], malformedAttemptIds: [], mismatchProbeIds: [], attempts: []
   };
   if (!fs.existsSync(campaignDir)) return out;
+  // Only ATTEMPT directories are attempts. A campaign directory may also contain
+  // sibling directories that are not attempts (e.g. `records/` holding human-readable
+  // live payloads). Counting those as attempts fabricated a phantom
+  // INCOMPLETE_OR_CRASHED entry — an evidence-integrity defect, because it invents a
+  // crashed attempt that never existed and inflates the allocated count.
+  // An attemptId is always `<campaignId>-<probeId>-A<n>`, so require the campaign prefix.
+  const campaignName = path.basename(campaignDir);
   for (const attemptId of fs.readdirSync(campaignDir).sort()) {
     const dir = path.join(campaignDir, attemptId);
     if (!fs.statSync(dir).isDirectory()) continue;
+    if (!attemptId.startsWith(`${campaignName}-`)) continue;
     const files = fs.readdirSync(dir);
     const read = (n) => {
       if (!files.includes(n)) return null;

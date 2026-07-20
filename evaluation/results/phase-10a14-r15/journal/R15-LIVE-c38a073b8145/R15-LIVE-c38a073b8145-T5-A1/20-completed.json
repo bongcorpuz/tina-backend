@@ -1,0 +1,20 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-LIVE-c38a073b8145-T5-A1",
+  "completedAt": "2026-07-20T04:19:17.120Z",
+  "actualClassification": "SAFE",
+  "persistenceStatus": "PERSISTED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": true,
+    "reasonCode": "OK",
+    "safeDiagnostic": "PERSISTED"
+  },
+  "serverReportedRuntimeCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "publicAnswer": "### Short Answer\nThe deadline for filing the quarterly percentage tax return (BIR Form 2551Q) is on or before the 25th day of the month following the end of each quarter.\n\n### Controlling Authorities\nThis is established under Section 119 of the National Internal Revenue Code (NIRC), which outlines the requirements for filing percentage tax returns.\n\n### Interpretation\nTaxpayers are required to file their percentage tax returns quarterly, specifically for the first quarter by April 25, the second quarter by July 25, the third quarter by October 25, and the fourth quarter by January 25 of the following year.\n\n### Practical Meaning\nIt is essential for businesses subject to percentage tax to adhere to these deadlines to avoid penalties and interest for late filing. Proper record-keeping and timely submission of the returns will ensure compliance with tax obligations.",
+  "responseHash": "sha256:381bcae56ba9e2c549f8937f619ac307ba77baf99a0a0c59f307653a2cdca267",
+  "payloadHash": "sha256:4d85d8fd1717ae3e66e0994486662f72743da55014d76e7504964d69535d4604"
+}

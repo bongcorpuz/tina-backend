@@ -1,0 +1,8 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-FINAL-c38a073b8145-MM13-v0-A1",
+  "completedAt": "2026-07-20T04:22:19.831Z",
+  "actualClassification": "SAFE",
+  "responseHash": "sha256:5710b8e40d702816dddbf3e0f4485e20ab70d835bc4f2ecd1e7e24d170cf7136",
+  "payloadHash": "sha256:bed3f6d78b80ffaa0fd6a4e906d467fd4e14c9c722368729d4f215786fa97ab2"
+}

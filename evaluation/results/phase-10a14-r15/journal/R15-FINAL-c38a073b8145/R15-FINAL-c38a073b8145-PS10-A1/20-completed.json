@@ -1,0 +1,19 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-FINAL-c38a073b8145-PS10-A1",
+  "completedAt": "2026-07-20T04:22:21.776Z",
+  "actualClassification": "PERSISTED",
+  "persistenceStatus": "PERSISTED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "status": "PERSISTED",
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": false,
+    "reasonCode": "OK",
+    "safeDiagnostic": "PERSISTED"
+  },
+  "responseHash": "sha256:c9dafb3c4703cf63ae4ef3184a3f83a447d840cc2c33f53d7404f1629c7c1dd5",
+  "payloadHash": "sha256:d07b1e3525cbd527061e3d7142cc89196658e1287fafca11b2cc1ccc9e903656"
+}

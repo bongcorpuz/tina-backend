@@ -1,0 +1,86 @@
+{
+  "campaignId": "R15-FINAL-c38a073b8145",
+  "runtimeCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "phase": "FINAL",
+  "stats": {
+    "semantic": {
+      "independent": {
+        "total": 30,
+        "pass": 30,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      },
+      "manual": {
+        "total": 90,
+        "pass": 90,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      },
+      "generated": {
+        "total": 1331,
+        "pass": 1331,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      },
+      "metamorphic": {
+        "total": 39,
+        "pass": 39,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      }
+    },
+    "routing": {
+      "falseRefusals": {
+        "total": 7,
+        "pass": 7,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      },
+      "adjacentPositives": {
+        "total": 10,
+        "pass": 10,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      },
+      "negativeControls": {
+        "total": 10,
+        "pass": 10,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      }
+    },
+    "persistence": {
+      "sims": {
+        "total": 10,
+        "pass": 10,
+        "unsafeMisses": 0,
+        "safeOverfires": 0,
+        "failIds": []
+      }
+    }
+  },
+  "review": {
+    "campaignDir": "evaluation\\results\\phase-10a14-r15\\journal\\R15-FINAL-c38a073b8145",
+    "allocated": 1528,
+    "started": 1528,
+    "completed": 1528,
+    "technicalFailures": 0,
+    "timeouts": 0,
+    "cancelled": 0,
+    "incompleteOrCrashed": 0,
+    "malformed": 0,
+    "retries": 0,
+    "supersessions": 0,
+    "legalMismatches": 0,
+    "incompleteAttemptIds": [],
+    "malformedAttemptIds": [],
+    "mismatchProbeIds": []
+  }
+}

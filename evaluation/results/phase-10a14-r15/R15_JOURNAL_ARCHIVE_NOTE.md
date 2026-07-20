@@ -71,9 +71,34 @@ the archiver exits non-zero and removes nothing.
   committed in directory form, so for those the JSONL archive plus its integrity record is
   the only representation. Their content is complete and hash-verified, but their
   directory layout is not independently recoverable.
-- The `PREFIXLIVE` generation records **1 incomplete attempt** (41 attempts, one lacking a
-  terminal event). It is preserved and reported as `INCOMPLETE_OR_CRASHED` rather than
-  hidden — the journal behaving exactly as intended.
+## CORRECTION — the "1 incomplete attempt" was a phantom, and my earlier reading was wrong
+
+An earlier version of this note recorded that the `PREFIXLIVE` generation contained
+**1 incomplete attempt** (41 attempts, one lacking a terminal event) and described it as
+"the journal behaving exactly as intended." **That was wrong, and the claim is withdrawn.**
+
+The same figure appeared again in the final `R15-LIVE` campaign, which reported
+`allocated 40, completed 40, incompleteOrCrashed 1` — an internally inconsistent result
+that prompted investigation.
+
+Root cause: a defect in `reviewCampaign()` in `journal.mjs`. It treated **every**
+subdirectory of a campaign directory as an attempt, including the sibling `records/`
+directory that holds human-readable live payloads. That directory contains no lifecycle
+events, so it was classified `INCOMPLETE_OR_CRASHED`.
+
+This is an evidence-integrity defect, not a cosmetic one: it **fabricated a crashed
+attempt that never existed** and inflated the allocated count. Had it gone unnoticed, a
+reviewer would have been told a live attempt crashed when none did.
+
+Fix: an attempt directory must carry the campaign-id prefix (`<campaignId>-<probeId>-A<n>`).
+Corrected review of `R15-LIVE-c38a073b8145`: **allocated 40, started 40, completed 40,
+incomplete 0, malformed 0, technical failures 0.**
+
+No attempt event was altered. Only the derived count was wrong, and summaries are derived
+artifacts recomputed from the preserved events. The archived `PREFIXLIVE` integrity record
+retains its original `incompleteAttempts: 1` figure, which is now known to be the same
+phantom; it is left as written rather than edited, and this note is the correction of
+record.
 
 ## Status
 

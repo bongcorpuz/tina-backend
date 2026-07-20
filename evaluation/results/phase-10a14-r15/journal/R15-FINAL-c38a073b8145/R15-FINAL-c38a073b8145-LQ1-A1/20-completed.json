@@ -1,0 +1,11 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-FINAL-c38a073b8145-LQ1-A1",
+  "completedAt": "2026-07-20T04:22:20.654Z",
+  "actualClassification": "ALLOW",
+  "boundaryDecision": "ALLOW",
+  "detectedDomain": "PHILIPPINE_TAX_FILING_ADJACENT",
+  "boundaryReason": "tax_filing_adjacency",
+  "responseHash": "sha256:10ce2e7353278545141cbcafb5d8a98ef0aec65c3e13608246da70530e22b308",
+  "payloadHash": "sha256:74448c3978c7809b8501d86ebb2cffe83340f49c79d57e70f2d7c31034e5631a"
+}

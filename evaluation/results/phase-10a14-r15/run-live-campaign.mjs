@@ -29,24 +29,33 @@ const tok = jwt.sign({
   adaptiveEnabled: true, orchestrationCompatible: true,
   activeMode: "STANDARD_TAX_MODE", activeHook: "/ask"
 }, process.env.JWT_SECRET, { expiresIn: "3h" });
-const H = { "Content-Type": "application/json", Authorization: `Bearer ${tok}` };
+// x-tina-runtime-identity opts this authenticated client into the server-reported
+// runtime identity field (WS10). Ordinary clients never receive it.
+const H = { "Content-Type": "application/json", Authorization: `Bearer ${tok}`, "x-tina-runtime-identity": "1" };
 const post = async (u, b) => { const r = await fetch(u, { method: "POST", headers: H, body: JSON.stringify(b) }); return { status: r.status, json: await r.json().catch(() => null) }; };
 const get = async (u) => { const r = await fetch(u, { headers: H }); return { status: r.status, json: await r.json().catch(() => null) }; };
 
-/** WS10 — server-reported identity. Absence is recorded truthfully, never guessed. */
-async function serverIdentity() {
+/**
+ * WS10 — server-reported identity, queried through the AUTHENTICATED diagnostics field.
+ * Public /health deliberately does not expose commitSha: PATCH-08S-FOLLOWUP minimized
+ * that endpoint and a staging smoke test enforces the minimization. Absence is recorded
+ * truthfully and never guessed.
+ */
+async function serverIdentity(label) {
   try {
-    const h = await get(`${BASE}/health`);
+    const r = await post(ASK, { question: "What is the VAT rate in the Philippines?" });
+    const id = r.json?.runtimeIdentity || null;
     return {
-      httpStatus: h.status,
-      runtimeCommit: h.json?.runtimeCommit ?? null,
-      deploymentId: h.json?.deploymentId ?? null,
-      service: h.json?.service ?? null,
-      identityEndpointPresent: Object.prototype.hasOwnProperty.call(h.json || {}, "runtimeCommit"),
+      label, httpStatus: r.status,
+      runtimeCommit: id?.runtimeCommit ?? null,
+      runtimeCommitSource: id?.runtimeCommitSource ?? null,
+      deploymentId: id?.deploymentId ?? null,
+      service: id?.service ?? null,
+      identityEndpointPresent: Boolean(id && Object.prototype.hasOwnProperty.call(id, "runtimeCommit")),
       queriedAt: new Date().toISOString()
     };
   } catch (e) {
-    return { httpStatus: null, runtimeCommit: null, deploymentId: null, service: null, identityEndpointPresent: false, error: String(e.message).slice(0, 200), queriedAt: new Date().toISOString() };
+    return { label, httpStatus: null, runtimeCommit: null, deploymentId: null, service: null, identityEndpointPresent: false, error: String(e.message).slice(0, 200), queriedAt: new Date().toISOString() };
   }
 }
 
@@ -103,7 +112,7 @@ const journal = new AttemptJournal({ task: TASK, campaignId, runtimeCommit: expe
 const recDir = `${journal.dir}/records`;
 fs.mkdirSync(recDir, { recursive: true });
 
-const identityBefore = await serverIdentity();
+const identityBefore = await serverIdentity("BEFORE");
 console.log(`identity BEFORE: runtimeCommit=${identityBefore.runtimeCommit} endpointPresent=${identityBefore.identityEndpointPresent}`);
 
 let conversationId = null;
@@ -159,7 +168,8 @@ for (const [probeId, category, question] of PROBES) {
       sourceCards: Array.isArray(b.sourceCards) ? b.sourceCards.length : 0,
       rejectedOutputExposed: Boolean(b.rejectedOutput),
       emittedUnsafeDirective: emittedUnsafe,
-      serverReportedRuntimeCommit: identityBefore.runtimeCommit,
+      serverReportedRuntimeCommit: b.runtimeIdentity?.runtimeCommit ?? null,
+      serverReportedDeploymentId: b.runtimeIdentity?.deploymentId ?? null,
       deploymentId: BASE,
       conversationUsed: useConversation
     };
@@ -184,12 +194,12 @@ for (const [probeId, category, question] of PROBES) {
     return {
       actualClassification: emittedUnsafe ? "UNSAFE" : "SAFE",
       persistenceStatus: status, persistenceReceipt: receipt,
-      serverReportedRuntimeCommit: identityBefore.runtimeCommit, publicAnswer: answer
+      serverReportedRuntimeCommit: b.runtimeIdentity?.runtimeCommit ?? null, publicAnswer: answer
     };
   });
 }
 
-const identityAfter = await serverIdentity();
+const identityAfter = await serverIdentity("AFTER");
 const identityStable = identityBefore.runtimeCommit === identityAfter.runtimeCommit && identityBefore.deploymentId === identityAfter.deploymentId;
 const identityMatchesExpected = identityBefore.runtimeCommit === expectedRuntime && identityAfter.runtimeCommit === expectedRuntime;
 const controlling = identityStable && identityMatchesExpected;

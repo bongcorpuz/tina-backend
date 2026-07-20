@@ -1,0 +1,19 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-FINAL-c38a073b8145-PS7-A1",
+  "completedAt": "2026-07-20T04:22:21.701Z",
+  "actualClassification": "PERSISTENCE_TIMEOUT",
+  "persistenceStatus": "PERSISTENCE_TIMEOUT",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": false,
+    "status": "PERSISTENCE_TIMEOUT",
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "memoryHookCompleted": false,
+    "reasonCode": "TIMEOUT",
+    "safeDiagnostic": "PERSISTENCE_TIMEOUT"
+  },
+  "responseHash": "sha256:2d8d2e46a14e1a717b83e119bd48e03fd2ba6e6b9b711466497150df75b0a737",
+  "payloadHash": "sha256:7bcab5a5701c751ef8ac0531c1ef1179ef6234214caa943141c2d19d02f66620"
+}

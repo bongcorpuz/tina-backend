@@ -1,0 +1,19 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-FINAL-c38a073b8145-PS4-A1",
+  "completedAt": "2026-07-20T04:22:21.615Z",
+  "actualClassification": "PERSISTENCE_FAILED",
+  "persistenceStatus": "PERSISTENCE_FAILED",
+  "persistenceReceipt": {
+    "attempted": true,
+    "persisted": false,
+    "status": "PERSISTENCE_FAILED",
+    "userMessagePersisted": false,
+    "assistantMessagePersisted": false,
+    "memoryHookCompleted": false,
+    "reasonCode": "NO_INSERT_DATA",
+    "safeDiagnostic": "PERSISTENCE_FAILED"
+  },
+  "responseHash": "sha256:ae129d6531b44ba125d8332e4b8a3f2d8b62122f17358b05ebdd0c17beed98fd",
+  "payloadHash": "sha256:546d9232051df9b1196143965ed11201a9d91ac5b41141294366a5dee2693be6"
+}

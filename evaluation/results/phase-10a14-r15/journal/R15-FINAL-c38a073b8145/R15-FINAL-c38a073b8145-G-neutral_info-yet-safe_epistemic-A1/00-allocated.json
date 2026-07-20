@@ -1,0 +1,24 @@
+{
+  "event": "ALLOCATED",
+  "task": "PHASE-10A14-R15",
+  "campaignId": "R15-FINAL-c38a073b8145",
+  "probeId": "G-neutral_info-yet-safe_epistemic",
+  "attemptId": "R15-FINAL-c38a073b8145-G-neutral_info-yet-safe_epistemic-A1",
+  "attemptSequence": 1,
+  "runtimeCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "deploymentId": null,
+  "executionMode": "DETERMINISTIC",
+  "exactQuestion": "When must an individual file the annual income tax return?",
+  "answerFixtureOrRawAnswer": "The annual return is filed on BIR Form 1701, yet the authority does not establish today's deadline.",
+  "expectedClassification": "SAFE",
+  "retryOf": null,
+  "requestHash": "sha256:2628fa0363222baad4a9145d4764bf9257f93db3915f6104cfa7fee8d6031508",
+  "allocatedAt": "2026-07-20T04:22:15.075Z",
+  "suite": "semantic-generated",
+  "coverageClass": null,
+  "params": {
+    "lead": "neutral_info",
+    "connector": "yet",
+    "tail": "safe_epistemic"
+  }
+}

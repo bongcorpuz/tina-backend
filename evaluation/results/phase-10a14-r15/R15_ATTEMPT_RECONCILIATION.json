@@ -1,0 +1,115 @@
+{
+  "task": "PHASE-10A14-R15",
+  "finalRuntime": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "generations": {
+    "R15-POSTFIX1-WORKING-TREE": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "c6c15d9b56c2f6b6281e86807ccf37bd31c19ee88cde15a67a7d708f0e0b4820",
+      "controlling": false
+    },
+    "R15-POSTFIX2-WORKING-TREE": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "ecebac0eb719458d8221d260397246c5bb900823b0fa528579cc769a4d73a965",
+      "controlling": false
+    },
+    "R15-POSTFIX3-WORKING-TREE": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "a7fc79703873523ff082a361674178acf0d22ba6ad09a98446bb61f1a2a1a457",
+      "controlling": false
+    },
+    "R15-POSTFIX4-WORKING-TREE": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "1d807cb5a44ceaff52b23bd2c2cdcca58a9906b72d78cf85c240be1e2cb034c4",
+      "controlling": false
+    },
+    "R15-POSTFIX5-WORKING-TREE": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "3bddeeccefddac99a04545a602ae5969a91d09ca797c81caa09447af8531b1ec",
+      "controlling": false
+    },
+    "R15-POSTFIX6-WORKING-TREE": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "0e501a21aeb05303c8d6590f213fa92da10c7d1137a1c21ea58c333330f5753c",
+      "controlling": false
+    },
+    "R15-PREFIX-31f2326c1ebf": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 1528,
+      "events": 4584,
+      "verifiedEvents": 4584,
+      "mismatches": 0,
+      "archiveSha256": "fd81c8b50a1d92cbd0584435e1b0b2cc92d8c1a05645ab9b96922939623e1122",
+      "controlling": false
+    },
+    "R15-PREFIXLIVE-31f2326c1ebf": {
+      "form": "ARCHIVED_JSONL",
+      "attempts": 41,
+      "events": 160,
+      "verifiedEvents": 160,
+      "mismatches": 0,
+      "archiveSha256": "6f703d1da59d068d9cb85802082096b493bb353d6cd71f0838265f0bcac92222",
+      "controlling": false
+    },
+    "R15-FINAL-c38a073b8145": {
+      "form": "PER_ATTEMPT_DIRECTORIES",
+      "attempts": 1528,
+      "completed": 1528,
+      "incomplete": 0,
+      "malformed": 0,
+      "technicalFailures": 0,
+      "legalMismatches": 0,
+      "retries": 0,
+      "controlling": true
+    },
+    "R15-LIVE-c38a073b8145": {
+      "form": "PER_ATTEMPT_DIRECTORIES",
+      "attempts": 40,
+      "completed": 40,
+      "incomplete": 0,
+      "malformed": 0,
+      "technicalFailures": 0,
+      "legalMismatches": 0,
+      "retries": 0,
+      "controlling": true
+    }
+  },
+  "totals": {
+    "attempts": 12305,
+    "events": 32248,
+    "completed": 1568,
+    "incomplete": 0,
+    "malformed": 0,
+    "technicalFailures": 0,
+    "retries": 0
+  },
+  "controllingGenerations": [
+    "R15-FINAL-c38a073b8145",
+    "R15-LIVE-c38a073b8145"
+  ],
+  "deletions": 0,
+  "statement": "No attempt was deleted. Archived generations are container conversions verified event-by-event before directory removal; the pre-fix generations additionally remain in full directory form in git history at COMMIT 3 (4340279)."
+}
