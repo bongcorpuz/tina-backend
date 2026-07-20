@@ -81,6 +81,21 @@ import {
 } from "./services/source-fallback-disclosure.js";
 import { evaluateAnswerSupport, buildCalendarRelativeSafeAnswer } from "./services/answer-support-validator.js";
 import { derivePersistenceReceipt } from "./services/persistence-receipt.js";
+import { AsyncLocalStorage } from "node:async_hooks";
+
+// PHASE-10A14-R14 (P1-R13-IR-003): request-scoped persistence context. R13 set a public
+// persistenceStatus on exactly ONE response path (the domain boundary), so 24 of 28 live
+// records declared null. Rather than editing dozens of res.json call sites — which would
+// silently miss any path not individually enumerated — the turn's acknowledged receipt is
+// recorded here and injected by a single response wrapper installed in handleAsk.
+// AsyncLocalStorage keeps this per-request and concurrency-safe.
+const persistenceContext = new AsyncLocalStorage();
+
+/** Record the acknowledged receipt for the in-flight request, if any. */
+function recordPersistenceReceipt(receipt) {
+  const store = persistenceContext.getStore();
+  if (store) { store.receipt = receipt; store.attempted = true; }
+}
 
 const ENGINE_VERSION = "9.0.0";
 
@@ -1910,7 +1925,9 @@ export function createAskHandler({
     // the actual saveMessage results (not from ID presence). Existing callers that ignore the
     // return value remain compatible; the domain-boundary path uses it to set persistenceStatus.
     if (!conversationId || !userId) {
-      return derivePersistenceReceipt({ conversationId, userId });
+      const missingIdReceipt = derivePersistenceReceipt({ conversationId, userId });
+      recordPersistenceReceipt(missingIdReceipt);
+      return missingIdReceipt;
     }
     let userMessageData = null, assistantMessageData = null, memoryHookOk = false, threw = false;
     try {
@@ -1930,7 +1947,9 @@ export function createAskHandler({
       console.error("Conversation save failed:", error.message);
       threw = true;
     }
-    return derivePersistenceReceipt({ conversationId, userId, userMessageData, assistantMessageData, memoryHookOk, threw });
+    const receipt = derivePersistenceReceipt({ conversationId, userId, userMessageData, assistantMessageData, memoryHookOk, threw });
+    recordPersistenceReceipt(receipt);
+    return receipt;
   }
 
   async function handleFeedback({ userId, conversationId, correction, feedbackType, originalAnswer, hookConfig }) {
@@ -2535,6 +2554,49 @@ export function createAskHandler({
   }
 
   return async function handleAsk(req, res) {
+    // ── PHASE-10A14-R14 (P1-R13-IR-003) — universal public persistenceStatus ──────
+    // Every ordinary public ask response must declare a truthful, non-null
+    // persistenceStatus. The status is derived ONLY from an acknowledged receipt or
+    // from an explicit non-persistence rule — never inferred from a later history
+    // lookup, and never from the mere presence of IDs.
+    const _persistenceStore = { receipt: null, attempted: false };
+    const _rawJson = res.json.bind(res);
+    res.json = (body) => {
+      if (body && typeof body === "object" && !Array.isArray(body) && body.persistenceStatus == null) {
+        const receipt = _persistenceStore.receipt;
+        if (receipt && receipt.status) {
+          body.persistenceStatus = receipt.status;
+          body.persistenceReceipt = {
+            attempted: receipt.attempted,
+            persisted: receipt.persisted,
+            userMessagePersisted: receipt.userMessagePersisted,
+            assistantMessagePersisted: receipt.assistantMessagePersisted,
+            memoryHookCompleted: receipt.memoryHookCompleted,
+            reasonCode: receipt.reasonCode,
+            safeDiagnostic: receipt.safeDiagnostic
+          };
+        } else {
+          // No persistence was attempted on this path. Report the truthful reason.
+          // NOTE: derivePersistenceReceipt must NOT be used here — with both IDs present
+          // and no row data it yields PERSISTENCE_FAILED, which would tell the user a
+          // save failed when none was ever attempted. An unattempted path is reported as
+          // an explicit non-persistence rule. PERSISTED is never produced here.
+          const _cid = getConversationId(req), _uid = getUserId(req);
+          body.persistenceStatus = !_cid ? "NOT_PERSISTED_NO_CONVERSATION"
+            : !_uid ? "NOT_PERSISTED_NO_USER"
+            : "NOT_PERSISTED_BY_POLICY";
+          body.persistenceReceipt = {
+            attempted: false, persisted: false,
+            reasonCode: !_cid ? "MISSING_CONVERSATION_ID"
+              : !_uid ? "MISSING_USER_ID"
+              : "NO_PERSISTENCE_ON_THIS_RESPONSE_PATH",
+            safeDiagnostic: body.persistenceStatus
+          };
+        }
+      }
+      return _rawJson(body);
+    };
+    return persistenceContext.run(_persistenceStore, async () => {
     try {
       const { question, correction, feedbackType, originalAnswer } = req.body || {};
       const userId = getUserId(req);
@@ -3518,6 +3580,7 @@ export function createAskHandler({
         tpmConscious: true
       });
     }
+    }); // PHASE-10A14-R14: end persistenceContext.run
   };
 }
 

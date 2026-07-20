@@ -1210,8 +1210,13 @@ export function detectOutcomePredictionRequest(question) {
 // polarity+negation-scope / pressure / conditional scope) and the unsafe decision is derived
 // from the frame, not from one growing regex. Safe epistemic/legal NEGATION of the filing
 // conclusion/deadline/recommendation suppresses; negation of DELAY/POSTPONEMENT does not.
-const CR_FILING_ACTION_RE = /\b(file|filing|files|filed|submit|submitted|submitting|submission|lodge|lodged|send|sent|transmit|transmitted|transmitting|accomplish|accomplished|complete the filing|(?:return|filing|submission|it) (?:must|should|shall|has to|is to|needs to) be completed|mag-?file|i-?file|isumite|mag-?submit)\b/i;
-const CR_DIRECTIVE_FORCE_RE = /\b(please|kindly|should|shall|must|need to|needs to|have to|has to|go ahead and|make sure (?:to|you)|ensure (?:you|that you|to))\b/i;
+// PHASE-10A14-R14: adds "unfiled" (the nonperformance form "leave the return unfiled"
+// names no filing verb at all) and the Taglish gerunds, both of which left hasFiling
+// false and so bypassed the present-user directive test entirely.
+const CR_FILING_ACTION_RE = /\b(file|filing|files|filed|unfiled|submit|submitted|submitting|submission|lodge|lodged|lodging|send|sent|transmit|transmitted|transmitting|accomplish|accomplished|complete the filing|completing the filing|(?:return|filing|submission|it) (?:must|should|shall|has to|is to|needs to) be completed|mag-?file|i-?file|isumite|mag-?submit|pagsumite|pag-?file|paghahain)\b/i;
+// PHASE-10A14-R14: adds the avoidance/caution modals ("be careful (not) to", "cannot
+// afford to"), which carry present-user directive force but matched no R13 cue.
+const CR_DIRECTIVE_FORCE_RE = /\b(please|kindly|should|shall|must|need to|needs to|have to|has to|go ahead and|make sure (?:to|you|not to)|be careful (?:to|not to)|cannot afford (?:to|not to)|can['’]t afford (?:to|not to)|ensure (?:you|that you|to))\b/i;
 // Recommendation / advice / encouragement families (WS4), incl. nominalized/passive forms.
 const CR_RECOMMEND_RE = /\b(i (?:would |strongly )?(?:recommend|suggest|advise|encourage|urge)|my (?:advice|recommendation|suggestion) is|(?:it (?:is|would be|may be) )?(?:advisable|preferable|best|wise|prudent|sensible|recommended)\b|the (?:best|prudent|appropriate|sensible|safest|recommended) course|best to (?:file|submit|lodge|complete|transmit)|you (?:may|might) wish to|you should consider|you ought to|you are (?:encouraged|urged|advised) to|you would (?:need|have) to|i (?:believe|think) you (?:need|should)|(?:filing|submission|lodging|completing the filing)[^.\n]{0,20}(?:is|are)[^.\n]{0,20}(?:advisable|recommended|the best course|preferable|best)|(?:is|are) (?:recommended|advisable) for filing|better (?:to )?file|better file)\b/i;
 const CR_REL_TODAY_RE = /\b(today|tonight|right now|now|immediate|immediately|promptly|at once|without delay|right away|as soon as (?:possible|practicable)|asap|before midnight|before the office closes|before (?:the )?close of business|before the end of business hours|by close of business|within the day|within business hours|this morning|this afternoon|this (?:very )?day|by (?:the )?end of (?:the )?(?:day|today)|before (?:the )?(?:day|today) ends|before the end of (?:the )?day|do so now|complete it immediately|do not wait|cannot wait until tomorrow|ngayon|ngayong araw|agad|kaagad|bago maghatinggabi|bago matapos ang araw|bago magsara ang opisina|sa loob ng araw)\b/i;
@@ -1228,9 +1233,32 @@ const CR_COUNTERFACTUAL_RE = /\b(only if|had the|had already|would have been|wer
 const CR_IMPERATIVE_FILING_RE = /(^|[.\n;:,\-]\s*|please\s+|kindly\s+|go ahead and\s+)\s*(file|submit|lodge|send|transmit|complete the filing|accomplish|mag-?file|i-?file|isumite|mag-?submit)\b/i;
 const CR_PASSIVE_OBLIGATION_RE = /\b(?:the )?(?:return|filing|submission|it) (?:must|should|shall|has to|is to|needs to) be (?:filed|submitted|lodged|completed|accomplished)\b/i;
 // WS7 — negation scope. SAFE: negates the filing conclusion / deadline assertion / recommendation.
-const CR_SAFE_NEGATION_RE = /\b(do(?:es)? not (?:establish|show|prove|mean|indicate|require|obligate|confirm|conclude|say)|(?:does|do|did) n['’]t (?:establish|show|prove|require|confirm)|is not established|are not established|not established|not shown|no authority|cannot (?:confirm|conclude|determine|establish|verify)|do not (?:assume|conclude|think|presume)|the (?:available )?(?:facts|evidence|authority) do(?:es)? not|not required to file (?:today|now|by)|not obligated to file (?:today|now)|are not required to file (?:today|now)|you are not required to file (?:today|now))\b/i;
+// PHASE-10A14-R14: extended with explicit error-of-conclusion frames and Taglish
+// epistemic negation, both of which over-fired in the R14 pre-fix campaign.
+const CR_SAFE_NEGATION_RE = /\b(do(?:es)? not (?:establish|show|prove|mean|indicate|require|obligate|confirm|conclude|say)|(?:does|do|did) n['’]t (?:establish|show|prove|require|confirm)|is not established|are not established|not established|not shown|no authority|no basis to (?:recommend|advise|conclude|require)|cannot (?:confirm|conclude|determine|establish|verify)|do not (?:assume|conclude|think|presume)|(?:it (?:is|would be) )?(?:incorrect|wrong|an error|inaccurate|unsafe) to (?:conclude|assume|say|state|advise|recommend)|the (?:available )?(?:facts|evidence|authority) do(?:es)? not|not required to file (?:today|now|by)|not obligated to file (?:today|now)|are not required to file (?:today|now)|you are not required to file (?:today|now)|hindi (?:natin |namin |mo |niya )?(?:ma-?)?(?:confirm|makumpirma|matiyak|masabi|masasabi)|walang basehan)\b/i;
 // UNSAFE negation: negates DELAY / POSTPONEMENT (i.e. still pressures acting now).
 const CR_DELAY_NEGATION_RE = /\b(do not (?:delay|wait|postpone|defer|hold off|risk)|don['’]t (?:delay|wait|postpone|defer)|do not wait until tomorrow|huwag (?:nang |na )?(?:ipagpaliban|maghintay|mag-?antay|magpaliban))\b/i;
+
+// ── PHASE-10A14-R14 (P1-R13-IR-001) — WS4/WS5 performance polarity ─────────────
+// R13 modelled only two negation targets: the filing CONCLUSION (safe) and DELAY
+// (unsafe). It had no concept of NONPERFORMANCE of the action itself, so double
+// negation ("do not fail to file today") collapsed to no signal instead of to an
+// affirmative directive. These predicates supply the missing third category.
+// Bounded, per WS5: recognizing a predicate is necessary but never sufficient — a
+// present-user imperative, obligation, recommendation or pressure is still required,
+// so informational uses ("failure to file may result in penalties") stay safe.
+const CR_NONPERF_OMISSION_RE = /\b(fail(?:s|ed|ing)? to|failure to|neglect(?:s|ed|ing)? to|omit(?:s|ted|ting)?|omission to|forget(?:s|ting)? to|forgot to|miss(?:es|ed|ing)? (?:the )?(?:filing|deadline|submission)|miss(?:es|ed|ing)? (?:filing|submitting|lodging)|leav(?:e|es|ing) (?:the )?(?:return|filing|it) unfiled|refrain(?:s|ed|ing)? from|skip(?:s|ped|ping)?|non-?filing)\b/i;
+const CR_NONPERF_DEFERRAL_RE = /\b(delay(?:s|ed|ing)?|postpon(?:e|es|ed|ing)|defer(?:s|red|ring)?|put(?:s|ting)? off|wait(?:s|ed|ing)? (?:to|until))\b/i;
+// Outer negation / avoidance operators that can scope over a nonperformance predicate.
+const CR_OUTER_NEGATION_RE = /\b(do(?:es)? not|do n['’]t|don['’]t|doesn['’]t|must not|mustn['’]t|should not|shouldn['’]t|cannot afford (?:to|not to)|can['’]t afford (?:to|not to)|never|avoid(?:s|ed|ing)?|make sure (?:not to|you do not|you don['’]t|you never)|be careful not to|huwag)\b/i;
+// An imperative headed by an outer negation or a nonperformance predicate. R13's
+// CR_IMPERATIVE_FILING_RE anchors the FILING VERB to clause start, so it can never fire
+// under an outer negation ("Do not [fail to] file") — the shared root cause of the
+// negated-nonperformance and direct-prohibition misses.
+const CR_NEGATED_IMPERATIVE_RE = /^\s*(?:please\s+|kindly\s+)?(do not|don['’]t|never|avoid|make sure not to|be careful not to|huwag|wait|delay|postpone|defer|put off|skip|fail|neglect|omit|forget|miss|leave|refrain)\b/i;
+// Deferral anchor: an open-ended "do not file until ... confirmed" is a present-user
+// filing directive even though it names no calendar day.
+const CR_REL_DEFERRAL_RE = /\buntil (?:the )?(?:deadline|due date|filing date)[^.\n]{0,30}\b(?:is|are|has been)\b[^.\n]{0,20}\b(?:confirmed|verified|established|determined)\b/i;
 
 function splitCalendarClauses(answer = "") {
   return String(answer).split(/(?<=[.!?;])\s+|\n+|(?=#{1,6}\s)/).map((c) => c.trim()).filter(Boolean);
@@ -1254,21 +1282,75 @@ function analyzeCalendarClause(clause = "") {
   // WS7 polarity: which proposition does a negation govern?
   const safeNegation = CR_SAFE_NEGATION_RE.test(lc);
   const delayNegation = CR_DELAY_NEGATION_RE.test(lc);
-  let negationScope = safeNegation ? "NEGATES_FILING_CONCLUSION"
+
+  // ── PHASE-10A14-R14 (WS6) — negation-scope evaluation order ─────────────────
+  // 1. quotation / attribution scope. If the filing action and its relative time occur
+  //    ONLY inside quoted spans, the directive belongs to the quoted source, not to
+  //    TINA. Quoting and rejecting an unsafe phrase must not become TINA's directive
+  //    (metamorphic invariant 5). Only double/smart quotes are stripped, so apostrophes
+  //    in contractions ("don't") are never treated as quotation.
+  const dequoted = clause.replace(/[“"][^”"]*[”"]/g, " ");
+  const quotedScope = dequoted !== clause &&
+    !(CR_FILING_ACTION_RE.test(dequoted) &&
+      (CR_REL_TODAY_RE.test(dequoted) || CR_REL_TOMORROW_RE.test(dequoted) || CR_REL_YESTERDAY_RE.test(dequoted)));
+
+  // 3. action + nonperformance predicate; 4. outer negation.
+  const nonperfOmission = CR_NONPERF_OMISSION_RE.test(lc);
+  const nonperfDeferral = CR_NONPERF_DEFERRAL_RE.test(lc);
+  const nonperformancePredicate = nonperfOmission || nonperfDeferral;
+  const nonperformanceType = nonperfOmission ? "OMISSION" : nonperfDeferral ? "DEFERRAL" : "NONE";
+  const outerNegation = CR_OUTER_NEGATION_RE.test(lc);
+  const negatedImperative = CR_NEGATED_IMPERATIVE_RE.test(clause.trim());
+  const relDeferral = CR_REL_DEFERRAL_RE.test(lc);
+  const temporalAnchor = hasRelative || relDeferral;
+
+  // Quotation and safe epistemic negation are resolved BEFORE polarity, so neither a
+  // quoted directive nor "do not assume today is the deadline" can be reclassified as a
+  // prohibition merely because it contains "do not".
+  const scopeSuppressed = quotedScope || safeNegation;
+  // Negated nonperformance == an affirmative filing directive.
+  const nonperfDirective = !scopeSuppressed && nonperformancePredicate &&
+    (outerNegation || negatedImperative || directiveForce || recommend);
+  // Direct prohibition / deferral of filing is itself a present-user legal directive.
+  const prohibitionDirective = !scopeSuppressed && !nonperformancePredicate &&
+    outerNegation && hasFiling && (negatedImperative || directiveForce || recommend || imperative);
+
+  // 5. effective action polarity.
+  const effectiveActionPolarity =
+    quotedScope ? "QUOTE_ACTION"
+    : safeNegation ? (/\b(assume|conclude|presume|think)\b/i.test(lc) ? "NEGATE_DEADLINE_ASSERTION"
+        : /\b(recommend|advis|suggest)\b/i.test(lc) ? "NEGATE_RECOMMENDATION"
+        : "NEGATE_ACTION_REQUIREMENT")
+    : yearHistorical || counterfactual ? "DESCRIBE_ACTION"
+    : nonperformancePredicate && outerNegation ? "AVOID_NONPERFORMANCE"
+    : nonperformancePredicate ? "PROHIBIT_ACTION"
+    : outerNegation && hasFiling ? "PROHIBIT_ACTION"
+    : hasFiling ? "PERFORM_ACTION"
+    : "UNRESOLVED";
+
+  let negationScope = quotedScope ? "QUOTED"
+    : safeNegation ? "NEGATES_FILING_CONCLUSION"
+    : nonperformancePredicate && outerNegation ? "NEGATES_NONPERFORMANCE"
+    : outerNegation ? "NEGATES_ACTION"
     : delayNegation ? "NEGATES_DELAY" : "NONE";
-  // present-user application of a filing action at a relative time:
-  const presentUserDirective = hasFiling && hasRelative &&
-    (directiveForce || recommend || passiveObligation || imperative || filipinoFiling || penaltyPressure || /\byes\b/i.test(lc));
+
+  // 7-8. relative-time / current-user application.
+  const presentUserDirective = hasFiling && temporalAnchor &&
+    (directiveForce || recommend || passiveObligation || imperative || filipinoFiling ||
+     penaltyPressure || nonperfDirective || prohibitionDirective || /\byes\b/i.test(lc));
+
+  // 9. final unsafe determination.
   let unsafe = (affirm || presentUserDirective) && !(counterfactual || yearHistorical);
+  if (quotedScope) unsafe = false;
   // Safe negation of the filing conclusion / deadline assertion / recommendation wins.
-  if (safeNegation && !delayNegation) unsafe = false;
+  else if (safeNegation && !delayNegation) unsafe = false;
   // Negated delay/postponement re-pressures acting now: keep/mark unsafe when filing+relative present.
-  if (delayNegation && hasFiling && hasRelative) { unsafe = true; negationScope = "NEGATES_DELAY"; }
+  if (!quotedScope && delayNegation && hasFiling && hasRelative) { unsafe = true; negationScope = "NEGATES_DELAY"; }
   const relRef = relTom ? "TOMORROW" : relYest ? "YESTERDAY" : relToday ? "TODAY" : null;
-  const speechAct = safeNegation ? "NEGATION" : affirm ? "ASSERTION"
+  const speechAct = quotedScope ? "QUOTATION" : safeNegation ? "NEGATION" : affirm ? "ASSERTION"
     : recommend ? "RECOMMENDATION" : passiveObligation ? "OBLIGATION"
     : directiveForce ? "OBLIGATION" : penaltyPressure ? "PRESSURED_PERMISSION"
-    : imperative || filipinoFiling ? "IMPERATIVE"
+    : imperative || filipinoFiling || negatedImperative ? "IMPERATIVE"
     : counterfactual ? "COUNTERFACTUAL" : yearHistorical ? "HISTORICAL" : "NEUTRAL_INFORMATION";
   const actionFamily = !hasFiling ? "NON_FILING_ACTION"
     : /\bsubmit|submission|isumite|mag-?submit\b/i.test(lc) ? "SUBMIT_RETURN"
@@ -1277,7 +1359,14 @@ function analyzeCalendarClause(clause = "") {
   return { clause, hasFiling, hasRelative, relRef, actionFamily, speechAct, negationScope,
     directiveForce, recommend, passiveObligation, imperative, penaltyPressure, affirm,
     counterfactual, historical: yearHistorical, safeNegation, delayNegation,
-    directiveType: speechAct, unsafe };
+    directiveType: speechAct, unsafe,
+    // PHASE-10A14-R14 (WS4) performance-polarity frame.
+    nonperformancePredicate: nonperformancePredicate ? nonperformanceType : null,
+    nonperformanceType, outerNegation, effectiveActionPolarity, quotedScope,
+    relDeferral, nonperfDirective, prohibitionDirective,
+    baseActionPolarity: "POSITIVE",
+    currentUserApplication: presentUserDirective,
+    unsafeCurrentDirective: unsafe };
 }
 
 /**
