@@ -1,0 +1,18 @@
+{
+  "event": "COMPLETED_FAIL",
+  "headAtEnd": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+  "treeCleanAfter": true,
+  "endedAt": "2026-07-20T10:09:03.051Z",
+  "exitCode": 1,
+  "signal": null,
+  "durationMs": 199633,
+  "runtimeCommit": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+  "syntaxRun": 10,
+  "syntaxFailed": 0,
+  "suitesRun": 210,
+  "suitesFailed": 4,
+  "reachabilityBefore": null,
+  "reachabilityAfter": null,
+  "environmentFailure": false,
+  "environmentClassification": null
+}

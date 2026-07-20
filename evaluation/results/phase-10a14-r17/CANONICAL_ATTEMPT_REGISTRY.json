@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T10:04:17.809Z",
+  "generatedAt": "2026-07-20T10:10:20.671Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r17/attempts",
   "r17Base": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
   "rule": "Machine-generated. Controlling status requires valid Git provenance AND a VALID_CONTROLLING disposition. No manually typed competing total is permitted anywhere.",
@@ -14,20 +14,20 @@
     "clean": true
   },
   "counts": {
-    "totalAttempts": 32,
-    "runnerInvocations": 0,
+    "totalAttempts": 33,
+    "runnerInvocations": 1,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 32,
     "campaignAttempts": 0,
     "completedPass": 31,
-    "completedFailures": 1,
+    "completedFailures": 2,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "incompleteAttempts": 0,
     "corruptAttempts": 0,
     "invalidProvenanceAttempts": 0,
     "controllingAttempts": 31,
-    "nonControllingAttempts": 1,
+    "nonControllingAttempts": 2,
     "validLinkedRetries": 0,
     "unlinkedReruns": 16
   },
@@ -39,7 +39,17 @@
     "statement": "All counts are derived from every immutable attempt directory under evaluation/results/phase-10a14-r17/attempts, with no category excluded. A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt. Controlling status requires BOTH valid Git provenance AND a VALID_CONTROLLING disposition — it is never the raw terminal event alone."
   },
   "gateCycles": {
-    "deterministic": [],
+    "deterministic": [
+      {
+        "attemptId": "R17-GATE-det-cycle1-A1",
+        "exitCode": 1,
+        "rawStatus": "COMPLETED_FAIL",
+        "disposition": "VALID_NON_CONTROLLING",
+        "controlling": false,
+        "retryOf": null,
+        "provenanceValid": true
+      }
+    ],
     "staging": []
   },
   "retryLinkage": {
@@ -192,6 +202,15 @@
       "maxRetries": 2,
       "ceilingReached": false,
       "ceilingSupportedByLinks": false
+    },
+    "R17-GATE-det-cycle1|58cda48ab31a24673a5f1be0cd7db60eeaf7c932": {
+      "key": "R17-GATE-det-cycle1|58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+      "attempts": 1,
+      "linkedRetries": 0,
+      "unlinkedReruns": 0,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": true
     }
   },
   "attempts": [
@@ -1569,6 +1588,49 @@
       "treeEquivalenceVerified": null,
       "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-FOCUSED-r9-focused-A2/stdout.raw.txt",
       "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-FOCUSED-r9-focused-A2",
+      "adjudicated": false
+    },
+    {
+      "attemptId": "R17-GATE-det-cycle1-A1",
+      "task": "PHASE-10A14-R17",
+      "attemptType": "DETERMINISTIC_GATE",
+      "campaignId": "R17-GATE-DETERMINISTIC",
+      "probeId": "deterministic",
+      "cycleKey": "R17-GATE-det-cycle1",
+      "command": "node scripts/run-regressions.mjs",
+      "runtimeCommit": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+      "runtimeCommitSource": "git rev-parse HEAD",
+      "headAtStart": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+      "headAtEnd": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T10:05:43.204Z",
+      "endedAt": "2026-07-20T10:09:03.051Z",
+      "exitCode": 1,
+      "signal": null,
+      "rawStatus": "COMPLETED_FAIL",
+      "status": "COMPLETED_FAIL",
+      "disposition": "VALID_NON_CONTROLLING",
+      "dispositionReasons": [
+        "RAW:COMPLETED_FAIL"
+      ],
+      "controlling": false,
+      "technicalFailure": false,
+      "completedFailure": true,
+      "environmentFailure": false,
+      "corrupt": false,
+      "corruptionFindings": [],
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "provenanceErrors": [],
+      "headAtStartVerified": true,
+      "headAtEndVerified": true,
+      "runtimeCommitVerified": true,
+      "ancestryVerified": null,
+      "treeEquivalenceVerified": null,
+      "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A1/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A1",
       "adjudicated": false
     }
   ]

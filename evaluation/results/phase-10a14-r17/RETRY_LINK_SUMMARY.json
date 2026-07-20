@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T10:04:17.809Z",
+  "generatedAt": "2026-07-20T10:10:20.671Z",
   "rule": "A retry requires a valid retryOf to an existing prior attempt, an objective reason and an unchanged runtime. An unlinked rerun is not a retry and never counts toward a ceiling.",
   "validRetryCount": 0,
   "validRetries": [],
@@ -149,6 +149,15 @@
       "maxRetries": 2,
       "ceilingReached": false,
       "ceilingSupportedByLinks": false
+    },
+    "R17-GATE-det-cycle1|58cda48ab31a24673a5f1be0cd7db60eeaf7c932": {
+      "key": "R17-GATE-det-cycle1|58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+      "attempts": 1,
+      "linkedRetries": 0,
+      "unlinkedReruns": 0,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": true
     }
   }
 }

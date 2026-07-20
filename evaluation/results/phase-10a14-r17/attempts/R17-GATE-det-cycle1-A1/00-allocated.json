@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R17-GATE-det-cycle1-A1",
+  "task": "PHASE-10A14-R17",
+  "attemptType": "DETERMINISTIC_GATE",
+  "campaignId": "R17-GATE-DETERMINISTIC",
+  "probeId": "deterministic",
+  "cycleKey": "R17-GATE-det-cycle1",
+  "runtimeCommit": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+  "runtimeCommitSource": "git rev-parse HEAD",
+  "headAtStart": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "retryOf": null,
+  "retryReason": null,
+  "notes": null,
+  "allocatedAt": "2026-07-20T10:05:43.052Z"
+}
