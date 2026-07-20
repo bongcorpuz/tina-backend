@@ -1,0 +1,16 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R16-GATE-deterministic-cycle1-A1",
+  "task": "PHASE-10A14-R16",
+  "attemptType": "DETERMINISTIC_GATE",
+  "campaignId": "R16-GATE-DETERMINISTIC",
+  "generationId": null,
+  "probeId": "deterministic",
+  "runtimeCommit": "4726bcd66af1ffeeb86afb48e9544e33be510cec",
+  "retryOf": null,
+  "notes": "runtime equivalence checked against a802064a4c26565d506c77f60fbde11abedcac89",
+  "headAtStart": "4726bcd66af1ffeeb86afb48e9544e33be510cec",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "allocatedAt": "2026-07-20T07:19:02.161Z"
+}

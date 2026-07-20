@@ -1,16 +1,16 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:17:51.247Z",
+  "generatedAt": "2026-07-20T07:23:04.978Z",
   "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
   "counts": {
-    "totalAttempts": 27,
-    "runnerInvocations": 0,
+    "totalAttempts": 28,
+    "runnerInvocations": 1,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 23,
     "campaignAttempts": 1,
     "otherAttempts": 3,
     "completedPass": 24,
-    "completedFailures": 3,
+    "completedFailures": 4,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "killedAttempts": 0,
@@ -27,7 +27,15 @@
     "statement": "All counts above are derived from every immutable attempt directory under evaluation/results/phase-10a14-r16/attempts, with no category excluded. A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt."
   },
   "gateCycles": {
-    "deterministic": [],
+    "deterministic": [
+      {
+        "attemptId": "R16-GATE-deterministic-cycle1-A1",
+        "exitCode": 1,
+        "status": "COMPLETED_FAIL",
+        "controlling": false,
+        "retryOf": null
+      }
+    ],
     "staging": []
   },
   "integrity": {

@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:17:51.247Z",
+  "generatedAt": "2026-07-20T07:23:04.978Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r16/attempts",
   "rule": "Machine-generated from immutable attempt directories. Every count in the report, result JSON, CURRENT_STATE, gate summary and attempt reconciliation derives from this file. No manually typed competing total is permitted.",
   "integrity": {
@@ -13,14 +13,14 @@
     "clean": true
   },
   "counts": {
-    "totalAttempts": 27,
-    "runnerInvocations": 0,
+    "totalAttempts": 28,
+    "runnerInvocations": 1,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 23,
     "campaignAttempts": 1,
     "otherAttempts": 3,
     "completedPass": 24,
-    "completedFailures": 3,
+    "completedFailures": 4,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "killedAttempts": 0,
@@ -37,7 +37,15 @@
     "statement": "All counts above are derived from every immutable attempt directory under evaluation/results/phase-10a14-r16/attempts, with no category excluded. A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt."
   },
   "gateCycles": {
-    "deterministic": [],
+    "deterministic": [
+      {
+        "attemptId": "R16-GATE-deterministic-cycle1-A1",
+        "exitCode": 1,
+        "status": "COMPLETED_FAIL",
+        "controlling": false,
+        "retryOf": null
+      }
+    ],
     "staging": []
   },
   "attempts": [
@@ -744,6 +752,38 @@
       "deploymentId": null,
       "malformed": false,
       "notes": null
+    },
+    {
+      "attemptId": "R16-GATE-deterministic-cycle1-A1",
+      "task": "PHASE-10A14-R16",
+      "attemptType": "DETERMINISTIC_GATE",
+      "campaignId": "R16-GATE-DETERMINISTIC",
+      "generationId": null,
+      "probeId": "deterministic",
+      "command": "node scripts/run-regressions.mjs",
+      "runtimeCommit": "4726bcd66af1ffeeb86afb48e9544e33be510cec",
+      "headAtStart": "4726bcd66af1ffeeb86afb48e9544e33be510cec",
+      "headAtEnd": "4726bcd66af1ffeeb86afb48e9544e33be510cec",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T07:19:02.319Z",
+      "endedAt": "2026-07-20T07:21:39.995Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "COMPLETED_FAIL",
+      "technicalFailure": false,
+      "legalMismatch": true,
+      "environmentFailure": false,
+      "retryOf": null,
+      "supersededBy": null,
+      "controlling": false,
+      "logPath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-deterministic-cycle1-A1/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r16/attempts/R16-GATE-deterministic-cycle1-A1",
+      "evidenceHash": "dc59c2d3a8bcd5f46239df98a32d9556a25ee60a7e437f4bcb2260ae2ed9d296",
+      "serverReportedRuntimeCommit": null,
+      "deploymentId": null,
+      "malformed": false,
+      "notes": "runtime equivalence checked against a802064a4c26565d506c77f60fbde11abedcac89"
     },
     {
       "attemptId": "R16-PREFIX-domain-false-allows-A1",
