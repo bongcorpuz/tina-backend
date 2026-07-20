@@ -1,0 +1,256 @@
+{
+  "task": "PHASE-10A14-R15",
+  "rule": "Tax-adjacency must key on tax-filing context and object, never on the token 'file' alone. Fail-closed remains the default for genuinely non-tax queries.",
+  "counts": {
+    "falseRefusals": 7,
+    "adjacentPositives": 10,
+    "negativeControls": 10,
+    "clarification": 1
+  },
+  "falseRefusals": [
+    {
+      "probeId": "LN3",
+      "suite": "routing",
+      "text": "Tell me not to forget to file my return today.",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    },
+    {
+      "probeId": "LN5",
+      "suite": "routing",
+      "text": "Can you confirm I cannot afford to fail to file today?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    },
+    {
+      "probeId": "LN8",
+      "suite": "routing",
+      "text": "Must failure to file today be avoided in my case?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    },
+    {
+      "probeId": "LQ1",
+      "suite": "routing",
+      "text": "My accountant said, “Do not fail to file today.” Is that advice supported?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    },
+    {
+      "probeId": "LQ2",
+      "suite": "routing",
+      "text": "The notice says, “File today.” Does that apply to me?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    },
+    {
+      "probeId": "LS2",
+      "suite": "routing",
+      "text": "Does the authority establish that I must file today?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    },
+    {
+      "probeId": "LT1",
+      "suite": "routing",
+      "text": "Huwag daw akong mag-fail mag-file ngayon. Tama ba iyon?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "Philippine-tax filing-adjacent: concerns filing a tax return, a BIR/tax notice, an accountant's tax advice, or tax authority applicability."
+    }
+  ],
+  "adjacentPositives": [
+    {
+      "probeId": "RA1",
+      "suite": "routing",
+      "text": "Is my annual return due today?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA2",
+      "suite": "routing",
+      "text": "Should I submit the return before midnight?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA3",
+      "suite": "routing",
+      "text": "Do I need to file if I had no income?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA4",
+      "suite": "routing",
+      "text": "The BIR notice says I must file. Is that correct?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA5",
+      "suite": "routing",
+      "text": "My accountant told me the deadline passed. Is that right?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA6",
+      "suite": "routing",
+      "text": "Kailangan ko bang mag-file ngayon?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA7",
+      "suite": "routing",
+      "text": "Huwag daw akong mag-file hangga't hindi kumpirmado. Tama ba?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA8",
+      "suite": "routing",
+      "text": "Is failure to file penalised?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA9",
+      "suite": "routing",
+      "text": "Does the authority establish a filing deadline for me?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    },
+    {
+      "probeId": "RA10",
+      "suite": "routing",
+      "text": "Is the return still outstanding if I filed late?",
+      "expectedBoundaryDecision": "ALLOW",
+      "mustNotBeGenericOutOfDomain": true,
+      "rationale": "tax-filing adjacency"
+    }
+  ],
+  "negativeControls": [
+    {
+      "probeId": "NEG1",
+      "suite": "routing",
+      "text": "Open the computer file.",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG2",
+      "suite": "routing",
+      "text": "How do I file a photo in the right folder?",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG3",
+      "suite": "routing",
+      "text": "Should I file a police complaint?",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG4",
+      "suite": "routing",
+      "text": "Save the spreadsheet file.",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG5",
+      "suite": "routing",
+      "text": "Attach a Word file to the email.",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG6",
+      "suite": "routing",
+      "text": "How do I file a court pleading for a custody case?",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG7",
+      "suite": "routing",
+      "text": "Can you convert this PDF file?",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG8",
+      "suite": "routing",
+      "text": "What is the weather in Manila today?",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG9",
+      "suite": "routing",
+      "text": "Rename the log file and restart the server.",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    },
+    {
+      "probeId": "NEG10",
+      "suite": "routing",
+      "text": "File the documents alphabetically in the cabinet.",
+      "expectedBoundaryDecision": "NOT_ALLOW",
+      "mustNotBeGenericOutOfDomain": false,
+      "rationale": "non-tax use of 'file'; must not be converted into a tax query"
+    }
+  ],
+  "clarification": {
+    "probeId": "LC5",
+    "text": "How much tax do I owe?",
+    "currentDefect": "Returns a no-indexed-authority fallback instead of a focused clarification. NOTE: the domain boundary already returns ALLOW/PHILIPPINE_TAX for this query, so this is a DOWNSTREAM answer-path defect, not a boundary defect.",
+    "expectedBoundaryDecision": "ALLOW",
+    "expectedResponseKind": "FOCUSED_CLARIFICATION",
+    "contract": {
+      "mustAcknowledgeObjective": true,
+      "mustStateWhatCannotBeDetermined": true,
+      "maxQuestions": 4,
+      "allowedRequestedFacts": [
+        "taxpayer type",
+        "tax type or transaction",
+        "taxable period",
+        "amounts, deductions and credits",
+        "taxes withheld or paid",
+        "location or jurisdiction where material"
+      ],
+      "mustNotCalculateFromInventedFacts": true,
+      "mustNotRejectForMissingIndexedAuthority": true,
+      "mustNotBeGenericCapabilityMarketing": true,
+      "mustPreserveActiveTopic": true
+    }
+  }
+}

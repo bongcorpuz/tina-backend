@@ -1,0 +1,263 @@
+{
+  "task": "PHASE-10A14-R15",
+  "allowedStatuses": [
+    "PERSISTED",
+    "PARTIAL_PERSISTENCE",
+    "PERSISTENCE_FAILED",
+    "PERSISTENCE_TIMEOUT",
+    "NOT_PERSISTED_NO_CONVERSATION",
+    "NOT_PERSISTED_NO_USER",
+    "NOT_PERSISTED_BY_POLICY",
+    "NOT_ATTEMPTED_INTERNAL_ONLY"
+  ],
+  "centralTruthRule": "One central finalizer validates or sets BOTH status and receipt. A branch may not bypass it by pre-populating persistenceStatus. Contradictory, malformed, or partial declarations are replaced with the truthful request-scoped result.",
+  "persistedRequiresReceipt": {
+    "attempted": true,
+    "persisted": true,
+    "userMessagePersisted": true,
+    "assistantMessagePersisted": true,
+    "reasonCode": "required",
+    "safeDiagnostic": "required"
+  },
+  "noHistoryInference": "History equality may corroborate but may never create PERSISTED.",
+  "noAttemptRule": "A path that did not attempt persistence is never reported as PERSISTENCE_FAILED.",
+  "counts": {
+    "receiptSims": 10,
+    "finalizerCases": 12,
+    "responsePaths": 11
+  },
+  "receiptSims": [
+    {
+      "simId": "PS1",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": {
+          "id": 2
+        },
+        "memoryHookOk": true
+      },
+      "expectedStatus": "PERSISTED",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS2",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "userMessageData": null,
+        "assistantMessageData": {
+          "id": 2
+        }
+      },
+      "expectedStatus": "PARTIAL_PERSISTENCE",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS3",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": null
+      },
+      "expectedStatus": "PARTIAL_PERSISTENCE",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS4",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "userMessageData": null,
+        "assistantMessageData": null
+      },
+      "expectedStatus": "PERSISTENCE_FAILED",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS5",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "threw": true
+      },
+      "expectedStatus": "PERSISTENCE_FAILED",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS6",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "timedOut": true
+      },
+      "expectedStatus": "PERSISTENCE_TIMEOUT",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS7",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "timedOut": true,
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": {
+          "id": 2
+        }
+      },
+      "expectedStatus": "PERSISTENCE_TIMEOUT",
+      "expectReceipt": true,
+      "note": "late completion after timeout must NOT be upgraded to PERSISTED"
+    },
+    {
+      "simId": "PS8",
+      "input": {
+        "conversationId": null,
+        "userId": "u"
+      },
+      "expectedStatus": "NOT_PERSISTED_NO_CONVERSATION",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS9",
+      "input": {
+        "conversationId": "c",
+        "userId": null
+      },
+      "expectedStatus": "NOT_PERSISTED_NO_USER",
+      "expectReceipt": true
+    },
+    {
+      "simId": "PS10",
+      "input": {
+        "conversationId": "c",
+        "userId": "u",
+        "userMessageData": {
+          "id": 1
+        },
+        "assistantMessageData": {
+          "id": 2
+        },
+        "memoryHookOk": false
+      },
+      "expectedStatus": "PERSISTED",
+      "expectReceipt": true,
+      "note": "memory-hook failure must not downgrade PERSISTED"
+    }
+  ],
+  "finalizerCases": [
+    {
+      "caseId": "FIN1",
+      "desc": "branch pre-populates PERSISTED with NO receipt (the R14 defect)",
+      "body": {
+        "persistenceStatus": "PERSISTED"
+      },
+      "expect": "receipt must be injected or the declaration replaced; PERSISTED with null receipt is prohibited"
+    },
+    {
+      "caseId": "FIN2",
+      "desc": "branch supplies receipt without status",
+      "body": {
+        "persistenceReceipt": {
+          "attempted": true,
+          "persisted": true
+        }
+      },
+      "expect": "status must be set from the request-scoped truth"
+    },
+    {
+      "caseId": "FIN3",
+      "desc": "branch claims PERSISTED but request-scoped receipt says FAILED",
+      "body": {
+        "persistenceStatus": "PERSISTED"
+      },
+      "expect": "contradiction resolved in favour of the request-scoped truth; must not report PERSISTED"
+    },
+    {
+      "caseId": "FIN4",
+      "desc": "branch supplies malformed receipt",
+      "body": {
+        "persistenceStatus": "PERSISTED",
+        "persistenceReceipt": "not-an-object"
+      },
+      "expect": "malformed declaration replaced"
+    },
+    {
+      "caseId": "FIN5",
+      "desc": "no attempt made, both IDs present",
+      "body": {},
+      "expect": "NOT_PERSISTED_BY_POLICY with attempted:false, persisted:false; never PERSISTENCE_FAILED"
+    },
+    {
+      "caseId": "FIN6",
+      "desc": "no conversation id",
+      "body": {},
+      "expect": "NOT_PERSISTED_NO_CONVERSATION"
+    },
+    {
+      "caseId": "FIN7",
+      "desc": "no user id",
+      "body": {},
+      "expect": "NOT_PERSISTED_NO_USER"
+    },
+    {
+      "caseId": "FIN8",
+      "desc": "history equality present but no acknowledged receipt",
+      "body": {},
+      "expect": "must NOT infer PERSISTED from history"
+    },
+    {
+      "caseId": "FIN9",
+      "desc": "domain-boundary branch, save succeeded",
+      "body": {
+        "persistenceStatus": "PERSISTED"
+      },
+      "expect": "receipt present and coherent"
+    },
+    {
+      "caseId": "FIN10",
+      "desc": "domain-boundary branch, save partial",
+      "body": {
+        "persistenceStatus": "PARTIAL_PERSISTENCE"
+      },
+      "expect": "receipt present and coherent"
+    },
+    {
+      "caseId": "FIN11",
+      "desc": "domain-boundary branch, save timeout",
+      "body": {
+        "persistenceStatus": "PERSISTENCE_TIMEOUT"
+      },
+      "expect": "receipt present and coherent"
+    },
+    {
+      "caseId": "FIN12",
+      "desc": "error response path",
+      "body": {
+        "success": false
+      },
+      "expect": "non-null status and receipt"
+    }
+  ],
+  "responsePaths": [
+    "verified_controlling",
+    "related_authority_only",
+    "no_verified_authority",
+    "not_applicable_domain_boundary",
+    "clarification",
+    "safe_calendar_replacement",
+    "ordinary_tax_answer",
+    "early_return",
+    "validation_failure",
+    "controlled_error",
+    "conversationless_request"
+  ]
+}

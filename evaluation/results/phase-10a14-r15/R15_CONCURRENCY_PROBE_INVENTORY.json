@@ -1,0 +1,93 @@
+{
+  "task": "PHASE-10A14-R15",
+  "severityRule": "Any cross-request leakage is P0 or P1 depending on exposed content.",
+  "counts": {
+    "cases": 10
+  },
+  "cases": [
+    {
+      "caseId": "CC1",
+      "desc": "two interleaved requests, different conversations, both persist",
+      "requests": 2,
+      "assert": [
+        "no receipt crossover",
+        "no status crossover",
+        "no identifier crossover"
+      ]
+    },
+    {
+      "caseId": "CC2",
+      "desc": "success interleaved with partial save",
+      "requests": 2,
+      "assert": [
+        "each response carries its own outcome"
+      ]
+    },
+    {
+      "caseId": "CC3",
+      "desc": "success interleaved with no-attempt path",
+      "requests": 2,
+      "assert": [
+        "no-attempt response must not inherit PERSISTED"
+      ]
+    },
+    {
+      "caseId": "CC4",
+      "desc": "success interleaved with timeout",
+      "requests": 2,
+      "assert": [
+        "timeout response must not report PERSISTED"
+      ]
+    },
+    {
+      "caseId": "CC5",
+      "desc": "domain-boundary response interleaved with ordinary answer",
+      "requests": 2,
+      "assert": [
+        "boundary receipt does not leak into ordinary answer"
+      ]
+    },
+    {
+      "caseId": "CC6",
+      "desc": "clarification interleaved with safe calendar replacement",
+      "requests": 2,
+      "assert": [
+        "independent declarations"
+      ]
+    },
+    {
+      "caseId": "CC7",
+      "desc": "controlled error interleaved with success",
+      "requests": 2,
+      "assert": [
+        "error response declares its own truthful status"
+      ]
+    },
+    {
+      "caseId": "CC8",
+      "desc": "many concurrent requests, mixed outcomes",
+      "requests": 12,
+      "assert": [
+        "every response matches its own turn",
+        "no cross-request leakage of any kind"
+      ]
+    },
+    {
+      "caseId": "CC9",
+      "desc": "different user IDs concurrently",
+      "requests": 6,
+      "assert": [
+        "no user identifier crosses requests"
+      ]
+    },
+    {
+      "caseId": "CC10",
+      "desc": "multiple internal persistence calls within one request",
+      "requests": 1,
+      "assert": [
+        "public receipt corresponds to the correct final response turn",
+        "deterministic resolution"
+      ]
+    }
+  ]
+}

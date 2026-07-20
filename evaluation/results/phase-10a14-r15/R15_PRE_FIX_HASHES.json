@@ -1,0 +1,31 @@
+{
+  "task": "PHASE-10A14-R15",
+  "note": "SHA-256 of every authorized runtime file BEFORE any R15 modification.",
+  "baselineRuntimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "files": {
+    "services/answer-support-validator.js": {
+      "sha256": "641f951ca44e8757a7e36b963124d9be53636a5d1778188d1103c6939d8970db",
+      "lines": 1660
+    },
+    "services/persistence-receipt.js": {
+      "sha256": "a3a1fb51a3793fad8b4424c37426d9f3436dc7d1eec0cbda106a8740020b4e68",
+      "lines": 48
+    },
+    "ask-handler.js": {
+      "sha256": "36e0f7e4893f8959838ac1cc5421f35f831e81b7faa8e5f15bf183961a526d55",
+      "lines": 3660
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "sha256": "9eaaa185b22dadb8b0867704d9805f21742fa2de2d38c12891b0e252fe5a43b1",
+      "lines": 149
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "sha256": "6e92f55e61d0dbf89e3dbf60cba0096a3ca07fe8851dfaf3f820ab393ea22679",
+      "lines": 459
+    },
+    "tax-keywords.js": {
+      "sha256": "5dc6924d62eee6d0515885c5ddb17f68a128a15477e79f849174cbf0b12c75dc",
+      "lines": 294
+    }
+  }
+}

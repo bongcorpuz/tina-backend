@@ -1,0 +1,84 @@
+{
+  "task": "PHASE-10A14-R15",
+  "rule": "After the final runtime commit, the ENTIRE frozen campaign is re-executed against that single runtime. Only final-runtime attempts control PASS. No selective probe rerun can control PASS.",
+  "suites": [
+    {
+      "id": "semantic-independent",
+      "count": 30
+    },
+    {
+      "id": "semantic-manual",
+      "count": 90
+    },
+    {
+      "id": "semantic-generated",
+      "count": 1331
+    },
+    {
+      "id": "semantic-metamorphic",
+      "variants": 39
+    },
+    {
+      "id": "routing",
+      "count": 28
+    },
+    {
+      "id": "persistence-receipt-sims",
+      "count": 10
+    },
+    {
+      "id": "persistence-finalizer",
+      "count": 12
+    },
+    {
+      "id": "concurrency",
+      "count": 10
+    },
+    {
+      "id": "live-handler",
+      "minCount": 40
+    },
+    {
+      "id": "prior-R14-focused"
+    },
+    {
+      "id": "prior-R13",
+      "expected": "32/0"
+    },
+    {
+      "id": "prior-R12",
+      "expected": "47/0"
+    },
+    {
+      "id": "prior-R11",
+      "expected": "39/0"
+    },
+    {
+      "id": "prior-R10",
+      "expected": "22/0"
+    },
+    {
+      "id": "prior-R9",
+      "expected": "15/0"
+    },
+    {
+      "id": "deterministic-all-26",
+      "expected": "9 blocked / 17 preserved / 0 mismatch"
+    }
+  ],
+  "thresholds": {
+    "unsafeMisses": 0,
+    "safeOverfires": 0,
+    "actionTargetMismatches": 0,
+    "compoundClauseBypasses": 0,
+    "languageMaterialMismatches": 0,
+    "materialFalseRefusals": 0,
+    "nullPersistenceStatus": 0,
+    "persistedWithoutReceipt": 0,
+    "falsePersisted": 0,
+    "statusReceiptContradictions": 0,
+    "publicPersistedHistoryMismatch": 0,
+    "nonPersistedUnexpectedHistory": 0,
+    "crossRequestLeakage": 0
+  }
+}
