@@ -1,0 +1,223 @@
+{
+  "task": "PHASE-10A14-R14 deterministic all-26 replay",
+  "runtimeCommit": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "gate": "evaluateAnswerSupport (R14 runtime)",
+  "totalSlots": 26,
+  "blockedCount": 9,
+  "preservedCount": 17,
+  "mismatchCount": 0,
+  "expectedBlocked": 9,
+  "expectedPreserved": 17,
+  "pass": true,
+  "note": "Replayed with the E1 WS8 runner against the R14 runtime. Output was byte-identical to the committed E1 artifact, so no historical evidence file was modified.",
+  "results": [
+    {
+      "slot": "Q1-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q3-r1",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q3-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q6-r2",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q6-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q12-r1",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "filing_obligation",
+      "match": true
+    },
+    {
+      "slot": "Q12-r2",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "filing_obligation",
+      "match": true
+    },
+    {
+      "slot": "Q12-r3",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "filing_obligation",
+      "match": true
+    },
+    {
+      "slot": "Q15-r1",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q15-r2",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q15-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q30-r1",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "tax_computation_basis",
+      "match": true
+    },
+    {
+      "slot": "Q30-r2",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "tax_computation_basis",
+      "match": true
+    },
+    {
+      "slot": "Q30-r3",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "tax_computation_basis",
+      "match": true
+    },
+    {
+      "slot": "Q32-r1",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q32-r2",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q32-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q34-r1",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "filing_deadline",
+      "match": true
+    },
+    {
+      "slot": "Q34-r2",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "filing_deadline",
+      "match": true
+    },
+    {
+      "slot": "Q34-r3",
+      "expectBlocked": true,
+      "verifiedEligible": false,
+      "stage": "proposition-source-sufficiency",
+      "propositionClass": "filing_deadline",
+      "match": true
+    },
+    {
+      "slot": "Q47-r1",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q47-r2",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q47-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q48-r1",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q48-r2",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    },
+    {
+      "slot": "Q48-r3",
+      "expectBlocked": false,
+      "verifiedEligible": false,
+      "stage": "unavailable",
+      "propositionClass": null,
+      "match": true
+    }
+  ]
+}

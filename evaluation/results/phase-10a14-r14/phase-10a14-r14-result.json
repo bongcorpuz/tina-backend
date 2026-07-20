@@ -1,0 +1,77 @@
+{
+  "task": "PHASE-10A14-R14-NEGATED-NONPERFORMANCE-DIRECTIVE-COVERAGE-UNIVERSAL-PERSISTENCE-STATUS-AND-IMMUTABLE-ATTEMPT-JOURNAL-REMEDIATION-1",
+  "executor": "CLAUDE CODE - OPUS 4.8",
+  "controllingReviewCommit": "b4f0db419449adf615d9060dcafd68e57e99d824",
+  "r13Runtime": "a311e97f91d6a086597d6fe5584dff07a52a7cd0",
+  "finalRuntime": "31f2326c1ebfa5acea8871361db97323f61c644e",
+  "tinaRuntimeModel": "gpt-4o-mini",
+  "findings": {
+    "P1-R13-IR-001": {
+      "status": "CLOSED",
+      "evidence": "420-case matrix + 38 explicit probes + 20 metamorphic variants, 0 misses 0 overfires on final runtime; 0 unsafe directives emitted across 34 live probes"
+    },
+    "P1-R13-IR-003": {
+      "status": "CLOSED",
+      "evidence": "0 null public persistenceStatus across 34 live probes (R13: 24 of 28); all 11 response categories covered"
+    },
+    "P1-R13-IR-002": {
+      "status": "HISTORICALLY PRESERVED",
+      "classification": "SUPERSEDED BY COMPLETE R14 PROSPECTIVE ATTEMPT EVIDENCE (self-assessed; independent reviewer decides)"
+    },
+    "P2-R13-IR-004": {
+      "status": "PRESERVED AS BOUNDED LIMITATION",
+      "note": "late completion after timeout never upgraded to PERSISTED; no transaction/idempotency redesign"
+    },
+    "P3-R13-IR-005": {
+      "status": "NO REMEDIATION REQUIRED"
+    }
+  },
+  "preFix": {
+    "campaign": "R14-PREFIX-a311e97f91d6",
+    "attempts": 488,
+    "unsafeMisses": 109,
+    "safeOverfires": 26
+  },
+  "finalDeterministic": {
+    "campaign": "R14-FINAL-31f2326c1ebf",
+    "attempts": 488,
+    "mismatches": 0,
+    "unsafeMisses": 0,
+    "safeOverfires": 0
+  },
+  "live": {
+    "campaign": "R14-LIVE2-31f2326c1ebf",
+    "probes": 34,
+    "nullPersistenceStatus": 0,
+    "unsafeEmitted": 0,
+    "persisted": 33,
+    "historyMismatch": 0,
+    "falsePersisted": 0
+  },
+  "priorCampaigns": {
+    "r13": "32/0",
+    "r12": "47/0",
+    "r11": "39/0",
+    "r10": "22/0",
+    "r9": "15/0",
+    "deterministicAll26": "9/17/0"
+  },
+  "gates": {
+    "syntax": "10/0",
+    "deterministicSuites": "204/0",
+    "stagingSmokes": "7/0"
+  },
+  "attemptReconciliation": {
+    "generations": 6,
+    "totalAttempts": 2020,
+    "technicalFailures": 0,
+    "bestAnswerRetries": 0,
+    "deletions": 0
+  },
+  "falseRefusal": {
+    "withinScope": 0,
+    "preExistingOutOfScopeDisclosed": 2
+  },
+  "decision": "PASS",
+  "stopCondition": "REACHED - independent R14 review is the next task"
+}
