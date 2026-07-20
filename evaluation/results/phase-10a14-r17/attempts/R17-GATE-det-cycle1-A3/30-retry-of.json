@@ -1,0 +1,8 @@
+{
+  "event": "RETRY_OF",
+  "attemptId": "R17-GATE-det-cycle1-A3",
+  "retryOf": "R17-GATE-det-cycle1-A2",
+  "retryReason": "TECHNICAL: persistent ERR_STREAM_PREMATURE_CLOSE; varying failure membership; runtime unchanged",
+  "runtimeCommit": "8a66b92d2d2c967f54016f9352deaa43b48325f7",
+  "at": "2026-07-20T10:14:00.921Z"
+}

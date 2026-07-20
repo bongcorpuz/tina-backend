@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T10:13:57.208Z",
+  "generatedAt": "2026-07-20T11:18:47.574Z",
   "rule": "A retry requires a valid retryOf to an existing prior attempt, an objective reason and an unchanged runtime. An unlinked rerun is not a retry and never counts toward a ceiling.",
   "validRetryCount": 0,
   "validRetries": [],
@@ -10,6 +10,12 @@
       "error": "RETRY_RUNTIME_CHANGED",
       "from": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
       "to": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b"
+    },
+    {
+      "attemptId": "R17-GATE-det-cycle1-A3",
+      "error": "RETRY_RUNTIME_CHANGED",
+      "from": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+      "to": "8a66b92d2d2c967f54016f9352deaa43b48325f7"
     }
   ],
   "ceiling": {
@@ -168,6 +174,15 @@
     },
     "R17-GATE-det-cycle1|b04515a4f5b1b0c2fb0fabd8745a7d18614c710b": {
       "key": "R17-GATE-det-cycle1|b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+      "attempts": 1,
+      "linkedRetries": 0,
+      "unlinkedReruns": 0,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": true
+    },
+    "R17-GATE-det-cycle1|8a66b92d2d2c967f54016f9352deaa43b48325f7": {
+      "key": "R17-GATE-det-cycle1|8a66b92d2d2c967f54016f9352deaa43b48325f7",
       "attempts": 1,
       "linkedRetries": 0,
       "unlinkedReruns": 0,

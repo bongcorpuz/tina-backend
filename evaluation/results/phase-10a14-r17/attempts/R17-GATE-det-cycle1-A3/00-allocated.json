@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R17-GATE-det-cycle1-A3",
+  "task": "PHASE-10A14-R17",
+  "attemptType": "DETERMINISTIC_GATE",
+  "campaignId": "R17-GATE-DETERMINISTIC",
+  "probeId": "deterministic",
+  "cycleKey": "R17-GATE-det-cycle1",
+  "runtimeCommit": "8a66b92d2d2c967f54016f9352deaa43b48325f7",
+  "runtimeCommitSource": "git rev-parse HEAD",
+  "headAtStart": "8a66b92d2d2c967f54016f9352deaa43b48325f7",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "retryOf": "R17-GATE-det-cycle1-A2",
+  "retryReason": "TECHNICAL: persistent ERR_STREAM_PREMATURE_CLOSE; varying failure membership; runtime unchanged",
+  "notes": null,
+  "allocatedAt": "2026-07-20T10:14:00.788Z"
+}
