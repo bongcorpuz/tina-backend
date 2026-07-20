@@ -1,16 +1,16 @@
 {
   "task": "PHASE-10A14-R16",
-  "generatedAt": "2026-07-20T07:33:17.329Z",
+  "generatedAt": "2026-07-20T07:35:56.733Z",
   "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
   "counts": {
-    "totalAttempts": 44,
-    "runnerInvocations": 3,
+    "totalAttempts": 45,
+    "runnerInvocations": 4,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 37,
     "campaignAttempts": 1,
     "otherAttempts": 3,
     "completedPass": 38,
-    "completedFailures": 6,
+    "completedFailures": 7,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "killedAttempts": 0,
@@ -37,6 +37,13 @@
       },
       {
         "attemptId": "R16-GATE-det-cycle1-A3",
+        "exitCode": 1,
+        "status": "COMPLETED_FAIL",
+        "controlling": false,
+        "retryOf": null
+      },
+      {
+        "attemptId": "R16-GATE-det-cycle1-A4",
         "exitCode": 1,
         "status": "COMPLETED_FAIL",
         "controlling": false,

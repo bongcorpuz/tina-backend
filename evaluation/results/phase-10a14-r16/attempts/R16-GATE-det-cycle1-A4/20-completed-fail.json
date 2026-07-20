@@ -1,0 +1,22 @@
+{
+  "event": "COMPLETED_FAIL",
+  "endedAt": "2026-07-20T07:35:38.355Z",
+  "exitCode": 1,
+  "signal": null,
+  "durationMs": 135842,
+  "suitesRun": 208,
+  "suitesFailed": 6,
+  "headAtEnd": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+  "treeCleanAfter": true,
+  "identityBefore": null,
+  "identityAfter": null,
+  "serverReportedRuntimeCommit": null,
+  "deploymentId": null,
+  "runtimeEquivalence": {
+    "expectRuntime": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+    "headCommit": "bc395985f37ee05bbfe6618f4c72fcdc25098e3e",
+    "allRuntimeFilesIdentical": true,
+    "differingFiles": []
+  },
+  "controlling": false
+}
