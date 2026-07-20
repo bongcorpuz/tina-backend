@@ -1,0 +1,87 @@
+{
+  "total": 10,
+  "passed": 8,
+  "failed": 2,
+  "results": [
+    {
+      "id": "IR-SEM-001",
+      "expected": true,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "ph_tax_pattern_match",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-002",
+      "expected": true,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "ph_tax_pattern_match",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-003",
+      "expected": true,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "ph_tax_pattern_match",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-004",
+      "expected": true,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "ph_tax_pattern_match",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-005",
+      "expected": true,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "ph_tax_pattern_match",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-006",
+      "expected": false,
+      "actual": false,
+      "decision": "REJECT",
+      "reason": "fail_closed_no_tax_signal",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-007",
+      "expected": false,
+      "actual": false,
+      "decision": "REJECT",
+      "reason": "fail_closed_no_tax_signal",
+      "passed": true
+    },
+    {
+      "id": "IR-SEM-008",
+      "expected": false,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "tax_keyword_match",
+      "passed": false
+    },
+    {
+      "id": "IR-SEM-009",
+      "expected": false,
+      "actual": true,
+      "decision": "ALLOW",
+      "reason": "tax_keyword_match",
+      "passed": false
+    },
+    {
+      "id": "IR-SEM-010",
+      "expected": false,
+      "actual": false,
+      "decision": "REJECT",
+      "reason": "fail_closed_no_tax_signal",
+      "passed": true
+    }
+  ]
+}

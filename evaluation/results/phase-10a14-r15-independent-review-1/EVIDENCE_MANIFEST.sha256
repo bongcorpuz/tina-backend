@@ -1,0 +1,11 @@
+705e83a36e306a8f949235bcb5e5131c6db51b5d9b0d104f56fd02441614c0d3  evaluation/results/phase-10a14-r15-independent-review-1/README.md
+730aabf26b45eeab51c28e96ddbad6aa851b5816f7e4f9f50b84df3bdc0600c4  evaluation/results/phase-10a14-r15-independent-review-1/deterministic-cycle1.raw.txt
+c9a0d99c2e75329151a1f9642a13f5fd90594fde022c0c7f60a023fa381bf66a  evaluation/results/phase-10a14-r15-independent-review-1/deterministic-cycle2.raw.txt
+fe822a02961efb368ad0a63246f22ff9c8f9aa04b14c971d764a4fad2637930f  evaluation/results/phase-10a14-r15-independent-review-1/findings-register.md
+05e28f10618113de8329e3200f424239378d7b268334fc5ad47cfa6d9af2ccbe  evaluation/results/phase-10a14-r15-independent-review-1/journal-independent-kill-harness.mjs
+0731d33fa8bda1fe661acd9b16e713b446bbc3068df0c779abcaa7bd0eef0431  evaluation/results/phase-10a14-r15-independent-review-1/journal-independent-kill-harness.output.json
+4c4e393c3d1fb61a339992c1c527254b69f290254fd71469de14122e78b46c43  evaluation/results/phase-10a14-r15-independent-review-1/manifest-and-governance-audit.md
+197064d8d7d376e374d6619a1958507ecf784abc671fad4b3cc84cae138c0f8c  evaluation/results/phase-10a14-r15-independent-review-1/repository-and-scope-review.md
+47fff82ed7f6ee879aee9ffc96e6de510dd2c173da4f3eae7be3db8588ea22f3  evaluation/results/phase-10a14-r15-independent-review-1/runner-and-live-evidence.md
+d1c255c15a34a755d2ce34bd76beff6998e6416c6b3008093371751ec1577e48  evaluation/results/phase-10a14-r15-independent-review-1/semantic-independent-probes.mjs
+4865fe3c16444dbcf61f198e5f30f6d96efdde691029ebe4d422d2bbbf8fa3e7  evaluation/results/phase-10a14-r15-independent-review-1/semantic-independent-probes.output.json

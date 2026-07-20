@@ -1,0 +1,122 @@
+{
+  "task": "PHASE-10A14-R15-SEMANTIC-COMPOSITION-TAX-ADJACENCY-UNIVERSAL-PERSISTENCE-RECEIPT-CRASH-VISIBLE-ATTEMPT-JOURNAL-AND-GOVERNANCE-EVIDENCE-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "reviewedRepository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedHead": "721d8546b3b819e45dbc6baa4d4a87e878193026",
+  "predecessorReviewCommit": "768059ccd5248f83fd29ce85be06c7d6f4921a43",
+  "expectedFinalRuntimeCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "preReviewSync": "0 0",
+  "decision": "REVISIONS REQUIRED",
+  "governanceSupersession": "NOT SUPERSEDED",
+  "severityCounts": {
+    "P0": 0,
+    "P1": 5,
+    "P2": 3,
+    "P3": 0
+  },
+  "findings": [
+    {
+      "id": "P1-R15-IR-001",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Mandatory deterministic gate did not pass; R15 crash-visible journal suite fails standalone and inside the full runner."
+    },
+    {
+      "id": "P1-R15-IR-002",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Real SIGKILL during governed action is not proven; independent during-call harness exits code 0 with no signal."
+    },
+    {
+      "id": "P1-R15-IR-003",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Independent semantic non-tax controls found 2 false allows out of 10 unseen probes."
+    },
+    {
+      "id": "P1-R15-IR-004",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Governance supersession blocked by mid-execution journal contract amendment and removal of completed per-attempt directories."
+    },
+    {
+      "id": "P1-R15-IR-005",
+      "severity": "P1",
+      "status": "OPEN",
+      "summary": "Formal gate/attempt accounting is materially inconsistent: four runner invocations in result JSON versus five attempts in narrative/evidence."
+    },
+    {
+      "id": "P2-R15-IR-006",
+      "severity": "P2",
+      "status": "OPEN",
+      "summary": "Protected evaluation/factcheck path was briefly tracked and then corrected to untracked final state."
+    },
+    {
+      "id": "P2-R15-IR-007",
+      "severity": "P2",
+      "status": "OPEN",
+      "summary": "Pre-fix evidence manifest is stale in final tree after archive conversion."
+    },
+    {
+      "id": "P2-R15-IR-008",
+      "severity": "P2",
+      "status": "OPEN",
+      "summary": "Independent deterministic raw-log placement caused an additional dirty-tree guard failure; preserved as a review limitation."
+    }
+  ],
+  "independentChecks": {
+    "deterministicCycles": [
+      {
+        "command": "node scripts/run-regressions.mjs",
+        "exitCode": 1,
+        "rawLog": "evaluation/results/phase-10a14-r15-independent-review-1/deterministic-cycle1.raw.txt"
+      },
+      {
+        "command": "node scripts/run-regressions.mjs",
+        "exitCode": 1,
+        "rawLog": "evaluation/results/phase-10a14-r15-independent-review-1/deterministic-cycle2.raw.txt"
+      }
+    ],
+    "stagingCycles": [
+      {
+        "command": "node scripts/run-staging-smokes.mjs",
+        "exitCode": 0,
+        "suites": "7 run, 0 failed"
+      },
+      {
+        "command": "node scripts/run-staging-smokes.mjs",
+        "exitCode": 0,
+        "suites": "7 run, 0 failed"
+      }
+    ],
+    "focusedSuites": {
+      "r15SemanticPersistence": "29 passed, 0 failed",
+      "r15CrashVisibleJournal": "exit 1, unsettled top-level await",
+      "r14": "21 passed, 0 failed",
+      "r13": "32 passed, 0 failed",
+      "r12": "47 passed, 0 failed",
+      "r11": "39 passed, 0 failed",
+      "r10": "22 passed, 0 failed",
+      "r9": "15 passed, 0 failed"
+    },
+    "semanticIndependentProbes": {
+      "total": 10,
+      "passed": 8,
+      "failed": 2
+    },
+    "journalIndependentKillHarness": {
+      "afterAllocatedSignal": "SIGKILL",
+      "afterStartedSignal": "SIGKILL",
+      "duringCallSignal": null,
+      "duringCallCode": 0,
+      "duringCallKillReturned": false
+    },
+    "liveCampaign": "Executor live evidence audited; independent official live harness not rerun because it writes into the executor R15 evidence area and local P1 blockers already force REVISIONS REQUIRED."
+  },
+  "artifacts": {
+    "report": "PHASE-10A14-R15-SEMANTIC-COMPOSITION-TAX-ADJACENCY-UNIVERSAL-PERSISTENCE-RECEIPT-CRASH-VISIBLE-ATTEMPT-JOURNAL-AND-GOVERNANCE-EVIDENCE-REMEDIATION-1-INDEPENDENT-REVIEW-1_REPORT.md",
+    "result": "evaluation/results/phase-10a14-r15-independent-review-1.json",
+    "evidenceDirectory": "evaluation/results/phase-10a14-r15-independent-review-1/"
+  }
+}

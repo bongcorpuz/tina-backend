@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "killPoint": "after-allocated",
+      "ready": true,
+      "killReturned": true,
+      "exit": {
+        "code": null,
+        "signal": "SIGKILL"
+      },
+      "review": {
+        "allocated": 1,
+        "started": 0,
+        "completed": 0,
+        "incompleteOrCrashed": 1,
+        "technicalFailures": 0,
+        "malformed": 0,
+        "incompleteAttemptIds": [
+          "IR1-AFTER-ALLOCATED-P1-A1"
+        ]
+      }
+    },
+    {
+      "killPoint": "after-started",
+      "ready": true,
+      "killReturned": true,
+      "exit": {
+        "code": null,
+        "signal": "SIGKILL"
+      },
+      "review": {
+        "allocated": 1,
+        "started": 1,
+        "completed": 0,
+        "incompleteOrCrashed": 1,
+        "technicalFailures": 0,
+        "malformed": 0,
+        "incompleteAttemptIds": [
+          "IR1-AFTER-STARTED-P1-A1"
+        ]
+      }
+    },
+    {
+      "killPoint": "during-call",
+      "ready": true,
+      "killReturned": false,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "review": {
+        "allocated": 2,
+        "started": 2,
+        "completed": 0,
+        "incompleteOrCrashed": 2,
+        "technicalFailures": 0,
+        "malformed": 0,
+        "incompleteAttemptIds": [
+          "IR1-DURING-CALL-P1-A1",
+          "IR1-DURING-CALL-P1-inner-A1"
+        ]
+      }
+    }
+  ]
+}
