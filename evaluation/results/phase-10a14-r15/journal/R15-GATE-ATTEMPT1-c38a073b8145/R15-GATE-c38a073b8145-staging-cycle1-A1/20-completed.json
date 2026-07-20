@@ -1,0 +1,13 @@
+{
+  "event": "COMPLETED",
+  "attemptId": "R15-GATE-c38a073b8145-staging-cycle1-A1",
+  "completedAt": "2026-07-20T04:33:19.414Z",
+  "actualClassification": "PASS",
+  "exitCode": 0,
+  "timedOut": false,
+  "durationMs": 8278,
+  "technicalFailure": false,
+  "failureReason": null,
+  "responseHash": "sha256:c1f6936df6a0ba76d9bcb1a4cba7e5dbb9b7664db5720347b591e8dc12c74fad",
+  "payloadHash": "sha256:7c5bc9316bed992c3db16f78734b7e929bf56b24d9bffc60109ac7ba4cf0cc05"
+}

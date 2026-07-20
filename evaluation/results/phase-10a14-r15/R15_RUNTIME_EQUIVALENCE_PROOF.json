@@ -1,0 +1,67 @@
+{
+  "task": "PHASE-10A14-R15",
+  "finalRuntimeCommit": "c38a073b814559d9e02139fcb7c61e310e46bc21",
+  "deployedCommit": "7db4f2841672e0940ef6c0690f6e3d9c1bcb7ba3",
+  "commitsBetween": [
+    "7db4f284 PHASE-10A14-R15 COMMIT 5: complete final-runtime evidence"
+  ],
+  "allRuntimeFilesIdentical": true,
+  "statement": "The final RUNTIME commit is the last commit that changed any runtime file (COMMIT 4, c38a073b). Staging subsequently auto-deployed COMMIT 5 (7db4f284), which is evidence-only. Every runtime file is byte-identical between the two, so the deployed service executes exactly the runtime the controlling campaigns were run against. Identity is proven by server-reported SHA plus this byte-equality proof; it is not inferred behaviourally.",
+  "files": [
+    {
+      "file": "services/answer-support-validator.js",
+      "atRuntimeCommit": "c79d82d6cb2e40cbea5c04ff17a7c1405a18103e40ae8f6a8f470341312b56f6",
+      "atDeployedCommit": "c79d82d6cb2e40cbea5c04ff17a7c1405a18103e40ae8f6a8f470341312b56f6"
+    },
+    {
+      "file": "services/persistence-receipt.js",
+      "atRuntimeCommit": "a3a1fb51a3793fad8b4424c37426d9f3436dc7d1eec0cbda106a8740020b4e68",
+      "atDeployedCommit": "a3a1fb51a3793fad8b4424c37426d9f3436dc7d1eec0cbda106a8740020b4e68"
+    },
+    {
+      "file": "services/philippine-tax-domain-boundary.js",
+      "atRuntimeCommit": "8c16ffeef88204d92633359b68f9d30fa4a537950a73236ccfb05d68edd00f4f",
+      "atDeployedCommit": "8c16ffeef88204d92633359b68f9d30fa4a537950a73236ccfb05d68edd00f4f"
+    },
+    {
+      "file": "services/philippine-tax-boundary-patterns.js",
+      "atRuntimeCommit": "2e0e6e6bbc035049357af9451830f8b24f4a7b19e53df4f8d85c9e8a6f318f6e",
+      "atDeployedCommit": "2e0e6e6bbc035049357af9451830f8b24f4a7b19e53df4f8d85c9e8a6f318f6e"
+    },
+    {
+      "file": "services/runtime-identity.js",
+      "atRuntimeCommit": "d47de6852fbdf7193d542a9ca4a681eb7bef1e21714ab1d7ca70b67695b4853d",
+      "atDeployedCommit": "d47de6852fbdf7193d542a9ca4a681eb7bef1e21714ab1d7ca70b67695b4853d"
+    },
+    {
+      "file": "services/tax-computation-clarification.js",
+      "atRuntimeCommit": "f7a1d68e152f3f8164d752d08067deb364f7f99e79e384616745c9f8326c8b0a",
+      "atDeployedCommit": "f7a1d68e152f3f8164d752d08067deb364f7f99e79e384616745c9f8326c8b0a"
+    },
+    {
+      "file": "ask-handler.js",
+      "atRuntimeCommit": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404",
+      "atDeployedCommit": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404"
+    },
+    {
+      "file": "pipeline.js",
+      "atRuntimeCommit": "dcecb6d137642065e5112a3845a4a4220436fb325ba684f4f0e9a160ed6d0cc8",
+      "atDeployedCommit": "dcecb6d137642065e5112a3845a4a4220436fb325ba684f4f0e9a160ed6d0cc8"
+    },
+    {
+      "file": "answer-renderer.js",
+      "atRuntimeCommit": "f59cbe43bd4c026e8ecf7481d9a8248782932358327fa61820f8004af24e9705",
+      "atDeployedCommit": "f59cbe43bd4c026e8ecf7481d9a8248782932358327fa61820f8004af24e9705"
+    },
+    {
+      "file": "server.js",
+      "atRuntimeCommit": "3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73",
+      "atDeployedCommit": "3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73"
+    },
+    {
+      "file": "tax-keywords.js",
+      "atRuntimeCommit": "527fca3dca59a9908d4377440e14de75053fcc1db8c0385d0ce05b37a5b45b93",
+      "atDeployedCommit": "527fca3dca59a9908d4377440e14de75053fcc1db8c0385d0ce05b37a5b45b93"
+    }
+  ]
+}
