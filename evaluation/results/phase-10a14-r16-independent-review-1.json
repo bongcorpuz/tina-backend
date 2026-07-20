@@ -1,0 +1,84 @@
+{
+  "task": "PHASE-10A14-R16-CRASH-VISIBLE-DURING-CALL-JOURNAL-NON-TAX-DOMAIN-BOUNDARY-IMMUTABLE-EVIDENCE-CONTRACT-AND-CANONICAL-GATE-ATTEMPT-ACCOUNTING-REMEDIATION-1-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex GPT-5",
+  "reviewedRepository": "C:\\Projects\\tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedHead": "31a0630abef4ab864b1082ce55ed0a0f9dc95ba2",
+  "predecessorReviewCommit": "aa0550753d1a0a988503123b6bca853a2c193bac",
+  "finalRuntimeCommit": "0323bb91ac8383e1cbb6800637e4b9b896cdaff1",
+  "preReviewSync": "0 0",
+  "decision": "REVISIONS REQUIRED",
+  "r15HistoricalGovernance": "NOT SUPERSEDED",
+  "r16ProspectiveGovernance": "NOT SATISFIED",
+  "severityCounts": {
+    "P0": 0,
+    "P1": 6,
+    "P2": 2,
+    "P3": 0
+  },
+  "acceptedClosures": {
+    "journalReliability": true,
+    "realDuringCallSigkill": true,
+    "exactPriorFalseAllows": true,
+    "protectedPathUntouchedInR16": true,
+    "runtimeByteEquivalenceAfterFinalRuntime": true
+  },
+  "blockingFindings": [
+    "Independent deterministic gates failed twice with local deterministic failures not matching executor network attribution.",
+    "Independent staging gates failed twice.",
+    "Domain boundary still false-refuses customs duties and phase-10a8 capital-gain probe.",
+    "Corrupt partial import is counted as controlling pass.",
+    "Retry ceiling lacks retryOf links and registry reports retries=0.",
+    "Fabricated SHA is not caught by registry integrity."
+  ],
+  "independentChecks": {
+    "journalStandaloneCycles": "5/5 exit 0",
+    "journalConcurrentCycles": "3/3 exit 0",
+    "sigkillHarness": "pass",
+    "domainCampaign": {
+      "total": 240,
+      "passed": 226,
+      "failed": 14
+    },
+    "deterministic": [
+      {
+        "cycle": 1,
+        "exitCode": 1,
+        "syntax": "10/0",
+        "suites": "208 run, 2 failed",
+        "failedSuites": [
+          "patch-07b-clarification-final-gate-1-track-closure",
+          "phase-10a8-trust-calibration-and-answer-correctness-remediation-1"
+        ]
+      },
+      {
+        "cycle": 2,
+        "exitCode": 1,
+        "syntax": "10/0",
+        "suites": "208 run, 2 failed",
+        "failedSuites": [
+          "patch-07b-clarification-final-gate-1-track-closure",
+          "phase-10a8-trust-calibration-and-answer-correctness-remediation-1"
+        ]
+      }
+    ],
+    "staging": [
+      {
+        "cycle": 1,
+        "exitCode": 1,
+        "suites": "7 run, 1 failed"
+      },
+      {
+        "cycle": 2,
+        "exitCode": 1,
+        "suites": "7 run, 1 failed"
+      }
+    ],
+    "focused": "R16/R15/R14/R13/R12/R11/R10/R9 focused suites exited 0; direct all-26 replay not rerun because it writes historical E1 evidence."
+  },
+  "artifacts": {
+    "report": "PHASE-10A14-R16-CRASH-VISIBLE-DURING-CALL-JOURNAL-NON-TAX-DOMAIN-BOUNDARY-IMMUTABLE-EVIDENCE-CONTRACT-AND-CANONICAL-GATE-ATTEMPT-ACCOUNTING-REMEDIATION-1-INDEPENDENT-REVIEW-1_REPORT.md",
+    "result": "evaluation/results/phase-10a14-r16-independent-review-1.json",
+    "evidenceDirectory": "evaluation/results/phase-10a14-r16-independent-review-1/"
+  }
+}

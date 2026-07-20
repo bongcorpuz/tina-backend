@@ -1,0 +1,17 @@
+[
+    {
+        "cycle":  "concurrent-job-1",
+        "exitCode":  0,
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-job-1.raw.txt"
+    },
+    {
+        "cycle":  "concurrent-job-2",
+        "exitCode":  0,
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-job-2.raw.txt"
+    },
+    {
+        "cycle":  "concurrent-job-3",
+        "exitCode":  0,
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-job-3.raw.txt"
+    }
+]

@@ -1,0 +1,24 @@
+[
+    {
+        "cycle":  1,
+        "command":  "node scripts/run-regressions.mjs",
+        "exitCode":  1,
+        "start":  "2026-07-20T16:01:26.5198794+08:00",
+        "end":  "2026-07-20T16:04:07.8071025+08:00",
+        "head":  "31a0630abef4ab864b1082ce55ed0a0f9dc95ba2",
+        "sync":  "0\t0",
+        "status":  "?? .claude/\r\n?? .vscode/\r\n?? evaluation/factcheck/",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\deterministic-cycle-1.raw.txt"
+    },
+    {
+        "cycle":  2,
+        "command":  "node scripts/run-regressions.mjs",
+        "exitCode":  1,
+        "start":  "2026-07-20T16:04:08.0300420+08:00",
+        "end":  "2026-07-20T16:06:45.8046163+08:00",
+        "head":  "31a0630abef4ab864b1082ce55ed0a0f9dc95ba2",
+        "sync":  "0\t0",
+        "status":  "?? .claude/\r\n?? .vscode/\r\n?? evaluation/factcheck/",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\deterministic-cycle-2.raw.txt"
+    }
+]

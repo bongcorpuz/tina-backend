@@ -1,0 +1,90 @@
+[
+    {
+        "suite":  "r16-domain",
+        "command":  "node tests/phase-10a14-r16-non-tax-domain-boundary.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:08:33.5318247+08:00",
+        "end":  "2026-07-20T16:08:33.6667816+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r16-domain.raw.txt"
+    },
+    {
+        "suite":  "r16-tooling",
+        "command":  "node tests/phase-10a14-r16-evidence-tooling.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:08:33.6690360+08:00",
+        "end":  "2026-07-20T16:08:35.0140176+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r16-tooling.raw.txt"
+    },
+    {
+        "suite":  "r15-journal-crash",
+        "command":  "node tests/phase-10a14-r15-crash-visible-attempt-journal.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:08:35.0140176+08:00",
+        "end":  "2026-07-20T16:09:05.3047692+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r15-journal-crash.raw.txt"
+    },
+    {
+        "suite":  "r15-focused",
+        "command":  "node tests/phase-10a14-r15-semantic-composition-tax-adjacency-and-persistence-receipt.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:05.3058404+08:00",
+        "end":  "2026-07-20T16:09:05.7723503+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r15-focused.raw.txt"
+    },
+    {
+        "suite":  "r14-focused",
+        "command":  "node tests/phase-10a14-r14-negated-nonperformance-and-universal-persistence-status.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:05.7733714+08:00",
+        "end":  "2026-07-20T16:09:05.9919264+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r14-focused.raw.txt"
+    },
+    {
+        "suite":  "r13-focused",
+        "command":  "node tests/phase-10a14-r13-polarity-aware-directive-and-persistence-receipt.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:05.9928573+08:00",
+        "end":  "2026-07-20T16:09:06.1858519+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r13-focused.raw.txt"
+    },
+    {
+        "suite":  "r12-focused",
+        "command":  "node tests/phase-10a14-r12-semantic-filing-directive-and-not-applicable-persistence.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:06.1858519+08:00",
+        "end":  "2026-07-20T16:09:06.3660860+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r12-focused.raw.txt"
+    },
+    {
+        "suite":  "r11-focused",
+        "command":  "node tests/phase-10a14-r11-calendar-directive-completeness-and-contextual-safe-answer.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:06.3681559+08:00",
+        "end":  "2026-07-20T16:09:06.5483741+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r11-focused.raw.txt"
+    },
+    {
+        "suite":  "r10-focused",
+        "command":  "node tests/phase-10a14-r10-calendar-relative-public-answer-replacement.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:06.5493962+08:00",
+        "end":  "2026-07-20T16:09:06.7320560+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r10-focused.raw.txt"
+    },
+    {
+        "suite":  "r9-focused",
+        "command":  "node tests/phase-10a14-r9-calendar-relative-deadline-and-filing-rationale-alignment.test.mjs",
+        "exitCode":  0,
+        "start":  "2026-07-20T16:09:06.7330781+08:00",
+        "end":  "2026-07-20T16:09:06.9318291+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-r9-focused.raw.txt"
+    },
+    {
+        "suite":  "all26-replay",
+        "command":  "node evaluation/results/phase-10a14-e1/ws8-deterministic-all26.mjs",
+        "exitCode":  1,
+        "start":  "2026-07-20T16:09:06.9318291+08:00",
+        "end":  "2026-07-20T16:09:07.2275358+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\focused-all26-replay.raw.txt"
+    }
+]

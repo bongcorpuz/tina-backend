@@ -1,0 +1,61 @@
+[
+    {
+        "cycle":  "standalone-1",
+        "exitCode":  0,
+        "start":  "2026-07-20T15:54:09.5788668+08:00",
+        "end":  "2026-07-20T15:54:39.8666717+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-standalone-1.raw.txt"
+    },
+    {
+        "cycle":  "standalone-2",
+        "exitCode":  0,
+        "start":  "2026-07-20T15:54:39.8882693+08:00",
+        "end":  "2026-07-20T15:55:10.2139281+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-standalone-2.raw.txt"
+    },
+    {
+        "cycle":  "standalone-3",
+        "exitCode":  0,
+        "start":  "2026-07-20T15:55:10.2139281+08:00",
+        "end":  "2026-07-20T15:55:40.5093553+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-standalone-3.raw.txt"
+    },
+    {
+        "cycle":  "standalone-4",
+        "exitCode":  0,
+        "start":  "2026-07-20T15:55:40.5098270+08:00",
+        "end":  "2026-07-20T15:56:10.8014595+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-standalone-4.raw.txt"
+    },
+    {
+        "cycle":  "standalone-5",
+        "exitCode":  0,
+        "start":  "2026-07-20T15:56:10.8014595+08:00",
+        "end":  "2026-07-20T15:56:41.3583152+08:00",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-standalone-5.raw.txt"
+    },
+    {
+        "cycle":  "concurrent-1",
+        "exitCode":  null,
+        "start":  "2026-07-20T15:56:41.3583152+08:00",
+        "end":  "2026-07-20T15:57:11.9512517+08:00",
+        "stdout":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-1.stdout.txt",
+        "stderr":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-1.stderr.txt"
+    },
+    {
+        "cycle":  "concurrent-2",
+        "exitCode":  null,
+        "start":  "2026-07-20T15:56:41.3953791+08:00",
+        "end":  "2026-07-20T15:57:11.9849700+08:00",
+        "stdout":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-2.stdout.txt",
+        "stderr":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-2.stderr.txt"
+    },
+    {
+        "cycle":  "concurrent-3",
+        "exitCode":  null,
+        "start":  "2026-07-20T15:56:41.4067653+08:00",
+        "end":  "2026-07-20T15:57:12.0009931+08:00",
+        "stdout":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-3.stdout.txt",
+        "stderr":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\journal-concurrent-3.stderr.txt"
+    }
+]

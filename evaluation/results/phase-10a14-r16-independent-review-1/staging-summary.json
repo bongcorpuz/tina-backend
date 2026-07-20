@@ -1,0 +1,22 @@
+[
+    {
+        "cycle":  1,
+        "command":  "node scripts/run-staging-smokes.mjs",
+        "exitCode":  1,
+        "start":  "2026-07-20T16:07:39.8084854+08:00",
+        "end":  "2026-07-20T16:07:41.0052254+08:00",
+        "head":  "31a0630abef4ab864b1082ce55ed0a0f9dc95ba2",
+        "sync":  "0\t0",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\staging-cycle-1.raw.txt"
+    },
+    {
+        "cycle":  2,
+        "command":  "node scripts/run-staging-smokes.mjs",
+        "exitCode":  1,
+        "start":  "2026-07-20T16:07:41.0924886+08:00",
+        "end":  "2026-07-20T16:07:42.2375836+08:00",
+        "head":  "31a0630abef4ab864b1082ce55ed0a0f9dc95ba2",
+        "sync":  "0\t0",
+        "log":  "C:\\Users\\USER\\AppData\\Local\\Temp\\r16-ir\\staging-cycle-2.raw.txt"
+    }
+]
