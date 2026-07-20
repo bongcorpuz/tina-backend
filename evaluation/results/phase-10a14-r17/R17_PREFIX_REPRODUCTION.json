@@ -1,0 +1,321 @@
+{
+  "task": "PHASE-10A14-R17",
+  "phase": "PRE_FIX",
+  "generatedAt": "2026-07-20T09:44:06.672Z",
+  "statement": "Reproduction against unchanged R16 runtime, before any repair. Historical R16 evidence read READ-ONLY and never modified.",
+  "domain": {
+    "totalProbes": 267,
+    "falseAllow": 2,
+    "falseRefusal": 69,
+    "byClass": {
+      "customs_strong": {
+        "total": 30,
+        "pass": 1,
+        "falseAllow": 0,
+        "falseRefusal": 29,
+        "failing": [
+          {
+            "probeId": "CUST-1",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CUST-2",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CUST-3",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CUST-4",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CUST-5",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          }
+        ]
+      },
+      "capital_gain_strong": {
+        "total": 30,
+        "pass": 7,
+        "falseAllow": 0,
+        "falseRefusal": 23,
+        "failing": [
+          {
+            "probeId": "CG-1",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CG-2",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CG-3",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CG-4",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "CG-5",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          }
+        ]
+      },
+      "private_contract_nontax": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0,
+        "failing": []
+      },
+      "court_labor_sec_nontax": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0,
+        "failing": []
+      },
+      "weak_generic_ambiguity": {
+        "total": 30,
+        "pass": 29,
+        "falseAllow": 1,
+        "falseRefusal": 0,
+        "failing": [
+          {
+            "probeId": "WEAK-15",
+            "expected": "CLARIFY_OR_NOT_ALLOW",
+            "got": "ALLOW",
+            "reason": "tax_filing_adjacency"
+          }
+        ]
+      },
+      "filipino_taglish": {
+        "total": 30,
+        "pass": 26,
+        "falseAllow": 0,
+        "falseRefusal": 4,
+        "failing": [
+          {
+            "probeId": "FIL-2",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "fail_closed_no_tax_signal"
+          },
+          {
+            "probeId": "FIL-8",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "FIL-11",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "fail_closed_no_tax_signal"
+          },
+          {
+            "probeId": "FIL-18",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          }
+        ]
+      },
+      "substring_trap": {
+        "total": 20,
+        "pass": 18,
+        "falseAllow": 0,
+        "falseRefusal": 2,
+        "failing": [
+          {
+            "probeId": "SUB-19",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "SUB-20",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          }
+        ]
+      },
+      "metamorphic": {
+        "total": 40,
+        "pass": 28,
+        "falseAllow": 1,
+        "falseRefusal": 11,
+        "failing": [
+          {
+            "probeId": "MM-2-strong",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "MM-3-strong",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "MM-7-strong",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "MM-8-strong",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          },
+          {
+            "probeId": "MM-9-strong",
+            "expected": "ALLOW",
+            "got": "NOT_ALLOW",
+            "reason": "weak_tax_signal_needs_context"
+          }
+        ]
+      },
+      "r15_false_refusal_closed": {
+        "total": 7,
+        "pass": 7,
+        "falseAllow": 0,
+        "falseRefusal": 0,
+        "failing": []
+      },
+      "r15_adjacency_closed": {
+        "total": 10,
+        "pass": 10,
+        "falseAllow": 0,
+        "falseRefusal": 0,
+        "failing": []
+      },
+      "explicit_nontax": {
+        "total": 10,
+        "pass": 10,
+        "falseAllow": 0,
+        "falseRefusal": 0,
+        "failing": []
+      }
+    }
+  },
+  "phase10a8": {
+    "exitCode": 1,
+    "reproduced": true,
+    "f14Failing": false
+  },
+  "patch07b": {
+    "exitCode": null,
+    "reproduced": true,
+    "rootCause": "spawnSync ENOBUFS in the test's git() helper: git ls-files output exceeds Node's 1 MiB default maxBuffer, so status is null and assert.equal(status,0) fails with 'null !== 0'. The guard dies while ENUMERATING files and never evaluates a marker.",
+    "nullStatusObserved": false,
+    "gitLsFilesBytes": 1053632,
+    "gitLsFilesCount": 9119,
+    "nodeDefaultMaxBuffer": 1048576
+  },
+  "phase09r": {
+    "exitCode": 0,
+    "currentlyPasses": true,
+    "note": "Independent review observed this failing with staging temporarily unreachable. Current local execution result recorded truthfully; classification is made in COMMIT 6."
+  },
+  "corruptedPartialImport": {
+    "attemptId": "R16-FOCUSED-r15-journal-crash-A3",
+    "r16Registry": {
+      "status": "COMPLETED_PASS",
+      "controlling": true,
+      "malformed": false
+    },
+    "adjudicationDisposition": "INVALID_PARTIAL_IMPORT_NON_CONTROLLING",
+    "corruptionFindings": [
+      {
+        "file": "stderr.raw.txt",
+        "reason": "ZERO_LENGTH"
+      },
+      {
+        "file": "tree-before.txt",
+        "reason": "CONTAINS_NUL_BYTES"
+      }
+    ],
+    "r17Disposition": "CORRUPTED_EVIDENCE",
+    "r17Controlling": false,
+    "defectConfirmed": true
+  },
+  "retryAccounting": {
+    "r16ReportedRetries": 0,
+    "deterministicAttempts": [
+      {
+        "attemptId": "R16-GATE-det-cycle1-A2",
+        "status": "COMPLETED_FAIL",
+        "retryOf": null
+      },
+      {
+        "attemptId": "R16-GATE-det-cycle1-A3",
+        "status": "COMPLETED_FAIL",
+        "retryOf": null
+      },
+      {
+        "attemptId": "R16-GATE-det-cycle1-A4",
+        "status": "COMPLETED_FAIL",
+        "retryOf": null
+      },
+      {
+        "attemptId": "R16-GATE-deterministic-cycle1-A1",
+        "status": "COMPLETED_FAIL",
+        "retryOf": null
+      }
+    ],
+    "validLinkedRetries": 0,
+    "defectConfirmed": true,
+    "note": "R16 described attempts A3 and A4 as technical retries and claimed a ceiling was reached, but no retry link exists. Under the R17 contract these are unlinked reruns."
+  },
+  "fabricatedSha": {
+    "sha": "a802064a1b32e8a68a0b8c4dd1f8a1b0c9a5e2f7",
+    "gitObjectExists": false,
+    "validationErrors": [
+      "SHA_NOT_A_GIT_OBJECT"
+    ],
+    "attemptsCarryingIt": 11,
+    "attemptIds": [
+      "R16-FOCUSED-all26-replay-A1",
+      "R16-FOCUSED-r10-focused-A1",
+      "R16-FOCUSED-r11-focused-A1",
+      "R16-FOCUSED-r12-focused-A1",
+      "R16-FOCUSED-r13-focused-A1",
+      "R16-FOCUSED-r14-focused-A1",
+      "R16-FOCUSED-r15-focused-A1",
+      "R16-FOCUSED-r15-journal-crash-A1",
+      "R16-FOCUSED-r16-domain-A1",
+      "R16-FOCUSED-r16-tooling-A1",
+      "R16-FOCUSED-r9-focused-A1"
+    ],
+    "r16IntegrityClean": true,
+    "r17InvalidProvenanceAttempts": 11,
+    "defectConfirmed": true
+  }
+}
