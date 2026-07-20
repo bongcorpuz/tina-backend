@@ -1,0 +1,13 @@
+{
+  "campaignId": "R15-POSTFIX6-WORKING-TREE",
+  "archivedAt": "2026-07-20T03:48:58.369Z",
+  "attempts": 1528,
+  "events": 4584,
+  "incompleteAttempts": 0,
+  "verifiedEvents": 4584,
+  "mismatches": 0,
+  "archiveFile": "R15-POSTFIX6-WORKING-TREE.attempts.jsonl",
+  "archiveSha256": "0e501a21aeb05303c8d6590f213fa92da10c7d1137a1c21ea58c333330f5753c",
+  "containerConversionOnly": true,
+  "statement": "Every event file was read verbatim and hash-recorded before any directory removal. The archive was verified to reproduce every event hash. No attempt, event or field was discarded."
+}

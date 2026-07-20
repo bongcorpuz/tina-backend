@@ -28,8 +28,10 @@ import {
   AUDIT_TAX_SIGNALS,
   BYPASS_HOOKS,
   CLARIFY_PATTERNS,
+  NON_TAX_FILE_OBJECT_PATTERNS,
   NON_TAX_REJECT_PATTERNS,
-  PH_TAX_ALLOW_PATTERNS
+  PH_TAX_ALLOW_PATTERNS,
+  TAX_FILING_ADJACENT_PATTERNS
 } from "./philippine-tax-boundary-patterns.js";
 
 // ─── Rejection / Clarification Messages ──────────────────────────────────────
@@ -90,6 +92,28 @@ export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", cont
   // ── 4. isTaxRelated keyword check (broader catch-all) ────────────────────
   if (isTaxRelated(q)) {
     return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "TAX_KEYWORD", reason: "tax_keyword_match", confidence: 0.85 };
+  }
+
+  // ── 4b. PHASE-10A14-R15 (P1-R14-IR-002) — TAX-FILING ADJACENCY ───────────
+  // Questions about filing a return, a filing deadline, or an authority/notice/adviser
+  // statement about filing are Philippine-tax questions even when they name no explicit
+  // tax keyword. R14 rejected these as out-of-domain; the R15 pre-fix campaign
+  // reproduced 17 such rejections.
+  //
+  // The non-tax file-object veto is checked FIRST, so adjacency can never be triggered
+  // by the bare token "file": "open the computer file", "file a police complaint",
+  // "save the spreadsheet file" and "file the documents alphabetically" remain outside
+  // the tax domain. Fail-closed remains the default for everything else.
+  const hasNonTaxFileObject = NON_TAX_FILE_OBJECT_PATTERNS.some((p) => p.test(q));
+  if (!hasNonTaxFileObject) {
+    for (const pattern of TAX_FILING_ADJACENT_PATTERNS) {
+      if (pattern.test(q)) {
+        return {
+          isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX_FILING_ADJACENT",
+          reason: "tax_filing_adjacency", confidence: 0.80
+        };
+      }
+    }
   }
 
   // ───────────────────────────────────────────────────────────────────────────

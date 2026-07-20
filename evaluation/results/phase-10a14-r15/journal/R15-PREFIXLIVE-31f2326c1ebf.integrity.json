@@ -1,0 +1,13 @@
+{
+  "campaignId": "R15-PREFIXLIVE-31f2326c1ebf",
+  "archivedAt": "2026-07-20T03:47:20.939Z",
+  "attempts": 41,
+  "events": 160,
+  "incompleteAttempts": 1,
+  "verifiedEvents": 160,
+  "mismatches": 0,
+  "archiveFile": "R15-PREFIXLIVE-31f2326c1ebf.attempts.jsonl",
+  "archiveSha256": "6f703d1da59d068d9cb85802082096b493bb353d6cd71f0838265f0bcac92222",
+  "containerConversionOnly": true,
+  "statement": "Every event file was read verbatim and hash-recorded before any directory removal. The archive was verified to reproduce every event hash. No attempt, event or field was discarded."
+}

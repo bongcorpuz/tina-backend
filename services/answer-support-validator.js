@@ -1235,7 +1235,7 @@ const CR_PASSIVE_OBLIGATION_RE = /\b(?:the )?(?:return|filing|submission|it) (?:
 // WS7 — negation scope. SAFE: negates the filing conclusion / deadline assertion / recommendation.
 // PHASE-10A14-R14: extended with explicit error-of-conclusion frames and Taglish
 // epistemic negation, both of which over-fired in the R14 pre-fix campaign.
-const CR_SAFE_NEGATION_RE = /\b(do(?:es)? not (?:establish|show|prove|mean|indicate|require|obligate|confirm|conclude|say)|(?:does|do|did) n['’]t (?:establish|show|prove|require|confirm)|is not established|are not established|not established|not shown|no authority|no basis to (?:recommend|advise|conclude|require)|cannot (?:confirm|conclude|determine|establish|verify)|do not (?:assume|conclude|think|presume)|(?:it (?:is|would be) )?(?:incorrect|wrong|an error|inaccurate|unsafe) to (?:conclude|assume|say|state|advise|recommend)|the (?:available )?(?:facts|evidence|authority) do(?:es)? not|not required to file (?:today|now|by)|not obligated to file (?:today|now)|are not required to file (?:today|now)|you are not required to file (?:today|now)|hindi (?:natin |namin |mo |niya )?(?:ma-?)?(?:confirm|makumpirma|matiyak|masabi|masasabi)|walang basehan)\b/i;
+const CR_SAFE_NEGATION_RE = /\b(do(?:es)? not (?:establish|show|prove|mean|indicate|require|obligate|confirm|conclude|say)|(?:does|do|did) n['’]t (?:establish|show|prove|require|confirm)|is not established|are not established|not established|not shown|no authority|no basis to (?:recommend|advise|conclude|require)|cannot (?:confirm|conclude|determine|establish|verify)|do not (?:assume|conclude|think|presume)|(?:it (?:is|would be) )?(?:incorrect|wrong|an error|inaccurate|unsafe) to (?:conclude|assume|say|state|advise|recommend)|the (?:available )?(?:facts|evidence|authority) do(?:es)? not|not required to file (?:today|now|by)|not obligated to file (?:today|now)|are not required to file (?:today|now)|you are not required to file (?:today|now)|hindi (?:natin |namin |mo |niya )?(?:ma-?)?(?:confirm|makumpirma|matiyak|masabi|masasabi)|walang basehan|hindi (?:pa )?napatutunayan|hindi (?:pa )?napatunayan|hindi (?:pa )?patunay|huwag (?:mo(?:ng)? |kang |nang )?(?:ipagpalagay|ipalagay|isipin|akalain|asahan)|walang sapat na batayan|hindi tiyak(?: na| kung)|hindi malinaw kung|hindi (?:ka |kang |kayo(?:ng)? )?obligado(?:ng)?|hindi (?:ka |kang )?kailangang mag-?file (?:ngayon|ngayong araw))\b/i;
 // UNSAFE negation: negates DELAY / POSTPONEMENT (i.e. still pressures acting now).
 const CR_DELAY_NEGATION_RE = /\b(do not (?:delay|wait|postpone|defer|hold off|risk)|don['’]t (?:delay|wait|postpone|defer)|do not wait until tomorrow|huwag (?:nang |na )?(?:ipagpaliban|maghintay|mag-?antay|magpaliban))\b/i;
 
@@ -1258,10 +1258,85 @@ const CR_OUTER_NEGATION_RE = /\b(do(?:es)? not|do n['’]t|don['’]t|doesn['’
 const CR_NEGATED_IMPERATIVE_RE = /^\s*(?:please\s+|kindly\s+)?(do not|don['’]t|never|avoid|make sure not to|be careful not to|huwag|wait|delay|postpone|defer|put off|skip|fail|neglect|omit|forget|miss|leave|refrain)\b/i;
 // Deferral anchor: an open-ended "do not file until ... confirmed" is a present-user
 // filing directive even though it names no calendar day.
-const CR_REL_DEFERRAL_RE = /\buntil (?:the )?(?:deadline|due date|filing date)[^.\n]{0,30}\b(?:is|are|has been)\b[^.\n]{0,20}\b(?:confirmed|verified|established|determined)\b/i;
+// PHASE-10A14-R15: also accepts a pronoun subject ("until IT is confirmed"), which is the
+// ordinary way the deferral is written once the deadline has been named in a prior clause.
+const CR_REL_DEFERRAL_RE = /\buntil (?:the |that )?(?:deadline|due date|filing date|it|this|that)\b[^.\n]{0,30}\b(?:is|are|has been)\b[^.\n]{0,20}\b(?:confirmed|verified|established|determined|clear)\b/i;
+
+// ── PHASE-10A14-R15 (P1-R14-IR-001) — ACTION TARGET ────────────────────────────
+// R14 treated any clause mentioning the noun "filing" near a relative time as a filing
+// directive, so "do not fail to VERIFY whether filing is due today" was scored unsafe.
+// The governed action there is verification, not filing. A directive whose complement is
+// an epistemic/preparatory verb does not direct the user to file.
+const CR_NONFILING_TARGET_VERBS =
+  "verify|verifying|confirm|confirming|check|checking|double-?check|ensure|ensuring|determine|determining|review|reviewing|validate|validating|obtain|obtaining|secure|securing|gather|gathering|ask|asking|consult|consulting|preserve|preserving|retain|retaining|keep|keeping|explain|explaining|clarify|clarifying|read|reading|compute|computing|calculate|calculating|prepare|preparing";
+// A nonperformance predicate or directive cue whose COMPLEMENT is a non-filing verb.
+const CR_NONFILING_TARGET_RE = new RegExp(
+  String.raw`\b(?:fail(?:s|ed|ing)? to|neglect(?:s|ed|ing)? to|forget(?:s|ting)? to|forgot to|omit(?:s|ted|ting)?|miss(?:es|ed|ing)?|refrain(?:s|ed|ing)? from|remember to|be sure to|make sure (?:to|you|that you)|be careful (?:to|not to)|see to it that (?:you )?)\s+(?:you\s+)?(?:also\s+)?(?:${CR_NONFILING_TARGET_VERBS})\b`,
+  "i"
+);
+// A bare imperative/obligation whose head verb is a non-filing action.
+const CR_NONFILING_IMPERATIVE_RE = new RegExp(
+  String.raw`^\s*(?:please\s+|kindly\s+)?(?:do not |don['’]t |never |avoid |you (?:must|should|need to|have to) (?:not )?)?\s*(?:${CR_NONFILING_TARGET_VERBS})\b`,
+  "i"
+);
+
+// ── PHASE-10A14-R15 — ADDITIONAL NONPERFORMANCE SURFACES ──────────────────────
+// Reported misses IR-U1..IR-U4: "left unfiled", "remain outstanding", "unsubmitted",
+// and "let the day pass without filing".
+const CR_NONPERF_STATE_RE =
+  /\b(?:left|leaving|leave|remain(?:s|ing|ed)?|stay(?:s|ing|ed)?|still)\s+(?:the\s+)?(?:return\s+)?(?:unfiled|unsubmitted|outstanding|unlodged|pending|undone)\b|\b(?:unfiled|unsubmitted|outstanding|unlodged)\b(?=[^.\n]{0,40}\b(?:today|tonight|tomorrow|midnight|day)\b)/i;
+const CR_NONPERF_DAYPASS_RE =
+  /\b(?:let|allow(?:ing)?|hayaan(?:g)?)\s+(?:today|the day|tonight|midnight|this day|the deadline|ang araw)\b[^.\n]{0,40}\b(?:pass|end|go by|elapse|lumipas|lipas)\b|\b(?:pass|end|go by|elapse)\b[^.\n]{0,30}\bwithout\s+(?:filing|submitting|lodging|transmitting)\b|\blumipas ang araw\b[^.\n]{0,40}\bhindi\b[^.\n]{0,25}\b(?:nakakapag-?file|naka-?file|mag-?file)\b/i;
+// Deferral by holding the return.
+const CR_NONPERF_HOLD_RE = /\bhold(?:s|ing)?(?:\s+off)?\b[^.\n]{0,30}\b(?:return|filing|submission|it)\b|\bhold(?:\s+off)?\s+(?:the\s+)?(?:return|filing|submission)\b|\bhold\s+(?:the\s+)?return\b/i;
+
+// ── PHASE-10A14-R15 — FILIPINO NONPERFORMANCE AND DIRECTIVE CUES ──────────────
+const CR_FIL_NONPERF_RE = /\b(?:mapalampas|palampasin|makaligtaan|malimutan|kalimutan(?:g)?|nakalimutan|ipagpaliban|magpaliban|antalahin|hindi\s+(?:maka)?(?:pag-?)?file|hindi nakakapag-?file|hindi naisumite)\b/i;
+const CR_FIL_DIRECTIVE_RE = /\b(?:siguraduhin(?:g|)|tiyakin(?:g|)|huwag|dapat|kailangan mong|mag-?file ka|isumite mo)\b/i;
+
+// PHASE-10A14-R15 (P1-R14-IR-001) — INDEPENDENT CLAUSE SEGMENTATION.
+// R14 split only on sentence punctuation, newlines and headings. It never split on
+// coordinators, so "The authority does not establish today's deadline, but do not fail to
+// file today" was ONE clause in which the safe-negation branch matched and suppressed the
+// unsafe half. A safe clause could therefore shield an unsafe one. R14's MM10 invariant
+// asserted this could not happen; it passed only because its fixture used a sentence
+// boundary, which does split.
+//
+// Coordinators are split ONLY when followed by material that can itself carry a directive,
+// so noun coordination ("the taxpayer and spouse") does not fragment into noise. Each
+// resulting clause is evaluated independently; a fragment lacking a filing action, a
+// relative time and directive force is inert and cannot make an answer unsafe.
+const CR_CLAUSE_COORDINATOR_RE =
+  /(?:[,;—–-]\s*)?\b(?:but|however|nevertheless|nonetheless|although|though|even if|even though|yet|and then|then|and|or|ngunit|pero|subalit|gayunpaman|samantala)\b\s+/gi;
 
 function splitCalendarClauses(answer = "") {
-  return String(answer).split(/(?<=[.!?;])\s+|\n+|(?=#{1,6}\s)/).map((c) => c.trim()).filter(Boolean);
+  const sentences = String(answer)
+    .split(/(?<=[.!?;])\s+|\n+|(?=#{1,6}\s)/)
+    .map((c) => c.trim())
+    .filter(Boolean);
+  // A sentence fragment may retain a leading coordinator once the sentence splitter has
+  // already cut on ';' — e.g. "; however, do not file today" becomes "however, do not
+  // file today", where the clause-initial imperative test can no longer fire.
+  const stripLeadingCoordinator = (s) =>
+    s.replace(/^\s*(?:but|however|nevertheless|nonetheless|although|though|yet|and then|then|and|or|ngunit|pero|subalit|gayunpaman|samantala)\b[,:\s]+/i, "").trim();
+
+  const out = [];
+  for (const sentence of sentences) {
+    const normalized = stripLeadingCoordinator(sentence);
+    const parts = normalized.split(CR_CLAUSE_COORDINATOR_RE).map((p) => stripLeadingCoordinator(p)).filter(Boolean);
+    if (parts.length > 1) {
+      // Evaluate ONLY the independent clauses. Keeping the unsplit sentence as well would
+      // let a filing verb in one clause combine with a relative time in another
+      // ("File by the applicable statutory deadline, but do not fail to verify whether
+      // filing is due today") and produce a false positive from two individually safe
+      // clauses. Any directive that genuinely spans a coordinator survives in the clause
+      // that actually carries it.
+      for (const p of parts) if (p.length >= 6) out.push(p);
+    } else {
+      out.push(normalized);
+    }
+  }
+  return out.filter(Boolean);
 }
 
 /** Polarity-aware clause-frame classifier for calendar-relative filing directives. Pure, deterministic. */
@@ -1294,20 +1369,50 @@ function analyzeCalendarClause(clause = "") {
     !(CR_FILING_ACTION_RE.test(dequoted) &&
       (CR_REL_TODAY_RE.test(dequoted) || CR_REL_TOMORROW_RE.test(dequoted) || CR_REL_YESTERDAY_RE.test(dequoted)));
 
+  // PHASE-10A14-R15 — UNQUOTED ATTRIBUTION SCOPE.
+  // "According to your accountant, the return is due today" REPORTS a third party's
+  // assertion; it is not TINA asserting a deadline. This suppresses an attributed
+  // ASSERTION only. An attributed IMPERATIVE ("As the notice says, file today") is TINA
+  // adopting the directive as its own and remains unsafe.
+  const attributionScope = /\b(?:according to|as (?:the |your )?(?:notice|letter|client|adviser|accountant|auditor|bir)\b[^.\n]{0,20}\b(?:says|said|states|stated)|in the view of|per your (?:accountant|adviser|auditor)|your (?:accountant|adviser|auditor) (?:says|said|told))\b/i.test(lc);
+
   // 3. action + nonperformance predicate; 4. outer negation.
-  const nonperfOmission = CR_NONPERF_OMISSION_RE.test(lc);
-  const nonperfDeferral = CR_NONPERF_DEFERRAL_RE.test(lc);
+  // PHASE-10A14-R15: state-based ("left unfiled", "remain outstanding"), day-pass
+  // ("let today pass without filing"), hold-deferral and Filipino surfaces added.
+  const nonperfState = CR_NONPERF_STATE_RE.test(lc);
+  const nonperfDayPass = CR_NONPERF_DAYPASS_RE.test(lc);
+  const nonperfHold = CR_NONPERF_HOLD_RE.test(lc);
+  const nonperfFilipino = CR_FIL_NONPERF_RE.test(lc);
+  const nonperfOmission = CR_NONPERF_OMISSION_RE.test(lc) || nonperfState || nonperfDayPass || nonperfFilipino;
+  const nonperfDeferral = CR_NONPERF_DEFERRAL_RE.test(lc) || nonperfHold;
   const nonperformancePredicate = nonperfOmission || nonperfDeferral;
   const nonperformanceType = nonperfOmission ? "OMISSION" : nonperfDeferral ? "DEFERRAL" : "NONE";
-  const outerNegation = CR_OUTER_NEGATION_RE.test(lc);
-  const negatedImperative = CR_NEGATED_IMPERATIVE_RE.test(clause.trim());
+  const outerNegation = CR_OUTER_NEGATION_RE.test(lc) || /\bhindi\b|\bhuwag\b|\bcannot let\b|\bcan't let\b/i.test(lc);
+  const negatedImperative = CR_NEGATED_IMPERATIVE_RE.test(clause.trim()) ||
+    /^\s*(?:see to it that|siguraduhin|tiyakin|huwag|hold\b)/i.test(clause.trim());
   const relDeferral = CR_REL_DEFERRAL_RE.test(lc);
-  const temporalAnchor = hasRelative || relDeferral;
+  // A day-pass or hold construction is ITSELF a calendar-relative anchor: "let the day
+  // pass without filing" and "hold the return until tomorrow" are about the present day
+  // even when no explicit "today" token appears (IR-U9).
+  const temporalAnchor = hasRelative || relDeferral || nonperfDayPass || nonperfHold;
 
-  // Quotation and safe epistemic negation are resolved BEFORE polarity, so neither a
-  // quoted directive nor "do not assume today is the deadline" can be reclassified as a
-  // prohibition merely because it contains "do not".
-  const scopeSuppressed = quotedScope || safeNegation;
+  // 3b. ACTION TARGET (P1-R14-IR-001). A directive whose complement is an epistemic or
+  // preparatory verb does not direct the user to FILE, even when the clause mentions
+  // filing. Filing must be independently directed for the clause to be a filing directive.
+  const nonFilingTarget = CR_NONFILING_TARGET_RE.test(lc) || CR_NONFILING_IMPERATIVE_RE.test(clause.trim());
+  const filingIndependentlyDirected =
+    CR_IMPERATIVE_FILING_RE.test(clause.trim()) ||
+    CR_PASSIVE_OBLIGATION_RE.test(lc) ||
+    /\b(?:fail(?:s|ed|ing)? to|neglect(?:s|ed|ing)? to|forget(?:s|ting)? to|forgot to|refrain(?:s|ed|ing)? from|wait(?:s|ed|ing)? to)\s+(?:file|submit|lodge|transmit|complete the filing)\b/i.test(lc) ||
+    /\b(?:must|should|shall|need to|needs to|have to|has to|cannot afford to|advise you to|advise you not to)\s+(?:not\s+)?(?:file|submit|lodge|transmit)\b/i.test(lc) ||
+    nonperfState || nonperfDayPass || nonperfHold || nonperfFilipino;
+  const actionTarget = nonFilingTarget && !filingIndependentlyDirected ? "NON_FILING_VERIFICATION" : "FILE_RETURN";
+
+  // Quotation, safe epistemic negation and a non-filing action target are resolved BEFORE
+  // polarity, so none of a quoted directive, "do not assume today is the deadline", or
+  // "do not fail to verify whether filing is due today" can be reclassified as a filing
+  // directive merely because it contains "do not" or the noun "filing".
+  const scopeSuppressed = quotedScope || safeNegation || actionTarget === "NON_FILING_VERIFICATION";
   // Negated nonperformance == an affirmative filing directive.
   const nonperfDirective = !scopeSuppressed && nonperformancePredicate &&
     (outerNegation || negatedImperative || directiveForce || recommend);
@@ -1335,13 +1440,25 @@ function analyzeCalendarClause(clause = "") {
     : delayNegation ? "NEGATES_DELAY" : "NONE";
 
   // 7-8. relative-time / current-user application.
-  const presentUserDirective = hasFiling && temporalAnchor &&
+  // PHASE-10A14-R15: hasFiling is satisfied either by an explicit filing token or by a
+  // state/day-pass/hold/Filipino nonperformance surface that necessarily concerns filing
+  // ("the return must not remain outstanding", "let today pass without filing").
+  const filingConcerned = hasFiling || nonperfState || nonperfDayPass || nonperfHold || nonperfFilipino;
+  const presentUserDirective = filingConcerned && temporalAnchor &&
+    actionTarget === "FILE_RETURN" &&
     (directiveForce || recommend || passiveObligation || imperative || filipinoFiling ||
-     penaltyPressure || nonperfDirective || prohibitionDirective || /\byes\b/i.test(lc));
+     penaltyPressure || nonperfDirective || prohibitionDirective ||
+     CR_FIL_DIRECTIVE_RE.test(lc) || /\byes\b/i.test(lc));
 
   // 9. final unsafe determination.
+  // An attributed ASSERTION is reported, not asserted by TINA. An attributed directive
+  // is still TINA's directive and is unaffected here.
+  const attributedAssertionOnly = attributionScope && affirm && !presentUserDirective;
   let unsafe = (affirm || presentUserDirective) && !(counterfactual || yearHistorical);
+  if (attributedAssertionOnly) unsafe = false;
   if (quotedScope) unsafe = false;
+  // A non-filing action target is never an unsupported filing directive.
+  else if (actionTarget === "NON_FILING_VERIFICATION") unsafe = false;
   // Safe negation of the filing conclusion / deadline assertion / recommendation wins.
   else if (safeNegation && !delayNegation) unsafe = false;
   // Negated delay/postponement re-pressures acting now: keep/mark unsafe when filing+relative present.

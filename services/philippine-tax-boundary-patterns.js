@@ -225,6 +225,57 @@ export const PH_TAX_ALLOW_PATTERNS = [
   /\baudit\b[^.\n]{0,40}(favor|win|succeed|prevail|resolved|outcome|assessment)/i,
 ];
 
+// ─── PHASE-10A14-R15 (P1-R14-IR-002) — TAX-FILING ADJACENCY ───────────────────
+//
+// R14 rejected filing-adjacent questions as out-of-domain because they named no explicit
+// tax keyword: "Does the authority establish that I must file today?", "The notice says,
+// 'File today.' Does that apply to me?", "Huwag daw akong mag-fail mag-file ngayon."
+// The R15 pre-fix live campaign reproduced 17 such rejections, not merely the 7 sampled.
+//
+// These patterns key on tax-filing CONTEXT AND OBJECT — a return, a filing deadline, a
+// filing obligation, a BIR/accountant/authority statement about filing — never on the
+// bare token "file". NON_TAX_FILE_OBJECT_PATTERNS below is checked FIRST and vetoes them,
+// so "open the computer file" and "file a police complaint" stay out of the tax domain.
+
+export const NON_TAX_FILE_OBJECT_PATTERNS = [
+  /\b(?:computer|text|log|zip|pdf|word|excel|csv|image|photo|video|audio|config|source|backup)\s+file\b/i,
+  /\bfile\s+(?:extension|format|name|path|size|type|manager|system|explorer)\b/i,
+  /\b(?:open|save|rename|delete|convert|attach|upload|download|compress|copy|move|zip|unzip)\b[^.\n]{0,20}\bfile\b/i,
+  /\bfile\b[^.\n]{0,40}\b(?:folder|directory|desktop|drive|server|email|attachment|cabinet)\b/i,
+  /\bfil(?:e|ing)\s+(?:a|an|the|this|that|my|your)?\s*(?:photo|image|picture|video|scan|document|doc|pdf|spreadsheet|receipt image)\b/i,
+  /\bfil(?:e|ing)\b[^.\n]{0,30}\b(?:police|criminal|complaint against|custody|divorce|annulment|labor case|estafa)\b/i,
+  /\bfil(?:e|ing)\b[^.\n]{0,30}\b(?:court|pleading|motion|petition)\b(?![^.\n]{0,40}\b(?:tax|bir|cta|assessment)\b)/i,
+  /\bfile\s+the\s+documents?\b[^.\n]{0,30}\b(?:alphabetically|cabinet|shelf|binder)\b/i,
+];
+
+export const TAX_FILING_ADJACENT_PATTERNS = [
+  // nonperformance-of-filing idioms (strong tax-compliance markers)
+  /\b(?:fail(?:ure|ing|s|ed)?|forget(?:ting|s)?|forgot|neglect(?:ing|s|ed)?|omit(?:ting|s|ted)?|miss(?:ing|es|ed)?)\s+(?:to\s+)?fil(?:e|ing)\b/i,
+  /\b(?:return|filing)\b[^.\n]{0,30}\b(?:unfiled|unsubmitted|outstanding|overdue|late)\b/i,
+  // the return as an object of filing
+  /\b(?:annual|quarterly|income tax|itr|my|the)\s+return\b[^.\n]{0,40}\b(?:file|filed|filing|submit|submitted|due|deadline|outstanding)\b/i,
+  /\b(?:file|filed|filing|submit|submitted|lodge)\b[^.\n]{0,40}\b(?:annual|quarterly|income tax|itr|my|the)\s+return\b/i,
+  // filing deadline / obligation
+  /\bfiling\s+(?:deadline|due date|date|obligation|requirement|period)\b/i,
+  /\bdeadline\b[^.\n]{0,40}\b(?:file|filing|submit|return)\b/i,
+  /\b(?:file|filing|submit)\b[^.\n]{0,40}\bdeadline\b/i,
+  // authority / notice / adviser statements about filing
+  /\b(?:authority|notice|letter of authority|assessment|regulation|ruling)\b[^.\n]{0,50}\b(?:file|filing|submit|return|deadline)\b/i,
+  /\b(?:accountant|auditor|adviser|advisor|bookkeeper|cpa)\b[^.\n]{0,60}\b(?:file|filing|submit|return|deadline)\b/i,
+  // filing directed at a calendar-relative time (the R14 probe family)
+  /\b(?:file|filing|submit|lodge)\b[^.\n]{0,40}\b(?:today|tonight|tomorrow|midnight|right now|immediately)\b/i,
+  /\b(?:today|tonight|tomorrow|midnight)\b[^.\n]{0,40}\b(?:file|filing|submit|lodge)\b/i,
+  // filing-obligation questions ("do I need to file if I had no income?"). The non-tax
+  // file-object veto still guards these, so "should I file a police complaint?" and
+  // "do I need to file the documents alphabetically?" remain outside the tax domain.
+  /\b(?:need|needs|needed|have|has|had|required|obliged|obligated|supposed)\s+to\s+file\b/i,
+  /\b(?:do|does|did|should|must|can|am|are|is)\s+(?:i|we|you|he|she|they|my\s+\w+)\s+(?:still\s+|also\s+)?(?:need\s+to\s+|have\s+to\s+|required\s+to\s+)?file\b/i,
+  /\bwho\s+(?:must|should|needs?\s+to|is\s+required\s+to)\s+file\b/i,
+  // Filipino / Taglish filing
+  /\b(?:mag-?file|i-?file|isumite|mag-?submit|nakakapag-?file|naka-?file|pag-?file)\b/i,
+  /\b(?:mapalampas|kalimutan\w*|ipagpaliban)\b[^.\n]{0,30}\b(?:file|filing|return)\b/i,
+];
+
 // ─── Non-tax REJECT patterns ──────────────────────────────────────────────────
 // Used to detect clearly non-Philippine-tax queries for explicit reject logging.
 // With fail-closed default, these are supplementary — they improve the log

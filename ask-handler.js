@@ -82,6 +82,8 @@ import {
 import { evaluateAnswerSupport, buildCalendarRelativeSafeAnswer } from "./services/answer-support-validator.js";
 import { derivePersistenceReceipt } from "./services/persistence-receipt.js";
 import { AsyncLocalStorage } from "node:async_hooks";
+import { publicRuntimeIdentity } from "./services/runtime-identity.js";
+import { detectTaxComputationClarification, buildTaxComputationClarification } from "./services/tax-computation-clarification.js";
 
 // PHASE-10A14-R14 (P1-R13-IR-003): request-scoped persistence context. R13 set a public
 // persistenceStatus on exactly ONE response path (the domain boundary), so 24 of 28 live
@@ -95,6 +97,81 @@ const persistenceContext = new AsyncLocalStorage();
 function recordPersistenceReceipt(receipt) {
   const store = persistenceContext.getStore();
   if (store) { store.receipt = receipt; store.attempted = true; }
+}
+
+/** Sanitized public receipt. Never carries DB errors, SQL, connection strings or credentials. */
+function sanitizeReceipt(receipt) {
+  return {
+    attempted: Boolean(receipt.attempted),
+    persisted: Boolean(receipt.persisted),
+    userMessagePersisted: Boolean(receipt.userMessagePersisted),
+    assistantMessagePersisted: Boolean(receipt.assistantMessagePersisted),
+    memoryHookCompleted: Boolean(receipt.memoryHookCompleted),
+    reasonCode: String(receipt.reasonCode || ""),
+    safeDiagnostic: String(receipt.safeDiagnostic || receipt.status || "")
+  };
+}
+
+/**
+ * PHASE-10A14-R15 (P1-R14-IR-003) — CENTRAL PUBLIC PERSISTENCE FINALIZER.
+ *
+ * R14 injected persistence information only when `body.persistenceStatus == null`. The
+ * domain-boundary branch pre-populates a status without a receipt, so the wrapper skipped
+ * the body entirely and every boundary response declared PERSISTED with a null receipt.
+ * The R15 pre-fix campaign reproduced this on 21 live responses, not merely the 8 sampled.
+ * The guard conflated "status is absent" with "persistence declaration is absent".
+ *
+ * This finalizer runs UNCONDITIONALLY on every public JSON body. A branch cannot bypass it
+ * by pre-populating a status. The request-scoped acknowledged receipt is the single source
+ * of truth; a branch-supplied status that contradicts it, or a malformed/incomplete
+ * declaration, is REPLACED.
+ *
+ * Invariants:
+ *   - status is never null;
+ *   - PERSISTED always carries a sanitized acknowledged receipt;
+ *   - PERSISTED is impossible without an acknowledged receipt (never inferred from
+ *     history equality, never from the presence of IDs);
+ *   - a path that did not attempt persistence is never reported as PERSISTENCE_FAILED.
+ *
+ * Exported for direct test coverage of the exact adversarial cases.
+ */
+export function finalizePublicPersistence(body, store, conversationId, userId) {
+  const receipt = store && store.receipt;
+  const claimed = body.persistenceStatus;
+
+  if (receipt && receipt.status) {
+    // Acknowledged receipt exists: it is authoritative. A contradictory branch claim is
+    // recorded (for evidence) and then overwritten with the truth.
+    if (claimed && claimed !== receipt.status) {
+      body.persistenceStatusClaimOverridden = claimed;
+    }
+    body.persistenceStatus = receipt.status;
+    body.persistenceReceipt = sanitizeReceipt(receipt);
+    return body;
+  }
+
+  // No acknowledged receipt for this request.
+  // PERSISTED may never survive here: without an acknowledgement there is no evidence of
+  // a write, and history equality is not acknowledgement.
+  const truthfulStatus = !conversationId ? "NOT_PERSISTED_NO_CONVERSATION"
+    : !userId ? "NOT_PERSISTED_NO_USER"
+    : "NOT_PERSISTED_BY_POLICY";
+  const reasonCode = !conversationId ? "MISSING_CONVERSATION_ID"
+    : !userId ? "MISSING_USER_ID"
+    : "NO_PERSISTENCE_ON_THIS_RESPONSE_PATH";
+
+  if (claimed && claimed !== truthfulStatus) body.persistenceStatusClaimOverridden = claimed;
+  body.persistenceStatus = truthfulStatus;
+  // NOTE: derivePersistenceReceipt is deliberately NOT used for the no-attempt case —
+  // with both IDs present and no row data it returns PERSISTENCE_FAILED, which would
+  // assert that a save failed when none was ever attempted.
+  body.persistenceReceipt = {
+    attempted: false, persisted: false,
+    userMessagePersisted: false, assistantMessagePersisted: false,
+    memoryHookCompleted: false,
+    reasonCode, safeDiagnostic: truthfulStatus
+  };
+  return body;
 }
 
 const ENGINE_VERSION = "9.0.0";
@@ -2562,37 +2639,25 @@ export function createAskHandler({
     const _persistenceStore = { receipt: null, attempted: false };
     const _rawJson = res.json.bind(res);
     res.json = (body) => {
-      if (body && typeof body === "object" && !Array.isArray(body) && body.persistenceStatus == null) {
-        const receipt = _persistenceStore.receipt;
-        if (receipt && receipt.status) {
-          body.persistenceStatus = receipt.status;
-          body.persistenceReceipt = {
-            attempted: receipt.attempted,
-            persisted: receipt.persisted,
-            userMessagePersisted: receipt.userMessagePersisted,
-            assistantMessagePersisted: receipt.assistantMessagePersisted,
-            memoryHookCompleted: receipt.memoryHookCompleted,
-            reasonCode: receipt.reasonCode,
-            safeDiagnostic: receipt.safeDiagnostic
-          };
-        } else {
-          // No persistence was attempted on this path. Report the truthful reason.
-          // NOTE: derivePersistenceReceipt must NOT be used here — with both IDs present
-          // and no row data it yields PERSISTENCE_FAILED, which would tell the user a
-          // save failed when none was ever attempted. An unattempted path is reported as
-          // an explicit non-persistence rule. PERSISTED is never produced here.
-          const _cid = getConversationId(req), _uid = getUserId(req);
-          body.persistenceStatus = !_cid ? "NOT_PERSISTED_NO_CONVERSATION"
-            : !_uid ? "NOT_PERSISTED_NO_USER"
-            : "NOT_PERSISTED_BY_POLICY";
-          body.persistenceReceipt = {
-            attempted: false, persisted: false,
-            reasonCode: !_cid ? "MISSING_CONVERSATION_ID"
-              : !_uid ? "MISSING_USER_ID"
-              : "NO_PERSISTENCE_ON_THIS_RESPONSE_PATH",
-            safeDiagnostic: body.persistenceStatus
-          };
-        }
+      if (body && typeof body === "object" && !Array.isArray(body)) {
+        finalizePublicPersistence(body, _persistenceStore, getConversationId(req), getUserId(req));
+        // PHASE-10A14-R15 (P2-R14-IR-009) — server-reported runtime identity.
+        // Exposed ONLY on an authenticated request that explicitly asks for it via the
+        // diagnostics header, so ordinary users never receive it. This deliberately does
+        // NOT touch public /health: PATCH-08S-FOLLOWUP minimized that endpoint and lists
+        // commitSha as a forbidden public field, enforced by a staging smoke test.
+        try {
+          const wantsIdentity = String(req.headers?.["x-tina-runtime-identity"] || "") === "1";
+          if (wantsIdentity) {
+            const id = publicRuntimeIdentity();
+            body.runtimeIdentity = {
+              runtimeCommit: id.runtimeCommit,
+              runtimeCommitSource: id.runtimeCommitSource,
+              deploymentId: id.deploymentId,
+              service: id.service
+            };
+          }
+        } catch { /* identity is diagnostic only and must never break a response */ }
       }
       return _rawJson(body);
     };
@@ -3285,6 +3350,38 @@ export function createAskHandler({
           compactHookConfig.hook_code
         );
         _isPhilippineTaxContext = _boundaryCheck.isPhilippineTax === true;
+
+        // ── PHASE-10A14-R15 (P2-R14-IR-008) — FOCUSED CLARIFICATION ──────────
+        // A liability-computation request that lacks the decisive facts cannot be
+        // resolved by retrieval: the obstacle is missing FACTS, not missing authority.
+        // R14 answered LC5 ("How much tax do I owe?") with a no-indexed-authority
+        // fallback, which misdescribes why TINA cannot answer. Ask instead.
+        // This runs only for in-domain queries and only when at least two decisive
+        // facts are absent, so a fully specified computation still reaches the pipeline.
+        if (_isPhilippineTaxContext) {
+          const _clarify = detectTaxComputationClarification(_boundaryQuery);
+          if (_clarify.applies) {
+            const _c = buildTaxComputationClarification(_boundaryQuery);
+            await saveConversationTurn({
+              conversationId, userId,
+              question: compactHookConfig.originalQuestion,
+              answerText: _c.answer,
+              sourcesUsed: [], fallbackReferences: [], trust: null
+            });
+            return res.json({
+              success: true,
+              engine: "TINA Ask Handler",
+              hook: compactHookConfig.hook_code,
+              mode: compactHookConfig.mode,
+              answer: _c.answer,
+              sources: [], sourcesUsed: [], sourceCards: [], vectorMatches: 0,
+              responseKind: _c.responseKind,
+              clarificationReason: _c.clarificationReason,
+              missingDecisiveFacts: _clarify.missing,
+              askHandlerVersion: ENGINE_VERSION
+            });
+          }
+        }
 
         console.log("[DOMAIN BOUNDARY CHECK]", {
           query:           _boundaryQuery.slice(0, 120),

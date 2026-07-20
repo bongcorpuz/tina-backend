@@ -66,20 +66,30 @@ await test("a timeout is recorded as its own terminal event", async () => {
   equal(rev.timeouts, 1, "timeout count");
 });
 
-// 4, 5, 6 — REAL process kills
+// 4, 5, 6 — REAL process kills.
+// Run concurrently with a generous readiness deadline: this suite also executes inside
+// the full regression gate alongside 200+ other suites, where child-process startup can
+// be much slower than when run alone. A short sequential deadline made the suite
+// load-dependent (it passed standalone and failed under the gate).
 async function crashCase(campaignId, killPoint) {
   const marker = path.join(ROOT, `${campaignId}.ready`);
   const child = spawn(process.execPath, [VICTIM, ROOT, campaignId, "P1", killPoint], { stdio: "ignore" });
-  const deadline = Date.now() + 15000;
-  while (!fs.existsSync(marker) && Date.now() < deadline) await new Promise((r) => setTimeout(r, 25));
+  const deadline = Date.now() + 60000;
+  while (!fs.existsSync(marker) && Date.now() < deadline) await new Promise((r) => setTimeout(r, 10));
   const ready = fs.existsSync(marker);
   child.kill("SIGKILL");
   await new Promise((r) => child.on("exit", r));
   return { ready, review: reviewCampaign(campDir(campaignId)) };
 }
 
+const [crash4, crash5, crash6] = await Promise.all([
+  crashCase("C4", "after-allocated"),
+  crashCase("C5", "after-started"),
+  crashCase("C6", "during-call")
+]);
+
 await test("process kill AFTER allocation leaves the allocation durably visible", async () => {
-  const { ready, review } = await crashCase("C4", "after-allocated");
+  const { ready, review } = crash4;
   check(ready, "victim never signalled readiness");
   equal(review.allocated, 1, "allocation must survive the kill");
   equal(review.completed, 0, "must have no terminal event");
@@ -87,7 +97,7 @@ await test("process kill AFTER allocation leaves the allocation durably visible"
 });
 
 await test("process kill AFTER started leaves allocation and started visible, no terminal", async () => {
-  const { ready, review } = await crashCase("C5", "after-started");
+  const { ready, review } = crash5;
   check(ready, "victim never signalled readiness");
   equal(review.allocated, 1, "allocation must survive");
   equal(review.started, 1, "started must survive");
@@ -95,7 +105,7 @@ await test("process kill AFTER started leaves allocation and started visible, no
 });
 
 await test("process kill DURING the governed call leaves the attempt visible with no terminal event", async () => {
-  const { ready, review } = await crashCase("C6", "during-call");
+  const { ready, review } = crash6;
   check(ready, "victim never signalled readiness");
   check(review.allocated >= 1, "allocation must survive a kill mid-call");
   check(review.incompleteOrCrashed >= 1, "an interrupted attempt must be visible as incomplete");
