@@ -1,0 +1,34 @@
+{
+  "event": "COMPLETED_PASS",
+  "headAtEnd": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+  "treeCleanAfter": true,
+  "endedAt": "2026-07-20T11:22:16.762Z",
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 10908,
+  "runtimeCommit": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+  "syntaxRun": null,
+  "syntaxFailed": null,
+  "suitesRun": 7,
+  "suitesFailed": 0,
+  "reachabilityBefore": {
+    "label": "BEFORE",
+    "configPresent": true,
+    "reachable": true,
+    "httpStatus": 200,
+    "latencyMs": 4114,
+    "body": "{\"status\":\"ok\",\"service\":\"tina-backend\"}",
+    "at": "2026-07-20T11:22:04.811Z"
+  },
+  "reachabilityAfter": {
+    "label": "AFTER",
+    "configPresent": true,
+    "reachable": true,
+    "httpStatus": 200,
+    "latencyMs": 3152,
+    "body": "{\"status\":\"ok\",\"service\":\"tina-backend\"}",
+    "at": "2026-07-20T11:22:16.456Z"
+  },
+  "environmentFailure": false,
+  "environmentClassification": null
+}

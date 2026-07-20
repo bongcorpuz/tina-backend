@@ -1,0 +1,64 @@
+{
+  "task": "PHASE-10A14-R17",
+  "finalRuntimeCommit": "345f2db5",
+  "headCommit": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+  "allRuntimeFilesIdentical": true,
+  "commitsSinceFinalRuntime": 8,
+  "statement": "The final RUNTIME commit is the last commit touching a runtime file (COMMIT 4, 345f2db5). Every later commit is evidence-only. All runtime files are byte-identical between that commit and HEAD.",
+  "files": [
+    {
+      "file": "services/philippine-tax-domain-boundary.js",
+      "atFinalRuntime": "40f0cf5de7dbd60e6ecd147e39c1e0c3c57423ef12effb54b91629b2ff49d64c",
+      "atHead": "40f0cf5de7dbd60e6ecd147e39c1e0c3c57423ef12effb54b91629b2ff49d64c",
+      "identical": true
+    },
+    {
+      "file": "services/philippine-tax-boundary-patterns.js",
+      "atFinalRuntime": "e29cf87f628243cf6c00d8959c7ff9c7f15f6be12b6bebbcd8769bb19826283b",
+      "atHead": "e29cf87f628243cf6c00d8959c7ff9c7f15f6be12b6bebbcd8769bb19826283b",
+      "identical": true
+    },
+    {
+      "file": "tax-keywords.js",
+      "atFinalRuntime": "527fca3dca59a9908d4377440e14de75053fcc1db8c0385d0ce05b37a5b45b93",
+      "atHead": "527fca3dca59a9908d4377440e14de75053fcc1db8c0385d0ce05b37a5b45b93",
+      "identical": true
+    },
+    {
+      "file": "tax-classifier.js",
+      "atFinalRuntime": "dc08eeb0c1747812358287816017e660bf58f16d15502682be9b54fd67351d16",
+      "atHead": "dc08eeb0c1747812358287816017e660bf58f16d15502682be9b54fd67351d16",
+      "identical": true
+    },
+    {
+      "file": "services/answer-support-validator.js",
+      "atFinalRuntime": "c79d82d6cb2e40cbea5c04ff17a7c1405a18103e40ae8f6a8f470341312b56f6",
+      "atHead": "c79d82d6cb2e40cbea5c04ff17a7c1405a18103e40ae8f6a8f470341312b56f6",
+      "identical": true
+    },
+    {
+      "file": "ask-handler.js",
+      "atFinalRuntime": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404",
+      "atHead": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404",
+      "identical": true
+    },
+    {
+      "file": "pipeline.js",
+      "atFinalRuntime": "dcecb6d137642065e5112a3845a4a4220436fb325ba684f4f0e9a160ed6d0cc8",
+      "atHead": "dcecb6d137642065e5112a3845a4a4220436fb325ba684f4f0e9a160ed6d0cc8",
+      "identical": true
+    },
+    {
+      "file": "answer-renderer.js",
+      "atFinalRuntime": "f59cbe43bd4c026e8ecf7481d9a8248782932358327fa61820f8004af24e9705",
+      "atHead": "f59cbe43bd4c026e8ecf7481d9a8248782932358327fa61820f8004af24e9705",
+      "identical": true
+    },
+    {
+      "file": "server.js",
+      "atFinalRuntime": "3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73",
+      "atHead": "3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73",
+      "identical": true
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T11:21:56.095Z",
+  "generatedAt": "2026-07-20T11:22:32.183Z",
   "rule": "Precedence: corruption, then invalid provenance, then explicit adjudication, then raw terminal status. An adjudication stating non-controlling overrides a COMPLETED_PASS terminal.",
   "byDisposition": {
     "VALID_NON_CONTROLLING": 4,
-    "VALID_CONTROLLING": 32
+    "VALID_CONTROLLING": 33
   },
   "adjudicatedAttempts": [],
   "corruptAttempts": []

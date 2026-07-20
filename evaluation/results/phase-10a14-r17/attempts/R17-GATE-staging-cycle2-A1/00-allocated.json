@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R17-GATE-staging-cycle2-A1",
+  "task": "PHASE-10A14-R17",
+  "attemptType": "STAGING_GATE",
+  "campaignId": "R17-GATE-STAGING",
+  "probeId": "staging",
+  "cycleKey": "R17-GATE-staging-cycle2",
+  "runtimeCommit": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+  "runtimeCommitSource": "git rev-parse HEAD",
+  "headAtStart": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "retryOf": null,
+  "retryReason": null,
+  "notes": null,
+  "allocatedAt": "2026-07-20T11:22:05.308Z"
+}

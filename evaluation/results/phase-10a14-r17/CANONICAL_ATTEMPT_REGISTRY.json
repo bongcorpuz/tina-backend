@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T11:21:56.095Z",
+  "generatedAt": "2026-07-20T11:22:32.183Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r17/attempts",
   "r17Base": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
   "rule": "Machine-generated. Controlling status requires valid Git provenance AND a VALID_CONTROLLING disposition. No manually typed competing total is permitted anywhere.",
@@ -27,19 +27,19 @@
     "clean": false
   },
   "counts": {
-    "totalAttempts": 36,
+    "totalAttempts": 37,
     "runnerInvocations": 3,
-    "stagingRunnerInvocations": 1,
+    "stagingRunnerInvocations": 2,
     "focusedSuiteInvocations": 32,
     "campaignAttempts": 0,
-    "completedPass": 32,
+    "completedPass": 33,
     "completedFailures": 4,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "incompleteAttempts": 0,
     "corruptAttempts": 0,
     "invalidProvenanceAttempts": 0,
-    "controllingAttempts": 32,
+    "controllingAttempts": 33,
     "nonControllingAttempts": 4,
     "validLinkedRetries": 0,
     "unlinkedReruns": 14
@@ -84,6 +84,15 @@
     "staging": [
       {
         "attemptId": "R17-GATE-staging-cycle1-A1",
+        "exitCode": 0,
+        "rawStatus": "COMPLETED_PASS",
+        "disposition": "VALID_CONTROLLING",
+        "controlling": true,
+        "retryOf": null,
+        "provenanceValid": true
+      },
+      {
+        "attemptId": "R17-GATE-staging-cycle2-A1",
         "exitCode": 0,
         "rawStatus": "COMPLETED_PASS",
         "disposition": "VALID_CONTROLLING",
@@ -286,6 +295,15 @@
     },
     "R17-GATE-staging-cycle1|371fa5843fe3aae4710d1130ed260d3177dad4f2": {
       "key": "R17-GATE-staging-cycle1|371fa5843fe3aae4710d1130ed260d3177dad4f2",
+      "attempts": 1,
+      "linkedRetries": 0,
+      "unlinkedReruns": 0,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": true
+    },
+    "R17-GATE-staging-cycle2|732e3337cc5b909a7f24a7e3e9cc8b17db307174": {
+      "key": "R17-GATE-staging-cycle2|732e3337cc5b909a7f24a7e3e9cc8b17db307174",
       "attempts": 1,
       "linkedRetries": 0,
       "unlinkedReruns": 0,
@@ -1841,6 +1859,49 @@
       "treeEquivalenceVerified": null,
       "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-staging-cycle1-A1/stdout.raw.txt",
       "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-staging-cycle1-A1",
+      "adjudicated": false
+    },
+    {
+      "attemptId": "R17-GATE-staging-cycle2-A1",
+      "task": "PHASE-10A14-R17",
+      "attemptType": "STAGING_GATE",
+      "campaignId": "R17-GATE-STAGING",
+      "probeId": "staging",
+      "cycleKey": "R17-GATE-staging-cycle2",
+      "command": "node scripts/run-staging-smokes.mjs",
+      "runtimeCommit": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+      "runtimeCommitSource": "git rev-parse HEAD",
+      "headAtStart": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+      "headAtEnd": "732e3337cc5b909a7f24a7e3e9cc8b17db307174",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T11:22:05.546Z",
+      "endedAt": "2026-07-20T11:22:16.762Z",
+      "exitCode": 0,
+      "signal": null,
+      "rawStatus": "COMPLETED_PASS",
+      "status": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "dispositionReasons": [
+        "RAW:COMPLETED_PASS"
+      ],
+      "controlling": true,
+      "technicalFailure": false,
+      "completedFailure": false,
+      "environmentFailure": false,
+      "corrupt": false,
+      "corruptionFindings": [],
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "provenanceErrors": [],
+      "headAtStartVerified": true,
+      "headAtEndVerified": true,
+      "runtimeCommitVerified": true,
+      "ancestryVerified": null,
+      "treeEquivalenceVerified": null,
+      "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-staging-cycle2-A1/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-staging-cycle2-A1",
       "adjudicated": false
     }
   ]

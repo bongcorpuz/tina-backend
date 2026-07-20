@@ -1,0 +1,275 @@
+{
+  "task": "PHASE-10A14-R17-DOMAIN-FALSE-REFUSAL-PROVENANCE-VALIDATION-RECOVERY-DISPOSITION-RETRY-LINK-AND-DETERMINISTIC-STAGING-GATE-CLOSURE-REMEDIATION-1",
+  "executor": "CLAUDE CODE - OPUS 4.8",
+  "controllingReviewCommit": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
+  "finalRuntimeCommit": "345f2db5",
+  "runtimeEquivalenceToHead": true,
+  "tinaRuntimeModel": "gpt-4o-mini",
+  "countsDerivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
+  "findings": {
+    "P1-R16-IR-001": {
+      "status": "PARTIALLY CLOSED",
+      "laneA_phase10a8": "CLOSED — 24/0 standalone and in the focused campaign; F14 explicitly PASSED even inside the failing A3 cycle.",
+      "laneB_patch07b": "CLOSED — 8/0; root cause was spawnSync ENOBUFS on git ls-files (1,053,632 bytes over the 1 MiB default), not a scope violation. Guard proven still live against a planted violation.",
+      "gate": "NOT CLOSED — deterministic gate achieved 0 of 2 required cycles."
+    },
+    "P1-R16-IR-002": {
+      "status": "CLOSED",
+      "evidence": "Classified STAGING_UNREACHABLE at review time with no harness or runtime change. Both R17 staging cycles pass 7/0 exit 0 with independent reachability probes."
+    },
+    "P1-R16-IR-003": {
+      "status": "CLOSED",
+      "evidence": "Frozen 267-probe inventory: false refusals 69 -> 0; all four exact independent-review probes ALLOW. 1 residual frozen-expectation mismatch (MM-15-weak) is an oracle/inventory-authoring defect and is not a material runtime false allow; it is tracked separately under evidenceFixtureDefects and does not qualify IR-003 closure."
+    },
+    "P1-R16-IR-004": {
+      "status": "CLOSED",
+      "evidence": "Recovery adjudication now overrides raw terminal status; corruption detected in non-JSON files including the exact 186-NUL-byte shape. 0 corrupt attempts counted controlling."
+    },
+    "P1-R16-IR-005": {
+      "status": "OPEN",
+      "evidence": "The validator tooling now detects the defect: retry linkage is enforced and cycle/self/missing-target/changed-runtime links are rejected. That enforcement rejected THIS run's own retry chain — validRetryCount 0, retryErrors 2 — which is reported rather than suppressed. Because no valid retry chain exists for this execution, the retry-chain and retry-ceiling requirement is not satisfied and P1-R16-IR-005 remains OPEN for this execution."
+    },
+    "P1-R16-IR-006": {
+      "status": "CLOSED",
+      "evidence": "Git-object validation (format, existence, type commit, ancestry). The fabricated SHA is rejected as SHA_NOT_A_GIT_OBJECT. Callers can no longer supply a controlling SHA; runtimeCommit is read from git rev-parse HEAD at allocation. 0 invalid-provenance attempts."
+    }
+  },
+  "gates": {
+    "deterministic": {
+      "requiredCycles": 2,
+      "successfulCycles": 0,
+      "attemptsExecuted": 3,
+      "attempts": [
+        {
+          "attemptId": "R17-GATE-det-cycle1-A1",
+          "exitCode": 1,
+          "rawStatus": "COMPLETED_FAIL",
+          "disposition": "VALID_NON_CONTROLLING",
+          "controlling": false,
+          "retryOf": null,
+          "provenanceValid": true
+        },
+        {
+          "attemptId": "R17-GATE-det-cycle1-A2",
+          "exitCode": 1,
+          "rawStatus": "COMPLETED_FAIL",
+          "disposition": "VALID_NON_CONTROLLING",
+          "controlling": false,
+          "retryOf": "R17-GATE-det-cycle1-A1",
+          "provenanceValid": true
+        },
+        {
+          "attemptId": "R17-GATE-det-cycle1-A3",
+          "exitCode": 1,
+          "rawStatus": "COMPLETED_FAIL",
+          "disposition": "VALID_NON_CONTROLLING",
+          "controlling": false,
+          "retryOf": "R17-GATE-det-cycle1-A2",
+          "provenanceValid": true
+        }
+      ],
+      "ceilingValidlyReached": false,
+      "ceilingNote": "Three deterministic attempts were executed and preserved. The frozen retry ceiling was NOT validly reached: the frozen validator rejects A2 and A3 as RETRY_RUNTIME_CHANGED, validRetryCount is 0, and retryErrors is 2. The retry-chain and retry-ceiling requirement is therefore not satisfied.",
+      "stopped": true,
+      "passed": false
+    },
+    "staging": {
+      "requiredCycles": 2,
+      "successfulCycles": 2,
+      "attempts": [
+        {
+          "attemptId": "R17-GATE-staging-cycle1-A1",
+          "exitCode": 0,
+          "rawStatus": "COMPLETED_PASS",
+          "disposition": "VALID_CONTROLLING",
+          "controlling": true,
+          "retryOf": null,
+          "provenanceValid": true
+        },
+        {
+          "attemptId": "R17-GATE-staging-cycle2-A1",
+          "exitCode": 0,
+          "rawStatus": "COMPLETED_PASS",
+          "disposition": "VALID_CONTROLLING",
+          "controlling": true,
+          "retryOf": null,
+          "provenanceValid": true
+        }
+      ],
+      "passed": true
+    }
+  },
+  "evidenceFixtureDefects": [
+    {
+      "id": "R17-FIXTURE-001",
+      "probeId": "MM-15-weak",
+      "coverageClass": "metamorphic",
+      "text": "Is the gain taxable?",
+      "frozenExpectation": "CLARIFY_OR_NOT_ALLOW",
+      "runtimeDecision": "ALLOW",
+      "classification": "FROZEN ORACLE / INVENTORY-AUTHORING DEFECT",
+      "materialRuntimeFalseAllow": false,
+      "rationale": "The probe text contains an explicit tax signal (\"taxable\"). The runtime ALLOW is the correct decision for that text; the frozen expectation is what is wrong. This is a defect in the evidence fixture's authoring, not in runtime domain-boundary behaviour, and it failed identically before the R17 fix.",
+      "disposition": "UNRESOLVED — recorded, not retrofitted and not deleted, per the frozen contract that the inventory is immutable for this execution.",
+      "status": "OPEN"
+    }
+  ],
+  "focusedSuites": {
+    "total": 16,
+    "allPassed": true,
+    "failed": []
+  },
+  "domain": {
+    "totalProbes": 267,
+    "falseAllow": 1,
+    "materialDomainFalseAllow": 0,
+    "materialDomainFalseAllowNote": "The single frozen-expectation mismatch (MM-15-weak) is an evidence-fixture/oracle defect, not a material runtime false allow. The final runtime must NOT be described as having a material domain false allow on the basis of MM-15-weak.",
+    "falseRefusal": 0,
+    "allRequiredExactProbesAllow": true,
+    "byClass": {
+      "customs_strong": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "capital_gain_strong": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "private_contract_nontax": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "court_labor_sec_nontax": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "weak_generic_ambiguity": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "filipino_taglish": {
+        "total": 30,
+        "pass": 30,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "substring_trap": {
+        "total": 20,
+        "pass": 20,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "metamorphic": {
+        "total": 40,
+        "pass": 39,
+        "falseAllow": 1,
+        "falseRefusal": 0
+      },
+      "r15_false_refusal_closed": {
+        "total": 7,
+        "pass": 7,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "r15_adjacency_closed": {
+        "total": 10,
+        "pass": 10,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "explicit_nontax": {
+        "total": 10,
+        "pass": 10,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      }
+    }
+  },
+  "counts": {
+    "totalAttempts": 37,
+    "runnerInvocations": 3,
+    "stagingRunnerInvocations": 2,
+    "focusedSuiteInvocations": 32,
+    "campaignAttempts": 0,
+    "completedPass": 33,
+    "completedFailures": 4,
+    "technicalFailures": 0,
+    "environmentFailures": 0,
+    "incompleteAttempts": 0,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "controllingAttempts": 33,
+    "nonControllingAttempts": 4,
+    "validLinkedRetries": 0,
+    "unlinkedReruns": 14
+  },
+  "scope": {
+    "includesGateRunnerAttempts": true,
+    "includesStagingRunnerAttempts": true,
+    "includesFocusedSuiteAttempts": true,
+    "includesCampaignAttempts": true,
+    "statement": "All counts are derived from every immutable attempt directory under evaluation/results/phase-10a14-r17/attempts, with no category excluded. A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt. Controlling status requires BOTH valid Git provenance AND a VALID_CONTROLLING disposition — it is never the raw terminal event alone."
+  },
+  "integrity": {
+    "duplicates": [],
+    "malformed": [],
+    "invalidProvenance": [],
+    "retryErrors": [
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+        "to": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b"
+      },
+      {
+        "attemptId": "R17-GATE-det-cycle1-A3",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+        "to": "8a66b92d2d2c967f54016f9352deaa43b48325f7"
+      }
+    ],
+    "controllingWithInvalidProvenance": [],
+    "controllingWithCorruption": [],
+    "clean": false
+  },
+  "retryLinkage": {
+    "validRetryCount": 0,
+    "errors": [
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+        "to": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b"
+      },
+      {
+        "attemptId": "R17-GATE-det-cycle1-A3",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+        "to": "8a66b92d2d2c967f54016f9352deaa43b48325f7"
+      }
+    ]
+  },
+  "blockers": [
+    "DETERMINISTIC GATE: 0 of 2 required successful cycles. Three deterministic attempts (A1, A2, A3) were executed and are preserved. The frozen retry ceiling was NOT validly reached: the frozen validator rejects A2 and A3 as RETRY_RUNTIME_CHANGED, so validRetryCount is 0 and no attempt after A1 counts as a linked retry.",
+    "RETRY LINKAGE: validRetryCount is 0 and retryErrors is 2. The frozen validator rejects both deterministic retry links as RETRY_RUNTIME_CHANGED, because runtimeCommit records git HEAD and HEAD moved between attempts when each failed attempt was committed as the sequence requires. The runtime itself is unchanged (all runtime files byte-identical to 345f2db5), but under the frozen contract the retry-chain and retry-ceiling requirement is NOT satisfied. P1-R16-IR-005 therefore remains OPEN for this execution, notwithstanding that the validator tooling now detects the defect.",
+    "REGISTRY INTEGRITY: not clean (retryErrors 2).",
+    "EVIDENCE-FIXTURE DEFECT (not a runtime defect): 1 frozen expectation(s) unmet — MM-15-weak. See evidenceFixtureDefects. This is an oracle/inventory-authoring defect, NOT a material runtime false allow."
+  ],
+  "decision": "REVISIONS REQUIRED",
+  "governance": {
+    "r15Historical": "NOT SUPERSEDED",
+    "r16Prospective": "NOT SATISFIED",
+    "r17Prospective": "NOT SATISFIED"
+  },
+  "stopCondition": "REACHED - the independent R17 review is the next task"
+}
