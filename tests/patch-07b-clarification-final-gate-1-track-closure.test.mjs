@@ -166,7 +166,22 @@ function read(path) {
 }
 
 function git(args) {
-  const result = spawnSync("git", args, { cwd: resolve("."), encoding: "utf8" });
+  // PHASE-10A14-R17 (P1-R16-IR-001 Lane B): maxBuffer raised.
+  //
+  // `git ls-files` now emits ~1,053,632 bytes across ~9,110 tracked files, which exceeds
+  // Node's 1,048,576-byte spawnSync default. spawnSync then returns status null (ENOBUFS)
+  // and the assertion below failed with "null !== 0" — so this guard died while
+  // ENUMERATING files and never evaluated a single marker. It was failing closed, which is
+  // safe but uninformative: it could no longer detect anything.
+  //
+  // This is NOT a protected-scope violation and NOT a stale allowlist. No allowlist,
+  // marker set, protected pattern or assertion is changed by this edit; the guard is
+  // simply able to run again, which strengthens it.
+  //
+  // Recorded plainly: the R15 and R16 evidence commits are what pushed the tracked-file
+  // listing past 1 MiB and broke this guard.
+  const result = spawnSync("git", args, { cwd: resolve("."), encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  if (result.error) assert.fail(`git ${args.join(" ")} failed to execute: ${result.error.message}`);
   assert.equal(result.status, 0, result.stderr || result.stdout);
   return result.stdout;
 }
