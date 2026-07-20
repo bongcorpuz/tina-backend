@@ -1,0 +1,133 @@
+  ── output of failing suite tests\patch-027u-openai-transient-retry.test.mjs ──
+  attempt: 1,
+  nextAttempt: 2,
+  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',
+  errorType: 'system',
+  success: false
+}
+[PATCH_027V_OPENAI_RETRY_ATTEMPT] {
+  attempt: 1,
+  nextAttempt: 2,
+  maxAttempts: 3,
+  delayMs: 750,
+  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',
+  durationMs: 1,
+  freshClientUsed: true
+}
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 2, clientType: 'fresh' }
+[PATCH_027V_OPENAI_RETRY_SUCCESS] {
+  attempt: 2,
+  maxAttempts: 3,
+  errorCode: 'ERR_STREAM_PREMATURE_CLOSE',
+  durationMs: 5601,
+  freshClientUsed: true
+}
+[PATCH_027U_OPENAI_TRANSIENT_RETRY] { attempt: 2, errorCode: 'ERR_STREAM_PREMATURE_CLOSE', success: true }
+  FAIL  transient failure is attempted twice total
+  FAIL  original transient error is rethrown after retry exhaustion
+  FAIL  diagnostic record ends as error
+  FAIL  diagnostic marks retry exhaustion
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+[PATCH_027X_OPENAI_IDENTITY_ENCODING_ENABLED] { enabled: true, attempt: 1, clientType: 'shared' }
+  ── output of failing suite tests\phase-10a10-r1-validator-schema-fail-closed-remediation-1.test.mjs ──
+PASS S1: complete valid schema -> verifiedEligible & VERIFIED_CONTROLLING reachable
+PASS S2: missing one positive field -> schemaValid false, not verified
+PASS S3: only A8-era fields (missing all new A10 fields) -> not verified
+PASS S4: eligibleForVerifiedControlling missing -> not verified
+PASS S5: eligibleForVerifiedControlling false -> not verified
+PASS S6: eligibility true but a positive gate false -> not verified
+PASS S7: eligibility true but risk field true -> not verified
+PASS S8: eligibility true but risk field missing -> schema invalid, not verified
+PASS S9 null: materiallyComplete=null -> schema invalid, not verified
+PASS S10 undefined: citationRelevant=undefined -> schema invalid, not verified
+PASS S11 string: answerResponsive="true" -> schema invalid, not verified
+PASS S12 numeric: primaryIssueAnswered=1 -> schema invalid, not verified
+PASS S13: empty object -> schema invalid, not verified
+PASS S15: extra unknown fields -> still verified when all mandatory present
+PASS S16: inherited mandatory field -> rejected, not verified
+PASS S17: throwing getter on a mandatory field -> rejected safely
+PASS S21: legitimate verified control remains reachable
+PASS S22-S24: Q5 missing-exception / Q35 missing-alternative / Q41 non-responsive -> not verified
+PASS S25: missing answerSupport (undefined) -> verified not gated by validator, but no attestation to launder
+PASS S26: legacy (A8) validator shape -> not verified in production
+PASS canonical required-field set integrity
+
+PHASE-10A10-R1 validator schema fail-closed tests: 21 passed, 1 failed, 37 assertions
+FAIL S18-S20: malformed / unavailable validator -> fail closed
+  unavailable
+  ── output of failing suite tests\phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs ──
+PASS A1: complete canonical answerSupport -> VERIFIED_CONTROLLING
+PASS A2: answerSupport omitted -> not verified
+PASS A3 undefined -> not verified
+PASS A4 null -> not verified
+PASS A5 false -> not verified
+PASS A6 string -> not verified
+PASS A7 array -> not verified
+PASS A8 empty object -> not verified
+PASS A9 schemaValid missing -> not verified
+PASS A10 verifiedEligible missing -> not verified
+PASS A11 schemaValid false -> not verified
+PASS A12 verifiedEligible false -> not verified
+PASS A13 schemaValid string -> not verified
+PASS A14 verifiedEligible numeric -> not verified
+PASS A15: inherited schemaValid/verifiedEligible -> not verified
+PASS A16: AUTHORITY_FOUND + displayed sources + no answerSupport -> RELATED_AUTHORITY_ONLY
+PASS A17: controlling-authority-shaped input + no answerSupport -> not verified
+PASS A18: bare source-listing + no answerSupport -> not verified
+PASS A22: restricted + no answerSupport -> RESTRICTED
+PASS A23: verified conflict + no answerSupport -> CONFLICTING_AUTHORITY
+PASS A24: missing-specific-authority (source-only fallback) + no answerSupport -> RELATED + flag
+PASS A25: source failure + no answerSupport -> NO_VERIFIED_AUTHORITY
+PASS A26: legitimate verified control remains reachable
+PASS A27-A29: Q5 incomplete / Q35 missing-alt / Q41 non-responsive attestations -> not verified
+PASS A30: legacy AUTHORITY_FOUND-only trust input -> not verified
+PASS isVerifiedAnswerSupport diagnostics
+
+PHASE-10A10-R2 missing-answerSupport fail-closed tests: 26 passed, 1 failed, 33 assertions
+FAIL A19-A21: validator timeout-shape / unavailable / malformed -> not verified
+  unavailable validator -> not verified
+  ── output of failing suite tests\phase-10a10-verified-controlling-residual-and-completeness-remediation-1.test.mjs ──
+PASS foundational-citation gate: only NIRC Secs 1-6 -> not eligible (Q35/Q41 clusters)
+PASS Q5 exact + paraphrases: import-VAT answer omitting CREATE MORE exemption is not verified
+PASS Q35 exact + paraphrases: 'only Form 1701' without 1701-MS is not verified
+PASS Q41 exact + paraphrases: non-responsive penalty answer / NIRC Secs 2-3 not verified
+PASS A1 correct answer, irrelevant source
+PASS A2 wrong answer, related source
+PASS A3 responsive, missing exception
+PASS A4 responsive, missing alternative
+PASS A5 non-responsive tax-related
+PASS A6 correct section, wrong proposition
+PASS A7 generic NIRC for specific penalty
+PASS A8 unsupported 'only'
+PASS A9 unsupported 'always'
+PASS A10 incomplete + high-quality sources
+PASS A16 legitimate fully supported verified
+PASS A14: absent answerSupport fails closed to RELATED_AUTHORITY_ONLY
+PASS A17-A20: related downgrade / conflict / missing-authority / restricted preserved
+
+PHASE-10A10 verified-controlling residual tests: 17 passed, 1 failed, 30 assertions
+FAIL A11-A13: malformed / timeout-shaped / unavailable validator fails closed
+  unavailable -> fail closed
+  ── output of failing suite tests\phase-10a12-validator-competence-remediation-1.test.mjs ──
+PASS C1: Q8 reversed answer + valid schema + LLM-approved -> guard overrides, not verified
+PASS C2: Q8 correct exempt answer -> verified reachable
+PASS C3-C4: aggregate-threshold substitution / general-rule reversal detected
+PASS C5: foundational-only sources -> not verified
+PASS C6: answerContradictsControllingSource true -> not verified
+PASS C7: treatmentDirectionMatches false -> not verified
+PASS C8: thresholdDimensionMatches false -> not verified
+PASS C9: sourcePropositionAligned false -> not verified
+PASS C7b-C9b: missing a new mandatory field -> schema invalid, not verified
+PASS C10: accessor getter on schemaValid returns true -> not verified
+PASS C11: throwing getter -> safe downgrade, no exception
+PASS C12: plain data-property attestation -> verified reachable
+PASS C15-C17: Q5/Q35/Q41 shapes -> not verified
+PASS C18-C21: restricted / conflict / missing-authority / source-failure preserved
+PASS Cimport-1: export-mfg import-VAT answer omitting CREATE MORE exemption -> guard overrides, not verified
+PASS Cimport-2: import-VAT answer covering CREATE MORE -> verified reachable
+PASS Cimport-3: import-VAT guard no false-positive on unrelated import / correct answer
+PASS polarity detector: no false-positive on unrelated / commercial / correct-exempt
+
+PHASE-10A12 validator-competence tests: 18 passed, 1 failed, 42 assertions
+FAIL C13-C14: malformed / unavailable validator -> not verified
+  unavailable

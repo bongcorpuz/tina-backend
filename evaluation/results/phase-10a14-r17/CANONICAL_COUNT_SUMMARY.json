@@ -1,24 +1,24 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T10:10:20.671Z",
+  "generatedAt": "2026-07-20T10:13:57.208Z",
   "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
   "counts": {
-    "totalAttempts": 33,
-    "runnerInvocations": 1,
+    "totalAttempts": 34,
+    "runnerInvocations": 2,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 32,
     "campaignAttempts": 0,
     "completedPass": 31,
-    "completedFailures": 2,
+    "completedFailures": 3,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "incompleteAttempts": 0,
     "corruptAttempts": 0,
     "invalidProvenanceAttempts": 0,
     "controllingAttempts": 31,
-    "nonControllingAttempts": 2,
+    "nonControllingAttempts": 3,
     "validLinkedRetries": 0,
-    "unlinkedReruns": 16
+    "unlinkedReruns": 15
   },
   "scope": {
     "includesGateRunnerAttempts": true,
@@ -37,6 +37,15 @@
         "controlling": false,
         "retryOf": null,
         "provenanceValid": true
+      },
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "exitCode": 1,
+        "rawStatus": "COMPLETED_FAIL",
+        "disposition": "VALID_NON_CONTROLLING",
+        "controlling": false,
+        "retryOf": "R17-GATE-det-cycle1-A1",
+        "provenanceValid": true
       }
     ],
     "staging": []
@@ -45,9 +54,16 @@
     "duplicates": [],
     "malformed": [],
     "invalidProvenance": [],
-    "retryErrors": [],
+    "retryErrors": [
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+        "to": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b"
+      }
+    ],
     "controllingWithInvalidProvenance": [],
     "controllingWithCorruption": [],
-    "clean": true
+    "clean": false
   }
 }

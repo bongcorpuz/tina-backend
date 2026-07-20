@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T10:10:20.671Z",
+  "generatedAt": "2026-07-20T10:13:57.208Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r17/attempts",
   "r17Base": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
   "rule": "Machine-generated. Controlling status requires valid Git provenance AND a VALID_CONTROLLING disposition. No manually typed competing total is permitted anywhere.",
@@ -8,28 +8,35 @@
     "duplicates": [],
     "malformed": [],
     "invalidProvenance": [],
-    "retryErrors": [],
+    "retryErrors": [
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+        "to": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b"
+      }
+    ],
     "controllingWithInvalidProvenance": [],
     "controllingWithCorruption": [],
-    "clean": true
+    "clean": false
   },
   "counts": {
-    "totalAttempts": 33,
-    "runnerInvocations": 1,
+    "totalAttempts": 34,
+    "runnerInvocations": 2,
     "stagingRunnerInvocations": 0,
     "focusedSuiteInvocations": 32,
     "campaignAttempts": 0,
     "completedPass": 31,
-    "completedFailures": 2,
+    "completedFailures": 3,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "incompleteAttempts": 0,
     "corruptAttempts": 0,
     "invalidProvenanceAttempts": 0,
     "controllingAttempts": 31,
-    "nonControllingAttempts": 2,
+    "nonControllingAttempts": 3,
     "validLinkedRetries": 0,
-    "unlinkedReruns": 16
+    "unlinkedReruns": 15
   },
   "scope": {
     "includesGateRunnerAttempts": true,
@@ -48,6 +55,15 @@
         "controlling": false,
         "retryOf": null,
         "provenanceValid": true
+      },
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "exitCode": 1,
+        "rawStatus": "COMPLETED_FAIL",
+        "disposition": "VALID_NON_CONTROLLING",
+        "controlling": false,
+        "retryOf": "R17-GATE-det-cycle1-A1",
+        "provenanceValid": true
       }
     ],
     "staging": []
@@ -55,7 +71,14 @@
   "retryLinkage": {
     "validRetries": [],
     "validRetryCount": 0,
-    "errors": [],
+    "errors": [
+      {
+        "attemptId": "R17-GATE-det-cycle1-A2",
+        "error": "RETRY_RUNTIME_CHANGED",
+        "from": "58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+        "to": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b"
+      }
+    ],
     "note": "An attempt with retryOf null is an unlinked rerun. It is not a retry and does not count toward any ceiling."
   },
   "retryCeiling": {
@@ -205,6 +228,15 @@
     },
     "R17-GATE-det-cycle1|58cda48ab31a24673a5f1be0cd7db60eeaf7c932": {
       "key": "R17-GATE-det-cycle1|58cda48ab31a24673a5f1be0cd7db60eeaf7c932",
+      "attempts": 1,
+      "linkedRetries": 0,
+      "unlinkedReruns": 0,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": true
+    },
+    "R17-GATE-det-cycle1|b04515a4f5b1b0c2fb0fabd8745a7d18614c710b": {
+      "key": "R17-GATE-det-cycle1|b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
       "attempts": 1,
       "linkedRetries": 0,
       "unlinkedReruns": 0,
@@ -1631,6 +1663,49 @@
       "treeEquivalenceVerified": null,
       "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A1/stdout.raw.txt",
       "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A1",
+      "adjudicated": false
+    },
+    {
+      "attemptId": "R17-GATE-det-cycle1-A2",
+      "task": "PHASE-10A14-R17",
+      "attemptType": "DETERMINISTIC_GATE",
+      "campaignId": "R17-GATE-DETERMINISTIC",
+      "probeId": "deterministic",
+      "cycleKey": "R17-GATE-det-cycle1",
+      "command": "node scripts/run-regressions.mjs",
+      "runtimeCommit": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+      "runtimeCommitSource": "git rev-parse HEAD",
+      "headAtStart": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+      "headAtEnd": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T10:10:36.096Z",
+      "endedAt": "2026-07-20T10:13:37.397Z",
+      "exitCode": 1,
+      "signal": null,
+      "rawStatus": "COMPLETED_FAIL",
+      "status": "COMPLETED_FAIL",
+      "disposition": "VALID_NON_CONTROLLING",
+      "dispositionReasons": [
+        "RAW:COMPLETED_FAIL"
+      ],
+      "controlling": false,
+      "technicalFailure": false,
+      "completedFailure": true,
+      "environmentFailure": false,
+      "corrupt": false,
+      "corruptionFindings": [],
+      "retryOf": "R17-GATE-det-cycle1-A1",
+      "retryReason": "TECHNICAL: ERR_STREAM_PREMATURE_CLOSE on OpenAI connection; all affected suites pass standalone; runtime unchanged",
+      "provenanceValid": true,
+      "provenanceErrors": [],
+      "headAtStartVerified": true,
+      "headAtEndVerified": true,
+      "runtimeCommitVerified": true,
+      "ancestryVerified": null,
+      "treeEquivalenceVerified": null,
+      "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A2/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A2",
       "adjudicated": false
     }
   ]

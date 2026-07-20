@@ -1,0 +1,8 @@
+{
+  "event": "RETRY_OF",
+  "attemptId": "R17-GATE-det-cycle1-A2",
+  "retryOf": "R17-GATE-det-cycle1-A1",
+  "retryReason": "TECHNICAL: ERR_STREAM_PREMATURE_CLOSE on OpenAI connection; all affected suites pass standalone; runtime unchanged",
+  "runtimeCommit": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+  "at": "2026-07-20T10:10:36.094Z"
+}

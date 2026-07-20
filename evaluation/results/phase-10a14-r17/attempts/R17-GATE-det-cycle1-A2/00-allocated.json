@@ -1,0 +1,18 @@
+{
+  "event": "ALLOCATED",
+  "attemptId": "R17-GATE-det-cycle1-A2",
+  "task": "PHASE-10A14-R17",
+  "attemptType": "DETERMINISTIC_GATE",
+  "campaignId": "R17-GATE-DETERMINISTIC",
+  "probeId": "deterministic",
+  "cycleKey": "R17-GATE-det-cycle1",
+  "runtimeCommit": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+  "runtimeCommitSource": "git rev-parse HEAD",
+  "headAtStart": "b04515a4f5b1b0c2fb0fabd8745a7d18614c710b",
+  "syncAtStart": "0\t0",
+  "treeCleanBefore": true,
+  "retryOf": "R17-GATE-det-cycle1-A1",
+  "retryReason": "TECHNICAL: ERR_STREAM_PREMATURE_CLOSE on OpenAI connection; all affected suites pass standalone; runtime unchanged",
+  "notes": null,
+  "allocatedAt": "2026-07-20T10:10:35.958Z"
+}
