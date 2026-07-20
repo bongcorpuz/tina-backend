@@ -1,0 +1,14 @@
+{
+  "event": "STARTED",
+  "startedAt": "2026-07-20T11:21:29.787Z",
+  "probeId": "staging",
+  "reachabilityBefore": {
+    "label": "BEFORE",
+    "configPresent": true,
+    "reachable": true,
+    "httpStatus": 200,
+    "latencyMs": 8176,
+    "body": "{\"status\":\"ok\",\"service\":\"tina-backend\"}",
+    "at": "2026-07-20T11:21:29.029Z"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T11:18:47.574Z",
+  "generatedAt": "2026-07-20T11:21:56.095Z",
   "attemptsRoot": "evaluation/results/phase-10a14-r17/attempts",
   "r17Base": "0f2468bc4ac657eee4c8c1ee94ab3a0b9f0cc690",
   "rule": "Machine-generated. Controlling status requires valid Git provenance AND a VALID_CONTROLLING disposition. No manually typed competing total is permitted anywhere.",
@@ -27,19 +27,19 @@
     "clean": false
   },
   "counts": {
-    "totalAttempts": 35,
+    "totalAttempts": 36,
     "runnerInvocations": 3,
-    "stagingRunnerInvocations": 0,
+    "stagingRunnerInvocations": 1,
     "focusedSuiteInvocations": 32,
     "campaignAttempts": 0,
-    "completedPass": 31,
+    "completedPass": 32,
     "completedFailures": 4,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "incompleteAttempts": 0,
     "corruptAttempts": 0,
     "invalidProvenanceAttempts": 0,
-    "controllingAttempts": 31,
+    "controllingAttempts": 32,
     "nonControllingAttempts": 4,
     "validLinkedRetries": 0,
     "unlinkedReruns": 14
@@ -81,7 +81,17 @@
         "provenanceValid": true
       }
     ],
-    "staging": []
+    "staging": [
+      {
+        "attemptId": "R17-GATE-staging-cycle1-A1",
+        "exitCode": 0,
+        "rawStatus": "COMPLETED_PASS",
+        "disposition": "VALID_CONTROLLING",
+        "controlling": true,
+        "retryOf": null,
+        "provenanceValid": true
+      }
+    ]
   },
   "retryLinkage": {
     "validRetries": [],
@@ -267,6 +277,15 @@
     },
     "R17-GATE-det-cycle1|8a66b92d2d2c967f54016f9352deaa43b48325f7": {
       "key": "R17-GATE-det-cycle1|8a66b92d2d2c967f54016f9352deaa43b48325f7",
+      "attempts": 1,
+      "linkedRetries": 0,
+      "unlinkedReruns": 0,
+      "maxRetries": 2,
+      "ceilingReached": false,
+      "ceilingSupportedByLinks": true
+    },
+    "R17-GATE-staging-cycle1|371fa5843fe3aae4710d1130ed260d3177dad4f2": {
+      "key": "R17-GATE-staging-cycle1|371fa5843fe3aae4710d1130ed260d3177dad4f2",
       "attempts": 1,
       "linkedRetries": 0,
       "unlinkedReruns": 0,
@@ -1779,6 +1798,49 @@
       "treeEquivalenceVerified": null,
       "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A3/stdout.raw.txt",
       "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-det-cycle1-A3",
+      "adjudicated": false
+    },
+    {
+      "attemptId": "R17-GATE-staging-cycle1-A1",
+      "task": "PHASE-10A14-R17",
+      "attemptType": "STAGING_GATE",
+      "campaignId": "R17-GATE-STAGING",
+      "probeId": "staging",
+      "cycleKey": "R17-GATE-staging-cycle1",
+      "command": "node scripts/run-staging-smokes.mjs",
+      "runtimeCommit": "371fa5843fe3aae4710d1130ed260d3177dad4f2",
+      "runtimeCommitSource": "git rev-parse HEAD",
+      "headAtStart": "371fa5843fe3aae4710d1130ed260d3177dad4f2",
+      "headAtEnd": "371fa5843fe3aae4710d1130ed260d3177dad4f2",
+      "treeCleanBefore": true,
+      "treeCleanAfter": true,
+      "startedAt": "2026-07-20T11:21:29.787Z",
+      "endedAt": "2026-07-20T11:21:38.189Z",
+      "exitCode": 0,
+      "signal": null,
+      "rawStatus": "COMPLETED_PASS",
+      "status": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "dispositionReasons": [
+        "RAW:COMPLETED_PASS"
+      ],
+      "controlling": true,
+      "technicalFailure": false,
+      "completedFailure": false,
+      "environmentFailure": false,
+      "corrupt": false,
+      "corruptionFindings": [],
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "provenanceErrors": [],
+      "headAtStartVerified": true,
+      "headAtEndVerified": true,
+      "runtimeCommitVerified": true,
+      "ancestryVerified": null,
+      "treeEquivalenceVerified": null,
+      "logPath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-staging-cycle1-A1/stdout.raw.txt",
+      "evidencePath": "evaluation/results/phase-10a14-r17/attempts/R17-GATE-staging-cycle1-A1",
       "adjudicated": false
     }
   ]

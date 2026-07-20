@@ -1,21 +1,21 @@
 {
   "task": "PHASE-10A14-R17",
-  "generatedAt": "2026-07-20T11:18:47.574Z",
+  "generatedAt": "2026-07-20T11:21:56.095Z",
   "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
   "counts": {
-    "totalAttempts": 35,
+    "totalAttempts": 36,
     "runnerInvocations": 3,
-    "stagingRunnerInvocations": 0,
+    "stagingRunnerInvocations": 1,
     "focusedSuiteInvocations": 32,
     "campaignAttempts": 0,
-    "completedPass": 31,
+    "completedPass": 32,
     "completedFailures": 4,
     "technicalFailures": 0,
     "environmentFailures": 0,
     "incompleteAttempts": 0,
     "corruptAttempts": 0,
     "invalidProvenanceAttempts": 0,
-    "controllingAttempts": 31,
+    "controllingAttempts": 32,
     "nonControllingAttempts": 4,
     "validLinkedRetries": 0,
     "unlinkedReruns": 14
@@ -57,7 +57,17 @@
         "provenanceValid": true
       }
     ],
-    "staging": []
+    "staging": [
+      {
+        "attemptId": "R17-GATE-staging-cycle1-A1",
+        "exitCode": 0,
+        "rawStatus": "COMPLETED_PASS",
+        "disposition": "VALID_CONTROLLING",
+        "controlling": true,
+        "retryOf": null,
+        "provenanceValid": true
+      }
+    ]
   },
   "integrity": {
     "duplicates": [],
