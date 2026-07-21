@@ -323,6 +323,34 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   /\bannual\s+information\s+return\b/i,
   /\bFIRB\b|\bLBT\b|\bRPT\b/i,
   /\bprescription\b[^.\n]{0,40}\b(?:claim|refund|assessment|tax)\b|\b(?:claim|refund|assessment|tax)\b[^.\n]{0,40}\bprescription\b/i,
+
+  // PHASE-10A14-R19 (P1-R18-IR1-001, executor unseen campaign). Additional coherent
+  // Philippine tax phrases and acronyms found carried only as weak signals or entirely
+  // uncovered. Each is a specific BIR/tax-administration term with no plausible ordinary
+  // non-tax reading, so no veto counterpart is needed.
+  /\bstatute\s+of\s+limitations\b[^.\n]{0,40}\bassessment\b|\bassessment\b[^.\n]{0,40}\bstatute\s+of\s+limitations\b/i,
+  /\bwarrant\s+of\s+distraint\s+and\s+levy\b/i,
+  /\bsubstituted\s+filing\b/i,
+  /\belectronic\s+filing\s+and\s+payment\s+system\b/i,
+  /\bdeficiency\s+interest\b/i,
+  /\btax\s+amnesty\b|\bamnesty\s+on\s+delinquent\s+accounts?\b/i,
+  /\brelated\s+party\s+transaction\b/i,
+  /\bnet\s+operating\s+loss\s+carry-?over\b/i,
+  /\bdeferred\s+payment\s+sale\b[^.\n]{0,30}\breal\s+property\b/i,
+  /\bvanishing\s+deduction\b/i,
+  /\b(?:medical|funeral|judicial)\s+expenses?\s+deduction\b/i,
+  /\bauthority\s+to\s+print\b/i,
+  /\bcomputerized\s+accounting\s+system\b/i,
+  /\belectronic\s+bookkeeping\b/i,
+  /\bonline\s+registration\s+and\s+update\s+system\b|\bORUS\b/i,
+  /\bimproperly\s+accumulated\s+(?:profits?|earnings?)\s+(?:surtax|tax)\b/i,
+  /\bCGT\b/i, /\bDTA\b/i,
+  /\breconsideration\b[^.\n]{0,30}\b(?:refund\s+claim|claim|assessment)\b/i,
+  /\brefund\s+claim\b[^.\n]{0,30}\bdocumentary\b/i,
+  /\bEWT\b|\bFWT\b/i,
+  /\bRATE\s+case\b|\bRATE\s+program\b/i,
+  /\bannual\s+registration\s+fee\b/i,
+  /\bresibo\b[^.\n]{0,30}\b(?:business|negosyo|expense)\b|\b(?:business|negosyo|expense)\b[^.\n]{0,30}\bresibo\b/i,
   // PHASE-10A14-R18 (P1-R17-IR1-002, false-refusal half). The R18 483-probe campaign
   // exposed 26 false refusals the narrower R17 inventory never covered. Each term below is
   // unambiguous Philippine tax vocabulary that was carried only in the WEAK allow list, so
@@ -394,7 +422,11 @@ export const NON_TAX_OBJECT_VETO_PATTERNS = [
   /\bJavaScript\b|\bTypeScript\b|\bPython\b|\bJava\b|\bC\+\+\b|\bRuby\b|\bGolang\b/i,
   /\bsoftware\b|\bsource code\b|\bcodebase\b|\brepository\b|\bmodule\b|\blibrary function\b/i,
   /\b(?:in|of|from) (?:my|this|the) code\b|\bmy code\b|\bthis code\b/i,
-  /\bvariable\b|\bconstant\b|\bclass name\b|\bfunction\b|\bmethod\b|\bparameter\b/i,
+  // PHASE-10A14-R19: bare "method" was too broad — "valuation method" and "transfer
+  // pricing method" are ordinary tax phrasing, not a programming signal. "method" now
+  // requires an actual coding-object qualifier.
+  /\bvariable\b|\bconstant\b|\bclass name\b|\bfunction\b|\bparameter\b/i,
+  /\b(?:class|instance|static|private|public)\s+method\b|\bmethod\s+(?:call|name|signature|override)\b/i,
   /\bnetworking\b|\bnetwork protocol\b|\bAPI\b|\bendpoint\b|\bdatabase query\b/i,
   /\bwebsite\b|\bweb page\b|\bbutton\b|\bUI\b|\bfront[- ]?end\b/i,
   // music / audio
@@ -856,7 +888,7 @@ export const DOMINANT_NON_TAX_ROLE_VETO_PATTERNS = [
 
   // ── Physical devices / animals ────────────────────────────────────────────
   /\bcooling\s+(?:fan|speed|device)\b|\bfan\s+cooling\b|\bhow\s+loud\s+is\s+this\s+(?:cooling\s+)?fan\b/i,
-  /\bcooking\s+(?:utensil|tool|pan)\b|\bpan\s+is\s+a\s+cooking\b/i,
+  /\bcooking\s+(?:utensil|tool|pan)\b|\bpan\s+is\s+a\s+cooking\b|\bbaking\s+pan\b|\bcookware\s+set\b/i,
   /\bon-?screen\s+display\b|\bmonitor\s+display\b|\bOSD\b[^.\n]{0,20}\bmonitor\b|\bmonitor\b[^.\n]{0,20}\bOSD\b/i,
   /\bmetal\s+can\b|\btin\s+can\b|\btin\s+is\s+a\s+metal\b/i,
   /\bbird\s+typo\b|\bis\s+a\s+bird\b/i,
@@ -951,5 +983,45 @@ export const DOMINANT_NON_TAX_ROLE_VETO_PATTERNS = [
 
   // Filipino / Taglish non-tax object markers
   /\beroplano\b|\bkodigo\b|\bproduktong?\b/i,
+  // General "X ba yan ay Y lang sa/sa Z" ("is X just Y in Z") mislabeling construction,
+  // reusable across any acronym or tax word substituted for X.
+  /\bba\s+yan\s+ay\b[^.\n]{0,40}\blang\b/i,
+  /\buri\s+ng\s+laro\b|\bibon\b|\bbentilador\b|\bkawali\b|\bistasyon\s+ng\s+radyo\b|\btradisyon\b|\bkuko\b/i,
+
+  // PHASE-10A14-R19 (executor unseen campaign iteration). An acronym IMMEDIATELY followed
+  // by a lowercase-starting parenthetical gloss is almost always a colloquial or joke
+  // expansion — genuine tax citations spell the parenthetical in title case
+  // ("RCIT (Regular Corporate Income Tax)"), never lowercase ("CGT (community garden
+  // team)"). This single structural pattern generalizes across any acronym.
+  // Allow an optional lowercase letter before the acronym core (eLA, eFPS, eBIRForms).
+  /\b[a-z]?[A-Z]{2,6}\s*\([a-z][a-z\s'-]{2,60}\)/,
+
+  // Generic acronym-mislabeling / disclaimer phrasings, reusable across any acronym.
+  // "is the <label> ... for/of/on <object>" — intervening words (my classmates use,
+  // my sister uses) are common, so the label and the preposition are not required to be
+  // adjacent.
+  /\bstands\s+for\s+nothing\b|\bdoesn'?t\s+ring\s+a\s+bell\b|\bdoesn'?t\s+come\s+up\s+in\b/i,
+  /\bisn'?t\s+(?:an?\s+)?(?:acronym|recogni[sz]ed)\b[^.\n]{0,40}\b(?:use[sd]?|recogni[sz]es|team|club|group|circle)\b/i,
+  /\bis\s+(?:just\s+)?the\s+(?:mascot\s+name|mascot\s+nickname|nickname|abbreviation|shorthand|brand\s+name|codename|config\s+flag|setting\s+menu|name\s+tag|callsign|name\s+of\s+(?:the|my))\b/i,
+  /\bmy\s+\w+\s+use[sd]?\s+for\b|\bmy\s+\w+\s+uses\s+for\b/i,
+  /\bmeans\s+nothing\s+to\b|\bis\s+not\s+a\s+word\s+in\b|\bmispronunciation\s+of\b|\bnonsense\s+word\b/i,
+
+  // A few more specific physical/hobby objects surfaced by the unseen campaign.
+  /\bthermostat\b|\btin\s+roof\b|\broofing\s+sheets?\b|\bconfig\s+flag\b|\bsetting\s+menu\b/i,
+  /\bclocks?\s+change\s+tonight\b|\byard\s+sale\b|\btrading\s+card\s+game\b/i,
+  /\bfood\s+truck\b|\bparking\s+spot\b|\blemonade\s+stand\b|\bschool\s+fair\b|\bsplit\s+the\s+pizza\b/i,
+  /\bdashboard\b|\btire\s+pressure\b|\bgoldfish\b|\bclassroom\s+aquarium\b|\bpodcast\b/i,
+  /\bconference\s+room\s+booking\b|\badventure\s+game\b|\bmural\b|\bphoto\s+spot\b/i,
+  /\bweb\s+design\s+buttons?\b/i,
+  /\bfantasy\s+football\b|\besports\s+team\b|\bknitting\s+circle\b|\bfishing\s+club\b/i,
+
+  // PHASE-10A14-R19 (executor unseen campaign, metamorphic non-tax sides).
+  /\bin\s+the\s+fall\b|\blanding\s+page\b|\bscholarship\s+application\b|\bdozen\s+cupcakes\b/i,
+  /\bmetal\s+alloy\b|\bplaylist\b|\btraditional\s+wedding\b|\bknob\s+setting\b[^.\n]{0,20}\bmixer\b/i,
+  /\blawn\s+sign\b|\bpop-?up\s+shop\b|\bfun\s+run\b|\bstatue\b[^.\n]{0,20}\bport\s+entrance\b/i,
+  /\breading\s+club\b|\bshipping\s+label\b|\bclub\s+logs\b|\bunreleased\s+mobile\s+app\b/i,
+  /\bmonitor\s+brightness\b|\bon\s+the\s+board\b[^.\n]{0,10}$|\bteacher\s+post\b/i,
+  /\btrivia\s+question\b|\binput\s+field\b|\bvalidates\b[^.\n]{0,30}\btext\b/i,
+  /\bfiction\s+novels?\b|\bbestseller\s+list\b/i,
 ];
 

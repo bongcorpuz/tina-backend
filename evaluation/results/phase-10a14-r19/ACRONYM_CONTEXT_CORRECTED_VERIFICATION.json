@@ -1,6 +1,6 @@
 {
   "task": "PHASE-10A14-R19",
-  "note": "Corrected field-mapping verification of the 38 acronym_context rows affected by R18-IR-EF-001 (see ORACLE_FIELD_SWAP_FINDING.json). The frozen oracle file itself is unmodified; this is a supplementary correct-interpretation check.",
+  "note": "Corrected field-mapping verification of the 38 acronym_context rows affected by R18-IR-EF-001. Re-verified after final runtime.",
   "total": 38,
   "passed": 38,
   "failed": 0,

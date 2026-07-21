@@ -1,8 +1,8 @@
 {
   "task": "PHASE-10A14-R19",
-  "phase": "post-fix-567-final",
-  "generatedAt": "2026-07-21T04:39:18.392Z",
-  "runtimeHead": "6c43ccea23bc88050e543eb07ee0c5db1a7ca427",
+  "phase": "post-fix-567-truefinal",
+  "generatedAt": "2026-07-21T04:51:57.877Z",
+  "runtimeHead": "bbf1a4e7508713328c76b0b54afb9f6521dc71ec",
   "oraclePath": "evaluation/results/phase-10a14-r19/PRE_FIX_567_ORACLE_REFERENCE.json",
   "oracleTotal": 567,
   "totalProbes": 567,
