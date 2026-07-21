@@ -1,0 +1,3406 @@
+{
+  "task": "PHASE-10A14-R18",
+  "frozen": true,
+  "oracleConsistency": {
+    "contradictions": 0,
+    "sharedTextsAcrossClasses": 16,
+    "rule": "A text may appear in multiple coverage classes only with an identical expectation. Contradictions abort the freeze."
+  },
+  "authoringRule": "A probe's expectation must be defensible from the probe's own text. A probe containing an explicit, coherent tax object is expected ALLOW even where NOT_ALLOW would flatter the pass rate. This is the MM-15-weak lesson from R17.",
+  "expectationSemantics": {
+    "ALLOW": "boundary decision must be ALLOW",
+    "NOT_ALLOW": "boundary decision must be REJECT or CLARIFY; either satisfies the expectation"
+  },
+  "counts": {
+    "explicit_tax": 121,
+    "explicit_non_tax": 122,
+    "substring_trap": 60,
+    "ambiguous": 60,
+    "filipino_taglish": 40,
+    "metamorphic": 80
+  },
+  "total": 483,
+  "probes": [
+    {
+      "probeId": "R18-0001",
+      "coverageClass": "explicit_tax",
+      "text": "What is the VAT rate in the Philippines?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0002",
+      "coverageClass": "explicit_tax",
+      "text": "How do I file a VAT return?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0003",
+      "coverageClass": "explicit_tax",
+      "text": "Is this sale subject to VAT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0004",
+      "coverageClass": "explicit_tax",
+      "text": "What is a VAT invoice?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0005",
+      "coverageClass": "explicit_tax",
+      "text": "How do I register for VAT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0006",
+      "coverageClass": "explicit_tax",
+      "text": "What is input VAT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0007",
+      "coverageClass": "explicit_tax",
+      "text": "What is output VAT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0008",
+      "coverageClass": "explicit_tax",
+      "text": "What is a zero-rated sale?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0009",
+      "coverageClass": "explicit_tax",
+      "text": "Is this compensation taxable?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0010",
+      "coverageClass": "explicit_tax",
+      "text": "What income is taxable in the Philippines?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0011",
+      "coverageClass": "explicit_tax",
+      "text": "Is the sale of this property taxable?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0012",
+      "coverageClass": "explicit_tax",
+      "text": "What is taxable income?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0013",
+      "coverageClass": "explicit_tax",
+      "text": "What is the taxable base for percentage tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0014",
+      "coverageClass": "explicit_tax",
+      "text": "Is a de minimis benefit taxable?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0015",
+      "coverageClass": "explicit_tax",
+      "text": "What is the income tax rate for individuals?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0016",
+      "coverageClass": "explicit_tax",
+      "text": "How is corporate income tax computed?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0017",
+      "coverageClass": "explicit_tax",
+      "text": "What is MCIT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0018",
+      "coverageClass": "explicit_tax",
+      "text": "What is RCIT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0019",
+      "coverageClass": "explicit_tax",
+      "text": "When is the annual ITR due?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0020",
+      "coverageClass": "explicit_tax",
+      "text": "What is expanded withholding tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0021",
+      "coverageClass": "explicit_tax",
+      "text": "What is final withholding tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0022",
+      "coverageClass": "explicit_tax",
+      "text": "How do I compute creditable withholding tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0023",
+      "coverageClass": "explicit_tax",
+      "text": "What is BIR Form 2307 for?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0024",
+      "coverageClass": "explicit_tax",
+      "text": "What is BIR Form 1601-C?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0025",
+      "coverageClass": "explicit_tax",
+      "text": "When do I file BIR Form 2550Q?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0026",
+      "coverageClass": "explicit_tax",
+      "text": "What is the estate tax rate?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0027",
+      "coverageClass": "explicit_tax",
+      "text": "What is included in the gross estate?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0028",
+      "coverageClass": "explicit_tax",
+      "text": "What is donor's tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0029",
+      "coverageClass": "explicit_tax",
+      "text": "What is documentary stamp tax on a deed of sale?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0030",
+      "coverageClass": "explicit_tax",
+      "text": "What is percentage tax for non-VAT taxpayers?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0031",
+      "coverageClass": "explicit_tax",
+      "text": "What is excise tax on alcohol?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0032",
+      "coverageClass": "explicit_tax",
+      "text": "What are the BOC customs duties on imported goods?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0033",
+      "coverageClass": "explicit_tax",
+      "text": "What is the Bureau of Customs tariff classification procedure?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0034",
+      "coverageClass": "explicit_tax",
+      "text": "How is customs duty computed on imported goods?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0035",
+      "coverageClass": "explicit_tax",
+      "text": "What is dutiable value?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0036",
+      "coverageClass": "explicit_tax",
+      "text": "What is a post-clearance audit by the BOC?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0037",
+      "coverageClass": "explicit_tax",
+      "text": "What is duty drawback?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0038",
+      "coverageClass": "explicit_tax",
+      "text": "What is landed cost for customs purposes?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0039",
+      "coverageClass": "explicit_tax",
+      "text": "What is misdeclaration under the CMTA?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0040",
+      "coverageClass": "explicit_tax",
+      "text": "What is the capital-gain holding-period rule?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0041",
+      "coverageClass": "explicit_tax",
+      "text": "What is a capital asset?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0042",
+      "coverageClass": "explicit_tax",
+      "text": "What is an ordinary asset?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0043",
+      "coverageClass": "explicit_tax",
+      "text": "How is capital gains tax computed on shares?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0044",
+      "coverageClass": "explicit_tax",
+      "text": "Is the gain on sale of my principal residence taxable?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0045",
+      "coverageClass": "explicit_tax",
+      "text": "When may BIR apply Oplan Kandado?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0046",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Letter of Authority?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0047",
+      "coverageClass": "explicit_tax",
+      "text": "What is the difference between a PAN and a FAN?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0048",
+      "coverageClass": "explicit_tax",
+      "text": "What is an FDDA?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0049",
+      "coverageClass": "explicit_tax",
+      "text": "How do I protest a deficiency assessment?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0050",
+      "coverageClass": "explicit_tax",
+      "text": "What is the prescriptive period for assessment?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0051",
+      "coverageClass": "explicit_tax",
+      "text": "Can I appeal to the Court of Tax Appeals?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0052",
+      "coverageClass": "explicit_tax",
+      "text": "What is a compromise penalty?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0053",
+      "coverageClass": "explicit_tax",
+      "text": "What is a tax lien?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0054",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Subpoena Duces Tecum from BIR?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0055",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Tax Compliance Verification Drive?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0056",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Mission Order?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0057",
+      "coverageClass": "explicit_tax",
+      "text": "What is real property tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0058",
+      "coverageClass": "explicit_tax",
+      "text": "What is local business tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0059",
+      "coverageClass": "explicit_tax",
+      "text": "What is the situs of taxation for local business tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0060",
+      "coverageClass": "explicit_tax",
+      "text": "What is RPT idle land tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0061",
+      "coverageClass": "explicit_tax",
+      "text": "Is my lessor required to charge VAT on residential rent?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0062",
+      "coverageClass": "explicit_tax",
+      "text": "What is the VAT exemption threshold for residential leases?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0063",
+      "coverageClass": "explicit_tax",
+      "text": "Is rental income taxable?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0064",
+      "coverageClass": "explicit_tax",
+      "text": "What is the per-unit residential exemption?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0065",
+      "coverageClass": "explicit_tax",
+      "text": "What is the optional standard deduction?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0066",
+      "coverageClass": "explicit_tax",
+      "text": "What expenses are deductible?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0067",
+      "coverageClass": "explicit_tax",
+      "text": "What is substantiation for deductions?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0068",
+      "coverageClass": "explicit_tax",
+      "text": "Are representation expenses deductible?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0069",
+      "coverageClass": "explicit_tax",
+      "text": "What is a fringe benefit tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0070",
+      "coverageClass": "explicit_tax",
+      "text": "What are gross receipts for percentage tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0071",
+      "coverageClass": "explicit_tax",
+      "text": "What is transfer pricing documentation?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0072",
+      "coverageClass": "explicit_tax",
+      "text": "What is a permanent establishment?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0073",
+      "coverageClass": "explicit_tax",
+      "text": "What is a tax treaty relief application?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0074",
+      "coverageClass": "explicit_tax",
+      "text": "What is double taxation relief?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0075",
+      "coverageClass": "explicit_tax",
+      "text": "What is the tax sparing rule?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0076",
+      "coverageClass": "explicit_tax",
+      "text": "What is an Income Tax Holiday?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0077",
+      "coverageClass": "explicit_tax",
+      "text": "What incentives does PEZA grant?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0078",
+      "coverageClass": "explicit_tax",
+      "text": "What is a registered business enterprise?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0079",
+      "coverageClass": "explicit_tax",
+      "text": "What is the CREATE Act?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0080",
+      "coverageClass": "explicit_tax",
+      "text": "What did the TRAIN Law change?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0081",
+      "coverageClass": "explicit_tax",
+      "text": "What is RA 10963?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0082",
+      "coverageClass": "explicit_tax",
+      "text": "What does RA 11976 cover?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0083",
+      "coverageClass": "explicit_tax",
+      "text": "What is the EOPT law?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0084",
+      "coverageClass": "explicit_tax",
+      "text": "What is the NIRC?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0085",
+      "coverageClass": "explicit_tax",
+      "text": "What is Revenue Regulation No. 16-2005?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0086",
+      "coverageClass": "explicit_tax",
+      "text": "What does RMC 24-2022 say?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0087",
+      "coverageClass": "explicit_tax",
+      "text": "What is a BIR ruling?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0088",
+      "coverageClass": "explicit_tax",
+      "text": "How do I get a TIN?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0089",
+      "coverageClass": "explicit_tax",
+      "text": "What is eFPS?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0090",
+      "coverageClass": "explicit_tax",
+      "text": "What is eBIRForms?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0091",
+      "coverageClass": "explicit_tax",
+      "text": "What is an Alphalist?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0092",
+      "coverageClass": "explicit_tax",
+      "text": "What is SLSP?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0093",
+      "coverageClass": "explicit_tax",
+      "text": "What are books of accounts?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0094",
+      "coverageClass": "explicit_tax",
+      "text": "What is an official receipt requirement?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0095",
+      "coverageClass": "explicit_tax",
+      "text": "What is a tax refund claim?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0096",
+      "coverageClass": "explicit_tax",
+      "text": "What is a tax credit certificate?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0097",
+      "coverageClass": "explicit_tax",
+      "text": "What is a tax-free exchange?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0098",
+      "coverageClass": "explicit_tax",
+      "text": "What is stock transaction tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0099",
+      "coverageClass": "explicit_tax",
+      "text": "What is net capital gain?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0100",
+      "coverageClass": "explicit_tax",
+      "text": "What is a delinquency in tax payment?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0101",
+      "coverageClass": "explicit_tax",
+      "text": "What is a surcharge for late filing?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0102",
+      "coverageClass": "explicit_tax",
+      "text": "What is the interest rate on deficiency tax?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0103",
+      "coverageClass": "explicit_tax",
+      "text": "What is Run After Tax Evaders?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0104",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Letter Notice from BIR?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0105",
+      "coverageClass": "explicit_tax",
+      "text": "What is an administrative protest?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0106",
+      "coverageClass": "explicit_tax",
+      "text": "What is a reinvestigation request?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0107",
+      "coverageClass": "explicit_tax",
+      "text": "What is a reconsideration request?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0108",
+      "coverageClass": "explicit_tax",
+      "text": "Is a BIR audit likely to be resolved in my favor?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0109",
+      "coverageClass": "explicit_tax",
+      "text": "What is tax exposure?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0110",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Notice for Informal Conference?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0111",
+      "coverageClass": "explicit_tax",
+      "text": "What is a Formal Letter of Demand?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0112",
+      "coverageClass": "explicit_tax",
+      "text": "What is deficiency VAT?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0113",
+      "coverageClass": "explicit_tax",
+      "text": "What is a VAT-exempt transaction?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0114",
+      "coverageClass": "explicit_tax",
+      "text": "What is a VAT zero-rated sale of services?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0115",
+      "coverageClass": "explicit_tax",
+      "text": "What is the CTA's jurisdiction?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0116",
+      "coverageClass": "explicit_tax",
+      "text": "What is an import duty on vehicles?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0117",
+      "coverageClass": "explicit_tax",
+      "text": "What is an ad valorem duty?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0118",
+      "coverageClass": "explicit_tax",
+      "text": "What is a customs broker's role?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0119",
+      "coverageClass": "explicit_tax",
+      "text": "What is a warehousing entry?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0120",
+      "coverageClass": "explicit_tax",
+      "text": "What is a tariff heading?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0121",
+      "coverageClass": "explicit_tax",
+      "text": "What is the tariff rate for imported goods?",
+      "expected": "ALLOW",
+      "rationale": "explicit, coherent Philippine tax subject"
+    },
+    {
+      "probeId": "R18-0122",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is photosynthesis?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0123",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain mitosis and meiosis.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0124",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is DNA made of?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0125",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is the theory of evolution?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0126",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a chromosome?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0127",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain cell biology.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0128",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is quantum mechanics?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0129",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a black hole?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0130",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain Newton's laws.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0131",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is string theory?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0132",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is astrophysics?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0133",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain chemistry basics.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0134",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is human anatomy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0135",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is chemotherapy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0136",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain pharmacology.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0137",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a clinical trial?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0138",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a medical diagnosis process?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0139",
+      "coverageClass": "explicit_non_tax",
+      "text": "Who is the president of the Philippines?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0140",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a presidential election?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0141",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain political parties.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0142",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a senate bill hearing?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0143",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I write JavaScript?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0144",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is TypeScript?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0145",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I debug my code?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0146",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a GitHub pull request?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0147",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain software architecture.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0148",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is an API endpoint?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0149",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I write a Python script?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0150",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a SQL query?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0151",
+      "coverageClass": "explicit_non_tax",
+      "text": "How to code a React component?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0152",
+      "coverageClass": "explicit_non_tax",
+      "text": "Write me a love letter.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0153",
+      "coverageClass": "explicit_non_tax",
+      "text": "Give me relationship advice.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0154",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are dating tips?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0155",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I impress someone?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0156",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is the football score?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0157",
+      "coverageClass": "explicit_non_tax",
+      "text": "Who won the championship game?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0158",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are the NBA standings?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0159",
+      "coverageClass": "explicit_non_tax",
+      "text": "Give me a travel itinerary.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0160",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are the best tourist spots?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0161",
+      "coverageClass": "explicit_non_tax",
+      "text": "Recommend a hotel.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0162",
+      "coverageClass": "explicit_non_tax",
+      "text": "Give me a movie review.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0163",
+      "coverageClass": "explicit_non_tax",
+      "text": "Recommend a TV show.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0164",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are the song lyrics?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0165",
+      "coverageClass": "explicit_non_tax",
+      "text": "Tell me celebrity gossip.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0166",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I cook adobo?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0167",
+      "coverageClass": "explicit_non_tax",
+      "text": "Give me a recipe for pasta.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0168",
+      "coverageClass": "explicit_non_tax",
+      "text": "What ingredients for sinigang?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0169",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I bake bread?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0170",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is civil law?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0171",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is family law?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0172",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are the grounds for legal separation?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0173",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is annulment of marriage?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0174",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is adoption proceedings?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0175",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is criminal procedure?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0176",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a murder charge?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0177",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are the rules of criminal procedure?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0178",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is drug trafficking?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0179",
+      "coverageClass": "explicit_non_tax",
+      "text": "Give me investment advice.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0180",
+      "coverageClass": "explicit_non_tax",
+      "text": "What are good stock picks?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0181",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is cryptocurrency?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0182",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is forex trading?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0183",
+      "coverageClass": "explicit_non_tax",
+      "text": "Tell me a fun fact.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0184",
+      "coverageClass": "explicit_non_tax",
+      "text": "Give me trivia.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0185",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I train my dog?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0186",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is dog grooming?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0187",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is theology?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0188",
+      "coverageClass": "explicit_non_tax",
+      "text": "What does the Bible say about love?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0189",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is worship?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0190",
+      "coverageClass": "explicit_non_tax",
+      "text": "Explain spirituality.",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0191",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a prayer?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0192",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I renew my passport?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0193",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a visa application?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0194",
+      "coverageClass": "explicit_non_tax",
+      "text": "When is school enrolment?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0195",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I register for a marathon?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0196",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I file an insurance claim?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0197",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a personal bank loan rate?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0198",
+      "coverageClass": "explicit_non_tax",
+      "text": "When are condominium association dues due?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0199",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I dispute a utility bill?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0200",
+      "coverageClass": "explicit_non_tax",
+      "text": "What do I do about a cancelled flight?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0201",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I file a police complaint?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0202",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is the court filing deadline?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0203",
+      "coverageClass": "explicit_non_tax",
+      "text": "Can I appeal my labor case?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0204",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a barangay dispute?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0205",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a custody case?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0206",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I open a computer file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0207",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a file extension?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0208",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I convert a PDF file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0209",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I compress a zip file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0210",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I rename a source file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0211",
+      "coverageClass": "explicit_non_tax",
+      "text": "Where is the file manager?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0212",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I save the log file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0213",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a config file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0214",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I attach a file to email?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0215",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I move a file to a folder?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0216",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is my payroll cutoff?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0217",
+      "coverageClass": "explicit_non_tax",
+      "text": "Who do I contact in HR?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0218",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a gym membership fee?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0219",
+      "coverageClass": "explicit_non_tax",
+      "text": "When is the library book due?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0220",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a rental car deposit?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0221",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is my rent payment schedule?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0222",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a private lease agreement?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0223",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a private loan contract?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0224",
+      "coverageClass": "explicit_non_tax",
+      "text": "How do I train for a marathon?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0225",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a conference schedule?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0226",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is ecology?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0227",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is zoology?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0228",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is botany?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0229",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is genetics?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0230",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is microbiology?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0231",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is biochemistry?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0232",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is geology?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0233",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is astronomy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0234",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a vaccine's efficacy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0235",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a drug dosage?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0236",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a surgical procedure?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0237",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is cancer treatment?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0238",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a political rally?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0239",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is a campaign?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0240",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is Angular?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0241",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is Vue.js?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0242",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is Node.js?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0243",
+      "coverageClass": "explicit_non_tax",
+      "text": "What is programming?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no Philippine tax subject present"
+    },
+    {
+      "probeId": "R18-0244",
+      "coverageClass": "substring_trap",
+      "text": "What is the taxable font in a CSS file?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0245",
+      "coverageClass": "substring_trap",
+      "text": "Is the BOC a band of chords?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0246",
+      "coverageClass": "substring_trap",
+      "text": "How do I close a VAT color palette?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0247",
+      "coverageClass": "substring_trap",
+      "text": "What is the taxable CSS property?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0248",
+      "coverageClass": "substring_trap",
+      "text": "How do I set a taxable typeface?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0249",
+      "coverageClass": "substring_trap",
+      "text": "Which taxable font family should I use in my stylesheet?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0250",
+      "coverageClass": "substring_trap",
+      "text": "Is there a taxable font weight in this stylesheet?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0251",
+      "coverageClass": "substring_trap",
+      "text": "What is the taxable variable name in my code?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0252",
+      "coverageClass": "substring_trap",
+      "text": "How do I rename the taxable variable in this software?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0253",
+      "coverageClass": "substring_trap",
+      "text": "Is the taxable class in this JavaScript module correct?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0254",
+      "coverageClass": "substring_trap",
+      "text": "What does the taxable flag do in this repository?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0255",
+      "coverageClass": "substring_trap",
+      "text": "Is BOC a band from the 1970s?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0256",
+      "coverageClass": "substring_trap",
+      "text": "What chords does the BOC band play?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0257",
+      "coverageClass": "substring_trap",
+      "text": "Is BOC a music group?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0258",
+      "coverageClass": "substring_trap",
+      "text": "What album did the BOC band release?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0259",
+      "coverageClass": "substring_trap",
+      "text": "Is BOC an acronym for a music genre?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0260",
+      "coverageClass": "substring_trap",
+      "text": "What does BOC stand for in audio engineering?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0261",
+      "coverageClass": "substring_trap",
+      "text": "Is the BOC guitar chord hard to play?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0262",
+      "coverageClass": "substring_trap",
+      "text": "Who is the BOC band's drummer?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0263",
+      "coverageClass": "substring_trap",
+      "text": "How do I open a VAT color palette in my design tool?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0264",
+      "coverageClass": "substring_trap",
+      "text": "What VAT color swatch should I paint the wall?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0265",
+      "coverageClass": "substring_trap",
+      "text": "Is the VAT paint finish glossy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0266",
+      "coverageClass": "substring_trap",
+      "text": "How do I pick a VAT color for the graphics?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0267",
+      "coverageClass": "substring_trap",
+      "text": "What is the VAT variable in this software module?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0268",
+      "coverageClass": "substring_trap",
+      "text": "How do I define a VAT constant in my code?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0269",
+      "coverageClass": "substring_trap",
+      "text": "Is VAT a color in this palette?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0270",
+      "coverageClass": "substring_trap",
+      "text": "What VAT shade of blue is this?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0271",
+      "coverageClass": "substring_trap",
+      "text": "How do I import the VAT module in JavaScript?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0272",
+      "coverageClass": "substring_trap",
+      "text": "What is the customs font used in this poster?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0273",
+      "coverageClass": "substring_trap",
+      "text": "Is the tariff a music tariff for radio airplay?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0274",
+      "coverageClass": "substring_trap",
+      "text": "What is the duty roster for the night shift?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0275",
+      "coverageClass": "substring_trap",
+      "text": "Who is on guard duty tonight?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0276",
+      "coverageClass": "substring_trap",
+      "text": "What is my duty schedule at the hospital?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0277",
+      "coverageClass": "substring_trap",
+      "text": "Is capital a font style in typography?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0278",
+      "coverageClass": "substring_trap",
+      "text": "What is a capital letter in this typeface?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0279",
+      "coverageClass": "substring_trap",
+      "text": "How do I capitalize the first letter in my code?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0280",
+      "coverageClass": "substring_trap",
+      "text": "What is the return type of this function?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0281",
+      "coverageClass": "substring_trap",
+      "text": "How do I return a value in JavaScript?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0282",
+      "coverageClass": "substring_trap",
+      "text": "What is the return policy for this online store?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0283",
+      "coverageClass": "substring_trap",
+      "text": "How do I return this defective product?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0284",
+      "coverageClass": "substring_trap",
+      "text": "What is an invoice template design in Figma?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0285",
+      "coverageClass": "substring_trap",
+      "text": "What is the assessment rubric for my school exam?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0286",
+      "coverageClass": "substring_trap",
+      "text": "What is a self-assessment questionnaire for therapy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0287",
+      "coverageClass": "substring_trap",
+      "text": "What is a risk assessment for a construction site?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0288",
+      "coverageClass": "substring_trap",
+      "text": "What is a performance assessment at work?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0289",
+      "coverageClass": "substring_trap",
+      "text": "Is PAN a cooking pan?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0290",
+      "coverageClass": "substring_trap",
+      "text": "How do I season a PAN?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0291",
+      "coverageClass": "substring_trap",
+      "text": "What is a PAN in networking terms?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0292",
+      "coverageClass": "substring_trap",
+      "text": "Is FAN a cooling fan for my computer?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0293",
+      "coverageClass": "substring_trap",
+      "text": "How loud is this FAN?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0294",
+      "coverageClass": "substring_trap",
+      "text": "What is a TIN can made of?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0295",
+      "coverageClass": "substring_trap",
+      "text": "Is TIN a metal element?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0296",
+      "coverageClass": "substring_trap",
+      "text": "What is a LOA in aviation terminology?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0297",
+      "coverageClass": "substring_trap",
+      "text": "What is the RATE of this song's tempo?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0298",
+      "coverageClass": "substring_trap",
+      "text": "What is an excise in surgical terms?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0299",
+      "coverageClass": "substring_trap",
+      "text": "What does the CTA button do on this website?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0300",
+      "coverageClass": "substring_trap",
+      "text": "What is a CTA in marketing copy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0301",
+      "coverageClass": "substring_trap",
+      "text": "What is a DST time zone change?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0302",
+      "coverageClass": "substring_trap",
+      "text": "What is DST in daylight saving?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0303",
+      "coverageClass": "substring_trap",
+      "text": "What is the ITR file format for this image?",
+      "expected": "NOT_ALLOW",
+      "rationale": "tax homograph attached to an explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0304",
+      "coverageClass": "ambiguous",
+      "text": "What is the deadline?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0305",
+      "coverageClass": "ambiguous",
+      "text": "When is it due?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0306",
+      "coverageClass": "ambiguous",
+      "text": "What is the filing deadline?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0307",
+      "coverageClass": "ambiguous",
+      "text": "When is the return due?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0308",
+      "coverageClass": "ambiguous",
+      "text": "Can I file next business day?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0309",
+      "coverageClass": "ambiguous",
+      "text": "Is the assessment deadline extended?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0310",
+      "coverageClass": "ambiguous",
+      "text": "What is the rate?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0311",
+      "coverageClass": "ambiguous",
+      "text": "How much do I owe?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0312",
+      "coverageClass": "ambiguous",
+      "text": "What is the penalty?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0313",
+      "coverageClass": "ambiguous",
+      "text": "Is there a surcharge?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0314",
+      "coverageClass": "ambiguous",
+      "text": "What is the threshold?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0315",
+      "coverageClass": "ambiguous",
+      "text": "What is the holding period?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0316",
+      "coverageClass": "ambiguous",
+      "text": "What is the tariff?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0317",
+      "coverageClass": "ambiguous",
+      "text": "Do I need to register?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0318",
+      "coverageClass": "ambiguous",
+      "text": "What is the interest?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0319",
+      "coverageClass": "ambiguous",
+      "text": "What is the requirement?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0320",
+      "coverageClass": "ambiguous",
+      "text": "Is this deductible?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0321",
+      "coverageClass": "ambiguous",
+      "text": "What is the exemption?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0322",
+      "coverageClass": "ambiguous",
+      "text": "Am I liable?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0323",
+      "coverageClass": "ambiguous",
+      "text": "What form do I use?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0324",
+      "coverageClass": "ambiguous",
+      "text": "When do I pay?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0325",
+      "coverageClass": "ambiguous",
+      "text": "How do I compute it?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0326",
+      "coverageClass": "ambiguous",
+      "text": "Is it exempt?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0327",
+      "coverageClass": "ambiguous",
+      "text": "What is the period?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0328",
+      "coverageClass": "ambiguous",
+      "text": "What are the rules?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0329",
+      "coverageClass": "ambiguous",
+      "text": "What is the process?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0330",
+      "coverageClass": "ambiguous",
+      "text": "Do I qualify?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0331",
+      "coverageClass": "ambiguous",
+      "text": "Is it required?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0332",
+      "coverageClass": "ambiguous",
+      "text": "What documents do I need?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0333",
+      "coverageClass": "ambiguous",
+      "text": "Who do I contact?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0334",
+      "coverageClass": "ambiguous",
+      "text": "What is the penalty rate?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0335",
+      "coverageClass": "ambiguous",
+      "text": "How long do I have?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0336",
+      "coverageClass": "ambiguous",
+      "text": "Can I get an extension?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0337",
+      "coverageClass": "ambiguous",
+      "text": "What happens if I am late?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0338",
+      "coverageClass": "ambiguous",
+      "text": "Is there a grace period?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0339",
+      "coverageClass": "ambiguous",
+      "text": "What is the procedure?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0340",
+      "coverageClass": "ambiguous",
+      "text": "What is the limit?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0341",
+      "coverageClass": "ambiguous",
+      "text": "What is the basis?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0342",
+      "coverageClass": "ambiguous",
+      "text": "How is it computed?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0343",
+      "coverageClass": "ambiguous",
+      "text": "What is the applicable rule?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0344",
+      "coverageClass": "ambiguous",
+      "text": "Is there a fee?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0345",
+      "coverageClass": "ambiguous",
+      "text": "What is the amount?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0346",
+      "coverageClass": "ambiguous",
+      "text": "When does it start?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0347",
+      "coverageClass": "ambiguous",
+      "text": "When does it end?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0348",
+      "coverageClass": "ambiguous",
+      "text": "Is it mandatory?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0349",
+      "coverageClass": "ambiguous",
+      "text": "What is the classification?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0350",
+      "coverageClass": "ambiguous",
+      "text": "What is the schedule?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0351",
+      "coverageClass": "ambiguous",
+      "text": "What is the standard?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0352",
+      "coverageClass": "ambiguous",
+      "text": "What is the treatment?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0353",
+      "coverageClass": "ambiguous",
+      "text": "How do I appeal?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0354",
+      "coverageClass": "ambiguous",
+      "text": "What is the remedy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0355",
+      "coverageClass": "ambiguous",
+      "text": "Is there a refund?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0356",
+      "coverageClass": "ambiguous",
+      "text": "What is the coverage?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0357",
+      "coverageClass": "ambiguous",
+      "text": "What is the scope?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0358",
+      "coverageClass": "ambiguous",
+      "text": "Who is covered?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0359",
+      "coverageClass": "ambiguous",
+      "text": "What is the effective date?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0360",
+      "coverageClass": "ambiguous",
+      "text": "Is it retroactive?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0361",
+      "coverageClass": "ambiguous",
+      "text": "What is the condition?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0362",
+      "coverageClass": "ambiguous",
+      "text": "What is the definition?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0363",
+      "coverageClass": "ambiguous",
+      "text": "What is the ruling?",
+      "expected": "NOT_ALLOW",
+      "rationale": "no coherent tax object; clarification is the correct outcome"
+    },
+    {
+      "probeId": "R18-0364",
+      "coverageClass": "filipino_taglish",
+      "text": "Magkano ang buwis ko?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0365",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang buwis sa sahod?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0366",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano magbayad ng buwis?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0367",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang impuwesto sa negosyo?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0368",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang deadline ng pag-file ng ITR?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0369",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-file ng VAT return?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0370",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang buwis sa lupa?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0371",
+      "coverageClass": "filipino_taglish",
+      "text": "May buwis ba ang benta ng bahay?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0372",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang withholding tax sa suweldo?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0373",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailangan ko bang mag-file ng income tax return?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0374",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang parusa kung hindi ako nag-file ng buwis?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0375",
+      "coverageClass": "filipino_taglish",
+      "text": "Magkano ang customs duty sa imported na kotse?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0376",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang buwis sa sasakyan na inangkat?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0377",
+      "coverageClass": "filipino_taglish",
+      "text": "May VAT ba ang renta ng bahay?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0378",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang BIR Form para sa buwis ko?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0379",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano ako makakakuha ng TIN?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0380",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang Oplan Kandado ng BIR?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0381",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang LOA mula sa BIR?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0382",
+      "coverageClass": "filipino_taglish",
+      "text": "Nakalimutan kong mag-file ng buwis, ano ang gagawin ko?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0383",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang capital gains tax sa benta ng lupa?",
+      "expected": "ALLOW",
+      "rationale": "Filipino/Taglish query with explicit tax subject"
+    },
+    {
+      "probeId": "R18-0384",
+      "coverageClass": "filipino_taglish",
+      "text": "Magkano ang pamasahe sa jeep?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0385",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang lutong ulam ngayon?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0386",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-alaga ng aso?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0387",
+      "coverageClass": "filipino_taglish",
+      "text": "Sino ang presidente ng Pilipinas?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0388",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang panahon bukas?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0389",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano maglaro ng basketball?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0390",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang magandang pasyalan?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0391",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-aral ng mabuti?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0392",
+      "coverageClass": "filipino_taglish",
+      "text": "Magkano ang bigas sa palengke?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0393",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang gamot sa sipon?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0394",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-code ng JavaScript?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0395",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang kanta ni Regine?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0396",
+      "coverageClass": "filipino_taglish",
+      "text": "Kailan ang enrollment sa paaralan?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0397",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-apply ng passport?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0398",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang barangay case?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0399",
+      "coverageClass": "filipino_taglish",
+      "text": "Paano mag-file ng police complaint?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0400",
+      "coverageClass": "filipino_taglish",
+      "text": "Magkano ang upa sa apartment ko?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0401",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang font na ito sa poster?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0402",
+      "coverageClass": "filipino_taglish",
+      "text": "Anong kulay ang pipiliin ko sa pintura?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0403",
+      "coverageClass": "filipino_taglish",
+      "text": "Ano ang banda na tumugtog kagabi?",
+      "expected": "NOT_ALLOW",
+      "rationale": "Filipino/Taglish query with no tax subject"
+    },
+    {
+      "probeId": "R18-0404",
+      "coverageClass": "metamorphic",
+      "text": "Is this compensation taxable?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0405",
+      "coverageClass": "metamorphic",
+      "text": "Is this font taxable in CSS?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0406",
+      "coverageClass": "metamorphic",
+      "text": "Is this sale taxable?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0407",
+      "coverageClass": "metamorphic",
+      "text": "Is this typeface taxable in my stylesheet?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0408",
+      "coverageClass": "metamorphic",
+      "text": "Is the rental income taxable?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0409",
+      "coverageClass": "metamorphic",
+      "text": "Is the taxable variable set in my code?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0410",
+      "coverageClass": "metamorphic",
+      "text": "What is taxable income?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0411",
+      "coverageClass": "metamorphic",
+      "text": "What is the taxable color in this palette?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0412",
+      "coverageClass": "metamorphic",
+      "text": "Is the gain on shares taxable?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0413",
+      "coverageClass": "metamorphic",
+      "text": "Is the taxable class name valid in JavaScript?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0414",
+      "coverageClass": "metamorphic",
+      "text": "What is the VAT on this sale?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0415",
+      "coverageClass": "metamorphic",
+      "text": "What is the VAT shade in this color palette?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0416",
+      "coverageClass": "metamorphic",
+      "text": "How do I file a VAT return?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0417",
+      "coverageClass": "metamorphic",
+      "text": "How do I open a VAT palette in Figma?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0418",
+      "coverageClass": "metamorphic",
+      "text": "Is this transaction VAT-exempt?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0419",
+      "coverageClass": "metamorphic",
+      "text": "Is this VAT swatch too dark to paint?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0420",
+      "coverageClass": "metamorphic",
+      "text": "What is input VAT?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0421",
+      "coverageClass": "metamorphic",
+      "text": "What is the VAT variable in this software?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0422",
+      "coverageClass": "metamorphic",
+      "text": "What is the VAT invoice requirement?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0423",
+      "coverageClass": "metamorphic",
+      "text": "What is the VAT color of this wall paint?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0424",
+      "coverageClass": "metamorphic",
+      "text": "What are BOC customs duties?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0425",
+      "coverageClass": "metamorphic",
+      "text": "Is BOC a band of chords?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0426",
+      "coverageClass": "metamorphic",
+      "text": "What does the BOC assess on imports?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0427",
+      "coverageClass": "metamorphic",
+      "text": "What chords does BOC play in the song?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0428",
+      "coverageClass": "metamorphic",
+      "text": "What is a BOC post-clearance audit?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0429",
+      "coverageClass": "metamorphic",
+      "text": "Is BOC a music acronym?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0430",
+      "coverageClass": "metamorphic",
+      "text": "What is the BOC tariff classification?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0431",
+      "coverageClass": "metamorphic",
+      "text": "What is the BOC guitar tab?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0432",
+      "coverageClass": "metamorphic",
+      "text": "What is the customs duty on imports?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0433",
+      "coverageClass": "metamorphic",
+      "text": "What is my duty roster this week?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0434",
+      "coverageClass": "metamorphic",
+      "text": "What is the import duty rate?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0435",
+      "coverageClass": "metamorphic",
+      "text": "Who is on guard duty tonight?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0436",
+      "coverageClass": "metamorphic",
+      "text": "What is the tariff on imported goods?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0437",
+      "coverageClass": "metamorphic",
+      "text": "What is the radio airplay tariff?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0438",
+      "coverageClass": "metamorphic",
+      "text": "What is a capital asset for tax?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0439",
+      "coverageClass": "metamorphic",
+      "text": "Is capital a font style in typography?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0440",
+      "coverageClass": "metamorphic",
+      "text": "What is capital gains tax?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0441",
+      "coverageClass": "metamorphic",
+      "text": "What is a capital letter in typography?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0442",
+      "coverageClass": "metamorphic",
+      "text": "What is the income tax return deadline?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0443",
+      "coverageClass": "metamorphic",
+      "text": "What is the return policy of the store?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0444",
+      "coverageClass": "metamorphic",
+      "text": "How do I file my annual return?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0445",
+      "coverageClass": "metamorphic",
+      "text": "How do I return a defective product?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0446",
+      "coverageClass": "metamorphic",
+      "text": "What is a BIR assessment?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0447",
+      "coverageClass": "metamorphic",
+      "text": "What is a school assessment rubric?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0448",
+      "coverageClass": "metamorphic",
+      "text": "What is a deficiency assessment?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0449",
+      "coverageClass": "metamorphic",
+      "text": "What is a construction risk assessment?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0450",
+      "coverageClass": "metamorphic",
+      "text": "What is a VAT invoice?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0451",
+      "coverageClass": "metamorphic",
+      "text": "What is an invoice template design in Figma?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0452",
+      "coverageClass": "metamorphic",
+      "text": "What is a PAN from the BIR?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0453",
+      "coverageClass": "metamorphic",
+      "text": "How do I season a cooking PAN?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0454",
+      "coverageClass": "metamorphic",
+      "text": "What is a FAN in a tax assessment?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0455",
+      "coverageClass": "metamorphic",
+      "text": "How loud is this cooling FAN?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0456",
+      "coverageClass": "metamorphic",
+      "text": "How do I get a BIR TIN?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0457",
+      "coverageClass": "metamorphic",
+      "text": "What is a TIN can made of?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0458",
+      "coverageClass": "metamorphic",
+      "text": "What is a Letter of Authority?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0459",
+      "coverageClass": "metamorphic",
+      "text": "What is a LOA in aviation?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0460",
+      "coverageClass": "metamorphic",
+      "text": "What is the RATE program of the BIR?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0461",
+      "coverageClass": "metamorphic",
+      "text": "What is the RATE of this song's tempo?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0462",
+      "coverageClass": "metamorphic",
+      "text": "What is excise tax on alcohol?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0463",
+      "coverageClass": "metamorphic",
+      "text": "What is an excise in surgery?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0464",
+      "coverageClass": "metamorphic",
+      "text": "Can I appeal to the CTA?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0465",
+      "coverageClass": "metamorphic",
+      "text": "What does the CTA button do on this site?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0466",
+      "coverageClass": "metamorphic",
+      "text": "What is documentary stamp tax?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0467",
+      "coverageClass": "metamorphic",
+      "text": "What is DST daylight saving time?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0468",
+      "coverageClass": "metamorphic",
+      "text": "What is estate tax on inheritance?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0469",
+      "coverageClass": "metamorphic",
+      "text": "What is a real estate agent's commission?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0470",
+      "coverageClass": "metamorphic",
+      "text": "What is my taxable compensation?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0471",
+      "coverageClass": "metamorphic",
+      "text": "What is the taxable font weight in CSS?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0472",
+      "coverageClass": "metamorphic",
+      "text": "Is the lessor liable for VAT?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0473",
+      "coverageClass": "metamorphic",
+      "text": "Is the VAT paint finish glossy?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0474",
+      "coverageClass": "metamorphic",
+      "text": "What is withholding tax on rent?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0475",
+      "coverageClass": "metamorphic",
+      "text": "What is the withholding pattern in this code?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0476",
+      "coverageClass": "metamorphic",
+      "text": "What is a tax refund claim?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0477",
+      "coverageClass": "metamorphic",
+      "text": "What is a refund for my cancelled flight?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0478",
+      "coverageClass": "metamorphic",
+      "text": "What is a tax credit certificate?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0479",
+      "coverageClass": "metamorphic",
+      "text": "What is my credit card limit?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0480",
+      "coverageClass": "metamorphic",
+      "text": "What is the tax deadline today?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0481",
+      "coverageClass": "metamorphic",
+      "text": "What is the court filing deadline today?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    },
+    {
+      "probeId": "R18-0482",
+      "coverageClass": "metamorphic",
+      "text": "What is a BIR ruling?",
+      "expected": "ALLOW",
+      "rationale": "metamorphic pair: coherent tax object"
+    },
+    {
+      "probeId": "R18-0483",
+      "coverageClass": "metamorphic",
+      "text": "What is the referee's ruling in the game?",
+      "expected": "NOT_ALLOW",
+      "rationale": "metamorphic pair: same term, explicitly non-tax object"
+    }
+  ]
+}
