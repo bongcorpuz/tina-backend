@@ -1,0 +1,152 @@
+{
+  "task": "PHASE-10A14-R19",
+  "totalMetamorphicRows": 60,
+  "totalPairs": 30,
+  "failingPairs": 12,
+  "failing": [
+    {
+      "id": "IR18-DOM-477",
+      "coverageClass": "metamorphic",
+      "text": "What local customs apply at dinner?",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-479",
+      "coverageClass": "metamorphic",
+      "text": "What is capital gain on an amplifier?",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-487",
+      "coverageClass": "metamorphic",
+      "text": "What does FLD mean as a field abbreviation?",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-489",
+      "coverageClass": "metamorphic",
+      "text": "What is OSD on a monitor?",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-501",
+      "coverageClass": "metamorphic",
+      "text": "Design a VAT invoice icon only.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-503",
+      "coverageClass": "metamorphic",
+      "text": "Input VAT into a text box.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-505",
+      "coverageClass": "metamorphic",
+      "text": "Output VAT from a function.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-509",
+      "coverageClass": "metamorphic",
+      "text": "What are cultural customs?",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-515",
+      "coverageClass": "metamorphic",
+      "text": "Use MCIT as a random SKU.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-517",
+      "coverageClass": "metamorphic",
+      "text": "Use RCIT as a course code.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-519",
+      "coverageClass": "metamorphic",
+      "text": "Draft a compromise offer in a negotiation class.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    },
+    {
+      "id": "IR18-DOM-525",
+      "coverageClass": "metamorphic",
+      "text": "Plan an informal conference agenda.",
+      "expected": "NOT_ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "detectedDomain": "PHILIPPINE_TAX",
+      "confidence": 0.98,
+      "pass": false,
+      "failureKind": "material_false_allow"
+    }
+  ]
+}
