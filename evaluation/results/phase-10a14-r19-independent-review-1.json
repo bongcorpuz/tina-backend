@@ -1,0 +1,100 @@
+{
+  "task": "PHASE-10A14-R19-INDEPENDENT-REVIEW-1",
+  "generatedAt": "2026-07-21T06:02:56.312Z",
+  "decision": "REVISIONS REQUIRED",
+  "r19ProspectiveGovernance": "NOT SATISFIED",
+  "phase10a": "OPEN",
+  "findings": [
+    {
+      "id": "P1-IR19-001",
+      "severity": "P1",
+      "title": "Independent semantic campaign failed",
+      "requirement": "Independent 1,120+ campaign must have zero material false allows, zero material false refusals and zero metamorphic failures.",
+      "evidence": "INDEPENDENT_SEMANTIC_CAMPAIGN_RESULT.json: 729/1120, falseAllows=179, falseRefusals=162, metamorphicFailures=36.",
+      "impact": "Blocks PASS and R19 prospective governance.",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-IR19-002",
+      "severity": "P1",
+      "title": "Dominant veto rejects genuine mixed-domain tax questions",
+      "requirement": "Ordinary objects remain ALLOW or tax-appropriate CLARIFY when the user asks a Philippine-tax question about them.",
+      "evidence": "mixed-domain-genuine-tax-report.json: 102/210 failed.",
+      "impact": "Material false refusals on deductible fan purchases, music-channel income, raffles, fun runs, prescriptions, customs duty and similar tax questions.",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-IR19-003",
+      "severity": "P1",
+      "title": "Tax-shaped anchors still create false allows for explicit non-tax meanings",
+      "requirement": "Explicit non-tax expansions and ordinary non-tax controls must remain NOT_ALLOW.",
+      "evidence": "explicit-non-tax-report.json: 74/260 failed; lowercase-titlecase-heuristic-review.json: 110/200 failed.",
+      "impact": "The boundary still admits non-tax uses of FLD, customs lessons, transfer-pricing game mechanics, title-case false acronym expansions and similar controls.",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-IR19-004",
+      "severity": "P1",
+      "title": "Executor unseen campaign is not independent for the final runtime",
+      "requirement": "A campaign used to refine final runtime is not an unseen holdout for that runtime.",
+      "evidence": "Commit b3e879b1 message states runtime refinements were discovered while building and iterating the executor unseen campaign; commit 23f71a39 later records the 726-row unseen evidence.",
+      "impact": "The 726-row campaign may be useful development coverage, but it cannot support statistical holdout or unseen-governance claims for b3e879b1.",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-IR19-005",
+      "severity": "P1",
+      "title": "Governed attempt registry omits required invocations",
+      "requirement": "Frozen plan section 9 requires every governed invocation, including pre-fix, development, unseen, focused batches, gates and retries, to be registered.",
+      "evidence": "CANONICAL_ATTEMPT_REGISTRY.json counts: total=4, domain_campaign=0, focused_suite=0; executor report separately relies on three domain campaigns and 22 focused suites.",
+      "impact": "The claim that every count derives from the registry is misleading; failed/transient and non-gate evidence is not immutably attempted in the registry.",
+      "blocksPass": true
+    },
+    {
+      "id": "P2-IR19-006",
+      "severity": "P2",
+      "title": "R18 assertion was widened to accept either veto family",
+      "requirement": "Regression assertions should preserve material reason family and precedence where required.",
+      "evidence": "tests/phase-10a14-r18-domain-hardening.test.mjs now accepts non_tax_object_veto or non_tax_object_role_veto. It still rejects ALLOW and still requires a veto reason.",
+      "impact": "Bounded weakening/ambiguity in precedence protection, but not the primary blocker because semantic campaign exposes direct failures.",
+      "blocksPass": false
+    }
+  ],
+  "independentCampaign": {
+    "oracleSha256": "55183f06b043187c0b26cd66e7e699a8265721fedb293ffe79b2b5825a66cd2f",
+    "total": 1120,
+    "passed": 729,
+    "materialFalseAllows": 179,
+    "materialFalseRefusals": 162,
+    "clarifyMismatches": 50,
+    "metamorphicFailures": 36
+  },
+  "correctedR18": {
+    "corrected38": {
+      "total": 38,
+      "passed": 38
+    },
+    "corrected567": {
+      "total": 567,
+      "passed": 567
+    }
+  },
+  "gates": {
+    "deterministic": [
+      0,
+      0
+    ],
+    "staging": [
+      0,
+      0
+    ]
+  },
+  "governance": {
+    "r15Historical": "NOT SUPERSEDED",
+    "r16Prospective": "NOT SATISFIED",
+    "r17Prospective": "NOT SATISFIED",
+    "r18Prospective": "NOT SATISFIED",
+    "r19Prospective": "NOT SATISFIED"
+  },
+  "next": "R20 remediation required; do not execute here."
+}

@@ -1,0 +1,1194 @@
+{
+  "totalGroups": 60,
+  "failedGroups": 36,
+  "metamorphicFailures": [
+    {
+      "group": "MM-02",
+      "members": [
+        {
+          "id": "IR19-1003",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does a project named SLSP create a BIR filing obligation? Group MM-02.",
+          "metamorphicGroup": "MM-02",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1004",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Rename the SLSP project folder. Group MM-02.",
+          "metamorphicGroup": "MM-02",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-04",
+      "members": [
+        {
+          "id": "IR19-1007",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is a cooling fan purchase deductible for income tax? Group MM-04.",
+          "metamorphicGroup": "MM-04",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1008",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Change the cooling fan speed. Group MM-04.",
+          "metamorphicGroup": "MM-04",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-07",
+      "members": [
+        {
+          "id": "IR19-1013",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is income from a music channel taxable? Group MM-07.",
+          "metamorphicGroup": "MM-07",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1014",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Tune the RMC music channel. Group MM-07.",
+          "metamorphicGroup": "MM-07",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-09",
+      "members": [
+        {
+          "id": "IR19-1017",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Are tuition receipts for culture classes taxable? Group MM-09.",
+          "metamorphicGroup": "MM-09",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1018",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Write a culture customs worksheet. Group MM-09.",
+          "metamorphicGroup": "MM-09",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-10",
+      "members": [
+        {
+          "id": "IR19-1019",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "How is gross estate computed for estate tax? Group MM-10.",
+          "metamorphicGroup": "MM-10",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1020",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Gross estate is a property marketing slogan. Group MM-10.",
+          "metamorphicGroup": "MM-10",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-12",
+      "members": [
+        {
+          "id": "IR19-1023",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Are school raffle receipts taxable? Group MM-12.",
+          "metamorphicGroup": "MM-12",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1024",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Explain school raffle mechanics. Group MM-12.",
+          "metamorphicGroup": "MM-12",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-14",
+      "members": [
+        {
+          "id": "IR19-1027",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does transfer pricing documentation apply? Group MM-14.",
+          "metamorphicGroup": "MM-14",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1028",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Transfer pricing is a board-game mechanic. Group MM-14.",
+          "metamorphicGroup": "MM-14",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-15",
+      "members": [
+        {
+          "id": "IR19-1029",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "mcit (minimum corporate income tax) applies? Group MM-15.",
+          "metamorphicGroup": "MM-15",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1030",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "mcit (my cool internal tool) joke expansion. Group MM-15.",
+          "metamorphicGroup": "MM-15",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-16",
+      "members": [
+        {
+          "id": "IR19-1031",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "RCIT (Regular Corporate Income Tax) applies? Group MM-16.",
+          "metamorphicGroup": "MM-16",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1032",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "RCIT (Regional Coding Internship Track) applies? Group MM-16.",
+          "metamorphicGroup": "MM-16",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-17",
+      "members": [
+        {
+          "id": "IR19-1033",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+          "metamorphicGroup": "MM-17",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1034",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "PAN means cooking utensil. Group MM-17.",
+          "metamorphicGroup": "MM-17",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-19",
+      "members": [
+        {
+          "id": "IR19-1037",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does authority to print receipts apply? Group MM-19.",
+          "metamorphicGroup": "MM-19",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1038",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Authority to print a school newspaper. Group MM-19.",
+          "metamorphicGroup": "MM-19",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-20",
+      "members": [
+        {
+          "id": "IR19-1039",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is annual registration fee a BIR issue? Group MM-20.",
+          "metamorphicGroup": "MM-20",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1040",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Annual registration fee for a sports club. Group MM-20.",
+          "metamorphicGroup": "MM-20",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-22",
+      "members": [
+        {
+          "id": "IR19-1043",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does a project named SLSP create a BIR filing obligation? Group MM-22.",
+          "metamorphicGroup": "MM-22",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1044",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Rename the SLSP project folder. Group MM-22.",
+          "metamorphicGroup": "MM-22",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-24",
+      "members": [
+        {
+          "id": "IR19-1047",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is a cooling fan purchase deductible for income tax? Group MM-24.",
+          "metamorphicGroup": "MM-24",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1048",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Change the cooling fan speed. Group MM-24.",
+          "metamorphicGroup": "MM-24",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-27",
+      "members": [
+        {
+          "id": "IR19-1053",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is income from a music channel taxable? Group MM-27.",
+          "metamorphicGroup": "MM-27",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1054",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Tune the RMC music channel. Group MM-27.",
+          "metamorphicGroup": "MM-27",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-29",
+      "members": [
+        {
+          "id": "IR19-1057",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Are tuition receipts for culture classes taxable? Group MM-29.",
+          "metamorphicGroup": "MM-29",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1058",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Write a culture customs worksheet. Group MM-29.",
+          "metamorphicGroup": "MM-29",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-30",
+      "members": [
+        {
+          "id": "IR19-1059",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "How is gross estate computed for estate tax? Group MM-30.",
+          "metamorphicGroup": "MM-30",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1060",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Gross estate is a property marketing slogan. Group MM-30.",
+          "metamorphicGroup": "MM-30",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-32",
+      "members": [
+        {
+          "id": "IR19-1063",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Are school raffle receipts taxable? Group MM-32.",
+          "metamorphicGroup": "MM-32",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1064",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Explain school raffle mechanics. Group MM-32.",
+          "metamorphicGroup": "MM-32",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-34",
+      "members": [
+        {
+          "id": "IR19-1067",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does transfer pricing documentation apply? Group MM-34.",
+          "metamorphicGroup": "MM-34",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1068",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Transfer pricing is a board-game mechanic. Group MM-34.",
+          "metamorphicGroup": "MM-34",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-35",
+      "members": [
+        {
+          "id": "IR19-1069",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "mcit (minimum corporate income tax) applies? Group MM-35.",
+          "metamorphicGroup": "MM-35",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1070",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "mcit (my cool internal tool) joke expansion. Group MM-35.",
+          "metamorphicGroup": "MM-35",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-36",
+      "members": [
+        {
+          "id": "IR19-1071",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "RCIT (Regular Corporate Income Tax) applies? Group MM-36.",
+          "metamorphicGroup": "MM-36",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1072",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "RCIT (Regional Coding Internship Track) applies? Group MM-36.",
+          "metamorphicGroup": "MM-36",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-37",
+      "members": [
+        {
+          "id": "IR19-1073",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is PAN sale VATable if PAN is a product code? Group MM-37.",
+          "metamorphicGroup": "MM-37",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1074",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "PAN means cooking utensil. Group MM-37.",
+          "metamorphicGroup": "MM-37",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-39",
+      "members": [
+        {
+          "id": "IR19-1077",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does authority to print receipts apply? Group MM-39.",
+          "metamorphicGroup": "MM-39",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1078",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Authority to print a school newspaper. Group MM-39.",
+          "metamorphicGroup": "MM-39",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-40",
+      "members": [
+        {
+          "id": "IR19-1079",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is annual registration fee a BIR issue? Group MM-40.",
+          "metamorphicGroup": "MM-40",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1080",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Annual registration fee for a sports club. Group MM-40.",
+          "metamorphicGroup": "MM-40",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-42",
+      "members": [
+        {
+          "id": "IR19-1083",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does a project named SLSP create a BIR filing obligation? Group MM-42.",
+          "metamorphicGroup": "MM-42",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1084",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Rename the SLSP project folder. Group MM-42.",
+          "metamorphicGroup": "MM-42",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-44",
+      "members": [
+        {
+          "id": "IR19-1087",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is a cooling fan purchase deductible for income tax? Group MM-44.",
+          "metamorphicGroup": "MM-44",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1088",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Change the cooling fan speed. Group MM-44.",
+          "metamorphicGroup": "MM-44",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-47",
+      "members": [
+        {
+          "id": "IR19-1093",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is income from a music channel taxable? Group MM-47.",
+          "metamorphicGroup": "MM-47",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1094",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Tune the RMC music channel. Group MM-47.",
+          "metamorphicGroup": "MM-47",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-49",
+      "members": [
+        {
+          "id": "IR19-1097",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Are tuition receipts for culture classes taxable? Group MM-49.",
+          "metamorphicGroup": "MM-49",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1098",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Write a culture customs worksheet. Group MM-49.",
+          "metamorphicGroup": "MM-49",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-50",
+      "members": [
+        {
+          "id": "IR19-1099",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "How is gross estate computed for estate tax? Group MM-50.",
+          "metamorphicGroup": "MM-50",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1100",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Gross estate is a property marketing slogan. Group MM-50.",
+          "metamorphicGroup": "MM-50",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-52",
+      "members": [
+        {
+          "id": "IR19-1103",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Are school raffle receipts taxable? Group MM-52.",
+          "metamorphicGroup": "MM-52",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1104",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Explain school raffle mechanics. Group MM-52.",
+          "metamorphicGroup": "MM-52",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-54",
+      "members": [
+        {
+          "id": "IR19-1107",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does transfer pricing documentation apply? Group MM-54.",
+          "metamorphicGroup": "MM-54",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1108",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Transfer pricing is a board-game mechanic. Group MM-54.",
+          "metamorphicGroup": "MM-54",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-55",
+      "members": [
+        {
+          "id": "IR19-1109",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "mcit (minimum corporate income tax) applies? Group MM-55.",
+          "metamorphicGroup": "MM-55",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1110",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "mcit (my cool internal tool) joke expansion. Group MM-55.",
+          "metamorphicGroup": "MM-55",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-56",
+      "members": [
+        {
+          "id": "IR19-1111",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "RCIT (Regular Corporate Income Tax) applies? Group MM-56.",
+          "metamorphicGroup": "MM-56",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1112",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "RCIT (Regional Coding Internship Track) applies? Group MM-56.",
+          "metamorphicGroup": "MM-56",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-57",
+      "members": [
+        {
+          "id": "IR19-1113",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is PAN sale VATable if PAN is a product code? Group MM-57.",
+          "metamorphicGroup": "MM-57",
+          "metamorphicRole": "tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": false,
+          "failureKind": "material_false_refusal"
+        },
+        {
+          "id": "IR19-1114",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "PAN means cooking utensil. Group MM-57.",
+          "metamorphicGroup": "MM-57",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "REJECT",
+          "actualReason": "non_tax_object_role_veto",
+          "actualDomain": "NON_TAX",
+          "confidence": 0.95,
+          "pass": true,
+          "failureKind": null
+        }
+      ]
+    },
+    {
+      "group": "MM-59",
+      "members": [
+        {
+          "id": "IR19-1117",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Does authority to print receipts apply? Group MM-59.",
+          "metamorphicGroup": "MM-59",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1118",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Authority to print a school newspaper. Group MM-59.",
+          "metamorphicGroup": "MM-59",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    },
+    {
+      "group": "MM-60",
+      "members": [
+        {
+          "id": "IR19-1119",
+          "coverageClass": "metamorphic",
+          "expected": "ALLOW",
+          "text": "Is annual registration fee a BIR issue? Group MM-60.",
+          "metamorphicGroup": "MM-60",
+          "metamorphicRole": "tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": true,
+          "failureKind": null
+        },
+        {
+          "id": "IR19-1120",
+          "coverageClass": "metamorphic",
+          "expected": "NOT_ALLOW",
+          "text": "Annual registration fee for a sports club. Group MM-60.",
+          "metamorphicGroup": "MM-60",
+          "metamorphicRole": "non_tax",
+          "actualDecision": "ALLOW",
+          "actualReason": "strong_tax_signal",
+          "actualDomain": "PHILIPPINE_TAX",
+          "confidence": 0.98,
+          "pass": false,
+          "failureKind": "material_false_allow"
+        }
+      ]
+    }
+  ]
+}

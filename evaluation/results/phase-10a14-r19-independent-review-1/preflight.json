@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-07-21T05:50:24.806Z",
+  "repository": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "69383f6af3b280c4aedeb9429010342462e54a25",
+  "expectedHead": "69383f6af3b280c4aedeb9429010342462e54a25",
+  "sync": "0\t0",
+  "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n"
+}

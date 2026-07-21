@@ -1,0 +1,8 @@
+{
+    "endedAt":  "2026-07-21T14:00:28.4883728+08:00",
+    "exitCode":  0,
+    "log":  "evaluation\\results\\phase-10a14-r19-independent-review-1\\staging-cycle2.raw.txt",
+    "command":  "node scripts/run-staging-smokes.mjs",
+    "cycle":  2,
+    "startedAt":  "2026-07-21T14:00:22.1802701+08:00"
+}

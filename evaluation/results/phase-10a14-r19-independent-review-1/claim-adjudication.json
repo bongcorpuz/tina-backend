@@ -1,0 +1,191 @@
+{
+  "generatedAt": "2026-07-21T06:02:56.312Z",
+  "claims": [
+    {
+      "id": 1,
+      "claim": "R19 decision is PASS",
+      "disposition": "REJECTED",
+      "evidence": "P1 findings exist."
+    },
+    {
+      "id": 2,
+      "claim": "R19 prospective governance is SATISFIED",
+      "disposition": "REJECTED",
+      "evidence": "P1 findings block governance."
+    },
+    {
+      "id": 3,
+      "claim": "Phase 10A remains OPEN",
+      "disposition": "ACCEPTED",
+      "evidence": "Executor and review preserve OPEN."
+    },
+    {
+      "id": 4,
+      "claim": "Final runtime is b3e879b1",
+      "disposition": "ACCEPTED",
+      "evidence": "Last runtime commit is b3e879b1; later commits are evidence/gates."
+    },
+    {
+      "id": 5,
+      "claim": "Only two runtime files changed",
+      "disposition": "ACCEPTED",
+      "evidence": "Runtime scope manifest and diff show the two boundary modules."
+    },
+    {
+      "id": 6,
+      "claim": "Exact 567 pre-fix reproduction matched 497/567, 67/3/12",
+      "disposition": "ACCEPTED",
+      "evidence": "PRE_FIX_567_RESULT: 497/567."
+    },
+    {
+      "id": 7,
+      "claim": "Exact 567 post-fix result is semantically 567/567",
+      "disposition": "ACCEPTED",
+      "evidence": "Corrected semantic 567 also 567/567."
+    },
+    {
+      "id": 8,
+      "claim": "The 38-row field swap is real and limited to acronym_context",
+      "disposition": "ACCEPTED",
+      "evidence": "Verified from original oracle rows IR18-DOM-530..567."
+    },
+    {
+      "id": 9,
+      "claim": "Corrected mapping passes 38/38",
+      "disposition": "ACCEPTED",
+      "evidence": "38/38."
+    },
+    {
+      "id": 10,
+      "claim": "873-row development oracle frozen before controlling execution",
+      "disposition": "PARTIALLY ACCEPTED",
+      "evidence": "Row/result counts verified; complete freeze history not sufficient to cure later P1s."
+    },
+    {
+      "id": 11,
+      "claim": "873-row result is 873/873 with 0/0/0",
+      "disposition": "ACCEPTED",
+      "evidence": "873/873."
+    },
+    {
+      "id": 12,
+      "claim": "726-row campaign authored after runtime freeze",
+      "disposition": "REJECTED",
+      "evidence": "b3e879b1 says runtime refinements were discovered while building/iterating the unseen campaign."
+    },
+    {
+      "id": 13,
+      "claim": "726-row campaign was not used to refine runtime",
+      "disposition": "REJECTED",
+      "evidence": "Commit message directly contradicts this."
+    },
+    {
+      "id": 14,
+      "claim": "726-row campaign is valid unseen holdout",
+      "disposition": "REJECTED",
+      "evidence": "Not unseen for final runtime."
+    },
+    {
+      "id": 15,
+      "claim": "726-row result is 726/726 with 0/0/0",
+      "disposition": "ACCEPTED",
+      "evidence": "726/726."
+    },
+    {
+      "id": 16,
+      "claim": "Dominant role veto closes all prior failures without new false refusals",
+      "disposition": "REJECTED",
+      "evidence": "162 material false refusals in independent campaign."
+    },
+    {
+      "id": 17,
+      "claim": "New strong anchors are context-safe",
+      "disposition": "REJECTED",
+      "evidence": "179 material/ambiguous false allows in independent campaign."
+    },
+    {
+      "id": 18,
+      "claim": "Lowercase-parenthetical logic is safe",
+      "disposition": "REJECTED",
+      "evidence": "Heuristic/acronym report failed 110/200."
+    },
+    {
+      "id": 19,
+      "claim": "Title-cased false expansions remain non-tax",
+      "disposition": "REJECTED",
+      "evidence": "Title-case false acronym expansions include material false allows."
+    },
+    {
+      "id": 20,
+      "claim": "Accepted R15-R18 closures remain passing",
+      "disposition": "PARTIALLY ACCEPTED",
+      "evidence": "Focused summary and deterministic gates pass; no historical evidence diff."
+    },
+    {
+      "id": 21,
+      "claim": "Widening R18 test did not weaken regression protection",
+      "disposition": "PARTIALLY ACCEPTED",
+      "evidence": "Decision protected, precedence specificity reduced."
+    },
+    {
+      "id": 22,
+      "claim": "Focused suites passed 22/22",
+      "disposition": "ACCEPTED",
+      "evidence": "Executor focused summary 22/22; independent deterministic gates also pass."
+    },
+    {
+      "id": 23,
+      "claim": "Deterministic passed 2/2 at 215/0",
+      "disposition": "ACCEPTED",
+      "evidence": "Independent cycles exit 0; logs captured."
+    },
+    {
+      "id": 24,
+      "claim": "Staging passed 2/2 at 7/0",
+      "disposition": "ACCEPTED",
+      "evidence": "Independent cycles exit 0; logs captured."
+    },
+    {
+      "id": 25,
+      "claim": "Runtime and harness identities complete and identical across gates",
+      "disposition": "PARTIALLY ACCEPTED",
+      "evidence": "Full digests exist in identity summaries/registry; executor result JSON displays truncated harness digest."
+    },
+    {
+      "id": 26,
+      "claim": "Registry total of four attempts is complete",
+      "disposition": "REJECTED",
+      "evidence": "Frozen contract required domain and focused attempts too."
+    },
+    {
+      "id": 27,
+      "claim": "Domain campaigns and focused suites were not required in registry",
+      "disposition": "REJECTED",
+      "evidence": "Frozen plan section 9 explicitly required them."
+    },
+    {
+      "id": 28,
+      "claim": "Two transient dirty-tree failures were preserved and adjudicated",
+      "disposition": "REJECTED",
+      "evidence": "Narrative disclosure found; no registered attempt dirs/logs."
+    },
+    {
+      "id": 29,
+      "claim": "Manifest has 62 entries and includes all governed evidence",
+      "disposition": "PARTIALLY ACCEPTED",
+      "evidence": "62 listed entries and hashes present, but missing governed attempt evidence cannot be cured by manifest."
+    },
+    {
+      "id": 30,
+      "claim": "No invented acronym expansion or Phase 10B-T implementation occurred",
+      "disposition": "ACCEPTED",
+      "evidence": "No terminology registry/runtime generation work found."
+    },
+    {
+      "id": 31,
+      "claim": "R13-R18 historical evidence remains untouched",
+      "disposition": "ACCEPTED",
+      "evidence": "No diff under R13-R18 evidence paths in R19 range."
+    }
+  ]
+}

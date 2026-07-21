@@ -1,0 +1,32 @@
+{
+  "generatedAt": "2026-07-21T06:02:56.312Z",
+  "files": {
+    "services/philippine-tax-boundary-patterns.js": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+    "services/philippine-tax-domain-boundary.js": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+    "evaluation/results/phase-10a14-r19/HARNESS_SCOPE_MANIFEST.json": "086eae61e4a64503d2ef9708f48c87e79e77a81b1d48bf69cb50975c16aebd44",
+    "evaluation/results/phase-10a14-r19/RUNTIME_SCOPE_MANIFEST.json": "d01f76dd8d3177b37e96620685c1bbeab4f6f30786fef205ebbef1acd5216220",
+    "scripts/run-regressions.mjs": "cbdd0a94a5975ced6f6df33c66770d920acd7ae7a7337158a10e6f74a4902053",
+    "scripts/run-staging-smokes.mjs": "613823f522bf373fc8919bd7cb5918c14f260bc14164f4116739ba2097d46fdb"
+  },
+  "runtimeIdentity": {
+    "task": "PHASE-10A14-R19",
+    "kind": "runtime",
+    "note": "FROZEN before any gate attempt and unchanged across all four gate cycles.",
+    "finalRuntimeCommit": "57b083b8",
+    "evidenceHead": "57b083b8360a2efd5fe72181a0802089bc82f22f",
+    "manifestSha256": "d01f76dd8d3177b37e96620685c1bbeab4f6f30786fef205ebbef1acd5216220",
+    "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+    "filesCount": 2,
+    "identicalAcrossAllGateAttempts": true
+  },
+  "harnessIdentity": {
+    "task": "PHASE-10A14-R19",
+    "kind": "harness",
+    "note": "FROZEN before any gate attempt and unchanged across all four gate cycles.",
+    "evidenceHead": "57b083b8360a2efd5fe72181a0802089bc82f22f",
+    "manifestSha256": "086eae61e4a64503d2ef9708f48c87e79e77a81b1d48bf69cb50975c16aebd44",
+    "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+    "filesCount": 9,
+    "identicalAcrossAllGateAttempts": true
+  }
+}

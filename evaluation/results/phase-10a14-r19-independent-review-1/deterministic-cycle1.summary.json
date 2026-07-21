@@ -1,0 +1,8 @@
+{
+    "endedAt":  "2026-07-21T13:56:07.3759290+08:00",
+    "exitCode":  0,
+    "log":  "evaluation\\results\\phase-10a14-r19-independent-review-1\\deterministic-cycle1.raw.txt",
+    "command":  "node scripts/run-regressions.mjs",
+    "cycle":  1,
+    "startedAt":  "2026-07-21T13:52:39.4826498+08:00"
+}
