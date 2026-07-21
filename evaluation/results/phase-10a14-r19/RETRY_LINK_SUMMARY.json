@@ -1,0 +1,38 @@
+{
+  "task": "PHASE-10A14-R18",
+  "generatedAt": "2026-07-21T05:07:02.130Z",
+  "rule": "A retry is valid only if runtime, harness, dependency, environment and command identity are unchanged, the structural link is sound, and the evidence-HEAD delta contains only authorized evidence paths. Evidence HEAD may move; that is the R17 fix.",
+  "validRetryCount": 0,
+  "validRetries": [],
+  "errors": [],
+  "ceiling": {
+    "deterministic|cycle1": {
+      "key": "deterministic|cycle1",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    },
+    "deterministic|cycle2": {
+      "key": "deterministic|cycle2",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    },
+    "staging|cycle1": {
+      "key": "staging|cycle1",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    },
+    "staging|cycle2": {
+      "key": "staging|cycle2",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    }
+  }
+}

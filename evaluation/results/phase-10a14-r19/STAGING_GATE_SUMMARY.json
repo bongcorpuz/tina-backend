@@ -1,0 +1,44 @@
+{
+  "task": "PHASE-10A14-R19",
+  "gate": "staging",
+  "requiredCycles": 2,
+  "successfulCycles": 2,
+  "passed": true,
+  "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+  "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+  "attempts": [
+    {
+      "attemptId": "R19-GATE-staging-cycle1-A1",
+      "cycle": 1,
+      "attemptOrdinal": 1,
+      "exitCode": 0,
+      "rawStatus": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "controlling": true,
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+      "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+      "evidenceHeadAtAllocation": "a7a8f4b3aefecdf933ef8b4581b988210569e7c0",
+      "evidenceHeadAtEnd": "a7a8f4b3aefecdf933ef8b4581b988210569e7c0"
+    },
+    {
+      "attemptId": "R19-GATE-staging-cycle2-A1",
+      "cycle": 2,
+      "attemptOrdinal": 1,
+      "exitCode": 0,
+      "rawStatus": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "controlling": true,
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+      "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+      "evidenceHeadAtAllocation": "5ec6cebd9a077df3ee7ee4414db903e0d908be16",
+      "evidenceHeadAtEnd": "5ec6cebd9a077df3ee7ee4414db903e0d908be16"
+    }
+  ],
+  "perCycleResult": "staging-smoke suites 7 run 0 failed; STAGING GATE PASSED"
+}

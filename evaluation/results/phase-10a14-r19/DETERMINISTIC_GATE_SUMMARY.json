@@ -1,0 +1,44 @@
+{
+  "task": "PHASE-10A14-R19",
+  "gate": "deterministic",
+  "requiredCycles": 2,
+  "successfulCycles": 2,
+  "passed": true,
+  "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+  "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+  "attempts": [
+    {
+      "attemptId": "R19-GATE-deterministic-cycle1-A1",
+      "cycle": 1,
+      "attemptOrdinal": 1,
+      "exitCode": 0,
+      "rawStatus": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "controlling": true,
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+      "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+      "evidenceHeadAtAllocation": "8b70e94f4c8c3971ad2280d989fe627c72721f6d",
+      "evidenceHeadAtEnd": "8b70e94f4c8c3971ad2280d989fe627c72721f6d"
+    },
+    {
+      "attemptId": "R19-GATE-deterministic-cycle2-A1",
+      "cycle": 2,
+      "attemptOrdinal": 1,
+      "exitCode": 0,
+      "rawStatus": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "controlling": true,
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+      "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+      "evidenceHeadAtAllocation": "df9896bfa8310e70bb1ff281fcb498ef094769ff",
+      "evidenceHeadAtEnd": "df9896bfa8310e70bb1ff281fcb498ef094769ff"
+    }
+  ],
+  "perCycleResult": "syntax 10 run 0 failed; test suites 215 run 0 failed; GATE PASSED"
+}

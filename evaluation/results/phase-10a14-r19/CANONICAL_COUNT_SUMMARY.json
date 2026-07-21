@@ -1,0 +1,43 @@
+{
+  "task": "PHASE-10A14-R18",
+  "generatedAt": "2026-07-21T05:07:02.130Z",
+  "derivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json",
+  "countingRule": "A runner invocation is one attempt; a suite inside a runner is not another runner invocation; a probe is not a runner invocation; a retry is a new attempt. Controlling status requires BOTH valid Git provenance AND a VALID_CONTROLLING disposition. Counts derive from attemptCategory, never from command-name inference.",
+  "counts": {
+    "totalAttempts": 4,
+    "byCategory": {
+      "deterministic_runner": 2,
+      "staging_runner": 2,
+      "focused_suite": 0,
+      "domain_campaign": 0,
+      "synthetic_validator": 0,
+      "other": 0
+    },
+    "controlling": 4,
+    "nonControlling": 0,
+    "incomplete": 0,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "validLinkedRetries": 0
+  },
+  "gateOutcome": {
+    "deterministic": {
+      "requiredCycles": 2,
+      "successfulCycles": 2
+    },
+    "staging": {
+      "requiredCycles": 2,
+      "successfulCycles": 2
+    }
+  },
+  "integrity": {
+    "duplicates": [],
+    "malformed": [],
+    "corrupt": [],
+    "invalidProvenance": [],
+    "retryErrors": [],
+    "controllingWithInvalidProvenance": [],
+    "controllingWithCorruption": [],
+    "clean": true
+  }
+}

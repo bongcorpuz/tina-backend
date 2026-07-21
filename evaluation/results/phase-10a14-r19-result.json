@@ -1,0 +1,128 @@
+{
+  "task": "PHASE-10A14-R19-CONTEXT-QUALIFIED-ACRONYM-PHRASE-OBJECT-ROLE-AND-METAMORPHIC-TAX-DOMAIN-BOUNDARY-CLOSURE-REMEDIATION-1",
+  "executor": "SONNET 5 (low speed)",
+  "controllingReview": "PHASE-10A14-R18-...-INDEPENDENT-REVIEW-1",
+  "controllingReviewCommit": "dcfcb77ef101317a23e3d23bba9e6187ba1fc54c",
+  "mandatoryStartingHead": "dcfcb77ef101317a23e3d23bba9e6187ba1fc54c",
+  "r19FinalRuntimeCommit": "b3e879b1",
+  "tinaRuntimeModel": "gpt-4o-mini",
+  "countsDerivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json (attemptCategory, never command-name inference)",
+  "findings": {
+    "P1-R18-IR1-001": {
+      "status": "CLOSED",
+      "evidence": "Independent unseen 567-probe campaign reproduced exactly pre-fix (497/567, 67 false allows, 3 false refusals, 12 metamorphic failures) and reaches 567/567 post-fix with 0/0/0. The frozen oracle file itself is unmodified."
+    },
+    "P1-R18-IR1-002": {
+      "status": "CLOSED",
+      "evidence": "A new dominant non-tax role veto tier, never defeated by any cosignal, closes every named failure family (SLSP, OSD, FLD, MCIT, RCIT, Alphalist, gross estate, prescriptive period, BIR, FAN, PAN, RMC, customs, gross receipts, books of accounts, transfer pricing, lease-without-tax) plus dozens more surfaced by independent development and unseen campaigns, organized into reusable rule families with no exact-question strings."
+    }
+  },
+  "gates": {
+    "deterministic": {
+      "requiredCycles": 2,
+      "successfulCycles": 2,
+      "perCycle": "syntax 10/0; suites 215 run, 0 failed"
+    },
+    "staging": {
+      "requiredCycles": 2,
+      "successfulCycles": 2,
+      "perCycle": "7 run, 0 failed"
+    }
+  },
+  "focusedSuites": {
+    "total": 22,
+    "allPassed": true,
+    "failed": []
+  },
+  "domainCampaigns": {
+    "independentReview567Reproduction": {
+      "total": 567,
+      "passed": 567,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "metamorphicFailures": 0,
+      "exactMatchToReviewerPreFix": true
+    },
+    "acronymContextCorrectedMapping": {
+      "total": 38,
+      "passed": 38,
+      "failed": 0,
+      "note": "R18-IR-EF-001 remedy: 38 rows re-verified under corrected field mapping since the source oracle has text/expected swapped for this class"
+    },
+    "developmentOracle": {
+      "total": 873,
+      "passed": 873,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "metamorphicFailures": 0
+    },
+    "executorUnseenCampaign": {
+      "total": 726,
+      "passed": 726,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "metamorphicFailures": 0,
+      "frozenAfterFinalRuntime": true,
+      "noSentenceReuseVerified": true
+    }
+  },
+  "evidenceFixtureDefect": {
+    "id": "R18-IR-EF-001",
+    "status": "DOCUMENTED, NOT ALTERED IN SOURCE",
+    "description": "The independent-review 567-probe oracle's acronym_context class (38 of 567 rows) has text/expected JSON fields swapped. Discovered and disclosed, not silently worked around.",
+    "file": "ORACLE_FIELD_SWAP_FINDING.json"
+  },
+  "counts": {
+    "totalAttempts": 4,
+    "byCategory": {
+      "deterministic_runner": 2,
+      "staging_runner": 2,
+      "focused_suite": 0,
+      "domain_campaign": 0,
+      "synthetic_validator": 0,
+      "other": 0
+    },
+    "controlling": 4,
+    "nonControlling": 0,
+    "incomplete": 0,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "validLinkedRetries": 0
+  },
+  "integrity": {
+    "duplicates": [],
+    "malformed": [],
+    "corrupt": [],
+    "invalidProvenance": [],
+    "retryErrors": [],
+    "controllingWithInvalidProvenance": [],
+    "controllingWithCorruption": [],
+    "clean": true
+  },
+  "retryLinkage": {
+    "validRetryCount": 0,
+    "errors": []
+  },
+  "runtimeIdentity": {
+    "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+    "harnessTreeDigest": "c79332afbd8cff61",
+    "identicalAcrossAllGateAttempts": true,
+    "repositoryHeadUsedAsRuntimeIdentity": false
+  },
+  "acceptedR18ClosuresPreserved": true,
+  "terminologyBoundaryPreserved": {
+    "noAcronymExpansionInvented": true,
+    "phase10bTNotImplemented": true
+  },
+  "blockers": [],
+  "decision": "PASS",
+  "governance": {
+    "r15Historical": "NOT SUPERSEDED",
+    "r16Prospective": "NOT SATISFIED",
+    "r17Prospective": "NOT SATISFIED",
+    "r18Prospective": "NOT SATISFIED",
+    "r19Prospective": "SATISFIED"
+  },
+  "phase10a": "OPEN",
+  "stopCondition": "REACHED - the mandatory Codex 5.5 independent review is the next task. The executor did not perform it."
+}

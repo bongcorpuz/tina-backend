@@ -1,0 +1,10 @@
+{
+  "task": "PHASE-10A14-R19",
+  "kind": "harness",
+  "note": "FROZEN before any gate attempt and unchanged across all four gate cycles.",
+  "evidenceHead": "57b083b8360a2efd5fe72181a0802089bc82f22f",
+  "manifestSha256": "086eae61e4a64503d2ef9708f48c87e79e77a81b1d48bf69cb50975c16aebd44",
+  "harnessTreeDigest": "c79332afbd8cff61d561eb27d96450b1cd3ac1ba88a43c47230c738aee905312",
+  "filesCount": 9,
+  "identicalAcrossAllGateAttempts": true
+}

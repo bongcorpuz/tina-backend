@@ -1,0 +1,11 @@
+{
+  "task": "PHASE-10A14-R19",
+  "kind": "runtime",
+  "note": "FROZEN before any gate attempt and unchanged across all four gate cycles.",
+  "finalRuntimeCommit": "57b083b8",
+  "evidenceHead": "57b083b8360a2efd5fe72181a0802089bc82f22f",
+  "manifestSha256": "d01f76dd8d3177b37e96620685c1bbeab4f6f30786fef205ebbef1acd5216220",
+  "runtimeTreeDigest": "27b71035e9331a758c37cc86383f21db03aa3246c4147f4273feccbc61167a2f",
+  "filesCount": 2,
+  "identicalAcrossAllGateAttempts": true
+}
