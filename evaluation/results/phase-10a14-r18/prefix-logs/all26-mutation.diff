@@ -1,0 +1,162 @@
+diff --git a/evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json b/evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json
+index 83aef807..18e743a2 100644
+--- a/evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json
++++ b/evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json
+@@ -16,36 +16,36 @@
+     {
+       "slot": "Q1-r3",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q3-r1",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q3-r3",
+       "expectBlocked": false,
+       "verifiedEligible": false,
+-      "stage": "llm",
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q6-r2",
+       "expectBlocked": false,
+       "verifiedEligible": false,
+-      "stage": "llm",
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q6-r3",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+@@ -72,22 +72,22 @@
+     {
+       "slot": "Q15-r1",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q15-r2",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q15-r3",
+       "expectBlocked": false,
+       "verifiedEligible": false,
+-      "stage": "llm",
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+@@ -114,22 +114,22 @@
+     {
+       "slot": "Q32-r1",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q32-r2",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q32-r3",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+@@ -156,43 +156,43 @@
+     {
+       "slot": "Q47-r1",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q47-r2",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q47-r3",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q48-r1",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q48-r2",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     },
+     {
+       "slot": "Q48-r3",
+       "expectBlocked": false,
+-      "verifiedEligible": true,
+-      "stage": "llm",
++      "verifiedEligible": false,
++      "stage": "unavailable",
+       "match": true
+     }
+   ]

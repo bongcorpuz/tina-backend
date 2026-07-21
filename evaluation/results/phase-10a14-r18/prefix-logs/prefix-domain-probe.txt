@@ -1,0 +1,11 @@
+ALLOW    strong_tax_signal                What is the taxable font in a CSS file?
+ALLOW    strong_tax_signal                Is the BOC a band of chords?
+ALLOW    strong_tax_signal                How do I close a VAT color palette?
+ALLOW    strong_tax_signal                Is this compensation taxable?
+ALLOW    strong_tax_signal                What income is taxable in the Philippines?
+ALLOW    strong_tax_signal                Is this sale subject to VAT?
+ALLOW    strong_tax_signal                How do I file a VAT return?
+ALLOW    strong_tax_signal                What are the BOC customs duties on imported goods?
+ALLOW    strong_tax_signal                What is the Bureau of Customs tariff classification?
+ALLOW    strong_tax_signal                What is the capital-gain holding-period rule?
+ALLOW    strong_tax_signal                When may BIR apply Oplan Kandado?

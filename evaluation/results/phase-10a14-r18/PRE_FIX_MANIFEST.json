@@ -1,0 +1,21 @@
+{
+  "task": "PHASE-10A14-R18",
+  "phase": "pre-fix",
+  "head": "10573eae4257639a28b22ab32224b5fd31dda80f",
+  "files": {
+    "services/philippine-tax-boundary-patterns.js": "44d1abd66bde0dd30bb78076eabedd41175cf1b4fdb92af960b3ee5bb6f011a7",
+    "services/philippine-tax-domain-boundary.js": "a1a85ac7ac213805b4af297adacdd5469c2ad8a431b465643158186c827045ac",
+    "tax-keywords.js": "5dc6924d62eee6d0515885c5ddb17f68a128a15477e79f849174cbf0b12c75dc",
+    "tax-classifier.js": "48be9559cfb09d52af5df233082dd6e32ee7ebdc9c347dc3cd56b369a5667f8d",
+    "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs": "cd4ece692ad69afb908c34126d5397bd8c197fa4b49e106f3da81c881411aad1",
+    "pipeline.js": "ba4dfd2a7e999cde8c68e8e0cfdb3b26335606f79f69ff403265c5c0a0b959a7",
+    "server.js": "2f30096a3d3497d80e1c44e29a8a94566b76bb1cf81801c5a0e3f34e90232ac1",
+    "ask-handler.js": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404",
+    "package.json": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3",
+    "package-lock.json": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+    "scripts/run-regressions.mjs": "cbdd0a94a5975ced6f6df33c66770d920acd7ae7a7337158a10e6f74a4902053",
+    "scripts/run-staging-smokes.mjs": "613823f522bf373fc8919bd7cb5918c14f260bc14164f4116739ba2097d46fdb",
+    "evaluation/results/phase-10a14-r17/all26-nonmutating.mjs": "e2c0bdfa63aaa93e158194e486d11ca6aa832f17ae15aa9f616ddd615617e562",
+    "evaluation/results/phase-10a14-r17/R17_ALL26_NONMUTATING.json": "f27db5062124c0642f75d9c7adefcb96ee3080f314a1d51a640d0ba1037ba668"
+  }
+}

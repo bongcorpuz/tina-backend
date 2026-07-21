@@ -1,0 +1,47 @@
+{
+  "task": "PHASE-10A14-R18",
+  "finding": "P1-R17-IR1-004",
+  "capturedAt": "pre-fix, on mandatory starting HEAD 2108d447, before any R18 change",
+  "captureDiscipline": "All three conditions were executed with output captured OUTSIDE the repository, on a tree whose only untracked paths were the protected .vscode/ and evaluation/factcheck/. Condition A was deliberately run before any R18 artifact existed, so that 'truly clean' means literally clean.",
+  "suite": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+  "conditions": {
+    "A_truly_clean_repository": {
+      "setup": "no in-repo R18 evidence directory; only protected untracked paths; no modified historical evidence",
+      "exitCode": 0,
+      "result": "PASS",
+      "suiteLine": "18 passed, 0 failed, 187 assertions"
+    },
+    "B_authorized_untracked_evidence_directory": {
+      "setup": "created evaluation/results/phase-10a14-r18-condB-probe/note.txt containing harmless text",
+      "exitCode": 1,
+      "result": "FAIL",
+      "suiteLine": "17 passed, 1 failed, 178 assertions",
+      "failingAssertion": "no disallowed runtime, package, env, database, frontend, or production files changed",
+      "failingDetail": "changed file is allowed: evaluation/results/phase-10a14-r18-condB-probe/note.txt",
+      "restored": "probe directory removed; git status returned to protected-untracked-only"
+    },
+    "C_planted_disallowed_runtime_change": {
+      "setup": "appended a marker comment to server.js",
+      "exitCode": 1,
+      "result": "FAIL",
+      "failingAssertion": "no disallowed runtime, package, env, database, frontend, or production files changed",
+      "failingDetail": "changed file is allowed: server.js",
+      "serverJsHashBefore": "171f42a6e95390d5de551001c47e84b8ea2e5480",
+      "serverJsHashAfterRestore": "171f42a6e95390d5de551001c47e84b8ea2e5480",
+      "restored": "git checkout -- server.js; hash identical before and after"
+    }
+  },
+  "matrixOutcome": "A=PASS, B=FAIL, C=FAIL",
+  "classification": "LANE_A_PLUS_LANE_B",
+  "rootCause": "The 09ZF scope guard is not detecting a runtime regression. diffNames() unions `git diff --name-only` with ALL untracked files (minus a hardcoded protected list), and the allowed-file assertion then requires every entry to appear in a small fixed allowlist. Any untracked file whatsoever — including a harmless evidence note that cannot affect runtime — is therefore reported as a disallowed runtime/package/env/database/frontend/production change. Condition B reproduces the exact failing assertion string observed in both independent R17 gate cycles, using a file with no runtime meaning at all.",
+  "guardIsLive": true,
+  "guardLivenessEvidence": "Condition C fails correctly on a planted server.js change, so the guard is genuinely live and is not a dead assertion. Any remedy must preserve this.",
+  "isTrueRuntimeRegression": false,
+  "trueRuntimeRegressionEvidence": "Condition A passes 18/18 with 187 assertions on a truly clean tree, including every safe-LOA controlled_loa_answer case, every excluded unsafe query, and the unrelated-tax-query routing checks. The controlled LOA runtime is therefore not regressed.",
+  "contaminationCorroboration": "The independent gate evidence showed an in-progress review directory and a modified R17 all-26 evidence file present during execution — both are untracked-or-modified paths of exactly the kind Condition B proves sufficient to fail the suite on its own.",
+  "remedy": {
+    "laneA": "R18 gate execution discipline: all capture outside the repository, no evidence imported until the gate process terminates, clean tracked tree and protected-only untracked paths verified before every cycle.",
+    "laneB": "Narrow the guard's CLASSIFICATION so evidence/report artifacts that cannot affect runtime are not counted as runtime/package/env/database/frontend/production changes. The guard is not disabled, no arbitrary runtime file is excluded, and every ignored class requires an explicit negative control.",
+    "laneC": "Not applicable. No runtime or ordering fix is warranted, and none will be made."
+  }
+}

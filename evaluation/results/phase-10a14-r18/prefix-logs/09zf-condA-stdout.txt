@@ -1,0 +1,38 @@
+[VECTOR INSERT CONFIG] { batchSize: 3, batchDelayMs: 750 }
+[DB IDENTITY] {
+  supabaseUrlHost: 'kjvrgkvooivmtxxkurth.supabase.co',
+  supabaseProjectRef: 'kjvrgkvooivmtxxkurth',
+  VECTOR_TABLE: 'tina_vector_store',
+  LOCK_TABLE: 'tina_reindex_locks',
+  vectorTableFromEnv: null,
+  vectorTableUsingDefault: true,
+  vectorTableMatchExpected: true,
+  NODE_ENV: null,
+  RENDER_SERVICE_NAME: null,
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: '2f9405e0d59ed0f2',
+  pid: 25324,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and core metadata is correct
+PASS fixture lists all four previously failing safe queries
+PASS fixture safe/excluded/unrelated matrices are complete
+PASS pipeline.js retains required controlled LOA gate markers
+PASS static scan confirms Step 12.65 controlled LOA gate now runs before Step 12.6 clarification gate
+PASS all safe queries -- including previously failing ones -- match the controlled LOA gate
+PASS previously failing replacement eLA query is covered and matches
+PASS previously failing consolidated eLA query is covered and matches
+PASS previously failing notice for presentation/submission query is covered and matches
+PASS previously failing reminder before subpoena query is covered and matches
+PASS each excluded unsafe query individually remains excluded from the controlled safe LOA answer
+PASS unrelated tax queries do not trigger the controlled LOA branch
+PASS source-card and legal-safety metadata remain locked down on the controlled branch
+PASS static scan confirms no external operation, filing-ready, or automatic-submission implementation was added
+PASS no disallowed runtime, package, env, database, frontend, or production files changed
+PASS report exists and contains required impact statements
+PASS CURRENT_STATE.md contains 09ZF completion, 09ZB rerun next, and 09ZC blocked statements
+PASS git diff scope is reported (encoded via allowed-file check above)
+
+PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1 tests: 18 passed, 0 failed, 187 assertions
