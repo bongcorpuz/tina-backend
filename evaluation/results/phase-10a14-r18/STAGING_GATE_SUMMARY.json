@@ -1,0 +1,44 @@
+{
+  "task": "PHASE-10A14-R18",
+  "gate": "staging",
+  "requiredCycles": 2,
+  "successfulCycles": 2,
+  "passed": true,
+  "runtimeTreeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+  "harnessTreeDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+  "attempts": [
+    {
+      "attemptId": "R18-GATE-staging-cycle1-A1",
+      "cycle": 1,
+      "attemptOrdinal": 1,
+      "exitCode": 0,
+      "rawStatus": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "controlling": true,
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "runtimeTreeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+      "harnessTreeDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+      "evidenceHeadAtAllocation": "932ca41dca93cc26bf0991ac777dfd81d1b9b75e",
+      "evidenceHeadAtEnd": "932ca41dca93cc26bf0991ac777dfd81d1b9b75e"
+    },
+    {
+      "attemptId": "R18-GATE-staging-cycle2-A1",
+      "cycle": 2,
+      "attemptOrdinal": 1,
+      "exitCode": 0,
+      "rawStatus": "COMPLETED_PASS",
+      "disposition": "VALID_CONTROLLING",
+      "controlling": true,
+      "retryOf": null,
+      "retryReason": null,
+      "provenanceValid": true,
+      "runtimeTreeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+      "harnessTreeDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+      "evidenceHeadAtAllocation": "57c608ab4ddbb1c5be01b3baa800712a64fe5e2e",
+      "evidenceHeadAtEnd": "57c608ab4ddbb1c5be01b3baa800712a64fe5e2e"
+    }
+  ],
+  "perCycleResult": "staging-smoke suites 7 run 0 failed; STAGING GATE PASSED"
+}

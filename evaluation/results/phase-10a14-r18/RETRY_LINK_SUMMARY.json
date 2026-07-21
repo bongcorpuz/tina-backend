@@ -1,0 +1,49 @@
+{
+  "task": "PHASE-10A14-R18",
+  "generatedAt": "2026-07-21T02:25:02.343Z",
+  "rule": "A retry is valid only if runtime, harness, dependency, environment and command identity are unchanged, the structural link is sound, and the evidence-HEAD delta contains only authorized evidence paths. Evidence HEAD may move; that is the R17 fix.",
+  "validRetryCount": 1,
+  "validRetries": [
+    {
+      "attemptId": "R18-GATE-deterministic-cycle1-A2",
+      "retryOf": "R18-GATE-deterministic-cycle1-A1",
+      "gateName": "deterministic",
+      "cycle": 1,
+      "retryReason": "TECHNICAL_ENVIRONMENT_ERROR",
+      "runtimeTreeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+      "harnessTreeDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+      "evidenceHeadMoved": true
+    }
+  ],
+  "errors": [],
+  "ceiling": {
+    "deterministic|cycle1": {
+      "key": "deterministic|cycle1",
+      "attempts": 2,
+      "validLinkedRetries": 1,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    },
+    "deterministic|cycle2": {
+      "key": "deterministic|cycle2",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    },
+    "staging|cycle1": {
+      "key": "staging|cycle1",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    },
+    "staging|cycle2": {
+      "key": "staging|cycle2",
+      "attempts": 1,
+      "validLinkedRetries": 0,
+      "maxRetries": 2,
+      "ceilingValidlyReached": false
+    }
+  }
+}

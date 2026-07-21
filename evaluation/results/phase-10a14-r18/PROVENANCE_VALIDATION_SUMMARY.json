@@ -1,0 +1,8 @@
+{
+  "task": "PHASE-10A14-R18",
+  "rule": "Every SHA validated against Git: format, existence, object type commit, ancestry. No caller-supplied SHA or digest is accepted for any identity field.",
+  "totalAttempts": 5,
+  "provenanceValid": 5,
+  "provenanceInvalid": 0,
+  "controllingWithInvalidProvenance": []
+}

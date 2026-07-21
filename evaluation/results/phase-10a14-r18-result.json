@@ -1,0 +1,187 @@
+{
+  "task": "PHASE-10A14-R18-RUNTIME-IDENTITY-SEPARATION-SUBSTRING-TAX-SIGNAL-CONTEXT-HARDENING-WRITE-ISOLATED-ALL26-AND-CONTROLLED-LOA-GATE-CLOSURE-REMEDIATION-1",
+  "executor": "CLAUDE CODE - OPUS 4.8 (low speed)",
+  "controllingReview": "PHASE-10A14-R17-INDEPENDENT-REVIEW-1",
+  "controllingReviewCommit": "2108d447df5a87695002d558a667c03ede8e29fb",
+  "mandatoryStartingHead": "2108d447df5a87695002d558a667c03ede8e29fb",
+  "r18FinalRuntimeCommit": "8413e022",
+  "tinaRuntimeModel": "gpt-4o-mini",
+  "countsDerivedFrom": "CANONICAL_ATTEMPT_REGISTRY.json (attemptCategory, never command-name inference)",
+  "findings": {
+    "P1-R17-IR1-001": {
+      "status": "CLOSED",
+      "evidence": "Runtime, harness, evidence and environment identity separated. Runtime identity is a sha256 over a frozen sorted manifest, never repository HEAD. 16 negative controls and the mandatory positive control pass. Proven in live conditions: A2 links to A1 across a moved evidence HEAD with identical runtime and harness digests, validRetryCount=1, retryErrors=0."
+    },
+    "P1-R17-IR1-002": {
+      "status": "CLOSED",
+      "evidence": "Non-tax object veto with phrase-level tax co-signals. Frozen 483-probe oracle: 392/483 pre-fix with 65 false allows and 26 false refusals, now 483/483 with 0 and 0. All three exact independent-review false allows closed with reason non_tax_object_veto."
+    },
+    "P1-R17-IR1-003": {
+      "status": "CLOSED",
+      "evidence": "Pure computation plus explicit output injection plus a destination guard rejecting before any open. No default destination. Historical artifacts byte-identical with unchanged mtimes; no restore needed or issued. Negative and concurrent controls pass."
+    },
+    "P1-R17-IR1-004": {
+      "status": "CLOSED",
+      "evidence": "Pre-fix matrix A=PASS B=FAIL C=FAIL classified LANE_A_PLUS_LANE_B; not a runtime regression. Post-fix A=PASS B=PASS C=FAIL. Guard remains live on every prohibited class. Deterministic gate 214 suites 0 failed, twice."
+    },
+    "P2-R17-IR1-005": {
+      "status": "CLOSED",
+      "evidence": "attemptCategory is a frozen six-value set; counts derive from it. Negative tests cover missing, unknown, conflicting and command-text-resembling-another-category. R17 counts not rewritten."
+    }
+  },
+  "gates": {
+    "deterministic": {
+      "requiredCycles": 2,
+      "successfulCycles": 2,
+      "perCycle": "syntax 10/0; suites 214 run, 0 failed"
+    },
+    "staging": {
+      "requiredCycles": 2,
+      "successfulCycles": 2,
+      "perCycle": "7 run, 0 failed"
+    }
+  },
+  "focusedSuites": {
+    "total": 21,
+    "allPassed": true,
+    "failed": []
+  },
+  "domain": {
+    "oracleTotal": 483,
+    "passed": 483,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "metamorphicFailures": 0,
+    "allThreeExactClosed": true,
+    "allPreservedClosuresAllow": true,
+    "byClass": {
+      "explicit_tax": {
+        "total": 121,
+        "pass": 121,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "explicit_non_tax": {
+        "total": 122,
+        "pass": 122,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "substring_trap": {
+        "total": 60,
+        "pass": 60,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "ambiguous": {
+        "total": 60,
+        "pass": 60,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "filipino_taglish": {
+        "total": 40,
+        "pass": 40,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      },
+      "metamorphic": {
+        "total": 80,
+        "pass": 80,
+        "falseAllow": 0,
+        "falseRefusal": 0
+      }
+    }
+  },
+  "all26WriteIsolation": {
+    "genuinelyIsolated": true,
+    "historicalEvidenceMutated": false,
+    "restoreRequired": false,
+    "negativeControlRejectsBeforeOpen": true,
+    "concurrentControlPassed": true
+  },
+  "phase09zf": {
+    "classification": "LANE_A_PLUS_LANE_B",
+    "isTrueRuntimeRegression": false,
+    "preFix": "A=PASS B=FAIL C=FAIL",
+    "postFix": "A=PASS B=PASS C=FAIL",
+    "guardStillLive": true
+  },
+  "counts": {
+    "totalAttempts": 5,
+    "byCategory": {
+      "deterministic_runner": 3,
+      "staging_runner": 2,
+      "focused_suite": 0,
+      "domain_campaign": 0,
+      "synthetic_validator": 0,
+      "other": 0
+    },
+    "controlling": 4,
+    "nonControlling": 1,
+    "incomplete": 1,
+    "corruptAttempts": 0,
+    "invalidProvenanceAttempts": 0,
+    "validLinkedRetries": 1
+  },
+  "integrity": {
+    "duplicates": [],
+    "malformed": [],
+    "corrupt": [],
+    "invalidProvenance": [],
+    "retryErrors": [],
+    "controllingWithInvalidProvenance": [],
+    "controllingWithCorruption": [],
+    "clean": true
+  },
+  "retryLinkage": {
+    "validRetryCount": 1,
+    "errors": [],
+    "ceiling": {
+      "deterministic|cycle1": {
+        "key": "deterministic|cycle1",
+        "attempts": 2,
+        "validLinkedRetries": 1,
+        "maxRetries": 2,
+        "ceilingValidlyReached": false
+      },
+      "deterministic|cycle2": {
+        "key": "deterministic|cycle2",
+        "attempts": 1,
+        "validLinkedRetries": 0,
+        "maxRetries": 2,
+        "ceilingValidlyReached": false
+      },
+      "staging|cycle1": {
+        "key": "staging|cycle1",
+        "attempts": 1,
+        "validLinkedRetries": 0,
+        "maxRetries": 2,
+        "ceilingValidlyReached": false
+      },
+      "staging|cycle2": {
+        "key": "staging|cycle2",
+        "attempts": 1,
+        "validLinkedRetries": 0,
+        "maxRetries": 2,
+        "ceilingValidlyReached": false
+      }
+    }
+  },
+  "runtimeIdentity": {
+    "runtimeTreeDigest": "5dd969d78b2aeba3",
+    "harnessTreeDigest": "48ea64c49263fd13",
+    "identicalAcrossAllGateAttempts": true,
+    "repositoryHeadUsedAsRuntimeIdentity": false
+  },
+  "blockers": [],
+  "decision": "PASS",
+  "governance": {
+    "r15Historical": "NOT SUPERSEDED",
+    "r16Prospective": "NOT SATISFIED",
+    "r17Prospective": "NOT SATISFIED",
+    "r18Prospective": "SATISFIED"
+  },
+  "phase10a": "OPEN",
+  "stopCondition": "REACHED - the mandatory Codex 5.5 independent review is the next task. The executor did not perform it."
+}

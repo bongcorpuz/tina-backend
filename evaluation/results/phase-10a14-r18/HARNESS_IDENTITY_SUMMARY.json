@@ -1,16 +1,20 @@
 {
   "task": "PHASE-10A14-R18",
   "kind": "harness",
-  "note": "Manifests are finalized at COMMIT 7, before any gate attempt, and are unchanged across every gate attempt. Digests recorded here are for the COMMIT 3 tooling state and will be recomputed at gate time.",
-  "evidenceHead": "123d75f318912f4f14e8f0e0b1779e220ab784cb",
-  "manifestPath": "evaluation/results/phase-10a14-r18/HARNESS_SCOPE_MANIFEST.json",
-  "manifestSha256": "96755166d320986eb462d50ce489a949fc8e851d7ba9e6a20c2f4e38b34f2480",
-  "harnessTreeDigest": "d8841c71340a1d06b51566ea1ad0814dc956fbf7ab41ef4292e7c83be5dcffc2",
-  "filesCount": 6,
+  "note": "FROZEN before any gate attempt and unchanged across all four gate cycles.",
+  "evidenceHead": "006854976d45e195e09c747ef7bfa3caf32ef3b6",
+  "manifestSha256": "115a1d5059436c1ee757395c91700496da1a9d8d38bb86747658e682fa658c6f",
+  "harnessTreeDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+  "filesCount": 13,
+  "identicalAcrossAllGateAttempts": true,
   "files": [
     {
+      "file": "evaluation/results/phase-10a14-r18/all26-isolated.mjs",
+      "sha256": "3c4c9f79b74d9c7e85fcd8f42e11ce8dbbd78e38d57f96b9acf1db6d88b10109"
+    },
+    {
       "file": "evaluation/results/phase-10a14-r18/identity.mjs",
-      "sha256": "c257579a7f804361fd2bcb1eca4c12e453417de613431d9d29cc754f0b560527"
+      "sha256": "b8ddfc3c070364b074e37d83cba9ab2daf732a7e4a3d6b5e6972c176d43d9a5b"
     },
     {
       "file": "evaluation/results/phase-10a14-r18/retry-validator.mjs",
@@ -19,6 +23,14 @@
     {
       "file": "evaluation/results/phase-10a14-r18/run-domain-campaign.mjs",
       "sha256": "7ca15f58d2f7dc35d305492b9e37d130503c4021751209d4804dfed24e936de2"
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r18/run-focused-campaign.mjs",
+      "sha256": "a2da763c320dca41d8def0f3b9038ef7d70d6e9a66d59d82a85f022e99647a65"
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r18/run-gate-cycle.mjs",
+      "sha256": "07ab9b4c8a6f671355486b98cf2b09a958b60305a7c7953c8054283f0bedbc11"
     },
     {
       "file": "scripts/run-regressions.mjs",
@@ -30,7 +42,23 @@
     },
     {
       "file": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
-      "sha256": "cd4ece692ad69afb908c34126d5397bd8c197fa4b49e106f3da81c881411aad1"
+      "sha256": "54fbba1daeadd61b24a28f6ed94366ff10fe39e0a5cae4c3e604630945678db3"
+    },
+    {
+      "file": "tests/phase-10a14-r18-09zf-scope-guard.test.mjs",
+      "sha256": "a7986e08a8a4bdb998d0e52147b60ea020ccb74bd47ec2d37ee5662b344b5508"
+    },
+    {
+      "file": "tests/phase-10a14-r18-all26-write-isolation.test.mjs",
+      "sha256": "933df145e75298660be3c5e7459f3e63a325cff190def7f995deb37582bbc135"
+    },
+    {
+      "file": "tests/phase-10a14-r18-domain-hardening.test.mjs",
+      "sha256": "b7adb079558ce53a521ae0f6c9665fed20efc715a1a1592ec71aa5858be19f5b"
+    },
+    {
+      "file": "tests/phase-10a14-r18-runtime-identity-and-retry.test.mjs",
+      "sha256": "e792b256e4956055ba0ca6d52b0aac348fa2249d4bc75c40741b16fc14a0fa4a"
     }
   ]
 }

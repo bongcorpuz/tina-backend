@@ -1,13 +1,14 @@
 {
   "task": "PHASE-10A14-R18",
   "kind": "runtime",
-  "note": "Manifests are finalized at COMMIT 7, before any gate attempt, and are unchanged across every gate attempt. Digests recorded here are for the COMMIT 3 tooling state and will be recomputed at gate time.",
-  "evidenceHead": "123d75f318912f4f14e8f0e0b1779e220ab784cb",
-  "manifestPath": "evaluation/results/phase-10a14-r18/RUNTIME_SCOPE_MANIFEST.json",
+  "note": "FROZEN before any gate attempt and unchanged across all four gate cycles.",
+  "finalRuntimeCommit": "8413e022",
+  "evidenceHead": "006854976d45e195e09c747ef7bfa3caf32ef3b6",
   "manifestSha256": "92daf06771a5a5b4f2993192a57a2877fb2c69be8090b2b9d7d4883fcdd01cfd",
-  "runtimeTreeDigest": "36dfea495fb5d881ad7a76fb616cd3fb0a4285ae5591de8fe25fa619590d9e7b",
+  "runtimeTreeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
   "filesCount": 11,
-  "recomputeRule": "sha256 over `path\n<sha256 of file bytes>\n` for every manifest entry in sorted path order; independently recomputable with no Git dependency",
+  "identicalAcrossAllGateAttempts": true,
+  "recomputeRule": "sha256 over `path\n<sha256 of file bytes>\n` per manifest entry in sorted path order; no Git dependency",
   "files": [
     {
       "file": "answer-renderer.js",
@@ -39,11 +40,11 @@
     },
     {
       "file": "services/philippine-tax-boundary-patterns.js",
-      "sha256": "44d1abd66bde0dd30bb78076eabedd41175cf1b4fdb92af960b3ee5bb6f011a7"
+      "sha256": "8395c802c6602c31fa423179d204ba7c3b816212fb3bf668b888e841e1953193"
     },
     {
       "file": "services/philippine-tax-domain-boundary.js",
-      "sha256": "a1a85ac7ac213805b4af297adacdd5469c2ad8a431b465643158186c827045ac"
+      "sha256": "0a16c7ae23c034600346564e11dd00c1c5a3fba95880b1ec1ecf242c335690a5"
     },
     {
       "file": "tax-classifier.js",
