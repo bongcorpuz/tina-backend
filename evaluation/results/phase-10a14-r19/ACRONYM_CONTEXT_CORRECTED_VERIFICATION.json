@@ -1,0 +1,313 @@
+{
+  "task": "PHASE-10A14-R19",
+  "note": "Corrected field-mapping verification of the 38 acronym_context rows affected by R18-IR-EF-001 (see ORACLE_FIELD_SWAP_FINDING.json). The frozen oracle file itself is unmodified; this is a supplementary correct-interpretation check.",
+  "total": 38,
+  "passed": 38,
+  "failed": 0,
+  "results": [
+    {
+      "id": "IR18-DOM-530",
+      "text": "What is MCIT in Philippine corporate income tax?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-531",
+      "text": "In music software, MCIT is my plugin code; what could it stand for?",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-532",
+      "text": "What is RCIT for a domestic corporation?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-533",
+      "text": "RCIT is my robotics course ID; define it generically.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-534",
+      "text": "What is FLD in a BIR assessment?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-535",
+      "text": "FLD means field in my spreadsheet; explain the acronym.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-536",
+      "text": "What is OSD for Philippine tax deductions?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-537",
+      "text": "What is OSD on a monitor display?",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-538",
+      "text": "What is SLSP filing for VAT taxpayers?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-539",
+      "text": "SLSP is an unknown acronym in my app logs.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-540",
+      "text": "What is an Alphalist for withholding tax?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-541",
+      "text": "Make an alphalist of students alphabetically.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-542",
+      "text": "What is BOC customs clearance?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-543",
+      "text": "BOC means band of chords in this song.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-544",
+      "text": "What is VAT registration?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-545",
+      "text": "VAT is a color token in my design system.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-546",
+      "text": "What is taxable income?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-547",
+      "text": "taxable is a CSS class in my stylesheet.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-548",
+      "text": "What is gross estate for estate tax?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-549",
+      "text": "Gross estate means ugly real-estate ads here.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-550",
+      "text": "What is the prescriptive period for tax assessment?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-551",
+      "text": "What is the prescription period for antibiotics?",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-552",
+      "text": "What is a FAN assessment notice?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-553",
+      "text": "FAN is a cooling fan device.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-554",
+      "text": "What is CTA jurisdiction in tax cases?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-555",
+      "text": "CTA is a call-to-action button.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-556",
+      "text": "What is PAN in BIR assessment process?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-557",
+      "text": "Pan is a cooking tool.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-558",
+      "text": "What is TIN registration?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-559",
+      "text": "Tin is a metal can.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-560",
+      "text": "What is RR No. 2-98?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-561",
+      "text": "RR is a railroad abbreviation.",
+      "expected": "NOT_ALLOW",
+      "decision": "CLARIFY",
+      "reason": "weak_tax_signal_needs_context",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-562",
+      "text": "What is RMC guidance from BIR?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-563",
+      "text": "RMC is a radio music channel.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-564",
+      "text": "What is eFPS filing?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-565",
+      "text": "EFPS is a random software flag.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-566",
+      "text": "What is CMTA for customs duties?",
+      "expected": "ALLOW",
+      "decision": "ALLOW",
+      "reason": "strong_tax_signal",
+      "pass": true
+    },
+    {
+      "id": "IR18-DOM-567",
+      "text": "CMTA is a club acronym with no tax context.",
+      "expected": "NOT_ALLOW",
+      "decision": "REJECT",
+      "reason": "non_tax_object_role_veto",
+      "pass": true
+    }
+  ]
+}

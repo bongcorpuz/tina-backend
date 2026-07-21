@@ -255,7 +255,10 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   /\bLetter of Authority\b|\bLOA\b|\beLA\b/i,
   /\bFDDA\b|\bPAN\b|\bFAN\b|\bFLD\b/i,
   /\bassessment notice\b/i,
-  /\bRMC\b|\bRMO\b|\bRR\s*\d|\bRevenue Regulations?\b|\bRevenue Memorandum\b/i,
+  // PHASE-10A14-R19: "RR\s*\d" required a digit immediately after RR, missing real
+  // citation style "RR No. 2-98" where "No." intervenes. Broadened to match the already-
+  // correct PH_TAX_ALLOW_PATTERNS form.
+  /\bRMC\b|\bRMO\b|\bRR\s*(?:No\.?\s*)?\d|\bRevenue Regulations?\b|\bRevenue Memorandum\b/i,
   /\bBIR ruling\b/i, /\btax refund\b/i, /\btax credit\b/i, /\btax return\b/i,
   /\bITR\b/i, /\bTIN\b/i, /\bzero-?rated\b/i, /\binput tax\b/i, /\boutput tax\b/i,
   // PHASE-10A14-R16 correction. Deterministic gate cycle 1 exposed two false REFUSALS
@@ -310,6 +313,15 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   /\bstatutory\s+(?:threshold|deadline|period|rate|due date)\b/i,
   /\bgross receipts\b/i, /\bfringe benefit\b/i, /\bde minimis\b/i,
   /\bCTA\s*Case\b/i, /\bSection\s*\d+\b(?=[^.\n]{0,40}\b(?:NIRC|tax|BIR)\b)/i,
+  // PHASE-10A14-R19 (P1-R18-IR1-001, false-refusal half). Three coherent Philippine tax
+  // phrases were carried only as WEAK signals and clarified instead of allowing:
+  // "official receipt" (BIR invoicing document — no plausible non-tax homograph),
+  // "annual information return" (coherent BIR phrase, no weak-signal hit at all), and
+  // "refund claim prescription" (weak "refund claim" alone, missing the prescription
+  // combination as an anchor).
+  /\bofficial receipt\b/i,
+  /\bannual information return\b/i,
+  /\bprescription\b[^.\n]{0,40}\b(?:claim|refund|assessment|tax)\b|\b(?:claim|refund|assessment|tax)\b[^.\n]{0,40}\bprescription\b/i,
   // PHASE-10A14-R18 (P1-R17-IR1-002, false-refusal half). The R18 483-probe campaign
   // exposed 26 false refusals the narrower R17 inventory never covered. Each term below is
   // unambiguous Philippine tax vocabulary that was carried only in the WEAK allow list, so
@@ -439,7 +451,11 @@ export const TAX_COSIGNAL_PATTERNS = [
   /\bincome tax\b|\bestate tax\b|\bdonor'?s tax\b|\bexcise tax\b/i,
   /\bpercentage tax\b|\bdocumentary stamp\b|\bcapital gains? tax\b|\bcapital gain\b/i,
   /\bLetter of Authority\b|\bassessment notice\b|\bdeficiency\b|\bBIR Form\b/i,
-  /\bRevenue Regulations?\b|\bRevenue Memorandum\b|\bRMC\b|\bRMO\b/i,
+  // PHASE-10A14-R19 (P1-R18-IR1-002): bare RMC/RMO were wrongly listed here as if they
+  // were unambiguous anchors. "RMC is a radio music channel" made this cosignal fire and
+  // defeat a correct non-tax veto. A cosignal must be a coherent PHRASE, never a bare
+  // 2-4 letter acronym — the acronym itself is exactly the ambiguity in question.
+  /\bRevenue Regulations?\b|\bRevenue Memorandum\b|\bRMC\s+(?:guidance|circular|issuance)\b|\bRMO\s+(?:guidance|circular|issuance)\b/i,
   /\bbuwis\b|\bimpuwesto\b/i,
 ];
 
@@ -787,5 +803,98 @@ export const CLARIFY_PATTERNS = [
   { pattern: /\bsubstantiation\b/i,                domain: "TAX_ADJACENT" },
   { pattern: /\bbooks\s+of\s+accounts?\b/i,        domain: "TAX_ADJACENT" },
   { pattern: /\bofficial\s+receipt\b/i,            domain: "TAX_ADJACENT" },
+];
+
+// ─── PHASE-10A14-R19 (P1-R18-IR1-001/002) — DOMINANT NON-TAX ROLE VETO ────────
+//
+// The R18 independent-review unseen campaign found 67 material false allows and 12
+// metamorphic false-allow failures over a frozen 567-probe oracle, all with reason
+// strong_tax_signal. R18's non-tax-object veto is defeated by any TAX_COSIGNAL match
+// anywhere in the sentence — correct for a genuine ambiguity ("Is software subject to
+// VAT?") but wrong when a cosignal PHRASE matches as a bare substring inside a sentence
+// whose real subject is a variable, a device, a hobby or a body of knowledge unrelated to
+// tax ("VAT return as function return value" — "VAT return" matches the cosignal, but the
+// sentence is about a programming return value, not a tax return).
+//
+// This tier runs BEFORE the cosignal-defeatable veto and before the strong-signal check,
+// and is NEVER defeated by any cosignal, because every pattern here names an object ROLE
+// that is orthogonal to whichever tax-shaped token happens to be nearby: the sentence is
+// simply not about tax, no matter which cosignal phrase it happens to contain.
+//
+// Organized by reusable rule family (never by exact sentence), per the frozen
+// CONTEXT_QUALIFIED_DECISION_SPEC.md. A known tax acronym or polysemous tax phrase is not
+// automatically tax when surrounding words establish a different object, field, role or
+// meaning — the guiding principle for every family below.
+
+export const DOMINANT_NON_TAX_ROLE_VETO_PATTERNS = [
+  // ── Software / code / UI role markers ────────────────────────────────────
+  // The sentence's true subject is a variable, function, form field, console output,
+  // design/colour/hue token, icon, CSS class, plugin, software flag, app log or code
+  // snippet — not a tax concept, regardless of which tax-shaped word is nearby.
+  /\bvariable\s+name\b|\bas\s+a\s+variable\b|\bvariable\s+in\s+(?:this\s+)?(?:software|code)\b/i,
+  /\bfunction\s+return\s+value\b|\breturn\s+value\s+(?:of|from)\s+a?\s*function\b|\bfrom\s+a\s+function\b/i,
+  /\bform\s+(?:input|field)\s+label\b|\binto\s+(?:this\s+|a\s+)?(?:web\s+)?form\s+(?:field|input)\b|\binto\s+a\s+text\s+box\b|\btext\s+box\b/i,
+  /\bconsole\s+output\s+label\b|\bto\s+the\s+console\b|\bfrom\s+the\s+console\b/i,
+  /\bdesign\s+token\b|\bcolou?r\s+token\b|\bhue\s+token\b|\bicon\s+(?:design|only)\b|\bdesign\s+system\b/i,
+  /\btaxable\s+CSS\s+class\b|\bCSS\s+class\b|\bstylesheet\b/i,
+  /\bplugin\s+code\b|\bmy\s+plugin\b|\bin\s+music\s+software\b/i,
+  /\brandom\s+software\s+flag\b|\bsoftware\s+flag\b|\bapp\s+log[s]?\b/i,
+  /\bcode\s+snippet\b|\bmy\s+software\s+project\b|\bsoftware\s+project\b/i,
+
+  // ── Random / unknown code labels ─────────────────────────────────────────
+  // A tax acronym is explicitly relabeled as a random or unknown project, product,
+  // training or course code, SKU, or field abbreviation.
+  /\brandom\s+SKU\b|\bas\s+a\s+(?:random\s+)?SKU\b/i,
+  /\bcourse\s+code\b|\bcourse\s+ID\b|\brobotics\s+course\b/i,
+  /\bproject\s+code\b|\bunknown\s+project\s+code\b/i,
+  /\btraining\s+code\b|\brandom\s+training\s+code\b/i,
+  /\bproduct\s+code\b|\brandom\s+product\s+code\b/i,
+  /\bfield\s+abbreviation\b|\bmy\s+spreadsheet\b|\bspreadsheet\s+field\b/i,
+  /\bunknown\s+acronym\b|\bin\s+my\s+app\s+logs\b/i,
+
+  // ── Physical devices / animals ────────────────────────────────────────────
+  /\bcooling\s+(?:fan|speed|device)\b|\bfan\s+cooling\b|\bhow\s+loud\s+is\s+this\s+(?:cooling\s+)?fan\b/i,
+  /\bcooking\s+(?:utensil|tool|pan)\b|\bpan\s+is\s+a\s+cooking\b/i,
+  /\bon-?screen\s+display\b|\bmonitor\s+display\b|\bOSD\b[^.\n]{0,20}\bmonitor\b|\bmonitor\b[^.\n]{0,20}\bOSD\b/i,
+  /\bmetal\s+can\b|\btin\s+can\b|\btin\s+is\s+a\s+metal\b/i,
+  /\bbird\s+typo\b|\bis\s+a\s+bird\b/i,
+
+  // ── Audio / music ─────────────────────────────────────────────────────────
+  /\bband\s+of\s+chords\b|\bmusic\s+channel\b|\bradio\s+music\b|\bin\s+audio\b|\bBOC\s+in\s+audio\b/i,
+  /\bamplifier\b|\bspeaker\b|\bstereo\s+equipment\b|\baudio\s+equipment\b/i,
+  /\bcall-?to-?action\s+button\b|\bCTA\s+button\b/i,
+
+  // ── Culture / tradition ────────────────────────────────────────────────────
+  /\b(?:cultural|social|local|traditional|family|wedding|dinner|holiday|regional|indigenous|tribal)\s+customs?\b/i,
+  /\bcustoms?\b[^.\n]{0,30}\b(?:tradition[s]?|etiquette|culture\s+class|wedding|dinner|holiday|festival|apply\s+at)\b/i,
+  /\bwhat\s+are\s+cultural\s+customs\b/i,
+
+  // ── Medicine ───────────────────────────────────────────────────────────────
+  /\bmedical\s+prescription\b|\bprescription\s+(?:period|for)\s+antibiotics\b|\bantibiotics\b/i,
+  /\bvitamin\s+deficienc\w*\b/i,
+  /\bprescriptive\s+period\b[^.\n]{0,20}\bmedicine\b|\bin\s+medicine\b/i,
+
+  // ── Real estate / marketing / landscaping ─────────────────────────────────
+  /\breal-?estate\s+(?:marketing|ads|copy)\b|\bmarketing\s+(?:phrase|copy)\b|\blandscaping\b/i,
+  /\breceipt\s+layout\b|\blayout\s+design\b/i,
+
+  // ── Hobbies / games ────────────────────────────────────────────────────────
+  /\bboard\s+game\b|\bgame\s+guild\b|\bgame\s+quest\b|\bprice\s+transfers?\s+in\s+a\s+board\s+game\b/i,
+
+  // ── School / class ─────────────────────────────────────────────────────────
+  /\bschool\s+raffle\b|\bexam\s+grade\b|\bgrammar\s+class\b|\bnegotiation\s+class\b/i,
+  /\balphabetical\s+list\b|\bmake\s+an?\s+alpha(?:beti\w*)?\s*list\s+of\b|\balphalist\s+of\s+students\b/i,
+
+  // ── Architecture / building ────────────────────────────────────────────────
+  /\bin\s+architecture\b|\barchitectural\s+establishment\b|\bbuilding\s+directions?\b/i,
+
+  // ── Office / generic mislabeling ──────────────────────────────────────────
+  /\bnovel\s+list\b|\blist\s+of\s+novels\b|\bclub\s+acronym\b|\bdelivery\s+surcharge\b/i,
+  /\binformal\s+conference\s+agenda\b(?!\s*[^.\n]{0,30}\b(?:BIR|notice|tax)\b)|\bplan\s+an?\s+(?:informal\s+)?conference\s+agenda\b/i,
+  /\bgrammar\s+class\b/i,
+  /\binsurance\s+deductible\b/i,
+
+  // ── Explicit negation ──────────────────────────────────────────────────────
+  /\bwithout\s+tax\b|\bnot\s+tax-?related\b|\bnon-?tax\b|\bno\s+tax\s+(?:involved|context)\b/i,
 ];
 

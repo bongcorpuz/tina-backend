@@ -1,0 +1,23 @@
+{
+  "task": "PHASE-10A14-R19",
+  "finding": "EVIDENCE-FIXTURE DEFECT (not a runtime defect) — R18-IR-EF-001",
+  "discoveredAt": "during pre-fix reproduction of the 567-probe independent-review oracle",
+  "sourceFile": "evaluation/results/phase-10a14-r18-independent-review-1/15_independent_unseen_domain_oracle.json",
+  "affectedRows": "IR18-DOM-530 through IR18-DOM-567 (the entire acronym_context coverage class, 38 of 567 rows)",
+  "description": "For exactly these 38 rows, the `text` and `expected` JSON fields are swapped: `text` holds the literal string \"ALLOW\" or \"NOT_ALLOW\" and `expected` holds the actual probe sentence (e.g. row IR18-DOM-560 has text=\"ALLOW\", expected=\"What is RR No. 2-98?\"). No other coverage class in the 567-row oracle exhibits this swap (verified: 0/529 swapped across all six other classes).",
+  "consequence": "Any campaign runner that reads `text` as the query and `expected` as the pass/fail label — including this R19 runner and, by inference, the independent reviewer's own campaign runner that PRODUCED THE FROZEN 15_independent_unseen_domain_campaign.json result — evaluated the boundary classifier against the literal strings \"ALLOW\"/\"NOT_ALLOW\" for these 38 rows, not against real questions. Because a bare word with no tax signal reliably REJECTs, and the true `expected` value (a full sentence) is never literally equal to \"ALLOW\", the satisfies() comparison degenerates to `decision !== \"ALLOW\"`, which a bare-word REJECT always trivially satisfies. This is consistent with the observed data: zero of the reviewer's 70 recorded failures fall in the acronym_context class, and this R19 reproduction likewise recorded zero failures there before any fix was applied — not because the 38 real probes were being correctly handled, but because they were not being meaningfully evaluated at all.",
+  "scopeOfImpact": "Limited to measurement, not to the controlling counts. The reviewer's totals (567/497/67/3/12) are NOT altered by this finding — they are reproduced exactly, because R19's own campaign runner reads the same (defective) fields the same way, so the comparison remains apples-to-apples with the controlling review. The finding matters because it means the acronym_context class was effectively unverified by the review, and R19's own fix — which specifically targets ambiguous-acronym behavior — must be separately validated against this class using the CORRECTED field interpretation.",
+  "remedy": "The frozen 567-probe oracle file is NOT altered, per the non-negotiable prohibition against amending R18/independent-review history. Instead: (1) this finding is recorded here as evidence; (2) the R19 runtime is additionally verified against the CORRECTED field mapping (query = `expected`, label = `text`) for all 38 acronym_context rows, with the result recorded in ACRONYM_CONTEXT_CORRECTED_VERIFICATION.json; (3) all 38 semantically-real acronym_context probes are additionally represented, correctly labeled, inside the R19 development oracle (R19_DEVELOPMENT_ORACLE.json) as part of its ≥100 acronym tax/non-tax pair requirement, so they are genuinely exercised by a frozen, correctly-structured oracle going forward.",
+  "correctedMappingResult": {
+    "totalRows": 38,
+    "passed": 38,
+    "failed": 0,
+    "note": "Achieved after the RR-citation strong-signal fix (see below); before that fix, 37/38 passed with 'What is RR No. 2-98?' failing."
+  },
+  "relatedRuntimeFixFoundViaThisCheck": {
+    "description": "Testing the corrected mapping surfaced a genuine, additional pre-existing gap independent of the R19 dominant-veto work: STRONG_TAX_SIGNAL_PATTERNS required a digit immediately after 'RR' (\\bRR\\s*\\d), so real citation style 'RR No. 2-98' (with 'No.' intervening) fell through to the weak/CLARIFY path. PH_TAX_ALLOW_PATTERNS already had the correct broader form (\\bRR\\s*(?:No\\.?\\s*)?\\d). The strong-signal pattern was broadened to match.",
+    "fileChanged": "services/philippine-tax-boundary-patterns.js",
+    "regressionCheck": "RR is a railroad abbreviation. -> still correctly NOT_ALLOW (CLARIFY) after the fix."
+  },
+  "disclosureRule": "This is disclosed here in the open, per the R18/R19 pattern of recording discovered defects rather than silently working around them, following the R17 MM-15-weak precedent for evidence-fixture defects."
+}

@@ -27,7 +27,15 @@ await test("the three exact P1-R17-IR1-002 false allows are closed", () => {
   ]) {
     const r = decide(q);
     check(r.decision !== "ALLOW", `must not allow: ${q} (got ${r.decision}/${r.reason})`);
-    check(r.reason === "non_tax_object_veto", `closed by the veto, not by accident: ${q} -> ${r.reason}`);
+    // PHASE-10A14-R19: "Is the BOC a band of chords?" is now caught by the new dominant
+    // non-tax role veto (non_tax_object_role_veto), which cannot be defeated by any
+    // cosignal — a strictly stronger guarantee than the R18 cosignal-defeatable veto.
+    // Either veto reason is accepted; what matters is that it is closed by a veto, not
+    // by the fail-closed default or any other accidental path.
+    check(
+      r.reason === "non_tax_object_veto" || r.reason === "non_tax_object_role_veto",
+      `closed by a veto, not by accident: ${q} -> ${r.reason}`
+    );
   }
 });
 

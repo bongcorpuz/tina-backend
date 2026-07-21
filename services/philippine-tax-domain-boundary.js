@@ -29,6 +29,7 @@ import {
   BYPASS_HOOKS,
   CLARIFY_PATTERNS,
   NON_TAX_CONTEXT_PATTERNS,
+  DOMINANT_NON_TAX_ROLE_VETO_PATTERNS,
   NON_TAX_FILE_OBJECT_PATTERNS,
   NON_TAX_OBJECT_VETO_PATTERNS,
   NON_TAX_REJECT_PATTERNS,
@@ -93,6 +94,16 @@ export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", cont
   // words "filing" and "deadline"). A frozen 193-probe reproduction found 88 false allows.
   const hasStrongTaxSignal = STRONG_TAX_SIGNAL_PATTERNS.some((p) => p.test(q));
   const hasNonTaxContext = NON_TAX_CONTEXT_PATTERNS.some((p) => p.test(q));
+
+  // ── PHASE-10A14-R19 (P1-R18-IR1-001/002) — DOMINANT NON-TAX ROLE VETO ────
+  // Runs FIRST, before any cosignal-defeatable step. Never overridden by any tax
+  // co-signal — the sentence's true subject (a variable, a device, a hobby, a body of
+  // knowledge) is orthogonal to whichever tax-shaped token happens to be nearby. See
+  // CONTEXT_QUALIFIED_DECISION_SPEC.md for the full family taxonomy.
+  const hasDominantNonTaxRole = DOMINANT_NON_TAX_ROLE_VETO_PATTERNS.some((p) => p.test(q));
+  if (hasDominantNonTaxRole) {
+    return { isPhilippineTax: false, decision: "REJECT", detectedDomain: "NON_TAX", reason: "non_tax_object_role_veto", confidence: 0.95 };
+  }
 
   // ── PHASE-10A14-R18 (P1-R17-IR1-002) — NON-TAX OBJECT VETO ───────────────
   // The R17 rule was that a strong signal is NEVER vetoed by a non-tax object. That is
