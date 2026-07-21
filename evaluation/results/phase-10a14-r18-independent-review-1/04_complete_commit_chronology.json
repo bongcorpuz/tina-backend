@@ -1,0 +1,222 @@
+{
+  "range": "2108d447df5a87695002d558a667c03ede8e29fb..c03e7794e49030face66928dbd3df91de0fa9f05",
+  "count": 15,
+  "commits": [
+    {
+      "commit": "10573eae4257639a28b22ab32224b5fd31dda80f",
+      "short": "10573eae",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T09:43:30+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 1 — frozen plan and contract (no implementation)",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/ALL26_WRITE_ISOLATION_SPEC.md",
+        "A\tevaluation/results/phase-10a14-r18/DOMAIN_ORACLE.json",
+        "A\tevaluation/results/phase-10a14-r18/EVIDENCE_CONTRACT.md",
+        "A\tevaluation/results/phase-10a14-r18/FROZEN_PLAN.md",
+        "A\tevaluation/results/phase-10a14-r18/PHASE09ZF_REPRODUCTION_PLAN.md",
+        "A\tevaluation/results/phase-10a14-r18/PREFLIGHT.json",
+        "A\tevaluation/results/phase-10a14-r18/RETRY_LINK_SPEC.md",
+        "A\tevaluation/results/phase-10a14-r18/RUNTIME_IDENTITY_SPEC.md",
+        "A\tevaluation/results/phase-10a14-r18/build-domain-oracle.mjs",
+        "A\tevaluation/results/phase-10a14-r18/check-protected-paths.mjs"
+      ]
+    },
+    {
+      "commit": "123d75f318912f4f14e8f0e0b1779e220ab784cb",
+      "short": "123d75f3",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T09:49:00+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 2 — immutable pre-fix evidence",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/PRE_FIX_09ZF_MATRIX.json",
+        "A\tevaluation/results/phase-10a14-r18/PRE_FIX_ALL26_MUTATION_REPORT.md",
+        "A\tevaluation/results/phase-10a14-r18/PRE_FIX_DOMAIN_RESULT.json",
+        "A\tevaluation/results/phase-10a14-r18/PRE_FIX_MANIFEST.json",
+        "A\tevaluation/results/phase-10a14-r18/prefix-logs/09zf-condA-stdout.txt",
+        "A\tevaluation/results/phase-10a14-r18/prefix-logs/09zf-condB-stderr.txt",
+        "A\tevaluation/results/phase-10a14-r18/prefix-logs/09zf-condB-stdout.txt",
+        "A\tevaluation/results/phase-10a14-r18/prefix-logs/09zf-condC-stderr.txt",
+        "A\tevaluation/results/phase-10a14-r18/prefix-logs/all26-mutation.diff",
+        "A\tevaluation/results/phase-10a14-r18/prefix-logs/prefix-domain-probe.txt",
+        "A\tevaluation/results/phase-10a14-r18/run-domain-campaign.mjs"
+      ]
+    },
+    {
+      "commit": "6c27fa901a8b6e6926bd552d85945f6cff43903f",
+      "short": "6c27fa90",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T09:53:46+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 3 — prospective runtime/harness identity and retry tooling",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/HARNESS_IDENTITY_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/HARNESS_SCOPE_MANIFEST.json",
+        "A\tevaluation/results/phase-10a14-r18/RUNTIME_IDENTITY_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/RUNTIME_SCOPE_MANIFEST.json",
+        "A\tevaluation/results/phase-10a14-r18/identity.mjs",
+        "A\tevaluation/results/phase-10a14-r18/retry-validator.mjs",
+        "A\ttests/phase-10a14-r18-runtime-identity-and-retry.test.mjs"
+      ]
+    },
+    {
+      "commit": "8413e02245280ed46983b17c219d146ca54a2fe2",
+      "short": "8413e022",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:00:02+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 4 — context-aware domain hardening (final runtime)",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/DOMAIN_FINAL_RESULT.json",
+        "M\tservices/philippine-tax-boundary-patterns.js",
+        "M\tservices/philippine-tax-domain-boundary.js",
+        "A\ttests/phase-10a14-r18-domain-hardening.test.mjs"
+      ]
+    },
+    {
+      "commit": "94ff1126247f5165774894bcfaadc8cef425ad00",
+      "short": "94ff1126",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:03:19+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 5 — genuinely write-isolated all-26 replay",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/ALL26_ISOLATED_RESULT.json",
+        "A\tevaluation/results/phase-10a14-r18/ALL26_WRITE_ISOLATION_REPORT.md",
+        "A\tevaluation/results/phase-10a14-r18/all26-isolated.mjs",
+        "A\ttests/phase-10a14-r18-all26-write-isolation.test.mjs"
+      ]
+    },
+    {
+      "commit": "16afd8db7702ed229fe57062f91abb56f53eddec",
+      "short": "16afd8db",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:08:16+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 6 — 09ZF controlled-LOA gate closure (Lane A + Lane B)",
+      "files": [
+        "M\ttests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+        "A\ttests/phase-10a14-r18-09zf-scope-guard.test.mjs"
+      ]
+    },
+    {
+      "commit": "4049dc7c27dc4e0b56b988effef238d30be4e974",
+      "short": "4049dc7c",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:11:56+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 7 — final focused evidence",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/FOCUSED_SUMMARY.json",
+        "M\tevaluation/results/phase-10a14-r18/HARNESS_SCOPE_MANIFEST.json",
+        "A\tevaluation/results/phase-10a14-r18/PHASE09ZF_ROOT_CAUSE_REPORT.md",
+        "A\tevaluation/results/phase-10a14-r18/run-focused-campaign.mjs",
+        "A\tevaluation/results/phase-10a14-r18/run-gate-cycle.mjs"
+      ]
+    },
+    {
+      "commit": "046f6ac2ef2338e726b18f1eb37ba64fcf076ee7",
+      "short": "046f6ac2",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:12:42+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 7b — attempt-directory parent creation fix (pre-gate)",
+      "files": [
+        "M\tevaluation/results/phase-10a14-r18/identity.mjs"
+      ]
+    },
+    {
+      "commit": "74943bb9bcb7f293d998cc538b01e5dc6ff40b35",
+      "short": "74943bb9",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:13:25+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 7c — correct a stale assertion left failing by 7b (disclosed)",
+      "files": [
+        "M\ttests/phase-10a14-r18-runtime-identity-and-retry.test.mjs"
+      ]
+    },
+    {
+      "commit": "08fe9d65572881db7f7b395c52ceea8476744d39",
+      "short": "08fe9d65",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:16:35+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 8 — deterministic cycle 1 attempt A1, externally terminated (preserved, non-controlling)",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A1/00-allocated.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A1/90-recovery-adjudication.json"
+      ]
+    },
+    {
+      "commit": "f14da1337d8cda1a700961cef086dda1962bfea0",
+      "short": "f14da133",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:20:27+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 9 — deterministic gate cycle 1 PASSED (A2, valid linked retry)",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/00-allocated.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/20-completed-pass.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/command.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/stderr.raw.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/stdout.raw.txt"
+      ]
+    },
+    {
+      "commit": "932ca41dca93cc26bf0991ac777dfd81d1b9b75e",
+      "short": "932ca41d",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:23:58+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 10 - deterministic gate cycle 2 PASSED (A1, no retry)",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/00-allocated.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/20-completed-pass.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/command.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/stderr.raw.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/stdout.raw.txt"
+      ]
+    },
+    {
+      "commit": "57c608ab4ddbb1c5be01b3baa800712a64fe5e2e",
+      "short": "57c608ab",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:24:30+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 11 - staging gate cycle 1 PASSED",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/00-allocated.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/20-completed-pass.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/command.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/stderr.raw.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/stdout.raw.txt"
+      ]
+    },
+    {
+      "commit": "006854976d45e195e09c747ef7bfa3caf32ef3b6",
+      "short": "00685497",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:24:59+08:00",
+      "subject": "PHASE-10A14-R18 COMMIT 12 - staging gate cycle 2 PASSED",
+      "files": [
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/00-allocated.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/20-completed-pass.json",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/command.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/stderr.raw.txt",
+        "A\tevaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/stdout.raw.txt"
+      ]
+    },
+    {
+      "commit": "c03e7794e49030face66928dbd3df91de0fa9f05",
+      "short": "c03e7794",
+      "author": "Bong Corpuz",
+      "date": "2026-07-21T10:31:57+08:00",
+      "subject": "PHASE-10A14-R18 FINAL COMMIT — report, result JSON, governance, manifest",
+      "files": [
+        "A\tPHASE-10A14-R18-RUNTIME-IDENTITY-SEPARATION-SUBSTRING-TAX-SIGNAL-CONTEXT-HARDENING-WRITE-ISOLATED-ALL26-AND-CONTROLLED-LOA-GATE-CLOSURE-REMEDIATION-1_REPORT.md",
+        "A\tevaluation/results/phase-10a14-r18-result.json",
+        "A\tevaluation/results/phase-10a14-r18/CANONICAL_ATTEMPT_REGISTRY.json",
+        "A\tevaluation/results/phase-10a14-r18/CANONICAL_COUNT_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/DETERMINISTIC_GATE_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/EVIDENCE_MANIFEST.sha256",
+        "M\tevaluation/results/phase-10a14-r18/HARNESS_IDENTITY_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/PROVENANCE_VALIDATION_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/RETRY_LINK_SUMMARY.json",
+        "M\tevaluation/results/phase-10a14-r18/RUNTIME_IDENTITY_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/SECURITY_AND_CLEANUP.md",
+        "A\tevaluation/results/phase-10a14-r18/STAGING_GATE_SUMMARY.json",
+        "A\tevaluation/results/phase-10a14-r18/build-registry.mjs",
+        "M\tknowledge/CURRENT_STATE.md"
+      ]
+    }
+  ]
+}

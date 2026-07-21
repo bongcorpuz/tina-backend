@@ -1,0 +1,3 @@
+# 26-anchor scope adjudication
+
+R18 correctly identified several genuine Philippine-tax false refusals, including MCIT, RCIT, gross estate, FLD, SLSP, Alphalist, OSD and prescriptive period in tax context. Independent unseen controls show the implementation over-accepts bare or non-tax acronym/phrase contexts, including SLSP as an unknown project code, OSD as on-screen display, FLD as field abbreviation, MCIT/RCIT as arbitrary codes, Alphalist as an ordinary alphabetical list, gross estate marketing phrase and prescriptive period in medicine. Disposition: partially accepted for genuine tax contexts, rejected for unseen safety.

@@ -1,0 +1,8 @@
+PASS every mandated prohibited class is still caught
+PASS a prohibited file is caught even if placed inside an evidence directory
+PASS only evidence and report artifacts are classified as non-runtime
+PASS the classification is a closed list, not a wildcard over the repository
+PASS the 09ZF suite carries the narrowed classification and keeps its prohibited checks
+PASS the guard is not disabled and no arbitrary runtime file is excluded
+
+PHASE-10A14-R18-09ZF-SCOPE-GUARD tests: 6 passed, 0 failed, 50 assertions

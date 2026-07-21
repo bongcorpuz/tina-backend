@@ -1,0 +1,143 @@
+{
+  "generatedAt": "2026-07-21T03:14:27.834Z",
+  "results": [
+    {
+      "id": "23_deterministic_cycle_1",
+      "command": "node scripts/run-regressions.mjs",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "before": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "startedAt": "2026-07-21T03:07:33.357Z"
+      },
+      "after": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "endedAt": "2026-07-21T03:10:49.062Z"
+      },
+      "parsed": {
+        "syntax": {
+          "run": 10,
+          "failed": 0
+        },
+        "tests": {
+          "run": 214,
+          "failed": 1
+        },
+        "staging": null
+      },
+      "stdoutPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/23_deterministic_cycle_1.stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/23_deterministic_cycle_1.stderr.txt"
+    },
+    {
+      "id": "23_deterministic_cycle_2",
+      "command": "node scripts/run-regressions.mjs",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "before": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "startedAt": "2026-07-21T03:10:49.386Z"
+      },
+      "after": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "endedAt": "2026-07-21T03:14:06.408Z"
+      },
+      "parsed": {
+        "syntax": {
+          "run": 10,
+          "failed": 0
+        },
+        "tests": {
+          "run": 214,
+          "failed": 1
+        },
+        "staging": null
+      },
+      "stdoutPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/23_deterministic_cycle_2.stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/23_deterministic_cycle_2.stderr.txt"
+    },
+    {
+      "id": "24_staging_cycle_1",
+      "command": "node scripts/run-staging-smokes.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "before": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "startedAt": "2026-07-21T03:14:06.683Z"
+      },
+      "after": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "endedAt": "2026-07-21T03:14:19.415Z"
+      },
+      "parsed": {
+        "syntax": null,
+        "tests": null,
+        "staging": {
+          "run": 7,
+          "failed": 0
+        }
+      },
+      "stdoutPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/24_staging_cycle_1.stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/24_staging_cycle_1.stderr.txt"
+    },
+    {
+      "id": "24_staging_cycle_2",
+      "command": "node scripts/run-staging-smokes.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "before": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "startedAt": "2026-07-21T03:14:19.626Z"
+      },
+      "after": {
+        "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+        "status": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+        "runtimeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+        "harnessDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d",
+        "packageLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "endedAt": "2026-07-21T03:14:27.831Z"
+      },
+      "parsed": {
+        "syntax": null,
+        "tests": null,
+        "staging": {
+          "run": 7,
+          "failed": 0
+        }
+      },
+      "stdoutPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/24_staging_cycle_2.stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r18-independent-review-1/gate-and-focused-logs/24_staging_cycle_2.stderr.txt"
+    }
+  ]
+}

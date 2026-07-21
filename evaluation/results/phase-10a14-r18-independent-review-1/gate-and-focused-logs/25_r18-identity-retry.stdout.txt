@@ -1,0 +1,34 @@
+PASS POSITIVE CONTROL: evidence HEAD moves, runtime and harness identical, retry is valid
+PASS POSITIVE CONTROL is not vacuous: the same link with a changed runtime is rejected
+PASS NEGATIVE CONTROL 1 changed runtime file is rejected as RETRY_RUNTIME_CHANGED
+PASS NEGATIVE CONTROL 2 changed harness file is rejected as RETRY_HARNESS_CHANGED
+PASS NEGATIVE CONTROL 3 changed package lock is rejected as RETRY_DEPENDENCY_CHANGED
+PASS NEGATIVE CONTROL 4 changed command is rejected as RETRY_COMMAND_CHANGED
+PASS NEGATIVE CONTROL 5 changed environment fingerprint is rejected as RETRY_ENVIRONMENT_CHANGED
+PASS NEGATIVE CONTROL 6 missing target is rejected as RETRY_TARGET_MISSING
+PASS NEGATIVE CONTROL 7 self link is rejected as RETRY_SELF_LINK
+PASS NEGATIVE CONTROL 9 cross-gate link is rejected as RETRY_CROSS_GATE
+PASS NEGATIVE CONTROL 10 cross-cycle link is rejected as RETRY_CROSS_CYCLE
+PASS NEGATIVE CONTROL 15 bad ordinal is rejected as RETRY_ORDINAL_INVALID
+PASS NEGATIVE CONTROL 16 missing retry reason is rejected as RETRY_REASON_INVALID
+PASS NEGATIVE CONTROL 16b unsupported retry reason is rejected as RETRY_REASON_INVALID
+PASS NEGATIVE CONTROL 8 cycle is rejected as RETRY_CYCLE
+PASS NEGATIVE CONTROL 11 retry after PASS is rejected as RETRY_AFTER_PASS
+PASS NEGATIVE CONTROL 12 forged runtime digest is rejected as RETRY_FORGED_DIGEST
+PASS NEGATIVE CONTROL 13 forged baseline commit is rejected as RETRY_FORGED_BASELINE
+PASS NEGATIVE CONTROL 14 evidence delta containing non-evidence code is rejected
+PASS evidence-only delta between real commits is accepted
+PASS ceiling is reached only when the supporting links are valid
+PASS runtime and harness digests are separate and independently recomputable
+PASS repository HEAD is not used as runtime identity
+PASS a missing manifest file is a hard error, never a skipped entry
+PASS an unsorted or duplicated manifest is rejected
+PASS environment fingerprint records no environment values
+PASS Git SHA validation enforces format, existence, type and ancestry
+PASS authorized evidence path matcher accepts evidence and rejects runtime
+PASS attempt categories are a frozen machine-readable set
+PASS counts derive from category, not from command-name inference
+PASS missing, unknown and conflicting categories are rejected
+PASS writeOnce refuses to overwrite and verifies by read-back
+
+PHASE-10A14-R18-RUNTIME-IDENTITY-AND-RETRY tests: 32 passed, 0 failed, 101 assertions

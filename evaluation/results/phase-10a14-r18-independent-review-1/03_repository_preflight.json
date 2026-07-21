@@ -1,0 +1,63 @@
+{
+  "repoPath": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "c03e7794e49030face66928dbd3df91de0fa9f05",
+  "sync": "0\t0",
+  "statusPorcelain": "## feature/source-availability-engine-v1...origin/feature/source-availability-engine-v1\n?? .vscode/\n?? evaluation/factcheck/\n?? evaluation/results/phase-10a14-r18-independent-review-1/",
+  "commitObjects": {
+    "2108d447df5a87695002d558a667c03ede8e29fb": {
+      "command": "git cat-file -t 2108d447df5a87695002d558a667c03ede8e29fb",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "commit\n",
+      "stderr": ""
+    },
+    "8413e022": {
+      "command": "git cat-file -t 8413e022",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "commit\n",
+      "stderr": ""
+    },
+    "c03e7794e49030face66928dbd3df91de0fa9f05": {
+      "command": "git cat-file -t c03e7794e49030face66928dbd3df91de0fa9f05",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "commit\n",
+      "stderr": ""
+    },
+    "046f6ac2": {
+      "command": "git cat-file -t 046f6ac2",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "commit\n",
+      "stderr": ""
+    },
+    "74943bb9": {
+      "command": "git cat-file -t 74943bb9",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "commit\n",
+      "stderr": ""
+    }
+  },
+  "ancestry": {
+    "runtimeAncestorOfHead": true,
+    "predecessorAncestorOfHead": true
+  },
+  "nodeProcesses": {
+    "command": "powershell -NoProfile -Command Get-Process node -ErrorAction SilentlyContinue | Select-Object Id,ProcessName,Path | ConvertTo-Json -Compress",
+    "exitCode": 0,
+    "signal": null,
+    "stdout": "{\"Id\":19068,\"ProcessName\":\"node\",\"Path\":\"C:\\\\Program Files\\\\nodejs\\\\node.exe\"}\r\n",
+    "stderr": ""
+  },
+  "port5173": {
+    "command": "powershell -NoProfile -Command Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,State,OwningProcess | ConvertTo-Json -Compress",
+    "exitCode": 1,
+    "signal": null,
+    "stdout": "",
+    "stderr": ""
+  },
+  "repositoryLocalCaptureDirs": []
+}

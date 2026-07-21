@@ -1,0 +1,21 @@
+{
+  "declaredEntries": 71,
+  "malformed": [
+    {
+      "malformed": "# PHASE-10A14-R18 EVIDENCE MANIFEST"
+    },
+    {
+      "malformed": "# Self-excluding: this manifest is deliberately NOT listed among its own entries."
+    },
+    {
+      "malformed": "# Includes failed and non-controlling attempts."
+    },
+    {
+      "malformed": "# Entries: 67"
+    }
+  ],
+  "selfEntries": [],
+  "duplicatePaths": [],
+  "missingManifest": [],
+  "badHash": []
+}

@@ -1,0 +1,305 @@
+{
+  "generatedAt": "2026-07-21T03:53:18.250Z",
+  "claims": [
+    {
+      "claim": 1,
+      "text": "R18 final decision is PASS",
+      "disposition": "REJECTED",
+      "reason": "Independent unseen domain campaign found P1 material false allows/refusals."
+    },
+    {
+      "claim": 2,
+      "text": "R18 prospective governance is SATISFIED",
+      "disposition": "REJECTED",
+      "reason": "P1 domain blockers prevent satisfaction."
+    },
+    {
+      "claim": 3,
+      "text": "Phase 10A remains OPEN",
+      "disposition": "ACCEPTED",
+      "reason": "CURRENT_STATE and result preserve OPEN."
+    },
+    {
+      "claim": 4,
+      "text": "Final runtime is 8413e022",
+      "disposition": "ACCEPTED",
+      "reason": "Commit exists and is ancestor of HEAD."
+    },
+    {
+      "claim": 5,
+      "text": "Only one commit changed runtime files after R18 began",
+      "disposition": "ACCEPTED",
+      "reason": "Only 8413e022 changed runtime files."
+    },
+    {
+      "claim": 6,
+      "text": "Evidence HEAD/runtime/harness/environment identity are separate",
+      "disposition": "ACCEPTED",
+      "reason": "Digest and retry evidence supports separation."
+    },
+    {
+      "claim": 7,
+      "text": "Runtime digest recomputable without Git",
+      "disposition": "ACCEPTED",
+      "reason": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a"
+    },
+    {
+      "claim": 8,
+      "text": "Harness digest recomputable without Git",
+      "disposition": "ACCEPTED",
+      "reason": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d"
+    },
+    {
+      "claim": 9,
+      "text": "Runtime manifest contains every runtime-relevant file",
+      "disposition": "ACCEPTED",
+      "reason": "No material omission found for governed R18 surface."
+    },
+    {
+      "claim": 10,
+      "text": "Harness manifest contains every governed affecting file",
+      "disposition": "ACCEPTED",
+      "reason": "No material omission found for governed R18 gates."
+    },
+    {
+      "claim": 11,
+      "text": "Missing manifest files are hard failures",
+      "disposition": "ACCEPTED",
+      "reason": "Focused identity suite passed."
+    },
+    {
+      "claim": 12,
+      "text": "Caller-supplied digest/baseline rejected",
+      "disposition": "ACCEPTED",
+      "reason": "Focused identity suite passed."
+    },
+    {
+      "claim": 13,
+      "text": "A2 links to A1 across moved evidence HEAD",
+      "disposition": "ACCEPTED",
+      "reason": "Retry summary and registry support."
+    },
+    {
+      "claim": 14,
+      "text": "Only authorized evidence paths changed between A1/A2",
+      "disposition": "ACCEPTED",
+      "reason": "Retry adjudication supports."
+    },
+    {
+      "claim": 15,
+      "text": "validRetryCount=1 retryErrors=0 integrity clean",
+      "disposition": "ACCEPTED",
+      "reason": "Registry reconstruction matches."
+    },
+    {
+      "claim": 16,
+      "text": "Sixteen negative retry controls pass distinctly",
+      "disposition": "ACCEPTED",
+      "reason": "Focused identity suite passed."
+    },
+    {
+      "claim": 17,
+      "text": "Mandatory positive retry control non-vacuous",
+      "disposition": "ACCEPTED",
+      "reason": "Focused identity suite passed."
+    },
+    {
+      "claim": 18,
+      "text": "483-probe oracle frozen before final execution",
+      "disposition": "ACCEPTED",
+      "reason": "Chronology places oracle before final domain result."
+    },
+    {
+      "claim": 19,
+      "text": "Final oracle result 483/483",
+      "disposition": "ACCEPTED",
+      "reason": "Executor oracle result accepted for frozen oracle only."
+    },
+    {
+      "claim": 20,
+      "text": "Material false allows = 0",
+      "disposition": "REJECTED",
+      "reason": "Independent unseen campaign found 67 material false allows."
+    },
+    {
+      "claim": 21,
+      "text": "Material false refusals = 0",
+      "disposition": "REJECTED",
+      "reason": "Independent unseen campaign found 3 material false refusals."
+    },
+    {
+      "claim": 22,
+      "text": "Metamorphic failures = 0",
+      "disposition": "REJECTED",
+      "reason": "Independent unseen campaign found 12 metamorphic pair failures."
+    },
+    {
+      "claim": 23,
+      "text": "Three exact R17 false allows closed by veto",
+      "disposition": "ACCEPTED",
+      "reason": "Focused R18 domain suite passed."
+    },
+    {
+      "claim": 24,
+      "text": "26 new tax false refusals genuine and within scope",
+      "disposition": "PARTIALLY ACCEPTED",
+      "reason": "Genuine in tax context, but anchor implementation over-expanded into non-tax contexts."
+    },
+    {
+      "claim": 25,
+      "text": "New anchors create no unseen false allows/refusals",
+      "disposition": "REJECTED",
+      "reason": "Independent unseen campaign contradicts."
+    },
+    {
+      "claim": 26,
+      "text": "VAT/BOC/taxable/customs/capital-gain safe",
+      "disposition": "PARTIALLY ACCEPTED",
+      "reason": "Core tax contexts preserved; unseen homograph/acronym controls expose false allows."
+    },
+    {
+      "claim": 27,
+      "text": "R17 MM-15-weak unchanged",
+      "disposition": "ACCEPTED",
+      "reason": "Focused suite preserved."
+    },
+    {
+      "claim": 28,
+      "text": "All-26 replay structurally cannot write history",
+      "disposition": "ACCEPTED",
+      "reason": "Destination guard and tests support."
+    },
+    {
+      "claim": 29,
+      "text": "No historical evidence written/restored in final proof",
+      "disposition": "ACCEPTED",
+      "reason": "No independent mutation observed."
+    },
+    {
+      "claim": 30,
+      "text": "Historical hashes/mtimes unchanged",
+      "disposition": "ACCEPTED",
+      "reason": "Executor and focused tests support."
+    },
+    {
+      "claim": 31,
+      "text": "Negative destination control rejects before open",
+      "disposition": "ACCEPTED",
+      "reason": "Independent in-repo destination rejection supports."
+    },
+    {
+      "claim": 32,
+      "text": "Concurrent replay non-racing and isolated",
+      "disposition": "ACCEPTED",
+      "reason": "Focused all26 suite passed."
+    },
+    {
+      "claim": 33,
+      "text": "All-26 CLI executed, not Windows no-op",
+      "disposition": "ACCEPTED",
+      "reason": "External proof wrote output."
+    },
+    {
+      "claim": 34,
+      "text": "09ZF was evidence-path misclassification",
+      "disposition": "ACCEPTED",
+      "reason": "Clean reruns and focused suite support."
+    },
+    {
+      "claim": 35,
+      "text": "09ZF post-fix matrix A=PASS B=PASS C=FAIL",
+      "disposition": "ACCEPTED",
+      "reason": "Focused scope guard passed."
+    },
+    {
+      "claim": 36,
+      "text": "Guard live across 16 classes",
+      "disposition": "ACCEPTED",
+      "reason": "Focused scope guard passed."
+    },
+    {
+      "claim": 37,
+      "text": "Evidence path cannot hide forbidden runtime file",
+      "disposition": "ACCEPTED",
+      "reason": "Focused scope guard passed."
+    },
+    {
+      "claim": 38,
+      "text": "Deterministic gates passed 2/2 at 214/0",
+      "disposition": "ACCEPTED",
+      "reason": "Independent clean rerun passed 2/2."
+    },
+    {
+      "claim": 39,
+      "text": "Staging gates passed 2/2 at 7/0",
+      "disposition": "ACCEPTED",
+      "reason": "Independent rerun passed 2/2."
+    },
+    {
+      "claim": 40,
+      "text": "Focused suites passed 21/21",
+      "disposition": "ACCEPTED",
+      "reason": "20 focused tests plus external all26 proof passed; original in-repo all26 destination correctly rejected."
+    },
+    {
+      "claim": 41,
+      "text": "Runtime/harness digests identical across four gate cycles",
+      "disposition": "ACCEPTED",
+      "reason": "Independent gate logs show stable digests."
+    },
+    {
+      "claim": 42,
+      "text": "Registry has 5 attempts, 4 controlling, 1 non-controlling",
+      "disposition": "ACCEPTED",
+      "reason": "Registry reconstruction matches."
+    },
+    {
+      "claim": 43,
+      "text": "Externally terminated A1 preserved/adjudicated",
+      "disposition": "ACCEPTED",
+      "reason": "Registry and A1 files support."
+    },
+    {
+      "claim": 44,
+      "text": "A1 214 run 38 failed solely termination artifact",
+      "disposition": "PARTIALLY ACCEPTED",
+      "reason": "No result inferred; exact internal cause not fully independently reproduced."
+    },
+    {
+      "claim": 45,
+      "text": "Canonical registry count scope complete/defined",
+      "disposition": "ACCEPTED",
+      "reason": "Counting rule clear for governed runner attempts."
+    },
+    {
+      "claim": 46,
+      "text": "R18 manifest has 67 entries includes failed evidence excludes self",
+      "disposition": "ACCEPTED",
+      "reason": "Manifest has 67 hashed entries, comments excluded, self absent."
+    },
+    {
+      "claim": 47,
+      "text": "R13-R17 historical evidence untouched",
+      "disposition": "ACCEPTED",
+      "reason": "No changed-file evidence found."
+    },
+    {
+      "claim": 48,
+      "text": "No unauthorized scope/production/model/corpus/db/frontend change",
+      "disposition": "ACCEPTED",
+      "reason": "Security scope review supports."
+    },
+    {
+      "claim": 49,
+      "text": "046f6ac2 false success claim and disclosure complete",
+      "disposition": "ACCEPTED",
+      "reason": "Git show confirms false-claim disclosure in 74943bb9."
+    },
+    {
+      "claim": 50,
+      "text": "Other four disclosed executor defects corrected and did not corrupt evidence",
+      "disposition": "ACCEPTED",
+      "reason": "Focused suites and direct proofs support."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+PASS NEGATIVE CONTROL: a historical destination is rejected before any file is opened
+PASS NEGATIVE CONTROL: every historical evidence directory is refused
+PASS NEGATIVE CONTROL: there is no default destination
+PASS NEGATIVE CONTROL: an arbitrary in-repository path outside R18 is refused
+PASS authorized destinations are accepted
+PASS computeAll26 is pure: it writes nothing anywhere
+PASS a full replay to an external path leaves all historical evidence identical
+PASS CONCURRENT CONTROL: two isolated replays do not race, overwrite or touch history
+PASS the R18 module contains no hardcoded historical write target
+PASS mutation-detection-plus-restore is not used anywhere in the R18 replay
+
+PHASE-10A14-R18-ALL26-WRITE-ISOLATION tests: 10 passed, 0 failed, 51 assertions

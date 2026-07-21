@@ -1,0 +1,18 @@
+PASS the four exact independent-review failures now ALLOW
+PASS the phase-10a8 F14 pair both ALLOW
+PASS all 30 customs strong-tax controls ALLOW
+PASS all 30 capital-gain strong-tax controls ALLOW
+PASS all 30 private-contract non-tax controls do NOT allow
+PASS all 30 court / labor / SEC controls do NOT allow
+PASS all 30 weak-generic ambiguity controls do NOT falsely allow
+PASS all 30 Filipino / Taglish controls match
+PASS all 20 substring traps match, including 'vat' inside 'private'
+PASS the 7 prior named false-refusal probes remain ALLOW
+PASS the broader adjacency family remains ALLOW
+PASS explicit non-tax controls remain NOT ALLOW
+PASS material tax false refusal = 0 across the whole inventory
+PASS a strong anchor overrides a non-tax object; removing it clarifies
+PASS the correction is category-based, not exact-question hardcoding
+
+phase-10a14-r17-domain: 15 passed, 0 failed
+PHASE-10A14-R17 DOMAIN PASS — customs and capital-gain closed, prior closures preserved.

@@ -1,0 +1,16 @@
+{
+  "basis": "Independent reviewer identifies runtime-relevant files from R18 runtime scope, package/dependency lock, and tax/LOA routing surface.",
+  "files": [
+    "answer-renderer.js",
+    "ask-handler.js",
+    "package-lock.json",
+    "package.json",
+    "pipeline.js",
+    "server.js",
+    "services/answer-support-validator.js",
+    "services/philippine-tax-boundary-patterns.js",
+    "services/philippine-tax-domain-boundary.js",
+    "tax-classifier.js",
+    "tax-keywords.js"
+  ]
+}

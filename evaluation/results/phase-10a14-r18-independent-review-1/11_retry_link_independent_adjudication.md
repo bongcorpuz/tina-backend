@@ -1,0 +1,3 @@
+# Retry-link independent adjudication
+
+A2 links to A1 as retryOf R18-GATE-deterministic-cycle1-A1, same deterministic gate/cycle, same command, same runtime digest 5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a, same harness digest 48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d, same package-lock digest f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b. Evidence HEAD moved from 74943bb9 to 08fe9d65 via authorized evidence paths. Literal contract result: accepted. Technical same-runtime result: accepted. Governance result: accepted, but does not overcome independent domain P1 findings.

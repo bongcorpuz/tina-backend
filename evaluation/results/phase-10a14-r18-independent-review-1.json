@@ -1,0 +1,221 @@
+{
+  "task": "PHASE-10A14-R18-INDEPENDENT-REVIEW-1",
+  "reviewer": "Codex 5.5",
+  "decision": "REVISIONS REQUIRED",
+  "blockers": [
+    "P1-R18-IR1-001",
+    "P1-R18-IR1-002"
+  ],
+  "governance": {
+    "decision": "REVISIONS REQUIRED",
+    "r15Historical": "NOT SUPERSEDED",
+    "r16Prospective": "NOT SATISFIED",
+    "r17Prospective": "NOT SATISFIED",
+    "r18Prospective": "NOT SATISFIED",
+    "phase10a": "OPEN"
+  },
+  "independentEvidence": {
+    "unseenDomain": {
+      "total": 567,
+      "passed": 497,
+      "materialFalseAllows": 67,
+      "materialFalseRefusals": 3,
+      "metamorphicFailures": 12,
+      "failedIds": [
+        "IR18-DOM-037",
+        "IR18-DOM-106",
+        "IR18-DOM-109",
+        "IR18-DOM-158",
+        "IR18-DOM-161",
+        "IR18-DOM-171",
+        "IR18-DOM-172",
+        "IR18-DOM-173",
+        "IR18-DOM-174",
+        "IR18-DOM-175",
+        "IR18-DOM-176",
+        "IR18-DOM-177",
+        "IR18-DOM-178",
+        "IR18-DOM-182",
+        "IR18-DOM-184",
+        "IR18-DOM-187",
+        "IR18-DOM-190",
+        "IR18-DOM-191",
+        "IR18-DOM-193",
+        "IR18-DOM-194",
+        "IR18-DOM-195",
+        "IR18-DOM-196",
+        "IR18-DOM-198",
+        "IR18-DOM-199",
+        "IR18-DOM-201",
+        "IR18-DOM-205",
+        "IR18-DOM-207",
+        "IR18-DOM-208",
+        "IR18-DOM-210",
+        "IR18-DOM-212",
+        "IR18-DOM-213",
+        "IR18-DOM-214",
+        "IR18-DOM-215",
+        "IR18-DOM-222",
+        "IR18-DOM-238",
+        "IR18-DOM-245",
+        "IR18-DOM-248",
+        "IR18-DOM-249",
+        "IR18-DOM-251",
+        "IR18-DOM-252",
+        "IR18-DOM-263",
+        "IR18-DOM-270",
+        "IR18-DOM-273",
+        "IR18-DOM-274",
+        "IR18-DOM-276",
+        "IR18-DOM-277",
+        "IR18-DOM-288",
+        "IR18-DOM-295",
+        "IR18-DOM-298",
+        "IR18-DOM-299",
+        "IR18-DOM-301",
+        "IR18-DOM-302",
+        "IR18-DOM-313",
+        "IR18-DOM-320",
+        "IR18-DOM-323",
+        "IR18-DOM-324",
+        "IR18-DOM-326",
+        "IR18-DOM-327",
+        "IR18-DOM-477",
+        "IR18-DOM-479",
+        "IR18-DOM-487",
+        "IR18-DOM-489",
+        "IR18-DOM-501",
+        "IR18-DOM-503",
+        "IR18-DOM-505",
+        "IR18-DOM-509",
+        "IR18-DOM-515",
+        "IR18-DOM-517",
+        "IR18-DOM-519",
+        "IR18-DOM-525"
+      ]
+    },
+    "deterministic": [
+      {
+        "id": "23_deterministic_cycle_1",
+        "exitCode": 0,
+        "syntax": {
+          "run": 10,
+          "failed": 0
+        },
+        "tests": {
+          "run": 214,
+          "failed": 0
+        }
+      },
+      {
+        "id": "23_deterministic_cycle_2",
+        "exitCode": 0,
+        "syntax": {
+          "run": 10,
+          "failed": 0
+        },
+        "tests": {
+          "run": 214,
+          "failed": 0
+        }
+      }
+    ],
+    "staging": [
+      {
+        "id": "24_staging_cycle_1",
+        "exitCode": 0,
+        "staging": {
+          "run": 7,
+          "failed": 0
+        }
+      },
+      {
+        "id": "24_staging_cycle_2",
+        "exitCode": 0,
+        "staging": {
+          "run": 7,
+          "failed": 0
+        }
+      }
+    ],
+    "focused": {
+      "controllingAllPassed": true,
+      "failedOriginal": [
+        "r18-all26-isolated-replay"
+      ],
+      "externalAll26CliProof": {
+        "path": "evaluation/results/phase-10a14-r18-independent-review-1/25_all26_external_cli_proof.json",
+        "pass": true
+      }
+    },
+    "digests": {
+      "runtime": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a",
+      "harness": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d"
+    },
+    "registry": {
+      "totalAttempts": 5,
+      "byCategory": {
+        "deterministic_runner": 3,
+        "staging_runner": 2,
+        "focused_suite": 0,
+        "domain_campaign": 0,
+        "synthetic_validator": 0,
+        "other": 0
+      },
+      "controlling": 4,
+      "nonControlling": 1,
+      "incomplete": 1,
+      "corruptAttempts": 0,
+      "invalidProvenanceAttempts": 0,
+      "validLinkedRetries": 1
+    },
+    "manifest": {
+      "hashedEntries": 67,
+      "selfEntries": 0,
+      "badHash": 0,
+      "missing": 0
+    }
+  },
+  "findings": [
+    {
+      "id": "P1-R18-IR1-001",
+      "severity": "P1",
+      "requirement": "Zero material unseen domain false allows/refusals.",
+      "evidence": "15_independent_unseen_domain_campaign.json: 497/567 pass; 67 material false allows; 3 material false refusals; 12 metamorphic failures.",
+      "reproduction": "node evaluation/results/phase-10a14-r18-independent-review-1/run-independent-domain-campaign.mjs",
+      "impact": "R18 over-expanded tax boundary anchors and cannot support PASS/governance satisfaction.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-R18-IR1-002",
+      "severity": "P1",
+      "requirement": "New anchors must not weaken out-of-scope protection.",
+      "evidence": "False allows include SLSP unknown project code, OSD on-screen display, FLD field abbreviation, MCIT/RCIT arbitrary codes, Alphalist ordinary list, gross estate marketing phrase, prescriptive period in medicine.",
+      "reproduction": "See failedIds in 15_independent_unseen_domain_campaign.json.",
+      "impact": "Boundary accepts material non-tax acronym and phrase contexts.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P2-R18-IR1-003",
+      "severity": "P2",
+      "requirement": "Frozen independent-review plan artifact before independent execution.",
+      "evidence": "Owner brief was read before execution, but local plan artifact was written during finalization.",
+      "reproduction": "Review artifact timestamps and conversation trace.",
+      "impact": "Reviewer process defect; does not hide executor P1 blockers and did not modify runtime.",
+      "disposition": "OPEN",
+      "blocksPass": false
+    },
+    {
+      "id": "P3-R18-IR1-004",
+      "severity": "P3",
+      "requirement": "09ZF scope guard should avoid broad substring false positives.",
+      "evidence": "Initial gate run failed because file name 09_digest_reproduction_report.json matched /production/. Renaming to recompute allowed clean 2/2 gates.",
+      "reproduction": "23_24_initial_contaminated_gate_runs.json and clean 23_24_independent_gate_runs.json.",
+      "impact": "Reviewer artifact naming can contaminate gate results; not a runtime defect.",
+      "disposition": "OBSERVED",
+      "blocksPass": false
+    }
+  ]
+}

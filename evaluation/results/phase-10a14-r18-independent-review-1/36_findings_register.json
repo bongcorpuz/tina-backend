@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-07-21T03:53:18.252Z",
+  "findings": [
+    {
+      "id": "P1-R18-IR1-001",
+      "severity": "P1",
+      "requirement": "Zero material unseen domain false allows/refusals.",
+      "evidence": "15_independent_unseen_domain_campaign.json: 497/567 pass; 67 material false allows; 3 material false refusals; 12 metamorphic failures.",
+      "reproduction": "node evaluation/results/phase-10a14-r18-independent-review-1/run-independent-domain-campaign.mjs",
+      "impact": "R18 over-expanded tax boundary anchors and cannot support PASS/governance satisfaction.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P1-R18-IR1-002",
+      "severity": "P1",
+      "requirement": "New anchors must not weaken out-of-scope protection.",
+      "evidence": "False allows include SLSP unknown project code, OSD on-screen display, FLD field abbreviation, MCIT/RCIT arbitrary codes, Alphalist ordinary list, gross estate marketing phrase, prescriptive period in medicine.",
+      "reproduction": "See failedIds in 15_independent_unseen_domain_campaign.json.",
+      "impact": "Boundary accepts material non-tax acronym and phrase contexts.",
+      "disposition": "OPEN",
+      "blocksPass": true
+    },
+    {
+      "id": "P2-R18-IR1-003",
+      "severity": "P2",
+      "requirement": "Frozen independent-review plan artifact before independent execution.",
+      "evidence": "Owner brief was read before execution, but local plan artifact was written during finalization.",
+      "reproduction": "Review artifact timestamps and conversation trace.",
+      "impact": "Reviewer process defect; does not hide executor P1 blockers and did not modify runtime.",
+      "disposition": "OPEN",
+      "blocksPass": false
+    },
+    {
+      "id": "P3-R18-IR1-004",
+      "severity": "P3",
+      "requirement": "09ZF scope guard should avoid broad substring false positives.",
+      "evidence": "Initial gate run failed because file name 09_digest_reproduction_report.json matched /production/. Renaming to recompute allowed clean 2/2 gates.",
+      "reproduction": "23_24_initial_contaminated_gate_runs.json and clean 23_24_independent_gate_runs.json.",
+      "impact": "Reviewer artifact naming can contaminate gate results; not a runtime defect.",
+      "disposition": "OBSERVED",
+      "blocksPass": false
+    }
+  ]
+}

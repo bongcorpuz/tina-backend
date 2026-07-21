@@ -1,0 +1,320 @@
+{
+  "range": "2108d447df5a87695002d558a667c03ede8e29fb..c03e7794e49030face66928dbd3df91de0fa9f05",
+  "changedFiles": [
+    {
+      "status": "A",
+      "path": "PHASE-10A14-R18-RUNTIME-IDENTITY-SEPARATION-SUBSTRING-TAX-SIGNAL-CONTEXT-HARDENING-WRITE-ISOLATED-ALL26-AND-CONTROLLED-LOA-GATE-CLOSURE-REMEDIATION-1_REPORT.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18-result.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/ALL26_ISOLATED_RESULT.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/ALL26_WRITE_ISOLATION_REPORT.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/ALL26_WRITE_ISOLATION_SPEC.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/CANONICAL_ATTEMPT_REGISTRY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/CANONICAL_COUNT_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/DETERMINISTIC_GATE_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/DOMAIN_FINAL_RESULT.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/DOMAIN_ORACLE.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/EVIDENCE_CONTRACT.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/EVIDENCE_MANIFEST.sha256"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/FOCUSED_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/FROZEN_PLAN.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/HARNESS_IDENTITY_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/HARNESS_SCOPE_MANIFEST.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PHASE09ZF_REPRODUCTION_PLAN.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PHASE09ZF_ROOT_CAUSE_REPORT.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PREFLIGHT.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PRE_FIX_09ZF_MATRIX.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PRE_FIX_ALL26_MUTATION_REPORT.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PRE_FIX_DOMAIN_RESULT.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PRE_FIX_MANIFEST.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/PROVENANCE_VALIDATION_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/RETRY_LINK_SPEC.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/RETRY_LINK_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/RUNTIME_IDENTITY_SPEC.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/RUNTIME_IDENTITY_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/RUNTIME_SCOPE_MANIFEST.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/SECURITY_AND_CLEANUP.md"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/STAGING_GATE_SUMMARY.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/all26-isolated.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A1/00-allocated.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A1/90-recovery-adjudication.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/00-allocated.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/20-completed-pass.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/command.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/stderr.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle1-A2/stdout.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/00-allocated.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/20-completed-pass.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/command.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/stderr.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-deterministic-cycle2-A1/stdout.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/00-allocated.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/20-completed-pass.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/command.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/stderr.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle1-A1/stdout.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/00-allocated.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/20-completed-pass.json"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/command.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/stderr.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/attempts/R18-GATE-staging-cycle2-A1/stdout.raw.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/build-domain-oracle.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/build-registry.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/check-protected-paths.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/identity.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/prefix-logs/09zf-condA-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/prefix-logs/09zf-condB-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/prefix-logs/09zf-condB-stdout.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/prefix-logs/09zf-condC-stderr.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/prefix-logs/all26-mutation.diff"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/prefix-logs/prefix-domain-probe.txt"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/retry-validator.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/run-domain-campaign.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/run-focused-campaign.mjs"
+    },
+    {
+      "status": "A",
+      "path": "evaluation/results/phase-10a14-r18/run-gate-cycle.mjs"
+    },
+    {
+      "status": "M",
+      "path": "knowledge/CURRENT_STATE.md"
+    },
+    {
+      "status": "M",
+      "path": "services/philippine-tax-boundary-patterns.js"
+    },
+    {
+      "status": "M",
+      "path": "services/philippine-tax-domain-boundary.js"
+    },
+    {
+      "status": "M",
+      "path": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tests/phase-10a14-r18-09zf-scope-guard.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tests/phase-10a14-r18-all26-write-isolation.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tests/phase-10a14-r18-domain-hardening.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tests/phase-10a14-r18-runtime-identity-and-retry.test.mjs"
+    }
+  ],
+  "allowedRuntimeModified": [
+    {
+      "status": "M",
+      "path": "services/philippine-tax-boundary-patterns.js"
+    },
+    {
+      "status": "M",
+      "path": "services/philippine-tax-domain-boundary.js"
+    }
+  ],
+  "forbiddenRuntimeTouched": []
+}

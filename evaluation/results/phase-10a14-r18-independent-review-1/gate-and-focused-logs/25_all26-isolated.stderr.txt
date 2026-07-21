@@ -1,0 +1,13 @@
+file:///C:/Projects/tina-backend/evaluation/results/phase-10a14-r18/all26-isolated.mjs:63
+    throw new Error(`all26 replay: in-repository output is allowed only under the R18 evidence directory: ${destination}`);
+          ^
+
+Error: all26 replay: in-repository output is allowed only under the R18 evidence directory: evaluation\results\phase-10a14-r18-independent-review-1\25_all26_isolated_from_focused.json
+    at assertWritableDestination (file:///C:/Projects/tina-backend/evaluation/results/phase-10a14-r18/all26-isolated.mjs:63:11)
+    at replayAll26To (file:///C:/Projects/tina-backend/evaluation/results/phase-10a14-r18/all26-isolated.mjs:100:15)
+    at file:///C:/Projects/tina-backend/evaluation/results/phase-10a14-r18/all26-isolated.mjs:118:41
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:647:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.18.0

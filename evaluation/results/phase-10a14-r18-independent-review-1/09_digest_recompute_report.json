@@ -1,0 +1,141 @@
+{
+  "algorithm": "sha256(concatenated sorted records of path + LF + sha256(file_bytes) + LF); each record SHA also shown",
+  "runtime": {
+    "sortedInput": true,
+    "duplicates": [],
+    "missing": [],
+    "count": 11,
+    "entries": [
+      {
+        "path": "answer-renderer.js",
+        "fileSha256": "a2248e5e4dc0f86223057f20adc4f66353b946d6562dcc4585858039be5c20d3",
+        "recordSha256": "678884e4701c95783b6e1de6c4ea3706e92fec9870d1f3ebd58f90a089ffcfa6"
+      },
+      {
+        "path": "ask-handler.js",
+        "fileSha256": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404",
+        "recordSha256": "09651d1ed10ff6e84f4ac1b4312ff88f883c5d4c0a28666accae678af9f8aaf9"
+      },
+      {
+        "path": "package-lock.json",
+        "fileSha256": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+        "recordSha256": "6d7ee71424cf24951e50bba944939459b19aeeafe67a765a93cb17588306be30"
+      },
+      {
+        "path": "package.json",
+        "fileSha256": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3",
+        "recordSha256": "e57e5c1b3a890bb8df11326c7a28ee3710a9d07bd46d2c549e5381f59878b772"
+      },
+      {
+        "path": "pipeline.js",
+        "fileSha256": "ba4dfd2a7e999cde8c68e8e0cfdb3b26335606f79f69ff403265c5c0a0b959a7",
+        "recordSha256": "35ee015834a4a3c69e53f8e954dfed2fad7f1fd0143ae3a4d7b1be645e2beddd"
+      },
+      {
+        "path": "server.js",
+        "fileSha256": "2f30096a3d3497d80e1c44e29a8a94566b76bb1cf81801c5a0e3f34e90232ac1",
+        "recordSha256": "9b754ad27aa753fe46da11f619d10093c972f3b25625000ab482f11ce75017c2"
+      },
+      {
+        "path": "services/answer-support-validator.js",
+        "fileSha256": "c79d82d6cb2e40cbea5c04ff17a7c1405a18103e40ae8f6a8f470341312b56f6",
+        "recordSha256": "5299287e66719126702b273373dbfef724ef5d496fecb1ec908e12c84ae30a88"
+      },
+      {
+        "path": "services/philippine-tax-boundary-patterns.js",
+        "fileSha256": "8395c802c6602c31fa423179d204ba7c3b816212fb3bf668b888e841e1953193",
+        "recordSha256": "b4babf15c9601a0642997817115fe7f06f48001ca4334bdad3fc6c241966136f"
+      },
+      {
+        "path": "services/philippine-tax-domain-boundary.js",
+        "fileSha256": "0a16c7ae23c034600346564e11dd00c1c5a3fba95880b1ec1ecf242c335690a5",
+        "recordSha256": "7098b02d5b2621da3c9013932f6c348d96da3db19ba507ca3f1db705ffcae4cb"
+      },
+      {
+        "path": "tax-classifier.js",
+        "fileSha256": "48be9559cfb09d52af5df233082dd6e32ee7ebdc9c347dc3cd56b369a5667f8d",
+        "recordSha256": "919879609ebee75c8a1a191f994a2fa0e278c2ede52ab2ed5338f5e0f0ddb509"
+      },
+      {
+        "path": "tax-keywords.js",
+        "fileSha256": "5dc6924d62eee6d0515885c5ddb17f68a128a15477e79f849174cbf0b12c75dc",
+        "recordSha256": "4893d8d8fee2f48efc0f2606fb915eec698b61db602aa093aaef0a212a146c32"
+      }
+    ],
+    "treeDigest": "5dd969d78b2aeba33c14dc5173300a0aec9a05017715040192bf7540e0fa231a"
+  },
+  "harness": {
+    "sortedInput": true,
+    "duplicates": [],
+    "missing": [],
+    "count": 13,
+    "entries": [
+      {
+        "path": "evaluation/results/phase-10a14-r18/all26-isolated.mjs",
+        "fileSha256": "3c4c9f79b74d9c7e85fcd8f42e11ce8dbbd78e38d57f96b9acf1db6d88b10109",
+        "recordSha256": "d2848b3a411b0d3ac3c9831c3cc4bcc3d9168fcf7ecae650edb2e2dfbfef4959"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r18/identity.mjs",
+        "fileSha256": "b8ddfc3c070364b074e37d83cba9ab2daf732a7e4a3d6b5e6972c176d43d9a5b",
+        "recordSha256": "01d219dfaeac0d7c1bfbc2b5875b22a1db34e5242fd48bf1a6e997e37ee4d622"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r18/retry-validator.mjs",
+        "fileSha256": "dc7b73cdc7cc4a5310e77415da2458e296b6800ba5f77a6d0efbf1953cd06c2c",
+        "recordSha256": "65f177de3175287dae22aa933ffd039ed19bff00bf5ab14adcb4f6caa8d8b5a0"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r18/run-domain-campaign.mjs",
+        "fileSha256": "7ca15f58d2f7dc35d305492b9e37d130503c4021751209d4804dfed24e936de2",
+        "recordSha256": "e4d60003fe8554616f3a295721bbcc3033a788c1e8ed1958bb376900335281f2"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r18/run-focused-campaign.mjs",
+        "fileSha256": "a2da763c320dca41d8def0f3b9038ef7d70d6e9a66d59d82a85f022e99647a65",
+        "recordSha256": "2b601c0b5736d75ece1fce4c4bde03cf9d838b42e9e6ef659d49e32578b3f524"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r18/run-gate-cycle.mjs",
+        "fileSha256": "07ab9b4c8a6f671355486b98cf2b09a958b60305a7c7953c8054283f0bedbc11",
+        "recordSha256": "f20e7995ca00f1f4e218d98331d437797c16c2a09cb199417c3c55a93a0a1130"
+      },
+      {
+        "path": "scripts/run-regressions.mjs",
+        "fileSha256": "cbdd0a94a5975ced6f6df33c66770d920acd7ae7a7337158a10e6f74a4902053",
+        "recordSha256": "c885c4021694fc2070b4c324765b72ee8a7bf393edc3c2b8397d5734fd6bd916"
+      },
+      {
+        "path": "scripts/run-staging-smokes.mjs",
+        "fileSha256": "613823f522bf373fc8919bd7cb5918c14f260bc14164f4116739ba2097d46fdb",
+        "recordSha256": "e9022d46b1526b7824840ae87f9c5460c03fc7da6e41d42539f897c3dfff76cc"
+      },
+      {
+        "path": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+        "fileSha256": "54fbba1daeadd61b24a28f6ed94366ff10fe39e0a5cae4c3e604630945678db3",
+        "recordSha256": "e3af7946b2eada481dea3e04f329a8889dca9903e6dcada81e1ad14d610fb93b"
+      },
+      {
+        "path": "tests/phase-10a14-r18-09zf-scope-guard.test.mjs",
+        "fileSha256": "a7986e08a8a4bdb998d0e52147b60ea020ccb74bd47ec2d37ee5662b344b5508",
+        "recordSha256": "3e7b70d03bce4bfc2b84a9ae84a921a37ef70dffc7b221a3b21541b2630ebaa8"
+      },
+      {
+        "path": "tests/phase-10a14-r18-all26-write-isolation.test.mjs",
+        "fileSha256": "933df145e75298660be3c5e7459f3e63a325cff190def7f995deb37582bbc135",
+        "recordSha256": "1e50381a4545b61bd0866d316a65160abc66d0aeb0bccc7a00f176d37824ff1d"
+      },
+      {
+        "path": "tests/phase-10a14-r18-domain-hardening.test.mjs",
+        "fileSha256": "b7adb079558ce53a521ae0f6c9665fed20efc715a1a1592ec71aa5858be19f5b",
+        "recordSha256": "35d03e1cb1ca6a043330d25204569253635e43102b6af6f5f527ce1c9c575a49"
+      },
+      {
+        "path": "tests/phase-10a14-r18-runtime-identity-and-retry.test.mjs",
+        "fileSha256": "e792b256e4956055ba0ca6d52b0aac348fa2249d4bc75c40741b16fc14a0fa4a",
+        "recordSha256": "714a1f3dd7f19b429f763cdcec3aa21aecc8bd0e776731cf2339f084c06680c2"
+      }
+    ],
+    "treeDigest": "48ea64c49263fd13dc99b51168208087cdd4bdc01722f919d117411b46fd6e9d"
+  }
+}

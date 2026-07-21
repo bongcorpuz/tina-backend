@@ -1,0 +1,24 @@
+PASS a real commit validates
+PASS THE EXACT R16 FABRICATED SHA is rejected as a nonexistent object
+PASS a malformed SHA string is rejected on format
+PASS a blob SHA is rejected because the object type is not commit
+PASS ancestry is validated, and an invalid ancestry is rejected
+PASS attempt provenance reports per-field verification
+PASS THE EXACT R16 CORRUPTION SHAPE is detected: 186 NUL bytes in a text file
+PASS corruption detection covers zero-length, all-whitespace and malformed JSON
+PASS a healthy attempt directory scans clean
+PASS RECOVERY ADJUDICATION OVERRIDES a COMPLETED_PASS terminal — the R16 defect
+PASS corruption outranks even a clean adjudication
+PASS invalid provenance makes an attempt non-controlling
+PASS a clean passing attempt is VALID_CONTROLLING
+PASS a malformed adjudication is treated as corrupt, not ignored
+PASS an unlinked rerun is NOT counted as a retry — the R16 defect
+PASS valid linked retries are counted and reach the ceiling
+PASS a retry pointing at a missing target is rejected
+PASS a retry without a reason is rejected
+PASS a retry on a CHANGED runtime is rejected as a same-runtime retry
+PASS cyclic retry links are detected and excluded
+PASS a self-link is rejected
+
+phase-10a14-r17-validators: 21 passed, 0 failed
+PHASE-10A14-R17 VALIDATORS PASS — Git-truth provenance, adjudication precedence, retry linkage.

@@ -1,0 +1,17 @@
+PASS the three exact P1-R17-IR1-002 false allows are closed
+PASS every required non-tax context family vetoes an ambiguous tax homograph
+PASS every required tax co-signal family still allows
+PASS the eight mandated genuine tax queries remain ALLOW
+PASS a tax co-signal defeats the veto but a bare homograph does not
+PASS bare 'withholding' does not rescue a code query, but withholding tax still allows
+PASS VAT, BOC, taxable, customs and capital-gain terms are not weakened generally
+PASS accepted R15-R17 closures are preserved
+PASS prior non-tax closures are preserved
+PASS the 26 R18-discovered false refusals are closed
+PASS genuinely ambiguous frames still do not allow
+PASS metamorphic pairs flip on the object, holding the tax term constant
+PASS the whole frozen 483-probe oracle passes with zero material defects
+PASS the remedy is context-aware, not a list of exact-question exceptions
+PASS veto and co-signal lists are category-based and non-empty
+
+PHASE-10A14-R18-DOMAIN-HARDENING tests: 15 passed, 0 failed, 228 assertions
