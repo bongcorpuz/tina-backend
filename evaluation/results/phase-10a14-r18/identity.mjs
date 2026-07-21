@@ -145,6 +145,7 @@ export function allocateAttempt(opts) {
   }
 
   const dir = path.join(attemptsDir, attemptId);
+  fs.mkdirSync(attemptsDir, { recursive: true }); // parent only
   fs.mkdirSync(dir, { recursive: false }); // exclusive: an existing attemptId is a hard error
   const rt = treeDigest(runtimeManifestPath);
   const hn = treeDigest(harnessManifestPath);
