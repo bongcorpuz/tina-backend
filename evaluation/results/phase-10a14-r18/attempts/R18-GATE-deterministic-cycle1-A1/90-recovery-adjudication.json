@@ -1,0 +1,15 @@
+{
+  "attemptId": "R18-GATE-deterministic-cycle1-A1",
+  "adjudication": "INCOMPLETE_EXTERNALLY_TERMINATED",
+  "appendOnly": true,
+  "terminalEventPresent": false,
+  "exitCode": null,
+  "signal": "SIGTERM (external)",
+  "cause": "The executor's own command-invocation harness enforces a 2-minute wall-clock cap that is shorter than a full deterministic gate cycle. The gate child process was terminated by that cap, not by any condition inside the gate, the runtime or the repository. The attempt was allocated and started; no terminal event was produced, so no result may be inferred from it.",
+  "evidenceBasis": "This attempt's own directory: 00-allocated.json is present and no terminal event file exists. No inference is drawn from any other attempt's logs.",
+  "disposition": "VALID_NON_CONTROLLING",
+  "controlling": false,
+  "resultInferred": "NONE — this attempt establishes neither a pass nor a failure of the deterministic gate.",
+  "preservation": "Preserved in place. Not deleted, not replaced, not reused, not converted. The attemptId is permanently consumed.",
+  "retryJustification": "TECHNICAL_ENVIRONMENT_ERROR — an executor-harness timeout is an environment fault, not a suite failure. The next attempt runs detached from that cap so the gate can terminate on its own."
+}
