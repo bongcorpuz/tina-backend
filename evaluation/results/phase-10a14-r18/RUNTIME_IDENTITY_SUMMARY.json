@@ -1,0 +1,57 @@
+{
+  "task": "PHASE-10A14-R18",
+  "kind": "runtime",
+  "note": "Manifests are finalized at COMMIT 7, before any gate attempt, and are unchanged across every gate attempt. Digests recorded here are for the COMMIT 3 tooling state and will be recomputed at gate time.",
+  "evidenceHead": "123d75f318912f4f14e8f0e0b1779e220ab784cb",
+  "manifestPath": "evaluation/results/phase-10a14-r18/RUNTIME_SCOPE_MANIFEST.json",
+  "manifestSha256": "92daf06771a5a5b4f2993192a57a2877fb2c69be8090b2b9d7d4883fcdd01cfd",
+  "runtimeTreeDigest": "36dfea495fb5d881ad7a76fb616cd3fb0a4285ae5591de8fe25fa619590d9e7b",
+  "filesCount": 11,
+  "recomputeRule": "sha256 over `path\n<sha256 of file bytes>\n` for every manifest entry in sorted path order; independently recomputable with no Git dependency",
+  "files": [
+    {
+      "file": "answer-renderer.js",
+      "sha256": "a2248e5e4dc0f86223057f20adc4f66353b946d6562dcc4585858039be5c20d3"
+    },
+    {
+      "file": "ask-handler.js",
+      "sha256": "8bbe8157ef1752d50576ec2ac44596040fb4a60ebe7627b4b2b91422b0a96404"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b"
+    },
+    {
+      "file": "package.json",
+      "sha256": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3"
+    },
+    {
+      "file": "pipeline.js",
+      "sha256": "ba4dfd2a7e999cde8c68e8e0cfdb3b26335606f79f69ff403265c5c0a0b959a7"
+    },
+    {
+      "file": "server.js",
+      "sha256": "2f30096a3d3497d80e1c44e29a8a94566b76bb1cf81801c5a0e3f34e90232ac1"
+    },
+    {
+      "file": "services/answer-support-validator.js",
+      "sha256": "c79d82d6cb2e40cbea5c04ff17a7c1405a18103e40ae8f6a8f470341312b56f6"
+    },
+    {
+      "file": "services/philippine-tax-boundary-patterns.js",
+      "sha256": "44d1abd66bde0dd30bb78076eabedd41175cf1b4fdb92af960b3ee5bb6f011a7"
+    },
+    {
+      "file": "services/philippine-tax-domain-boundary.js",
+      "sha256": "a1a85ac7ac213805b4af297adacdd5469c2ad8a431b465643158186c827045ac"
+    },
+    {
+      "file": "tax-classifier.js",
+      "sha256": "48be9559cfb09d52af5df233082dd6e32ee7ebdc9c347dc3cd56b369a5667f8d"
+    },
+    {
+      "file": "tax-keywords.js",
+      "sha256": "5dc6924d62eee6d0515885c5ddb17f68a128a15477e79f849174cbf0b12c75dc"
+    }
+  ]
+}

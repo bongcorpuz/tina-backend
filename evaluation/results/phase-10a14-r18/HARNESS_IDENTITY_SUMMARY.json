@@ -1,0 +1,36 @@
+{
+  "task": "PHASE-10A14-R18",
+  "kind": "harness",
+  "note": "Manifests are finalized at COMMIT 7, before any gate attempt, and are unchanged across every gate attempt. Digests recorded here are for the COMMIT 3 tooling state and will be recomputed at gate time.",
+  "evidenceHead": "123d75f318912f4f14e8f0e0b1779e220ab784cb",
+  "manifestPath": "evaluation/results/phase-10a14-r18/HARNESS_SCOPE_MANIFEST.json",
+  "manifestSha256": "96755166d320986eb462d50ce489a949fc8e851d7ba9e6a20c2f4e38b34f2480",
+  "harnessTreeDigest": "d8841c71340a1d06b51566ea1ad0814dc956fbf7ab41ef4292e7c83be5dcffc2",
+  "filesCount": 6,
+  "files": [
+    {
+      "file": "evaluation/results/phase-10a14-r18/identity.mjs",
+      "sha256": "c257579a7f804361fd2bcb1eca4c12e453417de613431d9d29cc754f0b560527"
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r18/retry-validator.mjs",
+      "sha256": "dc7b73cdc7cc4a5310e77415da2458e296b6800ba5f77a6d0efbf1953cd06c2c"
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r18/run-domain-campaign.mjs",
+      "sha256": "7ca15f58d2f7dc35d305492b9e37d130503c4021751209d4804dfed24e936de2"
+    },
+    {
+      "file": "scripts/run-regressions.mjs",
+      "sha256": "cbdd0a94a5975ced6f6df33c66770d920acd7ae7a7337158a10e6f74a4902053"
+    },
+    {
+      "file": "scripts/run-staging-smokes.mjs",
+      "sha256": "613823f522bf373fc8919bd7cb5918c14f260bc14164f4116739ba2097d46fdb"
+    },
+    {
+      "file": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+      "sha256": "cd4ece692ad69afb908c34126d5397bd8c197fa4b49e106f3da81c881411aad1"
+    }
+  ]
+}

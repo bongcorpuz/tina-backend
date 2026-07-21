@@ -1,0 +1,13 @@
+{
+  "task": "PHASE-10A14-R18",
+  "kind": "harness",
+  "note": "Gate runners, tested suites, attempt runner, retry validator, registry builder and any wrapper able to affect output or classification.",
+  "files": [
+    "evaluation/results/phase-10a14-r18/identity.mjs",
+    "evaluation/results/phase-10a14-r18/retry-validator.mjs",
+    "evaluation/results/phase-10a14-r18/run-domain-campaign.mjs",
+    "scripts/run-regressions.mjs",
+    "scripts/run-staging-smokes.mjs",
+    "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs"
+  ]
+}

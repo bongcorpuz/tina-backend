@@ -1,0 +1,18 @@
+{
+  "task": "PHASE-10A14-R18",
+  "kind": "runtime",
+  "note": "Frozen, explicit, sorted. A missing file is a hard error, never a skipped entry.",
+  "files": [
+    "answer-renderer.js",
+    "ask-handler.js",
+    "package-lock.json",
+    "package.json",
+    "pipeline.js",
+    "server.js",
+    "services/answer-support-validator.js",
+    "services/philippine-tax-boundary-patterns.js",
+    "services/philippine-tax-domain-boundary.js",
+    "tax-classifier.js",
+    "tax-keywords.js"
+  ]
+}
