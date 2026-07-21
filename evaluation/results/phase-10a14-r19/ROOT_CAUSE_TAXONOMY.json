@@ -1,0 +1,97 @@
+{
+  "task": "PHASE-10A14-R19",
+  "generatedAt": "2026-07-21T00:00:00.000Z",
+  "principle": "A known tax acronym or polysemous tax phrase is not automatically tax when surrounding words establish a different object, field, role or meaning.",
+  "diagnosedMechanism": "All 67 material false allows and all 12 metamorphic false-allow failures fired with reason strong_tax_signal. STRONG_TAX_SIGNAL_PATTERNS matches unconditionally except for the R18 cosignal-defeatable NON_TAX_OBJECT_VETO_PATTERNS tier. Two sub-defects: (1) no veto pattern existed at all for many non-tax object families; (2) TAX_COSIGNAL_PATTERNS wrongly included bare 2-4 letter acronyms (RMC, RMO), and phrase cosignals could match as a substring anywhere and defeat a veto match anywhere else with no role-based judgment.",
+  "families": {
+    "software_code_ui_role": {
+      "count": 20,
+      "description": "The sentence's true subject is a variable, function, form field, console output, design/colour/hue token, icon, CSS class, plugin, software flag, app log or code snippet — not a tax concept.",
+      "examples": ["subject to VAT as variable name in code", "input VAT as form input label", "Output VAT to the console.", "VAT hue token"],
+      "remedy": "dominant non-tax role veto, software/code/UI family"
+    },
+    "random_unknown_code_label": {
+      "count": 7,
+      "description": "A tax acronym is explicitly relabeled as a random/unknown project, product, training or course code, or a field abbreviation.",
+      "examples": ["SLSP as unknown project code", "MCIT as random product code", "Use RCIT as a course code."],
+      "remedy": "dominant non-tax role veto, random/unknown code label family"
+    },
+    "culture_tradition": {
+      "count": 12,
+      "description": "'customs' or a tax-shaped word used in its ordinary cultural/social/traditional sense.",
+      "examples": ["customs in a culture class", "What local customs apply at dinner?", "What are cultural customs?"],
+      "remedy": "dominant non-tax role veto, culture/tradition family"
+    },
+    "audio_music": {
+      "count": 6,
+      "description": "BOC/RMC/capital gain/etc. used in a music, audio or amplifier context.",
+      "examples": ["RMC music channel", "What is capital gain on an amplifier?", "Is BOC a band of chords?"],
+      "remedy": "dominant non-tax role veto, audio/music family"
+    },
+    "physical_device": {
+      "count": 4,
+      "description": "FAN/PAN/OSD used for an actual cooling fan, cooking utensil or on-screen display.",
+      "examples": ["FAN cooling speed", "PAN cooking utensil", "OSD as on-screen display"],
+      "remedy": "dominant non-tax role veto, physical device family"
+    },
+    "physical_animal": {
+      "count": 1,
+      "description": "BIR misread as the word 'bird'.",
+      "examples": ["BIR as a bird typo"],
+      "remedy": "dominant non-tax role veto, physical/animal family"
+    },
+    "medicine": {
+      "count": 1,
+      "description": "'prescriptive/prescription period' or 'deficiency' used in a medical sense.",
+      "examples": ["prescriptive period in medicine"],
+      "remedy": "dominant non-tax role veto, medicine family"
+    },
+    "real_estate_marketing": {
+      "count": 2,
+      "description": "'gross estate' used for real-estate marketing copy or landscaping, not estate tax.",
+      "examples": ["gross estate marketing phrase", "gross estate landscaping"],
+      "remedy": "dominant non-tax role veto, real-estate/marketing family"
+    },
+    "hobby_game": {
+      "count": 3,
+      "description": "Tax phrase reused inside a board game, game guild or quest.",
+      "examples": ["transfer pricing in a board game", "registered business enterprise as a game guild", "import duty in a game quest"],
+      "remedy": "dominant non-tax role veto, hobby/game family"
+    },
+    "school_class": {
+      "count": 5,
+      "description": "Tax phrase reused for a school raffle, exam grade, grammar class, negotiation class, or a plain alphabetical list.",
+      "examples": ["gross receipts for a school raffle", "reconsideration request for exam grade", "Alphalist as alphabetical list"],
+      "remedy": "dominant non-tax role veto, school/class family"
+    },
+    "architecture_building": {
+      "count": 2,
+      "description": "'permanent establishment' used in architecture, or 'Bureau of Customs' used only for building directions.",
+      "examples": ["permanent establishment in architecture", "Bureau of Customs as building directions only"],
+      "remedy": "dominant non-tax role veto, architecture/building family"
+    },
+    "office_generic_mislabel": {
+      "count": 3,
+      "description": "Tax term reused for a novel list, a generic conference agenda without a BIR/notice-for qualifier, or negotiation class.",
+      "examples": ["books of accounts as novel list", "notice for informal conference agenda", "compromise offer in negotiation class"],
+      "remedy": "dominant non-tax role veto, office/generic mislabel family"
+    },
+    "explicit_negation": {
+      "count": 1,
+      "description": "The sentence explicitly negates tax relevance.",
+      "examples": ["lease contract renewal without tax"],
+      "remedy": "dominant non-tax role veto, explicit negation family"
+    },
+    "false_refusal_weak_signal_underfit": {
+      "count": 3,
+      "description": "Coherent tax phrases carried only as weak/CLARIFY signals rather than strong anchors.",
+      "examples": ["official receipt", "annual information return", "refund claim prescription"],
+      "remedy": "add or strengthen a strong-signal anchor for the coherent phrase; not a veto change"
+    }
+  },
+  "totalMaterialFalseAllows": 67,
+  "totalMaterialFalseRefusals": 3,
+  "totalMetamorphicFailures": 12,
+  "totalClassified": 70,
+  "unclassified": 0
+}

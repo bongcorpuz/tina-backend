@@ -1,0 +1,16 @@
+{
+  "task": "PHASE-10A14-R19",
+  "kind": "harness",
+  "note": "FINALIZED before any gate attempt. Covers gate runners, the R19 focused suite, the attempt runner, retry validator and registry builder.",
+  "files": [
+    "evaluation/results/phase-10a14-r19/build-registry.mjs",
+    "evaluation/results/phase-10a14-r19/identity.mjs",
+    "evaluation/results/phase-10a14-r19/retry-validator.mjs",
+    "evaluation/results/phase-10a14-r19/run-domain-campaign.mjs",
+    "evaluation/results/phase-10a14-r19/run-focused-campaign.mjs",
+    "evaluation/results/phase-10a14-r19/run-gate-cycle.mjs",
+    "scripts/run-regressions.mjs",
+    "scripts/run-staging-smokes.mjs",
+    "tests/phase-10a14-r19-context-qualified-domain-boundary.test.mjs"
+  ]
+}

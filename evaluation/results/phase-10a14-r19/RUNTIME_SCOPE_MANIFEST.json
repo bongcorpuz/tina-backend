@@ -1,0 +1,9 @@
+{
+  "task": "PHASE-10A14-R19",
+  "kind": "runtime",
+  "note": "Only the two files touched by R19. A missing file is a hard error, never a skipped entry.",
+  "files": [
+    "services/philippine-tax-boundary-patterns.js",
+    "services/philippine-tax-domain-boundary.js"
+  ]
+}
