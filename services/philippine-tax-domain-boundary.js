@@ -30,10 +30,12 @@ import {
   CLARIFY_PATTERNS,
   NON_TAX_CONTEXT_PATTERNS,
   NON_TAX_FILE_OBJECT_PATTERNS,
+  NON_TAX_OBJECT_VETO_PATTERNS,
   NON_TAX_REJECT_PATTERNS,
   PH_TAX_ALLOW_PATTERNS,
   STRONG_TAX_SIGNAL_PATTERNS,
   TAX_ADJACENCY_COSIGNAL_PATTERNS,
+  TAX_COSIGNAL_PATTERNS,
   TAX_FILING_ADJACENT_PATTERNS
 } from "./philippine-tax-boundary-patterns.js";
 
@@ -92,9 +94,29 @@ export function detectPhilippineTaxBoundary(query = "", routeMode = "/ask", cont
   const hasStrongTaxSignal = STRONG_TAX_SIGNAL_PATTERNS.some((p) => p.test(q));
   const hasNonTaxContext = NON_TAX_CONTEXT_PATTERNS.some((p) => p.test(q));
 
+  // ── PHASE-10A14-R18 (P1-R17-IR1-002) — NON-TAX OBJECT VETO ───────────────
+  // The R17 rule was that a strong signal is NEVER vetoed by a non-tax object. That is
+  // correct for an unambiguous anchor ("withholding tax on the private lease payment"),
+  // but wrong for a tax HOMOGRAPH. The independent campaign allowed "What is the taxable
+  // font in a CSS file?", "Is the BOC a band of chords?" and "How do I close a VAT color
+  // palette?" — all reason strong_tax_signal.
+  //
+  // A query that names an explicitly non-tax OBJECT (a font, a colour, a chord, a cooling
+  // fan) is out of domain unless a tax CO-SIGNAL confirms the tax reading. Co-signals are
+  // phrases and unambiguous anchors, never bare homographs, so "VAT" cannot rescue "VAT
+  // color palette" while "subject to VAT" still rescues "Is software subject to VAT?".
+  //
+  // This is category-based, not exact-question. No tax term is removed or made to fail
+  // generally: "Is the gain taxable?" names no non-tax object and still allows.
+  const hasNonTaxObject = NON_TAX_OBJECT_VETO_PATTERNS.some((p) => p.test(q));
+  const hasTaxCoSignal = TAX_COSIGNAL_PATTERNS.some((p) => p.test(q));
+  if (hasNonTaxObject && !hasTaxCoSignal) {
+    return { isPhilippineTax: false, decision: "REJECT", detectedDomain: "NON_TAX", reason: "non_tax_object_veto", confidence: 0.93 };
+  }
+
   // ── 3. STRONG Philippine-tax signal → ALLOW ──────────────────────────────
-  // An explicit tax anchor controls, and is never vetoed by a non-tax object: e.g.
-  // "Is withholding tax on the private lease payment due this weekend?" is tax.
+  // An explicit tax anchor controls. It is not vetoed by a non-tax object that merely
+  // co-occurs with a confirmed tax reading — only by the homograph case handled above.
   if (hasStrongTaxSignal) {
     return { isPhilippineTax: true, decision: "ALLOW", detectedDomain: "PHILIPPINE_TAX", reason: "strong_tax_signal", confidence: 0.98 };
   }

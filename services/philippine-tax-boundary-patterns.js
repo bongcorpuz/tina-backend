@@ -309,7 +309,138 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   /\bVAT-?exempt\b|\btax-?exempt\b|\bexempt(?:ion)?\s+threshold\b/i,
   /\bstatutory\s+(?:threshold|deadline|period|rate|due date)\b/i,
   /\bgross receipts\b/i, /\bfringe benefit\b/i, /\bde minimis\b/i,
-  /\bCTA\s*Case\b/i, /\bSection\s*\d+\b(?=[^.\n]{0,40}\b(?:NIRC|tax|BIR)\b)/i
+  /\bCTA\s*Case\b/i, /\bSection\s*\d+\b(?=[^.\n]{0,40}\b(?:NIRC|tax|BIR)\b)/i,
+  // PHASE-10A14-R18 (P1-R17-IR1-002, false-refusal half). The R18 483-probe campaign
+  // exposed 26 false refusals the narrower R17 inventory never covered. Each term below is
+  // unambiguous Philippine tax vocabulary that was carried only in the WEAK allow list, so
+  // it clarified instead of allowing.
+  //
+  // Each is deliberately phrased so it cannot swallow a genuinely ambiguous frame. The
+  // frozen oracle expects "Is this deductible?", "What is the exemption?", "Is there a
+  // surcharge?", "What is the penalty?" and "What is the period?" to clarify, while
+  // "What expenses are deductible?", "What is a surcharge for late filing?", "What is a
+  // compromise penalty?" and "What is the prescriptive period for assessment?" must allow.
+  // Anchoring on the qualifying object rather than the bare noun keeps both sides true.
+  /\bMCIT\b|\bRCIT\b|\bminimum corporate income tax\b|\bregular corporate income tax\b/i,
+  /\bgross estate\b|\bnet estate\b|\bestate deduction[s]?\b/i,
+  /\bdeficiency assessment\b|\bdeficiency (?:tax|VAT|income tax)\b/i,
+  /\bprescriptive period\b/i,
+  /\bcompromise penalty\b|\bcompromise offer\b/i,
+  /\boptional standard deduction\b|\bOSD\b/i,
+  /\b(?:expense|expenses|cost|costs|representation|entertainment)\b[^.\n]{0,40}\bdeductib\w*\b/i,
+  /\bdeductib\w*\b[^.\n]{0,40}\b(?:expense|expenses|income|gross income)\b/i,
+  /\bsubstantiation\b[^.\n]{0,30}\bdeduction[s]?\b|\bdeduction[s]?\b[^.\n]{0,30}\bsubstantiation\b/i,
+  /\btransfer pricing\b|\bpermanent establishment\b|\btax treaty\b|\bBEPS\b/i,
+  /\bregistered business enterprise\b|\bIncome Tax Holiday\b|\bITH\b|\bSCIT\b/i,
+  /\bEOPT\b|\bEase of Paying Taxes\b/i,
+  /\bAlpha\s?list\b|\bSLSP\b|\beSales\b|\beFPS\b/i,
+  /\bbooks of accounts?\b/i,
+  /\bofficial receipt\b[^.\n]{0,30}\brequirement\b|\brequirement\b[^.\n]{0,30}\bofficial receipt\b/i,
+  /\bsurcharge\b[^.\n]{0,40}\b(?:late|filing|payment|deficiency|tax)\b/i,
+  /\b(?:late|filing|payment|deficiency|tax)\b[^.\n]{0,40}\bsurcharge\b/i,
+  /\badministrative protest\b|\bprotest letter\b|\bprotest\b[^.\n]{0,30}\bassessment\b/i,
+  // Bare "reconsideration" is court vocabulary too. The R17 inventory expects "What is the
+  // deadline to file a motion for reconsideration in a civil case?" to stay out of domain,
+  // so these anchor on the BIR instrument ("request for reconsideration") rather than the
+  // bare noun. Caught by the R17 customs/capital-gain suite, not by the R18 oracle.
+  /\b(?:request|petition|protest)\s+for\s+(?:reinvestigation|reconsideration)\b/i,
+  /\b(?:reinvestigation|reconsideration)\s+request\b/i,
+  /\bNotice for Informal Conference\b|\binformal conference\b/i,
+  /\bFormal Letter of Demand\b/i,
+  /\bper[- ]unit\s+(?:residential\s+)?exemption\b|\bresidential\s+(?:unit|lease|leasing|rent(?:al)?|dwelling)\b/i,
+];
+
+// ─── PHASE-10A14-R18 (P1-R17-IR1-002) — NON-TAX OBJECT VETO ───────────────────
+//
+// The independent 210-probe campaign found three material false allows:
+//   "What is the taxable font in a CSS file?"   -> ALLOW / strong_tax_signal
+//   "Is the BOC a band of chords?"              -> ALLOW / strong_tax_signal
+//   "How do I close a VAT color palette?"       -> ALLOW / strong_tax_signal
+//
+// Cause: a strong signal ALLOWed unconditionally and was documented as never vetoed by a
+// non-tax object. That rule is right for "withholding tax on the private lease payment",
+// where the tax anchor is unambiguous. It is wrong for a tax HOMOGRAPH — "taxable", "VAT",
+// "BOC", "PAN", "FAN", "TIN", "DST", "CTA" and friends all have ordinary non-tax meanings.
+//
+// The remedy is context-aware, not exact-question: an explicitly non-tax OBJECT vetoes the
+// query unless a tax CO-SIGNAL confirms the tax reading. Both lists are category-based.
+// No legitimate tax term is removed, and none is made to fail generally.
+
+/**
+ * Explicitly non-tax objects and domains of discourse. Presence of one of these means the
+ * query is about a font, a colour, a piece of code, a band, a hospital shift and so on.
+ */
+export const NON_TAX_OBJECT_VETO_PATTERNS = [
+  // typography / design
+  /\bfont\b|\btypeface\b|\btypography\b|\bfont[- ]?(?:family|weight|style|size)\b/i,
+  /\bCSS\b|\bstylesheet\b|\bstyle sheet\b/i,
+  /\bcolou?r\b|\bpalette\b|\bswatch\b|\bshade of\b|\bpaint\b|\bpainting\b/i,
+  /\bgraphics?\b|\bdesign tool\b|\bFigma\b|\bPhotoshop\b|\bIllustrator\b|\bposter\b|\blogo\b/i,
+  // software / code
+  /\bJavaScript\b|\bTypeScript\b|\bPython\b|\bJava\b|\bC\+\+\b|\bRuby\b|\bGolang\b/i,
+  /\bsoftware\b|\bsource code\b|\bcodebase\b|\brepository\b|\bmodule\b|\blibrary function\b/i,
+  /\b(?:in|of|from) (?:my|this|the) code\b|\bmy code\b|\bthis code\b/i,
+  /\bvariable\b|\bconstant\b|\bclass name\b|\bfunction\b|\bmethod\b|\bparameter\b/i,
+  /\bnetworking\b|\bnetwork protocol\b|\bAPI\b|\bendpoint\b|\bdatabase query\b/i,
+  /\bwebsite\b|\bweb page\b|\bbutton\b|\bUI\b|\bfront[- ]?end\b/i,
+  // music / audio
+  /\bband\b|\bchord[s]?\b|\bmusic\b|\bsong\b|\balbum\b|\bguitar\b|\bdrummer\b|\btempo\b/i,
+  /\baudio\b|\bsound engineering\b|\bairplay\b|\bradio station\b|\bmusic genre\b/i,
+  // ordinary-life objects that collide with tax acronyms
+  /\bcooking pan\b|\bseason a\b|\bfrying pan\b/i,
+  /\bcooling fan\b|\bhow loud\b|\bfan (?:speed|noise)\b/i,
+  /\btin can\b|\bmetal element\b/i,
+  /\bduty (?:roster|schedule|shift)\b|\bguard duty\b|\bnight shift\b|\bon duty (?:tonight|today)\b/i,
+  /\breturn (?:policy|the defective|this defective)\b|\bonline store\b/i,
+  /\bmarketing (?:copy|campaign)\b|\bcall to action\b/i,
+  /\bdaylight saving\b|\btime zone\b/i,
+  /\baviation\b|\bflight (?:plan|crew)\b/i,
+  /\bsurgical\b|\bsurgery\b|\bin surgery\b/i,
+  /\bschool (?:exam|rubric|test)\b|\bexam rubric\b|\bperformance (?:assessment|review) at work\b/i,
+  /\bself[- ]assessment questionnaire\b|\btherapy\b|\bconstruction site\b/i,
+  /\bcapital letter\b|\bcapitali[sz]e\b/i,
+  /\breferee\b|\bthe game\b/i,
+  /\bcredit card\b/i,
+  /\breal estate agent\b/i,
+  /\bimage\b|\bphoto\b|\bpicture\b/i,
+];
+
+/**
+ * Tax CO-SIGNALS. These confirm the tax reading and therefore DEFEAT the veto above.
+ *
+ * Every entry is a phrase or an unambiguous anchor — never a bare homograph. A bare "VAT"
+ * must not defeat the veto, or "How do I close a VAT color palette?" would allow itself.
+ */
+export const TAX_COSIGNAL_PATTERNS = [
+  // unambiguous institutional anchors
+  /\bBIR\b|\bBureau of Internal Revenue\b|\bNIRC\b|\bNational Internal Revenue Code\b/i,
+  /\bBureau of Customs\b|\bCMTA\b|\bPEZA\b|\bBOI\b|\bFIRB\b/i,
+  /\bCourt of Tax Appeals\b/i,
+  // the word "tax" used as a tax word (not the "taxable font" homograph)
+  /\btax\b|\btaxes\b|\btaxation\b|\btaxpayer\b|\btax-?free\b|\btax-?exempt\b/i,
+  // taxable + a real tax object
+  /\btaxable\s+(?:income|compensation|sale|sales|gain|year|base|amount|transaction|receipts?|estate)\b/i,
+  /\b(?:income|compensation|sale|sales|gain|estate|receipts?|profit|dividend|interest income)\b[^.\n]{0,30}\btaxable\b/i,
+  // VAT + a real VAT object
+  /\bVAT\s+(?:return|invoice|registration|refund|rate|exempt\w*|zero-?rated|payable|due|threshold|declaration)\b/i,
+  /\b(?:input|output|subject to|liable for|charge|charged|register(?:ed)? for|exempt from)\s+VAT\b/i,
+  /\bVAT[- ]exempt\w*\b|\bzero-?rated\b/i,
+  // customs + a real customs object
+  /\bcustoms\s+(?:dut(?:y|ies)|declaration|classification|assessment|broker|clearance|valuation|entry)\b/i,
+  /\b(?:import|export)\s+dut(?:y|ies)\b|\bdutiable value\b|\bduty drawback\b|\blanded cost\b/i,
+  /\btariff\s+(?:classification|heading|rate|schedule)\b|\bimported goods\b|\bimportation\b/i,
+  /\bpost-?clearance audit\b/i,
+  // other unambiguous tax instruments
+  // "withholding" is itself a homograph — a "withholding pattern" is a programming term —
+  // so as a CO-SIGNAL it must carry a tax object. It remains a bare STRONG signal, which
+  // still allows whenever no non-tax object is present.
+  /\bwithholding\s+(?:tax|agent|return|certificate)\b|\b(?:expanded|final|creditable)\s+withholding\b/i,
+  /\bwithholding\b[^.\n]{0,30}\b(?:compensation|salary|salaries|wage|rent|rental|income|payment to)\b/i,
+  /\bincome tax\b|\bestate tax\b|\bdonor'?s tax\b|\bexcise tax\b/i,
+  /\bpercentage tax\b|\bdocumentary stamp\b|\bcapital gains? tax\b|\bcapital gain\b/i,
+  /\bLetter of Authority\b|\bassessment notice\b|\bdeficiency\b|\bBIR Form\b/i,
+  /\bRevenue Regulations?\b|\bRevenue Memorandum\b|\bRMC\b|\bRMO\b/i,
+  /\bbuwis\b|\bimpuwesto\b/i,
 ];
 
 /**
