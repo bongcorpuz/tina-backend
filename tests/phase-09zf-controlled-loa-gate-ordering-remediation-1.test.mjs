@@ -287,6 +287,30 @@ await test("static scan confirms no external operation, filing-ready, or automat
   check(!/legalCitationAllowed:\s*true/.test(addedPipeline), "no legal citation enablement introduced");
 });
 
+// PHASE-10A14-R18 (P1-R17-IR1-004) — EVIDENCE-ARTIFACT CLASSIFICATION.
+//
+// The pre-fix matrix proved this assertion was misclassifying, not detecting a regression:
+//   A truly clean repository      -> PASS (18/0, 187 assertions)
+//   B one harmless untracked note -> FAIL "changed file is allowed: <note>.txt"
+//   C planted server.js change    -> FAIL "changed file is allowed: server.js"
+// Condition B reproduces the exact assertion string that failed both independent R17 gate
+// cycles, using a file with no runtime meaning. diffNames() unions git diff with ALL
+// untracked files, so any evidence an authorized reviewer writes while running the gate
+// fails the suite. That has now blocked two independent reviews.
+//
+// The remedy narrows CLASSIFICATION only. It is a closed, explicit list of evidence and
+// report artifacts that cannot affect runtime — not a wildcard over directories where
+// runtime files could appear, and not a relaxation of any prohibited class. The prohibited
+// classes below are still evaluated against the COMPLETE unfiltered change list, so a
+// forbidden file is caught even if it were placed inside an evidence directory.
+function isEvidenceArtifact(name) {
+  return (
+    /^evaluation\/results\//.test(name) ||        // evidence result trees
+    /^reviews\//.test(name) ||                    // review write-ups
+    /^PHASE-[0-9A-Za-z-]+_REPORT\.md$/.test(name) // top-level phase reports
+  );
+}
+
 await test("no disallowed runtime, package, env, database, frontend, or production files changed", () => {
   const changed = diffNames();
   const allowed = new Set([
@@ -298,7 +322,13 @@ await test("no disallowed runtime, package, env, database, frontend, or producti
     "tests/phase-09zb-controlled-loa-answer-staging-smoke-1.test.mjs",
     "evaluation/fixtures/phase-09zb-controlled-loa-answer-staging-smoke-1.fixture.json"
   ]);
-  for (const name of changed) check(allowed.has(name), `changed file is allowed: ${name}`);
+  // Allowlist check: evidence/report artifacts are classified as non-runtime and skipped.
+  for (const name of changed) {
+    if (isEvidenceArtifact(name)) continue;
+    check(allowed.has(name), `changed file is allowed: ${name}`);
+  }
+  // Prohibited-class checks run against the COMPLETE, UNFILTERED list. Nothing below is
+  // exempted by the classification above — the guard stays live, as Condition C requires.
   for (const forbidden of ["server.js", "ask-handler.js", "package.json", "package-lock.json", ".env"]) {
     check(!changed.includes(forbidden), `${forbidden} unchanged`);
   }
