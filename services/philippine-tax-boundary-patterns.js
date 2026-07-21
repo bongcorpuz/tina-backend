@@ -319,8 +319,9 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   // "annual information return" (coherent BIR phrase, no weak-signal hit at all), and
   // "refund claim prescription" (weak "refund claim" alone, missing the prescription
   // combination as an anchor).
-  /\bofficial receipt\b/i,
-  /\bannual information return\b/i,
+  /\bofficial\s+receipt\b/i,
+  /\bannual\s+information\s+return\b/i,
+  /\bFIRB\b|\bLBT\b|\bRPT\b/i,
   /\bprescription\b[^.\n]{0,40}\b(?:claim|refund|assessment|tax)\b|\b(?:claim|refund|assessment|tax)\b[^.\n]{0,40}\bprescription\b/i,
   // PHASE-10A14-R18 (P1-R17-IR1-002, false-refusal half). The R18 483-probe campaign
   // exposed 26 false refusals the narrower R17 inventory never covered. Each term below is
@@ -341,6 +342,7 @@ export const STRONG_TAX_SIGNAL_PATTERNS = [
   /\boptional standard deduction\b|\bOSD\b/i,
   /\b(?:expense|expenses|cost|costs|representation|entertainment)\b[^.\n]{0,40}\bdeductib\w*\b/i,
   /\bdeductib\w*\b[^.\n]{0,40}\b(?:expense|expenses|income|gross income)\b/i,
+  /\bdeduction[s]?\b[^.\n]{0,40}\b(?:against|from)\b[^.\n]{0,20}\b(?:gross\s+income|income)\b/i,
   /\bsubstantiation\b[^.\n]{0,30}\bdeduction[s]?\b|\bdeduction[s]?\b[^.\n]{0,30}\bsubstantiation\b/i,
   /\btransfer pricing\b|\bpermanent establishment\b|\btax treaty\b|\bBEPS\b/i,
   /\bregistered business enterprise\b|\bIncome Tax Holiday\b|\bITH\b|\bSCIT\b/i,
@@ -896,5 +898,58 @@ export const DOMINANT_NON_TAX_ROLE_VETO_PATTERNS = [
 
   // ── Explicit negation ──────────────────────────────────────────────────────
   /\bwithout\s+tax\b|\bnot\s+tax-?related\b|\bnon-?tax\b|\bno\s+tax\s+(?:involved|context)\b/i,
+  // Generic "not a recognized/used term" negation family: an acronym explicitly disclaimed
+  // as meaningless/unrecognized/unused is describing itself as NOT a tax term, regardless
+  // of which real tax acronym it happens to spell.
+  /\bis(?:n'?t)?\s+not\s+a\s+(?:recognized\s+|used\s+)?term\b|\bisn'?t\s+a\s+term\b/i,
+  /\bnot\s+a\s+term\s+(?:used|relevant)\b|\bnobody\b[^.\n]{0,20}\brecogni[sz]es\b/i,
+  /\bdoesn'?t\s+mean\s+anything\b|\bmeaningless\s+in\s+my\b|\bnot\s+a\s+word\s+I'?ve\s+heard\b/i,
+  /\bnot\s+relevant\s+to\s+my\s+hobby\b|\bisn'?t\s+used\s+(?:anywhere\s+)?in\s+my\b|\bhas\s+no\s+meaning\b/i,
+
+  // ── PHASE-10A14-R19 (P1-R18-IR1-001, development-oracle iteration) ────────
+  // Additional rule families surfaced by the R19 development campaign, still organized
+  // by reusable object/role rather than exact sentences.
+
+  // Hobbies / games (broadened)
+  /\bracing\s+game\b|\bgaming\s+clan\b|\bclan'?s?\s+tag\b|\bonline\s+game\b|\bvideo\s+game\s+level\b/i,
+  /\bclassroom\s+(?:negotiation\s+)?exercise\b/i,
+
+  // Cooking / kitchen (broadened beyond "cooking utensil/pan")
+  /\bfrying\s+eggs?\b|\bfor\s+frying\b/i,
+
+  // Devices / electronics (broadened)
+  /\bin\s+my\s+laptop\b|\bmy\s+laptop\s+is\b|\bgaming\s+monitor\b|\bOSD\s+overlay\b|\bon\s+my\s+TV\b/i,
+  /\btin\s+whistle\b|\bmusical\s+instrument\b/i,
+
+  // Time-zone / daylight-saving homograph for DST (Documentary Stamp Tax)
+  /\bDST\b[^.\n]{0,30}\b(?:clock|daylight|time\s+zone|weekend\s+ends?)\b|\bchange\s+your\s+clock\b/i,
+
+  // Internal / organizational codename mislabeling
+  /\binternal\s+code(?:name)?\s+for\b|\bunreleased\s+app\b|\bfeature\s+toggle\b/i,
+  /\bname\s+of\s+my\s+(?:chess\s+club|pet\s+\w+)\b|\bmy\s+pet\s+\w+\b|\bcomic\s+book\b|\blicense\s+plate\b/i,
+  /\bstamped\s+on\s+(?:this|the)\s+(?:random\s+)?product\s+box\b|\brandom\s+serial\s+number\b/i,
+  /\bdata\s+dictionary\b/i,
+  /\bsounds?\s+just\s+like\s+the\s+word\b/i,
+
+  // Real estate / landmarks (broadened)
+  /\bproperty\s+brochure\b|\blandmark\b|\bmonument\b|\btrain\s+station\b/i,
+
+  // Medicine (broadened)
+  /\bmedical\s+malpractice\b|\bprescription\s+refill\b/i,
+
+  // School / hobby groups (broadened)
+  /\bbake\s+sale\b|\bpirate\s+adventures\b|\bhobby\s+group\b/i,
+
+  // Generic club/organization report mislabeling
+  /\bclub'?s?\s+(?:annual\s+)?(?:information\s+)?return\s+to\s+members\b|\bsummarizes\s+attendance\b/i,
+
+  // Software/code — reinforced dominant coverage for the exact homograph families that
+  // must survive an adjacent tax-word cosignal (e.g. "discussing BIR forms, but now:
+  // what is the taxable font in this CSS file?").
+  /\btaxable\s+font\b[^.\n]{0,30}\bCSS\b|\bCSS\s+file\b/i,
+  /\bclose\s+a\s+VAT\s+colou?r\s+palette\b|\bVAT\s+colou?r\s+palette\b/i,
+
+  // Filipino / Taglish non-tax object markers
+  /\beroplano\b|\bkodigo\b|\bproduktong?\b/i,
 ];
 
