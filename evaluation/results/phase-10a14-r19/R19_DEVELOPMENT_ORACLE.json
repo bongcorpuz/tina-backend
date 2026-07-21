@@ -1,0 +1,6146 @@
+{
+  "task": "PHASE-10A14-R19",
+  "frozen": true,
+  "frozenAt": "2026-07-21T04:39:08.551Z",
+  "note": "Contains all 567 independent-review rows verbatim as regression (including the acronym_context field-swap quirk, documented separately in ORACLE_FIELD_SWAP_FINDING.json and NOT corrected here), the 38 acronym_context probes correctly re-labeled as acronym_tax_nontax_pair rows, accepted R15-R18 closures, and >=250 new context variants across five required categories.",
+  "oracleConsistency": {
+    "contradictions": 0,
+    "rule": "A text may appear multiple times only with an identical expectation; contradictions abort the freeze."
+  },
+  "requiredMinimums": {
+    "independent_review_567": 567,
+    "acronym_tax_nontax_pairs": 100,
+    "polysemous_phrase_pairs": 60,
+    "filipino_taglish_pairs": 40,
+    "typo_case_punctuation_variants": 30,
+    "active_context_controls": 20
+  },
+  "counts": {
+    "ir18_explicit_tax": 112,
+    "ir18_explicit_non_tax": 117,
+    "ir18_substring_homograph_trap": 100,
+    "ir18_ambiguous": 80,
+    "ir18_filipino_taglish": 60,
+    "ir18_metamorphic": 60,
+    "acronym_tax_nontax_pair": 136,
+    "accepted_r15_r18_closure": 49,
+    "polysemous_phrase_pair": 60,
+    "filipino_taglish_pair": 46,
+    "typo_case_punctuation_variant": 33,
+    "active_context_vs_explicit_nontax": 20
+  },
+  "total": 873,
+  "rows": [
+    {
+      "id": "R19-DEV-0001",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "VAT return",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0002",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "VAT invoice",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0003",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "input VAT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0004",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "output VAT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0005",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "withholding tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0006",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "expanded withholding tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0007",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "final withholding tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0008",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "income tax return",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0009",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR Form 1701",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0010",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR Form 2550Q",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0011",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "NIRC section",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0012",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Revenue Regulation",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0013",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "RMC guidance",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0014",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR ruling",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0015",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax refund",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0016",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax credit certificate",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0017",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "estate tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0018",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "donor tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0019",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "documentary stamp tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0020",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "percentage tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0021",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "excise tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0022",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "capital gains tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0023",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "customs duty",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0024",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "import duty",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0025",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tariff classification",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0026",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Bureau of Customs assessment",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0027",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BOC customs clearance",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0028",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "MCIT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0029",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "RCIT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0030",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "gross estate",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0031",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "net estate",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0032",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "optional standard deduction",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0033",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "OSD election",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0034",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "SLSP filing",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0035",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Alphalist attachment",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0036",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "books of accounts",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0037",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "official receipt",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0038",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "deficiency assessment",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0039",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Formal Letter of Demand",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0040",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "FLD assessment",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0041",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Notice for Informal Conference",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0042",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "administrative protest",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0043",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "reinvestigation request",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0044",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "reconsideration request",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0045",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "prescriptive period for assessment",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0046",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "compromise penalty",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0047",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "surcharge for late filing",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0048",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "transfer pricing documentation",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0049",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "permanent establishment",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0050",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "registered business enterprise",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0051",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "EOPT law",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0052",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Oplan Kandado",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0053",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR Letter of Authority",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0054",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Court of Tax Appeals petition",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0055",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax treaty relief",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0056",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "PEZA income tax holiday",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0057",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "local business tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0058",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "real property tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0059",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "withholding certificate",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0060",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "substantiation for deductions",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0061",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "deductible representation expense",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0062",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "fringe benefit tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0063",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "de minimis benefits",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0064",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "taxable compensation",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0065",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "taxable sale",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0066",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "zero-rated sale",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0067",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "VAT-exempt sale",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0068",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "gross receipts tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0069",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "minimum corporate income tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0070",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "regular corporate income tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0071",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "deficiency VAT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0072",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "deficiency withholding tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0073",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "stock transaction tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0074",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "principal residence CGT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0075",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax-free exchange",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0076",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "customs broker duty issue",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0077",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "post-clearance audit",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0078",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "dutiable value",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0079",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "ad valorem duty",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0080",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "CMTA import rule",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0081",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR audit defense",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0082",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax protest deadline",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0083",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "FDDA appeal",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0084",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "FAN response",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0085",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "PAN reply",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0086",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax delinquency",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0087",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax lien",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0088",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax sparing",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0089",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "double tax agreement",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0090",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "Philippine tax residency",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0091",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "resident alien tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0092",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "non-resident citizen tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0093",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "withholding on rent",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0094",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax on professional fees",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0095",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "VAT registration",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0096",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "eFPS filing",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0097",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "eBIRForms filing",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0098",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "TIN registration",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0099",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR registration",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0100",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "local tax situs",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0101",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "situs of taxation",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0102",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "tax accounting period",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0103",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "fiscal year tax filing",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0104",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "quarterly percentage tax",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0105",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "monthly withholding remittance",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0106",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "annual information return",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0107",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "BIR assessment notice",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0108",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "taxpayer remedies",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0109",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "refund claim prescription",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0110",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "customs tariff rate",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0111",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "imported goods VAT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0112",
+      "coverageClass": "ir18_explicit_tax",
+      "text": "subject to VAT",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0113",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "CSS grid layout",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0114",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "font kerning in a typeface",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0115",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "color palette selection",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0116",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "paint drying time",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0117",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "audio chord progression",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0118",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "music band schedule",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0119",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "guitar chord chart",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0120",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "software variable naming",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0121",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "TypeScript interface design",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0122",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "JavaScript promise handling",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0123",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "React component state",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0124",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "SQL query optimization",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0125",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "database index tuning",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0126",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "API endpoint latency",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0127",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "GitHub pull request labels",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0128",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "astronomy black hole facts",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0129",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "biology cell membrane",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0130",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "chemistry reaction rate",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0131",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "physics momentum problem",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0132",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "geology rock cycle",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0133",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "medical prescription dosage",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0134",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "pharmacology trial design",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0135",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "clinical diagnosis checklist",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0136",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "court filing in civil procedure",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0137",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "criminal procedure arraignment",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0138",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "family law annulment",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0139",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "political campaign strategy",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0140",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "presidential election trivia",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0141",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "basketball game score",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0142",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "football standings",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0143",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "travel itinerary in Cebu",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0144",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "hotel recommendation",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0145",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "recipe for adobo",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0146",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "baking temperature",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0147",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "movie review",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0148",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "song lyrics request",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0149",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "relationship advice",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0150",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "love letter draft",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0151",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "religious sermon outline",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0152",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "Bible study question",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0153",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "stock trading strategy",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0154",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "crypto wallet seed phrase",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0155",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "forex market analysis",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0156",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "business marketing plan",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0157",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "real-estate listing copy",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0158",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "lease contract renewal without tax",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0159",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "private lease weekend deadline",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0160",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "office duty roster",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0161",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "customs in a culture class",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0162",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "capital city trivia",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0163",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "capital letter typography",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0164",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "gain setting on amplifier",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0165",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "return statement in JavaScript",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0166",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "filing cabinet organization",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0167",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "deadline for homework",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0168",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "penalty kick rule",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0169",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "surcharge in a delivery app",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0170",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "deductible in insurance policy",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0171",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "gross estate marketing phrase",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0172",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "prescriptive period in medicine",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0173",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "Alphalist as alphabetical list",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0174",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "SLSP as unknown project code",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0175",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "OSD as on-screen display",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0176",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "FLD as field abbreviation",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0177",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "MCIT as random product code",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0178",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "RCIT as random training code",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0179",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "BOC as band of chords",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0180",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "VAT as color palette",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0181",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "taxable CSS class name",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0182",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "BIR as a bird typo",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0183",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "TIN can material",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0184",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "FAN cooling speed",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0185",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "CTA button wording",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0186",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "LOA in aviation",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0187",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "PAN cooking utensil",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0188",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "FAN noise level",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0189",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "RR railroad timetable",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0190",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "RMC music channel",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0191",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "gross receipts for a school raffle",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0192",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "official receipt layout design",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0193",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "books of accounts as novel list",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0194",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "transfer pricing in a board game",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0195",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "permanent establishment in architecture",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0196",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "registered business enterprise as a game guild",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0197",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "surcharge in shipping checkout",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0198",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "compromise offer in negotiation class",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0199",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "reconsideration request for exam grade",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0200",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "reinvestigation in detective fiction",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0201",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "notice for informal conference agenda",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0202",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "formal letter demand in English class",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0203",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "deficiency in vitamin D",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0204",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "assessment in classroom rubric",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0205",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "customs as social traditions",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0206",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "tariff as phone plan",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0207",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "import duty in a game quest",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0208",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "Bureau of Customs as building directions only",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0209",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "estate sale marketing",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0210",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "gross estate landscaping",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0211",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "prescription period for antibiotics",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0212",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "subject to VAT as variable name in code",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0213",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "VAT return as function return value",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0214",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "input VAT as form input label",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0215",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "output VAT as console output label",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0216",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "taxable font file",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0217",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "taxable typeface license",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0218",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "capital-gain knob on amplifier",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0219",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "BOC audio acronym",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0220",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "BOC chord sheet",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0221",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "VAT paint swatch",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0222",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "VAT hue token",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0223",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "deductible insurance excess",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0224",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "exemption in a game rule",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0225",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "rate in audio sample",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0226",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "threshold in image processing",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0227",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "period in grammar",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0228",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "deadline in school calendar",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0229",
+      "coverageClass": "ir18_explicit_non_tax",
+      "text": "return due in library books",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0230",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is the taxable font in this CSS file? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0231",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Which taxable typeface renders best? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0232",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Rename the taxable CSS class. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0233",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Set the taxable variable to true. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0234",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is taxable in this TypeScript enum? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0235",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "How do I close a VAT color palette? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0236",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Pick a VAT paint shade. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0237",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Sample the VAT hue from this image. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0238",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use VAT as a design token name. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0239",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Where is the VAT swatch? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0240",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Is BOC a band of chords? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0241",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Write BOC chord tabs. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0242",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is BOC in audio mixing? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0243",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Does the BOC band play jazz? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0244",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Tune the BOC chord progression. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0245",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Explain capital gain on an amplifier. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0246",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Increase capital-gain knob level. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0247",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use capital as a font style. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0248",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is a customs tradition? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0249",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What local customs apply at weddings? Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0250",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Return the VAT variable from a function. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0251",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Input VAT into this web form field. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0252",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Output VAT to the console. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0253",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Make a taxable font-face rule. Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0254",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Add taxable to the CSS class list Variant 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0255",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is the taxable font in this CSS file? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0256",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Which taxable typeface renders best? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0257",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Rename the taxable CSS class. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0258",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Set the taxable variable to true. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0259",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is taxable in this TypeScript enum? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0260",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "How do I close a VAT color palette? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0261",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Pick a VAT paint shade. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0262",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Sample the VAT hue from this image. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0263",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use VAT as a design token name. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0264",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Where is the VAT swatch? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0265",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Is BOC a band of chords? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0266",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Write BOC chord tabs. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0267",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is BOC in audio mixing? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0268",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Does the BOC band play jazz? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0269",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Tune the BOC chord progression. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0270",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Explain capital gain on an amplifier. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0271",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Increase capital-gain knob level. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0272",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use capital as a font style. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0273",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is a customs tradition? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0274",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What local customs apply at weddings? Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0275",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Return the VAT variable from a function. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0276",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Input VAT into this web form field. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0277",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Output VAT to the console. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0278",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Make a taxable font-face rule. Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0279",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Add taxable to the CSS class list Variant 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0280",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is the taxable font in this CSS file? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0281",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Which taxable typeface renders best? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0282",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Rename the taxable CSS class. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0283",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Set the taxable variable to true. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0284",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is taxable in this TypeScript enum? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0285",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "How do I close a VAT color palette? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0286",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Pick a VAT paint shade. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0287",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Sample the VAT hue from this image. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0288",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use VAT as a design token name. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0289",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Where is the VAT swatch? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0290",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Is BOC a band of chords? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0291",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Write BOC chord tabs. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0292",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is BOC in audio mixing? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0293",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Does the BOC band play jazz? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0294",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Tune the BOC chord progression. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0295",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Explain capital gain on an amplifier. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0296",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Increase capital-gain knob level. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0297",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use capital as a font style. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0298",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is a customs tradition? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0299",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What local customs apply at weddings? Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0300",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Return the VAT variable from a function. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0301",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Input VAT into this web form field. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0302",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Output VAT to the console. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0303",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Make a taxable font-face rule. Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0304",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Add taxable to the CSS class list Variant 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0305",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is the taxable font in this CSS file? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0306",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Which taxable typeface renders best? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0307",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Rename the taxable CSS class. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0308",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Set the taxable variable to true. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0309",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is taxable in this TypeScript enum? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0310",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "How do I close a VAT color palette? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0311",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Pick a VAT paint shade. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0312",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Sample the VAT hue from this image. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0313",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use VAT as a design token name. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0314",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Where is the VAT swatch? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0315",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Is BOC a band of chords? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0316",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Write BOC chord tabs. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0317",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is BOC in audio mixing? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0318",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Does the BOC band play jazz? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0319",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Tune the BOC chord progression. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0320",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Explain capital gain on an amplifier. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0321",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Increase capital-gain knob level. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0322",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Use capital as a font style. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0323",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What is a customs tradition? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0324",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "What local customs apply at weddings? Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0325",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Return the VAT variable from a function. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0326",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Input VAT into this web form field. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0327",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Output VAT to the console. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0328",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Make a taxable font-face rule. Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0329",
+      "coverageClass": "ir18_substring_homograph_trap",
+      "text": "Add taxable to the CSS class list Variant 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0330",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this deductible? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0331",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the exemption? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0332",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is there a surcharge? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0333",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the penalty? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0334",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the period? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0335",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the deadline? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0336",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the rate? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0337",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the threshold? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0338",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the holding period? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0339",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the tariff? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0340",
+      "coverageClass": "ir18_ambiguous",
+      "text": "When is the return due? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0341",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the filing deadline? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0342",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can this be credited? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0343",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this exempt? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0344",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Does this need registration? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0345",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this subject to assessment? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0346",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I protest this? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0347",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I appeal this? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0348",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What form should I use? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0349",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the notice period? Context 1.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0350",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this deductible? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0351",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the exemption? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0352",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is there a surcharge? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0353",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the penalty? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0354",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the period? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0355",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the deadline? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0356",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the rate? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0357",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the threshold? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0358",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the holding period? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0359",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the tariff? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0360",
+      "coverageClass": "ir18_ambiguous",
+      "text": "When is the return due? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0361",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the filing deadline? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0362",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can this be credited? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0363",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this exempt? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0364",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Does this need registration? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0365",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this subject to assessment? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0366",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I protest this? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0367",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I appeal this? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0368",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What form should I use? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0369",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the notice period? Context 2.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0370",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this deductible? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0371",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the exemption? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0372",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is there a surcharge? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0373",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the penalty? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0374",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the period? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0375",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the deadline? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0376",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the rate? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0377",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the threshold? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0378",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the holding period? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0379",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the tariff? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0380",
+      "coverageClass": "ir18_ambiguous",
+      "text": "When is the return due? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0381",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the filing deadline? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0382",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can this be credited? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0383",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this exempt? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0384",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Does this need registration? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0385",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this subject to assessment? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0386",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I protest this? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0387",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I appeal this? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0388",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What form should I use? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0389",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the notice period? Context 3.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0390",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this deductible? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0391",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the exemption? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0392",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is there a surcharge? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0393",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the penalty? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0394",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the period? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0395",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the deadline? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0396",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the rate? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0397",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the threshold? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0398",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the holding period? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0399",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the tariff? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0400",
+      "coverageClass": "ir18_ambiguous",
+      "text": "When is the return due? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0401",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the filing deadline? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0402",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can this be credited? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0403",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this exempt? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0404",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Does this need registration? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0405",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Is this subject to assessment? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0406",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I protest this? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0407",
+      "coverageClass": "ir18_ambiguous",
+      "text": "Can I appeal this? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0408",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What form should I use? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0409",
+      "coverageClass": "ir18_ambiguous",
+      "text": "What is the notice period? Context 4.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0410",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang VAT return sa Pilipinas? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0411",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-file ng BIR Form 1701? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0412",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Kailan due ang withholding tax? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0413",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Magkano ang income tax sa compensation? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0414",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang buwis sa sale? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0415",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano ang input VAT at output VAT? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0416",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang BIR audit defense? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0417",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "May surcharge ba sa late filing ng tax return? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0418",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang MCIT para sa corporation? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0419",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang RCIT sa Pilipinas? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0420",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang gross estate for estate tax? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0421",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-submit ng SLSP? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0422",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang Alphalist attachment? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0423",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang OSD election? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0424",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang FLD sa tax assessment? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0425",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-protest ng deficiency assessment? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0426",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang prescriptive period for BIR assessment? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0427",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Deductible ba ang representation expense? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0428",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang customs duty sa imported goods? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0429",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang tariff classification sa BOC? Batch 1.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0430",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang VAT return sa Pilipinas? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0431",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-file ng BIR Form 1701? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0432",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Kailan due ang withholding tax? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0433",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Magkano ang income tax sa compensation? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0434",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang buwis sa sale? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0435",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano ang input VAT at output VAT? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0436",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang BIR audit defense? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0437",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "May surcharge ba sa late filing ng tax return? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0438",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang MCIT para sa corporation? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0439",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang RCIT sa Pilipinas? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0440",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang gross estate for estate tax? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0441",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-submit ng SLSP? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0442",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang Alphalist attachment? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0443",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang OSD election? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0444",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang FLD sa tax assessment? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0445",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-protest ng deficiency assessment? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0446",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang prescriptive period for BIR assessment? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0447",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Deductible ba ang representation expense? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0448",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang customs duty sa imported goods? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0449",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang tariff classification sa BOC? Batch 2.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0450",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang VAT return sa Pilipinas? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0451",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-file ng BIR Form 1701? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0452",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Kailan due ang withholding tax? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0453",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Magkano ang income tax sa compensation? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0454",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang buwis sa sale? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0455",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano ang input VAT at output VAT? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0456",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang BIR audit defense? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0457",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "May surcharge ba sa late filing ng tax return? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0458",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang MCIT para sa corporation? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0459",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang RCIT sa Pilipinas? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0460",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang gross estate for estate tax? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0461",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-submit ng SLSP? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0462",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang Alphalist attachment? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0463",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang OSD election? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0464",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang FLD sa tax assessment? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0465",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Paano mag-protest ng deficiency assessment? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0466",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang prescriptive period for BIR assessment? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0467",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Deductible ba ang representation expense? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0468",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang customs duty sa imported goods? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0469",
+      "coverageClass": "ir18_filipino_taglish",
+      "text": "Ano ang tariff classification sa BOC? Batch 3.",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0470",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Is compensation taxable in the Philippines?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0471",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Is this font taxable in CSS?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0472",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is the VAT on this sale?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0473",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is the VAT shade in this palette?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0474",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What are BOC customs duties?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0475",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Is BOC a band of chords?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0476",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is the customs duty on imports?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0477",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What local customs apply at dinner?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0478",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is capital gains tax?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0479",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is capital gain on an amplifier?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0480",
+      "coverageClass": "ir18_metamorphic",
+      "text": "How do I get a BIR TIN?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0481",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a tin can made of?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0482",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a FAN in a tax assessment?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0483",
+      "coverageClass": "ir18_metamorphic",
+      "text": "How loud is this cooling fan?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0484",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Can I appeal to the CTA?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0485",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What does the CTA button do?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0486",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is an FLD in a tax assessment?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0487",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What does FLD mean as a field abbreviation?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0488",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is OSD for deductions?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0489",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is OSD on a monitor?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0490",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is SLSP filing?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0491",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What does SLSP mean in my software project?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0492",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is an Alphalist attachment?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0493",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Make an alphabetical list of names.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0494",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is gross estate for estate tax?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0495",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Write real-estate marketing copy.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0496",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is the prescriptive period for assessment?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0497",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is the medical prescription period?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0498",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Is software subject to VAT?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0499",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Where is the VAT variable in software?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0500",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Must I issue a VAT invoice?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0501",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Design a VAT invoice icon only.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0502",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is input VAT?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0503",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Input VAT into a text box.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0504",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is output VAT?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0505",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Output VAT from a function.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0506",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What expenses are deductible?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0507",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is my insurance deductible?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0508",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What are customs duties?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0509",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What are cultural customs?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0510",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is taxable compensation?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0511",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a taxable CSS class?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0512",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is BOC customs clearance?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0513",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is BOC in audio?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0514",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is MCIT?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0515",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Use MCIT as a random SKU.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0516",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is RCIT?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0517",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Use RCIT as a course code.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0518",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a compromise penalty?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0519",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Draft a compromise offer in a negotiation class.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0520",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a surcharge for late filing?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0521",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a delivery surcharge?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0522",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a deficiency assessment?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0523",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a vitamin deficiency?",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0524",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a Notice for Informal Conference?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0525",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Plan an informal conference agenda.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0526",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is a Formal Letter of Demand?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0527",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Write a formal demand letter for grammar class.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0528",
+      "coverageClass": "ir18_metamorphic",
+      "text": "What is transfer pricing documentation?",
+      "expected": "ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0529",
+      "coverageClass": "ir18_metamorphic",
+      "text": "Price transfers in a board game.",
+      "expected": "NOT_ALLOW",
+      "source": "independent_review_567_verbatim"
+    },
+    {
+      "id": "R19-DEV-0530",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is MCIT in Philippine corporate income tax?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0531",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "In music software, MCIT is my plugin code; what could it stand for?",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0532",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RCIT for a domestic corporation?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0533",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RCIT is my robotics course ID; define it generically.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0534",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is FLD in a BIR assessment?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0535",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FLD means field in my spreadsheet; explain the acronym.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0536",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is OSD for Philippine tax deductions?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0537",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is OSD on a monitor display?",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0538",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is SLSP filing for VAT taxpayers?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0539",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "SLSP is an unknown acronym in my app logs.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0540",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is an Alphalist for withholding tax?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0541",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Make an alphalist of students alphabetically.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0542",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is BOC customs clearance?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0543",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "BOC means band of chords in this song.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0544",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is VAT registration?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0545",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "VAT is a color token in my design system.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0546",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is taxable income?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0547",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "taxable is a CSS class in my stylesheet.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0548",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is gross estate for estate tax?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0549",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Gross estate means ugly real-estate ads here.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0550",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the prescriptive period for tax assessment?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0551",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the prescription period for antibiotics?",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0552",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a FAN assessment notice?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0553",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FAN is a cooling fan device.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0554",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is CTA jurisdiction in tax cases?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0555",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "CTA is a call-to-action button.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0556",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is PAN in BIR assessment process?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0557",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Pan is a cooking tool.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0558",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is TIN registration?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0559",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Tin is a metal can.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0560",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RR No. 2-98?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0561",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RR is a railroad abbreviation.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0562",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RMC guidance from BIR?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0563",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RMC is a radio music channel.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0564",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is eFPS filing?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0565",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "EFPS is a random software flag.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0566",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is CMTA for customs duties?",
+      "expected": "ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0567",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "CMTA is a club acronym with no tax context.",
+      "expected": "NOT_ALLOW",
+      "source": "ir18_acronym_context_corrected"
+    },
+    {
+      "id": "R19-DEV-0568",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What customs duties apply to importing goods into the Philippines?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0569",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the BOC customs duty deadline for imported goods?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0570",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What are Philippine customs duties?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0571",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the holding-period rule for an individual's capital gain on personal property?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0572",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is Oplan Kandado and when can it be applied?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0573",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Is withholding tax on the private lease payment due this weekend?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0574",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Is the gain taxable?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0575",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the taxable font in a CSS file?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0576",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Is the BOC a band of chords?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0577",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "How do I close a VAT color palette?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0578",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "For a private lease payment, does the weekend rule automatically extend my deadline?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0579",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Can a court filing deadline that falls on a holiday be moved to the next business day?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0580",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the deadline to file a motion for reconsideration in a civil case?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0581",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is MCIT?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0582",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is RCIT?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0583",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is included in the gross estate?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0584",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "How do I protest a deficiency assessment?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0585",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the prescriptive period for assessment?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0586",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a compromise penalty?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0587",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the per-unit residential exemption?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0588",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the optional standard deduction?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0589",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What expenses are deductible?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0590",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is substantiation for deductions?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0591",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Are representation expenses deductible?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0592",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is transfer pricing documentation?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0593",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a permanent establishment?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0594",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a registered business enterprise?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0595",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the EOPT law?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0596",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is an Alphalist?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0597",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is SLSP?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0598",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What are books of accounts?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0599",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is an official receipt requirement?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0600",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a surcharge for late filing?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0601",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is an administrative protest?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0602",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a reinvestigation request?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0603",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a reconsideration request?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0604",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a Notice for Informal Conference?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0605",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a Formal Letter of Demand?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0606",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is a deficiency assessment?",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0607",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Is this deductible?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0608",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the exemption?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0609",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "Is there a surcharge?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0610",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the penalty?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0611",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the period?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0612",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the holding period?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0613",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "What is the tariff?",
+      "expected": "NOT_ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0614",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "official receipt",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0615",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "annual information return",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0616",
+      "coverageClass": "accepted_r15_r18_closure",
+      "text": "refund claim prescription",
+      "expected": "ALLOW",
+      "source": "accepted_closure_verbatim"
+    },
+    {
+      "id": "R19-DEV-0617",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a Letter of Authority from the BIR?",
+      "expected": "ALLOW",
+      "source": "acronym_LOA_tax"
+    },
+    {
+      "id": "R19-DEV-0618",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a LOA in aviation terminology?",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_LOA_nontax"
+    },
+    {
+      "id": "R19-DEV-0619",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a replacement eLA?",
+      "expected": "ALLOW",
+      "source": "acronym_eLA_tax"
+    },
+    {
+      "id": "R19-DEV-0620",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What does eLA mean in this racing game?",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_eLA_nontax"
+    },
+    {
+      "id": "R19-DEV-0621",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is an FDDA from the BIR?",
+      "expected": "ALLOW",
+      "source": "acronym_FDDA_tax"
+    },
+    {
+      "id": "R19-DEV-0622",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FDDA is my gaming clan's tag.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_FDDA_nontax"
+    },
+    {
+      "id": "R19-DEV-0623",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a Preliminary Assessment Notice (PAN)?",
+      "expected": "ALLOW",
+      "source": "acronym_PAN_tax"
+    },
+    {
+      "id": "R19-DEV-0624",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "I need a new PAN for frying eggs.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_PAN_nontax"
+    },
+    {
+      "id": "R19-DEV-0625",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a Final Assessment Notice (FAN)?",
+      "expected": "ALLOW",
+      "source": "acronym_FAN_tax"
+    },
+    {
+      "id": "R19-DEV-0626",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "The FAN in my laptop is too loud.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_FAN_nontax"
+    },
+    {
+      "id": "R19-DEV-0627",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a Formal Letter of Demand (FLD)?",
+      "expected": "ALLOW",
+      "source": "acronym_FLD_tax"
+    },
+    {
+      "id": "R19-DEV-0628",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FLD is the column header in my spreadsheet.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_FLD_nontax"
+    },
+    {
+      "id": "R19-DEV-0629",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "How do I register for a BIR TIN?",
+      "expected": "ALLOW",
+      "source": "acronym_TIN_tax"
+    },
+    {
+      "id": "R19-DEV-0630",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "A tin whistle is a simple musical instrument.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_TIN_nontax"
+    },
+    {
+      "id": "R19-DEV-0631",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the jurisdiction of the Court of Tax Appeals (CTA)?",
+      "expected": "ALLOW",
+      "source": "acronym_CTA_tax"
+    },
+    {
+      "id": "R19-DEV-0632",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "The CTA button on the landing page needs a redesign.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_CTA_nontax"
+    },
+    {
+      "id": "R19-DEV-0633",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is documentary stamp tax (DST)?",
+      "expected": "ALLOW",
+      "source": "acronym_DST_tax"
+    },
+    {
+      "id": "R19-DEV-0634",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "DST ends this weekend, remember to change your clock.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_DST_nontax"
+    },
+    {
+      "id": "R19-DEV-0635",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "When is my annual ITR due?",
+      "expected": "ALLOW",
+      "source": "acronym_ITR_tax"
+    },
+    {
+      "id": "R19-DEV-0636",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "ITR is not a term used in our department.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_ITR_nontax"
+    },
+    {
+      "id": "R19-DEV-0637",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is regular corporate income tax (RCIT)?",
+      "expected": "ALLOW",
+      "source": "acronym_RCIT_tax"
+    },
+    {
+      "id": "R19-DEV-0638",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RCIT is the internal code for our robotics team.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_RCIT_nontax"
+    },
+    {
+      "id": "R19-DEV-0639",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is minimum corporate income tax (MCIT)?",
+      "expected": "ALLOW",
+      "source": "acronym_MCIT_tax"
+    },
+    {
+      "id": "R19-DEV-0640",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "MCIT is stamped on this random product box.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_MCIT_nontax"
+    },
+    {
+      "id": "R19-DEV-0641",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the standard VAT rate?",
+      "expected": "ALLOW",
+      "source": "acronym_VAT_tax"
+    },
+    {
+      "id": "R19-DEV-0642",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "VAT is just a colour swatch label in my palette.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_VAT_nontax"
+    },
+    {
+      "id": "R19-DEV-0643",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What forms does the BIR require?",
+      "expected": "ALLOW",
+      "source": "acronym_BIR_tax"
+    },
+    {
+      "id": "R19-DEV-0644",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "BIR sounds just like the word 'bird' when I mumble it.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_BIR_nontax"
+    },
+    {
+      "id": "R19-DEV-0645",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What does the NIRC provide for withholding tax?",
+      "expected": "ALLOW",
+      "source": "acronym_NIRC_tax"
+    },
+    {
+      "id": "R19-DEV-0646",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "NIRC isn't a term anyone uses outside tax law, so it's meaningless in my essay.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_NIRC_nontax"
+    },
+    {
+      "id": "R19-DEV-0647",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RMC guidance on VAT invoicing?",
+      "expected": "ALLOW",
+      "source": "acronym_RMC_tax"
+    },
+    {
+      "id": "R19-DEV-0648",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RMC 101.5 FM plays music all night.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_RMC_nontax"
+    },
+    {
+      "id": "R19-DEV-0649",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is an RMO on audit procedures?",
+      "expected": "ALLOW",
+      "source": "acronym_RMO_tax"
+    },
+    {
+      "id": "R19-DEV-0650",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RMO is an abbreviation nobody in my office recognizes.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_RMO_nontax"
+    },
+    {
+      "id": "R19-DEV-0651",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RR No. 16-2005 about?",
+      "expected": "ALLOW",
+      "source": "acronym_RR_tax"
+    },
+    {
+      "id": "R19-DEV-0652",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RR stands for railroad in old timetables.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_RR_nontax"
+    },
+    {
+      "id": "R19-DEV-0653",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "How do I enroll in eFPS?",
+      "expected": "ALLOW",
+      "source": "acronym_eFPS_tax"
+    },
+    {
+      "id": "R19-DEV-0654",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "eFPS is a flag my app uses for a random feature toggle.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_eFPS_nontax"
+    },
+    {
+      "id": "R19-DEV-0655",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the CMTA's provision on dutiable value?",
+      "expected": "ALLOW",
+      "source": "acronym_CMTA_tax"
+    },
+    {
+      "id": "R19-DEV-0656",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "CMTA is the name of my chess club.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_CMTA_nontax"
+    },
+    {
+      "id": "R19-DEV-0657",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the Bureau of Customs (BOC) clearance process?",
+      "expected": "ALLOW",
+      "source": "acronym_BOC_tax"
+    },
+    {
+      "id": "R19-DEV-0658",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "BOC could also mean 'band of chords' in music theory.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_BOC_nontax"
+    },
+    {
+      "id": "R19-DEV-0659",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "How do I prepare an SLSP for BIR submission?",
+      "expected": "ALLOW",
+      "source": "acronym_SLSP_tax"
+    },
+    {
+      "id": "R19-DEV-0660",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "SLSP is an internal codename for our unreleased app.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_SLSP_nontax"
+    },
+    {
+      "id": "R19-DEV-0661",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "How is the optional standard deduction (OSD) computed?",
+      "expected": "ALLOW",
+      "source": "acronym_OSD_tax"
+    },
+    {
+      "id": "R19-DEV-0662",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "I need to adjust the OSD setting on my gaming monitor.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_OSD_nontax"
+    },
+    {
+      "id": "R19-DEV-0663",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What must be included in an Alphalist?",
+      "expected": "ALLOW",
+      "source": "acronym_Alphalist_tax"
+    },
+    {
+      "id": "R19-DEV-0664",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Please make an Alphalist of the invited guests.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_Alphalist_nontax"
+    },
+    {
+      "id": "R19-DEV-0665",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the special corporate income tax (SCIT) rate?",
+      "expected": "ALLOW",
+      "source": "acronym_SCIT_tax"
+    },
+    {
+      "id": "R19-DEV-0666",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "SCIT isn't a term used in my hobby group.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_SCIT_nontax"
+    },
+    {
+      "id": "R19-DEV-0667",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is an Income Tax Holiday (ITH)?",
+      "expected": "ALLOW",
+      "source": "acronym_ITH_tax"
+    },
+    {
+      "id": "R19-DEV-0668",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "ITH doesn't mean anything in my context.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_ITH_nontax"
+    },
+    {
+      "id": "R19-DEV-0669",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What incentives does PEZA grant?",
+      "expected": "ALLOW",
+      "source": "acronym_PEZA_tax"
+    },
+    {
+      "id": "R19-DEV-0670",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "PEZA is not a word I've heard before in any other context.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_PEZA_nontax"
+    },
+    {
+      "id": "R19-DEV-0671",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is BOI registration for?",
+      "expected": "ALLOW",
+      "source": "acronym_BOI_tax"
+    },
+    {
+      "id": "R19-DEV-0672",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "My favorite BOI in this comic book is the giant robot mascot.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_BOI_nontax"
+    },
+    {
+      "id": "R19-DEV-0673",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the FIRB's role in incentive approval?",
+      "expected": "ALLOW",
+      "source": "acronym_FIRB_tax"
+    },
+    {
+      "id": "R19-DEV-0674",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FIRB is the name of my pet hamster.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_FIRB_nontax"
+    },
+    {
+      "id": "R19-DEV-0675",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What does the Local Government Code (LGC) say about local business tax?",
+      "expected": "ALLOW",
+      "source": "acronym_LGC_tax"
+    },
+    {
+      "id": "R19-DEV-0676",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "LGC is not an acronym I recognize.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_LGC_nontax"
+    },
+    {
+      "id": "R19-DEV-0677",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "How is local business tax (LBT) computed?",
+      "expected": "ALLOW",
+      "source": "acronym_LBT_tax"
+    },
+    {
+      "id": "R19-DEV-0678",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "LBT isn't used anywhere in my field.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_LBT_nontax"
+    },
+    {
+      "id": "R19-DEV-0679",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is real property tax (RPT)?",
+      "expected": "ALLOW",
+      "source": "acronym_RPT_tax"
+    },
+    {
+      "id": "R19-DEV-0680",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "RPT has no meaning in my context.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_RPT_nontax"
+    },
+    {
+      "id": "R19-DEV-0681",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "How is capital gains tax (CGT) computed on shares?",
+      "expected": "ALLOW",
+      "source": "acronym_CGT_tax"
+    },
+    {
+      "id": "R19-DEV-0682",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "CGT isn't an acronym used in my hobby.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_CGT_nontax"
+    },
+    {
+      "id": "R19-DEV-0683",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a Notice for Informal Conference (NIC)?",
+      "expected": "ALLOW",
+      "source": "acronym_NIC_tax"
+    },
+    {
+      "id": "R19-DEV-0684",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "NIC could mean network interface card in computing.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_NIC_nontax"
+    },
+    {
+      "id": "R19-DEV-0685",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is FLD in a BIR assessment sequence?",
+      "expected": "ALLOW",
+      "source": "acronym_FLD_tax"
+    },
+    {
+      "id": "R19-DEV-0686",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FLD stands for field in this data dictionary.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_FLD_nontax"
+    },
+    {
+      "id": "R19-DEV-0687",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is expanded withholding tax (EWT)?",
+      "expected": "ALLOW",
+      "source": "acronym_EWT_tax"
+    },
+    {
+      "id": "R19-DEV-0688",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "EWT is not a term I've encountered before.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_EWT_nontax"
+    },
+    {
+      "id": "R19-DEV-0689",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is final withholding tax (FWT)?",
+      "expected": "ALLOW",
+      "source": "acronym_FWT_tax"
+    },
+    {
+      "id": "R19-DEV-0690",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "FWT has no meaning in my class.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_FWT_nontax"
+    },
+    {
+      "id": "R19-DEV-0691",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is the Run After Tax Evaders (RATE) program?",
+      "expected": "ALLOW",
+      "source": "acronym_RATE_tax"
+    },
+    {
+      "id": "R19-DEV-0692",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "The song's RATE (tempo) feels too slow.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_RATE_nontax"
+    },
+    {
+      "id": "R19-DEV-0693",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is a Tax Compliance Verification Drive (TCVD)?",
+      "expected": "ALLOW",
+      "source": "acronym_TCVD_tax"
+    },
+    {
+      "id": "R19-DEV-0694",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "TCVD is the license plate code on my neighbor's car.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_TCVD_nontax"
+    },
+    {
+      "id": "R19-DEV-0695",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Can individuals opt for OSD instead of itemized deductions?",
+      "expected": "ALLOW",
+      "source": "acronym_OSD_tax"
+    },
+    {
+      "id": "R19-DEV-0696",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Please turn off the OSD overlay on my TV.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_OSD_nontax"
+    },
+    {
+      "id": "R19-DEV-0697",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "Is MCIT applicable to a newly registered corporation?",
+      "expected": "ALLOW",
+      "source": "acronym_MCIT_tax"
+    },
+    {
+      "id": "R19-DEV-0698",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "MCIT was printed as a random serial number on the package.",
+      "expected": "NOT_ALLOW",
+      "source": "acronym_MCIT_nontax"
+    },
+    {
+      "id": "R19-DEV-0699",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is LOA?",
+      "expected": "ALLOW",
+      "source": "acronym_LOA_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0700",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is FDDA?",
+      "expected": "ALLOW",
+      "source": "acronym_FDDA_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0701",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is TIN?",
+      "expected": "ALLOW",
+      "source": "acronym_TIN_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0702",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is CTA?",
+      "expected": "ALLOW",
+      "source": "acronym_CTA_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0703",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is DST?",
+      "expected": "ALLOW",
+      "source": "acronym_DST_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0704",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RCIT?",
+      "expected": "ALLOW",
+      "source": "acronym_RCIT_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0705",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is MCIT?",
+      "expected": "ALLOW",
+      "source": "acronym_MCIT_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0706",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is NIRC?",
+      "expected": "ALLOW",
+      "source": "acronym_NIRC_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0707",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is eFPS?",
+      "expected": "ALLOW",
+      "source": "acronym_eFPS_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0708",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is CMTA?",
+      "expected": "ALLOW",
+      "source": "acronym_CMTA_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0709",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is SCIT?",
+      "expected": "ALLOW",
+      "source": "acronym_SCIT_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0710",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is ITH?",
+      "expected": "ALLOW",
+      "source": "acronym_ITH_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0711",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is BOI?",
+      "expected": "ALLOW",
+      "source": "acronym_BOI_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0712",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is FIRB?",
+      "expected": "ALLOW",
+      "source": "acronym_FIRB_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0713",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is LBT?",
+      "expected": "ALLOW",
+      "source": "acronym_LBT_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0714",
+      "coverageClass": "acronym_tax_nontax_pair",
+      "text": "What is RPT?",
+      "expected": "ALLOW",
+      "source": "acronym_RPT_bare_definition"
+    },
+    {
+      "id": "R19-DEV-0715",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is included in the gross estate for estate tax purposes?",
+      "expected": "ALLOW",
+      "source": "phrase_gross_estate_tax"
+    },
+    {
+      "id": "R19-DEV-0716",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The gross estate listing in this property brochure is misleading marketing.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_gross_estate_nontax"
+    },
+    {
+      "id": "R19-DEV-0717",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the prescriptive period for a BIR assessment?",
+      "expected": "ALLOW",
+      "source": "phrase_prescriptive_period_tax"
+    },
+    {
+      "id": "R19-DEV-0718",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the prescriptive period for filing a medical malpractice claim outside tax?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_prescriptive_period_nontax"
+    },
+    {
+      "id": "R19-DEV-0719",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What are gross receipts subject to percentage tax?",
+      "expected": "ALLOW",
+      "source": "phrase_gross_receipts_tax"
+    },
+    {
+      "id": "R19-DEV-0720",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The gross receipts from our school bake sale raffle were modest.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_gross_receipts_nontax"
+    },
+    {
+      "id": "R19-DEV-0721",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What are the requirements for maintaining books of accounts under BIR rules?",
+      "expected": "ALLOW",
+      "source": "phrase_books_of_accounts_tax"
+    },
+    {
+      "id": "R19-DEV-0722",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "I keep my favorite books of accounts of pirate adventures on this shelf.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_books_of_accounts_nontax"
+    },
+    {
+      "id": "R19-DEV-0723",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What transfer pricing documentation does BIR require?",
+      "expected": "ALLOW",
+      "source": "phrase_transfer_pricing_tax"
+    },
+    {
+      "id": "R19-DEV-0724",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The transfer pricing rule in this board game is confusing.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_transfer_pricing_nontax"
+    },
+    {
+      "id": "R19-DEV-0725",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What constitutes a permanent establishment under a tax treaty?",
+      "expected": "ALLOW",
+      "source": "phrase_permanent_establishment_tax"
+    },
+    {
+      "id": "R19-DEV-0726",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The permanent establishment of this monument is a landmark, not a tax matter.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_permanent_establishment_nontax"
+    },
+    {
+      "id": "R19-DEV-0727",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What incentives apply to a registered business enterprise under CREATE?",
+      "expected": "ALLOW",
+      "source": "phrase_registered_business_enterprise_tax"
+    },
+    {
+      "id": "R19-DEV-0728",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "Our registered business enterprise in the online game has 50 members.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_registered_business_enterprise_nontax"
+    },
+    {
+      "id": "R19-DEV-0729",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is a compromise offer in a tax assessment dispute?",
+      "expected": "ALLOW",
+      "source": "phrase_compromise_offer_tax"
+    },
+    {
+      "id": "R19-DEV-0730",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "My compromise offer during the classroom negotiation exercise was rejected.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_compromise_offer_nontax"
+    },
+    {
+      "id": "R19-DEV-0731",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "How do I file a request for reconsideration of a tax assessment?",
+      "expected": "ALLOW",
+      "source": "phrase_reconsideration_tax"
+    },
+    {
+      "id": "R19-DEV-0732",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "I asked for reconsideration of my exam grade from the professor.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_reconsideration_nontax"
+    },
+    {
+      "id": "R19-DEV-0733",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is a Notice for Informal Conference issued by a BIR examiner?",
+      "expected": "ALLOW",
+      "source": "phrase_notice_for_informal_conference_tax"
+    },
+    {
+      "id": "R19-DEV-0734",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "I need to plan the agenda for our informal team conference next week.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_notice_for_informal_conference_nontax"
+    },
+    {
+      "id": "R19-DEV-0735",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What customs duties apply to imported machinery?",
+      "expected": "ALLOW",
+      "source": "phrase_customs_tax"
+    },
+    {
+      "id": "R19-DEV-0736",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What are the cultural customs observed during a Filipino wedding?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_customs_nontax"
+    },
+    {
+      "id": "R19-DEV-0737",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "How is import duty computed on imported vehicles?",
+      "expected": "ALLOW",
+      "source": "phrase_import_duty_tax"
+    },
+    {
+      "id": "R19-DEV-0738",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The import duty checkpoint in this video game level is tricky to pass.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_import_duty_nontax"
+    },
+    {
+      "id": "R19-DEV-0739",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What does the Bureau of Customs require for import clearance?",
+      "expected": "ALLOW",
+      "source": "phrase_Bureau_of_Customs_tax"
+    },
+    {
+      "id": "R19-DEV-0740",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The Bureau of Customs building is two blocks from the train station.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_Bureau_of_Customs_nontax"
+    },
+    {
+      "id": "R19-DEV-0741",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "How is capital gain on the sale of shares taxed?",
+      "expected": "ALLOW",
+      "source": "phrase_capital_gain_tax"
+    },
+    {
+      "id": "R19-DEV-0742",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The capital gain setting on this guitar amplifier boosts the signal.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_capital_gain_nontax"
+    },
+    {
+      "id": "R19-DEV-0743",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is a deficiency tax assessment?",
+      "expected": "ALLOW",
+      "source": "phrase_deficiency_tax"
+    },
+    {
+      "id": "R19-DEV-0744",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The doctor said I have a vitamin deficiency.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_deficiency_nontax"
+    },
+    {
+      "id": "R19-DEV-0745",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What surcharge applies to a late tax payment?",
+      "expected": "ALLOW",
+      "source": "phrase_surcharge_tax"
+    },
+    {
+      "id": "R19-DEV-0746",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The delivery surcharge on my food order was unexpected.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_surcharge_nontax"
+    },
+    {
+      "id": "R19-DEV-0747",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "When is an official receipt required under BIR invoicing rules?",
+      "expected": "ALLOW",
+      "source": "phrase_official_receipt_tax"
+    },
+    {
+      "id": "R19-DEV-0748",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "I'm designing the layout of this ordinary store receipt for a school project.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_official_receipt_nontax"
+    },
+    {
+      "id": "R19-DEV-0749",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is included in the annual information return filed with BIR?",
+      "expected": "ALLOW",
+      "source": "phrase_annual_information_return_tax"
+    },
+    {
+      "id": "R19-DEV-0750",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "Our club's annual information return to members just summarizes attendance.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_annual_information_return_nontax"
+    },
+    {
+      "id": "R19-DEV-0751",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the prescriptive period for a tax refund claim?",
+      "expected": "ALLOW",
+      "source": "phrase_refund_claim_prescription_tax"
+    },
+    {
+      "id": "R19-DEV-0752",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "My prescription refill for the refund of my old glasses is due.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_refund_claim_prescription_nontax"
+    },
+    {
+      "id": "R19-DEV-0753",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is a BIR deficiency assessment?",
+      "expected": "ALLOW",
+      "source": "phrase_assessment_tax"
+    },
+    {
+      "id": "R19-DEV-0754",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The teacher's assessment of my essay was generous.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_assessment_nontax"
+    },
+    {
+      "id": "R19-DEV-0755",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "When is the annual income tax return due?",
+      "expected": "ALLOW",
+      "source": "phrase_return_tax"
+    },
+    {
+      "id": "R19-DEV-0756",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the return policy for this online electronics store?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_return_nontax"
+    },
+    {
+      "id": "R19-DEV-0757",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "How do I file a tax refund claim?",
+      "expected": "ALLOW",
+      "source": "phrase_claim_tax"
+    },
+    {
+      "id": "R19-DEV-0758",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "How do I file an insurance claim after the accident?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_claim_nontax"
+    },
+    {
+      "id": "R19-DEV-0759",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "How do I file a protest against a BIR assessment?",
+      "expected": "ALLOW",
+      "source": "phrase_protest_tax"
+    },
+    {
+      "id": "R19-DEV-0760",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The student protest outside the building blocked traffic.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_protest_nontax"
+    },
+    {
+      "id": "R19-DEV-0761",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What triggers a BIR tax audit?",
+      "expected": "ALLOW",
+      "source": "phrase_audit_tax"
+    },
+    {
+      "id": "R19-DEV-0762",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "The security audit of our network found no vulnerabilities.",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_audit_nontax"
+    },
+    {
+      "id": "R19-DEV-0763",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the personal exemption for individual taxpayers?",
+      "expected": "ALLOW",
+      "source": "phrase_exemption_tax"
+    },
+    {
+      "id": "R19-DEV-0764",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the noise exemption for this residential zone?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_exemption_nontax"
+    },
+    {
+      "id": "R19-DEV-0765",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the holding period rule for capital assets?",
+      "expected": "ALLOW",
+      "source": "phrase_holding_period_tax"
+    },
+    {
+      "id": "R19-DEV-0766",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the holding period for this library book before it's due?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_holding_period_nontax"
+    },
+    {
+      "id": "R19-DEV-0767",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the tariff classification for imported electronics?",
+      "expected": "ALLOW",
+      "source": "phrase_tariff_tax"
+    },
+    {
+      "id": "R19-DEV-0768",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the tariff for my mobile phone plan this month?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_tariff_nontax"
+    },
+    {
+      "id": "R19-DEV-0769",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What deductions are allowed against gross income?",
+      "expected": "ALLOW",
+      "source": "phrase_deduction_tax"
+    },
+    {
+      "id": "R19-DEV-0770",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the deductible on my car insurance policy?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_deduction_nontax"
+    },
+    {
+      "id": "R19-DEV-0771",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the filing deadline for the quarterly VAT return?",
+      "expected": "ALLOW",
+      "source": "phrase_filing_tax"
+    },
+    {
+      "id": "R19-DEV-0772",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the filing procedure for a police report?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_filing_nontax"
+    },
+    {
+      "id": "R19-DEV-0773",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What penalty applies for late tax filing?",
+      "expected": "ALLOW",
+      "source": "phrase_penalty_tax"
+    },
+    {
+      "id": "R19-DEV-0774",
+      "coverageClass": "polysemous_phrase_pair",
+      "text": "What is the penalty for a false start in this race?",
+      "expected": "NOT_ALLOW",
+      "source": "phrase_penalty_nontax"
+    },
+    {
+      "id": "R19-DEV-0775",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Magkano ang buwis ko?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0776",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Magkano ang pamasahe sa jeep?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0777",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang buwis sa sahod?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0778",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang lutong ulam ngayon?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0779",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano magbayad ng buwis?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0780",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano mag-alaga ng aso?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0781",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang impuwesto sa negosyo?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0782",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Sino ang presidente ng Pilipinas?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0783",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Kailan ang deadline ng pag-file ng ITR?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0784",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Kailan ang enrollment sa paaralan?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0785",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano mag-file ng VAT return?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0786",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano mag-apply ng passport?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0787",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang buwis sa lupa?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0788",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang barangay case?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0789",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "May buwis ba ang benta ng bahay?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0790",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano mag-file ng police complaint?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0791",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang withholding tax sa suweldo?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0792",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Magkano ang upa sa apartment ko?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0793",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Kailangan ko bang mag-file ng income tax return?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0794",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang font na ito sa poster?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0795",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang parusa kung hindi ako nag-file ng buwis?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0796",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Anong kulay ang pipiliin ko sa pintura?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0797",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Magkano ang customs duty sa imported na kotse?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0798",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang banda na tumugtog kagabi?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0799",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang buwis sa sasakyan na inangkat?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0800",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang gamot sa sipon?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0801",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "May VAT ba ang renta ng bahay?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0802",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano mag-code ng JavaScript?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0803",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang BIR Form para sa buwis ko?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0804",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang kanta ni Regine?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0805",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano ako makakakuha ng TIN?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0806",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang lata na gawa sa metal?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0807",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang Oplan Kandado ng BIR?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0808",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Paano mag-laro ng basketball?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0809",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang LOA mula sa BIR?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0810",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang LOA sa eroplano?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0811",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Nakalimutan kong mag-file ng buwis, ano ang gagawin ko?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0812",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang magandang pasyalan?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0813",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang capital gains tax sa benta ng lupa?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0814",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang audio equipment na ginagamit sa banda?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0815",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang MCIT?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0816",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "MCIT ba yan ay kodigo lang sa produkto namin?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0817",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang SLSP sa BIR filing?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0818",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "SLSP ba yan ay project code lang sa software namin?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0819",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang gross estate para sa estate tax?",
+      "expected": "ALLOW",
+      "source": "filipino_tax"
+    },
+    {
+      "id": "R19-DEV-0820",
+      "coverageClass": "filipino_taglish_pair",
+      "text": "Ano ang tsismis tungkol sa mga bituin sa showbiz?",
+      "expected": "NOT_ALLOW",
+      "source": "filipino_nontax"
+    },
+    {
+      "id": "R19-DEV-0821",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "WHAT IS VAT?",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0822",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what is vat?",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0823",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "What Is VAT",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0824",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what is mcit",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0825",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "WHAT IS MCIT???",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0826",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "What is  MCIT  ?",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0827",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "is bir a bird typo",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0828",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "BIR AS A BIRD TYPO",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0829",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what is fan cooling speed",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0830",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "WHAT IS FAN COOLING SPEED",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0831",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "Whatis VAT?",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0832",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what.is.vat",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0833",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what is vat!!!",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0834",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "What is the taxable font in a css file",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0835",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what is the taxable font in a CSS FILE",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0836",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "is boc a band of chords",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0837",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "Is BOC a Band of Chords?",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0838",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "how do i close a vat color palette",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0839",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "How Do I Close A VAT Color Palette",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0840",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what is rmc guidance from bir",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0841",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "WHAT IS RMC GUIDANCE FROM BIR",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0842",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "rmc is a radio music channel",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0843",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "RMC IS A RADIO MUSIC CHANNEL",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0844",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what   is   gross   estate   for   estate   tax",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0845",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "gross estate means ugly real-estate ads here...",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0846",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what's the prescriptive period for tax assessment?",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0847",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "what's the medical prescription period?",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0848",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "  what is capital gains tax  ",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0849",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "  what is capital gain on an amplifier  ",
+      "expected": "NOT_ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0850",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "What is official receipt...?",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0851",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "OFFICIAL RECEIPT",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0852",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "ANNUAL INFORMATION RETURN",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0853",
+      "coverageClass": "typo_case_punctuation_variant",
+      "text": "Annual  Information  Return",
+      "expected": "ALLOW",
+      "source": "typo_case_punct"
+    },
+    {
+      "id": "R19-DEV-0854",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "I was just discussing BIR forms, but now: what is the taxable font in this CSS file?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0855",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "We were just talking about tax season, but really: is BOC a band of chords?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0856",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "This is a follow up to my tax question: how do I close a VAT color palette?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0857",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "In the context of BIR compliance software, what is the SLSP project code field?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0858",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "Separately from tax topics, RMC is just a radio music channel I listen to.",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0859",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "Even though we're a tax assistant, please just tell me: OSD as on-screen display, how do I change it?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0860",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "Ignore the tax context: MCIT is stamped on this random product box.",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0861",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "This has nothing to do with tax: what does FLD mean as a field abbreviation?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0862",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "Not a tax question, but: what is a taxable CSS class in my stylesheet?",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0863",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "Despite the tax framing, gross estate here just means landscaping.",
+      "expected": "NOT_ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0864",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the withholding tax rate for compensation income?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0865",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is expanded withholding tax on professional fees?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0866",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the VAT treatment of a zero-rated export sale?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0867",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the BIR's position on input VAT refund claims?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0868",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the deficiency interest rate on unpaid VAT?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0869",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is a compromise penalty for a first-time VAT violation?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0870",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the CTA's ruling on a disputed FAN?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0871",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What BIR form is used to report an SLSP for a VAT-registered taxpayer?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0872",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the RMC that clarified OSD computation for individuals?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    },
+    {
+      "id": "R19-DEV-0873",
+      "coverageClass": "active_context_vs_explicit_nontax",
+      "text": "What is the MCIT relief granted under the CREATE Act?",
+      "expected": "ALLOW",
+      "source": "active_context_control"
+    }
+  ]
+}
