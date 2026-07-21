@@ -1,13 +1,20 @@
 {
   "task": "PHASE-10A14-R18",
   "kind": "harness",
-  "note": "Gate runners, tested suites, attempt runner, retry validator, registry builder and any wrapper able to affect output or classification.",
+  "note": "FINALIZED at COMMIT 7, before any gate attempt, and unchanged across every gate attempt. Covers gate runners, tested suites, the attempt runner, the retry validator and every wrapper able to affect output or classification.",
   "files": [
+    "evaluation/results/phase-10a14-r18/all26-isolated.mjs",
     "evaluation/results/phase-10a14-r18/identity.mjs",
     "evaluation/results/phase-10a14-r18/retry-validator.mjs",
     "evaluation/results/phase-10a14-r18/run-domain-campaign.mjs",
+    "evaluation/results/phase-10a14-r18/run-focused-campaign.mjs",
+    "evaluation/results/phase-10a14-r18/run-gate-cycle.mjs",
     "scripts/run-regressions.mjs",
     "scripts/run-staging-smokes.mjs",
-    "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs"
+    "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+    "tests/phase-10a14-r18-09zf-scope-guard.test.mjs",
+    "tests/phase-10a14-r18-all26-write-isolation.test.mjs",
+    "tests/phase-10a14-r18-domain-hardening.test.mjs",
+    "tests/phase-10a14-r18-runtime-identity-and-retry.test.mjs"
   ]
 }

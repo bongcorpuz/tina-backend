@@ -1,0 +1,178 @@
+{
+  "task": "PHASE-10A14-R18",
+  "generatedAt": "2026-07-21T02:10:38.430Z",
+  "evidenceHead": "16afd8db7702ed229fe57062f91abb56f53eddec",
+  "rule": "A printed PASS with a nonzero process exit is a failure. Exit code is authoritative.",
+  "suites": 21,
+  "allPassed": true,
+  "failed": [],
+  "results": [
+    {
+      "id": "r18-identity-retry",
+      "script": "tests/phase-10a14-r18-runtime-identity-and-retry.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-10A14-R18-RUNTIME-IDENTITY-AND-RETRY tests: 32 passed, 0 failed, 99 assertions",
+      "passed": true
+    },
+    {
+      "id": "r18-domain-hardening",
+      "script": "tests/phase-10a14-r18-domain-hardening.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-10A14-R18-DOMAIN-HARDENING tests: 15 passed, 0 failed, 228 assertions",
+      "passed": true
+    },
+    {
+      "id": "r18-all26-write-isolation",
+      "script": "tests/phase-10a14-r18-all26-write-isolation.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-10A14-R18-ALL26-WRITE-ISOLATION tests: 10 passed, 0 failed, 51 assertions",
+      "passed": true
+    },
+    {
+      "id": "r18-09zf-scope-guard",
+      "script": "tests/phase-10a14-r18-09zf-scope-guard.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-10A14-R18-09ZF-SCOPE-GUARD tests: 6 passed, 0 failed, 50 assertions",
+      "passed": true
+    },
+    {
+      "id": "phase-09zf",
+      "script": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1 tests: 18 passed, 0 failed, 187 assertions",
+      "passed": true
+    },
+    {
+      "id": "r17-validators",
+      "script": "tests/phase-10a14-r17-provenance-recovery-retry.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r17-domain",
+      "script": "tests/phase-10a14-r17-customs-capital-gain-domain.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "phase-10a8",
+      "script": "tests/phase-10a8-trust-calibration-and-answer-correctness-remediation-1.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-10A8 trust-calibration tests: 24 passed, 0 failed, 37 assertions",
+      "passed": true
+    },
+    {
+      "id": "patch-07b",
+      "script": "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PATCH-07B-CLARIFICATION-FINAL-GATE-1 track closure tests: 8 passed, 0 failed",
+      "passed": true
+    },
+    {
+      "id": "phase-09r-staging",
+      "script": "tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "PHASE-09R-TAX-MEMO-RUNTIME-STAGING-SMOKE-1 tests: 36 passed, 0 failed, 178 assertions",
+      "passed": true
+    },
+    {
+      "id": "r16-domain",
+      "script": "tests/phase-10a14-r16-non-tax-domain-boundary.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r16-tooling",
+      "script": "tests/phase-10a14-r16-evidence-tooling.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r15-journal-crash",
+      "script": "tests/phase-10a14-r15-crash-visible-attempt-journal.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r15-focused",
+      "script": "tests/phase-10a14-r15-semantic-composition-tax-adjacency-and-persistence-receipt.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r14-focused",
+      "script": "tests/phase-10a14-r14-negated-nonperformance-and-universal-persistence-status.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r13-focused",
+      "script": "tests/phase-10a14-r13-polarity-aware-directive-and-persistence-receipt.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r12-focused",
+      "script": "tests/phase-10a14-r12-semantic-filing-directive-and-not-applicable-persistence.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r11-focused",
+      "script": "tests/phase-10a14-r11-calendar-directive-completeness-and-contextual-safe-answer.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r10-focused",
+      "script": "tests/phase-10a14-r10-calendar-relative-public-answer-replacement.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r9-focused",
+      "script": "tests/phase-10a14-r9-calendar-relative-deadline-and-filing-rationale-alignment.test.mjs",
+      "exitCode": 0,
+      "signal": null,
+      "summaryLine": "",
+      "passed": true
+    },
+    {
+      "id": "r18-all26-isolated-replay",
+      "script": "evaluation/results/phase-10a14-r18/all26-isolated.mjs",
+      "exitCode": 0,
+      "summaryLine": "blocked=9 preserved=17 mismatch=0 pass=true",
+      "passed": true
+    }
+  ]
+}
