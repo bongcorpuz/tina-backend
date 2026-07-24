@@ -1,0 +1,35 @@
+{
+  "validator": "r20-commit4r1-freeze-and-completeness",
+  "checks": [
+    {
+      "name": "r1_rowcount_3720",
+      "pass": true
+    },
+    {
+      "name": "inherited_reviewed_1897",
+      "pass": true
+    },
+    {
+      "name": "new_unchanged",
+      "pass": true
+    },
+    {
+      "name": "unauthorized_diffs_0",
+      "pass": true
+    },
+    {
+      "name": "unresolved_challenges_0",
+      "pass": true
+    },
+    {
+      "name": "v1_preserved",
+      "pass": true
+    },
+    {
+      "name": "incompat_0",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f"
+}

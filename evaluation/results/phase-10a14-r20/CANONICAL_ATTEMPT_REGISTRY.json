@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-24T13:53:05.122Z",
+  "generatedAt": "2026-07-24T14:23:04.980Z",
   "phase": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5",
+  "cumulativeThrough": "commit4r1",
   "summary": {
-    "totalAttempts": 14,
+    "totalAttempts": 19,
     "byCategory": {
       "domain_campaign": 3,
       "focused_suite": 1,
-      "other": 1,
-      "synthetic_validator": 9
+      "other": 2,
+      "synthetic_validator": 13
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -16,6 +16,7 @@
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
       "r20_commit4_development_oracle_builder": 1,
+      "r20_commit4r1_inherited_reason_adjudication": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
@@ -24,12 +25,16 @@
       "r20_commit4_duplicate_and_metamorphic": 1,
       "r20_commit4_freeze_and_evidence_completeness": 1,
       "r20_commit4_schema_quota_expectation": 1,
-      "r20_commit4_source_integrity_and_contamination": 1
+      "r20_commit4_source_integrity_and_contamination": 1,
+      "r20_commit4r1_freeze_and_completeness": 1,
+      "r20_commit4r1_independent_reason_review": 1,
+      "r20_commit4r1_unchanged_field_and_reason_contract": 1,
+      "r20_commit4r1_v1_source_lock": 1
     },
-    "completed": 14,
+    "completed": 19,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 14,
+    "controlling": 19,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
@@ -122,6 +127,23 @@
       "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4_development_oracle_builder-commit4-ord01-2026-07-24T13-19-33-653Z/stderr.txt",
       "commandHash": "e13bae0b31020c3cb013f57045e09fa84778da2eb9dea1ba636fdc2e89676081",
       "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-other-r20_commit4r1_inherited_reason_adjudication-commit4r1-ord01-2026-07-24T14-23-03-033Z",
+      "attemptCategory": "other",
+      "gateName": "r20_commit4r1_inherited_reason_adjudication",
+      "cycle": "commit4r1",
+      "status": "completed",
+      "disposition": "controlling_adjudication",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r1_inherited_reason_adjudication-commit4r1-ord01-2026-07-24T14-23-03-033Z/ADJUDICATION_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r1_inherited_reason_adjudication-commit4r1-ord01-2026-07-24T14-23-03-033Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r1_inherited_reason_adjudication-commit4r1-ord01-2026-07-24T14-23-03-033Z/stderr.txt",
+      "commandHash": "39cdf62a3c61dbe908531a19671f81ff820ec43c13235dd2a65a0331ef472406",
+      "runtimeBaselineCommit": "93783a818f06f0009da75d123735bc025f72ef7e",
       "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     },
     {
@@ -275,6 +297,74 @@
       "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_source_integrity_and_contamination-commit4-ord01-2026-07-24T13-19-33-241Z/stderr.txt",
       "commandHash": "d2dc5ec28c97b385680ce999cdba39c3925b80c9580fb4c9a02fae7da800ff1f",
       "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r1_freeze_and_completeness-commit4r1-ord01-2026-07-24T14-23-04-547Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r1_freeze_and_completeness",
+      "cycle": "commit4r1",
+      "status": "completed",
+      "disposition": "controlling_freeze",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_freeze_and_completeness-commit4r1-ord01-2026-07-24T14-23-04-547Z/FREEZE_COMPLETENESS_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_freeze_and_completeness-commit4r1-ord01-2026-07-24T14-23-04-547Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_freeze_and_completeness-commit4r1-ord01-2026-07-24T14-23-04-547Z/stderr.txt",
+      "commandHash": "843696b491c3693e12227a077468676cc0d7adf55ae390da453f276873438467",
+      "runtimeBaselineCommit": "93783a818f06f0009da75d123735bc025f72ef7e",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r1_independent_reason_review-commit4r1-ord01-2026-07-24T14-23-03-573Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r1_independent_reason_review",
+      "cycle": "commit4r1",
+      "status": "completed",
+      "disposition": "controlling_independent_review",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_independent_reason_review-commit4r1-ord01-2026-07-24T14-23-03-573Z/INDEPENDENT_REVIEW_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_independent_reason_review-commit4r1-ord01-2026-07-24T14-23-03-573Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_independent_reason_review-commit4r1-ord01-2026-07-24T14-23-03-573Z/stderr.txt",
+      "commandHash": "4b229b2f73da71944e837e411251a4508549a19cd77dacae9029fdc1f8dc8af2",
+      "runtimeBaselineCommit": "93783a818f06f0009da75d123735bc025f72ef7e",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r1_unchanged_field_and_reason_contract-commit4r1-ord01-2026-07-24T14-23-04-060Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r1_unchanged_field_and_reason_contract",
+      "cycle": "commit4r1",
+      "status": "completed",
+      "disposition": "controlling_unchanged_field",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_unchanged_field_and_reason_contract-commit4r1-ord01-2026-07-24T14-23-04-060Z/UNCHANGED_FIELD_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_unchanged_field_and_reason_contract-commit4r1-ord01-2026-07-24T14-23-04-060Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_unchanged_field_and_reason_contract-commit4r1-ord01-2026-07-24T14-23-04-060Z/stderr.txt",
+      "commandHash": "3a0643043ec2d2b4c2b35b8ae36ff87359a8b0ca00f2cc4fb51e216a30de44cb",
+      "runtimeBaselineCommit": "93783a818f06f0009da75d123735bc025f72ef7e",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r1_v1_source_lock-commit4r1-ord01-2026-07-24T14-23-02-601Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r1_v1_source_lock",
+      "cycle": "commit4r1",
+      "status": "completed",
+      "disposition": "controlling_v1_lock",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_v1_source_lock-commit4r1-ord01-2026-07-24T14-23-02-601Z/V1_SOURCE_LOCK_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_v1_source_lock-commit4r1-ord01-2026-07-24T14-23-02-601Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r1_v1_source_lock-commit4r1-ord01-2026-07-24T14-23-02-601Z/stderr.txt",
+      "commandHash": "2b7c7fcebed1afce6c83f4219c92ee76a883c6a6986e01e6bf77bb4f8552d020",
+      "runtimeBaselineCommit": "93783a818f06f0009da75d123735bc025f72ef7e",
       "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     }
   ]

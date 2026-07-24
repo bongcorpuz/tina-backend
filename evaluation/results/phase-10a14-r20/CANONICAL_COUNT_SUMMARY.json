@@ -1,13 +1,13 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5",
+  "cumulativeThrough": "commit4r1",
   "registrySummary": {
-    "totalAttempts": 14,
+    "totalAttempts": 19,
     "byCategory": {
       "domain_campaign": 3,
       "focused_suite": 1,
-      "other": 1,
-      "synthetic_validator": 9
+      "other": 2,
+      "synthetic_validator": 13
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -15,6 +15,7 @@
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
       "r20_commit4_development_oracle_builder": 1,
+      "r20_commit4r1_inherited_reason_adjudication": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
@@ -23,22 +24,28 @@
       "r20_commit4_duplicate_and_metamorphic": 1,
       "r20_commit4_freeze_and_evidence_completeness": 1,
       "r20_commit4_schema_quota_expectation": 1,
-      "r20_commit4_source_integrity_and_contamination": 1
+      "r20_commit4_source_integrity_and_contamination": 1,
+      "r20_commit4r1_freeze_and_completeness": 1,
+      "r20_commit4r1_independent_reason_review": 1,
+      "r20_commit4r1_unchanged_field_and_reason_contract": 1,
+      "r20_commit4r1_v1_source_lock": 1
     },
-    "completed": 14,
+    "completed": 19,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 14,
+    "controlling": 19,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "commit5": {
-    "decision": "INCOMPLETE_REVISIONS_REQUIRED",
-    "baseline": "948/3720",
-    "blocker": "FROZEN_ORACLE_REASON_GRANULARITY_CONFLICT",
-    "runtimeModified": false
+  "commit4r1": {
+    "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
+    "inheritedReviewed": 1897,
+    "reasonChanged": 984,
+    "reasonUnchanged": 913,
+    "unresolvedChallenges": 0,
+    "decision": "COMPLETE"
   }
 }

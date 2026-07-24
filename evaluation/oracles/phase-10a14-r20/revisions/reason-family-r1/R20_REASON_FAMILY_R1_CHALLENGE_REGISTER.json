@@ -1,0 +1,7 @@
+{
+  "challenges": [
+    {"challengeId": "CH-01", "oracleId": "S2-IR18-DOM-517", "query": "Use RCIT as a course code.", "challengedReason": "no_tax_relation", "proposedAlternative": "non_tax_label_or_name", "ruleBasis": "RF-06", "rationale": "Explicitly repurposes tax acronym RCIT as a non-tax label (course code)."},
+    {"challengeId": "CH-02", "oracleId": "S2-IR18-DOM-561", "query": "RR is a railroad abbreviation.", "challengedReason": "no_tax_relation", "proposedAlternative": "non_tax_expansion", "ruleBasis": "RF-07", "rationale": "Explicitly states a non-tax expansion of tax-shaped acronym RR."}
+  ],
+  "totalChallenges": 2
+}

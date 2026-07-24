@@ -1,0 +1,18 @@
+{
+  "inherited": 1897,
+  "changed": 984,
+  "unchanged": 913,
+  "incompat": 0,
+  "distR1": {
+    "explicit_tax_task_relation": 501,
+    "tax_compliance_task": 155,
+    "tax_treatment_of_ordinary_object": 218,
+    "explicit_non_tax_task": 242,
+    "non_tax_label_or_name": 97,
+    "quoted_tax_term_only": 20,
+    "ambiguous_tax_acronym": 200,
+    "no_tax_relation": 455,
+    "non_tax_expansion": 8,
+    "tax_definition_with_context": 1
+  }
+}

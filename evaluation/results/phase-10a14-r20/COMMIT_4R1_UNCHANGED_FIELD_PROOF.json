@@ -1,0 +1,47 @@
+{
+  "validator": "r20-commit4r1-unchanged-field-and-reason-contract",
+  "checks": [
+    {
+      "name": "unauthorized_field_diffs_0",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "new_rows_unchanged",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "decision_diffs_0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "relation_diffs_0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "decision_reason_incompat_0",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "all_reasons_closed_set",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "row_count_3720",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "allPassed": true,
+  "unauthorizedDiffs": 0,
+  "newRowDiffs": 0,
+  "decisionDiffs": 0,
+  "relationDiffs": 0,
+  "incompat": 0,
+  "diffExamples": []
+}

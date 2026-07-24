@@ -1,0 +1,9 @@
+{
+  "resolutions": [
+    {"challengeId": "CH-01", "resolution": "acceptedAlternative", "resolvedReason": "non_tax_label_or_name", "resolutionRationale": "Challenge accepted. Adjudicator RF-06 detector broadened to catch 'as a course code' and 'as a field abbreviation' label repurposing. Applied across the full 1,897-row set, not only the sampled row.", "contractCitation": "RF-06", "resolvedBy": "Opus 4.8", "affectedRowsAcrossFullSet": ["What does FLD mean as a field abbreviation?", "Use RCIT as a course code."]},
+    {"challengeId": "CH-02", "resolution": "acceptedAlternative", "resolvedReason": "non_tax_expansion", "resolutionRationale": "Challenge accepted. Adjudicator RF-07 detector broadened to catch 'is a/an X abbreviation/acronym' and 'acronym for/in/with' non-tax expansion framing. Applied across the full set.", "contractCitation": "RF-07", "resolvedBy": "Opus 4.8", "affectedRowsAcrossFullSet": ["RR is a railroad abbreviation.", "SLSP is an unknown acronym in my app logs.", "CMTA is a club acronym with no tax context."]}
+  ],
+  "totalChallenges": 2,
+  "resolved": 2,
+  "unresolved": 0
+}

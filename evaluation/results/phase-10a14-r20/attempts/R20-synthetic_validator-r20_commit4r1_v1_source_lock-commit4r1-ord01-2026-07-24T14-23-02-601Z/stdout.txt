@@ -1,0 +1,28 @@
+{
+  "validator": "r20-commit4r1-v1-source-lock",
+  "total": 5,
+  "passed": 5,
+  "checks": [
+    {
+      "name": "v1_sha",
+      "pass": true
+    },
+    {
+      "name": "v1_rowcount_3720",
+      "pass": true
+    },
+    {
+      "name": "inherited_1897",
+      "pass": true
+    },
+    {
+      "name": "new_1823",
+      "pass": true
+    },
+    {
+      "name": "runtime_unchanged",
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

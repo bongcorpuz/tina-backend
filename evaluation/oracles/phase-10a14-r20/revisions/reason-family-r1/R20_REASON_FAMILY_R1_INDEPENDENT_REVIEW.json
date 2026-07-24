@@ -1,0 +1,19 @@
+{
+  "reviewer": "Sonnet 5 (independent oracle-map reviewer; Opus 4.8 is primary executor)",
+  "reviewType": "oracle_map_reason_family_review",
+  "analyzerOutputProvided": false,
+  "baselinePassFailProvided": false,
+  "inputProvided": ["oracleId", "query", "frozenDecision", "proposedReason", "ruleId"],
+  "coverage": "stratified sample of 201 rows across all 10 active RF rules (~25/rule; full coverage of small buckets RF-03/RF-07)",
+  "sampledRows": 201,
+  "agree": 199,
+  "challenge": 2,
+  "perRuleAgreement": {
+    "RF-01": {"agree": 24, "challenge": 0}, "RF-02": {"agree": 24, "challenge": 0},
+    "RF-03": {"agree": 1, "challenge": 0}, "RF-04": {"agree": 25, "challenge": 0},
+    "RF-05": {"agree": 25, "challenge": 0}, "RF-06": {"agree": 25, "challenge": 0},
+    "RF-07": {"agree": 5, "challenge": 0}, "RF-08": {"agree": 18, "challenge": 0},
+    "RF-10": {"agree": 26, "challenge": 0}, "RF-11": {"agree": 25, "challenge": 2}
+  },
+  "systemicConcern": "Localized RF-11 precision gap: a few rows that explicitly reframe a tax-shaped acronym as a non-tax label or expansion were routed to the no_tax_relation catch-all instead of the more specific RF-06/RF-07. Not a decision risk (all remain REFUSE-compatible). No other systemic concerns; RF-01/02/03/04/05/06/07/08/10 consistently correct."
+}
