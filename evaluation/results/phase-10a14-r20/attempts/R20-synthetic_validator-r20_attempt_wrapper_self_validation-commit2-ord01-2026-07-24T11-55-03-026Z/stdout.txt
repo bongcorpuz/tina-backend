@@ -1,0 +1,63 @@
+{
+  "validator": "r20-wrapper-self-validation-1",
+  "total": 11,
+  "passed": 11,
+  "allPassed": true,
+  "checks": [
+    {
+      "name": "unique_allocation",
+      "pass": true,
+      "detail": "R20-synthetic_validator-g-commit2-ord01-2026-07-24T00-00-00-000Z != R20-synthetic_validator-g-commit2-ord02-2026-07-24T00-00-00-000Z"
+    },
+    {
+      "name": "id_outcome_independent",
+      "pass": true,
+      "detail": "R20-synthetic_validator-g-commit2-ord01-2026-07-24T00-00-00-000Z"
+    },
+    {
+      "name": "closed_categories_enforced",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "map_ALLOW",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "map_NOT_ALLOW",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "map_REFUSE",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "map_REJECT_runtime",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "map_CLARIFY",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "map_rejects_unknown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "terminal_overwrite_detectable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "protected_paths_declared",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

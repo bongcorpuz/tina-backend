@@ -1,0 +1,37 @@
+{
+  "phase": "PHASE-10A14-R20",
+  "unit": "COMMIT 2",
+  "startingHead": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "parent": "f0efc377a77de0b7f69913c4977333d1fb5fff8d",
+  "branch": "feature/source-availability-engine-v1",
+  "runtime": {
+    "startingCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+    "servicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+    "servicesTreeContentDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894",
+    "runtimeBlobs": {
+      "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+      "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+      "services/philippine-tax-intent-analyzer.js": "ABSENT"
+    },
+    "dependencyLock": {
+      "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+      "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+    }
+  },
+  "harness": {
+    "testsTree": "0890567139d37995be11a260a93a03d46a47c84b",
+    "runnerTreeAtCommit1": "850ad78b9e094aa2288756d58b40838286d50fe6",
+    "governedToolingContentDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "oracle1120": {
+    "path": "evaluation/results/phase-10a14-r19-independent-review-1/INDEPENDENT_SEMANTIC_ORACLE_1120_PLUS.json",
+    "blob": "dbe803e182f5968e48c83bc0e281cd1f9ffc8629",
+    "sha256": "55183f06b043187c0b26cd66e7e699a8265721fedb293ffe79b2b5825a66cd2f"
+  },
+  "corrected567": {
+    "path": "evaluation/results/phase-10a14-r19-independent-review-1/R18_CORRECTED_SEMANTIC_567_ORACLE.json",
+    "blob": "1c89bc0e2c2b6d5edd535b9b15a43b17e50df105",
+    "sha256": "e403594110c92f35eba6d64b4aadda62e0c7d4c3cc3d8c2e35b6803a7c1ceec4"
+  },
+  "capturedAt": "2026-07-24T11:55:02.664Z"
+}

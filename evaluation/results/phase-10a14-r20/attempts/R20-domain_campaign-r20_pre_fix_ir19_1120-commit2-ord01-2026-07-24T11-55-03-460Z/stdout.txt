@@ -1,0 +1,62 @@
+{
+  "oraclePath": "evaluation/results/phase-10a14-r19-independent-review-1/INDEPENDENT_SEMANTIC_ORACLE_1120_PLUS.json",
+  "oracleSha256": "55183f06b043187c0b26cd66e7e699a8265721fedb293ffe79b2b5825a66cd2f",
+  "total": 1120,
+  "strictCanonicalPassed": 729,
+  "historicalLenientPassed": 739,
+  "counts": {
+    "total": 1120,
+    "passed": 729,
+    "materialFalseAllows": 179,
+    "materialFalseRefusals": 162,
+    "clarifyMismatches": 50,
+    "metamorphicFailures": 36,
+    "byClass": {
+      "explicit_tax_control": {
+        "total": 200,
+        "passed": 190,
+        "failed": 10
+      },
+      "explicit_non_tax_control": {
+        "total": 200,
+        "passed": 150,
+        "failed": 50
+      },
+      "acronym_homograph_control": {
+        "total": 200,
+        "passed": 90,
+        "failed": 110
+      },
+      "mixed_domain_genuine_tax": {
+        "total": 150,
+        "passed": 60,
+        "failed": 90
+      },
+      "ambiguous_clarification_control": {
+        "total": 150,
+        "passed": 70,
+        "failed": 80
+      },
+      "filipino_taglish_control": {
+        "total": 100,
+        "passed": 85,
+        "failed": 15
+      },
+      "metamorphic": {
+        "total": 120,
+        "passed": 84,
+        "failed": 36
+      }
+    },
+    "byReason": {
+      "strong_tax_signal": 577,
+      "weak_tax_signal_needs_context": 80,
+      "non_tax_object_role_veto": 305,
+      "non_tax_object_veto": 45,
+      "fail_closed_no_tax_signal": 83,
+      "weak_signal_with_non_tax_context": 10,
+      "tax_adjacent_needs_context": 20
+    }
+  },
+  "metamorphicFailedGroups": 36
+}

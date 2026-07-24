@@ -1,0 +1,14 @@
+{
+  "testsTree": "0890567139d37995be11a260a93a03d46a47c84b",
+  "runnerTreeAtCommit1": "850ad78b9e094aa2288756d58b40838286d50fe6",
+  "governedToolingContentDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "capturedAt": "2026-07-24T11:55:03.025Z"
+}

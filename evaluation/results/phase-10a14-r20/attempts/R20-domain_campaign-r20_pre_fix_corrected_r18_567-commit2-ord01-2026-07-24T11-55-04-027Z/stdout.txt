@@ -1,0 +1,62 @@
+{
+  "oraclePath": "evaluation/results/phase-10a14-r19-independent-review-1/R18_CORRECTED_SEMANTIC_567_ORACLE.json",
+  "oracleSha256": "e403594110c92f35eba6d64b4aadda62e0c7d4c3cc3d8c2e35b6803a7c1ceec4",
+  "total": 567,
+  "strictCanonicalPassed": 511,
+  "historicalLenientPassed": 567,
+  "counts": {
+    "total": 567,
+    "passed": 511,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 56,
+    "metamorphicFailures": 0,
+    "byClass": {
+      "explicit_tax": {
+        "total": 112,
+        "passed": 112,
+        "failed": 0
+      },
+      "explicit_non_tax": {
+        "total": 117,
+        "passed": 102,
+        "failed": 15
+      },
+      "substring_homograph_trap": {
+        "total": 100,
+        "passed": 100,
+        "failed": 0
+      },
+      "ambiguous": {
+        "total": 80,
+        "passed": 40,
+        "failed": 40
+      },
+      "filipino_taglish": {
+        "total": 60,
+        "passed": 60,
+        "failed": 0
+      },
+      "metamorphic": {
+        "total": 60,
+        "passed": 60,
+        "failed": 0
+      },
+      "acronym_context": {
+        "total": 38,
+        "passed": 37,
+        "failed": 1
+      }
+    },
+    "byReason": {
+      "strong_tax_signal": 221,
+      "non_tax_object_veto": 70,
+      "clearly_non_tax_domain": 22,
+      "fail_closed_no_tax_signal": 56,
+      "weak_tax_signal_needs_context": 52,
+      "non_tax_object_role_veto": 139,
+      "weak_signal_with_non_tax_context": 3,
+      "tax_adjacent_needs_context": 4
+    }
+  }
+}

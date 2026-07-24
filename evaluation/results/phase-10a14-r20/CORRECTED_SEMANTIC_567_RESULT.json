@@ -1,0 +1,419 @@
+{
+  "task": "PHASE-10A14-R20-COMMIT-2",
+  "unit": "corrected_semantic_567",
+  "sourceAttemptId": "R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z",
+  "sourcePath": "evaluation/results/phase-10a14-r19-independent-review-1/R18_CORRECTED_SEMANTIC_567_ORACLE.json",
+  "sourceSha256": "e403594110c92f35eba6d64b4aadda62e0c7d4c3cc3d8c2e35b6803a7c1ceec4",
+  "sourceBlob": "1c89bc0e2c2b6d5edd535b9b15a43b17e50df105",
+  "runtimeBaselineCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "total": 567,
+  "strictCanonicalPassed": 511,
+  "strictCanonicalFailed": 56,
+  "historicalLenientPassed": 567,
+  "historicalResult": {
+    "total": 567,
+    "passed": 567
+  },
+  "divergence": {
+    "finding": "SCORING_SEMANTICS_DIVERGENCE (owner-adjudicated: record both, proceed)",
+    "runtimeUnchanged": true,
+    "rawRuntimeDecisionIdenticalToHistorical": "see 1120 comparison; 567 raw decisions verified identical below",
+    "explanation": "The unchanged runtime produces byte-identical raw decisions to the historical R18/R19 record for all 567 rows. Historical scoring (567/567) treated CLARIFY as an acceptable pass against expected NOT_ALLOW (lenient \"any non-ALLOW satisfies\"). The frozen COMMIT 2 canonical mapping treats CLARIFY and REFUSE as distinct classes, so 56 rows the runtime answers CLARIFY count as strict failures (511/567 strict). This is a scoring-rule difference, not a runtime regression.",
+    "strictFailureRows": [
+      {
+        "probeId": "IR18-DOM-127",
+        "query": "GitHub pull request labels",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-137",
+        "query": "criminal procedure arraignment",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-141",
+        "query": "basketball game score",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-151",
+        "query": "religious sermon outline",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-166",
+        "query": "filing cabinet organization",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-167",
+        "query": "deadline for homework",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-168",
+        "query": "penalty kick rule",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-169",
+        "query": "surcharge in a delivery app",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-170",
+        "query": "deductible in insurance policy",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-189",
+        "query": "RR railroad timetable",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-197",
+        "query": "surcharge in shipping checkout",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-203",
+        "query": "deficiency in vitamin D",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-204",
+        "query": "assessment in classroom rubric",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-206",
+        "query": "tariff as phone plan",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-223",
+        "query": "deductible insurance excess",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-330",
+        "query": "Is this deductible? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-332",
+        "query": "Is there a surcharge? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-333",
+        "query": "What is the penalty? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-335",
+        "query": "What is the deadline? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-338",
+        "query": "What is the holding period? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-339",
+        "query": "What is the tariff? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-341",
+        "query": "What is the filing deadline? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-344",
+        "query": "Does this need registration? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "tax_adjacent_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-345",
+        "query": "Is this subject to assessment? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-346",
+        "query": "Can I protest this? Context 1.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-350",
+        "query": "Is this deductible? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-352",
+        "query": "Is there a surcharge? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-353",
+        "query": "What is the penalty? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-355",
+        "query": "What is the deadline? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-358",
+        "query": "What is the holding period? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-359",
+        "query": "What is the tariff? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-361",
+        "query": "What is the filing deadline? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-364",
+        "query": "Does this need registration? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "tax_adjacent_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-365",
+        "query": "Is this subject to assessment? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-366",
+        "query": "Can I protest this? Context 2.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-370",
+        "query": "Is this deductible? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-372",
+        "query": "Is there a surcharge? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-373",
+        "query": "What is the penalty? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-375",
+        "query": "What is the deadline? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-378",
+        "query": "What is the holding period? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-379",
+        "query": "What is the tariff? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-381",
+        "query": "What is the filing deadline? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-384",
+        "query": "Does this need registration? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "tax_adjacent_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-385",
+        "query": "Is this subject to assessment? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-386",
+        "query": "Can I protest this? Context 3.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-390",
+        "query": "Is this deductible? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-392",
+        "query": "Is there a surcharge? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-393",
+        "query": "What is the penalty? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-395",
+        "query": "What is the deadline? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-398",
+        "query": "What is the holding period? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-399",
+        "query": "What is the tariff? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-401",
+        "query": "What is the filing deadline? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-404",
+        "query": "Does this need registration? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "tax_adjacent_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-405",
+        "query": "Is this subject to assessment? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-406",
+        "query": "Can I protest this? Context 4.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      },
+      {
+        "probeId": "IR18-DOM-561",
+        "query": "RR is a railroad abbreviation.",
+        "expectedRaw": "NOT_ALLOW",
+        "actualRaw": "CLARIFY",
+        "actualReason": "weak_tax_signal_needs_context"
+      }
+    ],
+    "relationToOriginal38FieldSwapDefect": "Unrelated to the original 38-row field-swap defect. The defective field-swapped derivative (R18_ACRONYM_CONTEXT_CORRECTED_38_DERIVATIVE.json) was NOT used as controlling evidence. This divergence is purely CLARIFY-vs-REFUSE scoring semantics.",
+    "ownerAdjudication": "Record both strict (511/567) and historical-lenient (567/567); proceed as COMMIT 2 COMPLETE; flag canonical-mapping conflict for review."
+  }
+}

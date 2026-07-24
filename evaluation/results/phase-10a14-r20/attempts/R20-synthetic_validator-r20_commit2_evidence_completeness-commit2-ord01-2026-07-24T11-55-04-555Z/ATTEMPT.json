@@ -1,0 +1,62 @@
+{
+  "attemptId": "R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z",
+  "attemptCategory": "synthetic_validator",
+  "gateName": "r20_commit2_evidence_completeness",
+  "cycle": "commit2",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "evidenceHeadAtStart": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "evidenceHeadAtEnd": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "runtimeBaselineCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894",
+  "runtimeServicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "ABSENT"
+  },
+  "harnessTreeDigest": "0890567139d37995be11a260a93a03d46a47c84b",
+  "governedToolingContentDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependencyLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+  "dependencyLockBlobs": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "registry.mjs",
+    "--reconcile"
+  ],
+  "commandHash": "d4d2fd5e3f0039d9bf585e98e6d50ad51e8c7edad658c16d493cbd141106a0e1",
+  "startedAt": "2026-07-24T11:55:04.847Z",
+  "endedAt": "2026-07-24T11:55:04.864Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "controlling_completeness",
+  "controlling": true,
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z/stderr.txt",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z/COMPLETENESS_RESULT.json"
+  ],
+  "stdoutSha256": "1f686d874d2d4a325fd2ec643f0610dff7ead1cb7d59678be4577ca0ff399c5f",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "externalCaptureRemoved": true,
+  "gitObjectValidation": {
+    "evidenceHeadAtAllocation": "commit",
+    "evidenceHeadAtStart": "commit",
+    "evidenceHeadAtEnd": "commit",
+    "runtimeBaselineCommit": "commit"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "task": "PHASE-10A14-R20-COMMIT-2",
+  "preFix1120": {
+    "total": 1120,
+    "strictPassed": 729,
+    "materialFalseAllows": 179,
+    "materialFalseRefusals": 162,
+    "clarifyMismatches": 50,
+    "metamorphicFailures": 36,
+    "reproducedHistoricalExactly": true
+  },
+  "corrected567": {
+    "total": 567,
+    "strictPassed": 511,
+    "historicalLenientPassed": 567,
+    "rawDecisionsIdenticalToHistorical": true,
+    "scoringDivergence": 56
+  },
+  "registrySummary": {
+    "totalAttempts": 4,
+    "byCategory": {
+      "domain_campaign": 2,
+      "synthetic_validator": 2
+    },
+    "byGate": {
+      "r20_pre_fix_corrected_r18_567": 1,
+      "r20_pre_fix_ir19_1120": 1,
+      "r20_attempt_wrapper_self_validation": 1,
+      "r20_commit2_evidence_completeness": 1
+    },
+    "completed": 4,
+    "failed": 0,
+    "technicalIncomplete": 0,
+    "controlling": 4,
+    "nonControlling": 0,
+    "retries": 0,
+    "transientFailures": 0,
+    "orphanResults": 0,
+    "danglingAttempts": 0
+  }
+}

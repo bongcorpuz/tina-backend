@@ -1,0 +1,58 @@
+{
+  "phase": "PHASE-10A14-R20",
+  "capturedAt": "2026-07-24T11:55:01.954Z",
+  "artifacts": {
+    "PREFLIGHT.json": {
+      "gitBlob": "5815faf91a5cc7e2a58c7ae1f84d48988a7e596a",
+      "sha256": "84d16d935bb375e8a0b40bd9721d0d5fc509091491a31c29b03f4a25a4f9807d"
+    },
+    "FROZEN_PLAN.md": {
+      "gitBlob": "4f8afcf3d2ff16bd1697b8e4b302c2d5cc91d952",
+      "sha256": "0953aa00fdccbd6c24120e620ec5d56069f2d8f0bc8ebabecc3027c58c2e2dfc"
+    },
+    "EVIDENCE_CONTRACT.md": {
+      "gitBlob": "3a0c500619d6e72bc976b82531e83fa461dad1c4",
+      "sha256": "3ba93c554ae158c9382506e64614d4f18ea980153f7ea06953262da03a7dd247"
+    },
+    "IR19_1120_FAILURE_INVENTORY_SPEC.md": {
+      "gitBlob": "96e0839389c24fed0ce71c53877aa0a99f539514",
+      "sha256": "91bb0eca6d41903b5948c5323c4743731873c86a66306a396e570fef35f313e3"
+    },
+    "CLAUSE_LEVEL_INTENT_SCHEMA.md": {
+      "gitBlob": "a7f16c6646aa6f93d644f7e71ff3d5aaad424f0a",
+      "sha256": "10dd95cfc409fcebbfa623b46c9ac3c5aa0bf443fca0b7a97df75e71c3f88a07"
+    },
+    "RELATION_AND_PRECEDENCE_SPEC.md": {
+      "gitBlob": "801b5b2e182f3ad056d7c9515d74d496e56c341b",
+      "sha256": "83089bbd12c27e9ccf8a322dfe04293d3bf2083f71cc4df907d4204befc79432"
+    },
+    "ALLOWED_FILE_INVENTORY.json": {
+      "gitBlob": "c156c891c98bd4ba08ccb1231afb803eaef3b1e6",
+      "sha256": "ceb2dc93893e7441acd346288868ec575932896b98562279ab73f1d965881d1e"
+    },
+    "DEVELOPMENT_ORACLE_DESIGN.md": {
+      "gitBlob": "12989d898a847679c8cb29ed8e81431eff2f9b4f",
+      "sha256": "991d0d4c662fb69be3b34ea299b77a8b531a2ff653b67250a57e9d4e8d01201d"
+    },
+    "ATTEMPT_REGISTRY_CONTRACT.md": {
+      "gitBlob": "2e21716a0890435fcf443881a7b6b76ce35862fa",
+      "sha256": "10e7d67cdaad6226b53d6b9f0d49bd4a972610499762da5a411e63ebebe90ea8"
+    },
+    "ATTEMPT_WRAPPER_SPEC.md": {
+      "gitBlob": "91c146531f0fd3850f9fb8f6320a886bda47d459",
+      "sha256": "22db0bd4c95ea5d276ded522f85441a019bdc21efe73b61459714fab56552182"
+    },
+    "FREEZE_SEQUENCE.md": {
+      "gitBlob": "60720d98f7fe5dd93215bdc3fb75a9822238e933",
+      "sha256": "9cd92f368a179e20b4ef952206819af17003f29b9c35cffcf8a9a32fcdb0e1fa"
+    },
+    "RETRY_RULES.md": {
+      "gitBlob": "2e13c1e4c3beb9ff15773689313d32100277f33a",
+      "sha256": "6eb5f9c6db011996ec9e00a53259235280548c255949ffdf8f8ca180fc6fbd44"
+    },
+    "DECISION_AND_STOP_RULES.md": {
+      "gitBlob": "cb62fe1b0998f7301be33f081fb76c0b9f1f82bd",
+      "sha256": "49ad590b52b07b2e74945ab282b63764939bb4fd3ea971f2682102bd3819814a"
+    }
+  }
+}

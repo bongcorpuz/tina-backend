@@ -1,0 +1,98 @@
+{
+  "generatedAt": "2026-07-24T11:55:04.996Z",
+  "phase": "PHASE-10A14-R20",
+  "cumulativeThrough": "commit2",
+  "summary": {
+    "totalAttempts": 4,
+    "byCategory": {
+      "domain_campaign": 2,
+      "synthetic_validator": 2
+    },
+    "byGate": {
+      "r20_pre_fix_corrected_r18_567": 1,
+      "r20_pre_fix_ir19_1120": 1,
+      "r20_attempt_wrapper_self_validation": 1,
+      "r20_commit2_evidence_completeness": 1
+    },
+    "completed": 4,
+    "failed": 0,
+    "technicalIncomplete": 0,
+    "controlling": 4,
+    "nonControlling": 0,
+    "retries": 0,
+    "transientFailures": 0,
+    "orphanResults": 0,
+    "danglingAttempts": 0
+  },
+  "danglingAttemptIds": [],
+  "attempts": [
+    {
+      "attemptId": "R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_pre_fix_corrected_r18_567",
+      "cycle": "commit2",
+      "status": "completed",
+      "disposition": "controlling_regression",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z/CORRECTED_SEMANTIC_567_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z/stderr.txt",
+      "commandHash": "4c00111d9700a7965d46a2ae2cf401d13051d5b08ef57d479fda47cccf513b25",
+      "runtimeBaselineCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+      "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_pre_fix_ir19_1120-commit2-ord01-2026-07-24T11-55-03-460Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_pre_fix_ir19_1120",
+      "cycle": "commit2",
+      "status": "completed",
+      "disposition": "controlling_pre_fix_baseline",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_pre_fix_ir19_1120-commit2-ord01-2026-07-24T11-55-03-460Z/PRE_FIX_1120_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_pre_fix_ir19_1120-commit2-ord01-2026-07-24T11-55-03-460Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_pre_fix_ir19_1120-commit2-ord01-2026-07-24T11-55-03-460Z/stderr.txt",
+      "commandHash": "bc70c8d2bb6ce14dc57e07032ee32c4c9a59975ba6b5dc5e59c966737a5bf227",
+      "runtimeBaselineCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+      "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_attempt_wrapper_self_validation-commit2-ord01-2026-07-24T11-55-03-026Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_attempt_wrapper_self_validation",
+      "cycle": "commit2",
+      "status": "completed",
+      "disposition": "controlling_self_validation",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_attempt_wrapper_self_validation-commit2-ord01-2026-07-24T11-55-03-026Z/SELF_VALIDATION_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_attempt_wrapper_self_validation-commit2-ord01-2026-07-24T11-55-03-026Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_attempt_wrapper_self_validation-commit2-ord01-2026-07-24T11-55-03-026Z/stderr.txt",
+      "commandHash": "330db2eb1bfc3fa3f8d40aa1d905b069bb34715b7e66e65f32cb3d937c1165e9",
+      "runtimeBaselineCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+      "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit2_evidence_completeness",
+      "cycle": "commit2",
+      "status": "completed",
+      "disposition": "controlling_completeness",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z/COMPLETENESS_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z/stderr.txt",
+      "commandHash": "d4d2fd5e3f0039d9bf585e98e6d50ad51e8c7edad658c16d493cbd141106a0e1",
+      "runtimeBaselineCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+      "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894"
+    }
+  ]
+}

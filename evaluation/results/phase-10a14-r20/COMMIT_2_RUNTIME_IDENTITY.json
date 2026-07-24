@@ -1,0 +1,20 @@
+{
+  "startingCommit": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "servicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+  "servicesTreeContentDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "ABSENT"
+  },
+  "dependencyLock": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "r19CampaignRuntimeHead": "69383f6af3b280c4aedeb9429010342462e54a25",
+  "runtimeBlobsIdenticalToR19Campaign": {
+    "services/philippine-tax-domain-boundary.js": true,
+    "services/philippine-tax-boundary-patterns.js": true
+  },
+  "capturedAt": "2026-07-24T11:55:02.957Z"
+}
