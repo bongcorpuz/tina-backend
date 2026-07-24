@@ -1,0 +1,55 @@
+{
+  "snapshotAt": "2026-07-24T13:53:05.123Z",
+  "cycle": "commit5",
+  "cumulativeThrough": "commit5",
+  "summary": {
+    "totalAttempts": 14,
+    "byCategory": {
+      "domain_campaign": 3,
+      "focused_suite": 1,
+      "other": 1,
+      "synthetic_validator": 9
+    },
+    "byGate": {
+      "r20_commit5_pre_remediation_standalone_baseline": 1,
+      "r20_pre_fix_corrected_r18_567": 1,
+      "r20_pre_fix_ir19_1120": 1,
+      "r20_commit3_analyzer_focused_suite": 1,
+      "r20_commit4_development_oracle_builder": 1,
+      "r20_attempt_wrapper_self_validation": 1,
+      "r20_commit2_evidence_completeness": 1,
+      "r20_commit3_determinism_and_serialization": 1,
+      "r20_commit3_evidence_completeness": 1,
+      "r20_commit3_static_scope_and_exports": 1,
+      "r20_commit4_duplicate_and_metamorphic": 1,
+      "r20_commit4_freeze_and_evidence_completeness": 1,
+      "r20_commit4_schema_quota_expectation": 1,
+      "r20_commit4_source_integrity_and_contamination": 1
+    },
+    "completed": 14,
+    "failed": 0,
+    "technicalIncomplete": 0,
+    "controlling": 14,
+    "nonControlling": 0,
+    "retries": 0,
+    "transientFailures": 0,
+    "orphanResults": 0,
+    "danglingAttempts": 0
+  },
+  "attemptIds": [
+    "R20-domain_campaign-r20_commit5_pre_remediation_standalone_baseline-commit5-baseline-ord01-2026-07-24T13-53-04-594Z",
+    "R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z",
+    "R20-domain_campaign-r20_pre_fix_ir19_1120-commit2-ord01-2026-07-24T11-55-03-460Z",
+    "R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z",
+    "R20-other-r20_commit4_development_oracle_builder-commit4-ord01-2026-07-24T13-19-33-653Z",
+    "R20-synthetic_validator-r20_attempt_wrapper_self_validation-commit2-ord01-2026-07-24T11-55-03-026Z",
+    "R20-synthetic_validator-r20_commit2_evidence_completeness-commit2-ord01-2026-07-24T11-55-04-555Z",
+    "R20-synthetic_validator-r20_commit3_determinism_and_serialization-commit3-ord01-2026-07-24T12-23-10-198Z",
+    "R20-synthetic_validator-r20_commit3_evidence_completeness-commit3-ord01-2026-07-24T12-23-10-612Z",
+    "R20-synthetic_validator-r20_commit3_static_scope_and_exports-commit3-ord01-2026-07-24T12-23-08-969Z",
+    "R20-synthetic_validator-r20_commit4_duplicate_and_metamorphic-commit4-ord01-2026-07-24T13-19-34-481Z",
+    "R20-synthetic_validator-r20_commit4_freeze_and_evidence_completeness-commit4-ord01-2026-07-24T13-19-34-881Z",
+    "R20-synthetic_validator-r20_commit4_schema_quota_expectation-commit4-ord01-2026-07-24T13-19-34-056Z",
+    "R20-synthetic_validator-r20_commit4_source_integrity_and_contamination-commit4-ord01-2026-07-24T13-19-33-241Z"
+  ]
+}

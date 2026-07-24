@@ -1,15 +1,16 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit4",
+  "cumulativeThrough": "commit5",
   "registrySummary": {
-    "totalAttempts": 13,
+    "totalAttempts": 14,
     "byCategory": {
-      "domain_campaign": 2,
+      "domain_campaign": 3,
       "focused_suite": 1,
       "other": 1,
       "synthetic_validator": 9
     },
     "byGate": {
+      "r20_commit5_pre_remediation_standalone_baseline": 1,
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
@@ -24,21 +25,20 @@
       "r20_commit4_schema_quota_expectation": 1,
       "r20_commit4_source_integrity_and_contamination": 1
     },
-    "completed": 13,
+    "completed": 14,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 13,
+    "controlling": 14,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "oracle": {
-    "rowCount": 3720,
-    "frozenSha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263",
-    "newRows": 1823,
-    "metamorphicGroups": 40,
-    "unresolvedDisputes": 0
+  "commit5": {
+    "decision": "INCOMPLETE_REVISIONS_REQUIRED",
+    "baseline": "948/3720",
+    "blocker": "FROZEN_ORACLE_REASON_GRANULARITY_CONFLICT",
+    "runtimeModified": false
   }
 }

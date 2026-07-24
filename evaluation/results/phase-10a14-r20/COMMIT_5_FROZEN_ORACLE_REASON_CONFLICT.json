@@ -1,0 +1,82 @@
+{
+  "finding": "FROZEN_ORACLE_REASON_GRANULARITY_CONFLICT",
+  "summary": "The COMMIT 4 frozen oracle assigned inherited-row (r19_1120 / r18_corrected_567 / r17_accepted_control) expectedReasonCodeFamily via a coarse heuristic (inheritedReasonFamily in commit4-oracle-builder.mjs). Those coarse families conflict with the analyzer's contract-required fine-grained reason taxonomy, so exact canonical reason match on all 3,720 rows is unreachable without editing the immutable frozen oracle or degrading the analyzer's reason grounding.",
+  "inheritedReasonOnlyMismatches": 588,
+  "frozenCoarseVsAnalyzerRefinement": 163,
+  "analyzerGapOrOther": 425,
+  "exampleConflicts": [
+    {
+      "oracleId": "S1-IR19-0002",
+      "query": "What BIR form applies to VAT in case 2?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0012",
+      "query": "What BIR form applies to minimum corporate income tax in case 12?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0014",
+      "query": "Is the transaction subject to BIR registration in case 14?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0022",
+      "query": "What BIR form applies to VAT in case 22?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0032",
+      "query": "What BIR form applies to minimum corporate income tax in case 32?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0034",
+      "query": "Is the transaction subject to BIR registration in case 34?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0042",
+      "query": "What BIR form applies to VAT in case 42?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0052",
+      "query": "What BIR form applies to minimum corporate income tax in case 52?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0054",
+      "query": "Is the transaction subject to BIR registration in case 54?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    },
+    {
+      "oracleId": "S1-IR19-0062",
+      "query": "What BIR form applies to VAT in case 62?",
+      "frozenExpectedReason": "explicit_tax_task_relation",
+      "analyzerReason": "tax_compliance_task",
+      "classification": "frozen_coarse_analyzer_refinement"
+    }
+  ],
+  "governanceImplication": "Per FINAL_RUNTIME_FREEZE / freeze contract, a frozen-oracle expectation defect that blocks canonical closure requires STOP + REVISIONS REQUIRED. The frozen oracle (expectationsMutable=false) must be re-frozen with corrected inherited-row reason families (a COMMIT 4 revision) before COMMIT 5 runtime closure is achievable.",
+  "ownerAdjudication": "STOP — REVISIONS REQUIRED. Do not edit the frozen oracle in COMMIT 5; do not degrade the analyzer; do not patch exact rows. Baseline preserved.",
+  "noRuntimeModification": true
+}

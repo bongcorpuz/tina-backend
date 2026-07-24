@@ -1,16 +1,17 @@
 {
-  "generatedAt": "2026-07-24T13:19:35.285Z",
+  "generatedAt": "2026-07-24T13:53:05.122Z",
   "phase": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit2",
+  "cumulativeThrough": "commit5",
   "summary": {
-    "totalAttempts": 13,
+    "totalAttempts": 14,
     "byCategory": {
-      "domain_campaign": 2,
+      "domain_campaign": 3,
       "focused_suite": 1,
       "other": 1,
       "synthetic_validator": 9
     },
     "byGate": {
+      "r20_commit5_pre_remediation_standalone_baseline": 1,
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
@@ -25,10 +26,10 @@
       "r20_commit4_schema_quota_expectation": 1,
       "r20_commit4_source_integrity_and_contamination": 1
     },
-    "completed": 13,
+    "completed": 14,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 13,
+    "controlling": 14,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
@@ -37,6 +38,23 @@
   },
   "danglingAttemptIds": [],
   "attempts": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5_pre_remediation_standalone_baseline-commit5-baseline-ord01-2026-07-24T13-53-04-594Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5_pre_remediation_standalone_baseline",
+      "cycle": "commit5-baseline",
+      "status": "completed",
+      "disposition": "development_baseline",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5_pre_remediation_standalone_baseline-commit5-baseline-ord01-2026-07-24T13-53-04-594Z/BASELINE_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5_pre_remediation_standalone_baseline-commit5-baseline-ord01-2026-07-24T13-53-04-594Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5_pre_remediation_standalone_baseline-commit5-baseline-ord01-2026-07-24T13-53-04-594Z/stderr.txt",
+      "commandHash": "07cb6b83766e876987935109dd475e23598738f5ddac68bc02235bb6b24ee29c",
+      "runtimeBaselineCommit": "2c4354ce0954a1659a15cb3b99cbfe2d6620bce8",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
     {
       "attemptId": "R20-domain_campaign-r20_pre_fix_corrected_r18_567-commit2-ord01-2026-07-24T11-55-04-027Z",
       "attemptCategory": "domain_campaign",
