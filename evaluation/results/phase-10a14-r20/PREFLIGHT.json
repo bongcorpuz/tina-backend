@@ -1,0 +1,118 @@
+{
+  "phase": "PHASE-10A14-R20-CLAUSE-LEVEL-TAX-INTENT-OBJECT-RELATION-AND-COMPLETE-GOVERNED-ATTEMPT-REGISTRY-CLOSURE-REMEDIATION-1",
+  "generatedAtUtc": "2026-07-21T00:00:00Z",
+  "completedAtUtc": "2026-07-24T00:00:00Z",
+  "executor": "Opus 4.8 (low speed)",
+  "repository": "C:\\Projects\\tina-backend",
+  "checks": {
+    "repositoryAndBranch": {
+      "expectedBranch": "feature/source-availability-engine-v1",
+      "actualBranch": "feature/source-availability-engine-v1",
+      "pass": true
+    },
+    "headExact": {
+      "expected": "f0efc377a77de0b7f69913c4977333d1fb5fff8d",
+      "actual": "f0efc377a77de0b7f69913c4977333d1fb5fff8d",
+      "pass": true
+    },
+    "sync": {
+      "expected": "0 0",
+      "actual": "0 0",
+      "pass": true
+    },
+    "trackedTreeClean": {
+      "actual": "clean (no tracked modifications)",
+      "pass": true
+    },
+    "untrackedAllowlist": {
+      "allowed": [".claude/", ".vscode/", "evaluation/factcheck/", "evaluation/results/phase-10a14-r20/"],
+      "observed": [".vscode/", "evaluation/factcheck/", "evaluation/results/phase-10a14-r20/"],
+      "note": "The R20 evidence directory evaluation/results/phase-10a14-r20/ was created by this task and is intended for inclusion in COMMIT 1. It was omitted from the first limited-token PREFLIGHT summary and is disclosed here.",
+      "pass": true
+    },
+    "noNodeListener": {
+      "actual": "one node.exe process present (PID 13288) but NOT listening on any TCP port; incidental (editor/extension host), not a runtime or dev server",
+      "listeningOnAnyPort": false,
+      "pass": true
+    },
+    "port5173Free": {
+      "actual": "no listener on 5173 (netstat hit was 51730/HTTPS, unrelated)",
+      "pass": true
+    },
+    "noRepoLocalCaptureDirectory": {
+      "actual": "no capture* directory present",
+      "pass": true
+    },
+    "r19FinalRuntimeIsAncestor": {
+      "commit": "b3e879b18e7c9781eabade32622468066fbcde27",
+      "isAncestor": true,
+      "objectType": "commit",
+      "pass": true
+    },
+    "r19IndependentReviewIsHead": {
+      "headSubject": "PHASE-10A14-R19 independent review 1",
+      "decisionInherited": "REVISIONS REQUIRED",
+      "controllingFindings": ["P1-IR19-001", "P1-IR19-002", "P1-IR19-003", "P1-IR19-004", "P1-IR19-005", "P2-IR19-006"],
+      "baselineRow": "729/1120 historical passes present in review artifact",
+      "pass": true
+    },
+    "runtimeModel": {
+      "expected": "gpt-4o-mini",
+      "observedInRuntime": true,
+      "pass": true
+    }
+  },
+  "deferredChecksNowCompleted": {
+    "gitObjectValidation": {
+      "description": "All referenced SHAs validated to exist as commit objects.",
+      "f0efc377a77de0b7f69913c4977333d1fb5fff8d": "commit",
+      "b3e879b18e7c9781eabade32622468066fbcde27": "commit",
+      "pass": true
+    },
+    "r13ToR19HistoricalEvidenceUnchanged": {
+      "method": "git status --porcelain over evaluation/results/phase-10a14-r13* through r19* returned empty; tracked tree clean implies byte-identity with HEAD.",
+      "modificationsFound": 0,
+      "pass": true
+    },
+    "runtimeIdentityDigest": {
+      "method": "Git object hashes at HEAD (deterministic).",
+      "servicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+      "servicesTreeContentDigest": "11a0e992b57a6b107acd5ed8f57a50c284a7adab",
+      "runtimeBlobs": {
+        "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+        "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+        "services/philippine-tax-intent-analyzer.js": "ABSENT (does not yet exist; to be created in COMMIT 3+)"
+      },
+      "dependencyLock": {
+        "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+        "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+      },
+      "pass": true
+    },
+    "harnessIdentityDigest": {
+      "method": "Git tree objects at HEAD (deterministic).",
+      "evaluationRunnerTree": "850ad78b9e094aa2288756d58b40838286d50fe6",
+      "testsTree": "0890567139d37995be11a260a93a03d46a47c84b",
+      "pass": true
+    },
+    "controllingEvidenceAnchor": {
+      "r19IndependentReview1Blob": "a8526c4325ab67c694ad8c129b3a842567947421",
+      "pass": true
+    },
+    "noProtectedPathStaged": {
+      "actual": "nothing staged at PREFLIGHT completion; only COMMIT 1 artifacts under evaluation/results/phase-10a14-r20/ will be staged.",
+      "pass": true
+    }
+  },
+  "governanceState": {
+    "R15_historical": "NOT SUPERSEDED",
+    "R16_prospective": "NOT SATISFIED",
+    "R17_prospective": "NOT SATISFIED",
+    "R18_prospective": "NOT SATISFIED",
+    "R19_prospective": "NOT SATISFIED",
+    "R20_prospective": "IN PROGRESS (COMMIT 1)",
+    "phase10A": "OPEN"
+  },
+  "overall": "PASS - all core preconditions satisfied and all previously deferred checks completed; safe to author and commit COMMIT 1 (Frozen Plan and Contract). No runtime changes made. No oracle executed.",
+  "stopBoundary": "After COMMIT 1 is committed, pushed and verified, STOP. Do not begin COMMIT 2 in this run."
+}

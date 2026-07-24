@@ -1,0 +1,47 @@
+{
+  "phase": "PHASE-10A14-R20",
+  "immutableAtCommit": 1,
+  "note": "Any file touched outside this allowlist requires REVISIONS REQUIRED. There is no ad-hoc extension; the only extension mechanism is the narrow, pre-authorized 'governedToolingExtension' below.",
+  "preferredRuntimeFiles": [
+    "services/philippine-tax-intent-analyzer.js",
+    "services/philippine-tax-boundary-patterns.js",
+    "services/philippine-tax-domain-boundary.js"
+  ],
+  "runtimeBaselineDigests": {
+    "servicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+    "philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "philippine-tax-intent-analyzer.js": "ABSENT-to-be-created-in-COMMIT-3+"
+  },
+  "authorizedR20TestAndEvidencePaths": [
+    "evaluation/results/phase-10a14-r20/**",
+    "evaluation/oracles/phase-10a14-r20/**",
+    "tests/phase-10a14-r20/**",
+    "evaluation/runner/phase-10a14-r20/** (governed attempt wrapper/registry tooling only, per ATTEMPT_WRAPPER_SPEC.md and ATTEMPT_REGISTRY_CONTRACT.md)"
+  ],
+  "governedToolingExtension": {
+    "description": "The ONLY pre-authorized extension mechanism. Governed attempt-wrapper and registry tooling may be added under evaluation/runner/phase-10a14-r20/ (and a single manifest/registry module it imports) strictly to execute and preserve R20 evidence. It must not alter runtime decision logic.",
+    "constraints": [
+      "No decision logic in tooling.",
+      "No modification of files outside evaluation/runner/phase-10a14-r20/.",
+      "Introduced no earlier than COMMIT 2 and only as authorized by the frozen contract."
+    ]
+  },
+  "explicitlyProhibitedFiles": [
+    "pipeline.js",
+    "server.js",
+    "ask-handler.js",
+    "answer-renderer.js",
+    "LOA workflow files",
+    "retrieval/reranking files",
+    "sourceAvailability files",
+    "corpus/index files",
+    "frontend files",
+    "database/schema files",
+    "C:\\Projects\\tina-dev-factory",
+    ".claude/",
+    ".vscode/",
+    "evaluation/factcheck/",
+    "evaluation/results/phase-10a14-r13* through r19* (historical evidence — read-only)"
+  ]
+}
