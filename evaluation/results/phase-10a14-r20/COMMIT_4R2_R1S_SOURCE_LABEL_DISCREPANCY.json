@@ -1,0 +1,115 @@
+{
+  "count": 9,
+  "unresolved": 0,
+  "note": "Owner-adjudicated: r1ExpectedReasonCodeFamily uses actual frozen R1 reason; r2ExpectedReasonCodeFamily uses committed resolvedReason. Target corrections unchanged. R1S evidence not edited.",
+  "discrepancies": [
+    {
+      "oracleId": "S1-IR19-0015",
+      "queryHash": "11f4cb581e64e55e9b434db3",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0035",
+      "queryHash": "03f2bd26d1180b9a3090a3b3",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0055",
+      "queryHash": "fb0fec8433a9437700d80112",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0075",
+      "queryHash": "a2aa3bc8e21184b608d3434b",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0095",
+      "queryHash": "192de78e76330043aa47f93b",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0115",
+      "queryHash": "b3e65e885659bc01be8851af",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0135",
+      "queryHash": "a002babf823f209aca048598",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0155",
+      "queryHash": "7c57ddc584ad5c1610434057",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    },
+    {
+      "oracleId": "S1-IR19-0175",
+      "queryHash": "7252c223a26840ec9d46e459",
+      "challengeRegisterReviewedReason": "explicit_tax_task_relation",
+      "actualFrozenR1Reason": "tax_compliance_task",
+      "committedResolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "targetCorrectionUnchanged": true,
+      "decisionUnchanged": true,
+      "relationsUnchanged": true,
+      "classification": "REVIEW_SOURCE_LABEL_CLERICAL_DISCREPANCY"
+    }
+  ]
+}

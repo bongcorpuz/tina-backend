@@ -1,0 +1,52 @@
+{
+  "validator": "r20-commit4r2-r2-builder",
+  "checks": [
+    {
+      "name": "changed_73",
+      "pass": true
+    },
+    {
+      "name": "unchanged_3647",
+      "pass": true
+    },
+    {
+      "name": "new_row_changes_0",
+      "pass": true
+    },
+    {
+      "name": "order_changes_0",
+      "pass": true
+    },
+    {
+      "name": "unauthorized_diffs_0",
+      "pass": true
+    },
+    {
+      "name": "decision_diffs_0",
+      "pass": true
+    },
+    {
+      "name": "relation_diffs_0",
+      "pass": true
+    },
+    {
+      "name": "query_diffs_0",
+      "pass": true
+    },
+    {
+      "name": "all_changed_in_confirmed_set",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "changed": 73,
+  "unchanged": 3647,
+  "diff": {
+    "unauthorizedDiffs": 0,
+    "decisionDiffs": 0,
+    "relationDiffs": 0,
+    "queryDiffs": 0,
+    "newRowChanges": 0,
+    "orderChanges": 0
+  }
+}

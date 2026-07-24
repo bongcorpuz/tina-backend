@@ -1,0 +1,9 @@
+{
+  "correctionsApplied": 73,
+  "adjudicatorCrossCheck": {
+    "agree": 73,
+    "conflicts": 0,
+    "conflictDetail": [],
+    "note": "Adjudicator is an application aid only; the committed resolution register is controlling. A conflict is reported but the register target is used."
+  }
+}

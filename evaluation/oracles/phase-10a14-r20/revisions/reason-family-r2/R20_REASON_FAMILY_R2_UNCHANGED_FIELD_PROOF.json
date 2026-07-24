@@ -1,0 +1,13 @@
+{
+  "rowCountEqual": true,
+  "rowOrderEqual": true,
+  "oracleIdsEqual": true,
+  "queriesEqual": true,
+  "expectedDecisionsEqual": true,
+  "expectedRelationsEqual": true,
+  "R20NewRowsEqual": true,
+  "rowsCompared": 3720,
+  "rowsChanged": 73,
+  "rowsUnchanged": 3647,
+  "unauthorizedFieldDifferences": 0
+}

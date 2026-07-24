@@ -1,0 +1,17 @@
+{
+  "statement": [
+    "V1 remains immutable historical evidence.",
+    "R1 remains immutable historical evidence.",
+    "R1 is not edited, deleted or rewritten.",
+    "R2 supersedes R1 only as the canonical development oracle for COMMIT 5 Restart 1.",
+    "R2 applies exactly 73 independently confirmed reason-family corrections.",
+    "R2 changes no query, decision, expected relation, category, source provenance, row order or R20 new-row expectation.",
+    "R2 is development evidence and is not unseen, blind, independent or holdout."
+  ],
+  "v1Sha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263",
+  "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
+  "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+  "reviewSourceCommit": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+  "challengeRegister": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/review-completion/R20_REASON_FAMILY_R1_FULL_REVIEW_CHALLENGE_REGISTER.json",
+  "resolutionRegister": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/review-completion/R20_REASON_FAMILY_R1_FULL_REVIEW_RESOLUTION_REGISTER.json"
+}

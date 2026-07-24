@@ -1,0 +1,47 @@
+{
+  "validator": "r20-commit4r2-r1-r1s-source-lock",
+  "checks": [
+    {
+      "name": "v1_unchanged",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "r1_sha",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "r1_rows_3720",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "confirmed_defects_73",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "corrections_73",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no_builder_errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "adjudicator_hash_frozen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "runtime_unchanged",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "allPassed": true,
+  "errors": []
+}

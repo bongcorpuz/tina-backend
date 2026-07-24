@@ -1,0 +1,26 @@
+{
+  "validator": "r20-commit4r2-correction-application-review",
+  "checks": [
+    {
+      "name": "reviewed_73",
+      "pass": true
+    },
+    {
+      "name": "verified_73",
+      "pass": true
+    },
+    {
+      "name": "challenges_0",
+      "pass": true
+    },
+    {
+      "name": "label_discrepancies_9_verified",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "reviewed": 73,
+  "verified": 73,
+  "challenge": 0,
+  "labelDiscrepanciesVerified": 9
+}

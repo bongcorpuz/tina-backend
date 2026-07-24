@@ -1,0 +1,62 @@
+{
+  "attemptId": "R20-synthetic_validator-r20_commit4r2_freeze_and_evidence_completeness-commit4r2-ord01-2026-07-24T21-32-18-104Z",
+  "attemptCategory": "synthetic_validator",
+  "gateName": "r20_commit4r2_freeze_and_evidence_completeness",
+  "cycle": "commit4r2",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+  "evidenceHeadAtStart": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+  "evidenceHeadAtEnd": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+  "runtimeBaselineCommit": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+  "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284",
+  "runtimeServicesTreeObject": "c16daac64b34261899fef1b8941d8b23a290bed8",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+  },
+  "harnessTreeDigest": "8be393c0ed9327db57abcd5ddd4e51c562153f40",
+  "governedToolingContentDigest": "8cc4dc3c049e4a2259b4c19161e68904d1408d2b1c1268d2ebde2e1117ef53bf",
+  "dependencyLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+  "dependencyLockBlobs": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "commit4r2-driver.mjs",
+    "--freeze"
+  ],
+  "commandHash": "28ed3b86762bcef58d2af22b45e4456f213ac47532bc8a228543c004b5c13979",
+  "startedAt": "2026-07-24T21:32:18.453Z",
+  "endedAt": "2026-07-24T21:32:18.487Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "controlling_freeze",
+  "controlling": true,
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r2_freeze_and_evidence_completeness-commit4r2-ord01-2026-07-24T21-32-18-104Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r2_freeze_and_evidence_completeness-commit4r2-ord01-2026-07-24T21-32-18-104Z/stderr.txt",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r2_freeze_and_evidence_completeness-commit4r2-ord01-2026-07-24T21-32-18-104Z/FREEZE_COMPLETENESS_RESULT.json"
+  ],
+  "stdoutSha256": "ef83404356b9b6ec085d54ef53d027ca62f2b741cb042a66b65dfdc3ff8cff6f",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "externalCaptureRemoved": true,
+  "gitObjectValidation": {
+    "evidenceHeadAtAllocation": "commit",
+    "evidenceHeadAtStart": "commit",
+    "evidenceHeadAtEnd": "commit",
+    "runtimeBaselineCommit": "commit"
+  }
+}

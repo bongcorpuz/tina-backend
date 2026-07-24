@@ -1,0 +1,38 @@
+{
+  "validator": "r20-commit4r2-unchanged-field-and-contract",
+  "checks": [
+    {
+      "name": "changed_73",
+      "pass": true
+    },
+    {
+      "name": "unchanged_3647",
+      "pass": true
+    },
+    {
+      "name": "unauthorized_0",
+      "pass": true
+    },
+    {
+      "name": "decision_0",
+      "pass": true
+    },
+    {
+      "name": "relation_0",
+      "pass": true
+    },
+    {
+      "name": "query_0",
+      "pass": true
+    },
+    {
+      "name": "order_0",
+      "pass": true
+    },
+    {
+      "name": "all_reasons_closed",
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

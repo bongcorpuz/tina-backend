@@ -1,0 +1,304 @@
+{
+  "reviewer": "Sonnet 5 (independent, non-executor correction-application reviewer)",
+  "reviewed": 73,
+  "verified": 73,
+  "challenges": 0,
+  "labelDiscrepancyRowsVerified": 9,
+  "missing": 0,
+  "duplicates": 0,
+  "summary": "All 73 corrections were verified as substantively correct against the closed taxonomy and RF→reason mapping: deductibility questions correctly target RF-02 (tax_treatment_of_ordinary_object), records/penalty/registration compliance questions correctly target RF-01 (tax_compliance_task), non-tax-shaped translation requests and referent-less 'scenario N' follow-ups correctly target RF-11 (no_tax_relation) rather than RF-08 or RF-04 respectively, and explicit acronym-to-non-tax redefinitions (BOC, SEC) correctly target RF-07 (non_tax_expansion). All 9 labelDiscrepancy=true rows (withholding tax return deductibility queries, oracleIds 0015/0035/0055/0075/0095/0115/0135/0155/0175) were confirmed: the r1Reason_from (tax_compliance_task) is a plausible starting reason distinct from the historicalReviewedLabel clerical error (explicit_tax_task_relation), and the r2Reason_target (tax_treatment_of_ordinary_object) is correct regardless. No challenges raised.",
+  "results": [
+    {
+      "oracleId": "S1-IR19-0005",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0006",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0009",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0015",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0019",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0025",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0026",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0029",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0035",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0039",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0045",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0046",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0049",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0055",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0059",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0065",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0066",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0069",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0075",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0079",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0085",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0086",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0089",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0095",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0099",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0105",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0106",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0109",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0115",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0119",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0125",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0126",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0129",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0135",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0139",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0145",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0146",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0149",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0155",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0159",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0165",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0166",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0169",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0175",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0179",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0185",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0186",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0189",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0194",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0216",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0236",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0256",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0276",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0296",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0316",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0336",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0356",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0376",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0751",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0752",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0753",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0754",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0755",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0756",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0757",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0758",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0759",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S1-IR19-0760",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-082",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-093",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-472",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S3-IR17-202",
+      "reviewDecision": "VERIFIED"
+    },
+    {
+      "oracleId": "S3-IR17-206",
+      "reviewDecision": "VERIFIED"
+    }
+  ]
+}

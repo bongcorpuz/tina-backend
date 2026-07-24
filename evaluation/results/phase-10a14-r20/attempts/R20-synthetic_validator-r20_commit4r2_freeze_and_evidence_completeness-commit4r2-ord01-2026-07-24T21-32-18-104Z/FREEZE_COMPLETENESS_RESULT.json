@@ -1,0 +1,15 @@
+{
+  "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+  "r2MatchesBuild": true,
+  "r1Preserved": true,
+  "attemptDirectories": 28,
+  "registryRecords": 28,
+  "attemptDirEqualsRegistry": true,
+  "controllingAttempts": 28,
+  "controllingAttemptsWithResults": 28,
+  "controllingResultPaths": 29,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "closureComplete": true,
+  "allPassed": true
+}

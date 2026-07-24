@@ -1,13 +1,13 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit4r1s",
+  "cumulativeThrough": "commit4r2",
   "registrySummary": {
-    "totalAttempts": 24,
+    "totalAttempts": 29,
     "byCategory": {
       "domain_campaign": 3,
       "focused_suite": 1,
-      "other": 3,
-      "synthetic_validator": 17
+      "other": 5,
+      "synthetic_validator": 20
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -17,6 +17,8 @@
       "r20_commit4_development_oracle_builder": 1,
       "r20_commit4r1_inherited_reason_adjudication": 1,
       "r20_commit4r1s_full_independent_reason_review": 1,
+      "r20_commit4r2_correction_application_review": 1,
+      "r20_commit4r2_r2_builder": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
@@ -33,26 +35,27 @@
       "r20_commit4r1s_blind_packet_integrity": 1,
       "r20_commit4r1s_challenge_resolution": 1,
       "r20_commit4r1s_evidence_completeness": 1,
-      "r20_commit4r1s_r1_immutability_and_scope": 1
+      "r20_commit4r1s_r1_immutability_and_scope": 1,
+      "r20_commit4r2_freeze_and_evidence_completeness": 1,
+      "r20_commit4r2_r1_r1s_source_lock": 1,
+      "r20_commit4r2_unchanged_field_and_contract": 1
     },
-    "completed": 24,
+    "completed": 29,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 24,
+    "controlling": 29,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "commit4r1s": {
-    "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
-    "r1Unchanged": true,
-    "reviewedRows": 1897,
-    "agree": 1824,
-    "challenge": 73,
-    "confirmedDefects": 73,
-    "invalidChallenges": 0,
-    "decision": "COMMIT_4R1S_COMPLETE_R1_DEFECTS_FOUND"
+  "commit4r2": {
+    "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+    "correctionsApplied": 73,
+    "changed": 73,
+    "unchanged": 3647,
+    "labelDiscrepancies": 9,
+    "decision": "COMPLETE"
   }
 }
