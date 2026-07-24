@@ -1,0 +1,67 @@
+{
+  "attemptId": "R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z",
+  "attemptCategory": "focused_suite",
+  "gateName": "r20_commit3_analyzer_focused_suite",
+  "cycle": "commit3",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "ebb71e4927609d441f4acaddd25360f9bb525362",
+  "evidenceHeadAtStart": "ebb71e4927609d441f4acaddd25360f9bb525362",
+  "evidenceHeadAtEnd": "ebb71e4927609d441f4acaddd25360f9bb525362",
+  "runtimeBaselineCommit": "ebb71e4927609d441f4acaddd25360f9bb525362",
+  "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894",
+  "runtimeServicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "ABSENT"
+  },
+  "harnessTreeDigest": "0890567139d37995be11a260a93a03d46a47c84b",
+  "governedToolingContentDigest": "c3ab88c0601e4e31e96e9a120a32504dddbc96fcbfac1374719f7076f825bb1d",
+  "dependencyLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+  "dependencyLockBlobs": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "--test",
+    "tests/phase-10a14-r20/analyzer-schema-contract.test.mjs",
+    "tests/phase-10a14-r20/analyzer-clause-and-relation.test.mjs",
+    "tests/phase-10a14-r20/analyzer-decision-precedence.test.mjs",
+    "tests/phase-10a14-r20/analyzer-determinism.test.mjs",
+    "tests/phase-10a14-r20/analyzer-non-integration.test.mjs"
+  ],
+  "commandHash": "2c86a1be2a9b8fa5c163d361a33fc1f570140c3f543e6355337b8f421e3658d0",
+  "startedAt": "2026-07-24T12:23:10.002Z",
+  "endedAt": "2026-07-24T12:23:10.013Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "controlling_focused_suite",
+  "controlling": true,
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z/stderr.txt",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z/FOCUSED_SUITE_TAP.txt",
+    "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z/FOCUSED_SUITE_SUMMARY.json"
+  ],
+  "stdoutSha256": "df40c8c65cdf1306680c0c369fa71062d71b7da51ea2279d540156edf962b83d",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "externalCaptureRemoved": true,
+  "gitObjectValidation": {
+    "evidenceHeadAtAllocation": "commit",
+    "evidenceHeadAtStart": "commit",
+    "evidenceHeadAtEnd": "commit",
+    "runtimeBaselineCommit": "commit"
+  }
+}

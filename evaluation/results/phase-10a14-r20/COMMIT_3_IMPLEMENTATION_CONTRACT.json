@@ -1,0 +1,120 @@
+{
+  "task": "PHASE-10A14-R20-COMMIT-3",
+  "unit": "implementation_contract",
+  "analyzerFile": "services/philippine-tax-intent-analyzer.js",
+  "exports": [
+    "TAX_BOUNDARY_DECISIONS",
+    "TAX_BOUNDARY_REASON_CODES",
+    "TAX_RELATION_TYPES",
+    "TAX_BOUNDARY_SPEECH_ACTS",
+    "normalizeTaxBoundaryText",
+    "segmentTaxBoundaryClauses",
+    "analyzePhilippineTaxIntent",
+    "decideTaxBoundaryFromEvidence",
+    "serializeTaxBoundaryEvidence"
+  ],
+  "schemaFields": 19,
+  "relationTypes": 12,
+  "decisions": 3,
+  "reasonCodes": 11,
+  "speechActs": 5,
+  "staticScopeResult": {
+    "validator": "r20-commit3-static-scope-and-exports",
+    "total": 18,
+    "passed": 18,
+    "allPassed": true,
+    "checks": [
+      {
+        "name": "export_normalizeTaxBoundaryText",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "export_segmentTaxBoundaryClauses",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "export_analyzePhilippineTaxIntent",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "export_decideTaxBoundaryFromEvidence",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "export_serializeTaxBoundaryEvidence",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "const_TAX_BOUNDARY_DECISIONS",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "const_TAX_BOUNDARY_REASON_CODES",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "const_TAX_RELATION_TYPES",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_fs_import",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_network",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_retrieval",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_env",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_datetime_random",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_console",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "no_production_integration",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "legacy_domain_blob",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "legacy_patterns_blob",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "closed_sets_enforced",
+        "pass": true,
+        "detail": ""
+      }
+    ]
+  },
+  "integration": "NONE — analyzer not wired into detectPhilippineTaxBoundary (deferred to COMMIT 5)."
+}

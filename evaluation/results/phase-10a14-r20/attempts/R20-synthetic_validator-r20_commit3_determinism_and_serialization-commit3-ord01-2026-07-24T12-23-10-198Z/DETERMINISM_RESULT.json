@@ -1,0 +1,8 @@
+{
+  "validator": "r20-commit3-determinism-and-serialization",
+  "representativeQueries": 8,
+  "repeatedRunsPerQuery": 100,
+  "byteMismatches": 0,
+  "mutationFailures": 0,
+  "allPassed": true
+}

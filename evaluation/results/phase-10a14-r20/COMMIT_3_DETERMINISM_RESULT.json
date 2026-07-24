@@ -1,0 +1,10 @@
+{
+  "task": "PHASE-10A14-R20-COMMIT-3",
+  "sourceAttemptId": "R20-synthetic_validator-r20_commit3_determinism_and_serialization-commit3-ord01-2026-07-24T12-23-10-198Z",
+  "validator": "r20-commit3-determinism-and-serialization",
+  "representativeQueries": 8,
+  "repeatedRunsPerQuery": 100,
+  "byteMismatches": 0,
+  "mutationFailures": 0,
+  "allPassed": true
+}

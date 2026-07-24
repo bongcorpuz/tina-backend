@@ -1,0 +1,16 @@
+{
+  "validator": "r20-commit3-evidence-completeness",
+  "attemptDirectories": 7,
+  "registryRecords": 7,
+  "attemptDirEqualsRegistry": true,
+  "controllingAttempts": 7,
+  "controllingAttemptsWithResults": 7,
+  "controllingResultPaths": 8,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "closureComplete": true,
+  "commit2AttemptsPresent": 4,
+  "commit3AttemptsPresent": 3,
+  "commit2Immutable": true,
+  "allPassed": true
+}

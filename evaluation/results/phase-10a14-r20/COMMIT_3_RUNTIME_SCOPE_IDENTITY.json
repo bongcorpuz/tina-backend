@@ -1,0 +1,27 @@
+{
+  "startingCommit": "ebb71e4927609d441f4acaddd25360f9bb525362",
+  "servicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+  "servicesTreeContentDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "ABSENT"
+  },
+  "dependencyLock": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "legacyBoundaryFilesUnchanged": {
+    "services/philippine-tax-domain-boundary.js": true,
+    "services/philippine-tax-boundary-patterns.js": true
+  },
+  "capturedAt": "2026-07-24T12:23:11.298Z"
+}

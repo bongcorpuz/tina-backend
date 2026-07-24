@@ -1,0 +1,30 @@
+{
+  "phase": "PHASE-10A14-R20",
+  "unit": "COMMIT 3",
+  "startingHead": "ebb71e4927609d441f4acaddd25360f9bb525362",
+  "parent": "78cf7ea7adf0f84edda767bef89c665b69bea0ff",
+  "branch": "feature/source-availability-engine-v1",
+  "analyzerPresent": "new (uncommitted, to be added in COMMIT 3)",
+  "legacyDomainBoundaryBlob": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+  "legacyPatternsBlob": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+  "runtime": {
+    "startingCommit": "ebb71e4927609d441f4acaddd25360f9bb525362",
+    "servicesTreeObject": "0b5453ea0fb96857e489483ec7f102476e6b213b",
+    "servicesTreeContentDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894",
+    "runtimeBlobs": {
+      "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+      "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+      "services/philippine-tax-intent-analyzer.js": "ABSENT"
+    },
+    "dependencyLock": {
+      "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+      "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+    }
+  },
+  "harness": {
+    "testsTree": "0890567139d37995be11a260a93a03d46a47c84b",
+    "runnerTreeAtCommit1": "850ad78b9e094aa2288756d58b40838286d50fe6",
+    "governedToolingContentDigest": "c3ab88c0601e4e31e96e9a120a32504dddbc96fcbfac1374719f7076f825bb1d"
+  },
+  "capturedAt": "2026-07-24T12:23:08.918Z"
+}

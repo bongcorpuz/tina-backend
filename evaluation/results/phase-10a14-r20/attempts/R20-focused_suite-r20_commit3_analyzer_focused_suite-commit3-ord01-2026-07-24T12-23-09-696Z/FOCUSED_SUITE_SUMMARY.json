@@ -1,0 +1,13 @@
+{
+  "tests": 101,
+  "pass": 101,
+  "fail": 0,
+  "exitCode": 0,
+  "testFiles": [
+    "tests/phase-10a14-r20/analyzer-schema-contract.test.mjs",
+    "tests/phase-10a14-r20/analyzer-clause-and-relation.test.mjs",
+    "tests/phase-10a14-r20/analyzer-decision-precedence.test.mjs",
+    "tests/phase-10a14-r20/analyzer-determinism.test.mjs",
+    "tests/phase-10a14-r20/analyzer-non-integration.test.mjs"
+  ]
+}

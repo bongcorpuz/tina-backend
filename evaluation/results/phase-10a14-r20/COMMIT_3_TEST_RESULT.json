@@ -1,0 +1,16 @@
+{
+  "task": "PHASE-10A14-R20-COMMIT-3",
+  "unit": "focused_suite",
+  "sourceAttemptId": "R20-focused_suite-r20_commit3_analyzer_focused_suite-commit3-ord01-2026-07-24T12-23-09-696Z",
+  "testFiles": [
+    "tests/phase-10a14-r20/analyzer-schema-contract.test.mjs",
+    "tests/phase-10a14-r20/analyzer-clause-and-relation.test.mjs",
+    "tests/phase-10a14-r20/analyzer-decision-precedence.test.mjs",
+    "tests/phase-10a14-r20/analyzer-determinism.test.mjs",
+    "tests/phase-10a14-r20/analyzer-non-integration.test.mjs"
+  ],
+  "tests": 101,
+  "passed": 101,
+  "failed": 0,
+  "exitCode": 0
+}
