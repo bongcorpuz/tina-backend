@@ -1,0 +1,7 @@
+{
+  "newRowExactDuplicates": 0,
+  "duplicateOracleIds": 0,
+  "inheritedSourceExactDuplicates": 2,
+  "inheritedNote": "Inherited exact duplicates originate inside the immutable corrected-567 source and are preserved unchanged (R18 history not rewritten).",
+  "maxNearDupCluster": 3
+}

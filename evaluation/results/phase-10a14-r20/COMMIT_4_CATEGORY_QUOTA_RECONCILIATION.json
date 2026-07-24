@@ -1,0 +1,12 @@
+{
+  "categoryCounts": {
+    "mixed_domain_genuine_tax": 360,
+    "explicit_non_tax_task": 565,
+    "acronym_capitalization_expansion": 276,
+    "quoted_term_only": 110,
+    "negation_contradiction": 100,
+    "internal_label_proper_name": 104,
+    "tax_compliance_task": 108
+  },
+  "quotasMet": true
+}

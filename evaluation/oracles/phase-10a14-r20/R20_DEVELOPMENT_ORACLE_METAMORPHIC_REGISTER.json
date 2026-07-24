@@ -1,0 +1,2286 @@
+{
+  "task": "PHASE-10A14-R20",
+  "groupCount": 40,
+  "groups": [
+    {
+      "group": "MM-R20-01",
+      "transformationType": "case",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0001",
+        "R20MM-0002",
+        "R20MM-0003",
+        "R20MM-0004",
+        "R20MM-0005"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0001",
+          "query": "Is the cooling fan deductible for income tax? [MM-R20-01]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0002",
+          "query": "IS THE COOLING FAN DEDUCTIBLE FOR INCOME TAX? [MM-R20-01]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0003",
+          "query": "Please, kindly: Is the cooling fan deductible for income tax? [MM-R20-01]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0004",
+          "query": "Deductible ba ang cooling fan para sa income tax? [MM-R20-01]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0005",
+          "query": "Change the cooling fan setting. [MM-R20-01]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-02",
+      "transformationType": "punctuation",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0006",
+        "R20MM-0007",
+        "R20MM-0008",
+        "R20MM-0009",
+        "R20MM-0010"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0006",
+          "query": "Is the cooking pan deductible for income tax? [MM-R20-02]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0007",
+          "query": "IS THE COOKING PAN DEDUCTIBLE FOR INCOME TAX? [MM-R20-02]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0008",
+          "query": "Please, kindly: Is the cooking pan deductible for income tax? [MM-R20-02]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0009",
+          "query": "Deductible ba ang cooking pan para sa income tax? [MM-R20-02]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0010",
+          "query": "Change the cooking pan setting. [MM-R20-02]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-03",
+      "transformationType": "polite_framing",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0011",
+        "R20MM-0012",
+        "R20MM-0013",
+        "R20MM-0014",
+        "R20MM-0015"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0011",
+          "query": "Is the website design deductible for income tax? [MM-R20-03]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0012",
+          "query": "IS THE WEBSITE DESIGN DEDUCTIBLE FOR INCOME TAX? [MM-R20-03]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0013",
+          "query": "Please, kindly: Is the website design deductible for income tax? [MM-R20-03]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0014",
+          "query": "Deductible ba ang website design para sa income tax? [MM-R20-03]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0015",
+          "query": "Change the website design setting. [MM-R20-03]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-04",
+      "transformationType": "code_switch",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0016",
+        "R20MM-0017",
+        "R20MM-0018",
+        "R20MM-0019",
+        "R20MM-0020"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0016",
+          "query": "Is the music channel deductible for income tax? [MM-R20-04]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0017",
+          "query": "IS THE MUSIC CHANNEL DEDUCTIBLE FOR INCOME TAX? [MM-R20-04]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0018",
+          "query": "Please, kindly: Is the music channel deductible for income tax? [MM-R20-04]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0019",
+          "query": "Deductible ba ang music channel para sa income tax? [MM-R20-04]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0020",
+          "query": "Change the music channel setting. [MM-R20-04]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-05",
+      "transformationType": "clause_order",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0021",
+        "R20MM-0022",
+        "R20MM-0023",
+        "R20MM-0024",
+        "R20MM-0025"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0021",
+          "query": "Is the software company deductible for income tax? [MM-R20-05]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0022",
+          "query": "IS THE SOFTWARE COMPANY DEDUCTIBLE FOR INCOME TAX? [MM-R20-05]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0023",
+          "query": "Please, kindly: Is the software company deductible for income tax? [MM-R20-05]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0024",
+          "query": "Deductible ba ang software company para sa income tax? [MM-R20-05]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0025",
+          "query": "Change the software company setting. [MM-R20-05]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-06",
+      "transformationType": "quoted_vs_used",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0026",
+        "R20MM-0027",
+        "R20MM-0028",
+        "R20MM-0029",
+        "R20MM-0030"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0026",
+          "query": "Is the school raffle deductible for income tax? [MM-R20-06]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0027",
+          "query": "IS THE SCHOOL RAFFLE DEDUCTIBLE FOR INCOME TAX? [MM-R20-06]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0028",
+          "query": "Please, kindly: Is the school raffle deductible for income tax? [MM-R20-06]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0029",
+          "query": "Deductible ba ang school raffle para sa income tax? [MM-R20-06]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0030",
+          "query": "Change the school raffle setting. [MM-R20-06]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-07",
+      "transformationType": "explicit_tax_context",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0031",
+        "R20MM-0032",
+        "R20MM-0033",
+        "R20MM-0034",
+        "R20MM-0035"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0031",
+          "query": "Is the charity fun run deductible for income tax? [MM-R20-07]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0032",
+          "query": "IS THE CHARITY FUN RUN DEDUCTIBLE FOR INCOME TAX? [MM-R20-07]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0033",
+          "query": "Please, kindly: Is the charity fun run deductible for income tax? [MM-R20-07]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0034",
+          "query": "Deductible ba ang charity fun run para sa income tax? [MM-R20-07]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0035",
+          "query": "Change the charity fun run setting. [MM-R20-07]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-08",
+      "transformationType": "explicit_non_tax_expansion",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0036",
+        "R20MM-0037",
+        "R20MM-0038",
+        "R20MM-0039",
+        "R20MM-0040"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0036",
+          "query": "Is the mobile app deductible for income tax? [MM-R20-08]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0037",
+          "query": "IS THE MOBILE APP DEDUCTIBLE FOR INCOME TAX? [MM-R20-08]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0038",
+          "query": "Please, kindly: Is the mobile app deductible for income tax? [MM-R20-08]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0039",
+          "query": "Deductible ba ang mobile app para sa income tax? [MM-R20-08]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0040",
+          "query": "Change the mobile app setting. [MM-R20-08]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-09",
+      "transformationType": "negation_insertion",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0041",
+        "R20MM-0042",
+        "R20MM-0043",
+        "R20MM-0044",
+        "R20MM-0045"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0041",
+          "query": "Is the marketing service deductible for income tax? [MM-R20-09]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0042",
+          "query": "IS THE MARKETING SERVICE DEDUCTIBLE FOR INCOME TAX? [MM-R20-09]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0043",
+          "query": "Please, kindly: Is the marketing service deductible for income tax? [MM-R20-09]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0044",
+          "query": "Deductible ba ang marketing service para sa income tax? [MM-R20-09]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0045",
+          "query": "Change the marketing service setting. [MM-R20-09]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-10",
+      "transformationType": "ordinary_object_substitution",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0046",
+        "R20MM-0047",
+        "R20MM-0048",
+        "R20MM-0049",
+        "R20MM-0050"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0046",
+          "query": "Is the equipment repair deductible for income tax? [MM-R20-10]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0047",
+          "query": "IS THE EQUIPMENT REPAIR DEDUCTIBLE FOR INCOME TAX? [MM-R20-10]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0048",
+          "query": "Please, kindly: Is the equipment repair deductible for income tax? [MM-R20-10]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0049",
+          "query": "Deductible ba ang equipment repair para sa income tax? [MM-R20-10]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0050",
+          "query": "Change the equipment repair setting. [MM-R20-10]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-11",
+      "transformationType": "singular_plural",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0051",
+        "R20MM-0052",
+        "R20MM-0053",
+        "R20MM-0054",
+        "R20MM-0055"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0051",
+          "query": "Is the delivery van deductible for income tax? [MM-R20-11]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0052",
+          "query": "IS THE DELIVERY VAN DEDUCTIBLE FOR INCOME TAX? [MM-R20-11]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0053",
+          "query": "Please, kindly: Is the delivery van deductible for income tax? [MM-R20-11]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0054",
+          "query": "Deductible ba ang delivery van para sa income tax? [MM-R20-11]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0055",
+          "query": "Change the delivery van setting. [MM-R20-11]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-12",
+      "transformationType": "common_typo",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0056",
+        "R20MM-0057",
+        "R20MM-0058",
+        "R20MM-0059",
+        "R20MM-0060"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0056",
+          "query": "Is the office chair deductible for income tax? [MM-R20-12]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0057",
+          "query": "IS THE OFFICE CHAIR DEDUCTIBLE FOR INCOME TAX? [MM-R20-12]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0058",
+          "query": "Please, kindly: Is the office chair deductible for income tax? [MM-R20-12]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0059",
+          "query": "Deductible ba ang office chair para sa income tax? [MM-R20-12]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0060",
+          "query": "Change the office chair setting. [MM-R20-12]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-13",
+      "transformationType": "acronym_casing",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0061",
+        "R20MM-0062",
+        "R20MM-0063",
+        "R20MM-0064",
+        "R20MM-0065"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0061",
+          "query": "Is the server rack deductible for income tax? [MM-R20-13]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0062",
+          "query": "IS THE SERVER RACK DEDUCTIBLE FOR INCOME TAX? [MM-R20-13]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0063",
+          "query": "Please, kindly: Is the server rack deductible for income tax? [MM-R20-13]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0064",
+          "query": "Deductible ba ang server rack para sa income tax? [MM-R20-13]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0065",
+          "query": "Change the server rack setting. [MM-R20-13]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-14",
+      "transformationType": "whitespace",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0066",
+        "R20MM-0067",
+        "R20MM-0068",
+        "R20MM-0069",
+        "R20MM-0070"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0066",
+          "query": "Is the coffee machine deductible for income tax? [MM-R20-14]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0067",
+          "query": "IS THE COFFEE MACHINE DEDUCTIBLE FOR INCOME TAX? [MM-R20-14]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0068",
+          "query": "Please, kindly: Is the coffee machine deductible for income tax? [MM-R20-14]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0069",
+          "query": "Deductible ba ang coffee machine para sa income tax? [MM-R20-14]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0070",
+          "query": "Change the coffee machine setting. [MM-R20-14]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-15",
+      "transformationType": "case",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0071",
+        "R20MM-0072",
+        "R20MM-0073",
+        "R20MM-0074",
+        "R20MM-0075"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0071",
+          "query": "Is the company vehicle deductible for income tax? [MM-R20-15]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0072",
+          "query": "IS THE COMPANY VEHICLE DEDUCTIBLE FOR INCOME TAX? [MM-R20-15]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0073",
+          "query": "Please, kindly: Is the company vehicle deductible for income tax? [MM-R20-15]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0074",
+          "query": "Deductible ba ang company vehicle para sa income tax? [MM-R20-15]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0075",
+          "query": "Change the company vehicle setting. [MM-R20-15]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-16",
+      "transformationType": "punctuation",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0076",
+        "R20MM-0077",
+        "R20MM-0078",
+        "R20MM-0079",
+        "R20MM-0080"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0076",
+          "query": "Is the printing service deductible for income tax? [MM-R20-16]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0077",
+          "query": "IS THE PRINTING SERVICE DEDUCTIBLE FOR INCOME TAX? [MM-R20-16]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0078",
+          "query": "Please, kindly: Is the printing service deductible for income tax? [MM-R20-16]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0079",
+          "query": "Deductible ba ang printing service para sa income tax? [MM-R20-16]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0080",
+          "query": "Change the printing service setting. [MM-R20-16]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-17",
+      "transformationType": "polite_framing",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0081",
+        "R20MM-0082",
+        "R20MM-0083",
+        "R20MM-0084",
+        "R20MM-0085"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0081",
+          "query": "Is the catering service deductible for income tax? [MM-R20-17]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0082",
+          "query": "IS THE CATERING SERVICE DEDUCTIBLE FOR INCOME TAX? [MM-R20-17]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0083",
+          "query": "Please, kindly: Is the catering service deductible for income tax? [MM-R20-17]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0084",
+          "query": "Deductible ba ang catering service para sa income tax? [MM-R20-17]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0085",
+          "query": "Change the catering service setting. [MM-R20-17]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-18",
+      "transformationType": "code_switch",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0086",
+        "R20MM-0087",
+        "R20MM-0088",
+        "R20MM-0089",
+        "R20MM-0090"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0086",
+          "query": "Is the training seminar deductible for income tax? [MM-R20-18]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0087",
+          "query": "IS THE TRAINING SEMINAR DEDUCTIBLE FOR INCOME TAX? [MM-R20-18]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0088",
+          "query": "Please, kindly: Is the training seminar deductible for income tax? [MM-R20-18]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0089",
+          "query": "Deductible ba ang training seminar para sa income tax? [MM-R20-18]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0090",
+          "query": "Change the training seminar setting. [MM-R20-18]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-19",
+      "transformationType": "clause_order",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0091",
+        "R20MM-0092",
+        "R20MM-0093",
+        "R20MM-0094",
+        "R20MM-0095"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0091",
+          "query": "Is the consulting engagement deductible for income tax? [MM-R20-19]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0092",
+          "query": "IS THE CONSULTING ENGAGEMENT DEDUCTIBLE FOR INCOME TAX? [MM-R20-19]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0093",
+          "query": "Please, kindly: Is the consulting engagement deductible for income tax? [MM-R20-19]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0094",
+          "query": "Deductible ba ang consulting engagement para sa income tax? [MM-R20-19]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0095",
+          "query": "Change the consulting engagement setting. [MM-R20-19]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-20",
+      "transformationType": "quoted_vs_used",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0096",
+        "R20MM-0097",
+        "R20MM-0098",
+        "R20MM-0099",
+        "R20MM-0100"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0096",
+          "query": "Is the billboard rental deductible for income tax? [MM-R20-20]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0097",
+          "query": "IS THE BILLBOARD RENTAL DEDUCTIBLE FOR INCOME TAX? [MM-R20-20]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0098",
+          "query": "Please, kindly: Is the billboard rental deductible for income tax? [MM-R20-20]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0099",
+          "query": "Deductible ba ang billboard rental para sa income tax? [MM-R20-20]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0100",
+          "query": "Change the billboard rental setting. [MM-R20-20]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-21",
+      "transformationType": "explicit_tax_context",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0101",
+        "R20MM-0102",
+        "R20MM-0103",
+        "R20MM-0104",
+        "R20MM-0105"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0101",
+          "query": "Is the warehouse space deductible for income tax? [MM-R20-21]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0102",
+          "query": "IS THE WAREHOUSE SPACE DEDUCTIBLE FOR INCOME TAX? [MM-R20-21]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0103",
+          "query": "Please, kindly: Is the warehouse space deductible for income tax? [MM-R20-21]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0104",
+          "query": "Deductible ba ang warehouse space para sa income tax? [MM-R20-21]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0105",
+          "query": "Change the warehouse space setting. [MM-R20-21]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-22",
+      "transformationType": "explicit_non_tax_expansion",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0106",
+        "R20MM-0107",
+        "R20MM-0108",
+        "R20MM-0109",
+        "R20MM-0110"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0106",
+          "query": "Is the solar panel deductible for income tax? [MM-R20-22]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0107",
+          "query": "IS THE SOLAR PANEL DEDUCTIBLE FOR INCOME TAX? [MM-R20-22]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0108",
+          "query": "Please, kindly: Is the solar panel deductible for income tax? [MM-R20-22]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0109",
+          "query": "Deductible ba ang solar panel para sa income tax? [MM-R20-22]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0110",
+          "query": "Change the solar panel setting. [MM-R20-22]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-23",
+      "transformationType": "negation_insertion",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0111",
+        "R20MM-0112",
+        "R20MM-0113",
+        "R20MM-0114",
+        "R20MM-0115"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0111",
+          "query": "Is the security service deductible for income tax? [MM-R20-23]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0112",
+          "query": "IS THE SECURITY SERVICE DEDUCTIBLE FOR INCOME TAX? [MM-R20-23]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0113",
+          "query": "Please, kindly: Is the security service deductible for income tax? [MM-R20-23]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0114",
+          "query": "Deductible ba ang security service para sa income tax? [MM-R20-23]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0115",
+          "query": "Change the security service setting. [MM-R20-23]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-24",
+      "transformationType": "ordinary_object_substitution",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0116",
+        "R20MM-0117",
+        "R20MM-0118",
+        "R20MM-0119",
+        "R20MM-0120"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0116",
+          "query": "Is the cloud subscription deductible for income tax? [MM-R20-24]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0117",
+          "query": "IS THE CLOUD SUBSCRIPTION DEDUCTIBLE FOR INCOME TAX? [MM-R20-24]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0118",
+          "query": "Please, kindly: Is the cloud subscription deductible for income tax? [MM-R20-24]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0119",
+          "query": "Deductible ba ang cloud subscription para sa income tax? [MM-R20-24]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0120",
+          "query": "Change the cloud subscription setting. [MM-R20-24]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-25",
+      "transformationType": "singular_plural",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0121",
+        "R20MM-0122",
+        "R20MM-0123",
+        "R20MM-0124",
+        "R20MM-0125"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0121",
+          "query": "Is the company laptop deductible for income tax? [MM-R20-25]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0122",
+          "query": "IS THE COMPANY LAPTOP DEDUCTIBLE FOR INCOME TAX? [MM-R20-25]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0123",
+          "query": "Please, kindly: Is the company laptop deductible for income tax? [MM-R20-25]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0124",
+          "query": "Deductible ba ang company laptop para sa income tax? [MM-R20-25]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0125",
+          "query": "Change the company laptop setting. [MM-R20-25]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-26",
+      "transformationType": "common_typo",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0126",
+        "R20MM-0127",
+        "R20MM-0128",
+        "R20MM-0129",
+        "R20MM-0130"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0126",
+          "query": "Is the industrial oven deductible for income tax? [MM-R20-26]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0127",
+          "query": "IS THE INDUSTRIAL OVEN DEDUCTIBLE FOR INCOME TAX? [MM-R20-26]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0128",
+          "query": "Please, kindly: Is the industrial oven deductible for income tax? [MM-R20-26]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0129",
+          "query": "Deductible ba ang industrial oven para sa income tax? [MM-R20-26]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0130",
+          "query": "Change the industrial oven setting. [MM-R20-26]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-27",
+      "transformationType": "acronym_casing",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0131",
+        "R20MM-0132",
+        "R20MM-0133",
+        "R20MM-0134",
+        "R20MM-0135"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0131",
+          "query": "Is the delivery drone deductible for income tax? [MM-R20-27]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0132",
+          "query": "IS THE DELIVERY DRONE DEDUCTIBLE FOR INCOME TAX? [MM-R20-27]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0133",
+          "query": "Please, kindly: Is the delivery drone deductible for income tax? [MM-R20-27]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0134",
+          "query": "Deductible ba ang delivery drone para sa income tax? [MM-R20-27]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0135",
+          "query": "Change the delivery drone setting. [MM-R20-27]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-28",
+      "transformationType": "whitespace",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0136",
+        "R20MM-0137",
+        "R20MM-0138",
+        "R20MM-0139",
+        "R20MM-0140"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0136",
+          "query": "Is the retail shelf deductible for income tax? [MM-R20-28]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0137",
+          "query": "IS THE RETAIL SHELF DEDUCTIBLE FOR INCOME TAX? [MM-R20-28]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0138",
+          "query": "Please, kindly: Is the retail shelf deductible for income tax? [MM-R20-28]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0139",
+          "query": "Deductible ba ang retail shelf para sa income tax? [MM-R20-28]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0140",
+          "query": "Change the retail shelf setting. [MM-R20-28]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-29",
+      "transformationType": "case",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0141",
+        "R20MM-0142",
+        "R20MM-0143",
+        "R20MM-0144",
+        "R20MM-0145"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0141",
+          "query": "Is the packaging material deductible for income tax? [MM-R20-29]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0142",
+          "query": "IS THE PACKAGING MATERIAL DEDUCTIBLE FOR INCOME TAX? [MM-R20-29]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0143",
+          "query": "Please, kindly: Is the packaging material deductible for income tax? [MM-R20-29]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0144",
+          "query": "Deductible ba ang packaging material para sa income tax? [MM-R20-29]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0145",
+          "query": "Change the packaging material setting. [MM-R20-29]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-30",
+      "transformationType": "punctuation",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0146",
+        "R20MM-0147",
+        "R20MM-0148",
+        "R20MM-0149",
+        "R20MM-0150"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0146",
+          "query": "Is the company uniform deductible for income tax? [MM-R20-30]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0147",
+          "query": "IS THE COMPANY UNIFORM DEDUCTIBLE FOR INCOME TAX? [MM-R20-30]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0148",
+          "query": "Please, kindly: Is the company uniform deductible for income tax? [MM-R20-30]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0149",
+          "query": "Deductible ba ang company uniform para sa income tax? [MM-R20-30]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0150",
+          "query": "Change the company uniform setting. [MM-R20-30]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-31",
+      "transformationType": "polite_framing",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0151",
+        "R20MM-0152",
+        "R20MM-0153",
+        "R20MM-0154",
+        "R20MM-0155"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0151",
+          "query": "Is the water dispenser deductible for income tax? [MM-R20-31]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0152",
+          "query": "IS THE WATER DISPENSER DEDUCTIBLE FOR INCOME TAX? [MM-R20-31]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0153",
+          "query": "Please, kindly: Is the water dispenser deductible for income tax? [MM-R20-31]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0154",
+          "query": "Deductible ba ang water dispenser para sa income tax? [MM-R20-31]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0155",
+          "query": "Change the water dispenser setting. [MM-R20-31]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-32",
+      "transformationType": "code_switch",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0156",
+        "R20MM-0157",
+        "R20MM-0158",
+        "R20MM-0159",
+        "R20MM-0160"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0156",
+          "query": "Is the CCTV system deductible for income tax? [MM-R20-32]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0157",
+          "query": "IS THE CCTV SYSTEM DEDUCTIBLE FOR INCOME TAX? [MM-R20-32]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0158",
+          "query": "Please, kindly: Is the CCTV system deductible for income tax? [MM-R20-32]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0159",
+          "query": "Deductible ba ang CCTV system para sa income tax? [MM-R20-32]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0160",
+          "query": "Change the CCTV system setting. [MM-R20-32]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-33",
+      "transformationType": "clause_order",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0161",
+        "R20MM-0162",
+        "R20MM-0163",
+        "R20MM-0164",
+        "R20MM-0165"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0161",
+          "query": "Is the delivery motorcycle deductible for income tax? [MM-R20-33]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0162",
+          "query": "IS THE DELIVERY MOTORCYCLE DEDUCTIBLE FOR INCOME TAX? [MM-R20-33]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0163",
+          "query": "Please, kindly: Is the delivery motorcycle deductible for income tax? [MM-R20-33]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0164",
+          "query": "Deductible ba ang delivery motorcycle para sa income tax? [MM-R20-33]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0165",
+          "query": "Change the delivery motorcycle setting. [MM-R20-33]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-34",
+      "transformationType": "quoted_vs_used",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0166",
+        "R20MM-0167",
+        "R20MM-0168",
+        "R20MM-0169",
+        "R20MM-0170"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0166",
+          "query": "Is the point-of-sale terminal deductible for income tax? [MM-R20-34]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0167",
+          "query": "IS THE POINT-OF-SALE TERMINAL DEDUCTIBLE FOR INCOME TAX? [MM-R20-34]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0168",
+          "query": "Please, kindly: Is the point-of-sale terminal deductible for income tax? [MM-R20-34]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0169",
+          "query": "Deductible ba ang point-of-sale terminal para sa income tax? [MM-R20-34]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0170",
+          "query": "Change the point-of-sale terminal setting. [MM-R20-34]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-35",
+      "transformationType": "explicit_tax_context",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0171",
+        "R20MM-0172",
+        "R20MM-0173",
+        "R20MM-0174",
+        "R20MM-0175"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0171",
+          "query": "Is the air conditioner deductible for income tax? [MM-R20-35]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0172",
+          "query": "IS THE AIR CONDITIONER DEDUCTIBLE FOR INCOME TAX? [MM-R20-35]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0173",
+          "query": "Please, kindly: Is the air conditioner deductible for income tax? [MM-R20-35]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0174",
+          "query": "Deductible ba ang air conditioner para sa income tax? [MM-R20-35]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0175",
+          "query": "Change the air conditioner setting. [MM-R20-35]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-36",
+      "transformationType": "explicit_non_tax_expansion",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0176",
+        "R20MM-0177",
+        "R20MM-0178",
+        "R20MM-0179",
+        "R20MM-0180"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0176",
+          "query": "Is the generator set deductible for income tax? [MM-R20-36]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0177",
+          "query": "IS THE GENERATOR SET DEDUCTIBLE FOR INCOME TAX? [MM-R20-36]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0178",
+          "query": "Please, kindly: Is the generator set deductible for income tax? [MM-R20-36]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0179",
+          "query": "Deductible ba ang generator set para sa income tax? [MM-R20-36]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0180",
+          "query": "Change the generator set setting. [MM-R20-36]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-37",
+      "transformationType": "negation_insertion",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0181",
+        "R20MM-0182",
+        "R20MM-0183",
+        "R20MM-0184",
+        "R20MM-0185"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0181",
+          "query": "Is the company signage deductible for income tax? [MM-R20-37]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0182",
+          "query": "IS THE COMPANY SIGNAGE DEDUCTIBLE FOR INCOME TAX? [MM-R20-37]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0183",
+          "query": "Please, kindly: Is the company signage deductible for income tax? [MM-R20-37]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0184",
+          "query": "Deductible ba ang company signage para sa income tax? [MM-R20-37]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0185",
+          "query": "Change the company signage setting. [MM-R20-37]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-38",
+      "transformationType": "ordinary_object_substitution",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0186",
+        "R20MM-0187",
+        "R20MM-0188",
+        "R20MM-0189",
+        "R20MM-0190"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0186",
+          "query": "Is the forklift deductible for income tax? [MM-R20-38]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0187",
+          "query": "IS THE FORKLIFT DEDUCTIBLE FOR INCOME TAX? [MM-R20-38]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0188",
+          "query": "Please, kindly: Is the forklift deductible for income tax? [MM-R20-38]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0189",
+          "query": "Deductible ba ang forklift para sa income tax? [MM-R20-38]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0190",
+          "query": "Change the forklift setting. [MM-R20-38]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-39",
+      "transformationType": "singular_plural",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0191",
+        "R20MM-0192",
+        "R20MM-0193",
+        "R20MM-0194",
+        "R20MM-0195"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0191",
+          "query": "Is the refrigerated truck deductible for income tax? [MM-R20-39]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0192",
+          "query": "IS THE REFRIGERATED TRUCK DEDUCTIBLE FOR INCOME TAX? [MM-R20-39]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0193",
+          "query": "Please, kindly: Is the refrigerated truck deductible for income tax? [MM-R20-39]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0194",
+          "query": "Deductible ba ang refrigerated truck para sa income tax? [MM-R20-39]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0195",
+          "query": "Change the refrigerated truck setting. [MM-R20-39]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    },
+    {
+      "group": "MM-R20-40",
+      "transformationType": "common_typo",
+      "invariantExpectedDecision": "ALLOW",
+      "invariantReasonFamily": "tax_treatment_of_ordinary_object",
+      "intendedReasonShift": "The non_tax_substitution member intentionally shifts to REFUSE/explicit_non_tax_task; all tax-preserving transforms keep ALLOW.",
+      "memberIds": [
+        "R20MM-0196",
+        "R20MM-0197",
+        "R20MM-0198",
+        "R20MM-0199",
+        "R20MM-0200"
+      ],
+      "members": [
+        {
+          "oracleId": "R20MM-0196",
+          "query": "Is the network switch deductible for income tax? [MM-R20-40]",
+          "metamorphicRole": "base",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "base"
+        },
+        {
+          "oracleId": "R20MM-0197",
+          "query": "IS THE NETWORK SWITCH DEDUCTIBLE FOR INCOME TAX? [MM-R20-40]",
+          "metamorphicRole": "case",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "case"
+        },
+        {
+          "oracleId": "R20MM-0198",
+          "query": "Please, kindly: Is the network switch deductible for income tax? [MM-R20-40]",
+          "metamorphicRole": "polite",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "polite_framing"
+        },
+        {
+          "oracleId": "R20MM-0199",
+          "query": "Deductible ba ang network switch para sa income tax? [MM-R20-40]",
+          "metamorphicRole": "code_switch",
+          "expectedDecision": "ALLOW",
+          "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+          "transform": "code_switch"
+        },
+        {
+          "oracleId": "R20MM-0200",
+          "query": "Change the network switch setting. [MM-R20-40]",
+          "metamorphicRole": "non_tax_substitution",
+          "expectedDecision": "REFUSE",
+          "expectedReasonCodeFamily": "explicit_non_tax_task",
+          "transform": "ordinary_object_substitution"
+        }
+      ],
+      "whyInvariant": "Case, punctuation, polite framing, code-switching, whitespace and typos do not change the tax task/target relation; only replacing the tax question with a non-tax action does."
+    }
+  ]
+}

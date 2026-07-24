@@ -1,0 +1,13 @@
+{
+  "expectationSources": [
+    "frozen_contract_construction",
+    "accepted_r19_controlling",
+    "accepted_r18_corrected",
+    "accepted_r17_control"
+  ],
+  "prohibitedSourcesUsed": [],
+  "analyzerOutputStored": false,
+  "classifierImported": false,
+  "everyRowOneDecision": true,
+  "everyRowOneReasonFamily": true
+}

@@ -1,46 +1,44 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit3",
+  "cumulativeThrough": "commit4",
   "registrySummary": {
-    "totalAttempts": 8,
+    "totalAttempts": 13,
     "byCategory": {
       "domain_campaign": 2,
       "focused_suite": 1,
-      "synthetic_validator": 5
+      "other": 1,
+      "synthetic_validator": 9
     },
     "byGate": {
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
+      "r20_commit4_development_oracle_builder": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
       "r20_commit3_evidence_completeness": 1,
-      "r20_commit3_static_scope_and_exports": 1
+      "r20_commit3_static_scope_and_exports": 1,
+      "r20_commit4_duplicate_and_metamorphic": 1,
+      "r20_commit4_freeze_and_evidence_completeness": 1,
+      "r20_commit4_schema_quota_expectation": 1,
+      "r20_commit4_source_integrity_and_contamination": 1
     },
-    "completed": 8,
+    "completed": 13,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 8,
+    "controlling": 13,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "commit3": {
-    "focusedSuite": {
-      "tests": 101,
-      "passed": 101,
-      "failed": 0
-    },
-    "determinism": {
-      "byteMismatches": 0,
-      "mutationFailures": 0
-    },
-    "staticScope": {
-      "passed": 18,
-      "total": 18
-    }
+  "oracle": {
+    "rowCount": 3720,
+    "frozenSha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263",
+    "newRows": 1823,
+    "metamorphicGroups": 40,
+    "unresolvedDisputes": 0
   }
 }

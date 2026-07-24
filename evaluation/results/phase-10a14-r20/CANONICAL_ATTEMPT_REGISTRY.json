@@ -1,28 +1,34 @@
 {
-  "generatedAt": "2026-07-24T12:23:11.300Z",
+  "generatedAt": "2026-07-24T13:19:35.285Z",
   "phase": "PHASE-10A14-R20",
   "cumulativeThrough": "commit2",
   "summary": {
-    "totalAttempts": 8,
+    "totalAttempts": 13,
     "byCategory": {
       "domain_campaign": 2,
       "focused_suite": 1,
-      "synthetic_validator": 5
+      "other": 1,
+      "synthetic_validator": 9
     },
     "byGate": {
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
+      "r20_commit4_development_oracle_builder": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
       "r20_commit3_evidence_completeness": 1,
-      "r20_commit3_static_scope_and_exports": 1
+      "r20_commit3_static_scope_and_exports": 1,
+      "r20_commit4_duplicate_and_metamorphic": 1,
+      "r20_commit4_freeze_and_evidence_completeness": 1,
+      "r20_commit4_schema_quota_expectation": 1,
+      "r20_commit4_source_integrity_and_contamination": 1
     },
-    "completed": 8,
+    "completed": 13,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 8,
+    "controlling": 13,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
@@ -82,6 +88,23 @@
       "commandHash": "2c86a1be2a9b8fa5c163d361a33fc1f570140c3f543e6355337b8f421e3658d0",
       "runtimeBaselineCommit": "ebb71e4927609d441f4acaddd25360f9bb525362",
       "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894"
+    },
+    {
+      "attemptId": "R20-other-r20_commit4_development_oracle_builder-commit4-ord01-2026-07-24T13-19-33-653Z",
+      "attemptCategory": "other",
+      "gateName": "r20_commit4_development_oracle_builder",
+      "cycle": "commit4",
+      "status": "completed",
+      "disposition": "controlling_builder",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4_development_oracle_builder-commit4-ord01-2026-07-24T13-19-33-653Z/BUILDER_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4_development_oracle_builder-commit4-ord01-2026-07-24T13-19-33-653Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4_development_oracle_builder-commit4-ord01-2026-07-24T13-19-33-653Z/stderr.txt",
+      "commandHash": "e13bae0b31020c3cb013f57045e09fa84778da2eb9dea1ba636fdc2e89676081",
+      "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     },
     {
       "attemptId": "R20-synthetic_validator-r20_attempt_wrapper_self_validation-commit2-ord01-2026-07-24T11-55-03-026Z",
@@ -167,6 +190,74 @@
       "commandHash": "181bc64894d98645d0b461cac194a96b7acf06a5945038397f2a06152e071509",
       "runtimeBaselineCommit": "ebb71e4927609d441f4acaddd25360f9bb525362",
       "runtimeTreeDigest": "c7e4ea3625370d90efba447bea4e89bb8561f99f1f1d8e3a6be64ac9ce674894"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4_duplicate_and_metamorphic-commit4-ord01-2026-07-24T13-19-34-481Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4_duplicate_and_metamorphic",
+      "cycle": "commit4",
+      "status": "completed",
+      "disposition": "controlling_duplicate_metamorphic",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_duplicate_and_metamorphic-commit4-ord01-2026-07-24T13-19-34-481Z/DUPLICATE_METAMORPHIC_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_duplicate_and_metamorphic-commit4-ord01-2026-07-24T13-19-34-481Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_duplicate_and_metamorphic-commit4-ord01-2026-07-24T13-19-34-481Z/stderr.txt",
+      "commandHash": "dd7ae5201c3d9080ff6dfbc5046a7eefde16f2f6b340abbf4da0b1e07cb40012",
+      "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4_freeze_and_evidence_completeness-commit4-ord01-2026-07-24T13-19-34-881Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4_freeze_and_evidence_completeness",
+      "cycle": "commit4",
+      "status": "completed",
+      "disposition": "controlling_freeze_completeness",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_freeze_and_evidence_completeness-commit4-ord01-2026-07-24T13-19-34-881Z/FREEZE_COMPLETENESS_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_freeze_and_evidence_completeness-commit4-ord01-2026-07-24T13-19-34-881Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_freeze_and_evidence_completeness-commit4-ord01-2026-07-24T13-19-34-881Z/stderr.txt",
+      "commandHash": "158df313d8e86f597b2f93ca2a3e7d52c963d706a74a9fafad694490a93665ec",
+      "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4_schema_quota_expectation-commit4-ord01-2026-07-24T13-19-34-056Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4_schema_quota_expectation",
+      "cycle": "commit4",
+      "status": "completed",
+      "disposition": "controlling_schema_quota",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_schema_quota_expectation-commit4-ord01-2026-07-24T13-19-34-056Z/SCHEMA_QUOTA_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_schema_quota_expectation-commit4-ord01-2026-07-24T13-19-34-056Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_schema_quota_expectation-commit4-ord01-2026-07-24T13-19-34-056Z/stderr.txt",
+      "commandHash": "4a7579a260b3b775555070b0af6a1e938fe08ef29fe1e9d33f1eba8212830d36",
+      "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4_source_integrity_and_contamination-commit4-ord01-2026-07-24T13-19-33-241Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4_source_integrity_and_contamination",
+      "cycle": "commit4",
+      "status": "completed",
+      "disposition": "controlling_source_integrity",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_source_integrity_and_contamination-commit4-ord01-2026-07-24T13-19-33-241Z/SOURCE_INTEGRITY_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_source_integrity_and_contamination-commit4-ord01-2026-07-24T13-19-33-241Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4_source_integrity_and_contamination-commit4-ord01-2026-07-24T13-19-33-241Z/stderr.txt",
+      "commandHash": "d2dc5ec28c97b385680ce999cdba39c3925b80c9580fb4c9a02fae7da800ff1f",
+      "runtimeBaselineCommit": "ca9919c4c50fad30c460aca336cb171fa4f7e8ca",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     }
   ]
 }

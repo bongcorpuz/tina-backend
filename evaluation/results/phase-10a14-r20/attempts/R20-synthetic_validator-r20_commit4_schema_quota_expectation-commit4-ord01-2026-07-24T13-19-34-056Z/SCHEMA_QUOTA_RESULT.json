@@ -1,0 +1,202 @@
+{
+  "validator": "r20-commit4-schema-quota-expectation",
+  "total": 29,
+  "passed": 29,
+  "allPassed": true,
+  "checks": [
+    {
+      "name": "all_decisions_closed",
+      "pass": true,
+      "detail": "bad=0"
+    },
+    {
+      "name": "all_reason_families_closed",
+      "pass": true,
+      "detail": "bad=0"
+    },
+    {
+      "name": "all_relations_closed",
+      "pass": true,
+      "detail": "bad=0"
+    },
+    {
+      "name": "no_analyzer_output_contamination",
+      "pass": true,
+      "detail": "contaminated=0"
+    },
+    {
+      "name": "all_rows_have_id",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "source_1120",
+      "pass": true,
+      "detail": "1120"
+    },
+    {
+      "name": "source_567",
+      "pass": true,
+      "detail": "567"
+    },
+    {
+      "name": "source_210",
+      "pass": true,
+      "detail": "210"
+    },
+    {
+      "name": "quota_mixed_domain_genuine_tax",
+      "pass": true,
+      "detail": "360/300"
+    },
+    {
+      "name": "quota_explicit_non_tax_task",
+      "pass": true,
+      "detail": "565/300"
+    },
+    {
+      "name": "quota_acronym_capitalization_expansion",
+      "pass": true,
+      "detail": "276/200"
+    },
+    {
+      "name": "quota_quoted_term_only",
+      "pass": true,
+      "detail": "110/100"
+    },
+    {
+      "name": "quota_negation_contradiction",
+      "pass": true,
+      "detail": "100/100"
+    },
+    {
+      "name": "quota_internal_label_proper_name",
+      "pass": true,
+      "detail": "104/100"
+    },
+    {
+      "name": "quota_tax_compliance_task",
+      "pass": true,
+      "detail": "108/100"
+    },
+    {
+      "name": "new_compositional_min_1200",
+      "pass": true,
+      "detail": "1623"
+    },
+    {
+      "name": "crosscut_filipino_taglish",
+      "pass": true,
+      "detail": "205/100"
+    },
+    {
+      "name": "crosscut_capitalization_variant",
+      "pass": true,
+      "detail": "120/100"
+    },
+    {
+      "name": "crosscut_multi_clause",
+      "pass": true,
+      "detail": "224/50"
+    },
+    {
+      "name": "crosscut_definition_intent",
+      "pass": true,
+      "detail": "198/100"
+    },
+    {
+      "name": "crosscut_ordinary_object_tax",
+      "pass": true,
+      "detail": "360/300"
+    },
+    {
+      "name": "crosscut_non_tax_homograph",
+      "pass": true,
+      "detail": "200/150"
+    },
+    {
+      "name": "crosscut_bare_ambiguous_acronym",
+      "pass": true,
+      "detail": "120/75"
+    },
+    {
+      "name": "crosscut_non_tax_expansion",
+      "pass": true,
+      "detail": "78/75"
+    },
+    {
+      "name": "crosscut_bir_context_acronym",
+      "pass": true,
+      "detail": "78/75"
+    },
+    {
+      "name": "crosscut_quoted_metalinguistic",
+      "pass": true,
+      "detail": "110/100"
+    },
+    {
+      "name": "crosscut_negation_scope",
+      "pass": true,
+      "detail": "100/100"
+    },
+    {
+      "name": "dual_scoring_567",
+      "pass": true,
+      "detail": "567"
+    },
+    {
+      "name": "divergence_tagged_56",
+      "pass": true,
+      "detail": "56"
+    }
+  ],
+  "categoryCounts": {
+    "mixed_domain_genuine_tax": 360,
+    "explicit_non_tax_task": 565,
+    "acronym_capitalization_expansion": 276,
+    "quoted_term_only": 110,
+    "negation_contradiction": 100,
+    "internal_label_proper_name": 104,
+    "tax_compliance_task": 108
+  },
+  "crossCuttingCounts": {
+    "ordinary_object_tax": 360,
+    "multi_clause": 224,
+    "non_tax_action": 365,
+    "non_tax_homograph": 200,
+    "bare_ambiguous_acronym": 120,
+    "capitalization_variant": 120,
+    "definition_intent": 198,
+    "base": 40,
+    "uppercase": 40,
+    "lowercase": 40,
+    "non_tax_expansion": 78,
+    "bir_context_acronym": 78,
+    "quoted_metalinguistic": 110,
+    "negation_scope": 100,
+    "internal_label": 104,
+    "tax_compliance": 108,
+    "filipino_taglish": 205,
+    "metamorphic": 200,
+    "case": 15,
+    "punctuation": 15,
+    "polite_framing": 15,
+    "code_switch": 15,
+    "clause_order": 15,
+    "quoted_vs_used": 15,
+    "explicit_tax_context": 15,
+    "explicit_non_tax_expansion": 15,
+    "negation_insertion": 15,
+    "ordinary_object_substitution": 15,
+    "singular_plural": 15,
+    "common_typo": 15,
+    "acronym_casing": 10,
+    "whitespace": 10
+  },
+  "bySet": {
+    "r19_1120": 1120,
+    "r18_corrected_567": 567,
+    "r17_accepted_control": 210,
+    "r20_new": 1823
+  }
+}

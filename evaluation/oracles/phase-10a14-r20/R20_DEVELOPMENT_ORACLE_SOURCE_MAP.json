@@ -1,0 +1,25 @@
+{
+  "task": "PHASE-10A14-R20",
+  "sourceSets": {
+    "set1_r19_1120": {
+      "path": "evaluation/results/phase-10a14-r19-independent-review-1/INDEPENDENT_SEMANTIC_ORACLE_1120_PLUS.json",
+      "sha256": "55183f06b043187c0b26cd66e7e699a8265721fedb293ffe79b2b5825a66cd2f",
+      "gitBlob": "dbe803e182f5968e48c83bc0e281cd1f9ffc8629"
+    },
+    "set2_r18_567": {
+      "path": "evaluation/results/phase-10a14-r19-independent-review-1/R18_CORRECTED_SEMANTIC_567_ORACLE.json",
+      "sha256": "e403594110c92f35eba6d64b4aadda62e0c7d4c3cc3d8c2e35b6803a7c1ceec4",
+      "gitBlob": "1c89bc0e2c2b6d5edd535b9b15a43b17e50df105"
+    },
+    "set3_r17_210": {
+      "path": "evaluation/results/phase-10a14-r17-independent-review-1/06_INDEPENDENT_DOMAIN_CAMPAIGN.json",
+      "sha256": "e0ef72fabcd379c395ddd7dab9ddd4cf8214b6f7350b51cc6fc1f3255cfecc92",
+      "gitBlob": "28879e662eff9a581d5db80b0031a4f81dc09433"
+    },
+    "set4_new": {
+      "generator": "commit4-new-rows.mjs",
+      "newRows": 1623,
+      "metamorphicRows": 200
+    }
+  }
+}

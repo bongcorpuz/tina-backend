@@ -1,0 +1,38 @@
+{
+  "validator": "r20-commit4-duplicate-and-metamorphic",
+  "total": 5,
+  "passed": 5,
+  "allPassed": true,
+  "checks": [
+    {
+      "name": "no_duplicate_oracleId",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "no_exact_duplicate_new_queries",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "near_dup_cluster_bounded",
+      "pass": true,
+      "detail": "maxCluster=3"
+    },
+    {
+      "name": "metamorphic_group_count",
+      "pass": true,
+      "detail": "40"
+    },
+    {
+      "name": "metamorphic_groups_well_formed",
+      "pass": true,
+      "detail": "bad=0"
+    }
+  ],
+  "duplicateNewQueries": 0,
+  "duplicateOracleIds": 0,
+  "inheritedExactDuplicates": 2,
+  "maxNearDupCluster": 3,
+  "metamorphicGroups": 40
+}

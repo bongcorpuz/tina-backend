@@ -1,0 +1,13 @@
+{
+  "rowCount": 3720,
+  "sources": {
+    "o1120": 1120,
+    "o567": 567,
+    "c210": 210,
+    "newRows": 1623,
+    "mmRows": 200
+  },
+  "s3New": 210,
+  "s3Dup": 0,
+  "frozenSha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263"
+}

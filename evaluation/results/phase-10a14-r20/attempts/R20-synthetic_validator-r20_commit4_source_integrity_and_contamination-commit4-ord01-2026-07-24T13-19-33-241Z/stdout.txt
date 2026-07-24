@@ -1,0 +1,53 @@
+{
+  "validator": "r20-commit4-source-integrity-and-contamination",
+  "total": 9,
+  "passed": 9,
+  "allPassed": true,
+  "checks": [
+    {
+      "name": "r19_1120_sha256",
+      "pass": true,
+      "detail": "55183f06b043187c0b26cd66e7e699a8265721fedb293ffe79b2b5825a66cd2f"
+    },
+    {
+      "name": "r18_567_sha256",
+      "pass": true,
+      "detail": "e403594110c92f35eba6d64b4aadda62e0c7d4c3cc3d8c2e35b6803a7c1ceec4"
+    },
+    {
+      "name": "r17_210_present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "builder_no_analyzer_import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "builder_no_domain_boundary_import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "builder_no_model_network",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "new-rows_no_analyzer_import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "new-rows_no_domain_boundary_import",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "new-rows_no_model_network",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}
