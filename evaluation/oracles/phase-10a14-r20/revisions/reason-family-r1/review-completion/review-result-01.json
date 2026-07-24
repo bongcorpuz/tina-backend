@@ -1,0 +1,1006 @@
+{
+  "chunk": 1,
+  "reviewed": 190,
+  "results": [
+    {
+      "oracleId": "S1-IR19-0001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0005",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0006",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0009",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0015",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0019",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0020",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0021",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0022",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0023",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0024",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0025",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0026",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0027",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0028",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0029",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0030",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0031",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0032",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0033",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0034",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0035",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0036",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0037",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0038",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0039",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0040",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0041",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0042",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0043",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0044",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0045",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0046",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0047",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0048",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0049",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0050",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0051",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0052",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0053",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0054",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0055",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0056",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0057",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0058",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0059",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0060",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0061",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0062",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0063",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0064",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0065",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0066",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0067",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0068",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0069",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0070",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0071",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0072",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0073",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0074",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0075",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0076",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0077",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0078",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0079",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0080",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0081",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0082",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0083",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0084",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0085",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0086",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0087",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0088",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0089",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0090",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0091",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0092",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0093",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0094",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0095",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0096",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0097",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0098",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0099",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0100",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0101",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0102",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0103",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0104",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0105",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0106",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0107",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0108",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0109",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0110",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0111",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0112",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0113",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0114",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0115",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0116",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0117",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0118",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0119",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0120",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0121",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0122",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0123",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0124",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0125",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0126",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0127",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0128",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0129",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0130",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0131",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0132",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0133",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0134",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0135",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0136",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0137",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0138",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0139",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0140",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0141",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0142",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0143",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0144",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0145",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0146",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0147",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0148",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0149",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0150",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0151",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0152",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0153",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0154",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0155",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0156",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0157",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0158",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0159",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0160",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0161",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0162",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0163",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0164",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0165",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0166",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0167",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0168",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0169",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0170",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0171",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0172",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0173",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0174",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0175",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0176",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0177",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0178",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0179",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0180",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0181",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0182",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0183",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0184",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0185",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0186",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0187",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0188",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0189",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0190",
+      "reviewDecision": "AGREE"
+    }
+  ]
+}

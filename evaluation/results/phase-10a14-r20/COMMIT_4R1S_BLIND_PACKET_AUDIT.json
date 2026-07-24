@@ -1,0 +1,77 @@
+{
+  "validator": "r20-commit4r1s-blind-packet-integrity",
+  "checks": [
+    {
+      "name": "packet_1897_rows",
+      "pass": true
+    },
+    {
+      "name": "audit_clean",
+      "pass": true
+    },
+    {
+      "name": "prohibited_occurrences_0",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "audit": {
+    "rowsAudited": 1897,
+    "allowedFields": [
+      "oracleId",
+      "query",
+      "expectedDecision",
+      "expectedRelations",
+      "r1ExpectedReasonCodeFamily",
+      "ruleId",
+      "primaryRationale"
+    ],
+    "prohibitedFieldsChecked": [
+      "sourceSet",
+      "sourceRef",
+      "sourceRowHash",
+      "sourceFixtureId",
+      "coverageClass",
+      "primaryCategory",
+      "secondaryTags",
+      "language",
+      "expectedRaw",
+      "expectedReasonCodeFamily",
+      "historicalScoringMode",
+      "historicalExpectedPassRule",
+      "scoringSemanticsFlag",
+      "rationale",
+      "authorityOfExpectation",
+      "metamorphicGroup",
+      "metamorphicRole",
+      "disputed",
+      "disputeRecordId",
+      "probeId",
+      "primaryTaskClause",
+      "taskVerb",
+      "taskTarget",
+      "taxPredicates",
+      "taxEntities",
+      "nonTaxObjects",
+      "quotedTerms",
+      "negation",
+      "relationEvidence",
+      "rootCauseFamily",
+      "materiality",
+      "actualDecision",
+      "actualReason",
+      "reasonAdjudication",
+      "changedFromV1",
+      "v1Reason",
+      "v1ExpectedReasonCodeFamily",
+      "baselinePassed",
+      "baselineFailed",
+      "conflictSetMembership",
+      "priorChallengeStatus"
+    ],
+    "prohibitedFieldOccurrences": 0,
+    "prohibitedFieldsFound": [],
+    "allowedFieldsPresent": true,
+    "clean": true
+  }
+}

@@ -29,12 +29,15 @@ const lc = (s) => String(s || '').toLowerCase();
 
 // ── Structural signal detectors (query text only) ────────────────────────────
 const RE = {
-  compliance: /\b(bir form|what form|which form|file(?:s|d|ing)?\b|filing|return\b|what return|register(?:ed|ing|ation)?|remit(?:s|ted|tance)?|withhold(?:ing)? (?:tax )?(?:on|deadline|remit)|deadline|due date|books of account|invoic(?:e|ing)|documentary (?:requirement|submission|stamp filing)|substantiat|reportorial|slsp|alphalist|quarterly|monthly filing|annual return|tax clearance|certificate of registration)\b/,
-  treatmentVerb: /\b(deductib|subject to (?:vat|tax|withholding|percentage|excise|dst|customs)|vat treatment|tax treatment|input vat|output vat|withholding tax on|customs dut(?:y|ies)|tariff|excise|documentary stamp tax on|capital gains|taxable\b|zero-?rated|vat-?exempt|creditable|fringe benefit)\b/,
+  compliance: /\b(bir form|what form|which form|file(?:s|d|ing)?\b|filing|return\b|what return|register(?:ed|ing|ation)?|remit(?:s|ted|tance)?|withhold(?:ing)? (?:tax )?(?:on (?!rent\b)|deadline (?!for (?:filing|payment|remit))|remit)|(?<!protest )deadline|due date|books of account|invoic(?:e|ing)|documentary (?:requirement|submission|stamp filing)|substantiat|reportorial|slsp|alphalist|quarterly|monthly filing|annual return|tax clearance|certificate of registration|what records support|records support|penalty (?:applies )?for late|late (?:filing|payment|donor tax|deficiency interest)|subject to (?:bir )?registration)\b/,
+  treatmentVerb: /\b(deductib|deducted|subject to (?:vat|tax|withholding|percentage|excise|dst|customs)(?!.{0,20}registration)|vat treatment|tax treatment|input vat|output vat|withholding tax on|withholding on\b|customs dut(?:y|ies)|tariff|excise|documentary stamp tax on|capital gains|taxable\b|zero-?rated|vat-?exempt|creditable|fringe benefit|\bvat on\b|\bbuwis sa\b)\b/,
   definition: /\b(what does .* mean|what is the meaning|define\b|meaning of|stand[s]? for|what is [a-z]{2,5}\??$|explain (?:the )?(?:term|acronym))\b/,
-  quotedOnly: /\b(quote|translate (?:the |radio |")?(?:word|phrase|term|music|.*into plain english)|count the (?:letter|word|occurrence)|format the (?:word|phrase)|spell|capitali[sz]e (?:the )?(?:word|each)|alphabet|reverse the phrase|proofread|copy the phrase)\b/,
+  quotedOnly: /\b(quote|translate (?:the |radio |")?(?:word|phrase|term|music)\b|count the (?:letter|word|occurrence)|format the (?:word|phrase)|spell|capitali[sz]e (?:the )?(?:word|each)|alphabet|reverse the phrase|proofread|copy the phrase)\b/,
   label: /\b(as (?:the |a |an |our )?(?:product code|database field|field label|field abbreviation|course code|variable|filename|file name|team name|channel name|internal label|project code|codename|label|sprint label|report ?name|server name))|internal (?:label|project phrase|project name|code name|codename)|only (?:an?|our) (?:internal )?(?:label|name|code|project phrase|phrase)|is (?:only )?(?:an? |our )?(?:project|product|internal)? ?(?:code|name|label|phrase)\b|only our .* (?:project )?code\b|good project name|as (?:a |the )?project name|typo for\b/,
-  expansion: /\b(means (?:the )?(?:personal area network|radio music channel|cooling device|field level design|physical therapy|company annual retreat)|stands for the|expands to|i\.e\.|refers to the|denotes the|is (?:a|the|an|only a) (?:radio )?(?:music channel|cooling (?:device|fan)|personal area network))\b|is (?:a|an|only an?) [a-z ]*(?:abbreviation|acronym)\b|(?:abbreviation|acronym) (?:for|in|with)\b/,
+  // Explicit acronym redefinition to a non-tax meaning, incl. "Is BOC a band of chords?" / "What is SEC in time measurement?"
+  expansion: /\b(means (?:the )?(?:personal area network|radio music channel|cooling device|field level design|physical therapy|company annual retreat)|stands for the|expands to|i\.e\.|refers to the|denotes the|is (?:a|the|an|only a) (?:radio )?(?:music channel|cooling (?:device|fan)|personal area network))\b|is (?:a|an|only an?) [a-z ]*(?:abbreviation|acronym)\b|(?:abbreviation|acronym) (?:for|in|with)\b|\bin (?:time measurement|unit(?:s)?)\b|\ba band of chords\b/,
+  // A referent-less "what about X for scenario/case/situation N" with no acronym present.
+  danglingScenarioRef: /\bwhat about .+ for (?:scenario|situation) \d+\??$/,
   nonTaxAction: /\b(change|rename|delete|draw|paint|compile|install|download|sort|cook|play|sing|design|render|print|debug|prepare|improve|buy|organi[sz]e|fix|build|write|update|configure|make a|create a|summari[sz]e|list the|explain\b|adjust|schedule the|format the|edit the|which .* (?:is best|brand|should i|to (?:buy|use))|best\b.*\?|poster about|novels? about)\b/,
   negationReview: /\b(although|even if|may be non-?tax|not tax|non-?tax).{0,60}(review|vat treatment|tax treatment|deductib|withholding|is (?:it|this) taxable|subject to)/,
   bareAcronym: /^\s*(?:what (?:is|does)\s+)?["']?[a-z]{2,5}["']?\??\s*(?:mean\??)?\s*$/i,
@@ -53,6 +56,12 @@ export function adjudicateReason(row) {
   const pick = (reason, ruleId, rationale) => ({ reason, ruleId, rationale });
 
   if (dec === 'CLARIFY') {
+    // RF-11: a referent-less "what about X for scenario/case N" with no acronym
+    // is ambiguous due to a missing referent, not an ambiguous acronym.
+    const hasAcronymToken = /\b[a-z]{2,5}\b/i.test(row.query.replace(/\bwhat about\b/i, '').split(/ for /i)[0] || '') && /\b[A-Z]{2,5}\b/.test(row.query);
+    if (RE.danglingScenarioRef.test(q) && !hasAcronymToken) {
+      return pick(REASONS.NO_RELATION, 'RF-11', 'CLARIFY row: referent-less follow-up ("for scenario/situation N") with no acronym present; ambiguity is a missing referent, not RF-04 acronym ambiguity.');
+    }
     // RF-04: bare/ambiguous acronym or ambiguous tax-adjacent frame.
     return pick(REASONS.AMBIG_ACRONYM, 'RF-04', 'CLARIFY row: materially ambiguous acronym/term lacking resolving context.');
   }
@@ -71,6 +80,9 @@ export function adjudicateReason(row) {
   if (RE.negationReview.test(q)) return pick(REASONS.NEG_REVIEW, 'RF-09', 'Negation/non-tax framing with an explicit tax-review request.');
   // RF-03: definition with tax context.
   if (RE.definition.test(q) && RE.taxContext.test(q)) return pick(REASONS.DEF_CONTEXT, 'RF-03', 'Definition/explanation of a tax term resolved by explicit tax context.');
+  // Deductibility is explicitly named under RF-02 and controls even when a
+  // compliance-shaped word (e.g. "return") also appears in the same query.
+  if (/deductib|\bdeducted\b/.test(q)) return pick(REASONS.TREAT_ORDINARY, 'RF-02', 'Requests deductibility treatment of an expense/object; more specific than a co-occurring compliance term.');
   // RF-01: tax compliance task.
   if (RE.compliance.test(q)) return pick(REASONS.COMPLIANCE, 'RF-01', 'Requested action is a tax filing/registration/remittance/compliance task.');
   // RF-02: tax treatment of an ordinary object/service/activity/business target.

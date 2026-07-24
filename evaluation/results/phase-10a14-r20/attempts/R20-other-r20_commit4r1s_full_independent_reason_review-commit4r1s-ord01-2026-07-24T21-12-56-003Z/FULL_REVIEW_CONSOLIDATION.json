@@ -1,0 +1,7963 @@
+{
+  "chunks": 10,
+  "reviewed": 1897,
+  "missing": 0,
+  "duplicates": 0,
+  "agree": 1824,
+  "challenge": 73,
+  "results": [
+    {
+      "oracleId": "S1-IR19-0001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0005",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0006",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0009",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0015",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0019",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0020",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0021",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0022",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0023",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0024",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0025",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0026",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0027",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0028",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0029",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0030",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0031",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0032",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0033",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0034",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0035",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0036",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0037",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0038",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0039",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0040",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0041",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0042",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0043",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0044",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0045",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0046",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0047",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0048",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0049",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0050",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0051",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0052",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0053",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0054",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0055",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0056",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0057",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0058",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0059",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0060",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0061",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0062",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0063",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0064",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0065",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0066",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0067",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0068",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0069",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0070",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0071",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0072",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0073",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0074",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0075",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0076",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0077",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0078",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0079",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0080",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0081",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0082",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0083",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0084",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0085",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0086",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0087",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0088",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0089",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0090",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0091",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0092",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0093",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0094",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0095",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0096",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0097",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0098",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0099",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0100",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0101",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0102",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0103",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0104",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0105",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0106",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0107",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0108",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0109",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0110",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0111",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0112",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0113",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0114",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0115",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0116",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0117",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0118",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0119",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0120",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0121",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0122",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0123",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0124",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0125",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0126",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0127",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0128",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0129",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0130",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0131",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0132",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0133",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0134",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0135",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0136",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0137",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0138",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0139",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0140",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0141",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0142",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0143",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0144",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0145",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0146",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0147",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0148",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0149",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0150",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0151",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0152",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0153",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0154",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0155",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0156",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0157",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0158",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0159",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0160",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0161",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0162",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0163",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0164",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0165",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0166",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0167",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0168",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0169",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0170",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0171",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0172",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0173",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0174",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0175",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0176",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0177",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0178",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0179",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0180",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0181",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0182",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0183",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0184",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0185",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0186",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0187",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0188",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0189",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0190",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0191",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0192",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0193",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0194",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "The query asks whether a transaction is subject to BIR registration, which is a registration/compliance question explicitly covered by RF-01 rather than the residual RF-10 family.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0195",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0196",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0197",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0198",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0199",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0200",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0201",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0202",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0203",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0204",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0205",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0206",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0207",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0208",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0209",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0210",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0211",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0212",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0213",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0214",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0215",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0216",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0217",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0218",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0219",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0220",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0221",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0222",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0223",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0224",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0225",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0226",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0227",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0228",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0229",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0230",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0231",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0232",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0233",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0234",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0235",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0236",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0237",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0238",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0239",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0240",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0241",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0242",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0243",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0244",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0245",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0246",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0247",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0248",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0249",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0250",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0251",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0252",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0253",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0254",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0255",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0256",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0257",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0258",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0259",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0260",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0261",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0262",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0263",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0264",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0265",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0266",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0267",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0268",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0269",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0270",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0271",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0272",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0273",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0274",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0275",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0276",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0277",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0278",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0279",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0280",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0281",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0282",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0283",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0284",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0285",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0286",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0287",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0288",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0289",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0290",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0291",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0292",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0293",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0294",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0295",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0296",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0297",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0298",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0299",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0300",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0301",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0302",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0303",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0304",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0305",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0306",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0307",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0308",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0309",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0310",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0311",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0312",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0313",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0314",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0315",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0316",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0317",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0318",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0319",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0320",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0321",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0322",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0323",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0324",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0325",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0326",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0327",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0328",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0329",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0330",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0331",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0332",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0333",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0334",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0335",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0336",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0337",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0338",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0339",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0340",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0341",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0342",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0343",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0344",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0345",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0346",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0347",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0348",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0349",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0350",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0351",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0352",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0353",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0354",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0355",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0356",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0357",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0358",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0359",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0360",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0361",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0362",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0363",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0364",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0365",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0366",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0367",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0368",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0369",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0370",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0371",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0372",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0373",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0374",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0375",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0376",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0377",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0378",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0379",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0380",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0381",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0382",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0383",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0384",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0385",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0386",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0387",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0388",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0389",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0390",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0391",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0392",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0393",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0394",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0395",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0396",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0397",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0398",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0399",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0400",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0401",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0402",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0403",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0404",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0405",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0406",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0407",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0408",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0409",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0410",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0411",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0412",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0413",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0414",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0415",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0416",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0417",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0418",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0419",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0420",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0421",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0422",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0423",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0424",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0425",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0426",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0427",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0428",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0429",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0430",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0431",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0432",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0433",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0434",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0435",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0436",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0437",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0438",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0439",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0440",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0441",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0442",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0443",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0444",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0445",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0446",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0447",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0448",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0449",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0450",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0451",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0452",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0453",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0454",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0455",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0456",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0457",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0458",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0459",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0460",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0461",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0462",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0463",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0464",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0465",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0466",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0467",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0468",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0469",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0470",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0471",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0472",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0473",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0474",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0475",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0476",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0477",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0478",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0479",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0480",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0481",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0482",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0483",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0484",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0485",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0486",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0487",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0488",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0489",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0490",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0491",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0492",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0493",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0494",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0495",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0496",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0497",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0498",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0499",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0500",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0501",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0502",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0503",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0504",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0505",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0506",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0507",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0508",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0509",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0510",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0511",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0512",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0513",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0514",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0515",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0516",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0517",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0518",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0519",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0520",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0521",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0522",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0523",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0524",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0525",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0526",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0527",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0528",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0529",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0530",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0531",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0532",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0533",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0534",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0535",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0536",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0537",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0538",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0539",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0540",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0541",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0542",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0543",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0544",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0545",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0546",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0547",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0548",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0549",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0550",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0551",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0552",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0553",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0554",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0555",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0556",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0557",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0558",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0559",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0560",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0561",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0562",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0563",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0564",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0565",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0566",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0567",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0568",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0569",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0570",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0571",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0572",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0573",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0574",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0575",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0576",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0577",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0578",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0579",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0580",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0581",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0582",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0583",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0584",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0585",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0586",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0587",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0588",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0589",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0590",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0591",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0592",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0593",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0594",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0595",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0596",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0597",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0598",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0599",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0600",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0601",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0602",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0603",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0604",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0605",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0606",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0607",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0608",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0609",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0610",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0611",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0612",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0613",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0614",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0615",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0616",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0617",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0618",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0619",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0620",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0621",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0622",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0623",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0624",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0625",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0626",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0627",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0628",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0629",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0630",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0631",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0632",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0633",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0634",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0635",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0636",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0637",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0638",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0639",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0640",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0641",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0642",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0643",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0644",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0645",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0646",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0647",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0648",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0649",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0650",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0651",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0652",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0653",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0654",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0655",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0656",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0657",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0658",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0659",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0660",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0661",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0662",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0663",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0664",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0665",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0666",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0667",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0668",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0669",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0670",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0671",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0672",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0673",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0674",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0675",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0676",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0677",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0678",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0679",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0680",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0681",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0682",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0683",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0684",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0685",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0686",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0687",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0688",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0689",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0690",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0691",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0692",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0693",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0694",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0695",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0696",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0697",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0698",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0699",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0700",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0701",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0702",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0703",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0704",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0705",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0706",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0707",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0708",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0709",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0710",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0711",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0712",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0713",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0714",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0715",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0716",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0717",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0718",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0719",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0720",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0721",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0722",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0723",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0724",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0725",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0726",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0727",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0728",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0729",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0730",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0731",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0732",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0733",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0734",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0735",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0736",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0737",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0738",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0739",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0740",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0741",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0742",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0743",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0744",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0745",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0746",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0747",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0748",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0749",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0750",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0751",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "The query contains no acronym at all (\"gross receipts\" is a plain tax-adjacent term used with an unresolvable dangling reference to an undefined 'scenario 1'), so RF-04 (which is specifically for ambiguous acronyms) does not fit; RF-11's no_tax_relation is the correct CLARIFY-compatible family for a referent-less, context-free follow-up.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0752",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Professional fees\" is not an acronym; the ambiguity comes from a missing referent for 'scenario 2', which is no_tax_relation/RF-11 territory rather than RF-04's ambiguous-acronym scope.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0753",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Registration\" is a plain word, not an acronym, so the CLARIFY trigger is the undefined 'scenario 3' referent, matching RF-11 rather than RF-04.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0754",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Penalties\" is not an acronym; the row is ambiguous only because 'scenario 4' is never defined, which is the RF-11 no_tax_relation pattern.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0755",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Return\" here is a plain word with a dangling 'scenario 5' reference, not an ambiguous acronym, so RF-11 fits better than RF-04.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0756",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Filing deadline\" contains no acronym; the ambiguity is the missing 'scenario 6' context, which is RF-11's no_tax_relation pattern.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0757",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Assessment\" is a plain word, not an acronym, so the CLARIFY basis is the undefined 'scenario 7' referent under RF-11 rather than RF-04.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0758",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Deduction\" is not an acronym; ambiguity stems from the unresolved 'scenario 8' reference, matching RF-11.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0759",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Exemption threshold\" is a plain phrase, not an acronym, so RF-11's no_tax_relation fits the missing-referent ambiguity better than RF-04.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0760",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Books\" is not an acronym here; the row is ambiguous solely because 'scenario 10' is never defined, which is RF-11's no_tax_relation pattern rather than RF-04's acronym-specific scope.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0761",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0762",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0763",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0764",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0765",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0766",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0767",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0768",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0769",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0770",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0771",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0772",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0773",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0774",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0775",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0776",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0777",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0778",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0779",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0780",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0781",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0782",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0783",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0784",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0785",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0786",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0787",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0788",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0789",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0790",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0791",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0792",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0793",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0794",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0795",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0796",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0797",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0798",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0799",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0800",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0801",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0802",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0803",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0804",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0805",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0806",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0807",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0808",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0809",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0810",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0811",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0812",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0813",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0814",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0815",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0816",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0817",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0818",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0819",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0820",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0821",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0822",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0823",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0824",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0825",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0826",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0827",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0828",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0829",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0830",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0831",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0832",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0833",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0834",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0835",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0836",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0837",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0838",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0839",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0840",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0841",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0842",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0843",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0844",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0845",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0846",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0847",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0848",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0849",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0850",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0851",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0852",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0853",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0854",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0855",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0856",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0857",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0858",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0859",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0860",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0861",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0862",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0863",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0864",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0865",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0866",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0867",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0868",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0869",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0870",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0871",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0872",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0873",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0874",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0875",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0876",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0877",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0878",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0879",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0880",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0881",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0882",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0883",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0884",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0885",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0886",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0887",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0888",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0889",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0890",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0891",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0892",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0893",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0894",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0895",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0896",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0897",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0898",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0899",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0900",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0901",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0902",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0903",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0904",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0905",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0906",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0907",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0908",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0909",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0910",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0911",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0912",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0913",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0914",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0915",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0916",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0917",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0918",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0919",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0920",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0921",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0922",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0923",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0924",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0925",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0926",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0927",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0928",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0929",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0930",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0931",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0932",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0933",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0934",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0935",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0936",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0937",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0938",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0939",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0940",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0941",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0942",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0943",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0944",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0945",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0946",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0947",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0948",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0949",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0950",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0951",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0952",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0953",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0954",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0955",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0956",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0957",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0958",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0959",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0960",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0961",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0962",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0963",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0964",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0965",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0966",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0967",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0968",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0969",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0970",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0971",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0972",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0973",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0974",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0975",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0976",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0977",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0978",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0979",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0980",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0981",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0982",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0983",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0984",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0985",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0986",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0987",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0988",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0989",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0990",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0991",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0992",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0993",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0994",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0995",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0996",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0997",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0998",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0999",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1000",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1005",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1006",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1009",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1015",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1019",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1020",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1021",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1022",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1023",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1024",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1025",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1026",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1027",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1028",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1029",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1030",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1031",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1032",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1033",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1034",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1035",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1036",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1037",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1038",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1039",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1040",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1041",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1042",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1043",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1044",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1045",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1046",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1047",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1048",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1049",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1050",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1051",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1052",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1053",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1054",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1055",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1056",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1057",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1058",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1059",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1060",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1061",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1062",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1063",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1064",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1065",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1066",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1067",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1068",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1069",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1070",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1071",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1072",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1074",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1075",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1076",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1077",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1078",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1079",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1080",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1081",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1082",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1083",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1084",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1085",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1086",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1087",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1088",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1089",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1090",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1091",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1092",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1093",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1094",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1095",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1096",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1097",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1098",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1099",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1100",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1101",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1102",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1103",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1104",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1105",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1106",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1107",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1108",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1109",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1110",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1111",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1112",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1114",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1115",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1116",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1117",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1118",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1119",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1120",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-005",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-006",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-009",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-015",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-019",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-020",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-021",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-022",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-023",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-024",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-025",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-026",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-027",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-028",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-029",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-030",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-031",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-032",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-033",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-034",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-035",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-036",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-037",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-038",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-039",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-040",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-041",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-042",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-043",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-044",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-045",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-046",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-047",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-048",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-049",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-050",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-051",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-052",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-053",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-054",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-055",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-056",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-057",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-058",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-059",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-060",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-061",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-062",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-063",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-064",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-065",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-066",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-067",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-068",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-069",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-070",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-071",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-072",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-073",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-074",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-075",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-076",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-077",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-078",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-079",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-080",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-081",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-082",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "tax_compliance_task",
+      "alternativeReason": "explicit_tax_task_relation",
+      "ruleBasis": "RF-10",
+      "rationale": "\"Tax protest deadline\" concerns an administrative remedy/timing issue (akin to reconsideration/reinvestigation requests, sibling rows DOM-042 to DOM-044 filed under RF-10), not a filing/registration/remittance/withholding compliance action as RF-01 requires.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-083",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-084",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-085",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-086",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-087",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-088",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-089",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-090",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-091",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-092",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-093",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "tax_compliance_task",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "\"Withholding on rent\" asks about withholding tax treatment applied to an ordinary object (rent payment) rather than a filing/registration/remittance procedure itself.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-094",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-095",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-096",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-097",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-098",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-099",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-100",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-101",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-102",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-103",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-104",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-105",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-106",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-107",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-108",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-109",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-110",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-111",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-112",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-113",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-114",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-115",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-116",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-117",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-118",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-119",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-120",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-121",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-122",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-123",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-124",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-125",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-126",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-127",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-128",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-129",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-130",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-131",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-132",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-133",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-134",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-135",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-136",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-137",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-138",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-139",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-140",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-141",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-142",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-143",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-144",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-145",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-146",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-147",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-148",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-149",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-150",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-151",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-152",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-153",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-154",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-155",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-156",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-157",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-158",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-159",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-160",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-161",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-162",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-163",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-164",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-165",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-166",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-167",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-168",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-169",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-170",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-171",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-172",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-173",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-174",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-175",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-176",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-177",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-178",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-179",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-180",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-181",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-182",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-183",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-184",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-185",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-186",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-187",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-188",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-189",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-190",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-191",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-192",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-193",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-194",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-195",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-196",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-197",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-198",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-199",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-200",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-201",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-202",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-203",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-204",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-205",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-206",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-207",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-208",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-209",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-210",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-211",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-212",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-213",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-214",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-215",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-216",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-217",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-218",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-219",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-220",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-221",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-222",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-223",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-224",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-225",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-226",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-227",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-228",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-229",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-230",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-231",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-232",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-233",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-234",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-235",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-236",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-237",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-238",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-239",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-240",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-241",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-242",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-243",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-244",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-245",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-246",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-247",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-248",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-249",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-250",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-251",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-252",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-253",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-254",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-255",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-256",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-257",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-258",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-259",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-260",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-261",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-262",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-263",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-264",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-265",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-266",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-267",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-268",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-269",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-270",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-271",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-272",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-273",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-274",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-275",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-276",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-277",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-278",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-279",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-280",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-281",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-282",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-283",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-284",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-285",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-286",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-287",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-288",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-289",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-290",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-291",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-292",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-293",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-294",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-295",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-296",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-297",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-298",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-299",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-300",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-301",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-302",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-303",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-304",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-305",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-306",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-307",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-308",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-309",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-310",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-311",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-312",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-313",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-314",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-315",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-316",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-317",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-318",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-319",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-320",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-321",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-322",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-323",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-324",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-325",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-326",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-327",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-328",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-329",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-330",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-331",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-332",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-333",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-334",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-335",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-336",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-337",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-338",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-339",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-340",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-341",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-342",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-343",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-344",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-345",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-346",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-347",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-348",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-349",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-350",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-351",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-352",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-353",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-354",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-355",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-356",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-357",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-358",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-359",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-360",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-361",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-362",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-363",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-364",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-365",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-366",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-367",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-368",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-369",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-370",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-371",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-372",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-373",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-374",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-375",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-376",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-377",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-378",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-379",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-380",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-381",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-382",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-383",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-384",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-385",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-386",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-387",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-388",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-389",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-390",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-391",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-392",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-393",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-394",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-395",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-396",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-397",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-398",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-399",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-400",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-401",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-402",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-403",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-404",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-405",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-406",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-407",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-408",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-409",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-410",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-411",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-412",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-413",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-414",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-415",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-416",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-417",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-418",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-419",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-420",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-421",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-422",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-423",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-424",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-425",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-426",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-427",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-428",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-429",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-430",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-431",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-432",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-433",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-434",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-435",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-436",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-437",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-438",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-439",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-440",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-441",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-442",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-443",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-444",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-445",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-446",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-447",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-448",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-449",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-450",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-451",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-452",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-453",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-454",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-455",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-456",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-457",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-458",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-459",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-460",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-461",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-462",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-463",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-464",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-465",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-466",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-467",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-468",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-469",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-470",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-471",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-472",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Query asks the VAT treatment of an ordinary sale, matching RF-02 (tax/VAT treatment of an object/service/activity) rather than the residual RF-10 bucket, as confirmed by the structurally identical query \"Ano ang buwis sa sale?\" (DOM-414/434/454) which was correctly coded RF-02.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-473",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-474",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-475",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-476",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-477",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-478",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-479",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-480",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-481",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-482",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-483",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-484",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-485",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-486",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-487",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-488",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-489",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-490",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-491",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-492",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-493",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-494",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-495",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-496",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-497",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-498",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-499",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-500",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-501",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-502",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-503",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-504",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-505",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-506",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-507",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-508",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-509",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-510",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-511",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-512",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-513",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-514",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-515",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-516",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-517",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-518",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-519",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-520",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-521",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-522",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-523",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-524",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-525",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-526",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-527",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-528",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-529",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-530",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-531",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-532",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-533",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-534",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-535",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-536",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-537",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-538",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-539",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-540",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-541",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-542",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-543",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-544",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-545",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-546",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-547",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-548",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-549",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-550",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-551",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-552",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-553",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-554",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-555",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-556",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-557",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-558",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-559",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-560",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-561",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-562",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-563",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-564",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-565",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-566",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-567",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-005",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-006",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-009",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-015",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-019",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-020",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-021",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-022",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-023",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-024",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-025",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-026",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-027",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-028",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-029",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-030",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-031",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-032",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-033",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-034",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-035",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-036",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-037",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-038",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-039",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-040",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-041",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-042",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-043",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-044",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-045",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-046",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-047",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-048",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-049",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-050",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-051",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-052",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-053",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-054",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-055",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-056",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-057",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-058",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-059",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-060",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-061",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-062",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-063",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-064",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-065",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-066",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-067",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-068",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-069",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-070",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-071",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-072",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-073",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-074",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-075",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-076",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-077",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-078",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-079",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-080",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-081",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-082",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-083",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-084",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-085",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-086",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-087",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-088",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-089",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-090",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-091",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-092",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-093",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-094",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-095",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-096",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-097",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-098",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-099",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-100",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-101",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-102",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-103",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-104",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-105",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-106",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-107",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-108",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-109",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-110",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-111",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-112",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-113",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-114",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-115",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-116",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-117",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-118",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-119",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-120",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-121",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-122",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-123",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-124",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-125",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-126",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-127",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-128",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-129",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-130",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-131",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-132",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-133",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-134",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-135",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-136",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-137",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-138",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-139",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-140",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-141",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-142",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-143",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-144",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-145",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-146",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-147",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-148",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-149",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-150",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-151",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-152",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-153",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-154",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-155",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-156",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-157",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-158",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-159",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-160",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-161",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-162",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-163",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-164",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-165",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-166",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-167",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-168",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-169",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-170",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-171",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-172",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-173",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-174",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-175",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-176",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-177",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-178",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-179",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-180",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-181",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-182",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-183",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-184",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-185",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-186",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-187",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-188",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-189",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-190",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-191",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-192",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-193",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-194",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-195",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-196",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-197",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-198",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-199",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-200",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-201",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-202",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "no_tax_relation",
+      "alternativeReason": "non_tax_expansion",
+      "ruleBasis": "RF-07",
+      "rationale": "The query explicitly redefines the acronym BOC (Bureau of Customs) as an unrelated musical meaning (a band of chords), which is a direct acronym-to-non-tax-meaning expansion rather than a generic absence of tax relation.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S3-IR17-203",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-204",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-205",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-206",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "no_tax_relation",
+      "alternativeReason": "non_tax_expansion",
+      "ruleBasis": "RF-07",
+      "rationale": "The query explicitly redefines the acronym SEC as a unit of time measurement (second), which is a direct acronym-to-non-tax-meaning expansion rather than a generic absence of tax relation.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S3-IR17-207",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-208",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-209",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S3-IR17-210",
+      "reviewDecision": "AGREE"
+    }
+  ]
+}

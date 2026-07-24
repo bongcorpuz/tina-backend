@@ -1,0 +1,766 @@
+{
+  "chunk": 6,
+  "reviewed": 190,
+  "results": [
+    {
+      "oracleId": "S1-IR19-0951",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0952",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0953",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0954",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0955",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0956",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0957",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0958",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0959",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0960",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0961",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0962",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0963",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0964",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0965",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0966",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0967",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0968",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0969",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0970",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0971",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0972",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0973",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0974",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0975",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0976",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0977",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0978",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0979",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0980",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0981",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0982",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0983",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0984",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0985",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0986",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0987",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0988",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0989",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0990",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0991",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0992",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0993",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0994",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0995",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0996",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0997",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0998",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0999",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1000",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1005",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1006",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1009",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1015",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1019",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1020",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1021",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1022",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1023",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1024",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1025",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1026",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1027",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1028",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1029",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1030",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1031",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1032",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1033",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1034",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1035",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1036",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1037",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1038",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1039",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1040",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1041",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1042",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1043",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1044",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1045",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1046",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1047",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1048",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1049",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1050",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1051",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1052",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1053",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1054",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1055",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1056",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1057",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1058",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1059",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1060",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1061",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1062",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1063",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1064",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1065",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1066",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1067",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1068",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1069",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1070",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1071",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1072",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1074",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1075",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1076",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1077",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1078",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1079",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1080",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1081",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1082",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1083",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1084",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1085",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1086",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1087",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1088",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1089",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1090",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1091",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1092",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1093",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1094",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1095",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1096",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1097",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1098",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1099",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1100",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1101",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1102",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1103",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1104",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1105",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1106",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1107",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1108",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1109",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1110",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1111",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1112",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1114",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1115",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1116",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1117",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1118",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1119",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-1120",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-001",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-002",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-003",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-004",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-005",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-006",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-008",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-009",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-010",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-011",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-012",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-013",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-014",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-015",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-016",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-017",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-018",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-019",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-020",
+      "reviewDecision": "AGREE"
+    }
+  ]
+}

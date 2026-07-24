@@ -1,0 +1,816 @@
+{
+  "chunk": 2,
+  "reviewed": 190,
+  "results": [
+    {
+      "oracleId": "S1-IR19-0191",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0192",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0193",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0194",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "explicit_tax_task_relation",
+      "alternativeReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "The query asks whether a transaction is subject to BIR registration, which is a registration/compliance question explicitly covered by RF-01 rather than the residual RF-10 family.",
+      "materiality": "LOW"
+    },
+    {
+      "oracleId": "S1-IR19-0195",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0196",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0197",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0198",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0199",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0200",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0201",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0202",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0203",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0204",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0205",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0206",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0207",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0208",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0209",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0210",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0211",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0212",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0213",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0214",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0215",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0216",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0217",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0218",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0219",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0220",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0221",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0222",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0223",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0224",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0225",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0226",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0227",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0228",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0229",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0230",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0231",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0232",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0233",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0234",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0235",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0236",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0237",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0238",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0239",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0240",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0241",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0242",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0243",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0244",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0245",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0246",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0247",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0248",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0249",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0250",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0251",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0252",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0253",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0254",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0255",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0256",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0257",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0258",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0259",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0260",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0261",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0262",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0263",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0264",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0265",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0266",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0267",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0268",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0269",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0270",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0271",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0272",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0273",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0274",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0275",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0276",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0277",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0278",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0279",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0280",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0281",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0282",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0283",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0284",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0285",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0286",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0287",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0288",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0289",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0290",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0291",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0292",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0293",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0294",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0295",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0296",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0297",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0298",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0299",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0300",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0301",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0302",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0303",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0304",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0305",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0306",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0307",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0308",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0309",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0310",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0311",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0312",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0313",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0314",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0315",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0316",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0317",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0318",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0319",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0320",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0321",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0322",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0323",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0324",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0325",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0326",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0327",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0328",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0329",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0330",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0331",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0332",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0333",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0334",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0335",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0336",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0337",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0338",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0339",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0340",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0341",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0342",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0343",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0344",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0345",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0346",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0347",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0348",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0349",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0350",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0351",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0352",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0353",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0354",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0355",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0356",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0357",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0358",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0359",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0360",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0361",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0362",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0363",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0364",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0365",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0366",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0367",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0368",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0369",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0370",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0371",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0372",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0373",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0374",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0375",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0376",
+      "reviewDecision": "CHALLENGE",
+      "reviewedReason": "quoted_tax_term_only",
+      "alternativeReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "materiality": "MEDIUM"
+    },
+    {
+      "oracleId": "S1-IR19-0377",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0378",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0379",
+      "reviewDecision": "AGREE"
+    },
+    {
+      "oracleId": "S1-IR19-0380",
+      "reviewDecision": "AGREE"
+    }
+  ]
+}

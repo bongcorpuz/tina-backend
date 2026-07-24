@@ -1,0 +1,9 @@
+{
+  "decision": "COMMIT_4R1S_COMPLETE_R1_DEFECTS_FOUND",
+  "confirmedDefects": 73,
+  "invalidChallenges": 0,
+  "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
+  "r1Unchanged": true,
+  "next": "COMMIT_4R2_VERSIONED_RE_FREEZE",
+  "note": "R1 was NOT edited by this unit per the frozen COMMIT 4R1S contract. All 73 confirmed defects are precision-only reason-family corrections (0 decision changes, 0 relation changes) fully specified in the challenge/resolution registers and independently re-verifiable against a corrected adjudicator; they must be applied in a new COMMIT 4R2 versioned oracle, not by amending R1 in place."
+}

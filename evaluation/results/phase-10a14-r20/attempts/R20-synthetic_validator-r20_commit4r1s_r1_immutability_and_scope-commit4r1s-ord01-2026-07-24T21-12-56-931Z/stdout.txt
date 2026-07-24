@@ -1,0 +1,26 @@
+{
+  "validator": "r20-commit4r1s-r1-immutability-and-scope",
+  "checks": [
+    {
+      "name": "v1_unchanged",
+      "pass": true
+    },
+    {
+      "name": "r1_unchanged",
+      "pass": true
+    },
+    {
+      "name": "runtime_unchanged",
+      "pass": true
+    },
+    {
+      "name": "no_analyzer_execution",
+      "pass": true
+    },
+    {
+      "name": "no_actual_output_supplied_to_reviewer",
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

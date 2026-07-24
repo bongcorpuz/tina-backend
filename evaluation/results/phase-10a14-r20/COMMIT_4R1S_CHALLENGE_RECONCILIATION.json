@@ -1,0 +1,25 @@
+{
+  "validator": "r20-commit4r1s-challenge-resolution",
+  "checks": [
+    {
+      "name": "every_challenge_has_rule_and_rationale",
+      "pass": true
+    },
+    {
+      "name": "every_challenge_resolved",
+      "pass": true
+    },
+    {
+      "name": "no_invalid_reason",
+      "pass": true
+    },
+    {
+      "name": "unresolved_0",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "totalChallenges": 73,
+  "confirmedDefects": 73,
+  "invalidChallenges": 0
+}

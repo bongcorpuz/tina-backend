@@ -1,0 +1,18 @@
+{
+  "reviewer": "Sonnet 5 (10 independent blind chunk reviews)",
+  "reviewed": 1897,
+  "agree": 1824,
+  "challenge": 73,
+  "chunkFiles": [
+    "review-result-01.json",
+    "review-result-02.json",
+    "review-result-03.json",
+    "review-result-04.json",
+    "review-result-05.json",
+    "review-result-06.json",
+    "review-result-07.json",
+    "review-result-08.json",
+    "review-result-09.json",
+    "review-result-10.json"
+  ]
+}

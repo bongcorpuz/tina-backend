@@ -1,0 +1,738 @@
+{
+  "totalChallenges": 73,
+  "confirmedDefects": 73,
+  "invalidChallenges": 0,
+  "unresolved": 0,
+  "resolutions": [
+    {
+      "challengeId": "CH-S1-IR19-0005",
+      "oracleId": "S1-IR19-0005",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0006",
+      "oracleId": "S1-IR19-0006",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0009",
+      "oracleId": "S1-IR19-0009",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0015",
+      "oracleId": "S1-IR19-0015",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0019",
+      "oracleId": "S1-IR19-0019",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0025",
+      "oracleId": "S1-IR19-0025",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0026",
+      "oracleId": "S1-IR19-0026",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0029",
+      "oracleId": "S1-IR19-0029",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0035",
+      "oracleId": "S1-IR19-0035",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0039",
+      "oracleId": "S1-IR19-0039",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0045",
+      "oracleId": "S1-IR19-0045",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0046",
+      "oracleId": "S1-IR19-0046",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0049",
+      "oracleId": "S1-IR19-0049",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0055",
+      "oracleId": "S1-IR19-0055",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0059",
+      "oracleId": "S1-IR19-0059",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0065",
+      "oracleId": "S1-IR19-0065",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0066",
+      "oracleId": "S1-IR19-0066",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0069",
+      "oracleId": "S1-IR19-0069",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0075",
+      "oracleId": "S1-IR19-0075",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0079",
+      "oracleId": "S1-IR19-0079",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0085",
+      "oracleId": "S1-IR19-0085",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0086",
+      "oracleId": "S1-IR19-0086",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0089",
+      "oracleId": "S1-IR19-0089",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0095",
+      "oracleId": "S1-IR19-0095",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0099",
+      "oracleId": "S1-IR19-0099",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0105",
+      "oracleId": "S1-IR19-0105",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0106",
+      "oracleId": "S1-IR19-0106",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0109",
+      "oracleId": "S1-IR19-0109",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0115",
+      "oracleId": "S1-IR19-0115",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0119",
+      "oracleId": "S1-IR19-0119",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0125",
+      "oracleId": "S1-IR19-0125",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0126",
+      "oracleId": "S1-IR19-0126",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0129",
+      "oracleId": "S1-IR19-0129",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0135",
+      "oracleId": "S1-IR19-0135",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0139",
+      "oracleId": "S1-IR19-0139",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0145",
+      "oracleId": "S1-IR19-0145",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0146",
+      "oracleId": "S1-IR19-0146",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0149",
+      "oracleId": "S1-IR19-0149",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0155",
+      "oracleId": "S1-IR19-0155",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0159",
+      "oracleId": "S1-IR19-0159",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0165",
+      "oracleId": "S1-IR19-0165",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0166",
+      "oracleId": "S1-IR19-0166",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0169",
+      "oracleId": "S1-IR19-0169",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0175",
+      "oracleId": "S1-IR19-0175",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0179",
+      "oracleId": "S1-IR19-0179",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0185",
+      "oracleId": "S1-IR19-0185",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Deductibility of an expense is explicitly named as a treatment question under RF-02, making it more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0186",
+      "oracleId": "S1-IR19-0186",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "Asking what records support a tax is a documentary-submission compliance question explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0189",
+      "oracleId": "S1-IR19-0189",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "A penalty for late filing/payment is a deadlines/compliance matter explicitly covered by RF-01, more specific than the RF-10 residual.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0194",
+      "oracleId": "S1-IR19-0194",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_compliance_task",
+      "ruleBasis": "RF-01",
+      "rationale": "The query asks whether a transaction is subject to BIR registration, which is a registration/compliance question explicitly covered by RF-01 rather than the residual RF-10 family.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0216",
+      "oracleId": "S1-IR19-0216",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0236",
+      "oracleId": "S1-IR19-0236",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0256",
+      "oracleId": "S1-IR19-0256",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0276",
+      "oracleId": "S1-IR19-0276",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0296",
+      "oracleId": "S1-IR19-0296",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0316",
+      "oracleId": "S1-IR19-0316",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0336",
+      "oracleId": "S1-IR19-0336",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0356",
+      "oracleId": "S1-IR19-0356",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0376",
+      "oracleId": "S1-IR19-0376",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "quoted_tax_term_only",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Conference room booking\" is not a tax-shaped phrase being quoted/translated, so RF-08 does not apply; the request has no tax relation at all, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0751",
+      "oracleId": "S1-IR19-0751",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "The query contains no acronym at all (\"gross receipts\" is a plain tax-adjacent term used with an unresolvable dangling reference to an undefined 'scenario 1'), so RF-04 (which is specifically for ambiguous acronyms) does not fit; RF-11's no_tax_relation is the correct CLARIFY-compatible family for a referent-less, context-free follow-up.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0752",
+      "oracleId": "S1-IR19-0752",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Professional fees\" is not an acronym; the ambiguity comes from a missing referent for 'scenario 2', which is no_tax_relation/RF-11 territory rather than RF-04's ambiguous-acronym scope.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0753",
+      "oracleId": "S1-IR19-0753",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Registration\" is a plain word, not an acronym, so the CLARIFY trigger is the undefined 'scenario 3' referent, matching RF-11 rather than RF-04.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0754",
+      "oracleId": "S1-IR19-0754",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Penalties\" is not an acronym; the row is ambiguous only because 'scenario 4' is never defined, which is the RF-11 no_tax_relation pattern.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0755",
+      "oracleId": "S1-IR19-0755",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Return\" here is a plain word with a dangling 'scenario 5' reference, not an ambiguous acronym, so RF-11 fits better than RF-04.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0756",
+      "oracleId": "S1-IR19-0756",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Filing deadline\" contains no acronym; the ambiguity is the missing 'scenario 6' context, which is RF-11's no_tax_relation pattern.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0757",
+      "oracleId": "S1-IR19-0757",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Assessment\" is a plain word, not an acronym, so the CLARIFY basis is the undefined 'scenario 7' referent under RF-11 rather than RF-04.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0758",
+      "oracleId": "S1-IR19-0758",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Deduction\" is not an acronym; ambiguity stems from the unresolved 'scenario 8' reference, matching RF-11.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0759",
+      "oracleId": "S1-IR19-0759",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Exemption threshold\" is a plain phrase, not an acronym, so RF-11's no_tax_relation fits the missing-referent ambiguity better than RF-04.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S1-IR19-0760",
+      "oracleId": "S1-IR19-0760",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "ambiguous_tax_acronym",
+      "resolvedReason": "no_tax_relation",
+      "ruleBasis": "RF-11",
+      "rationale": "\"Books\" is not an acronym here; the row is ambiguous solely because 'scenario 10' is never defined, which is RF-11's no_tax_relation pattern rather than RF-04's acronym-specific scope.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S2-IR18-DOM-082",
+      "oracleId": "S2-IR18-DOM-082",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "tax_compliance_task",
+      "resolvedReason": "explicit_tax_task_relation",
+      "ruleBasis": "RF-10",
+      "rationale": "\"Tax protest deadline\" concerns an administrative remedy/timing issue (akin to reconsideration/reinvestigation requests, sibling rows DOM-042 to DOM-044 filed under RF-10), not a filing/registration/remittance/withholding compliance action as RF-01 requires.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S2-IR18-DOM-093",
+      "oracleId": "S2-IR18-DOM-093",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "tax_compliance_task",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "\"Withholding on rent\" asks about withholding tax treatment applied to an ordinary object (rent payment) rather than a filing/registration/remittance procedure itself.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S2-IR18-DOM-472",
+      "oracleId": "S2-IR18-DOM-472",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "explicit_tax_task_relation",
+      "resolvedReason": "tax_treatment_of_ordinary_object",
+      "ruleBasis": "RF-02",
+      "rationale": "Query asks the VAT treatment of an ordinary sale, matching RF-02 (tax/VAT treatment of an object/service/activity) rather than the residual RF-10 bucket, as confirmed by the structurally identical query \"Ano ang buwis sa sale?\" (DOM-414/434/454) which was correctly coded RF-02.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S3-IR17-202",
+      "oracleId": "S3-IR17-202",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "no_tax_relation",
+      "resolvedReason": "non_tax_expansion",
+      "ruleBasis": "RF-07",
+      "rationale": "The query explicitly redefines the acronym BOC (Bureau of Customs) as an unrelated musical meaning (a band of chords), which is a direct acronym-to-non-tax-meaning expansion rather than a generic absence of tax relation.",
+      "resolvedBy": "Opus 4.8"
+    },
+    {
+      "challengeId": "CH-S3-IR17-206",
+      "oracleId": "S3-IR17-206",
+      "resolution": "R1_DEFECT_CONFIRMED",
+      "reviewedReason": "no_tax_relation",
+      "resolvedReason": "non_tax_expansion",
+      "ruleBasis": "RF-07",
+      "rationale": "The query explicitly redefines the acronym SEC as a unit of time measurement (second), which is a direct acronym-to-non-tax-meaning expansion rather than a generic absence of tax relation.",
+      "resolvedBy": "Opus 4.8"
+    }
+  ]
+}
