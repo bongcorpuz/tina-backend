@@ -1,0 +1,24 @@
+{
+  "file": "knowledge/CURRENT_STATE.md",
+  "committedBlobBeforeUpdate": "d71744b4e3f3cf87bd03d161326aab4916b5c3bc",
+  "workingTreeSha256AfterUpdate": "37d70f9ab79be9f7037d3cb8fcb475cf4115a64991753dbeda993c8e6c94121c",
+  "changed": true,
+  "isFinalSubstantiveChange": true,
+  "assertions": {
+    "noPlaceholders": true,
+    "doesNotClaim10AClosure": true,
+    "doesNotDescribe2870AsClosureOrPass": true,
+    "latestUnit": "COMMIT 5R1-C3",
+    "decision": "INCOMPLETE — ARCHITECTURE REMEDIATION NOT CLOSED",
+    "reconstructedCandidate": "2,819 / 3,720",
+    "bestGovernedC3Candidate": "2,870 / 3,720",
+    "remainingFailedRows": 850,
+    "runtimeIntegrated": false,
+    "runtimeFrozen": false,
+    "runtimeMutable": true,
+    "liveServicesRestoredToBaseline": true,
+    "nextExactTask": "PHASE-10A14-R20 — COMMIT 5R1-C4 — ARCHITECTURE REMEDIATION CONTINUATION 4 AGAINST R3",
+    "cumulativeThrough": "commit5r1c3-incomplete",
+    "totalAttempts": 43
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "note": "Improved clause-level/relation iteration this continuation: narrow acronym-non-tax-redefine veto (OSD/monitor, MCIT/plugin, RCIT/robotics, VAT-as-variable-name), tax-expansion+context ALLOW (RMC/PAN/SLSP tax expansions), explicit code-label detection, expanded clear-tax-terms (net estate, books of accounts, official receipt). NOT applied to services/ (unit INCOMPLETE). Preserved for COMMIT 5R1-C4.",
+  "analyzerSha256": "e2dfdf05b290e1f117d81e93305f5e6064a53d7518325a9c9d31d2aa99cd871d",
+  "patchBase": "reconstructed 2819 candidate",
+  "oracleVersion": "R3"
+}

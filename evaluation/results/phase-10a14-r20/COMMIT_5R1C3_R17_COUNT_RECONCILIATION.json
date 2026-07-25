@@ -1,0 +1,15 @@
+{
+  "finding": "R17_COUNT_RECONCILIATION",
+  "candidate": "2819 (COMMIT 5R1-C2 dev-02 improved)",
+  "humanReport": "106/210",
+  "committedArtifact2819": "107/210",
+  "reconstructedR3ThisSession": "107/210",
+  "reconstructed2716Artifact": "105/210",
+  "authoritativePassedCount": 107,
+  "authoritativeFailedCount": 103,
+  "rowIdsCounted": 210,
+  "duplicateRowIds": 0,
+  "missingRowIds": 0,
+  "explanation": "The committed DEV02_IMPROVED_RESULT (the 2819 candidate) records R17 as 107/210, matching the C3 reconstruction this session (107). The human report of 106 was off by one. Note: COMMIT_5R1C2_DEV02_R3_RESULT.json records 105, but that artifact is the separate RECONSTRUCTED 2716 candidate, not the 2819 improved candidate. The committed 2819 row-level result is controlling; authoritative R17 pass count is 107/210.",
+  "controllingSource": "DEV02_IMPROVED_RESULT.json (2819 candidate)"
+}

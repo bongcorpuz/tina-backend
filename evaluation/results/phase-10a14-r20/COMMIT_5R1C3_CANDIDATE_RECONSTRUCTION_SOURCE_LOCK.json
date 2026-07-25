@@ -1,0 +1,8 @@
+{
+  "sourceSnapshot": "attempts/…commit5r1c2-dev-02…/runtime-snapshot/philippine-tax-intent-analyzer.js",
+  "snapshotSha256": "1a0c305ea7e7df0e2b45ec62f9aabd0c0c6e88564226e77bdeb2622738e4ca0b",
+  "expected": "1a0c305ea7e7df0e2b45ec62f9aabd0c0c6e88564226e77bdeb2622738e4ca0b",
+  "matches": true,
+  "patchBase": "committed COMMIT 3 analyzer a23364bc",
+  "oracleVersion": "R3"
+}

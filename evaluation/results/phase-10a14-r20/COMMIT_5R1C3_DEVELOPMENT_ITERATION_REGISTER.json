@@ -1,0 +1,32 @@
+{
+  "iterations": [
+    {
+      "iterationId": "reconstructed-2819",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c3_reconstructed_2819_candidate-commit5r1c3-dev-01-ord01-2026-07-25T06-36-57-119Z",
+      "oracleVersion": "R3",
+      "governedScore": "2819/3720",
+      "disposition": "development_iteration_reconstructed"
+    },
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c3_development_iteration_02-commit5r1c3-dev-02-ord01-2026-07-25T06-36-57-972Z",
+      "parentIterationId": "reconstructed-2819",
+      "oracleVersion": "R3",
+      "governedScore": "2870/3720",
+      "layerChanged": "relation construction + decision precedence (acronym context)",
+      "decisionMismatches": 404,
+      "reasonMismatches": 849,
+      "relationMismatches": 315,
+      "materialFalseAllows": 155,
+      "materialFalseRefusals": 143,
+      "clarifyMismatches": 106,
+      "metamorphicGroupsPassed": 72,
+      "metamorphicGroupsFailed": 28,
+      "architecturalHypothesis": "Narrow acronym-non-tax-redefine veto; tax-expansion-in-parens + context ALLOW; explicit code-label detection; expanded clear-tax-terms bare-term ALLOW.",
+      "disposition": "development_iteration_incomplete",
+      "supersededBy": null,
+      "improvementOverReconstructed": 51,
+      "note": "Did not reach 3720/3720; architecture remediation not closed."
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-25T05:37:42Z`
+`2026-07-25T06:37:00Z`
 
 Repository:
 
@@ -31,40 +31,39 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C2
-ARCHITECTURE REMEDIATION CONTINUATION 2 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C3
+ARCHITECTURE REMEDIATION CONTINUATION 3 AGAINST R3
 DECISION: INCOMPLETE — ARCHITECTURE REMEDIATION NOT CLOSED
 ```
 
-Starting evidence commit:
+Canonical oracle:
 
-`14a9e14ccdc4c7de54abb66ebc49c9d6a76573cc`
+```text
+R3, unchanged
+ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
+```
 
-R3 remains canonical and unchanged:
-
-`ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54`
-
-Reconstructed dev-02 R3 score:
-
-`2,716 / 3,720`
-
-Best governed R3 candidate:
+Reconstructed candidate:
 
 `2,819 / 3,720`
 
+Best governed C3 candidate:
+
+`2,870 / 3,720`
+
 Remaining failed rows:
 
-`901`
+`850`
 
 Best-candidate mismatch matrix:
 
 ```text
-decision mismatches:       461
-reason mismatches:         900
+decision mismatches:       404
+reason mismatches:         849
 relation mismatches:       315
-material false allows:     169
-material false refusals:   182
-clarify mismatches:        110
+material false allows:     155
+material false refusals:   143
+clarify mismatches:        106
 metamorphic groups passed:  72 / 100
 ```
 
@@ -74,23 +73,28 @@ Runtime:
 not integrated
 not frozen
 runtimeMutable = true
-live services restored to the committed COMMIT 3 baseline
+live services restored to the committed baseline
 ```
 
-Exact blocker:
+Blocker:
 
 ```text
-competing clause/task/target/relation constraints involving genuine
-mixed-domain tax questions, homograph traps, explicit tax-task relations,
-ordinary-object tax treatment and inherited reason granularity
+persistent decision-layer tradeoffs between genuine mixed-domain tax
+questions and homograph traps, together with inherited reason-family
+granularity that continues to oscillate under coupled patching
 ```
 
-Preserved candidate:
+Preserved candidates:
 
 ```text
-attempt: R20-domain_campaign-r20_commit5r1c2_development_iteration_02-commit5r1c2-dev-02
-runtime snapshot preserved in the attempt directory (not applied to services/)
+reconstructed 2,819:
+  attempt: R20-domain_campaign-r20_commit5r1c3_reconstructed_2819_candidate-commit5r1c3-dev-01
+best governed 2,870:
+  attempt: R20-domain_campaign-r20_commit5r1c3_development_iteration_02-commit5r1c3-dev-02
+runtime snapshots preserved in the attempt directories (not applied to services/)
 ```
+
+2,870 / 3,720 is NOT closure and NOT a PASS.
 
 ## Why COMMIT 4R3 Was Required
 
@@ -252,25 +256,26 @@ R3 best COMMIT 5R1-C2 candidate (governed):
 
 The R2 scores are historical only.
 
-The best current governed R3 candidate is 2,819 / 3,720, preserved as the COMMIT 5R1-C2
-dev-02 attempt runtime-snapshot (with its patch and hashes).
+The best current governed R3 candidate is 2,870 / 3,720, preserved as the COMMIT 5R1-C3
+dev-02 attempt runtime-snapshot (with its patch from the reconstructed 2,819 candidate and
+hashes). The reconstructed 2,819 candidate is preserved as the COMMIT 5R1-C3 dev-01 attempt.
 
-It is not applied to the live `services/` tree; the live runtime is the committed COMMIT 3
-baseline. COMMIT 5R1-C3 must reconstruct and resume from the preserved 2,819 candidate.
+Neither is applied to the live `services/` tree; the live runtime is the committed baseline.
+COMMIT 5R1-C4 must resume from the preserved 2,870 candidate.
 
 ## Current Evidence Registry
 
 ```text
 cumulativeThrough:
-commit5r1c2-incomplete
+commit5r1c3-incomplete
 
 runtimeClosure:
 false
 
 total attempts:
-41
+43
 
-COMMIT 5R1-C2 new attempts:
+COMMIT 5R1-C3 new attempts:
 2
 
 closureComplete:
@@ -288,14 +293,14 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C3
-ARCHITECTURE REMEDIATION CONTINUATION 3 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C4
+ARCHITECTURE REMEDIATION CONTINUATION 4 AGAINST R3
 ```
 
-COMMIT 5R1-C3 must:
+COMMIT 5R1-C4 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the preserved COMMIT 5R1-C2 dev-02 candidate (best governed R3 = 2,819 / 3,720);
+2. reconstruct the preserved COMMIT 5R1-C3 dev-02 candidate (best governed R3 = 2,870 / 3,720);
 3. execute it as a new governed R3 campaign;
 4. preserve the actual R3 result;
 5. continue clause-level task/target/relation remediation without changing R3;
@@ -312,7 +317,7 @@ COMMIT 6 is not the next task; it becomes the next task only after a successful 
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C2 runtime closure and freeze
+COMMIT 5R1-C4 (and any further continuations) runtime closure and freeze
 → COMMIT 6 post-freeze campaigns and focused evidence
 → deterministic clean cycles
 → staging clean cycles

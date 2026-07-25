@@ -1,0 +1,12 @@
+{
+  "iterations": [
+    {
+      "iterationId": "dev-02",
+      "acceptedAsNextBase": true,
+      "acceptanceRationale": "Failed rows decreased 901->850; no closed cluster reopened (tax_compliance_task remains closed); no material false-allow masking; no oracle-specific logic added.",
+      "failedRowsDelta": -51,
+      "falseAllowDelta": -14,
+      "falseRefusalDelta": -39
+    }
+  ]
+}

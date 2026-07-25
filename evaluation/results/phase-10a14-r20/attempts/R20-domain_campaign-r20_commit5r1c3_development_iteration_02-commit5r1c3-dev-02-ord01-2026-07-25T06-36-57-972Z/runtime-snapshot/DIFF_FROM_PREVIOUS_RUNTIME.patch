@@ -1,0 +1,58 @@
+diff --git a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c2_development_iteration_02-commit5r1c2-dev-02-ord01-2026-07-25T06-07-44-977Z/runtime-snapshot/philippine-tax-intent-analyzer.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_c3_dev02_2870.js
+index b033870f..2e71038d 100644
+--- a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c2_development_iteration_02-commit5r1c2-dev-02-ord01-2026-07-25T06-07-44-977Z/runtime-snapshot/philippine-tax-intent-analyzer.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_c3_dev02_2870.js
+@@ -285,6 +285,12 @@ const CLEAR_TAX_TERMS = Object.freeze([
+   'output tax', 'input tax', 'gross receipts tax', 'documentary stamp tax', 'transfer tax',
+   'real property tax', 'community tax', 'professional tax', 'amusement tax', 'compute .*tax',
+   'philippine tax', 'nirc', 'train law', 'create law', 'ease of paying taxes',
++  'net estate', 'gross estate', 'books of accounts', 'official receipt', 'authority to print',
++  'transfer pricing documentation', 'deficiency interest', 'deficiency tax', 'tax mapping',
++  'letter of authority', 'oplan kandado', 'no audit program', 'compromise penalty',
++  'input tax credit', 'output tax due', 'vatable', 'zero-rated sale', 'exempt sale',
++  'quarterly income tax', 'annual income tax', 'monthly vat', 'expanded withholding',
++  'bir accreditation', 'taxpayer identification', 'certificate of registration',
+ ]);
+ function clearTaxContent(loText) {
+   for (const t of CLEAR_TAX_TERMS) {
+@@ -372,8 +378,30 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+   // Whole-phrase non-tax homograph: a tax-shaped word used in an explicit non-tax
+   // domain (court filing, JS return statement, homework deadline). No tax relation.
+   const isHomographPhrase = NON_TAX_HOMOGRAPH_PHRASES.some((re) => re.test(fullLo));
++
++  // An acronym or tax token explicitly REDEFINED/USED in a non-tax software/device
++  // context controls FIRST -> REFUSE. Narrow, specific patterns only (no broad
++  // co-occurrence): "OSD on a monitor", "MCIT is my plugin code", "RCIT is my
++  // robotics course ID", "subject to VAT as variable name in code", "Output VAT to
++  // the console", "taxable font/variable in this CSS/TypeScript". Requires NO
++  // genuine tax question predicate and NO explicit tax expansion.
++  const acronymNonTaxRedefine = /\b(?:osd|mcit|rcit|slsp|rmc|pan|fan|rr|cta|boc|vat|bir|dst|ewt|fwt)\b[^.?!]*\b(?:on a monitor|monitor display|is my (?:plugin|robotics|software|app|game|music|radio)|plugin code|robotics course|course id|software project|as (?:a |the )?variable name|to the console|in (?:this )?(?:css|typescript|enum)\b)/.test(fullLo)
++    || /\btaxable (?:font|variable|typeface)\b|\btaxable in (?:this )?typescript\b|\bvat (?:hue|swatch|color)\b|\bas variable name in code\b|\boutput vat to the console\b/.test(fullLo);
++  const hasTaxExpansionOrContext = /\((?:revenue (?:regulations?|memorandum circular)|final assessment notice|preliminary assessment notice|optional standard deduction|expanded withholding tax|final withholding tax|minimum corporate income tax|summary list[^)]*|regular corporate income tax|creditable withholding tax|documentary stamp tax)\)/.test(fullLo)
++    || /\b(?:our philippine|filing position|tax compliance|for bir compliance)\b/.test(fullLo);
++  // An explicit "as variable name / label / code / in code / to the console"
++  // redefinition is a non-tax label even when a tax token precedes it.
++  const explicitCodeLabel = /\bas (?:a |the )?variable name\b|\bas variable name in code\b|\bto the console\b|\bin (?:this )?(?:css|typescript|enum)\b(?! treatment)|\btaxable (?:font|variable|typeface)\b/.test(fullLo);
++  const genuineTaxQ = !explicitCodeLabel && (/\b(are|is)\b[^?]*\btaxable\b|\bsubject to (?:vat|percentage tax|withholding|customs|excise|income tax)\b|\bwithholding tax (?:apply|applies|on)\b|\bwhat (?:philippine )?tax(?:es)? apply\b|\b(?:can|does|do) (?:a |the )?taxpayer\b|\buse invoices for\b|\bcan input vat be claimed\b|\bis income from\b[^?]*\btaxable\b|\bvatable\b/.test(fullLo));
++  if (acronymNonTaxRedefine && !hasTaxExpansionOrContext && !genuineTaxQ && !RE.negationReview.test(fullLo)) {
++    if (/\b(?:code|variable|field|name|id|as variable)\b/.test(fullLo)) { add('NAMES_AS_INTERNAL_LABEL', target || 'name', 'label'); relations._homographVeto = true; return relations; }
++    if (/\bis my\b|\bis a\b|\bis an\b/.test(fullLo)) { add('EXPANDS_AS_NON_TAX', target || 'acronym', 'non-tax meaning'); relations._homographVeto = true; return relations; }
++    relations._homographVeto = true;
++    return relations;
++  }
++
+   // Tax acronym with an explicit tax expansion AND tax context -> genuine tax task.
+-  const acronymTaxExpansionContext = /\b[a-z]{2,5}\s*\((?:revenue regulations?|final assessment notice|optional standard deduction|expanded withholding tax|final withholding tax|minimum corporate income tax|summary list|bir[^)]*|[^)]*tax[^)]*|[^)]*bir[^)]*)\)/.test(fullLo) && /\bbir\b|compliance|\btax\b|filing|assessment|position/.test(fullLo);
++  const acronymTaxExpansionContext = /\b[a-z]{2,6}\s*\((?:revenue regulations?|revenue memorandum circular|final assessment notice|preliminary assessment notice|optional standard deduction|expanded withholding tax|final withholding tax|minimum corporate income tax|regular corporate income tax|summary list[^)]*|creditable withholding tax|documentary stamp tax|bir[^)]*|[^)]*tax[^)]*|[^)]*bir[^)]*)\)/.test(fullLo) && /\bbir\b|compliance|\btax\b|filing|assessment|position|philippine/.test(fullLo);
+   if (acronymTaxExpansionContext && !isHomographPhrase) {
+     // "X (tax expansion) question for BIR compliance" — a genuine tax task. Use the
+     // general tax-task relation (residual explicit_tax_task_relation) unless it is a
+@@ -478,6 +506,8 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+     else if (isCompliance) add('ASKS_TAX_COMPLIANCE_FOR', 'task', target || 'transaction');
+     else if (hasTaxPredicate && hasAnchor) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+     else if (isQuestion && strongTaxContext && !RE.danglingScenarioRef.test(lo)) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
++    // A tax term/entity present in a question with no non-tax framing -> tax task.
++    else if (isQuestion && clearTaxContent(fullLo) && !RE.danglingScenarioRef.test(lo) && !NON_TAX_DOMAIN_NOUNS.some((n) => lo.includes(n))) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+     // Clear tax content (tax term/entity/reference) with NO non-tax framing is a
+     // genuine tax task -> residual explicit tax-task relation. Suppressed when a
+     // non-tax domain noun co-occurs (homograph trap).

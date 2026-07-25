@@ -1,0 +1,17 @@
+{
+  "decision": "COMMIT_5R1C3_INCOMPLETE_ARCHITECTURE_REMEDIATION_NOT_CLOSED",
+  "reason": "Standalone R3 closure (3720/3720 on decision+reason+relation) not reached. Best governed R3 candidate 2870/3720. Remaining failures are dominated by competing decision-layer constraints (genuine mixed-domain tax vs homograph traps; acronym tax-context vs non-tax-context) and inherited reason granularity.",
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r3Edited": false,
+  "reconstructed2819R3": "2819/3720",
+  "bestGovernedR3": "2870/3720",
+  "remainingFailedRows": 850,
+  "runtimeIntegrated": false,
+  "runtimeFrozen": false,
+  "runtimeMutable": true,
+  "analyzerRestoredToBaseline": true,
+  "analyzerBlob": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+  "accepted2870AsClosure": false,
+  "runtimeExceptionsCreated": false,
+  "next": "PHASE-10A14-R20 COMMIT 5R1-C4: ARCHITECTURE REMEDIATION CONTINUATION 4 AGAINST R3 (resume from the preserved 2870 candidate)."
+}
