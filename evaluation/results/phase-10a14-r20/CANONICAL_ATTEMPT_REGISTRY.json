@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-25T04:46:49.400Z",
+  "generatedAt": "2026-07-25T05:13:16.561Z",
   "phase": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1",
+  "cumulativeThrough": "commit5r1c1",
   "summary": {
-    "totalAttempts": 31,
+    "totalAttempts": 33,
     "byCategory": {
-      "domain_campaign": 5,
+      "domain_campaign": 7,
       "focused_suite": 1,
       "other": 5,
       "synthetic_validator": 20
@@ -14,6 +14,8 @@
       "r20_commit5_pre_remediation_standalone_baseline": 1,
       "r20_commit5r1_development_iteration_01": 1,
       "r20_commit5r1_pre_remediation_r2_standalone_baseline": 1,
+      "r20_commit5r1c1_development_iteration_02": 1,
+      "r20_commit5r1c1_reconstructed_2674_candidate": 1,
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
@@ -43,10 +45,10 @@
       "r20_commit4r2_r1_r1s_source_lock": 1,
       "r20_commit4r2_unchanged_field_and_contract": 1
     },
-    "completed": 31,
+    "completed": 33,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 31,
+    "controlling": 33,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
@@ -105,6 +107,41 @@
       "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1_pre_remediation_r2_standalone_baseline-commit5r1-baseline-ord01-2026-07-25T04-46-46-993Z/stderr.txt",
       "commandHash": "a3fcc476504d8d4ed12a0143d99d2e7975af3700d306e3f15768462d2c240f81",
       "runtimeBaselineCommit": "677eb0e4bb83d3d37de4f4eeefab062c088191f5",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5r1c1_development_iteration_02",
+      "cycle": "commit5r1c1-dev-02",
+      "status": "completed",
+      "disposition": "development_iteration_incomplete",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z/DEV02_RESULT.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z/DEV02_FAILURES.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z/stderr.txt",
+      "commandHash": "1a0baedfe99bb5e3bacf4076600c9501c0bc15ce98b44223aa92301865fbbabe",
+      "runtimeBaselineCommit": "d210c224fe41ae2754bb8293e830eff0ee252043",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c1_reconstructed_2674_candidate-commit5r1c1-dev-01-ord01-2026-07-25T05-13-13-187Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5r1c1_reconstructed_2674_candidate",
+      "cycle": "commit5r1c1-dev-01",
+      "status": "completed",
+      "disposition": "development_iteration_reconstructed",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_reconstructed_2674_candidate-commit5r1c1-dev-01-ord01-2026-07-25T05-13-13-187Z/RECONSTRUCTED_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_reconstructed_2674_candidate-commit5r1c1-dev-01-ord01-2026-07-25T05-13-13-187Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_reconstructed_2674_candidate-commit5r1c1-dev-01-ord01-2026-07-25T05-13-13-187Z/stderr.txt",
+      "commandHash": "acdd5bb4fadf05b57d348ffc7734846191d375aa292174cd3be9d32dc6afcfc4",
+      "runtimeBaselineCommit": "d210c224fe41ae2754bb8293e830eff0ee252043",
       "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     },
     {

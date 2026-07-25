@@ -1,0 +1,25 @@
+{
+  "iterations": [
+    {
+      "iterationId": "reconstructed-2674",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c1_reconstructed_2674_candidate-commit5r1c1-dev-01-ord01-2026-07-25T05-13-13-187Z",
+      "governedScore": "2674/3720",
+      "disposition": "development_iteration_reconstructed",
+      "note": "Governed re-run of the preserved candidate; matches the earlier local 2674."
+    },
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z",
+      "parentIterationId": "reconstructed-2674",
+      "governedScore": "2777/3720",
+      "decisionMismatches": 530,
+      "reasonMismatches": 919,
+      "relationMismatches": 351,
+      "metamorphicGroupsPassed": 61,
+      "disposition": "development_iteration_incomplete",
+      "supersededBy": null,
+      "architecturalChange": "Category homograph veto; clear-tax-content residual ALLOW; Filipino VAT/withholding relations; negation-scope non-tax-action relations; genuine-tax-question guard."
+    }
+  ],
+  "ceilingNote": "Standalone closure capped at 3706/3720 by 14 R2 template-wide reason conflicts (140 rows). Exact 3720/3720 is logically unreachable by any deterministic analyzer until R2 is corrected (COMMIT 4R3)."
+}

@@ -1,0 +1,5 @@
+{
+  "note": "Reconstructed from the preserved COMMIT 5R1 dev-01 snapshot; originated from earlier UNREGISTERED local iterations. Governed score below is controlling.",
+  "analyzerSha256": "7df28ebbdbf1baa5398b1056f35e1dd2d3b4fd668f15f30fc8d313903ac128bf",
+  "patchBase": "committed COMMIT 3 analyzer a23364bc"
+}

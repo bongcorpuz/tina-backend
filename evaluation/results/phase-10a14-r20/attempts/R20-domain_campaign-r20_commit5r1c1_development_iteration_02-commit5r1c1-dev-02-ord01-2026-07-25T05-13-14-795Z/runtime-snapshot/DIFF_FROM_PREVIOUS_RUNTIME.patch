@@ -1,0 +1,134 @@
+diff --git a/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_dev_iter_2674.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_dev_iter_2777.js
+index 3a9ddda8..3f89bd7b 100644
+--- a/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_dev_iter_2674.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_dev_iter_2777.js
+@@ -135,6 +135,31 @@ const NON_TAX_HOMOGRAPH_PHRASES = Object.freeze([
+   /\bin javascript\b/, /\bin grammar\b/, /\bin a game\b/, /\bin time measurement\b/,
+ ]);
+ 
++// Non-tax DOMAIN nouns. When a tax-shaped token co-occurs with one of these and
++// there is no explicit strong tax anchor, the tax token is a homograph -> non-tax.
++// This is a category-based structural veto, not an exact-question list.
++const NON_TAX_DOMAIN_NOUNS = Object.freeze([
++  'css', 'font', 'typeface', 'variable', 'typescript', 'enum', 'javascript', 'code',
++  'class name', 'button', 'wording', 'hue', 'token', 'color palette', 'colour palette',
++  'palette', 'chord', 'chord sheet', 'audio', 'music channel', 'music', 'railroad',
++  'railway', 'timetable', 'cooling speed', 'noise level', 'cooling', 'utensil',
++  'cooking utensil', 'board game', 'board-game', 'game guild', 'school raffle', 'raffle',
++  'phone plan', 'function return', 'form input', 'console output', 'alphabetical list',
++  'library book', 'school calendar', 'novel', 'song', 'movie', 'poster', 'lesson',
++  'sermon', 'recipe', 'game', 'app logs', 'delivery app', 'basketball', 'homework',
++  'penalty kick', 'grammar', 'sport', 'guild', 'display', 'on-screen display',
++  'medical prescription', 'prescription', 'band of chords', 'band', 'guitar',
++  'training class', 'conference room', 'poster about', 'internal tool', 'project code',
++]);
++
++// Tax-shaped tokens that are prone to non-tax homograph use.
++const HOMOGRAPH_TAX_TOKENS = Object.freeze([
++  'taxable', 'vat', 'tax', 'tariff', 'gross receipts', 'transfer pricing', 'return',
++  'filing', 'deadline', 'input vat', 'output vat', 'boc', 'cta', 'rr', 'rmc', 'fan',
++  'pan', 'slsp', 'alphalist', 'registered business enterprise', 'deductible', 'surcharge',
++  'penalty', 'estate', 'customs', 'receipt', 'invoice', 'withholding', 'excise',
++]);
++
+ // Non-tax action verbs (imperative task heads).
+ const NON_TAX_VERBS = Object.freeze([
+   'change', 'rename', 'delete', 'draw', 'paint', 'compile', 'install',
+@@ -222,7 +247,7 @@ const RE = {
+   compliance: /\b(bir form|what form|which form|file(?:s|d|ing)?\b|filing|return\b|what return|register(?:ed|ing|ation)?|remit(?:s|ted|tance)?|withhold(?:ing)? (?:tax )?(?:on (?!rent\b)|deadline (?!for (?:filing|payment|remit))|remit)|(?<!protest )deadline|due date|books of account|invoic(?:e|ing)|documentary (?:requirement|submission|stamp filing)|substantiat|reportorial|slsp|alphalist|quarterly|monthly filing|annual return|tax clearance|certificate of registration|what records support|records support|penalty (?:applies )?for late|late (?:filing|payment|donor tax|deficiency interest)|subject to (?:bir )?registration)\b/,
+   // Tax treatment verbs (RF-02).
+   treatment: /\b(deductib|deducted|subject to (?:vat|tax|withholding|percentage|excise|dst|customs)(?!.{0,20}registration)|vat treatment|tax treatment|input vat|output vat|withholding tax on|withholding on\b|customs dut(?:y|ies)|tariff|excise|documentary stamp tax on|capital gains|taxable\b|zero-?rated|vat-?exempt|creditable|fringe benefit|\bvat on\b|\bbuwis sa\b)\b/,
+-  vat: /\bsubject to vat|vat treatment|vat on\b|input vat|output vat|\bvat\b.*\b(sale|service|design|treatment)\b|\bbuwis.*vat\b|may vat ba|deductible ba ang .* para sa income tax|\bvat sa\b/,
++  vat: /\bsubject to vat|vat treatment|vat on\b|input vat|output vat|\bvat\b.*\b(sale|service|design|treatment)\b|\bbuwis.*vat\b|may vat ba|deductible ba ang .* para sa income tax|\bvat sa\b|kailangan bang? i-?withhold ang buwis sa|\bbuwis sa\b|magkano ang buwis/,
+   deduct: /\bdeductib|\bdeducted\b/,
+   withholding: /\bwithholding\b/,
+   customs: /\bcustoms dut|\btariff\b|\bimport dut/,
+@@ -240,6 +265,30 @@ const RE = {
+   taxContext: /\b(bir|nirc|tax|vat|assessment|filing|withholding|customs|revenue|deficiency|estate tax|percentage tax|income tax|ra ?\d{3,5}|republic act|revenue regulation|rmc|department of finance|philippine tax)\b/,
+ };
+ 
++// Clear Philippine-tax content: an explicit tax term/entity/reference that marks a
++// genuine tax subject. Broad but bounded; used only as a residual ALLOW anchor when
++// no non-tax framing (action/label/quote/expansion/homograph) is present.
++const CLEAR_TAX_TERMS = Object.freeze([
++  'income tax', 'business tax', 'local business tax', 'value added tax', 'vat return',
++  'percentage tax', 'withholding tax', 'expanded withholding', 'final withholding',
++  'documentary stamp', 'capital gains', 'estate tax', 'gross estate', 'donor', 'excise tax',
++  'customs dut', 'tariff classification', 'import dut', 'tax refund', 'tax credit',
++  'revenue regulation', 'revenue memorandum', 'bureau of customs', 'bir ruling',
++  'tax amnesty', 'tax treaty', 'tax exemption', 'tax prescriptive', 'prescriptive period',
++  'deficiency', 'assessment notice', 'tax clearance', 'fringe benefit tax', 'minimum corporate',
++  'nolco', 'mcit', 'optional standard deduction', 'creditable withholding', 'zero-rated',
++  'output tax', 'input tax', 'gross receipts tax', 'documentary stamp tax', 'transfer tax',
++  'real property tax', 'community tax', 'professional tax', 'amusement tax', 'compute .*tax',
++  'philippine tax', 'nirc', 'train law', 'create law', 'ease of paying taxes',
++]);
++function clearTaxContent(loText) {
++  for (const t of CLEAR_TAX_TERMS) {
++    if (t.includes('.*')) { if (new RegExp('\\b' + t + '\\b').test(loText)) return true; }
++    else if (loText.includes(t)) return true;
++  }
++  return false;
++}
++
+ function detectTaskVerb(loClause) {
+   const lead = loClause.match(/^([a-z']+)/);
+   if (!lead) return null;
+@@ -333,6 +382,28 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+     return relations;
+   }
+ 
++  // Category homograph veto: a tax-shaped token co-occurring with a non-tax domain
++  // noun, with NO explicit strong tax anchor, is an ordinary-sense use -> no tax
++  // relation. This generalizes the substring-homograph-trap family structurally.
++  const strongTaxAnchorRe = /\bincome tax\b|\bfor (?:our|the|a) (?:business|corporation|company)\b|\bbir\b|subject to (?:vat|tax|withholding|customs)|\bphilippine (?:tax|corporation|company)\b|\bnirc\b|\bunder (?:bir|philippine)\b|\bfor tax purposes\b|\bfiling obligation\b|\bwhat (?:bir )?form\b|deductible for income tax|\bcompute .*\btax\b|\b(?:are|is)\b[^?]*\btaxable\b|\btaxpayer\b|\bare receipts\b|business tax|\bwithholding tax on\b|\bcapital gains\b|\bestate tax\b|\bdonor'?s? tax\b|\bpercentage tax\b|\bcustoms dut/;
++  const hasHomographTaxToken = HOMOGRAPH_TAX_TOKENS.some((t) => new RegExp('\\b' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(fullLo));
++  const hasNonTaxDomainNoun = NON_TAX_DOMAIN_NOUNS.some((n) => fullLo.includes(n));
++  const hasStrongTaxAnchor = strongTaxAnchorRe.test(fullLo);
++  // A genuine tax QUESTION predicate applied to a subject (even an ordinary object)
++  // is NOT a homograph trap: "are X taxable?", "subject to VAT?", "withholding tax
++  // apply to X", "what taxes apply to X", "can a taxpayer use invoices for X".
++  const genuineTaxQuestionPredicate = /\b(are|is)\b[^?]*\btaxable\b|\bsubject to (?:vat|percentage tax|withholding|customs|excise|dst|income tax)\b|\bwithholding tax (?:apply|applies|on)\b|\bwhat (?:philippine )?tax(?:es)? apply\b|\buse invoices for\b|\bdeductible for income tax\b|\bcreate a bir filing\b|\bbir filing obligation\b|\bpara sa business\b|resibo para sa|\binput vat treatment\b|\bvat treatment of\b/.test(fullLo);
++  const hasNegationFraming = /\bdo not discuss tax|don't discuss tax|not asking about tax|may be non-?tax|\bnon-?tax\b/.test(fullLo);
++  if (hasHomographTaxToken && hasNonTaxDomainNoun && !hasStrongTaxAnchor && !genuineTaxQuestionPredicate && !RE.negationReview.test(fullLo) && !hasNegationFraming) {
++    // If there is an explicit non-tax action verb or "as <label>", record it; else
++    // flag a homograph veto so the decision resolves to REFUSE / no_tax_relation.
++    if (RE.label.test(fullLo)) { add('NAMES_AS_INTERNAL_LABEL', target || 'name', 'label'); relations._homographVeto = true; return relations; }
++    if (RE.expansion.test(fullLo)) { add('EXPANDS_AS_NON_TAX', target || 'acronym', 'non-tax meaning'); relations._homographVeto = true; return relations; }
++    if (NON_TAX_VERBS.includes(primary.taskVerb) || RE.nonTaxAction.test(lo)) { add('REQUESTS_NON_TAX_ACTION_ON', primary.taskVerb || 'action', target || 'object'); relations._homographVeto = true; return relations; }
++    relations._homographVeto = true;
++    return relations;
++  }
++
+   // Negation of tax relevance across all clauses.
+   let hasNegationReview = false, hasNegationScope = false;
+   for (const c of clauses) {
+@@ -389,6 +460,10 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+     else if (isCompliance) add('ASKS_TAX_COMPLIANCE_FOR', 'task', target || 'transaction');
+     else if (hasTaxPredicate && hasAnchor) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+     else if (isQuestion && strongTaxContext && !RE.danglingScenarioRef.test(lo)) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
++    // Clear tax content (tax term/entity/reference) with NO non-tax framing is a
++    // genuine tax task -> residual explicit tax-task relation. Suppressed when a
++    // non-tax domain noun co-occurs (homograph trap).
++    else if (clearTaxContent(lo) && !RE.danglingScenarioRef.test(lo) && !NON_TAX_DOMAIN_NOUNS.some((n) => lo.includes(n))) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+   }
+ 
+   // Definition relation.
+@@ -450,6 +525,8 @@ export function decideTaxBoundaryFromEvidence(evidence) {
+   if (quotesTerm && !hasTreatment && !hasCompliance && !asksDefinition) return decide('REFUSE', 'quoted_tax_term_only', 0.88);
+   // 5. Explicit non-tax task.
+   if (requestsNonTax && !hasTreatment && !hasCompliance) return decide('REFUSE', 'explicit_non_tax_task', 0.90);
++  // 5b. Homograph veto with no other relation -> no tax relation (REFUSE).
++  if (evidence.homographVeto && !hasTreatment && !hasCompliance && !asksDefinition) return decide('REFUSE', 'no_tax_relation', 0.85);
+   // 6. Tax compliance task.
+   if (hasCompliance && !hasTreatment) return decide('ALLOW', 'tax_compliance_task', 0.90);
+   // 7. Tax treatment relations. A SPECIFIC treatment relation (deductibility, VAT,
+@@ -553,7 +630,7 @@ export function analyzePhilippineTaxIntent(input, options = {}) {
+   if (acronymMentions.some((a) => a.ambiguous)) ambiguityFlags.push('ambiguous_acronym');
+   if (danglingScenario) ambiguityFlags.push('dangling_referent');
+ 
+-  const evidenceForDecision = { relations, acronymMentions, ordinaryObjects, taxPredicates, taxEntities, normalizedText, danglingScenario };
++  const evidenceForDecision = { relations, acronymMentions, ordinaryObjects, taxPredicates, taxEntities, normalizedText, danglingScenario, homographVeto: relations._homographVeto === true };
+   const { decision, reasonCode, confidence } = decideTaxBoundaryFromEvidence(evidenceForDecision);
+ 
+   const publicClauses = clauses.map((c) => Object.freeze({

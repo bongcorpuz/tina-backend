@@ -1,0 +1,28 @@
+{
+  "phase": "PHASE-10A14-R20",
+  "unit": "COMMIT 5R1-C1",
+  "startingHead": "d210c224fe41ae2754bb8293e830eff0ee252043",
+  "parent": "677eb0e4bb83d3d37de4f4eeefab062c088191f5",
+  "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+  "r2Matches": true,
+  "runtime": {
+    "startingCommit": "d210c224fe41ae2754bb8293e830eff0ee252043",
+    "servicesTreeObject": "c16daac64b34261899fef1b8941d8b23a290bed8",
+    "servicesTreeContentDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284",
+    "runtimeBlobs": {
+      "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+      "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+      "services/philippine-tax-intent-analyzer.js": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "dependencyLock": {
+      "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+      "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+    }
+  },
+  "harness": {
+    "testsTree": "8be393c0ed9327db57abcd5ddd4e51c562153f40",
+    "runnerTreeAtCommit1": "850ad78b9e094aa2288756d58b40838286d50fe6",
+    "governedToolingContentDigest": "60ab3b24742775ee982a269ba5222f3dbed743281f7fb0b6bfccee0fe73af135"
+  },
+  "capturedAt": "2026-07-25T05:13:12.717Z"
+}

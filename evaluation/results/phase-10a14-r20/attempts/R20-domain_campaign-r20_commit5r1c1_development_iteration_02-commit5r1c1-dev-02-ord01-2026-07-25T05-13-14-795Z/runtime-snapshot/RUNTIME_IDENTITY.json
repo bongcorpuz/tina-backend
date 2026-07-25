@@ -1,0 +1,5 @@
+{
+  "note": "Further clause-level/relation architecture remediation this continuation cycle (homograph veto, clear-tax-content residual, Filipino VAT relations, negation-scope relations). NOT applied to services/ (unit INCOMPLETE; standalone closure logically unreachable at 3706 ceiling). Preserved for the post-4R3 restart.",
+  "analyzerSha256": "27984fc6569794b8a12f46d4ab0796f75a0a9235ab7dd98fda0ee79afe8558f3",
+  "patchBase": "reconstructed 2674 candidate"
+}

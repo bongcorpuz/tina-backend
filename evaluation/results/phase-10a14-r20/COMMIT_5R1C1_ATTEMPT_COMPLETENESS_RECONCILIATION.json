@@ -1,0 +1,11 @@
+{
+  "attemptDirectories": 33,
+  "registryRecords": 33,
+  "attemptDirEqualsRegistry": true,
+  "controllingAttempts": 33,
+  "controllingAttemptsWithResults": 33,
+  "controllingResultPaths": 36,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "closureComplete": true
+}

@@ -1,0 +1,14 @@
+{
+  "decision": "COMMIT_5R1C1_INCOMPLETE_FROZEN_R2_TEMPLATE_WIDE_REASON_CONFLICT",
+  "reason": "R2 contains 14 template-wide reason-family conflicts (140 rows) where byte-identical query structures carry different expected reasons, because COMMIT 4R2 applied each R1S-confirmed correction to only one sampled instance per repeating template. The deterministic ceiling is 3706/3720; exact 3720/3720 standalone closure is logically unreachable.",
+  "theoreticalMaxDeterministicPass": 3706,
+  "bestGovernedStandalone": "2777/3720",
+  "runtimeFrozen": false,
+  "runtimeIntegrated": false,
+  "analyzerModified": false,
+  "r2Edited": false,
+  "analyzerBlob": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+  "next": "PHASE-10A14-R20 COMMIT 4R3: TEMPLATE-WIDE REASON-FAMILY ORACLE RE-FREEZE (apply each of the 14 confirmed corrections template-wide as a new R3 oracle; preserve R2). COMMIT 5R1-C1 restarts only after R3 is frozen and validated.",
+  "accepted3706AsPass": false,
+  "runtimeExceptionsCreated": false
+}

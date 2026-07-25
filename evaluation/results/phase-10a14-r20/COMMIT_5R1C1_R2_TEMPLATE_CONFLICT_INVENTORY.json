@@ -1,0 +1,511 @@
+{
+  "finding": "FROZEN_R2_TEMPLATE_WIDE_REASON_CONFLICT",
+  "conflictTemplates": 14,
+  "totalConflictRows": 140,
+  "irreducibleMinFailures": 14,
+  "theoreticalMaxDeterministicPass": 3706,
+  "rootCause": "COMMIT 4R1S reviewed a stratified sample and challenged one instance per repeating template; COMMIT 4R2 applied each confirmed correction only to that single challenged oracleId, leaving the structurally-identical sibling instances with the original (now inconsistent) reason family. Each affected template therefore has two different expected reason families for byte-identical query structures.",
+  "proofOfStructuralEquivalence": "For every affected template, allSameDecision and allSameRelations and allSameCoverageClass are reported per family below; queries differ only by an incrementing case/scenario integer.",
+  "families": [
+    {
+      "templateNormalized": "Is the transaction subject to BIR registration in ?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "ALLOW/explicit_tax_task_relation": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0014",
+            "S1-IR19-0034",
+            "S1-IR19-0054",
+            "S1-IR19-0074",
+            "S1-IR19-0094",
+            "S1-IR19-0114",
+            "S1-IR19-0134",
+            "S1-IR19-0154",
+            "S1-IR19-0174"
+          ],
+          "sampleQuery": "Is the transaction subject to BIR registration in case 14?"
+        },
+        "ALLOW/tax_compliance_task": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0194"
+          ],
+          "sampleQuery": "Is the transaction subject to BIR registration in case 194?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0194"
+      ]
+    },
+    {
+      "templateNormalized": "Can the expense be deducted for withholding tax return in ?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "ALLOW/tax_treatment_of_ordinary_object": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0015",
+            "S1-IR19-0035",
+            "S1-IR19-0055",
+            "S1-IR19-0075",
+            "S1-IR19-0095",
+            "S1-IR19-0115",
+            "S1-IR19-0135",
+            "S1-IR19-0155",
+            "S1-IR19-0175"
+          ],
+          "sampleQuery": "Can the expense be deducted for withholding tax return in case 15?"
+        },
+        "ALLOW/tax_compliance_task": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0195"
+          ],
+          "sampleQuery": "Can the expense be deducted for withholding tax return in case 195?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0015",
+        "S1-IR19-0035",
+        "S1-IR19-0055",
+        "S1-IR19-0075",
+        "S1-IR19-0095",
+        "S1-IR19-0115",
+        "S1-IR19-0135",
+        "S1-IR19-0155",
+        "S1-IR19-0175"
+      ]
+    },
+    {
+      "templateNormalized": "What penalty applies for late deficiency interest in ?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "ALLOW/tax_compliance_task": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0019",
+            "S1-IR19-0039",
+            "S1-IR19-0059",
+            "S1-IR19-0079",
+            "S1-IR19-0099",
+            "S1-IR19-0119",
+            "S1-IR19-0139",
+            "S1-IR19-0159",
+            "S1-IR19-0179"
+          ],
+          "sampleQuery": "What penalty applies for late deficiency interest in case 19?"
+        },
+        "ALLOW/explicit_tax_task_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0199"
+          ],
+          "sampleQuery": "What penalty applies for late deficiency interest in case 199?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0019",
+        "S1-IR19-0039",
+        "S1-IR19-0059",
+        "S1-IR19-0079",
+        "S1-IR19-0099",
+        "S1-IR19-0119",
+        "S1-IR19-0139",
+        "S1-IR19-0159",
+        "S1-IR19-0179"
+      ]
+    },
+    {
+      "templateNormalized": "Translate conference room booking into plain English. .",
+      "rowCount": 10,
+      "expectedGroups": {
+        "REFUSE/no_tax_relation": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0216",
+            "S1-IR19-0236",
+            "S1-IR19-0256",
+            "S1-IR19-0276",
+            "S1-IR19-0296",
+            "S1-IR19-0316",
+            "S1-IR19-0336",
+            "S1-IR19-0356",
+            "S1-IR19-0376"
+          ],
+          "sampleQuery": "Translate conference room booking into plain English. Control 16."
+        },
+        "REFUSE/quoted_tax_term_only": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0396"
+          ],
+          "sampleQuery": "Translate conference room booking into plain English. Control 196."
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0216",
+        "S1-IR19-0236",
+        "S1-IR19-0256",
+        "S1-IR19-0276",
+        "S1-IR19-0296",
+        "S1-IR19-0316",
+        "S1-IR19-0336",
+        "S1-IR19-0356",
+        "S1-IR19-0376"
+      ]
+    },
+    {
+      "templateNormalized": "What about gross receipts for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0751"
+          ],
+          "sampleQuery": "What about gross receipts for scenario 1?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0766",
+            "S1-IR19-0781",
+            "S1-IR19-0796",
+            "S1-IR19-0811",
+            "S1-IR19-0826",
+            "S1-IR19-0841",
+            "S1-IR19-0856",
+            "S1-IR19-0871",
+            "S1-IR19-0886"
+          ],
+          "sampleQuery": "What about gross receipts for scenario 16?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0751"
+      ]
+    },
+    {
+      "templateNormalized": "What about professional fees for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0752"
+          ],
+          "sampleQuery": "What about professional fees for scenario 2?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0767",
+            "S1-IR19-0782",
+            "S1-IR19-0797",
+            "S1-IR19-0812",
+            "S1-IR19-0827",
+            "S1-IR19-0842",
+            "S1-IR19-0857",
+            "S1-IR19-0872",
+            "S1-IR19-0887"
+          ],
+          "sampleQuery": "What about professional fees for scenario 17?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0752"
+      ]
+    },
+    {
+      "templateNormalized": "What about registration for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0753"
+          ],
+          "sampleQuery": "What about registration for scenario 3?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0768",
+            "S1-IR19-0783",
+            "S1-IR19-0798",
+            "S1-IR19-0813",
+            "S1-IR19-0828",
+            "S1-IR19-0843",
+            "S1-IR19-0858",
+            "S1-IR19-0873",
+            "S1-IR19-0888"
+          ],
+          "sampleQuery": "What about registration for scenario 18?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0753"
+      ]
+    },
+    {
+      "templateNormalized": "What about penalties for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0754"
+          ],
+          "sampleQuery": "What about penalties for scenario 4?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0769",
+            "S1-IR19-0784",
+            "S1-IR19-0799",
+            "S1-IR19-0814",
+            "S1-IR19-0829",
+            "S1-IR19-0844",
+            "S1-IR19-0859",
+            "S1-IR19-0874",
+            "S1-IR19-0889"
+          ],
+          "sampleQuery": "What about penalties for scenario 19?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0754"
+      ]
+    },
+    {
+      "templateNormalized": "What about return for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0755"
+          ],
+          "sampleQuery": "What about return for scenario 5?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0770",
+            "S1-IR19-0785",
+            "S1-IR19-0800",
+            "S1-IR19-0815",
+            "S1-IR19-0830",
+            "S1-IR19-0845",
+            "S1-IR19-0860",
+            "S1-IR19-0875",
+            "S1-IR19-0890"
+          ],
+          "sampleQuery": "What about return for scenario 20?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0755"
+      ]
+    },
+    {
+      "templateNormalized": "What about filing deadline for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0756"
+          ],
+          "sampleQuery": "What about filing deadline for scenario 6?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0771",
+            "S1-IR19-0786",
+            "S1-IR19-0801",
+            "S1-IR19-0816",
+            "S1-IR19-0831",
+            "S1-IR19-0846",
+            "S1-IR19-0861",
+            "S1-IR19-0876",
+            "S1-IR19-0891"
+          ],
+          "sampleQuery": "What about filing deadline for scenario 21?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0756"
+      ]
+    },
+    {
+      "templateNormalized": "What about assessment for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0757"
+          ],
+          "sampleQuery": "What about assessment for scenario 7?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0772",
+            "S1-IR19-0787",
+            "S1-IR19-0802",
+            "S1-IR19-0817",
+            "S1-IR19-0832",
+            "S1-IR19-0847",
+            "S1-IR19-0862",
+            "S1-IR19-0877",
+            "S1-IR19-0892"
+          ],
+          "sampleQuery": "What about assessment for scenario 22?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0757"
+      ]
+    },
+    {
+      "templateNormalized": "What about deduction for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0758"
+          ],
+          "sampleQuery": "What about deduction for scenario 8?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0773",
+            "S1-IR19-0788",
+            "S1-IR19-0803",
+            "S1-IR19-0818",
+            "S1-IR19-0833",
+            "S1-IR19-0848",
+            "S1-IR19-0863",
+            "S1-IR19-0878",
+            "S1-IR19-0893"
+          ],
+          "sampleQuery": "What about deduction for scenario 23?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0758"
+      ]
+    },
+    {
+      "templateNormalized": "What about exemption threshold for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0759"
+          ],
+          "sampleQuery": "What about exemption threshold for scenario 9?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0774",
+            "S1-IR19-0789",
+            "S1-IR19-0804",
+            "S1-IR19-0819",
+            "S1-IR19-0834",
+            "S1-IR19-0849",
+            "S1-IR19-0864",
+            "S1-IR19-0879",
+            "S1-IR19-0894"
+          ],
+          "sampleQuery": "What about exemption threshold for scenario 24?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0759"
+      ]
+    },
+    {
+      "templateNormalized": "What about books for scenario N?",
+      "rowCount": 10,
+      "expectedGroups": {
+        "CLARIFY/no_tax_relation": {
+          "count": 1,
+          "oracleIds": [
+            "S1-IR19-0760"
+          ],
+          "sampleQuery": "What about books for scenario 10?"
+        },
+        "CLARIFY/ambiguous_tax_acronym": {
+          "count": 9,
+          "oracleIds": [
+            "S1-IR19-0775",
+            "S1-IR19-0790",
+            "S1-IR19-0805",
+            "S1-IR19-0820",
+            "S1-IR19-0835",
+            "S1-IR19-0850",
+            "S1-IR19-0865",
+            "S1-IR19-0880",
+            "S1-IR19-0895"
+          ],
+          "sampleQuery": "What about books for scenario 25?"
+        }
+      },
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "alreadyCorrectedInR2": [
+        "S1-IR19-0760"
+      ]
+    }
+  ]
+}
