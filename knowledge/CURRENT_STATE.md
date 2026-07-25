@@ -31,6 +31,127 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
+PHASE-10A14-R20 — COMMIT 5R1-C7-P1
+PREFLIGHT RUNTIME-IDENTITY RECONCILIATION,
+RESIDUE RECOVERY AND ROADMAP CANONICALIZATION
+DECISION: COMPLETE
+```
+
+C7 semantic execution:
+
+```text
+NOT STARTED
+```
+
+This unit exists because the attempted COMMIT 5R1-C7 preflight correctly stopped before
+runtime reconstruction, attempt allocation, oracle execution, semantic remediation or any
+repository modification. It cleared the preflight ambiguity without losing evidence.
+
+Canonical oracle:
+
+```text
+R3, unchanged
+ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
+```
+
+Runtime:
+
+```text
+committed COMMIT 3 baseline
+not integrated
+not frozen
+runtimeMutable = true
+```
+
+Analyzer identity:
+
+```text
+classification: CRLF_WORKTREE_NORMALIZATION_ONLY
+```
+
+The earlier stop compared a raw working-tree SHA-256 against a Git blob SHA-1. Those are
+different hash functions over different byte streams and can never be equal. Under
+`core.autocrlf=true` the working tree holds CRLF while the blob holds LF. No drift existed
+and no restoration was required or performed.
+
+```text
+raw working-tree SHA-256:   0f67e16e4377aac9e46287ca59e90825926949fe19bea2eea56c408662702484
+Git blob (SHA-1):           a23364bc6a31196d2fb5d9f1299ab069d84b5ca1
+normalized-LF identity:     8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308
+                            (working tree, blob content and raw blob all equal)
+byte-length delta:          697, exactly the CRLF pair count
+index flag:                 H (no assume-unchanged, no skip-worktree)
+attributes/filters:         none applying to the path
+module load / exports:      PASS, all nine required exports present
+```
+
+Identity policy adopted for C7: the Git blob SHA-1 remains the canonical committed identity,
+and content identity is asserted on normalized-LF SHA-256 wherever `core.autocrlf=true` applies.
+
+Root residue:
+
+```text
+4 files inventoried (tmp_full.mjs, tmp_probe.mjs, tmp_r3.mjs, tmp_r3fails.json)
+0 duplicate of committed evidence
+4 uniquely recovered and preserved with sidecar metadata
+0 remaining at repository root
+0 sensitive findings
+```
+
+All four were C6-era ad-hoc diagnostic scratch files. Exact bytes were copied to
+`evaluation/results/phase-10a14-r20/commit5r1c7p1-recovered-residue/root-files/` and destination
+hashes verified equal to source before removal. They are marked non-controlling and must not be
+executed. The single secret-scan regex hit was the literal word "tokens" inside the synthetic
+non-tax benchmark query `board game pricing tokens mechanic` (oracleId `R20N-ENT-0556`), not a
+credential.
+
+Roadmap:
+
+```text
+knowledge/TINA_Updated_Roadmap_v7.md
+tracked
+SHA-256: 235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa
+Phase 10A absolute blocker preserved
+18 major phases preserved
+```
+
+The roadmap was read in full before any classification or write. Its stated C6 results match the
+committed evidence. It is strategic governance only: not a legal authority, not a runtime oracle,
+not a test-expectation source, and not authorization to bypass Phase 10A, ingest or promote
+sources, deploy or commercialize.
+
+Git parent chain:
+
+```text
+23df8e8aa098bd4518fbbccbebfd50c3ee14b7da -> 1a8abdd098a5bc93ce0371a0ed0b056f712501cd
+```
+
+The prior C7 prompt stated a mandatory parent of `08990106993262cc5fdb4ad8b77b17aa3cf479dd`.
+That was a prompt defect, not a repository defect; `08990106` is the parent of C5.
+
+Registry:
+
+```text
+prior attempts:          55 (all preserved and unchanged)
+new C7-P1 attempts:       2 (both synthetic_validator, controlling)
+total attempts:          57
+domain campaigns:         0 registered in this unit
+oracle executed:          false
+cumulativeThrough = commit5r1c7p1
+runtimeClosure = false
+decisionLayerClosure = false
+closureComplete = true
+orphan = 0
+dangling = 0
+```
+
+R20 remains IN PROGRESS.
+Phase 10A remains OPEN.
+The preflight reconciliation is not decision closure and is not R20 PASS.
+
+## Prior Execution Unit
+
+```text
 PHASE-10A14-R20 — COMMIT 5R1-C6
 DECISION-LAYER CLOSURE CONTINUATION 6 AGAINST R3
 DECISION: INCOMPLETE — DECISION LAYER REMEDIATION NOT CLOSED
@@ -351,7 +472,7 @@ COMMIT 5R1-C7 must resume from the accepted 3,464-decision candidate.
 
 ```text
 cumulativeThrough:
-commit5r1c6-incomplete
+commit5r1c7p1
 
 runtimeClosure:
 false
@@ -360,10 +481,13 @@ decisionLayerClosure:
 false
 
 total attempts:
-55
+57
 
 COMMIT 5R1-C6 new attempts:
 4
+
+COMMIT 5R1-C7-P1 new attempts:
+2 (synthetic_validator, controlling; no domain campaign, no oracle execution)
 
 closureComplete:
 true
@@ -382,6 +506,17 @@ All prior attempts and failed/incomplete development states remain immutable.
 ```text
 PHASE-10A14-R20 — COMMIT 5R1-C7
 DECISION-LAYER CLOSURE CONTINUATION 7 AGAINST R3
+```
+
+COMMIT 5R1-C7 preflight preconditions were cleared by COMMIT 5R1-C7-P1 and now hold:
+
+```text
+analyzer identity policy: Git blob canonical; normalized-LF content identity accepted
+                          where core.autocrlf=true applies
+working-tree drift:       none unresolved
+root residue:             none
+roadmap:                  tracked strategic governance
+parent chain:             use the C7-P1 commit as the new starting HEAD
 ```
 
 COMMIT 5R1-C7 must:
@@ -478,9 +613,15 @@ Use this priority:
 
 ```text
 1. committed Git evidence and frozen artifacts
-2. CURRENT_STATE.md
-3. controlling roadmap workbook
-4. conversation continuity
+2. knowledge/CURRENT_STATE.md
+3. knowledge/TINA_Updated_Roadmap_v7.md
+4. controlling roadmap workbook
+5. conversation continuity
 ```
 
 When CURRENT_STATE.md conflicts with committed evidence, committed evidence controls.
+
+When a roadmap statement conflicts with committed execution evidence, committed evidence controls.
+The roadmap is strategic governance: it is not a legal authority, not a runtime oracle, not a
+test-expectation source, and not authorization to bypass Phase 10A, ingest or promote sources,
+deploy or commercialize TINA.

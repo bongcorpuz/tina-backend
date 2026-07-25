@@ -1,0 +1,37 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:15:06.745Z",
+  "status": "NOT_REQUIRED_CRLF_NORMALIZATION_ONLY",
+  "restorationPerformed": false,
+  "preservedPreRestorationPath": null,
+  "rationale": "Classification A applies. Normalized-LF working-tree content is byte-identical to normalized-LF committed blob content for all three runtime files. No file was modified, so no restore was performed and none was fabricated.",
+  "runtimeFiles": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "gitBlobSha1": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+      "rawWorktreeSha256": "0f67e16e4377aac9e46287ca59e90825926949fe19bea2eea56c408662702484",
+      "normalizedLfWorktreeSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "normalizedLfBlobSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "normalizedContentEqual": true,
+      "trackedDiffBytes": 0
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "gitBlobSha1": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+      "rawWorktreeSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfWorktreeSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "normalizedLfBlobSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "normalizedContentEqual": true,
+      "trackedDiffBytes": 0
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "gitBlobSha1": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+      "rawWorktreeSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfWorktreeSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "normalizedLfBlobSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "normalizedContentEqual": true,
+      "trackedDiffBytes": 0
+    }
+  ]
+}

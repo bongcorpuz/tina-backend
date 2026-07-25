@@ -1,0 +1,17 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:17:34.161Z",
+  "priorAttempts": 55,
+  "priorAttemptsUnchanged": true,
+  "newAttempts": 2,
+  "totalAttempts": 57,
+  "everyAttemptHasCaptures": true,
+  "everyAttemptHasResults": true,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "closureComplete": true,
+  "cumulativeThrough": "commit5r1c7p1",
+  "runtimeClosure": false,
+  "decisionLayerClosure": false,
+  "domainCampaignsRegisteredThisUnit": 0
+}

@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-25T12:34:46.352Z",
+  "generatedAt": "2026-07-25T23:16:23.158Z",
   "phase": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c6-incomplete",
+  "cumulativeThrough": "commit5r1c7p1",
   "summary": {
-    "totalAttempts": 55,
+    "totalAttempts": 57,
     "byCategory": {
       "domain_campaign": 19,
       "focused_suite": 3,
       "other": 9,
-      "synthetic_validator": 24
+      "synthetic_validator": 26
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -65,12 +65,14 @@
       "r20_commit4r3_freeze_current_state_and_completeness": 1,
       "r20_commit4r3_r2_conflict_source_lock": 1,
       "r20_commit4r3_template_equivalence": 1,
-      "r20_commit4r3_unchanged_field_and_reason_contract": 1
+      "r20_commit4r3_unchanged_field_and_reason_contract": 1,
+      "r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation": 1,
+      "r20_commit5r1c7p1_final_preflight_current_state_and_completeness": 1
     },
-    "completed": 55,
+    "completed": 57,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 53,
+    "controlling": 55,
     "nonControlling": 2,
     "retries": 0,
     "transientFailures": 0,
@@ -1030,6 +1032,40 @@
       "commandHash": "522c485bdfbf5ba72f11553f53380567d61ddc599212f4d13d4cd9fda732a804",
       "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
       "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation-commit5r1c7p1-ord01-2026-07-25T23-16-23-147Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation",
+      "cycle": "commit5r1c7p1",
+      "status": "completed",
+      "disposition": "controlling_identity_residue_roadmap_reconciliation",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation-commit5r1c7p1-ord01-2026-07-25T23-16-23-147Z/IDENTITY_RESIDUE_AND_ROADMAP_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation-commit5r1c7p1-ord01-2026-07-25T23-16-23-147Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation-commit5r1c7p1-ord01-2026-07-25T23-16-23-147Z/stderr.txt",
+      "commandHash": "70921dfcb283c16c3fc3288f8533e7b03fe05d1a8084f9c108d3aa6d0a39cf83",
+      "runtimeBaselineCommit": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd",
+      "runtimeTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit5r1c7p1_final_preflight_current_state_and_completeness-commit5r1c7p1-ord01-2026-07-25T23-16-23-153Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit5r1c7p1_final_preflight_current_state_and_completeness",
+      "cycle": "commit5r1c7p1",
+      "status": "completed",
+      "disposition": "controlling_final_preflight_completeness",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7p1_final_preflight_current_state_and_completeness-commit5r1c7p1-ord01-2026-07-25T23-16-23-153Z/FINAL_PREFLIGHT_COMPLETENESS_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7p1_final_preflight_current_state_and_completeness-commit5r1c7p1-ord01-2026-07-25T23-16-23-153Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7p1_final_preflight_current_state_and_completeness-commit5r1c7p1-ord01-2026-07-25T23-16-23-153Z/stderr.txt",
+      "commandHash": "70921dfcb283c16c3fc3288f8533e7b03fe05d1a8084f9c108d3aa6d0a39cf83",
+      "runtimeBaselineCommit": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd",
+      "runtimeTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
     }
   ],
   "runtimeClosure": false,

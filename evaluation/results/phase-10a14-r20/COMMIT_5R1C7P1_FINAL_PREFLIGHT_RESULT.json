@@ -1,0 +1,17 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:17:34.161Z",
+  "runtimeTrackedDiffBytes": 0,
+  "testsTrackedDiffBytes": 0,
+  "oracleTrackedDiffBytes": 0,
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r3ExpectedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "rootResidueRemaining": [],
+  "roadmapTracked": true,
+  "analyzerIdentityClassification": "CRLF_WORKTREE_NORMALIZATION_ONLY",
+  "c7SemanticExecutionStarted": false,
+  "oracleExecuted": false,
+  "domainCampaignRegistered": false,
+  "result": "PASS",
+  "c7Authorized": true
+}

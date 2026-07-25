@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:15:06.745Z",
+  "path": "services/philippine-tax-intent-analyzer.js",
+  "checkAttrOutput": "(no attributes set)",
+  "textAttribute": "unset",
+  "eolAttribute": "unset",
+  "workingTreeEncodingAttribute": "unset",
+  "coreAutocrlf": "true",
+  "coreEol": "(unset)",
+  "filters": [
+    "filter.lfs.clean",
+    "filter.lfs.smudge",
+    "filter.lfs.process",
+    "filter.lfs.required"
+  ],
+  "lfsAppliesToThisPath": false,
+  "lfsNote": "git-lfs filters are configured globally but no .gitattributes rule routes this path through them; the file is stored as an ordinary blob.",
+  "cleanSmudgeFilterActiveOnPath": false,
+  "conclusion": "core.autocrlf=true alone fully explains a CRLF working tree over an LF-normalized blob. No filter or attribute alters content."
+}

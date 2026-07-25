@@ -1,0 +1,16 @@
+{
+  "originalRootPath": "tmp_r3.mjs",
+  "recoveredTo": "evaluation/results/phase-10a14-r20/commit5r1c7p1-recovered-residue/root-files/tmp_r3.mjs",
+  "rawSha256": "4e3e020d30568552b3f8a7c9965f946a3105922997bcdd39f496dcdfcb3c7beb",
+  "normalizedLfSha256": "4e3e020d30568552b3f8a7c9965f946a3105922997bcdd39f496dcdfcb3c7beb",
+  "sizeBytes": 790,
+  "modifiedUtc": "2026-07-25T06:22:43.149Z",
+  "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+  "description": "Ad-hoc R3 scorer that emitted tmp_r3fails.json.",
+  "controlling": false,
+  "recoveredResidue": true,
+  "historicalExecutionClaim": "unverified",
+  "mustNotBeExecuted": true,
+  "nonControlling": true,
+  "notAuthorizedAsRuntimeCandidate": true
+}

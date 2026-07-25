@@ -1,0 +1,33 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:17:34.161Z",
+  "originatingUnit": "PHASE-10A14-R20 COMMIT 5R1-C7 (attempted preflight)",
+  "stopWasCorrect": true,
+  "workPerformedBeforeStop": "read-only verification only; no repository modification, no attempt allocation, no oracle execution",
+  "reportedStopConditions": [
+    {
+      "id": "A",
+      "condition": "Apparent live-analyzer identity conflict (raw 0f67e16e... vs blob a23364bc...)",
+      "resolution": "RESOLVED — CRLF_WORKTREE_NORMALIZATION_ONLY",
+      "detail": "A raw working-tree SHA-256 was compared against a Git blob SHA-1. Different hash functions over different byte streams; equality was never possible. Normalized-LF content of worktree and blob are byte-identical (8c984f17...)."
+    },
+    {
+      "id": "B",
+      "condition": "Four root-level untracked tmp_* residue files",
+      "resolution": "RESOLVED — all four unique, preserved under recovered-residue, removed from root"
+    },
+    {
+      "id": "C",
+      "condition": "Untracked knowledge/TINA_Updated_Roadmap_v7.md",
+      "resolution": "RESOLVED — read in full, anchors validated, now tracked at its authorized knowledge path"
+    },
+    {
+      "id": "D",
+      "condition": "Prompt-stated mandatory parent 08990106... did not match actual parent",
+      "resolution": "RESOLVED — prompt defect, not repository defect. Actual chain 23df8e8a -> 1a8abdd0 confirmed correct by owner."
+    }
+  ],
+  "staleParentInPriorPrompt": "08990106993262cc5fdb4ad8b77b17aa3cf479dd",
+  "correctActualParent": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd",
+  "correctHead": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd"
+}

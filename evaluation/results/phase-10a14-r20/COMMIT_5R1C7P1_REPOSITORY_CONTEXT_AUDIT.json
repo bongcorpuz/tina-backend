@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:17:34.161Z",
+  "backend": {
+    "root": "C:/Projects/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "headAtStart": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd",
+    "parent": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd",
+    "staleParentClaimedByPriorPrompt": "08990106993262cc5fdb4ad8b77b17aa3cf479dd",
+    "staleParentIsPromptDefect": true
+  },
+  "devFactory": {
+    "root": "C:/Projects/tina-dev-factory",
+    "headAtPreflight": "91670029ccae10a76385533a283f3c96c7411577",
+    "expectedPrefix": "91670029",
+    "modifiedByThisUnit": false
+  },
+  "explicitGitCCompliance": true,
+  "bareGitCommitUsed": false,
+  "crossRepoContamination": "none"
+}

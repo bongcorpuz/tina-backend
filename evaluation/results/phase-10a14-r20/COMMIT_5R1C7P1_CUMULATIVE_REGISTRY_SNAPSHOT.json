@@ -1,0 +1,27 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:16:23.163Z",
+  "priorAttempts": 55,
+  "newAttempts": 2,
+  "totalAttempts": 57,
+  "byCategory": {
+    "domain_campaign": 19,
+    "focused_suite": 3,
+    "other": 9,
+    "synthetic_validator": 26
+  },
+  "controlling": 55,
+  "nonControlling": 2,
+  "failed": 0,
+  "retries": 0,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "cumulativeThrough": "commit5r1c7p1",
+  "runtimeClosure": false,
+  "decisionLayerClosure": false,
+  "closureComplete": true,
+  "newAttemptIds": [
+    "R20-synthetic_validator-r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation-commit5r1c7p1-ord01-2026-07-25T23-16-23-147Z",
+    "R20-synthetic_validator-r20_commit5r1c7p1_final_preflight_current_state_and_completeness-commit5r1c7p1-ord01-2026-07-25T23-16-23-153Z"
+  ]
+}

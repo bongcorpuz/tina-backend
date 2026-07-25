@@ -1,0 +1,4 @@
+COMMIT 5R1-C7-P1 identity/residue/roadmap reconciliation: PASS
+analyzer=CRLF_WORKTREE_NORMALIZATION_ONLY restoration=NOT_REQUIRED
+residue inventoried=4 duplicates=0 preserved=4 sensitive=0
+roadmap anchors=validated majorPhases=18 phase10ABlocker=true

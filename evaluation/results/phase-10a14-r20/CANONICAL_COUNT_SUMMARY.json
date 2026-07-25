@@ -1,15 +1,15 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c6-incomplete",
+  "cumulativeThrough": "commit5r1c7p1",
   "runtimeClosure": false,
   "decisionLayerClosure": false,
   "registrySummary": {
-    "totalAttempts": 55,
+    "totalAttempts": 57,
     "byCategory": {
       "domain_campaign": 19,
       "focused_suite": 3,
       "other": 9,
-      "synthetic_validator": 24
+      "synthetic_validator": 26
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -66,12 +66,14 @@
       "r20_commit4r3_freeze_current_state_and_completeness": 1,
       "r20_commit4r3_r2_conflict_source_lock": 1,
       "r20_commit4r3_template_equivalence": 1,
-      "r20_commit4r3_unchanged_field_and_reason_contract": 1
+      "r20_commit4r3_unchanged_field_and_reason_contract": 1,
+      "r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation": 1,
+      "r20_commit5r1c7p1_final_preflight_current_state_and_completeness": 1
     },
-    "completed": 55,
+    "completed": 57,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 53,
+    "controlling": 55,
     "nonControlling": 2,
     "retries": 0,
     "transientFailures": 0,
@@ -85,6 +87,17 @@
     "bestDecisionLayerResult": "3464/3720",
     "remainingDecisionMismatches": 256,
     "decisionLayerLock": "NOT ACHIEVED",
+    "runtimeFrozen": false,
+    "analyzerModified": false,
+    "r3Edited": false
+  },
+  "commit5r1c7p1": {
+    "decision": "COMPLETE_PREFLIGHT_RECONCILIATION",
+    "analyzerIdentityClassification": "CRLF_WORKTREE_NORMALIZATION_ONLY",
+    "restorationRequired": false,
+    "rootResidueRemaining": 0,
+    "roadmapTracked": true,
+    "c7SemanticExecutionStarted": false,
     "runtimeFrozen": false,
     "analyzerModified": false,
     "r3Edited": false

@@ -1,0 +1,16 @@
+{
+  "originalRootPath": "tmp_full.mjs",
+  "recoveredTo": "evaluation/results/phase-10a14-r20/commit5r1c7p1-recovered-residue/root-files/tmp_full.mjs",
+  "rawSha256": "b19ddf6864bcf7f3ebac86e5d3b2458ebd52d64f0474d63f78d29b126d659d75",
+  "normalizedLfSha256": "b19ddf6864bcf7f3ebac86e5d3b2458ebd52d64f0474d63f78d29b126d659d75",
+  "sizeBytes": 690,
+  "modifiedUtc": "2026-07-25T06:29:00.147Z",
+  "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+  "description": "Ad-hoc full-R3 count printer invoking commit5r1c2-oracle-runner.",
+  "controlling": false,
+  "recoveredResidue": true,
+  "historicalExecutionClaim": "unverified",
+  "mustNotBeExecuted": true,
+  "nonControlling": true,
+  "notAuthorizedAsRuntimeCandidate": true
+}

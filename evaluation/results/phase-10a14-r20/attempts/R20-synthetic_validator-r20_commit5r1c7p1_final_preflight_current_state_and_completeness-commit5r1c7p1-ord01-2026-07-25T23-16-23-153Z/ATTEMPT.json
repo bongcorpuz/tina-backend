@@ -1,0 +1,14 @@
+{
+  "attemptId": "R20-synthetic_validator-r20_commit5r1c7p1_final_preflight_current_state_and_completeness-commit5r1c7p1-ord01-2026-07-25T23-16-23-153Z",
+  "attemptCategory": "synthetic_validator",
+  "gateName": "r20_commit5r1c7p1_final_preflight_current_state_and_completeness",
+  "cycle": "commit5r1c7p1",
+  "controlling": true,
+  "status": "completed",
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C7-P1",
+  "oracleExecuted": false,
+  "domainCampaign": false,
+  "runtimeModified": false,
+  "startedFromHead": "1a8abdd098a5bc93ce0371a0ed0b056f712501cd",
+  "runtimeTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+}

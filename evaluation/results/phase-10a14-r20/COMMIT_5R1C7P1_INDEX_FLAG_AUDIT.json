@@ -1,0 +1,13 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:15:06.745Z",
+  "path": "services/philippine-tax-intent-analyzer.js",
+  "lsFilesV": "H services/philippine-tax-intent-analyzer.js",
+  "lsFilesStage": "100644 a23364bc6a31196d2fb5d9f1299ab069d84b5ca1 0\tservices/philippine-tax-intent-analyzer.js",
+  "indexFlagLetter": "H",
+  "assumeUnchanged": false,
+  "skipWorktree": false,
+  "hiddenIndexStateConcealingDrift": false,
+  "statusPorcelainV2ForPath": "(clean - no entry)",
+  "conclusion": "Index flag is H (cached, normal). No assume-unchanged or skip-worktree bit is set, so a clean status is trustworthy and does not conceal content drift."
+}

@@ -1,0 +1,16 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "priorAttemptsPreserved": 55,
+  "newAttemptsRegistered": 2,
+  "oracleExecuted": false,
+  "domainCampaignRegistered": false,
+  "runtimeTrackedDiffBytes": 0,
+  "testsTrackedDiffBytes": 0,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "cumulativeThrough": "commit5r1c7p1",
+  "runtimeClosure": false,
+  "decisionLayerClosure": false,
+  "closureComplete": true,
+  "result": "PASS"
+}

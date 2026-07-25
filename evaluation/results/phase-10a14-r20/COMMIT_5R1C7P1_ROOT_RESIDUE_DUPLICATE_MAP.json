@@ -1,0 +1,43 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:15:06.745Z",
+  "method": "SHA-256 of every file in the accepted C6 dev-02 attempt directory compared against the SHA-256 of each root residue file.",
+  "comparedAgainstAttempt": "R20-domain_campaign-r20_commit5r1c6_development_iteration_02-commit5r1c6-dev-02-ord01-2026-07-25T12-34-42-999Z",
+  "duplicatesFound": 0,
+  "uniqueFiles": 4,
+  "perFile": [
+    {
+      "path": "tmp_full.mjs",
+      "rawSha256": "b19ddf6864bcf7f3ebac86e5d3b2458ebd52d64f0474d63f78d29b126d659d75",
+      "byteIdenticalCommittedMatch": null,
+      "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+      "safeToRemoveFromRoot": true,
+      "removalJustification": "Exact bytes preserved and verified under recovered-residue evidence."
+    },
+    {
+      "path": "tmp_probe.mjs",
+      "rawSha256": "444a46619e47a2a92a155eb9a2a55a6f774ce28a1d90ab602d632808cbe3325a",
+      "byteIdenticalCommittedMatch": null,
+      "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+      "safeToRemoveFromRoot": true,
+      "removalJustification": "Exact bytes preserved and verified under recovered-residue evidence."
+    },
+    {
+      "path": "tmp_r3.mjs",
+      "rawSha256": "4e3e020d30568552b3f8a7c9965f946a3105922997bcdd39f496dcdfcb3c7beb",
+      "byteIdenticalCommittedMatch": null,
+      "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+      "safeToRemoveFromRoot": true,
+      "removalJustification": "Exact bytes preserved and verified under recovered-residue evidence."
+    },
+    {
+      "path": "tmp_r3fails.json",
+      "rawSha256": "a58d8e48573006315a14a4b676842174c1b8996bb4ce2c98f907ea56d49f718f",
+      "byteIdenticalCommittedMatch": null,
+      "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+      "safeToRemoveFromRoot": true,
+      "removalJustification": "Exact bytes preserved and verified under recovered-residue evidence."
+    }
+  ],
+  "conclusion": "No root residue file is byte-identical to any committed C6 evidence file. DUPLICATE_OF_COMMITTED_EVIDENCE was not used. All four required preservation before removal."
+}

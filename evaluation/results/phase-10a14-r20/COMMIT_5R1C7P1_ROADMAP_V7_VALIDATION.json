@@ -1,0 +1,71 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:17:34.161Z",
+  "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+  "startingTrackedStatus": "untracked",
+  "finalTrackedStatus": "tracked",
+  "sha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+  "encoding": "utf-8",
+  "lineEnding": "LF",
+  "bomPresent": false,
+  "normalizationChangedContent": false,
+  "requiredAnchorsPresent": {
+    "notAGeneralLegalResearchClone": {
+      "present": true,
+      "evidence": "Section 1 line 14; non-negotiable #6 line 467"
+    },
+    "anycaseIsBenchmarkForSourceBreadthAndDiscipline": {
+      "present": true,
+      "evidence": "Section 1 lines 16-27; Section 4 line 288"
+    },
+    "durableDifferentiationTaxTreatment": {
+      "present": true,
+      "evidence": "Line 31 blockquote"
+    },
+    "phase10AAbsoluteBlocker": {
+      "present": true,
+      "evidence": "Section 2 heading line 44; line 62"
+    },
+    "noAcceleratedBypassOfTrustClosure": {
+      "present": true,
+      "evidence": "Line 62; Section 10A lines 70-80; non-negotiable #10 line 471"
+    },
+    "majorPhaseCount18": {
+      "present": true,
+      "evidence": "Line 7; line 495"
+    },
+    "acceleratedAdditions": {
+      "present": true,
+      "items": [
+        "10G-D1",
+        "10G-D2",
+        "10G-D3",
+        "10H-B",
+        "10I-C",
+        "11N",
+        "11O",
+        "Phase 12",
+        "13V",
+        "13W",
+        "13X",
+        "13Y",
+        "13Z"
+      ]
+    },
+    "strategicNotAuthority": {
+      "present": true,
+      "evidence": "Section 10G-D3 line 209 (no automatic canonical promotion); non-negotiable #3 line 464; #11 line 472"
+    }
+  },
+  "majorPhaseCount": 18,
+  "phase10AAbsoluteBlocker": true,
+  "currentExecutionNamed": "COMMIT 5R1-C7",
+  "currentExecutionEvidence": "Line 6 and line 60 name COMMIT 5R1-C7 as next exact task",
+  "unsupportedRuntimeAuthorization": false,
+  "consistencyWithCommittedEvidence": {
+    "consistent": true,
+    "checked": "Roadmap lines 48-56 state C6 overall 3,009/3,720, decision 3,464/3,720, 256 decision mismatches, 209 relation, 710 reason, and closed controls 108/200/150/104. These match CANONICAL_COUNT_SUMMARY.json commit5r1c6 and the accepted C6 dev-02 attempt."
+  },
+  "validationResult": "PASS",
+  "promotedAsControllingTrackedKnowledge": true
+}

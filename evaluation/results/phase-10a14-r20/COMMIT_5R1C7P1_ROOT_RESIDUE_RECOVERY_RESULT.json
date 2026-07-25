@@ -1,0 +1,14 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "generatedUtc": "2026-07-25T23:20:26.000Z",
+  "filesInventoried": 4,
+  "duplicatesRemovedWithProof": 0,
+  "uniquePreserved": 4,
+  "sensitiveFindings": 0,
+  "destinationVerificationMethod": "SHA-256 of destination compared to source before any removal",
+  "allDestinationsVerified": true,
+  "rootResidueRemaining": [],
+  "recoveredFilesExecuted": false,
+  "retroactivelyAssignedToGovernedAttempt": false,
+  "recoveryDirectory": "evaluation/results/phase-10a14-r20/commit5r1c7p1-recovered-residue/root-files/"
+}

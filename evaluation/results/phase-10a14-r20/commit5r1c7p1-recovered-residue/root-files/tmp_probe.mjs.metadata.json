@@ -1,0 +1,16 @@
+{
+  "originalRootPath": "tmp_probe.mjs",
+  "recoveredTo": "evaluation/results/phase-10a14-r20/commit5r1c7p1-recovered-residue/root-files/tmp_probe.mjs",
+  "rawSha256": "444a46619e47a2a92a155eb9a2a55a6f774ce28a1d90ab602d632808cbe3325a",
+  "normalizedLfSha256": "444a46619e47a2a92a155eb9a2a55a6f774ce28a1d90ab602d632808cbe3325a",
+  "sizeBytes": 596,
+  "modifiedUtc": "2026-07-25T06:26:55.780Z",
+  "classification": "UNIQUE_UNCERTAIN_RESIDUE_PRESERVED",
+  "description": "Ad-hoc single-query analyzer probe over six queries.",
+  "controlling": false,
+  "recoveredResidue": true,
+  "historicalExecutionClaim": "unverified",
+  "mustNotBeExecuted": true,
+  "nonControlling": true,
+  "notAuthorizedAsRuntimeCandidate": true
+}

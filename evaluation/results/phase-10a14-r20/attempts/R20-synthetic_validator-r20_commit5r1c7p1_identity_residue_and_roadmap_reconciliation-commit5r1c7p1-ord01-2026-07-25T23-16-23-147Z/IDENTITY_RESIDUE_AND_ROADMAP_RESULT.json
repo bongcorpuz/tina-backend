@@ -1,0 +1,16 @@
+{
+  "unit": "COMMIT 5R1-C7-P1",
+  "analyzerIdentityClassification": "CRLF_WORKTREE_NORMALIZATION_ONLY",
+  "analyzerRestorationRequired": false,
+  "runtimeFilesNormalizedEqualToHead": 3,
+  "indexFlagsClean": true,
+  "hiddenIndexStateFound": false,
+  "residueFilesInventoried": 4,
+  "residueDuplicates": 0,
+  "residueUniquePreserved": 4,
+  "sensitiveResidueFindings": 0,
+  "roadmapAnchorsValidated": true,
+  "roadmapMajorPhaseCount": 18,
+  "roadmapPhase10AAbsoluteBlocker": true,
+  "result": "PASS"
+}
