@@ -1,0 +1,6 @@
+{
+  "note": "In-progress clause-level/relation remediation iteration. NOT applied to services/ (unit is INCOMPLETE, no freeze). Preserved for the authorized continuation.",
+  "analyzerSha256": "7df28ebbdbf1baa5398b1056f35e1dd2d3b4fd668f15f30fc8d313903ac128bf",
+  "domainBoundary": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+  "patterns": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+}

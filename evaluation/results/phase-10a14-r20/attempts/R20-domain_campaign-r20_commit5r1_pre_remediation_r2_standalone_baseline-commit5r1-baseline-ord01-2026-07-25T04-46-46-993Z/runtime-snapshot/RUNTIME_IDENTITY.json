@@ -1,0 +1,6 @@
+{
+  "analyzer": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+  "domainBoundary": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+  "patterns": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+  "note": "Unchanged COMMIT 3 standalone analyzer; R2 diagnostic baseline."
+}

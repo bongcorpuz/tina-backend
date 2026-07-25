@@ -1,16 +1,18 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit4r2",
+  "cumulativeThrough": "commit5r1",
   "registrySummary": {
-    "totalAttempts": 29,
+    "totalAttempts": 31,
     "byCategory": {
-      "domain_campaign": 3,
+      "domain_campaign": 5,
       "focused_suite": 1,
       "other": 5,
       "synthetic_validator": 20
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
+      "r20_commit5r1_development_iteration_01": 1,
+      "r20_commit5r1_pre_remediation_r2_standalone_baseline": 1,
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
@@ -40,22 +42,21 @@
       "r20_commit4r2_r1_r1s_source_lock": 1,
       "r20_commit4r2_unchanged_field_and_contract": 1
     },
-    "completed": 29,
+    "completed": 31,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 29,
+    "controlling": 31,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "commit4r2": {
-    "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
-    "correctionsApplied": 73,
-    "changed": 73,
-    "unchanged": 3647,
-    "labelDiscrepancies": 9,
-    "decision": "COMPLETE"
+  "commit5r1": {
+    "decision": "INCOMPLETE_ARCHITECTURE_REMEDIATION_NOT_CLOSED",
+    "baseline": "1089/3720",
+    "bestDevelopment": "2674/3720",
+    "runtimeFrozen": false,
+    "analyzerModified": false
   }
 }

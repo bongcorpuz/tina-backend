@@ -1,0 +1,10 @@
+{
+  "decision": "COMMIT_5_RESTART_1_INCOMPLETE_ARCHITECTURE_REMEDIATION_NOT_CLOSED",
+  "reason": "The clause-level/relation runtime did not reach exact 3720/3720 canonical closure (decision+reason+relation) against R2. Per the frozen COMMIT 5R1 failure discipline, evidence is preserved and the unit STOPS without a runtime freeze.",
+  "baselineCanonicalPassed": 1089,
+  "bestDevelopmentCanonicalPassed": 2674,
+  "runtimeFrozen": false,
+  "analyzerModified": false,
+  "analyzerBlob": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+  "next": "Authorized continuation resumes remediation from the preserved development iteration toward 3720/3720, then integrates and freezes."
+}

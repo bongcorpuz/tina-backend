@@ -1,0 +1,28 @@
+{
+  "iterations": [
+    {
+      "iterationId": "baseline",
+      "attemptId": "R20-domain_campaign-r20_commit5r1_pre_remediation_r2_standalone_baseline-commit5r1-baseline-ord01-2026-07-25T04-46-46-993Z",
+      "runtime": "unchanged COMMIT 3 analyzer",
+      "canonicalPassed": 1089,
+      "total": 3720,
+      "disposition": "development_baseline",
+      "supersededBy": "R20-domain_campaign-r20_commit5r1_development_iteration_01-commit5r1-dev-01-ord01-2026-07-25T04-46-48-337Z"
+    },
+    {
+      "iterationId": "dev-01",
+      "attemptId": "R20-domain_campaign-r20_commit5r1_development_iteration_01-commit5r1-dev-01-ord01-2026-07-25T04-46-48-337Z",
+      "parentIterationId": "baseline",
+      "runtime": "in-progress clause-level/relation remediation (preserved in attempt snapshot; not applied to services/)",
+      "canonicalPassed": 2674,
+      "total": 3720,
+      "decisionMismatches": 629,
+      "reasonMismatches": 987,
+      "relationMismatches": 376,
+      "metamorphicGroupsPassed": 61,
+      "disposition": "development_iteration_incomplete",
+      "supersededBy": null,
+      "note": "Did not reach 3720/3720; architecture remediation not closed."
+    }
+  ]
+}

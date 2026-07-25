@@ -1,0 +1,62 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1_pre_remediation_r2_standalone_baseline-commit5r1-baseline-ord01-2026-07-25T04-46-46-993Z",
+  "attemptCategory": "domain_campaign",
+  "gateName": "r20_commit5r1_pre_remediation_r2_standalone_baseline",
+  "cycle": "commit5r1-baseline",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "677eb0e4bb83d3d37de4f4eeefab062c088191f5",
+  "evidenceHeadAtStart": "677eb0e4bb83d3d37de4f4eeefab062c088191f5",
+  "evidenceHeadAtEnd": "677eb0e4bb83d3d37de4f4eeefab062c088191f5",
+  "runtimeBaselineCommit": "677eb0e4bb83d3d37de4f4eeefab062c088191f5",
+  "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284",
+  "runtimeServicesTreeObject": "c16daac64b34261899fef1b8941d8b23a290bed8",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+  },
+  "harnessTreeDigest": "8be393c0ed9327db57abcd5ddd4e51c562153f40",
+  "governedToolingContentDigest": "ff8dd993c775b80a23cf1c35c67ce09dc59c1db8bb085b65f8359b6f95554576",
+  "dependencyLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+  "dependencyLockBlobs": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "commit5r1-oracle-runner.mjs",
+    "--r2-standalone-baseline"
+  ],
+  "commandHash": "a3fcc476504d8d4ed12a0143d99d2e7975af3700d306e3f15768462d2c240f81",
+  "startedAt": "2026-07-25T04:46:47.564Z",
+  "endedAt": "2026-07-25T04:46:47.733Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "development_baseline",
+  "controlling": true,
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1_pre_remediation_r2_standalone_baseline-commit5r1-baseline-ord01-2026-07-25T04-46-46-993Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1_pre_remediation_r2_standalone_baseline-commit5r1-baseline-ord01-2026-07-25T04-46-46-993Z/stderr.txt",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1_pre_remediation_r2_standalone_baseline-commit5r1-baseline-ord01-2026-07-25T04-46-46-993Z/R2_BASELINE_RESULT.json"
+  ],
+  "stdoutSha256": "d826570c662750c7f0317b277ee3c05a87571985d39c4db63d0e2215271df428",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "externalCaptureRemoved": true,
+  "gitObjectValidation": {
+    "evidenceHeadAtAllocation": "commit",
+    "evidenceHeadAtStart": "commit",
+    "evidenceHeadAtEnd": "commit",
+    "runtimeBaselineCommit": "commit"
+  }
+}
