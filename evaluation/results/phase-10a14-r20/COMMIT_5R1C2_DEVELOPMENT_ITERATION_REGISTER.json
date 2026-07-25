@@ -1,0 +1,31 @@
+{
+  "iterations": [
+    {
+      "iterationId": "reconstructed-dev02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c2_reconstructed_dev02_against_r3-commit5r1c2-dev-01-ord01-2026-07-25T06-07-44-210Z",
+      "oracleVersion": "R3",
+      "governedScore": "2716/3720",
+      "disposition": "development_iteration_reconstructed",
+      "note": "dev-02 re-scored against R3 (historical R2 score 2777)."
+    },
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c2_development_iteration_02-commit5r1c2-dev-02-ord01-2026-07-25T06-07-44-977Z",
+      "parentIterationId": "reconstructed-dev02",
+      "oracleVersion": "R3",
+      "governedScore": "2819/3720",
+      "decisionMismatches": 461,
+      "reasonMismatches": 900,
+      "relationMismatches": 315,
+      "materialFalseAllows": 169,
+      "materialFalseRefusals": 182,
+      "clarifyMismatches": 110,
+      "metamorphicGroupsPassed": 72,
+      "metamorphicGroupsFailed": 28,
+      "architecturalHypothesis": "scenario dangling -> no_tax_relation (R3); genuine-tax-question predicate builds tax relation before homograph veto; withholding/VAT specific relation typing; negation non-tax-action relation; expanded non-tax domain-noun homograph veto.",
+      "disposition": "development_iteration_incomplete",
+      "supersededBy": null,
+      "note": "Did not reach 3720/3720; architecture remediation not closed."
+    }
+  ]
+}

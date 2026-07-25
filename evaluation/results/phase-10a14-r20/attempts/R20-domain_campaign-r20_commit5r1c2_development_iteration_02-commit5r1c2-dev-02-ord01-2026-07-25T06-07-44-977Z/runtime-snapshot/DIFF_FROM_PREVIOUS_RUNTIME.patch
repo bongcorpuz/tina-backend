@@ -1,0 +1,63 @@
+diff --git a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z/runtime-snapshot/philippine-tax-intent-analyzer.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_c2_dev02_2819.js
+index 3f89bd7b..b033870f 100644
+--- a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c1_development_iteration_02-commit5r1c1-dev-02-ord01-2026-07-25T05-13-14-795Z/runtime-snapshot/philippine-tax-intent-analyzer.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/analyzer_c2_dev02_2819.js
+@@ -150,6 +150,11 @@ const NON_TAX_DOMAIN_NOUNS = Object.freeze([
+   'penalty kick', 'grammar', 'sport', 'guild', 'display', 'on-screen display',
+   'medical prescription', 'prescription', 'band of chords', 'band', 'guitar',
+   'training class', 'conference room', 'poster about', 'internal tool', 'project code',
++  'marketing phrase', 'marketing slogan', 'landscaping', 'medicine', 'vitamin', 'monitor',
++  'plugin', 'plugin code', 'robotics course', 'robotics', 'building directions', 'directions',
++  'property marketing', 'culture class', 'software project', 'app', 'course id', 'course',
++  'plain english', 'typescript enum', 'enum', 'web form', 'web form field', 'swatch', 'hue token',
++  'on-screen display', 'display setting', 'monitor display', 'vitamin d', 'in medicine',
+ ]);
+ 
+ // Tax-shaped tokens that are prone to non-tax homograph use.
+@@ -392,8 +397,21 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+   // A genuine tax QUESTION predicate applied to a subject (even an ordinary object)
+   // is NOT a homograph trap: "are X taxable?", "subject to VAT?", "withholding tax
+   // apply to X", "what taxes apply to X", "can a taxpayer use invoices for X".
+-  const genuineTaxQuestionPredicate = /\b(are|is)\b[^?]*\btaxable\b|\bsubject to (?:vat|percentage tax|withholding|customs|excise|dst|income tax)\b|\bwithholding tax (?:apply|applies|on)\b|\bwhat (?:philippine )?tax(?:es)? apply\b|\buse invoices for\b|\bdeductible for income tax\b|\bcreate a bir filing\b|\bbir filing obligation\b|\bpara sa business\b|resibo para sa|\binput vat treatment\b|\bvat treatment of\b/.test(fullLo);
++  const genuineTaxQuestionPredicate = /\b(are|is)\b[^?]*\btaxable\b|\bsubject to (?:vat|percentage tax|withholding|customs|excise|dst|income tax)\b|\bwithholding tax (?:apply|applies|on)\b|\bwhat (?:philippine )?tax(?:es)? apply\b|\b(?:can|does|do) (?:a |the )?taxpayer\b|\buse invoices for\b|\bdeductible for income tax\b|\bcreate a bir filing\b|\bbir filing obligation\b|\bpara sa business\b|resibo para sa|\binput vat treatment\b|\bvat treatment of\b|\bare receipts\b[^?]*\btaxable\b|\bare tuition receipts\b|\btaxable ba\b/.test(fullLo);
+   const hasNegationFraming = /\bdo not discuss tax|don't discuss tax|not asking about tax|may be non-?tax|\bnon-?tax\b/.test(fullLo);
++
++  // A genuine tax question predicate applied to a subject controls FIRST: it builds
++  // the tax relation directly, defeating any co-occurring non-tax domain noun. This
++  // is the genuine-mixed-domain case ("Are receipts from a music channel taxable?").
++  if (genuineTaxQuestionPredicate && !hasNegationFraming && !RE.negationReview.test(fullLo)) {
++    if (/\bwithholding\b/.test(fullLo)) add('ASKS_WITHHOLDING_ON', 'task', target || 'subject');
++    else if (/subject to vat|vat treatment|input vat|output vat|\bvat\b/.test(fullLo)) add('ASKS_VAT_TREATMENT_OF', 'task', target || 'subject');
++    else if (/subject to customs|customs dut/.test(fullLo)) add('ASKS_CUSTOMS_DUTY_ON', 'task', target || 'subject');
++    else if (/deductib/.test(fullLo)) add('ASKS_DEDUCTIBILITY_OF', 'task', target || 'subject');
++    else if (/bir filing|create a bir|filing obligation/.test(fullLo)) add('ASKS_TAX_COMPLIANCE_FOR', 'task', target || 'transaction');
++    else add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
++    return relations;
++  }
+   if (hasHomographTaxToken && hasNonTaxDomainNoun && !hasStrongTaxAnchor && !genuineTaxQuestionPredicate && !RE.negationReview.test(fullLo) && !hasNegationFraming) {
+     // If there is an explicit non-tax action verb or "as <label>", record it; else
+     // flag a homograph veto so the decision resolves to REFUSE / no_tax_relation.
+@@ -490,6 +508,14 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+     add('REQUESTS_NON_TAX_ACTION_ON', nonTaxActionVerb || 'action', nonTaxActionTarget || 'object');
+   }
+ 
++  // "I am not asking about tax, only the <ordinary object> ..." — a NEGATES clause
++  // that redirects to a non-tax subject also constitutes a non-tax request on that
++  // object, even without an explicit action verb.
++  if (relations.some((r) => r.relation === 'NEGATES_TAX_RELEVANCE') && !anyTaxTaskRel && !relations.some((r) => r.relation === 'REQUESTS_NON_TAX_ACTION_ON')) {
++    const ordTarget = includesAny(fullLo, ORDINARY_OBJECT_TERMS)[0];
++    if (ordTarget || /\bonly the\b|\bjust the\b/.test(fullLo)) add('REQUESTS_NON_TAX_ACTION_ON', 'action', ordTarget || 'object');
++  }
++
+   return relations;
+ }
+ 
+@@ -553,7 +579,7 @@ export function decideTaxBoundaryFromEvidence(evidence) {
+   // 10. Tax-adjacent frame lacking resolving context -> CLARIFY / ambiguous_tax_acronym.
+   const taxLexical = (evidence.taxPredicates || []).length + (evidence.taxEntities || []).length;
+   const ordinaryLexical = (evidence.ordinaryObjects || []).length;
+-  if (evidence.danglingScenario) return decide('CLARIFY', 'ambiguous_tax_acronym', 0.50);
++  if (evidence.danglingScenario) return decide('CLARIFY', 'no_tax_relation', 0.50);
+   if (taxLexical > 0 && ordinaryLexical === 0 && !requestsNonTax && !expandsNonTax && !namesLabel) {
+     return decide('CLARIFY', 'ambiguous_tax_acronym', 0.50);
+   }

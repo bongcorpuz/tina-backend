@@ -31,16 +31,66 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 4R3
-TEMPLATE-WIDE REASON-FAMILY ORACLE RE-FREEZE
-DECISION: COMPLETE
+PHASE-10A14-R20 — COMMIT 5R1-C2
+ARCHITECTURE REMEDIATION CONTINUATION 2 AGAINST R3
+DECISION: INCOMPLETE — ARCHITECTURE REMEDIATION NOT CLOSED
 ```
 
 Starting evidence commit:
 
-`5c1fb4b2b529070a9c0560c48ac64ae6ac892c90`
+`14a9e14ccdc4c7de54abb66ebc49c9d6a76573cc`
 
-The final COMMIT 4R3 Git SHA is recorded in Git history and the COMMIT 4R3 report.
+R3 remains canonical and unchanged:
+
+`ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54`
+
+Reconstructed dev-02 R3 score:
+
+`2,716 / 3,720`
+
+Best governed R3 candidate:
+
+`2,819 / 3,720`
+
+Remaining failed rows:
+
+`901`
+
+Best-candidate mismatch matrix:
+
+```text
+decision mismatches:       461
+reason mismatches:         900
+relation mismatches:       315
+material false allows:     169
+material false refusals:   182
+clarify mismatches:        110
+metamorphic groups passed:  72 / 100
+```
+
+Runtime:
+
+```text
+not integrated
+not frozen
+runtimeMutable = true
+live services restored to the committed COMMIT 3 baseline
+```
+
+Exact blocker:
+
+```text
+competing clause/task/target/relation constraints involving genuine
+mixed-domain tax questions, homograph traps, explicit tax-task relations,
+ordinary-object tax treatment and inherited reason granularity
+```
+
+Preserved candidate:
+
+```text
+attempt: R20-domain_campaign-r20_commit5r1c2_development_iteration_02-commit5r1c2-dev-02
+runtime snapshot preserved in the attempt directory (not applied to services/)
+```
 
 ## Why COMMIT 4R3 Was Required
 
@@ -184,33 +234,44 @@ model = gpt-4o-mini
 ## Preserved Runtime-Remediation Evidence
 
 ```text
-R2 baseline:
+R2 baseline (historical):
 1,089 / 3,720
 
-governed reconstructed candidate:
+R2 reconstructed candidate (historical):
 2,674 / 3,720
 
-best preserved COMMIT 5R1-C1 development candidate:
+R2 best COMMIT 5R1-C1 candidate (historical):
 2,777 / 3,720
+
+R3 reconstructed dev-02 (governed):
+2,716 / 3,720
+
+R3 best COMMIT 5R1-C2 candidate (governed):
+2,819 / 3,720
 ```
 
-The 2,777 candidate exists only as preserved attempt runtime-snapshot evidence.
+The R2 scores are historical only.
 
-It is not applied to the live `services/` tree.
+The best current governed R3 candidate is 2,819 / 3,720, preserved as the COMMIT 5R1-C2
+dev-02 attempt runtime-snapshot (with its patch and hashes).
 
-It was produced against R2 and must be re-executed against R3 before it can control future remediation.
+It is not applied to the live `services/` tree; the live runtime is the committed COMMIT 3
+baseline. COMMIT 5R1-C3 must reconstruct and resume from the preserved 2,819 candidate.
 
 ## Current Evidence Registry
 
 ```text
 cumulativeThrough:
-commit4r3
+commit5r1c2-incomplete
+
+runtimeClosure:
+false
 
 total attempts:
-39
+41
 
-COMMIT 4R3 new attempts:
-6
+COMMIT 5R1-C2 new attempts:
+2
 
 closureComplete:
 true
@@ -227,14 +288,14 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C2
-ARCHITECTURE REMEDIATION CONTINUATION 2 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C3
+ARCHITECTURE REMEDIATION CONTINUATION 3 AGAINST R3
 ```
 
-COMMIT 5R1-C2 must:
+COMMIT 5R1-C3 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the preserved 2,777 candidate;
+2. reconstruct the preserved COMMIT 5R1-C2 dev-02 candidate (best governed R3 = 2,819 / 3,720);
 3. execute it as a new governed R3 campaign;
 4. preserve the actual R3 result;
 5. continue clause-level task/target/relation remediation without changing R3;
@@ -244,6 +305,9 @@ COMMIT 5R1-C2 must:
 9. pass focused, relevant legacy, structural-generalization, anti-overfit and determinism gates;
 10. freeze the exact runtime;
 11. STOP before COMMIT 6.
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+COMMIT 6 is not the next task; it becomes the next task only after a successful runtime freeze.
 
 ## Remaining Phase 10A Sequence
 

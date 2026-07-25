@@ -1,0 +1,6 @@
+{
+  "note": "Improved clause-level/relation architecture iteration this continuation (scenario->no_tax_relation per R3, genuine-tax-question predicate relations, withholding/VAT relation typing, negation non-tax-action relation, expanded non-tax domain nouns). NOT applied to services/ (unit INCOMPLETE). Preserved for COMMIT 5R1-C3.",
+  "analyzerSha256": "1a0c305ea7e7df0e2b45ec62f9aabd0c0c6e88564226e77bdeb2622738e4ca0b",
+  "patchBase": "reconstructed dev-02 candidate",
+  "oracleVersion": "R3"
+}
