@@ -1,0 +1,23 @@
+{
+  "iterations": [
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c6_development_iteration_02-commit5r1c6-dev-02-ord01-2026-07-25T12-34-42-999Z",
+      "accepted": true,
+      "activeLane": "decision",
+      "decisionFailedFrom": 305,
+      "decisionFailedTo": 256,
+      "closedControlRegression": false,
+      "closedControls": {
+        "tax_compliance_task": "108/108",
+        "acronym_homograph_control": "200/200",
+        "ambiguous_clarification_control": "150/150",
+        "internal_label_proper_name": "104/104"
+      },
+      "falseRefusals": 143,
+      "counterfactualCombined": "369/400",
+      "becameNextBase": true,
+      "note": "Two-step accepted decision-lane candidate; priority-1 clusters + Context-N contentless. No closed-control regression; false-refusals held at 143."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C6",
+  "expectedRepoRoot": "C:/Projects/tina-backend",
+  "actualRepoRoot": "C:/Projects/tina-backend",
+  "backendStartingHead": "23df8e8aa098bd4518fbbccbebfd50c3ee14b7da",
+  "backendBranch": "feature/source-availability-engine-v1",
+  "backendTopLevel": "C:/Projects/tina-backend",
+  "backendGitDir": ".git",
+  "backendParent": "08990106993262cc5fdb4ad8b77b17aa3cf479dd",
+  "devFactoryPreflightHead": "91670029ccae10a76385533a283f3c96c7411577",
+  "devFactoryPreflightStatus": "pre-existing unstaged tracked mods + untracked governance artifacts; NOT modified by this unit",
+  "devFactoryReportedPrefix": "91670029",
+  "devFactoryPrefixMatches": true,
+  "implicitCwdGitCommandsAllowed": false,
+  "allBackendGitCommandsUseExplicitC": true,
+  "allRuntimeCommandsUseExplicitWorkingDirectory": true
+}

@@ -1,0 +1,15 @@
+{
+  "existing": {
+    "passed": 189,
+    "total": 200
+  },
+  "extension": {
+    "passed": 180,
+    "total": 200
+  },
+  "combined": {
+    "passed": 369,
+    "total": 400
+  },
+  "note": "Measured on the accepted C6 decision candidate (not the base). The decision-lock candidate (not reached) must pass 400/400; the accepted candidate is 369/400, improved from the base 322/400."
+}

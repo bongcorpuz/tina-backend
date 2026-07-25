@@ -1,0 +1,16 @@
+{
+  "evidenceClassesUsed": [
+    "PRIMARY_TAX_RELATION",
+    "PRIMARY_NON_TAX_ACTION",
+    "PRIMARY_LABEL_BINDING",
+    "PRIMARY_QUOTATION_ACTION",
+    "PRIMARY_NON_TAX_EXPANSION",
+    "MATERIAL_BARE_ACRONYM_AMBIGUITY",
+    "NO_CONTROLLING_RELATION"
+  ],
+  "reasonFamilyUsedForDecision": false,
+  "globalTokenVotingUsed": false,
+  "typedTargetCompleteness": true,
+  "decisionReasonRelationDecoupled": true,
+  "note": "Decision derived from typed evidence on the primary task; reason-family choice does not drive the decision. Relation/reason changes are reported as side effects only."
+}

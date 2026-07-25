@@ -1,0 +1,22 @@
+{
+  "decision": "COMMIT_5R1C6_INCOMPLETE_DECISION_LAYER_REMEDIATION_NOT_CLOSED",
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r3Edited": false,
+  "reconstructedAccepted2959": "2959/3720",
+  "bestGovernedC6Overall": "3009/3720",
+  "bestDecisionLayerResult": "3464/3720",
+  "remainingDecisionMismatches": 256,
+  "decisionLayerLock": "NOT ACHIEVED",
+  "relationLayerLock": "NOT STARTED",
+  "reasonLayerLock": "NOT STARTED",
+  "standaloneClosure": "NOT ACHIEVED",
+  "runtimeIntegrated": false,
+  "runtimeFrozen": false,
+  "runtimeMutable": true,
+  "analyzerRestoredToBaseline": true,
+  "analyzerBlob": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+  "geminiAvailable": false,
+  "substituteChallengeUsed": true,
+  "runtimeExceptionsCreated": false,
+  "next": "PHASE-10A14-R20 COMMIT 5R1-C7: DECISION-LAYER CLOSURE CONTINUATION 7 AGAINST R3 (resume from the accepted dev-02 3464-decision candidate)."
+}

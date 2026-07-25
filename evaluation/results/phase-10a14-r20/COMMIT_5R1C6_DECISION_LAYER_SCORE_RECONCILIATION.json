@@ -1,0 +1,25 @@
+{
+  "note": "Decision-lane scores derived from the same frozen R3 rows and governed classify output; no new oracle.",
+  "iterations": [
+    {
+      "iterationId": "dev-01-reconstructed-2959",
+      "activeLane": "decision",
+      "decisionPassed": 3415,
+      "decisionFailed": 305,
+      "overallPassed": 2959,
+      "priorLocksPreserved": "n/a"
+    },
+    {
+      "iterationId": "dev-02-accepted",
+      "activeLane": "decision",
+      "decisionPassed": 3464,
+      "decisionFailed": 256,
+      "overallPassed": 3009,
+      "relationMismatchesSideEffect": 209,
+      "reasonMismatchesSideEffect": 710,
+      "closedControlsPreserved": true,
+      "counterfactualCombined": "369/400",
+      "acceptedAsNextBase": true
+    }
+  ]
+}

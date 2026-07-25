@@ -1,0 +1,7 @@
+{
+  "note": "Accepted C6 decision-lane candidate (best decision 3464/3720). Two coherent steps: (a) priority-1 clusters — quotation-scope guard (text op on a quoted tax term -> QUOTES_TERM), non-tax-domain-noun expansion (text box/CSS/private contract/computer file), extended label-binding (named/keep/store + report filename + bare-acronym-label carve-out); (b) Context-N contentless referent (bare compliance/treatment attribute + trailing \"Context N\" tag, no concrete object -> no_tax_relation). NOT applied to services/ (INCOMPLETE).",
+  "analyzerSha256": "7801adda7831bb4301744faf80e1686e3f3e0bdeff4294d06c33d28e5b39cf42",
+  "patchBaseSnapshot": "reconstructed 2959 (commit5r1c6-dev-01)",
+  "oracleVersion": "R3",
+  "activeLane": "decision"
+}

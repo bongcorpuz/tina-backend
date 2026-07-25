@@ -1,0 +1,54 @@
+{
+  "decisionLayerLock": "NOT ACHIEVED",
+  "bestAcceptedDecision": "3464/3720",
+  "remainingDecisionMismatches": 256,
+  "falseAllows": 72,
+  "falseRefusals": 143,
+  "clarifyMismatches": 41,
+  "directionMatrix": {
+    "ALLOW->REFUSE": 104,
+    "ALLOW->CLARIFY": 39,
+    "REFUSE->ALLOW": 62,
+    "REFUSE->CLARIFY": 41,
+    "CLARIFY->ALLOW": 10
+  },
+  "closedControls": {
+    "tax_compliance_task": {
+      "total": 108,
+      "decisionCorrect": 108
+    },
+    "acronym_homograph_control": {
+      "total": 200,
+      "decisionCorrect": 200
+    },
+    "ambiguous_clarification_control": {
+      "total": 150,
+      "decisionCorrect": 150
+    },
+    "negation_contradiction": {
+      "total": 100,
+      "decisionCorrect": 99
+    },
+    "internal_label_proper_name": {
+      "total": 104,
+      "decisionCorrect": 104
+    },
+    "mixed_domain_genuine_tax": {
+      "total": 510,
+      "decisionCorrect": 487
+    }
+  },
+  "counterfactual": {
+    "existing": "189/200",
+    "extension": "180/200",
+    "combined": "369/400",
+    "required": "400/400 (not met)"
+  },
+  "lockVerification": "NOT_EXECUTED_BECAUSE_LOCK_NOT_REACHED",
+  "relationLayerLock": "NOT STARTED",
+  "reasonLayerLock": "NOT STARTED",
+  "standaloneClosure": "NOT ACHIEVED",
+  "productionIntegration": "NOT PERFORMED",
+  "runtimeFreeze": "NOT PERFORMED",
+  "remainingClusters": "ALLOW->REFUSE concrete-tax anchoring (104, heterogeneous tail), CONTEXTUAL_ACRONYM_MISCLASSIFIED (102), residual decision tail — see COMMIT_5R1C6_DECISION_FAILURE_PARTITION.json"
+}

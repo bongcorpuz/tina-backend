@@ -1,0 +1,4 @@
+{
+  "status": "NOT_EXECUTED_BECAUSE_LOCK_NOT_REACHED",
+  "reason": "Decision mismatches = 256 > 0; no lock candidate to verify."
+}

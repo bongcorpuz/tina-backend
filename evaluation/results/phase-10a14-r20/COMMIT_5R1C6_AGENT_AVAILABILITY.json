@@ -1,0 +1,13 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C6",
+  "primaryExecutor": "Opus 4.8",
+  "geminiProbedAfterReconstruction": true,
+  "geminiAvailable": false,
+  "geminiAvailabilityNote": "Gemini 2.5 Pro is not available in this execution environment's agent roster (available: general-purpose, Explore, Plan, claude, claude-code-guide, statusline-setup). No Gemini review was run; none is fabricated.",
+  "substituteChallengerUsed": true,
+  "substituteChallenger": "Sonnet 5 (non-executor full model)",
+  "substituteChallengerNote": "Per the C6 fallback: Opus 4.8 executes, so Sonnet 5 is the substitute non-controlling challenger. Recorded in COMMIT_5R1C6_SUBSTITUTE_ARCHITECTURE_CHALLENGE.md; non-controlling.",
+  "codex55": "reserved for final R20 Independent Review 1; not used",
+  "haiku45": "not separately invoked; mechanical evidence produced deterministically by governed tooling",
+  "controllingDecisionIssuedBy": "Opus 4.8 (primary executor)"
+}

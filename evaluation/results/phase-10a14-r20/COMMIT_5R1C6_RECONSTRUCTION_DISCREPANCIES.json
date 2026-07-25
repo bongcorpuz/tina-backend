@@ -1,0 +1,8 @@
+{
+  "expectedOverall": 2959,
+  "governedOverall": 2959,
+  "overallDiscrepancy": 0,
+  "expectedDecisionMismatches": 305,
+  "governedDecisionMismatches": 305,
+  "exact": true
+}

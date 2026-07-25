@@ -1,0 +1,11 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C6",
+  "suite": "COMMIT_5R1C5_DECISION_COUNTERFACTUAL_PAIRS (preserved byte-identically from C5)",
+  "rerunAgainst": "reconstructed accepted 2,959 base (commit5r1c6-dev-01)",
+  "totalQueries": 200,
+  "pairs": 100,
+  "families": 10,
+  "passedOn2959Base": 169,
+  "failedOn2959Base": 31,
+  "note": "This is the C6 counterfactual baseline. The decision-lock candidate must pass the existing suite 200/200 and the new extension all/all."
+}

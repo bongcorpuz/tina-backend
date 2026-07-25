@@ -1,0 +1,202 @@
+{
+  "totalQueries": 200,
+  "pairs": 100,
+  "families": 10,
+  "passOnBase": 180,
+  "failOnBase": 20,
+  "byFamily": {
+    "quote_action_vs_definition": {
+      "total": 20
+    },
+    "nontax_edit_vs_tax": {
+      "total": 20
+    },
+    "private_contract_vs_tax": {
+      "total": 20
+    },
+    "label_assign_vs_applicability": {
+      "total": 20
+    },
+    "contentless_vs_concrete_v2": {
+      "total": 20
+    },
+    "bare_vs_contextual_v2": {
+      "total": 20
+    },
+    "clause_order_invariance": {
+      "total": 20
+    },
+    "numeric_label_invariance": {
+      "total": 20
+    },
+    "negation_vs_review_v2": {
+      "total": 20
+    },
+    "filipino_v2": {
+      "total": 20
+    }
+  },
+  "note": "C6 extension authored from frozen structural rules; no model; no exact R3 query. Failures on the 2959 base are decision-lane targets; the decision-lock candidate must pass all.",
+  "failures": [
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 1.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 2.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 3.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 4.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 5.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 6.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 7.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 8.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 9.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "private_contract_vs_tax",
+      "query": "When is rent due under a private lease contract? Case 10.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "private contract, non-tax",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 1.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 2.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 3.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 4.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 5.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 6.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 7.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 8.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 9.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "filipino_v2",
+      "query": "I-format ang invoice layout. Kaso 10.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "taglish non-tax formatting action",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    }
+  ]
+}

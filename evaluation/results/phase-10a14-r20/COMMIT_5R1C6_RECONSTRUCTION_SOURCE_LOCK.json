@@ -1,0 +1,16 @@
+{
+  "sourceSnapshot": "…commit5r1c5-dev-02…/runtime-snapshot/philippine-tax-intent-analyzer.js",
+  "snapshotSha256": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f",
+  "expected": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f",
+  "matches": true,
+  "atomicWrite": {
+    "size": 54403,
+    "sha256": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f"
+  },
+  "patchFile": "COMMIT_5R1C6_RECONSTRUCTED_2959.patch",
+  "patchSha256": "7795db89570aaddc0fd3cedcddd0faa1656a0b3f2a9a07d95264f270220ffe17",
+  "boundaryUnchanged": true,
+  "patternsUnchanged": true,
+  "unexpectedRuntimeFileDifferences": 0,
+  "oracleVersion": "R3"
+}

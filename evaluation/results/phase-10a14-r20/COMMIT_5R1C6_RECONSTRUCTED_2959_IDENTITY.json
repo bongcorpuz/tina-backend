@@ -1,0 +1,11 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c6_reconstructed_2959_candidate-commit5r1c6-dev-01-ord01-2026-07-25T12-09-50-812Z",
+  "analyzerSha256": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f",
+  "snapshotSha256": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f",
+  "expected": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f",
+  "match": true,
+  "runtimeContentEqual": true,
+  "normalizedLFContentEqual": true,
+  "unexpectedRuntimeFileDifferences": 0,
+  "oracleVersion": "R3"
+}

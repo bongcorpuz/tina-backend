@@ -1,0 +1,25 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C6",
+  "problemAddressed": "C4/C5 observed intermittent scratchpad/Temp write-back truncation (0-byte reads) and one transient overwrite of the live analyzer by an analysis script that used cpSync to the live path.",
+  "protocol": {
+    "authoritativeSourceWritePath": "in-repo sibling temp (<dest>.c6tmp), never the global scratchpad Temp dir",
+    "steps": [
+      "1. hash+record current live file (guardRuntimeFiles)",
+      "2. write replacement to <dest>.c6tmp inside C:/Projects/tina-backend",
+      "3. verify temp: non-zero, parses via import, exports analyzePhilippineTaxIntent + decideTaxBoundaryFromEvidence, record SHA-256",
+      "4. atomic renameSync(<dest>.c6tmp, <dest>)",
+      "5. verify dest: non-zero, imports, SHA-256 == verified temp SHA-256, exports present",
+      "6. snapshot+diff runtime before execution"
+    ],
+    "continuousGuard": "guardRuntimeFiles() before and after every evidence-bearing execution: all three runtime files size>0 and hashes match the allocated attempt identity",
+    "onZeroByteOrUnexpectedDiff": "stop attempt; preserve technical evidence; restore from immutable snapshot; register technical failure; update CURRENT_STATE; commit incomplete technical evidence; STOP (no silent correct-and-continue)"
+  },
+  "scoringDisciplineFix": "C6 scoring reads the live file in place; candidate variants are written via the atomic protocol to the live path and captured to immutable attempt snapshots. Analysis scripts do NOT cpSync a scratch file over live during a scoring pass.",
+  "baselineGuardAtPreflight": {
+    "analyzer": { "size": 31742, "sha256": "0f67e16e4377aac9e46287ca59e90825926949fe19bea2eea56c408662702484", "gitBlob": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1" },
+    "domainBoundary": { "size": 12192, "gitBlob": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d" },
+    "boundaryPatterns": { "size": 65451, "gitBlob": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a" },
+    "note": "working-tree SHA differs from git blob due to CRLF/LF normalization (autocrlf); size>0 and content substantively identical to the committed baseline."
+  },
+  "initialized": true
+}

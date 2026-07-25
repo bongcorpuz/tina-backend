@@ -1,0 +1,24 @@
+{
+  "iterations": [
+    {
+      "iterationId": "dev-01-reconstructed-2959",
+      "governedOverall": "2959/3720",
+      "decision": "3415/3720",
+      "disposition": "development_iteration_reconstructed"
+    },
+    {
+      "iterationId": "dev-02-accepted",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c6_development_iteration_02-commit5r1c6-dev-02-ord01-2026-07-25T12-34-42-999Z",
+      "governedOverall": "3009/3720",
+      "decision": "3464/3720",
+      "disposition": "development_iteration_accepted",
+      "functionsChanged": [
+        "buildRelations (quotation-scope guard, non-tax-domain-noun expansion, label-binding extension + bare-acronym-label carve-out)",
+        "classifyTargetCompleteness (Context-N contentless)",
+        "decideTaxBoundaryFromEvidence (rule 0b broadened to compliance)"
+      ],
+      "resolvedClusters": "QUOTATION_SCOPE, NON_TAX_ACTION_MISREAD_AS_TAX, LABEL_BINDING_MISSED, partial CONTENTLESS_REFERENT (Context-N)",
+      "sideEffects": "relation mismatches 250->209, reason mismatches 760->710 (side effects; not remediated in C6)"
+    }
+  ]
+}

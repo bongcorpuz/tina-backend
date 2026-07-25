@@ -1,0 +1,96 @@
+diff --git a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c6_reconstructed_2959_candidate-commit5r1c6-dev-01-ord01-2026-07-25T12-09-50-812Z/runtime-snapshot/philippine-tax-intent-analyzer.js b/C:/Projects/tina-backend/services/philippine-tax-intent-analyzer.js
+index 7bf4e313..0cd36c0a 100644
+--- a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c6_reconstructed_2959_candidate-commit5r1c6-dev-01-ord01-2026-07-25T12-09-50-812Z/runtime-snapshot/philippine-tax-intent-analyzer.js
++++ b/C:/Projects/tina-backend/services/philippine-tax-intent-analyzer.js
+@@ -155,6 +155,12 @@ const NON_TAX_DOMAIN_NOUNS = Object.freeze([
+   'property marketing', 'culture class', 'software project', 'app', 'course id', 'course',
+   'plain english', 'typescript enum', 'enum', 'web form', 'web form field', 'swatch', 'hue token',
+   'on-screen display', 'display setting', 'monitor display', 'vitamin d', 'in medicine',
++  'text box', 'spreadsheet cell', 'spreadsheet', 'form input', 'database column', 'config file',
++  'json field', 'ui label', 'dropdown', 'table header', 'css class', 'text field', 'a function',
++  'from a function', 'into a text box', 'private lease', 'private lease contract', 'lease contract',
++  'private contract', 'private supply agreement', 'private sale', 'private sale agreement',
++  'private collection case', 'supply agreement', 'computer file', 'contract deadline',
++  'real-estate ads', 'real estate ads', 'ugly real-estate',
+ ]);
+ 
+ // Tax-shaped tokens that are prone to non-tax homograph use.
+@@ -375,6 +381,16 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+ 
+   const isNonTaxVerb = NON_TAX_VERBS.includes(primary.taskVerb) && primary.taskVerb !== 'quote';
+ 
++  // C6 Priority-1a — QUOTATION SCOPE: a text operation (count/repeat/alphabetize/spell/
++  // reverse/proofread) applied to a QUOTED tax term is a quotation action on text, not a
++  // tax question. Build QUOTES_TERM and stop, ahead of any tax-predicate detection.
++  const textOpRe = /\b(count the (?:letter|word|character|occurrence)|repeat the (?:phrase|word|line)|alphabet(?:i[sz]e)?|spell\b|reverse the (?:phrase|word|string)|proofread|capitali[sz]e|how many (?:letter|word|character)|sort the (?:letter|word))/;
++  const hasQuotedSpan = /["'“‘][^"'”’]{1,60}["'”’]/.test(primary.text);
++  if (textOpRe.test(lo) && hasQuotedSpan && /\btax\b|vat|withholding|stamp|excise|estate|customs|percentage|donor|gains|receipts/.test(lo)) {
++    add('QUOTES_TERM', 'task', target || 'quoted term');
++    return relations;
++  }
++
+   // Whole-phrase non-tax homograph: a tax-shaped word used in an explicit non-tax
+   // domain (court filing, JS return statement, homework deadline). No tax relation.
+   const isHomographPhrase = NON_TAX_HOMOGRAPH_PHRASES.some((re) => re.test(fullLo));
+@@ -448,14 +464,22 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+   // field label FLD". This is a non-tax label/name -> REFUSE. The genuine-tax carve
+   // -out above ("...reported to BIR?", "What taxes apply...", "VATable") already
+   // returned before reaching here, so the tax-question rows are unaffected.
+-  const labelNoun = /\b(?:product code|database field(?: label)?|field (?:label|abbreviation)|course code|training code|channel name|team name|file ?name|variable name|internal (?:label|phrase|project (?:name|phrase|code)|code(?: ?name)?)|sprint label|report ?name|server name|codename|project (?:code|phrase|name))\b/;
++  const labelNoun = /\b(?:product code|database field(?: label)?|field (?:label|abbreviation)|course code|training code|channel name|team name|file ?name|variable name|internal (?:label|phrase|project (?:name|phrase|code)|code(?: ?name)?)|sprint label|report ?name|report filename|server name|codename|project (?:code|phrase|name))\b/;
+   const labelBinding = labelNoun.test(fullLo)
+-    && (/\b(?:name|label|tag|call(?:ed)?|assign|use|set|rename|title)\b/.test(fullLo)
++    && (/\b(?:names?|named|naming|labels?|labell?ed|tags?|tagged|calls?|called|assigns?|assigned|uses?|used|sets?|renames?|renamed|titles?|titled|keeps?|kept|stores?|stored)\b/.test(fullLo)
+       || /\bis (?:only )?(?:an? |our )?[a-z ]*\b(?:label|code|name|phrase)\b/.test(fullLo)
+       || /\bshould be\b/.test(fullLo)
+       || /\bcreate a checklist for\b/.test(fullLo)
+-      || /\bis called\b/.test(fullLo));
+-  if (labelBinding && !genuineTaxQuestionPredicate && !hasStrongTaxAnchor && !RE.negationReview.test(fullLo) && !hasNegationFraming) {
++      || /\b(?:is|are) called\b/.test(fullLo)
++      || /\bunder [a-z]+ as the\b/.test(fullLo)
++      || /\bas the (?:report|file|variable|product|project|server|channel|team|course|training)\b/.test(fullLo));
++  // When the label-binding is explicit (label-noun + naming/assignment verb) and the
++  // only tax signal is a bare tax acronym (the thing being named), the strong-tax-anchor
++  // guard must not block the label reading. A real tax predicate/action still blocks it.
++  const strongAnchorIsOnlyBareAcronym = hasStrongTaxAnchor
++    && /\b(?:bir|vat|dst|ewt|fwt|cwt|rcit|mcit|osd|nolco|slsp|pan|fan|fld|boc|cta|rr)\b/.test(fullLo)
++    && !/\bincome tax\b|subject to (?:vat|tax|withholding|customs)|\bwithholding tax on\b|\bcapital gains\b|\bestate tax\b|\bdonor'?s? tax\b|\bpercentage tax\b|\bcustoms dut|deductible|taxable\b|\bfiling\b|\bfile\b|\bcompute\b/.test(fullLo);
++  if (labelBinding && !genuineTaxQuestionPredicate && (!hasStrongTaxAnchor || strongAnchorIsOnlyBareAcronym) && !RE.negationReview.test(fullLo) && !hasNegationFraming) {
+     if (/\bcreate a checklist for\b|\bchecklist\b/.test(fullLo)) { add('REQUESTS_NON_TAX_ACTION_ON', primary.taskVerb || 'action', target || 'object'); relations._homographVeto = true; return relations; }
+     add('NAMES_AS_INTERNAL_LABEL', target || 'name', 'label'); relations._homographVeto = true; return relations;
+   }
+@@ -584,6 +608,16 @@ function classifyTargetCompleteness(primary, fullLo, relations, ordinaryObjects)
+   const lo = lower(primary.text);
+   if (relations.some((r) => r.relation === 'QUOTES_TERM')) return 'QUOTED_TEXT';
+   if (relations.some((r) => r.relation === 'NAMES_AS_INTERNAL_LABEL')) return 'LABEL_ONLY';
++  // Contentless bare compliance/treatment referent: the primary clause is a short bare
++  // question whose subject is only "this/that/it/the <attribute>" with a trailing
++  // "Context N" tag and NO concrete object. "When is the return due? Context 1.", "What
++  // form should I use? Context 1.", "Is this deductible? Context 1.". Restricted to the
++  // bare-attribute question shape so concrete tax questions ("penalty for late deficiency
++  // interest in case 19") are unaffected.
++  const contextTag = /\bcontext \d+\s*\.?\s*$/.test(lo);
++  const bareAttrQuestion = /^(?:is|are|does|do|can|should|when|what|how|will|where)\b[^?]*\b(?:this|that|it|the|there|i)\b[^?]*\?/.test(lo)
++    && !CONCRETE_SUBJECT_RE.test(lo) && !CONCRETE_TAX_NOUN_RE.test(lo) && (ordinaryObjects || []).length === 0;
++  if (contextTag && bareAttrQuestion && (COMPLIANCE_PROCEDURE_RE.test(lo) || TREATMENT_ATTRIBUTE_RE.test(lo))) return 'CONTENTLESS';
+   if (COMPLIANCE_PROCEDURE_RE.test(lo)) return 'RESOLVED_REFERENT';
+   if ((primary.taskObject) || (ordinaryObjects || []).length > 0 || CONCRETE_SUBJECT_RE.test(lo)) return 'CONCRETE';
+   if (CONCRETE_TAX_NOUN_RE.test(lo)) return 'CONCRETE';
+@@ -624,11 +658,12 @@ export function decideTaxBoundaryFromEvidence(evidence) {
+     const acrAmbiguous = acr.some((a) => a.ambiguous);
+     return decide('CLARIFY', acrAmbiguous ? 'ambiguous_tax_acronym' : 'no_tax_relation', 0.50);
+   }
+-  // 0b. Contentless treatment referent: a treatment-family relation over a bare
+-  // pronoun/determiner tax-attribute with no concrete/resolved subject and no
+-  // compliance procedure -> no_tax_relation (REFUSE). Compliance relations carry an
+-  // explicit procedure and short-circuit this rule, so genuine compliance is unaffected.
+-  if (evidence.contentlessTreatmentTarget && hasTreatment && !hasCompliance
++  // 0b. Contentless tax referent: a treatment- or compliance-family relation over a bare
++  // pronoun/determiner tax-attribute with no concrete/resolved subject (including a
++  // dangling "Context/case/item N" tag with no concrete object) -> no_tax_relation
++  // (REFUSE). targetCompleteness already distinguishes a genuine compliance procedure
++  // with a concrete/implicit object (RESOLVED_REFERENT) from a contentless one.
++  if (evidence.contentlessTreatmentTarget && (hasTreatment || hasCompliance)
+       && !namesLabel && !expandsNonTax && !quotesTerm && !requestsNonTax && !negatesTax) {
+     return decide('REFUSE', 'no_tax_relation', 0.55);
+   }

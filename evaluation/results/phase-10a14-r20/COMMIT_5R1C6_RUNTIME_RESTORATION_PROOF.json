@@ -1,0 +1,28 @@
+{
+  "candidatePreserved": true,
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c6_development_iteration_02-commit5r1c6-dev-02-ord01-2026-07-25T12-34-42-999Z",
+  "candidateSha256": "7801adda7831bb4301744faf80e1686e3f3e0bdeff4294d06c33d28e5b39cf42",
+  "liveAnalyzerRestored": true,
+  "liveAnalyzerBlob": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1",
+  "liveDomainBoundaryRestored": true,
+  "liveDomainBoundaryBlob": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+  "livePatternsRestored": true,
+  "livePatternsBlob": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+  "runtimeIntegrated": false,
+  "runtimeFrozen": false,
+  "runtimeMutable": true,
+  "postRestoreGuard": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "size": 31742,
+      "sha256": "0f67e16e4377aac9e46287ca59e90825926949fe19bea2eea56c408662702484"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "size": 12192,
+      "sha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "size": 65451,
+      "sha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465"
+    }
+  }
+}

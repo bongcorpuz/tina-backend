@@ -1,0 +1,61 @@
+{
+  "attemptId": "R20-other-r20_commit5r1c6_substitute_architecture_challenge-commit5r1c6-analysis-ord01-2026-07-25T12-34-45-010Z",
+  "attemptCategory": "other",
+  "gateName": "r20_commit5r1c6_substitute_architecture_challenge",
+  "cycle": "commit5r1c6-analysis",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "23df8e8aa098bd4518fbbccbebfd50c3ee14b7da",
+  "evidenceHeadAtStart": "23df8e8aa098bd4518fbbccbebfd50c3ee14b7da",
+  "evidenceHeadAtEnd": "23df8e8aa098bd4518fbbccbebfd50c3ee14b7da",
+  "runtimeBaselineCommit": "23df8e8aa098bd4518fbbccbebfd50c3ee14b7da",
+  "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284",
+  "runtimeServicesTreeObject": "c16daac64b34261899fef1b8941d8b23a290bed8",
+  "runtimeBlobs": {
+    "services/philippine-tax-boundary-patterns.js": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a",
+    "services/philippine-tax-domain-boundary.js": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d",
+    "services/philippine-tax-intent-analyzer.js": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+  },
+  "harnessTreeDigest": "8be393c0ed9327db57abcd5ddd4e51c562153f40",
+  "governedToolingContentDigest": "38b4470c53dcb3c30d7104ec3e90dc2d3246a6142388876f9acb44fa14fae08a",
+  "dependencyLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+  "dependencyLockBlobs": {
+    "package-lock.json": "9c9b93bf4be082790c4bf99c52a66bab9bc61d88",
+    "package.json": "339f194c6824804a412c179a1c4a7d1a8f4dd1f8"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "osRelease": "node",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "timezone": "Asia/Manila",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "n/a",
+  "commandArgs": [
+    "substitute-architecture-challenge"
+  ],
+  "commandHash": "a1288780094621756a07e2b03c3db6ff8e9a293fe4d336d07a57ede851e0df13",
+  "startedAt": "2026-07-25T12:34:45.615Z",
+  "endedAt": "2026-07-25T12:34:45.634Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "non_controlling_challenge",
+  "controlling": false,
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit5r1c6_substitute_architecture_challenge-commit5r1c6-analysis-ord01-2026-07-25T12-34-45-010Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit5r1c6_substitute_architecture_challenge-commit5r1c6-analysis-ord01-2026-07-25T12-34-45-010Z/stderr.txt",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit5r1c6_substitute_architecture_challenge-commit5r1c6-analysis-ord01-2026-07-25T12-34-45-010Z/CHALLENGE_SUMMARY.json"
+  ],
+  "stdoutSha256": "df21e4f5ad0761f91eb746cfed531359d9dbb7e2193161e1d3b6f039a0e954bf",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "externalCaptureRemoved": true,
+  "gitObjectValidation": {
+    "evidenceHeadAtAllocation": "commit",
+    "evidenceHeadAtStart": "commit",
+    "evidenceHeadAtEnd": "commit",
+    "runtimeBaselineCommit": "commit"
+  }
+}
