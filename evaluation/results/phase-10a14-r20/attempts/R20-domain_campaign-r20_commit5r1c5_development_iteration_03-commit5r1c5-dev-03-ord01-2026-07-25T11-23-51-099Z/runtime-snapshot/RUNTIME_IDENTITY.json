@@ -1,0 +1,6 @@
+{
+  "note": "development_iteration_rejected. Bare tax-content phrase -> ALLOW before the CLARIFY fallback (for \"RMC guidance\", \"RCIT\", \"OSD election\"). activeLane=decision. NOT applied to services/ (INCOMPLETE).",
+  "analyzerSha256": "4723d45200674acf0e72f772e5953c29ee0ae66956c306f77a874789d86be3b7",
+  "patchBaseSnapshot": "c5_iter02_accepted.js",
+  "oracleVersion": "R3"
+}

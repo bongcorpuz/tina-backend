@@ -1,0 +1,63 @@
+diff --git a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c4_development_iteration_02-commit5r1c4-dev-02-ord01-2026-07-25T10-45-21-760Z/runtime-snapshot/philippine-tax-intent-analyzer.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c5_iter02_accepted.js
+index 0ee5b2f1..7bf4e313 100644
+--- a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c4_development_iteration_02-commit5r1c4-dev-02-ord01-2026-07-25T10-45-21-760Z/runtime-snapshot/philippine-tax-intent-analyzer.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c5_iter02_accepted.js
+@@ -569,6 +569,31 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+   return relations;
+ }
+ 
++// ── Typed target-completeness (decision-lane referent model) ─────────────────
++
++const COMPLIANCE_PROCEDURE_RE = /\b(bir form|what form|which form|\bform\b|file\b|filing|\breturn\b|register(?:ed|ing|ation)?|remit|books of account|invoic(?:e|ing)|slsp|alphalist|quarterly|annual return|tax clearance|certificate of registration|records support|deadline to file|due date|when is the return due|what records)\b/;
++const TREATMENT_ATTRIBUTE_RE = /\b(deductib|credited|creditable|exempt|surcharge|penalty|period|deadline|rate|threshold|holding period|tariff|protest|appeal|notice period)\b/;
++const CONCRETE_SUBJECT_RE = /\b(deficiency interest|culture class|income from|sale\b|import(?:ed|s)?|property|compensation|dividend|interest income|royalt|rent(?:al)?\b|fringe benefit|estate\b|donation|transaction|expense|the [a-z]+ (?:purchase|van|car|printer|machinery|warehouse|fee|cost|subscription|dinner)|for (?:a|an|the|our|my) [a-z])/;
++const CONCRETE_TAX_NOUN_RE = /\b(assessment|prescriptive period|final assessment notice|deficiency|notice|customs dut|tariff classification|import|estate|donation|refund|credit|amnesty|ruling|clearance|registration)\b/;
++
++// A compliance procedure carries its own subject (RESOLVED_REFERENT) even when the
++// object is implicit. A treatment attribute over only a bare pronoun/determiner, with
++// no concrete/resolved subject and no procedure, is CONTENTLESS.
++function classifyTargetCompleteness(primary, fullLo, relations, ordinaryObjects) {
++  if (!primary) return 'CONCRETE';
++  const lo = lower(primary.text);
++  if (relations.some((r) => r.relation === 'QUOTES_TERM')) return 'QUOTED_TEXT';
++  if (relations.some((r) => r.relation === 'NAMES_AS_INTERNAL_LABEL')) return 'LABEL_ONLY';
++  if (COMPLIANCE_PROCEDURE_RE.test(lo)) return 'RESOLVED_REFERENT';
++  if ((primary.taskObject) || (ordinaryObjects || []).length > 0 || CONCRETE_SUBJECT_RE.test(lo)) return 'CONCRETE';
++  if (CONCRETE_TAX_NOUN_RE.test(lo)) return 'CONCRETE';
++  const barePronoun = /^(?:is|are|does|do|can|should|when|what|how|will)\b[^?]*\b(?:this|that|it|these|those)\b/.test(lo)
++    || /^what is the (?:deductib\w*|penalty|period|deadline|rate|threshold|holding period|tariff|exemption|surcharge|notice period)\s*\??$/.test(lo)
++    || /^(?:when is the return due|what form should i use|is there a surcharge|can i (?:protest|appeal) this|does this need registration|is this (?:subject to assessment|exempt))\b/.test(lo);
++  if (barePronoun && TREATMENT_ATTRIBUTE_RE.test(lo) && !/\bfor (?:a|an|the|our|my) [a-z]/.test(lo)) return 'CONTENTLESS';
++  return 'CONCRETE';
++}
++
+ // ── Decision precedence (terminating, deterministic, relation-controlled) ────
+ 
+ /**
+@@ -599,6 +624,14 @@ export function decideTaxBoundaryFromEvidence(evidence) {
+     const acrAmbiguous = acr.some((a) => a.ambiguous);
+     return decide('CLARIFY', acrAmbiguous ? 'ambiguous_tax_acronym' : 'no_tax_relation', 0.50);
+   }
++  // 0b. Contentless treatment referent: a treatment-family relation over a bare
++  // pronoun/determiner tax-attribute with no concrete/resolved subject and no
++  // compliance procedure -> no_tax_relation (REFUSE). Compliance relations carry an
++  // explicit procedure and short-circuit this rule, so genuine compliance is unaffected.
++  if (evidence.contentlessTreatmentTarget && hasTreatment && !hasCompliance
++      && !namesLabel && !expandsNonTax && !quotesTerm && !requestsNonTax && !negatesTax) {
++    return decide('REFUSE', 'no_tax_relation', 0.55);
++  }
+   // 1. Negation + explicit tax review -> ALLOW.
+   if (negatesTax && (hasTreatment || hasCompliance)) return decide('ALLOW', 'tax_negation_but_tax_review_requested', 0.80);
+   // 2. Internal label / name.
+@@ -714,7 +747,10 @@ export function analyzePhilippineTaxIntent(input, options = {}) {
+   if (acronymMentions.some((a) => a.ambiguous)) ambiguityFlags.push('ambiguous_acronym');
+   if (danglingScenario) ambiguityFlags.push('dangling_referent');
+ 
+-  const evidenceForDecision = { relations, acronymMentions, ordinaryObjects, taxPredicates, taxEntities, normalizedText, danglingScenario, homographVeto: relations._homographVeto === true };
++  const targetCompleteness = classifyTargetCompleteness(primary, fullLo, relations, ordinaryObjects);
++  const contentlessTreatmentTarget = targetCompleteness === 'CONTENTLESS';
++
++  const evidenceForDecision = { relations, acronymMentions, ordinaryObjects, taxPredicates, taxEntities, normalizedText, danglingScenario, homographVeto: relations._homographVeto === true, contentlessTreatmentTarget, targetCompleteness };
+   const { decision, reasonCode, confidence } = decideTaxBoundaryFromEvidence(evidenceForDecision);
+ 
+   const publicClauses = clauses.map((c) => Object.freeze({

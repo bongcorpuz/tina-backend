@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-25T11:00:00Z`
+`2026-07-25T11:30:00Z`
 
 Repository:
 
@@ -31,9 +31,9 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C4
-LAYER-LOCKED ARCHITECTURE REMEDIATION CONTINUATION 4 AGAINST R3
-DECISION: INCOMPLETE — ARCHITECTURE REMEDIATION NOT CLOSED
+PHASE-10A14-R20 — COMMIT 5R1-C5
+DECISION-CONFUSION CLOSURE AND LAYER-LOCKED RUNTIME REMEDIATION AGAINST R3
+DECISION: INCOMPLETE — DECISION LAYER REMEDIATION NOT CLOSED
 ```
 
 Canonical oracle:
@@ -43,26 +43,26 @@ R3, unchanged
 ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
 ```
 
-Reconstructed candidate:
+Reconstructed accepted C4 base:
 
-`2,870 / 3,720`
+`2,955 / 3,720` (decision 3,411 / 3,720)
 
-Best overall governed C4 candidate:
+Best governed C5 candidate:
 
-`2,955 / 3,720`
+`2,959 / 3,720`
 
 Best decision-layer result:
 
-`3,439 / 3,720`
+`3,415 / 3,720`
 
 Remaining decision mismatches:
 
-`281`
+`305`
 
 Layer status:
 
 ```text
-decision lock:   not achieved (best decision 3,439/3,720; accepted base 3,411/3,720)
+decision lock:   not achieved (best decision 3,415/3,720)
 relation lock:   not started
 reason lock:     not started
 standalone:      not achieved
@@ -73,14 +73,21 @@ freeze:          not performed
 Best accepted base (dev-02) mismatch matrix:
 
 ```text
-overall passed:            2,955 / 3,720
-decision mismatches:       309
+overall passed:            2,959 / 3,720
+decision mismatches:       305
 relation mismatches:       250
-reason mismatches:         764
-material false allows:     113
+reason mismatches:         760
+material false allows:     109
 material false refusals:   143
 clarify mismatches:         53
 metamorphic groups passed:  72 / 100
+```
+
+Decision-level closed controls preserved by the accepted base:
+
+```text
+tax_compliance_task decisions:        108 / 108
+acronym_homograph_control decisions:  200 / 200
 ```
 
 Runtime:
@@ -92,28 +99,47 @@ runtimeMutable = true
 live services restored to the committed baseline
 ```
 
+Agent availability:
+
+```text
+Gemini 2.5 Pro: unavailable in this environment (not fabricated)
+substitute non-controlling challenger: Sonnet 5 (recorded, advisory only)
+controlling decision issued by: Opus 4.8 (primary executor)
+```
+
 Blocker:
 
 ```text
-mutually trading decision-precedence clusters:
-- ALLOW expected but REFUSE produced;
-- REFUSE expected but ALLOW produced;
-- REFUSE expected but CLARIFY produced;
-together with concrete-subject and homograph discrimination that reopens
-one category when another is tightened (the dev-03 contentless-referent
-guard improved decisions 309->281 but reopened tax_compliance_task 108->90,
-so it was rejected as the next base).
+remaining decision clusters carry false-allow / false-refusal trade risk:
+- CONTEXTUAL_ACRONYM_MISCLASSIFIED (concrete tax subject not anchored;
+  bare tax phrase routed to CLARIFY);
+- TAX_RELATION_MISSED_ON_CONCRETE_TARGET;
+- QUOTATION_SCOPE and NON_TAX_ACTION_MISREAD_AS_TAX (clean, low-risk, for C6);
+the rejected dev-03 bare-tax-topic ALLOW over-allowed 8 non-tax rows
+(decision 305->311), so a tighter structural anchor is required in C6.
 ```
 
-Preserved candidates:
+Key architecture result (validated this unit):
 
 ```text
-reconstructed 2,870 (dev-01):
-  attempt: R20-domain_campaign-r20_commit5r1c4_reconstructed_2870_candidate-commit5r1c4-dev-01
-accepted best base 2,955 (dev-02):
-  attempt: R20-domain_campaign-r20_commit5r1c4_development_iteration_02-commit5r1c4-dev-02
-rejected decision candidate, 3,439 decisions (dev-03):
-  attempt: R20-domain_campaign-r20_commit5r1c4_development_iteration_03-commit5r1c4-dev-03
+The typed target-completeness model (rule 0b) suppresses a CONTENTLESS bare
+tax-attribute at the DECISION lane while leaving compliance relations intact,
+so the C4 dev-03 tax_compliance reason/relation regression is avoided. This
+decouples the decision lane from reason/relation and is the accepted base for C6.
+```
+
+Preserved candidates and controls:
+
+```text
+reconstructed accepted 2,955 (dev-01):
+  attempt: R20-domain_campaign-r20_commit5r1c5_reconstructed_2955_candidate-commit5r1c5-dev-01
+accepted best decision base 2,959 / decision 3,415 (dev-02):
+  attempt: R20-domain_campaign-r20_commit5r1c5_development_iteration_02-commit5r1c5-dev-02
+rejected bare-tax-topic candidate, decision 3,409 (dev-03):
+  attempt: R20-domain_campaign-r20_commit5r1c5_development_iteration_03-commit5r1c5-dev-03
+decision confusion matrix + 10-cluster partition + dev02/dev03 differential preserved;
+200-query / 100-pair / 10-family counterfactual controls (169/200 pass on base);
+target-completeness contract + decision-evidence-lattice spec preserved.
 runtime snapshots + patches preserved in the attempt directories (not applied to services/)
 ```
 
@@ -284,35 +310,42 @@ R3 best COMMIT 5R1-C4 candidate — overall (governed):
 
 R3 best COMMIT 5R1-C4 result — decision layer (governed):
 3,439 / 3,720
+
+R3 best COMMIT 5R1-C5 candidate — overall (governed):
+2,959 / 3,720
+
+R3 best COMMIT 5R1-C5 result — decision layer (governed):
+3,415 / 3,720
 ```
 
 The R2 scores are historical only.
 
-The best current governed R3 candidate is the accepted COMMIT 5R1-C4 dev-02 candidate at
-2,955 / 3,720 overall (decision layer 3,411 / 3,720), preserved as its attempt runtime-snapshot
-(with its patch from the reconstructed 2,870 candidate and hashes). The reconstructed 2,870
-candidate is preserved as the COMMIT 5R1-C4 dev-01 attempt. The dev-03 candidate reached the
-best decision-layer result (3,439 / 3,720) but was rejected as the next base because it reopened
-a closed category (tax_compliance_task 108 -> 90); it is preserved as the COMMIT 5R1-C4 dev-03
-attempt.
+The best current governed R3 candidate is the accepted COMMIT 5R1-C5 dev-02 candidate at
+2,959 / 3,720 overall (decision layer 3,415 / 3,720), preserved as its attempt runtime-snapshot
+(with its patch from the reconstructed 2,955 base and hashes). It introduced a typed
+target-completeness model that suppresses a CONTENTLESS bare tax-attribute at the decision lane
+while preserving compliance relations (tax_compliance_task decisions 108/108 and
+acronym_homograph_control decisions 200/200 preserved). The reconstructed accepted 2,955 base is
+preserved as the COMMIT 5R1-C5 dev-01 attempt; the rejected bare-tax-topic candidate
+(decision 3,409 / 3,720) is preserved as the COMMIT 5R1-C5 dev-03 attempt.
 
 None is applied to the live `services/` tree; the live runtime is the committed baseline.
-COMMIT 5R1-C5 must resume from the accepted 2,955 candidate.
+COMMIT 5R1-C6 must resume from the accepted 2,959 candidate.
 
 ## Current Evidence Registry
 
 ```text
 cumulativeThrough:
-commit5r1c4-incomplete
+commit5r1c5-incomplete
 
 runtimeClosure:
 false
 
 total attempts:
-46
+51
 
-COMMIT 5R1-C4 new attempts:
-3
+COMMIT 5R1-C5 new attempts:
+5
 
 closureComplete:
 true
@@ -329,17 +362,17 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C5
-LAYER-LOCKED ARCHITECTURE REMEDIATION CONTINUATION 5 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C6
+DECISION-CONFUSION / LAYER-LOCKED REMEDIATION CONTINUATION 6 AGAINST R3
 ```
 
-COMMIT 5R1-C5 must:
+COMMIT 5R1-C6 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the accepted COMMIT 5R1-C4 dev-02 candidate (best overall R3 = 2,955 / 3,720; decision 3,411 / 3,720);
+2. reconstruct the accepted COMMIT 5R1-C5 dev-02 candidate (best overall R3 = 2,959 / 3,720; decision 3,415 / 3,720);
 3. execute it as a new governed R3 campaign;
 4. preserve the actual R3 result;
-5. continue the layer-locked decision lane first — reach 0 decision mismatches without reopening any closed category (tax_compliance_task, acronym_homograph_control), refining the concrete-subject / homograph discriminator so the mutually-trading clusters resolve together;
+5. continue the decision lane from the preserved 10-cluster partition and 200-query counterfactual controls — start with the clean low-risk clusters (QUOTATION_SCOPE, NON_TAX_ACTION_MISREAD_AS_TAX), then the concrete-tax anchoring and a tighter structural bare-tax-topic anchor, to reach 0 decision mismatches without reopening tax_compliance_task (108/108) or acronym_homograph_control (200/200);
 6. only then lock decision, close the relation lane, then the reason lane, to standalone 3,720/3,720;
 7. integrate only after standalone closure;
 8. achieve integrated production-boundary 3,720/3,720;
@@ -353,7 +386,7 @@ COMMIT 6 is not the next task; it becomes the next task only after a successful 
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C5 (and any further continuations) runtime closure and freeze
+COMMIT 5R1-C6 (and any further continuations) runtime closure and freeze
 → COMMIT 6 post-freeze campaigns and focused evidence
 → deterministic clean cycles
 → staging clean cycles

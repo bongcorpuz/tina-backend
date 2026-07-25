@@ -1,0 +1,6 @@
+{
+  "accepted": true,
+  "rationale": "Decision failures 309->305; no closed-control regression (tax_compliance_task decision 108/108, acronym_homograph_control 200/200 preserved); false-refusals held at 143; overall 2955->2959. Accepted best decision base for C6.",
+  "architecturalHypothesis": "Typed target-completeness (decision lane): a treatment-family relation over a CONTENTLESS bare pronoun/determiner tax-attribute (no concrete/resolved subject, no compliance procedure) -> no_tax_relation REFUSE. Relations left intact; compliance short-circuits, so the dev-03 reason regression is avoided",
+  "activeLane": "decision"
+}

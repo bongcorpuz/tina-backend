@@ -1,0 +1,289 @@
+{
+  "totalQueries": 200,
+  "families": 10,
+  "passOnBase": 169,
+  "failOnBase": 31,
+  "byFamily": {
+    "contentless_vs_concrete": {
+      "total": 20
+    },
+    "bare_vs_contextual_acronym": {
+      "total": 20
+    },
+    "label_vs_tax": {
+      "total": 20
+    },
+    "homograph_action_vs_tax": {
+      "total": 20
+    },
+    "quote_vs_definition": {
+      "total": 20
+    },
+    "negation_vs_review": {
+      "total": 20
+    },
+    "filipino_task_contrast": {
+      "total": 20
+    },
+    "multiclause_focus": {
+      "total": 20
+    },
+    "compliance_vs_contentless": {
+      "total": 20
+    },
+    "scenario_invariance": {
+      "total": 20
+    }
+  },
+  "note": "Authored from frozen structural rules; no model; no exact R3 query. Run on the accepted 2955 base — failures here are the decision-lane targets. The suite must pass on the final decision-locked runtime.",
+  "failures": [
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 1.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 2.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is a delivery van deductible?",
+      "expectedDecision": "ALLOW",
+      "controllingFeature": "concrete taxable subject",
+      "actualDecision": "REFUSE",
+      "actualReason": "explicit_non_tax_task"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 3.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 4.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 5.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 6.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 7.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 8.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 9.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "contentless_vs_concrete",
+      "query": "Is this deductible? Item 10.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "contentless bare pronoun subject",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"withholding tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_treatment_of_ordinary_object"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"value added tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"percentage tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"capital gains tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"donor tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"excise tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"fringe benefit tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "quote_vs_definition",
+      "query": "Count the letters in \"gross receipts tax\".",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "tax term quoted for text operation",
+      "actualDecision": "ALLOW",
+      "actualReason": "explicit_tax_task_relation"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 1.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 2.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 3.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 4.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 5.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 6.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 7.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 8.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 9.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    },
+    {
+      "family": "compliance_vs_contentless",
+      "query": "What is the deadline? Case 10.",
+      "expectedDecision": "REFUSE",
+      "controllingFeature": "bare attribute, no procedure, contentless",
+      "actualDecision": "ALLOW",
+      "actualReason": "tax_compliance_task"
+    }
+  ]
+}

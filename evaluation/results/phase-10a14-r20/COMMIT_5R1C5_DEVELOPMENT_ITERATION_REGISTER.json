@@ -1,0 +1,36 @@
+{
+  "iterations": [
+    {
+      "iterationId": "dev-01-reconstructed-2955",
+      "governedScore": "2955/3720",
+      "decisionScore": "3411/3720",
+      "disposition": "development_iteration_reconstructed"
+    },
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c5_development_iteration_02-commit5r1c5-dev-02-ord01-2026-07-25T11-23-49-412Z",
+      "governedScore": "2959/3720",
+      "decisionScore": "3415/3720",
+      "disposition": "development_iteration_accepted",
+      "functionsChanged": [
+        "classifyTargetCompleteness (new)",
+        "decideTaxBoundaryFromEvidence (rule 0b contentless)",
+        "analyzePhilippineTaxIntent (targetCompleteness wiring)"
+      ],
+      "newRegressions": "none (decision-safe; reason/relation unchanged)",
+      "resolvedClusters": "CONTENTLESS_REFERENT decision rows (REFUSE->ALLOW 103->99)"
+    },
+    {
+      "iterationId": "dev-03",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c5_development_iteration_03-commit5r1c5-dev-03-ord01-2026-07-25T11-23-51-099Z",
+      "governedScore": "2953/3720",
+      "decisionScore": "3409/3720",
+      "disposition": "development_iteration_rejected",
+      "functionsChanged": [
+        "decideTaxBoundaryFromEvidence (rule 8b bare-tax-topic)"
+      ],
+      "newRegressions": "REFUSE->ALLOW +8 false-allows",
+      "resolvedClusters": "none net"
+    }
+  ]
+}

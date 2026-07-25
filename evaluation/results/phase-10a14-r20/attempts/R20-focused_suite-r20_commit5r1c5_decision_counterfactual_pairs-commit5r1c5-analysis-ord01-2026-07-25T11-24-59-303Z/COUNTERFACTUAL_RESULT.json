@@ -1,0 +1,8 @@
+{
+  "totalQueries": 200,
+  "pairs": 100,
+  "families": 10,
+  "passOnAccepted2955Base": 169,
+  "failOnBase": 31,
+  "note": "Authored from frozen structural rules; no model; no exact R3 query. Run against the accepted 2955 base — failures are the decision-lane targets for C6. The suite must pass on the final decision-locked runtime."
+}

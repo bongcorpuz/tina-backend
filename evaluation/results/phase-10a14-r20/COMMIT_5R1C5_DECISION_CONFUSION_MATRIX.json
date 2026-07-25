@@ -1,0 +1,233 @@
+{
+  "base": "reconstructed accepted 2955 (commit5r1c5-dev-01)",
+  "totalCells": 3720,
+  "matrix": {
+    "ALLOW->ALLOW": 1488,
+    "ALLOW->REFUSE": 103,
+    "ALLOW->CLARIFY": 40,
+    "REFUSE->ALLOW": 103,
+    "REFUSE->REFUSE": 1613,
+    "REFUSE->CLARIFY": 53,
+    "CLARIFY->ALLOW": 10,
+    "CLARIFY->REFUSE": 0,
+    "CLARIFY->CLARIFY": 310
+  },
+  "diagonalTotal": 3411,
+  "offDiagonalTotal": 309,
+  "rowIdsMissing": 0,
+  "rowIdsDuplicated": 0,
+  "by": {
+    "sourceSet": {
+      "r19_1120": {
+        "total": 1120,
+        "decCorrect": 1096
+      },
+      "r18_corrected_567": {
+        "total": 567,
+        "decCorrect": 472
+      },
+      "r17_accepted_control": {
+        "total": 210,
+        "decCorrect": 134
+      },
+      "r20_new": {
+        "total": 1823,
+        "decCorrect": 1709
+      }
+    },
+    "primaryCategory": {
+      "explicit_tax_control": {
+        "total": 200,
+        "decCorrect": 190
+      },
+      "explicit_non_tax_control": {
+        "total": 200,
+        "decCorrect": 200
+      },
+      "acronym_homograph_control": {
+        "total": 200,
+        "decCorrect": 200
+      },
+      "mixed_domain_genuine_tax": {
+        "total": 510,
+        "decCorrect": 487
+      },
+      "ambiguous_clarification_control": {
+        "total": 150,
+        "decCorrect": 150
+      },
+      "filipino_taglish_control": {
+        "total": 100,
+        "decCorrect": 100
+      },
+      "metamorphic": {
+        "total": 380,
+        "decCorrect": 357
+      },
+      "explicit_tax": {
+        "total": 112,
+        "decCorrect": 69
+      },
+      "explicit_non_tax": {
+        "total": 117,
+        "decCorrect": 117
+      },
+      "substring_homograph_trap": {
+        "total": 100,
+        "decCorrect": 100
+      },
+      "ambiguous": {
+        "total": 80,
+        "decCorrect": 56
+      },
+      "filipino_taglish": {
+        "total": 60,
+        "decCorrect": 51
+      },
+      "acronym_context": {
+        "total": 38,
+        "decCorrect": 32
+      },
+      "customs_tariff_tax": {
+        "total": 30,
+        "decCorrect": 22
+      },
+      "capital_gain_tax": {
+        "total": 30,
+        "decCorrect": 22
+      },
+      "bir_enforcement_tax": {
+        "total": 20,
+        "decCorrect": 19
+      },
+      "private_contract_non_tax": {
+        "total": 30,
+        "decCorrect": 13
+      },
+      "court_labor_sec_non_tax": {
+        "total": 30,
+        "decCorrect": 12
+      },
+      "generic_ambiguous": {
+        "total": 30,
+        "decCorrect": 22
+      },
+      "filipino_taglish_mixed": {
+        "total": 20,
+        "decCorrect": 14
+      },
+      "substring_traps": {
+        "total": 20,
+        "decCorrect": 10
+      },
+      "explicit_non_tax_task": {
+        "total": 565,
+        "decCorrect": 563
+      },
+      "acronym_capitalization_expansion": {
+        "total": 276,
+        "decCorrect": 227
+      },
+      "quoted_term_only": {
+        "total": 110,
+        "decCorrect": 80
+      },
+      "negation_contradiction": {
+        "total": 100,
+        "decCorrect": 99
+      },
+      "internal_label_proper_name": {
+        "total": 104,
+        "decCorrect": 91
+      },
+      "tax_compliance_task": {
+        "total": 108,
+        "decCorrect": 108
+      }
+    },
+    "language": {
+      "english": {
+        "total": 3382,
+        "decCorrect": 3102
+      },
+      "filipino_taglish": {
+        "total": 338,
+        "decCorrect": 309
+      }
+    },
+    "primaryRelation": {
+      "ASKS_TAX_TREATMENT_OF": {
+        "total": 424,
+        "decCorrect": 399
+      },
+      "ASKS_TAX_COMPLIANCE_FOR": {
+        "total": 420,
+        "decCorrect": 362
+      },
+      "ASKS_WITHHOLDING_ON": {
+        "total": 83,
+        "decCorrect": 80
+      },
+      "ASKS_DEDUCTIBILITY_OF": {
+        "total": 234,
+        "decCorrect": 229
+      },
+      "ASKS_CUSTOMS_DUTY_ON": {
+        "total": 115,
+        "decCorrect": 111
+      },
+      "ASKS_VAT_TREATMENT_OF": {
+        "total": 289,
+        "decCorrect": 281
+      },
+      "NONE": {
+        "total": 707,
+        "decCorrect": 537
+      },
+      "REQUESTS_NON_TAX_ACTION_ON": {
+        "total": 887,
+        "decCorrect": 870
+      },
+      "NAMES_AS_INTERNAL_LABEL": {
+        "total": 200,
+        "decCorrect": 197
+      },
+      "EXPANDS_AS_NON_TAX": {
+        "total": 59,
+        "decCorrect": 59
+      },
+      "ASKS_DEFINITION_OF": {
+        "total": 156,
+        "decCorrect": 141
+      },
+      "QUOTES_TERM": {
+        "total": 70,
+        "decCorrect": 70
+      },
+      "NEGATES_TAX_RELEVANCE": {
+        "total": 76,
+        "decCorrect": 75
+      }
+    },
+    "targetPresence": {
+      "target_absent": {
+        "total": 1398,
+        "decCorrect": 1239
+      },
+      "target_present": {
+        "total": 2322,
+        "decCorrect": 2172
+      }
+    },
+    "clauseCount": {
+      "single_clause": {
+        "total": 2474,
+        "decCorrect": 2225
+      },
+      "multi_clause": {
+        "total": 1246,
+        "decCorrect": 1186
+      }
+    }
+  }
+}

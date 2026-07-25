@@ -1,0 +1,23 @@
+{
+  "decisionLayerLock": "NOT ACHIEVED",
+  "bestAcceptedDecision": "3415/3720",
+  "remainingDecisionMismatches": 305,
+  "decByDir": {
+    "ALLOW->REFUSE": 103,
+    "ALLOW->CLARIFY": 40,
+    "REFUSE->ALLOW": 99,
+    "REFUSE->CLARIFY": 53,
+    "CLARIFY->ALLOW": 10
+  },
+  "closedControlsAtDecision": {
+    "tax_compliance_task": "108/108",
+    "acronym_homograph_control": "200/200"
+  },
+  "remainingClusters": "CONTEXTUAL_ACRONYM_MISCLASSIFIED (103), TAX_RELATION_MISSED_ON_CONCRETE_TARGET (58), QUOTATION_SCOPE (27), NON_TAX_ACTION_MISREAD_AS_TAX (26), plus smaller clusters — see COMMIT_5R1C5_DECISION_FAILURE_PARTITION.json (partition of the reconstructed base; dev-02 shifted counts slightly).",
+  "reason": "Remaining clusters carry false-allow/false-refusal trade risk (bare tax-topic ALLOW over-allows non-tax rows; concrete-tax anchoring vs contentless suppression interact). Exact 0 not reached within the decision-lane budget used.",
+  "relationLayerLock": "NOT STARTED",
+  "reasonLayerLock": "NOT STARTED",
+  "standaloneClosure": "NOT ACHIEVED",
+  "productionIntegration": "NOT PERFORMED",
+  "runtimeFreeze": "NOT PERFORMED"
+}

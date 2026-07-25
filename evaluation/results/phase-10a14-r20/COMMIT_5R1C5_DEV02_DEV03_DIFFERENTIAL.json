@@ -1,0 +1,89 @@
+{
+  "accepted": "dev-02 (2955)",
+  "rejected": "dev-03 (2944)",
+  "decisionCorrectedByDev03Count": 28,
+  "decisionRegressedByDev03Count": 0,
+  "netDecisionImprovement": 28,
+  "relationRegressed": 18,
+  "reasonRegressed": 39,
+  "taxComplianceRegressedCount": 0,
+  "categoryClosuresReopened": {},
+  "correctedSharedFeature": "All rows corrected by the dev-03 contentless-referent guard are bare tax-attribute questions whose only subject is a pronoun/determiner (\"Is this deductible? Context N\", \"What is the deadline?\") with NO concrete taxable subject — expected REFUSE no_tax_relation.",
+  "regressionDistinguishingFeature": "CRITICAL: the dev-03 tax_compliance_task regression (108->90 OVERALL) is NOT a decision regression — dev-03 preserved tax_compliance_task decisions at 108/108. It is a REASON/RELATION regression: the contentless-referent guard suppressed the ASKS_TAX_COMPLIANCE_FOR relation on 18 genuine compliance-category ALLOW rows, so their reason became no_tax_relation instead of tax_compliance_task while the decision stayed ALLOW via another path. Therefore dev-03s contentless structure is a VALID decision-lane improvement (net +28 decisions, 0 decision regressions) and its damage lives entirely in Lane B/C. The C5 target-completeness model must gate the contentless suppression to the DECISION lane only, and in the relation lane must still attach ASKS_TAX_COMPLIANCE_FOR when an explicit compliance procedure is present even if the object is implicit.",
+  "samples": {
+    "correctedByDev03": [
+      {
+        "oracleId": "S2-IR18-DOM-335",
+        "query": "What is the deadline? Context 1.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-339",
+        "query": "What is the tariff? Context 1.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-340",
+        "query": "When is the return due? Context 1.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-341",
+        "query": "What is the filing deadline? Context 1.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-348",
+        "query": "What form should I use? Context 1.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-355",
+        "query": "What is the deadline? Context 2.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-359",
+        "query": "What is the tariff? Context 2.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-360",
+        "query": "When is the return due? Context 2.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-361",
+        "query": "What is the filing deadline? Context 2.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-368",
+        "query": "What form should I use? Context 2.",
+        "cat": "ambiguous",
+        "from": "REFUSE->ALLOW",
+        "to": "REFUSE->REFUSE"
+      }
+    ],
+    "regressedByDev03": [],
+    "taxComplianceRegressed": []
+  }
+}

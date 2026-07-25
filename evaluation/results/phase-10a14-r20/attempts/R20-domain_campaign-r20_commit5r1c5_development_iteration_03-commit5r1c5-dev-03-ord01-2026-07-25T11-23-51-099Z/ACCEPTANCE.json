@@ -1,0 +1,6 @@
+{
+  "accepted": false,
+  "rationale": "REJECTED: net decision regression 305->311. The clearTaxContent anchor over-allowed 8 non-tax rows that merely contain a clear-tax term (REFUSE->ALLOW 99->107, false-allows +8), and did not fix the intended ALLOW->CLARIFY bare-phrase rows (clearTaxContent misses \"RMC guidance\"/\"RCIT\"). Preserved as diagnostic; the bare-tax-topic ALLOW needs a tighter structural anchor in C6.",
+  "architecturalHypothesis": "Bare tax-content phrase -> ALLOW before the CLARIFY fallback (for \"RMC guidance\", \"RCIT\", \"OSD election\")",
+  "activeLane": "decision"
+}

@@ -1,0 +1,44 @@
+{
+  "note": "Lane scores derived from the same frozen R3 rows and governed classify output; no new oracle.",
+  "iterations": [
+    {
+      "iterationId": "dev-01-reconstructed-2955",
+      "activeLane": "decision",
+      "decisionPassed": 3411,
+      "decisionFailed": 309,
+      "relationFailed": 250,
+      "reasonFailed": 764,
+      "overallPassed": 2955,
+      "overallFailed": 765,
+      "priorLocksPreserved": "n/a",
+      "acceptedAsNextBase": "base"
+    },
+    {
+      "iterationId": "dev-02-accepted",
+      "activeLane": "decision",
+      "decisionPassed": 3415,
+      "decisionFailed": 305,
+      "relationFailed": 250,
+      "reasonFailed": 760,
+      "overallPassed": 2959,
+      "overallFailed": 761,
+      "priorLocksPreserved": "n/a (no lock achieved)",
+      "counterfactualPairsPassed": "see COMMIT_5R1C5_DECISION_COUNTERFACTUAL_PAIRS.json",
+      "closedControlsPreserved": true,
+      "acceptedAsNextBase": true
+    },
+    {
+      "iterationId": "dev-03-rejected",
+      "activeLane": "decision",
+      "decisionPassed": 3409,
+      "decisionFailed": 311,
+      "relationFailed": 250,
+      "reasonFailed": 766,
+      "overallPassed": 2953,
+      "overallFailed": 767,
+      "priorLocksPreserved": "n/a",
+      "closedControlsPreserved": true,
+      "acceptedAsNextBase": false
+    }
+  ]
+}

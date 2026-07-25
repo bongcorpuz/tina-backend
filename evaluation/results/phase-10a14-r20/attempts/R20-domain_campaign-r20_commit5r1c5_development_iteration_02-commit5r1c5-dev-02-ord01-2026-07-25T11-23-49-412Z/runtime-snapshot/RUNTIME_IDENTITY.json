@@ -1,0 +1,6 @@
+{
+  "note": "development_iteration_accepted. Typed target-completeness (decision lane): a treatment-family relation over a CONTENTLESS bare pronoun/determiner tax-attribute (no concrete/resolved subject, no compliance procedure) -> no_tax_relation REFUSE. Relations left intact; compliance short-circuits, so the dev-03 reason regression is avoided. activeLane=decision. NOT applied to services/ (INCOMPLETE).",
+  "analyzerSha256": "86e0b222fea995a0935e974cc312776cca58ff88570b5debfa0767c214649d2f",
+  "patchBaseSnapshot": "philippine-tax-intent-analyzer.js",
+  "oracleVersion": "R3"
+}

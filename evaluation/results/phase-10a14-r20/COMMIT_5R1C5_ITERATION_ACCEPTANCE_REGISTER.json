@@ -1,0 +1,28 @@
+{
+  "iterations": [
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c5_development_iteration_02-commit5r1c5-dev-02-ord01-2026-07-25T11-23-49-412Z",
+      "accepted": true,
+      "activeLane": "decision",
+      "decisionFailedDelta": -4,
+      "closedControlRegression": false,
+      "taxComplianceDecision": "108/108",
+      "acronymHomographDecision": "200/200",
+      "falseAllowDelta": -4,
+      "falseRefusalDelta": 0,
+      "becameNextBase": true
+    },
+    {
+      "iterationId": "dev-03",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c5_development_iteration_03-commit5r1c5-dev-03-ord01-2026-07-25T11-23-51-099Z",
+      "accepted": false,
+      "activeLane": "decision",
+      "decisionFailedDelta": 6,
+      "closedControlRegression": false,
+      "falseAllowDelta": 8,
+      "becameNextBase": false,
+      "rejectionReason": "net decision regression + false-allows"
+    }
+  ]
+}

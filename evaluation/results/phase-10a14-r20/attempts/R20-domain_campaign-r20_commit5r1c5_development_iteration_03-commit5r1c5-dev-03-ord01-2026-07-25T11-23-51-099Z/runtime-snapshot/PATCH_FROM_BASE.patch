@@ -1,0 +1,20 @@
+diff --git a/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c5_iter02_accepted.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c5_iter03_rejected.js
+index 7bf4e313..6a93ae3c 100644
+--- a/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c5_iter02_accepted.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c5_iter03_rejected.js
+@@ -665,6 +665,15 @@ export function decideTaxBoundaryFromEvidence(evidence) {
+     if (anyAmbiguous) return decide('CLARIFY', 'ambiguous_tax_acronym', 0.55);
+     return decide('CLARIFY', 'ambiguous_tax_acronym', 0.50);
+   }
++  // 8b. [REJECTED iteration] Bare tax-content phrase -> ALLOW. Over-allowed 8 non-tax
++  // rows containing a clear-tax term (net decision regression 305->311, +false-allows).
++  const loNorm = lower(evidence.normalizedText || '');
++  const isBareTaxTopic = clearTaxContent(loNorm)
++    && !/\bfor (?:item|scenario|situation|case) \d+/.test(loNorm)
++    && !/\?\s*$/.test((evidence.normalizedText || '').trim())
++    && (evidence.ordinaryObjects || []).length === 0
++    && !requestsNonTax && !namesLabel && !expandsNonTax && !quotesTerm;
++  if (isBareTaxTopic) return decide('ALLOW', 'explicit_tax_task_relation', 0.75);
+   // 9. Lone ambiguous acronym.
+   if (acr.some((a) => a.ambiguous)) return decide('CLARIFY', 'ambiguous_tax_acronym', 0.55);
+   // 10. Tax-adjacent frame lacking resolving context -> CLARIFY / ambiguous_tax_acronym.

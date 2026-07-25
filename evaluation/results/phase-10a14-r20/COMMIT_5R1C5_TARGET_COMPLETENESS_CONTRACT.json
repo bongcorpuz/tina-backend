@@ -1,0 +1,21 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C5",
+  "purpose": "Replace broad word-list decision behaviour with a typed referent model. For each candidate target of the primary task clause, classify targetCompleteness; the decision evidence lattice consumes this type rather than raw token co-occurrence.",
+  "targetCompletenessValues": [
+    { "value": "CONCRETE", "definition": "A concrete noun phrase naming a taxable subject, ordinary object, service or activity (e.g. 'a delivery van', 'imported machinery', 'deficiency interest', 'a culture class').", "decisionEffect": "Satisfies the concrete-subject requirement for a tax relation." },
+    { "value": "RESOLVED_REFERENT", "definition": "A pronoun/deictic OR implicit object whose antecedent is resolvable within the same query, OR an explicit tax/compliance PROCEDURE that carries its own subject (e.g. 'file monthly VAT', 'the return', 'BIR registration'). An explicit compliance procedure is a resolved referent even when the object noun is implicit.", "decisionEffect": "Satisfies the concrete-subject requirement." },
+    { "value": "CONTENTLESS", "definition": "A bare pronoun/determiner subject ('this', 'that', 'it', 'the <attribute>') with NO concrete subject and NO explicit procedure — only a tax attribute ('deductible', 'the deadline', 'the rate').", "decisionEffect": "Does NOT satisfy the concrete-subject requirement; a treatment attribute alone yields no controlling tax relation (no_tax_relation)." },
+    { "value": "LABEL_ONLY", "definition": "A tax-shaped token bound to a naming/assignment/label action ('use MCIT as the product code').", "decisionEffect": "Label evidence, not tax treatment -> REFUSE." },
+    { "value": "QUOTED_TEXT", "definition": "A tax term appearing only as quoted text operated on by a text action (count/spell/translate/repeat/alphabetize).", "decisionEffect": "Quotation evidence -> REFUSE." },
+    { "value": "AMBIGUOUS", "definition": "A bare ambiguous acronym with no controlling action, expansion or tax context.", "decisionEffect": "-> CLARIFY." }
+  ],
+  "rules": [
+    "1. A pronoun/deictic target is NOT automatically contentless — resolve its antecedent within the query first.",
+    "2. A target with a resolvable same-query antecedent is RESOLVED_REFERENT.",
+    "3. A tax predicate governing a CONCRETE or RESOLVED ordinary target is genuine tax evidence -> ALLOW.",
+    "4. A tax-shaped token bound to a naming/assignment action is LABEL_ONLY -> REFUSE, never tax treatment.",
+    "5. A CONTENTLESS tax-attribute question lacks a controlling tax relation; BUT a compliance question with an explicit tax procedure (RESOLVED_REFERENT) must NOT be rejected merely because the object is implicit.",
+    "6. The target model must not depend on exact nouns from R3; it keys on structural type (determiner, procedure, quotation, label-binding, acronym-context), not a hard-coded noun list tied to expected outcomes."
+  ],
+  "decoupling": "targetCompleteness=CONTENTLESS suppresses the tax relation for the DECISION lane. The RELATION lane still attaches ASKS_TAX_COMPLIANCE_FOR when an explicit compliance procedure is present (RESOLVED_REFERENT), preventing the dev-03 reason/relation regression on genuine compliance rows."
+}
