@@ -1,0 +1,29 @@
+{
+  "validator": "r20-commit4r3-independent-template-review",
+  "checks": [
+    {
+      "name": "templates_reviewed_14",
+      "pass": true
+    },
+    {
+      "name": "all_agree",
+      "pass": true
+    },
+    {
+      "name": "challenges_0",
+      "pass": true
+    },
+    {
+      "name": "review_matches_adjudication",
+      "pass": true
+    },
+    {
+      "name": "unique_14",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "reviewed": 14,
+  "agree": 14,
+  "challenge": 0
+}

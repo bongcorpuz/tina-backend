@@ -1,0 +1,22 @@
+{
+  "validator": "r20-commit4r3-template-equivalence",
+  "checks": [
+    {
+      "name": "ten_members_each",
+      "pass": true
+    },
+    {
+      "name": "normalized_equal",
+      "pass": true
+    },
+    {
+      "name": "same_decision_relation_coverage",
+      "pass": true
+    },
+    {
+      "name": "no_semantic_exception",
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

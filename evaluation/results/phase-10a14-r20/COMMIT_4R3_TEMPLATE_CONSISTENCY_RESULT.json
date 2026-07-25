@@ -1,0 +1,136 @@
+{
+  "templatesValidated": 14,
+  "templatesConsistent": 14,
+  "templatesInconsistent": 0,
+  "affectedRowsValidated": 140,
+  "remainingReasonConflicts": 0,
+  "theoreticalDeterministicCeilingAfterR3": "3720/3720",
+  "families": [
+    {
+      "templateId": "R3T-01",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "tax_compliance_task"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-02",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-03",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "tax_compliance_task"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-04",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-05",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-06",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-07",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-08",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-09",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-10",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-11",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-12",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-13",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    },
+    {
+      "templateId": "R3T-14",
+      "memberCount": 10,
+      "r3ReasonSet": [
+        "no_tax_relation"
+      ],
+      "invariant": true,
+      "decisionReasonCompatible": true
+    }
+  ]
+}

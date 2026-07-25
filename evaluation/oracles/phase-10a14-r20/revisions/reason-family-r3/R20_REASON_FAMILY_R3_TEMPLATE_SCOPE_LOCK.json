@@ -1,0 +1,682 @@
+{
+  "templateFamilies": 14,
+  "affectedRows": 140,
+  "uniqueAffectedOracleIds": 140,
+  "duplicateAffectedIds": 0,
+  "missingR2Ids": 0,
+  "unaffectedR2Rows": 3580,
+  "families": [
+    {
+      "templateId": "R3T-01",
+      "templateNormalized": "Is the transaction subject to BIR registration in ?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0014",
+        "S1-IR19-0034",
+        "S1-IR19-0054",
+        "S1-IR19-0074",
+        "S1-IR19-0094",
+        "S1-IR19-0114",
+        "S1-IR19-0134",
+        "S1-IR19-0154",
+        "S1-IR19-0174",
+        "S1-IR19-0194"
+      ],
+      "memberQueries": [
+        "Is the transaction subject to BIR registration in case 14?",
+        "Is the transaction subject to BIR registration in case 34?",
+        "Is the transaction subject to BIR registration in case 54?",
+        "Is the transaction subject to BIR registration in case 74?",
+        "Is the transaction subject to BIR registration in case 94?",
+        "Is the transaction subject to BIR registration in case 114?",
+        "Is the transaction subject to BIR registration in case 134?",
+        "Is the transaction subject to BIR registration in case 154?",
+        "Is the transaction subject to BIR registration in case 174?",
+        "Is the transaction subject to BIR registration in case 194?"
+      ],
+      "incrementingIdentifierType": "case",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [],
+      "coverageClass": "explicit_tax_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "explicit_tax_task_relation",
+          "count": 9
+        },
+        {
+          "reason": "tax_compliance_task",
+          "count": 1
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-02",
+      "templateNormalized": "Can the expense be deducted for withholding tax return in ?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0015",
+        "S1-IR19-0035",
+        "S1-IR19-0055",
+        "S1-IR19-0075",
+        "S1-IR19-0095",
+        "S1-IR19-0115",
+        "S1-IR19-0135",
+        "S1-IR19-0155",
+        "S1-IR19-0175",
+        "S1-IR19-0195"
+      ],
+      "memberQueries": [
+        "Can the expense be deducted for withholding tax return in case 15?",
+        "Can the expense be deducted for withholding tax return in case 35?",
+        "Can the expense be deducted for withholding tax return in case 55?",
+        "Can the expense be deducted for withholding tax return in case 75?",
+        "Can the expense be deducted for withholding tax return in case 95?",
+        "Can the expense be deducted for withholding tax return in case 115?",
+        "Can the expense be deducted for withholding tax return in case 135?",
+        "Can the expense be deducted for withholding tax return in case 155?",
+        "Can the expense be deducted for withholding tax return in case 175?",
+        "Can the expense be deducted for withholding tax return in case 195?"
+      ],
+      "incrementingIdentifierType": "case",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [],
+      "coverageClass": "explicit_tax_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "tax_treatment_of_ordinary_object",
+          "count": 9
+        },
+        {
+          "reason": "tax_compliance_task",
+          "count": 1
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-03",
+      "templateNormalized": "What penalty applies for late deficiency interest in ?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0019",
+        "S1-IR19-0039",
+        "S1-IR19-0059",
+        "S1-IR19-0079",
+        "S1-IR19-0099",
+        "S1-IR19-0119",
+        "S1-IR19-0139",
+        "S1-IR19-0159",
+        "S1-IR19-0179",
+        "S1-IR19-0199"
+      ],
+      "memberQueries": [
+        "What penalty applies for late deficiency interest in case 19?",
+        "What penalty applies for late deficiency interest in case 39?",
+        "What penalty applies for late deficiency interest in case 59?",
+        "What penalty applies for late deficiency interest in case 79?",
+        "What penalty applies for late deficiency interest in case 99?",
+        "What penalty applies for late deficiency interest in case 119?",
+        "What penalty applies for late deficiency interest in case 139?",
+        "What penalty applies for late deficiency interest in case 159?",
+        "What penalty applies for late deficiency interest in case 179?",
+        "What penalty applies for late deficiency interest in case 199?"
+      ],
+      "incrementingIdentifierType": "case",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [],
+      "coverageClass": "explicit_tax_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "tax_compliance_task",
+          "count": 9
+        },
+        {
+          "reason": "explicit_tax_task_relation",
+          "count": 1
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-04",
+      "templateNormalized": "Translate conference room booking into plain English. .",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0216",
+        "S1-IR19-0236",
+        "S1-IR19-0256",
+        "S1-IR19-0276",
+        "S1-IR19-0296",
+        "S1-IR19-0316",
+        "S1-IR19-0336",
+        "S1-IR19-0356",
+        "S1-IR19-0376",
+        "S1-IR19-0396"
+      ],
+      "memberQueries": [
+        "Translate conference room booking into plain English. Control 16.",
+        "Translate conference room booking into plain English. Control 36.",
+        "Translate conference room booking into plain English. Control 56.",
+        "Translate conference room booking into plain English. Control 76.",
+        "Translate conference room booking into plain English. Control 96.",
+        "Translate conference room booking into plain English. Control 116.",
+        "Translate conference room booking into plain English. Control 136.",
+        "Translate conference room booking into plain English. Control 156.",
+        "Translate conference room booking into plain English. Control 176.",
+        "Translate conference room booking into plain English. Control 196."
+      ],
+      "incrementingIdentifierType": "control",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [],
+      "coverageClass": "explicit_non_tax_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 9
+        },
+        {
+          "reason": "quoted_tax_term_only",
+          "count": 1
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-05",
+      "templateNormalized": "What about gross receipts for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0751",
+        "S1-IR19-0766",
+        "S1-IR19-0781",
+        "S1-IR19-0796",
+        "S1-IR19-0811",
+        "S1-IR19-0826",
+        "S1-IR19-0841",
+        "S1-IR19-0856",
+        "S1-IR19-0871",
+        "S1-IR19-0886"
+      ],
+      "memberQueries": [
+        "What about gross receipts for scenario 1?",
+        "What about gross receipts for scenario 16?",
+        "What about gross receipts for scenario 31?",
+        "What about gross receipts for scenario 46?",
+        "What about gross receipts for scenario 61?",
+        "What about gross receipts for scenario 76?",
+        "What about gross receipts for scenario 91?",
+        "What about gross receipts for scenario 106?",
+        "What about gross receipts for scenario 121?",
+        "What about gross receipts for scenario 136?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-06",
+      "templateNormalized": "What about professional fees for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0752",
+        "S1-IR19-0767",
+        "S1-IR19-0782",
+        "S1-IR19-0797",
+        "S1-IR19-0812",
+        "S1-IR19-0827",
+        "S1-IR19-0842",
+        "S1-IR19-0857",
+        "S1-IR19-0872",
+        "S1-IR19-0887"
+      ],
+      "memberQueries": [
+        "What about professional fees for scenario 2?",
+        "What about professional fees for scenario 17?",
+        "What about professional fees for scenario 32?",
+        "What about professional fees for scenario 47?",
+        "What about professional fees for scenario 62?",
+        "What about professional fees for scenario 77?",
+        "What about professional fees for scenario 92?",
+        "What about professional fees for scenario 107?",
+        "What about professional fees for scenario 122?",
+        "What about professional fees for scenario 137?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-07",
+      "templateNormalized": "What about registration for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0753",
+        "S1-IR19-0768",
+        "S1-IR19-0783",
+        "S1-IR19-0798",
+        "S1-IR19-0813",
+        "S1-IR19-0828",
+        "S1-IR19-0843",
+        "S1-IR19-0858",
+        "S1-IR19-0873",
+        "S1-IR19-0888"
+      ],
+      "memberQueries": [
+        "What about registration for scenario 3?",
+        "What about registration for scenario 18?",
+        "What about registration for scenario 33?",
+        "What about registration for scenario 48?",
+        "What about registration for scenario 63?",
+        "What about registration for scenario 78?",
+        "What about registration for scenario 93?",
+        "What about registration for scenario 108?",
+        "What about registration for scenario 123?",
+        "What about registration for scenario 138?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-08",
+      "templateNormalized": "What about penalties for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0754",
+        "S1-IR19-0769",
+        "S1-IR19-0784",
+        "S1-IR19-0799",
+        "S1-IR19-0814",
+        "S1-IR19-0829",
+        "S1-IR19-0844",
+        "S1-IR19-0859",
+        "S1-IR19-0874",
+        "S1-IR19-0889"
+      ],
+      "memberQueries": [
+        "What about penalties for scenario 4?",
+        "What about penalties for scenario 19?",
+        "What about penalties for scenario 34?",
+        "What about penalties for scenario 49?",
+        "What about penalties for scenario 64?",
+        "What about penalties for scenario 79?",
+        "What about penalties for scenario 94?",
+        "What about penalties for scenario 109?",
+        "What about penalties for scenario 124?",
+        "What about penalties for scenario 139?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-09",
+      "templateNormalized": "What about return for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0755",
+        "S1-IR19-0770",
+        "S1-IR19-0785",
+        "S1-IR19-0800",
+        "S1-IR19-0815",
+        "S1-IR19-0830",
+        "S1-IR19-0845",
+        "S1-IR19-0860",
+        "S1-IR19-0875",
+        "S1-IR19-0890"
+      ],
+      "memberQueries": [
+        "What about return for scenario 5?",
+        "What about return for scenario 20?",
+        "What about return for scenario 35?",
+        "What about return for scenario 50?",
+        "What about return for scenario 65?",
+        "What about return for scenario 80?",
+        "What about return for scenario 95?",
+        "What about return for scenario 110?",
+        "What about return for scenario 125?",
+        "What about return for scenario 140?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-10",
+      "templateNormalized": "What about filing deadline for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0756",
+        "S1-IR19-0771",
+        "S1-IR19-0786",
+        "S1-IR19-0801",
+        "S1-IR19-0816",
+        "S1-IR19-0831",
+        "S1-IR19-0846",
+        "S1-IR19-0861",
+        "S1-IR19-0876",
+        "S1-IR19-0891"
+      ],
+      "memberQueries": [
+        "What about filing deadline for scenario 6?",
+        "What about filing deadline for scenario 21?",
+        "What about filing deadline for scenario 36?",
+        "What about filing deadline for scenario 51?",
+        "What about filing deadline for scenario 66?",
+        "What about filing deadline for scenario 81?",
+        "What about filing deadline for scenario 96?",
+        "What about filing deadline for scenario 111?",
+        "What about filing deadline for scenario 126?",
+        "What about filing deadline for scenario 141?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-11",
+      "templateNormalized": "What about assessment for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0757",
+        "S1-IR19-0772",
+        "S1-IR19-0787",
+        "S1-IR19-0802",
+        "S1-IR19-0817",
+        "S1-IR19-0832",
+        "S1-IR19-0847",
+        "S1-IR19-0862",
+        "S1-IR19-0877",
+        "S1-IR19-0892"
+      ],
+      "memberQueries": [
+        "What about assessment for scenario 7?",
+        "What about assessment for scenario 22?",
+        "What about assessment for scenario 37?",
+        "What about assessment for scenario 52?",
+        "What about assessment for scenario 67?",
+        "What about assessment for scenario 82?",
+        "What about assessment for scenario 97?",
+        "What about assessment for scenario 112?",
+        "What about assessment for scenario 127?",
+        "What about assessment for scenario 142?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-12",
+      "templateNormalized": "What about deduction for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0758",
+        "S1-IR19-0773",
+        "S1-IR19-0788",
+        "S1-IR19-0803",
+        "S1-IR19-0818",
+        "S1-IR19-0833",
+        "S1-IR19-0848",
+        "S1-IR19-0863",
+        "S1-IR19-0878",
+        "S1-IR19-0893"
+      ],
+      "memberQueries": [
+        "What about deduction for scenario 8?",
+        "What about deduction for scenario 23?",
+        "What about deduction for scenario 38?",
+        "What about deduction for scenario 53?",
+        "What about deduction for scenario 68?",
+        "What about deduction for scenario 83?",
+        "What about deduction for scenario 98?",
+        "What about deduction for scenario 113?",
+        "What about deduction for scenario 128?",
+        "What about deduction for scenario 143?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-13",
+      "templateNormalized": "What about exemption threshold for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0759",
+        "S1-IR19-0774",
+        "S1-IR19-0789",
+        "S1-IR19-0804",
+        "S1-IR19-0819",
+        "S1-IR19-0834",
+        "S1-IR19-0849",
+        "S1-IR19-0864",
+        "S1-IR19-0879",
+        "S1-IR19-0894"
+      ],
+      "memberQueries": [
+        "What about exemption threshold for scenario 9?",
+        "What about exemption threshold for scenario 24?",
+        "What about exemption threshold for scenario 39?",
+        "What about exemption threshold for scenario 54?",
+        "What about exemption threshold for scenario 69?",
+        "What about exemption threshold for scenario 84?",
+        "What about exemption threshold for scenario 99?",
+        "What about exemption threshold for scenario 114?",
+        "What about exemption threshold for scenario 129?",
+        "What about exemption threshold for scenario 144?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    },
+    {
+      "templateId": "R3T-14",
+      "templateNormalized": "What about books for scenario N?",
+      "normalizationRule": "strip only the incrementing case/scenario/control/mixed/variant integer identifier",
+      "memberOracleIds": [
+        "S1-IR19-0760",
+        "S1-IR19-0775",
+        "S1-IR19-0790",
+        "S1-IR19-0805",
+        "S1-IR19-0820",
+        "S1-IR19-0835",
+        "S1-IR19-0850",
+        "S1-IR19-0865",
+        "S1-IR19-0880",
+        "S1-IR19-0895"
+      ],
+      "memberQueries": [
+        "What about books for scenario 10?",
+        "What about books for scenario 25?",
+        "What about books for scenario 40?",
+        "What about books for scenario 55?",
+        "What about books for scenario 70?",
+        "What about books for scenario 85?",
+        "What about books for scenario 100?",
+        "What about books for scenario 115?",
+        "What about books for scenario 130?",
+        "What about books for scenario 145?"
+      ],
+      "incrementingIdentifierType": "scenario",
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentR2ReasonDistribution": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "allSameDecision": true,
+      "allSameRelations": true,
+      "allSameCoverageClass": true,
+      "structurallyEquivalent": true,
+      "semanticExceptionFound": false
+    }
+  ]
+}

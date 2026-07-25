@@ -1,0 +1,29 @@
+{
+  "r2All": {
+    "explicit_tax_task_relation": 461,
+    "tax_compliance_task": 282,
+    "tax_treatment_of_ordinary_object": 783,
+    "explicit_non_tax_task": 897,
+    "non_tax_label_or_name": 201,
+    "quoted_tax_term_only": 121,
+    "no_tax_relation": 472,
+    "ambiguous_tax_acronym": 310,
+    "non_tax_expansion": 88,
+    "tax_definition_with_context": 79,
+    "tax_negation_but_tax_review_requested": 26
+  },
+  "r3All": {
+    "explicit_tax_task_relation": 451,
+    "tax_compliance_task": 291,
+    "tax_treatment_of_ordinary_object": 784,
+    "explicit_non_tax_task": 897,
+    "non_tax_label_or_name": 201,
+    "quoted_tax_term_only": 120,
+    "no_tax_relation": 563,
+    "ambiguous_tax_acronym": 220,
+    "non_tax_expansion": 88,
+    "tax_definition_with_context": 79,
+    "tax_negation_but_tax_review_requested": 26
+  },
+  "changed": 102
+}

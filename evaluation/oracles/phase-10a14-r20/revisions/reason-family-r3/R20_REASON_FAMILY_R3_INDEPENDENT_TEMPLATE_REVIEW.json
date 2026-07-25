@@ -1,0 +1,109 @@
+{
+  "reviewer": "Sonnet 5 (independent, non-executor)",
+  "templatesReviewed": 14,
+  "rowMappingsReviewed": 140,
+  "agree": 14,
+  "challenge": 0,
+  "unresolvedChallenges": 0,
+  "results": [
+    {
+      "templateId": "R3T-01",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "tax_compliance_task",
+      "rfRule": "RF-01"
+    },
+    {
+      "templateId": "R3T-02",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "tax_treatment_of_ordinary_object",
+      "rfRule": "RF-02"
+    },
+    {
+      "templateId": "R3T-03",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "tax_compliance_task",
+      "rfRule": "RF-01"
+    },
+    {
+      "templateId": "R3T-04",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-05",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-06",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-07",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-08",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-09",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-10",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-11",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-12",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-13",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    },
+    {
+      "templateId": "R3T-14",
+      "reviewDecision": "AGREE",
+      "semanticEquivalenceConfirmed": true,
+      "reviewedReason": "no_tax_relation",
+      "rfRule": "RF-11"
+    }
+  ],
+  "summary": "All 14 templates show 10 structurally-equivalent instances differing only by an incrementing integer (case/scenario/control), confirming semantic equivalence throughout. All proposed canonical reasons correctly apply the RF taxonomy: compliance/deadline/penalty tasks map to RF-01, deductibility-of-object questions map to RF-02 despite co-occurring compliance vocabulary, non-tax-shaped quoted phrases and referent-less 'what about <term> for scenario N' frames correctly map to RF-11 (no_tax_relation) rather than RF-08 or RF-04 respectively, since neither a tax-shaped quoted phrase nor a genuine ambiguous acronym is present. No challenges."
+}

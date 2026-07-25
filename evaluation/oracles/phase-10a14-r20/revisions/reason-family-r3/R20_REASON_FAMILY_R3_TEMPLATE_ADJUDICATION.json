@@ -1,0 +1,495 @@
+{
+  "count": 14,
+  "adjudication": [
+    {
+      "templateId": "R3T-01",
+      "templateNormalized": "Is the transaction subject to BIR registration in ?",
+      "memberOracleIds": [
+        "S1-IR19-0014",
+        "S1-IR19-0034",
+        "S1-IR19-0054",
+        "S1-IR19-0074",
+        "S1-IR19-0094",
+        "S1-IR19-0114",
+        "S1-IR19-0134",
+        "S1-IR19-0154",
+        "S1-IR19-0174",
+        "S1-IR19-0194"
+      ],
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [],
+      "coverageClass": "explicit_tax_control",
+      "currentReasonGroups": [
+        {
+          "reason": "explicit_tax_task_relation",
+          "count": 9
+        },
+        {
+          "reason": "tax_compliance_task",
+          "count": 1
+        }
+      ],
+      "candidateReason": "tax_compliance_task",
+      "rfRule": "RF-01",
+      "reasonRationale": "The requested action is a BIR filing/registration/remittance/penalty-for-late/deadline compliance task (RF-01).",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-02",
+      "templateNormalized": "Can the expense be deducted for withholding tax return in ?",
+      "memberOracleIds": [
+        "S1-IR19-0015",
+        "S1-IR19-0035",
+        "S1-IR19-0055",
+        "S1-IR19-0075",
+        "S1-IR19-0095",
+        "S1-IR19-0115",
+        "S1-IR19-0135",
+        "S1-IR19-0155",
+        "S1-IR19-0175",
+        "S1-IR19-0195"
+      ],
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [],
+      "coverageClass": "explicit_tax_control",
+      "currentReasonGroups": [
+        {
+          "reason": "tax_treatment_of_ordinary_object",
+          "count": 9
+        },
+        {
+          "reason": "tax_compliance_task",
+          "count": 1
+        }
+      ],
+      "candidateReason": "tax_treatment_of_ordinary_object",
+      "rfRule": "RF-02",
+      "reasonRationale": "Deductibility of an expense is explicitly a tax-treatment-of-object question (RF-02), the most specific ALLOW reason even when a compliance-shaped word (e.g. \"return\") co-occurs.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-03",
+      "templateNormalized": "What penalty applies for late deficiency interest in ?",
+      "memberOracleIds": [
+        "S1-IR19-0019",
+        "S1-IR19-0039",
+        "S1-IR19-0059",
+        "S1-IR19-0079",
+        "S1-IR19-0099",
+        "S1-IR19-0119",
+        "S1-IR19-0139",
+        "S1-IR19-0159",
+        "S1-IR19-0179",
+        "S1-IR19-0199"
+      ],
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [],
+      "coverageClass": "explicit_tax_control",
+      "currentReasonGroups": [
+        {
+          "reason": "tax_compliance_task",
+          "count": 9
+        },
+        {
+          "reason": "explicit_tax_task_relation",
+          "count": 1
+        }
+      ],
+      "candidateReason": "tax_compliance_task",
+      "rfRule": "RF-01",
+      "reasonRationale": "The requested action is a BIR filing/registration/remittance/penalty-for-late/deadline compliance task (RF-01).",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-04",
+      "templateNormalized": "Translate conference room booking into plain English. .",
+      "memberOracleIds": [
+        "S1-IR19-0216",
+        "S1-IR19-0236",
+        "S1-IR19-0256",
+        "S1-IR19-0276",
+        "S1-IR19-0296",
+        "S1-IR19-0316",
+        "S1-IR19-0336",
+        "S1-IR19-0356",
+        "S1-IR19-0376",
+        "S1-IR19-0396"
+      ],
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [],
+      "coverageClass": "explicit_non_tax_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 9
+        },
+        {
+          "reason": "quoted_tax_term_only",
+          "count": 1
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "The phrase being translated/quoted is not tax-shaped, so RF-08 (quoted tax term) does not apply; there is no tax relation (RF-11).",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-05",
+      "templateNormalized": "What about gross receipts for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0751",
+        "S1-IR19-0766",
+        "S1-IR19-0781",
+        "S1-IR19-0796",
+        "S1-IR19-0811",
+        "S1-IR19-0826",
+        "S1-IR19-0841",
+        "S1-IR19-0856",
+        "S1-IR19-0871",
+        "S1-IR19-0886"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-06",
+      "templateNormalized": "What about professional fees for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0752",
+        "S1-IR19-0767",
+        "S1-IR19-0782",
+        "S1-IR19-0797",
+        "S1-IR19-0812",
+        "S1-IR19-0827",
+        "S1-IR19-0842",
+        "S1-IR19-0857",
+        "S1-IR19-0872",
+        "S1-IR19-0887"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-07",
+      "templateNormalized": "What about registration for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0753",
+        "S1-IR19-0768",
+        "S1-IR19-0783",
+        "S1-IR19-0798",
+        "S1-IR19-0813",
+        "S1-IR19-0828",
+        "S1-IR19-0843",
+        "S1-IR19-0858",
+        "S1-IR19-0873",
+        "S1-IR19-0888"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-08",
+      "templateNormalized": "What about penalties for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0754",
+        "S1-IR19-0769",
+        "S1-IR19-0784",
+        "S1-IR19-0799",
+        "S1-IR19-0814",
+        "S1-IR19-0829",
+        "S1-IR19-0844",
+        "S1-IR19-0859",
+        "S1-IR19-0874",
+        "S1-IR19-0889"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-09",
+      "templateNormalized": "What about return for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0755",
+        "S1-IR19-0770",
+        "S1-IR19-0785",
+        "S1-IR19-0800",
+        "S1-IR19-0815",
+        "S1-IR19-0830",
+        "S1-IR19-0845",
+        "S1-IR19-0860",
+        "S1-IR19-0875",
+        "S1-IR19-0890"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-10",
+      "templateNormalized": "What about filing deadline for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0756",
+        "S1-IR19-0771",
+        "S1-IR19-0786",
+        "S1-IR19-0801",
+        "S1-IR19-0816",
+        "S1-IR19-0831",
+        "S1-IR19-0846",
+        "S1-IR19-0861",
+        "S1-IR19-0876",
+        "S1-IR19-0891"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-11",
+      "templateNormalized": "What about assessment for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0757",
+        "S1-IR19-0772",
+        "S1-IR19-0787",
+        "S1-IR19-0802",
+        "S1-IR19-0817",
+        "S1-IR19-0832",
+        "S1-IR19-0847",
+        "S1-IR19-0862",
+        "S1-IR19-0877",
+        "S1-IR19-0892"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-12",
+      "templateNormalized": "What about deduction for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0758",
+        "S1-IR19-0773",
+        "S1-IR19-0788",
+        "S1-IR19-0803",
+        "S1-IR19-0818",
+        "S1-IR19-0833",
+        "S1-IR19-0848",
+        "S1-IR19-0863",
+        "S1-IR19-0878",
+        "S1-IR19-0893"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-13",
+      "templateNormalized": "What about exemption threshold for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0759",
+        "S1-IR19-0774",
+        "S1-IR19-0789",
+        "S1-IR19-0804",
+        "S1-IR19-0819",
+        "S1-IR19-0834",
+        "S1-IR19-0849",
+        "S1-IR19-0864",
+        "S1-IR19-0879",
+        "S1-IR19-0894"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    },
+    {
+      "templateId": "R3T-14",
+      "templateNormalized": "What about books for scenario N?",
+      "memberOracleIds": [
+        "S1-IR19-0760",
+        "S1-IR19-0775",
+        "S1-IR19-0790",
+        "S1-IR19-0805",
+        "S1-IR19-0820",
+        "S1-IR19-0835",
+        "S1-IR19-0850",
+        "S1-IR19-0865",
+        "S1-IR19-0880",
+        "S1-IR19-0895"
+      ],
+      "expectedDecision": "CLARIFY",
+      "expectedRelations": [],
+      "coverageClass": "ambiguous_clarification_control",
+      "currentReasonGroups": [
+        {
+          "reason": "no_tax_relation",
+          "count": 1
+        },
+        {
+          "reason": "ambiguous_tax_acronym",
+          "count": 9
+        }
+      ],
+      "candidateReason": "no_tax_relation",
+      "rfRule": "RF-11",
+      "reasonRationale": "Referent-less \"what about <plain tax-adjacent term> for scenario N\" with no acronym; the ambiguity is a missing referent, not RF-04 acronym ambiguity, so no_tax_relation (RF-11) applies. Confirmed by the R1S independent review.",
+      "decisionCompatible": true,
+      "relationCompatible": true,
+      "confidence": "HIGH"
+    }
+  ]
+}

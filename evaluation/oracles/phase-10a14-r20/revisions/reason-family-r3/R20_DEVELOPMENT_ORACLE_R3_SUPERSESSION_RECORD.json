@@ -1,0 +1,22 @@
+{
+  "statement": [
+    "V1 remains immutable historical evidence.",
+    "R1 remains immutable historical evidence.",
+    "R2 remains immutable historical evidence.",
+    "R2 is not edited, deleted, renamed or rewritten.",
+    "R3 supersedes R2 only as the canonical development oracle for the next runtime-remediation continuation.",
+    "R3 resolves 14 template-wide reason-family conflicts affecting 140 rows.",
+    "R3 applies one independently adjudicated canonical reason to all structurally equivalent siblings in each template.",
+    "R3 changes no query, decision, expected relation, category, source provenance, row order or R20 new-row content except the reason field on rows whose R2 reason conflicted with the template adjudication.",
+    "R3 is development evidence and is not unseen, blind, independent or holdout."
+  ],
+  "v1Sha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263",
+  "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
+  "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "conflictInventoryPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C1_R2_TEMPLATE_CONFLICT_INVENTORY.json",
+  "conflictInventorySha256": "474f7d716cb5cce7e777db7972d3b913d2ae2c69d08aa0d6016cf2e68bdbe00a",
+  "commit5r1c1EvidenceCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
+  "templateAdjudicationPath": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_REASON_FAMILY_R3_TEMPLATE_ADJUDICATION.json",
+  "independentReviewPath": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_REASON_FAMILY_R3_INDEPENDENT_TEMPLATE_REVIEW.json"
+}

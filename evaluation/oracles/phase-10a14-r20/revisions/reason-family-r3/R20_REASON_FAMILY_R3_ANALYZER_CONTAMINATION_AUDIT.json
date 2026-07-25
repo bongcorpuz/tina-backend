@@ -1,0 +1,10 @@
+{
+  "analyzerImported": false,
+  "analyzerExecuted": false,
+  "productionBoundaryImported": false,
+  "productionBoundaryExecuted": false,
+  "actualRuntimeOutputUsedForAdjudication": false,
+  "runtimeScoreUsedForAdjudication": false,
+  "networkUsed": false,
+  "modelUsedByBuilder": false
+}

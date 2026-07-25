@@ -1,0 +1,20 @@
+{
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r3Rows": 3720,
+  "r3MatchesFreeze": true,
+  "templatesConsistent": 14,
+  "remainingTemplateConflicts": 0,
+  "r2Preserved": true,
+  "currentStateUpdated": true,
+  "currentStateNoPlaceholders": true,
+  "attemptDirectories": 38,
+  "registryRecords": 38,
+  "attemptDirEqualsRegistry": true,
+  "controllingAttempts": 38,
+  "controllingAttemptsWithResults": 38,
+  "controllingResultPaths": 41,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "closureComplete": true,
+  "allPassed": true
+}

@@ -1,13 +1,13 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c1",
+  "cumulativeThrough": "commit4r3",
   "registrySummary": {
-    "totalAttempts": 33,
+    "totalAttempts": 39,
     "byCategory": {
       "domain_campaign": 7,
       "focused_suite": 1,
-      "other": 5,
-      "synthetic_validator": 20
+      "other": 7,
+      "synthetic_validator": 24
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -23,6 +23,8 @@
       "r20_commit4r1s_full_independent_reason_review": 1,
       "r20_commit4r2_correction_application_review": 1,
       "r20_commit4r2_r2_builder": 1,
+      "r20_commit4r3_independent_template_review": 1,
+      "r20_commit4r3_template_adjudication_builder": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
@@ -42,25 +44,30 @@
       "r20_commit4r1s_r1_immutability_and_scope": 1,
       "r20_commit4r2_freeze_and_evidence_completeness": 1,
       "r20_commit4r2_r1_r1s_source_lock": 1,
-      "r20_commit4r2_unchanged_field_and_contract": 1
+      "r20_commit4r2_unchanged_field_and_contract": 1,
+      "r20_commit4r3_freeze_current_state_and_completeness": 1,
+      "r20_commit4r3_r2_conflict_source_lock": 1,
+      "r20_commit4r3_template_equivalence": 1,
+      "r20_commit4r3_unchanged_field_and_reason_contract": 1
     },
-    "completed": 33,
+    "completed": 39,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 33,
+    "controlling": 39,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "commit5r1c1": {
-    "decision": "INCOMPLETE_FROZEN_R2_TEMPLATE_WIDE_REASON_CONFLICT",
-    "reconstructed": "2674/3720",
-    "bestDevelopment": "2777/3720",
-    "deterministicCeiling": "3706/3720",
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r2Edited": false
+  "commit4r3": {
+    "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "changed": 102,
+    "unchanged": 3618,
+    "templatesResolved": 14,
+    "remainingConflicts": 0,
+    "deterministicCeiling": "3720/3720",
+    "currentStateUpdated": true,
+    "decision": "COMPLETE"
   }
 }

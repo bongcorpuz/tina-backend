@@ -1,0 +1,42 @@
+{
+  "validator": "r20-commit4r3-unchanged-field-and-reason-contract",
+  "checks": [
+    {
+      "name": "changed_within_140",
+      "pass": true
+    },
+    {
+      "name": "unauthorized_0",
+      "pass": true
+    },
+    {
+      "name": "decision_0",
+      "pass": true
+    },
+    {
+      "name": "relation_0",
+      "pass": true
+    },
+    {
+      "name": "query_0",
+      "pass": true
+    },
+    {
+      "name": "order_0",
+      "pass": true
+    },
+    {
+      "name": "all_reasons_closed",
+      "pass": true
+    },
+    {
+      "name": "all_decision_reason_compatible",
+      "pass": true
+    },
+    {
+      "name": "row_count_3720",
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

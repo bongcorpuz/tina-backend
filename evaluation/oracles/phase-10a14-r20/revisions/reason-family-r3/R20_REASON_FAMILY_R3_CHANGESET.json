@@ -1,0 +1,76 @@
+{
+  "changed": 102,
+  "unchanged": 3618,
+  "changedByTemplate": [
+    {
+      "templateId": "R3T-01",
+      "canonicalReason": "tax_compliance_task",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-02",
+      "canonicalReason": "tax_treatment_of_ordinary_object",
+      "changes": 1
+    },
+    {
+      "templateId": "R3T-03",
+      "canonicalReason": "tax_compliance_task",
+      "changes": 1
+    },
+    {
+      "templateId": "R3T-04",
+      "canonicalReason": "no_tax_relation",
+      "changes": 1
+    },
+    {
+      "templateId": "R3T-05",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-06",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-07",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-08",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-09",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-10",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-11",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-12",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-13",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    },
+    {
+      "templateId": "R3T-14",
+      "canonicalReason": "no_tax_relation",
+      "changes": 9
+    }
+  ]
+}

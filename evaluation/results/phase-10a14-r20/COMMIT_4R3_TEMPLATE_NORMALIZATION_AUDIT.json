@@ -1,0 +1,117 @@
+{
+  "families": [
+    {
+      "templateId": "R3T-01",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "Is the transaction subject to BIR registration in case N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-02",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "Can the expense be deducted for withholding tax return in case N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-03",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What penalty applies for late deficiency interest in case N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-04",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "Translate conference room booking into plain English. Control N."
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-05",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about gross receipts for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-06",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about professional fees for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-07",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about registration for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-08",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about penalties for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-09",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about return for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-10",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about filing deadline for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-11",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about assessment for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-12",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about deduction for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-13",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about exemption threshold for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    },
+    {
+      "templateId": "R3T-14",
+      "allMembersNormalizeEqual": true,
+      "distinctNormalizedForms": [
+        "What about books for scenario N?"
+      ],
+      "status": "EQUIVALENT"
+    }
+  ],
+  "allEquivalent": true
+}

@@ -1,0 +1,34 @@
+{
+  "validator": "r20-commit4r3-r2-conflict-source-lock",
+  "checks": [
+    {
+      "name": "r2_sha",
+      "pass": true
+    },
+    {
+      "name": "r2_rows_3720",
+      "pass": true
+    },
+    {
+      "name": "v1_unchanged",
+      "pass": true
+    },
+    {
+      "name": "r1_unchanged",
+      "pass": true
+    },
+    {
+      "name": "conflict_14_templates",
+      "pass": true
+    },
+    {
+      "name": "conflict_140_rows",
+      "pass": true
+    },
+    {
+      "name": "runtime_unchanged",
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

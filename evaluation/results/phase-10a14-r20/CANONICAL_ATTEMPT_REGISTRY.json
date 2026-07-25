@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-25T05:13:16.561Z",
+  "generatedAt": "2026-07-25T05:40:40.314Z",
   "phase": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c1",
+  "cumulativeThrough": "commit4r3",
   "summary": {
-    "totalAttempts": 33,
+    "totalAttempts": 39,
     "byCategory": {
       "domain_campaign": 7,
       "focused_suite": 1,
-      "other": 5,
-      "synthetic_validator": 20
+      "other": 7,
+      "synthetic_validator": 24
     },
     "byGate": {
       "r20_commit5_pre_remediation_standalone_baseline": 1,
@@ -24,6 +24,8 @@
       "r20_commit4r1s_full_independent_reason_review": 1,
       "r20_commit4r2_correction_application_review": 1,
       "r20_commit4r2_r2_builder": 1,
+      "r20_commit4r3_independent_template_review": 1,
+      "r20_commit4r3_template_adjudication_builder": 1,
       "r20_attempt_wrapper_self_validation": 1,
       "r20_commit2_evidence_completeness": 1,
       "r20_commit3_determinism_and_serialization": 1,
@@ -43,12 +45,16 @@
       "r20_commit4r1s_r1_immutability_and_scope": 1,
       "r20_commit4r2_freeze_and_evidence_completeness": 1,
       "r20_commit4r2_r1_r1s_source_lock": 1,
-      "r20_commit4r2_unchanged_field_and_contract": 1
+      "r20_commit4r2_unchanged_field_and_contract": 1,
+      "r20_commit4r3_freeze_current_state_and_completeness": 1,
+      "r20_commit4r3_r2_conflict_source_lock": 1,
+      "r20_commit4r3_template_equivalence": 1,
+      "r20_commit4r3_unchanged_field_and_reason_contract": 1
     },
-    "completed": 33,
+    "completed": 39,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 33,
+    "controlling": 39,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
@@ -279,6 +285,40 @@
       "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r2_r2_builder-commit4r2-ord01-2026-07-24T21-32-16-605Z/stderr.txt",
       "commandHash": "3cba0d7c954a8517dca6be9558cba8d131bb8de80725e1a733cd125163e03c15",
       "runtimeBaselineCommit": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-other-r20_commit4r3_independent_template_review-commit4r3-ord01-2026-07-25T05-37-14-425Z",
+      "attemptCategory": "other",
+      "gateName": "r20_commit4r3_independent_template_review",
+      "cycle": "commit4r3",
+      "status": "completed",
+      "disposition": "controlling_independent_review",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r3_independent_template_review-commit4r3-ord01-2026-07-25T05-37-14-425Z/INDEPENDENT_REVIEW_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r3_independent_template_review-commit4r3-ord01-2026-07-25T05-37-14-425Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r3_independent_template_review-commit4r3-ord01-2026-07-25T05-37-14-425Z/stderr.txt",
+      "commandHash": "cef8b352d9f31c9adefe10878936f98a5264c4e2f670198f0efef6f395841f94",
+      "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-other-r20_commit4r3_template_adjudication_builder-commit4r3-ord01-2026-07-25T05-37-13-900Z",
+      "attemptCategory": "other",
+      "gateName": "r20_commit4r3_template_adjudication_builder",
+      "cycle": "commit4r3",
+      "status": "completed",
+      "disposition": "controlling_builder",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r3_template_adjudication_builder-commit4r3-ord01-2026-07-25T05-37-13-900Z/BUILDER_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r3_template_adjudication_builder-commit4r3-ord01-2026-07-25T05-37-13-900Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-other-r20_commit4r3_template_adjudication_builder-commit4r3-ord01-2026-07-25T05-37-13-900Z/stderr.txt",
+      "commandHash": "225df30989ec743da21975bcf8e31a2839645c626292e738ba27adadf8a61ede",
+      "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
       "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     },
     {
@@ -619,6 +659,74 @@
       "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r2_unchanged_field_and_contract-commit4r2-ord01-2026-07-24T21-32-17-636Z/stderr.txt",
       "commandHash": "14d0bc46b7ebc9a0c013b1e0803b9acafd690126b4d165b4d5ee3aa36ea2e344",
       "runtimeBaselineCommit": "3213d654b7a9d293a6a90761a370de2cb8ff91f2",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r3_freeze_current_state_and_completeness-commit4r3-ord01-2026-07-25T05-40-39-661Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r3_freeze_current_state_and_completeness",
+      "cycle": "commit4r3",
+      "status": "completed",
+      "disposition": "controlling_freeze_completeness",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_freeze_current_state_and_completeness-commit4r3-ord01-2026-07-25T05-40-39-661Z/FREEZE_COMPLETENESS_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_freeze_current_state_and_completeness-commit4r3-ord01-2026-07-25T05-40-39-661Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_freeze_current_state_and_completeness-commit4r3-ord01-2026-07-25T05-40-39-661Z/stderr.txt",
+      "commandHash": "ce2137fa25e0c7bfeb0a112b5f157710e4d662fab43b3dc6a702487697f30a55",
+      "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r3_r2_conflict_source_lock-commit4r3-ord01-2026-07-25T05-37-12-627Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r3_r2_conflict_source_lock",
+      "cycle": "commit4r3",
+      "status": "completed",
+      "disposition": "controlling_source_lock",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_r2_conflict_source_lock-commit4r3-ord01-2026-07-25T05-37-12-627Z/SOURCE_LOCK_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_r2_conflict_source_lock-commit4r3-ord01-2026-07-25T05-37-12-627Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_r2_conflict_source_lock-commit4r3-ord01-2026-07-25T05-37-12-627Z/stderr.txt",
+      "commandHash": "cdf8f1cebbec63eecc9f79fa4d117a04f7923c8687fc5179e449551eec7ff7a1",
+      "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r3_template_equivalence-commit4r3-ord01-2026-07-25T05-37-13-309Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r3_template_equivalence",
+      "cycle": "commit4r3",
+      "status": "completed",
+      "disposition": "controlling_equivalence",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_template_equivalence-commit4r3-ord01-2026-07-25T05-37-13-309Z/EQUIVALENCE_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_template_equivalence-commit4r3-ord01-2026-07-25T05-37-13-309Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_template_equivalence-commit4r3-ord01-2026-07-25T05-37-13-309Z/stderr.txt",
+      "commandHash": "72ba183a6ea1041370d4afd235b5031cae15b3a1fc914ff3a24743a114b46317",
+      "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
+      "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
+    },
+    {
+      "attemptId": "R20-synthetic_validator-r20_commit4r3_unchanged_field_and_reason_contract-commit4r3-ord01-2026-07-25T05-40-39-116Z",
+      "attemptCategory": "synthetic_validator",
+      "gateName": "r20_commit4r3_unchanged_field_and_reason_contract",
+      "cycle": "commit4r3",
+      "status": "completed",
+      "disposition": "controlling_unchanged_field",
+      "controlling": true,
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_unchanged_field_and_reason_contract-commit4r3-ord01-2026-07-25T05-40-39-116Z/UNCHANGED_FIELD_RESULT.json"
+      ],
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_unchanged_field_and_reason_contract-commit4r3-ord01-2026-07-25T05-40-39-116Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit4r3_unchanged_field_and_reason_contract-commit4r3-ord01-2026-07-25T05-40-39-116Z/stderr.txt",
+      "commandHash": "522c485bdfbf5ba72f11553f53380567d61ddc599212f4d13d4cd9fda732a804",
+      "runtimeBaselineCommit": "5c1fb4b2b529070a9c0560c48ac64ae6ac892c90",
       "runtimeTreeDigest": "7d8cb1dc264968515dc1720d99473155cdade35f52e1e9501989e28dd864b284"
     }
   ]

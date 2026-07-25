@@ -1,0 +1,43 @@
+{
+  "validator": "r20-commit4r3-template-adjudication-builder",
+  "checks": [
+    {
+      "name": "templates_14",
+      "pass": true
+    },
+    {
+      "name": "affected_140",
+      "pass": true
+    },
+    {
+      "name": "all_structurally_equivalent",
+      "pass": true
+    },
+    {
+      "name": "all_rf_supported",
+      "pass": true
+    },
+    {
+      "name": "all_decision_compatible",
+      "pass": true
+    },
+    {
+      "name": "no_out_of_scope_change",
+      "pass": true
+    },
+    {
+      "name": "diff_clean",
+      "pass": true
+    }
+  ],
+  "allPassed": true,
+  "changed": 102,
+  "unchanged": 3618,
+  "diff": {
+    "unauthorized": 0,
+    "decision": 0,
+    "relation": 0,
+    "query": 0,
+    "order": 0
+  }
+}
