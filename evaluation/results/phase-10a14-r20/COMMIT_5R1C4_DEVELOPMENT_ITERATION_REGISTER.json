@@ -1,0 +1,35 @@
+{
+  "iterations": [
+    {
+      "iterationId": "dev-01-reconstructed-2870",
+      "attemptId": "see COMMIT_5R1C4_RECONSTRUCTED_2870_IDENTITY.json",
+      "governedScore": "2870/3720",
+      "disposition": "development_iteration_reconstructed"
+    },
+    {
+      "iterationId": "dev-02",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c4_development_iteration_02-commit5r1c4-dev-02-ord01-2026-07-25T10-45-21-760Z",
+      "governedScore": "2955/3720",
+      "decisionScore": "3411/3720",
+      "disposition": "development_iteration_accepted",
+      "functionsChanged": [
+        "decideTaxBoundaryFromEvidence (dangling precedence)",
+        "buildRelations (label-binding)"
+      ],
+      "newRegressions": "none material",
+      "resolvedClusters": "dangling-scenario CLARIFY (40 dec), internal-label REFUSE (55 dec)"
+    },
+    {
+      "iterationId": "dev-03",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c4_development_iteration_03-commit5r1c4-dev-03-ord01-2026-07-25T10-45-22-818Z",
+      "governedScore": "2944/3720",
+      "decisionScore": "3439/3720",
+      "disposition": "development_iteration_rejected",
+      "functionsChanged": [
+        "buildRelations (contentless-referent guard)"
+      ],
+      "newRegressions": "tax_compliance_task 108->90 (closed-category)",
+      "resolvedClusters": "REFUSE->ALLOW Context-N bare-referent (28 dec)"
+    }
+  ]
+}

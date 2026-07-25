@@ -1,0 +1,6 @@
+{
+  "note": "Reconstructed COMMIT 5R1-C3 2870 candidate re-scored vs R3 (governed). Identity check; the governed score controls.",
+  "analyzerSha256": "e2dfdf05b290e1f117d81e93305f5e6064a53d7518325a9c9d31d2aa99cd871d",
+  "patchBase": "COMMIT 3 analyzer a23364bc",
+  "oracleVersion": "R3"
+}

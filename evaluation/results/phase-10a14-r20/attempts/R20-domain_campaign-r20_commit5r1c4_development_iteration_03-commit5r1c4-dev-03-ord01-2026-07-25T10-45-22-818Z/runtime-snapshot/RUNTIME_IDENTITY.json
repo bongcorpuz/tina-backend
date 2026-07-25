@@ -1,0 +1,7 @@
+{
+  "note": "development_iteration_rejected. Decision lane: contentless-referent guard — a bare tax-attribute question (\"Is this deductible?\", \"What is the penalty?\") with only a pronoun/determiner subject and no concrete taxable subject -> no_tax_relation REFUSE; concrete-subject carve-out preserves genuine questions. NOT applied to services/ (unit INCOMPLETE).",
+  "analyzerSha256": "e9e5d17253285a6f0cbe2d77f638fec67a101a78bb71c475e66f10aadaea59cc",
+  "patchBaseSnapshot": "c4_dev03_2955.js",
+  "oracleVersion": "R3",
+  "activeLayer": "decision"
+}

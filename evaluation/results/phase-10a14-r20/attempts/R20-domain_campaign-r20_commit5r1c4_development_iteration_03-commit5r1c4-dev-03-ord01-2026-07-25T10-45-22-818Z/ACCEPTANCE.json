@@ -1,0 +1,6 @@
+{
+  "accepted": false,
+  "acceptanceRationale": "REJECTED as next base: although decision failures improved 309->281 (best decision-layer result 3439/3720), it introduced a CLOSED-CATEGORY REGRESSION (tax_compliance_task 108->90) because the contentless guard also suppressed legitimately-bare compliance asks. Under the layer-lock acceptance rule (no material closed-category regression), it cannot become the next base. Preserved as a governed rejected candidate; the discriminator is carried to C5 for refinement.",
+  "architecturalHypothesis": "Decision lane: contentless-referent guard — a bare tax-attribute question (\"Is this deductible?\", \"What is the penalty?\") with only a pronoun/determiner subject and no concrete taxable subject -> no_tax_relation REFUSE; concrete-subject carve-out preserves genuine questions",
+  "activeLayer": "decision"
+}

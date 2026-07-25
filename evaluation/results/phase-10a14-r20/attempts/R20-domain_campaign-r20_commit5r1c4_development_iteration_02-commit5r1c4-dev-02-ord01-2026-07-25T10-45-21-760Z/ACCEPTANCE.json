@@ -1,0 +1,6 @@
+{
+  "accepted": true,
+  "acceptanceRationale": "Decision failures 404->309; no closed-category regression (tax_compliance_task 108/108, acronym_homograph_control 200/200 preserved); no material false-allow masking; overall 2870->2955. Accepted best base for COMMIT 5R1-C5.",
+  "architecturalHypothesis": "Decision lane: (a) dangling-scenario referent forced to CLARIFY before treatment/compliance rules; (b) label-binding — tax-shaped acronym bound to an ordinary label-noun via a naming/assignment/checklist act, guarded by absence of a genuine tax question predicate -> NAMES_AS_INTERNAL_LABEL/REQUESTS_NON_TAX_ACTION_ON REFUSE",
+  "activeLayer": "decision"
+}

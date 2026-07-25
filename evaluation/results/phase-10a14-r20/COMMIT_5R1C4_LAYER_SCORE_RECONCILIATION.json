@@ -1,0 +1,38 @@
+{
+  "note": "Lane scores derived from the same frozen R3 rows and the same governed classify output; no new oracle, no expectation change.",
+  "iterations": [
+    {
+      "iterationId": "dev-01-reconstructed-2870",
+      "activeLane": "decision",
+      "decisionPassed": 3316,
+      "decisionFailed": 404,
+      "relationFailed": 315,
+      "reasonFailed": 849,
+      "overallPassed": 2870,
+      "overallFailed": 850,
+      "priorLocksPreserved": "n/a"
+    },
+    {
+      "iterationId": "dev-02-accepted",
+      "activeLane": "decision",
+      "decisionPassed": 3411,
+      "decisionFailed": 309,
+      "relationFailed": 250,
+      "reasonFailed": 764,
+      "overallPassed": 2955,
+      "overallFailed": 765,
+      "priorLocksPreserved": "n/a (no lock achieved)"
+    },
+    {
+      "iterationId": "dev-03-rejected",
+      "activeLane": "decision",
+      "decisionPassed": 3439,
+      "decisionFailed": 281,
+      "relationFailed": 268,
+      "reasonFailed": 775,
+      "overallPassed": 2944,
+      "overallFailed": 776,
+      "priorLocksPreserved": "n/a (rejected: closed-category regression)"
+    }
+  ]
+}

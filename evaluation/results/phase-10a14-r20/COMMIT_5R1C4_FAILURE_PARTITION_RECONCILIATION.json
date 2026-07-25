@@ -1,0 +1,4270 @@
+{
+  "reconstructedAttempt": "commit5r1c4-dev-01",
+  "failedRows": 850,
+  "partitionedRows": 850,
+  "missingRows": 0,
+  "duplicatePrimaryAssignments": 0,
+  "byCluster": {
+    "DECISION_PRECEDENCE": 404,
+    "RELATION_MISSING": 157,
+    "REASON_SPECIFICITY": 289
+  },
+  "matchesC3Partition": true,
+  "c3Partition": {
+    "REASON_SPECIFICITY": 289,
+    "DECISION_PRECEDENCE": 404,
+    "RELATION_MISSING": 157
+  },
+  "rows": [
+    {
+      "oracleId": "S1-IR19-0004",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0007",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0019",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0024",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0027",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0039",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0044",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0047",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0059",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0064",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0067",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0079",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0084",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0087",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0099",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0104",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0107",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0119",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0124",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0127",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0139",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0144",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0147",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0159",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0164",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0167",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0179",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0184",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0187",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0199",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0206",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0216",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0226",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0236",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0246",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0256",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0266",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0276",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0286",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0296",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0306",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0316",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0326",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0336",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0346",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0356",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0366",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0376",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0386",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0396",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0601",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0604",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0607",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0610",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0611",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0612",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0613",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0614",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0617",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0618",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0620",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0621",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0623",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0624",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0630",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0631",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0634",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0637",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0640",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0641",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0642",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0643",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0644",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0647",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0648",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0650",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0651",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0653",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0654",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0660",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0661",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0664",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0667",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0670",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0671",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0672",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0673",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0674",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0677",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0678",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0680",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0681",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0683",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0684",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0690",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0691",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0694",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0697",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0700",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0701",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0702",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0703",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0704",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0707",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0708",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0710",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0711",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0713",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0714",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0720",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0721",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0724",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0727",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0730",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0731",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0732",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0733",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0734",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0737",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0738",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0740",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0741",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0743",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0744",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0750",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0755",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0756",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0761",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0762",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0763",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0764",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0765",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0770",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0771",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0776",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0777",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0778",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0779",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0780",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0785",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0786",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0791",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0792",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0793",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0794",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0795",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0800",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0801",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0806",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0807",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0808",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0809",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0810",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0815",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0816",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0821",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0822",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0823",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0824",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0825",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0830",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0831",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0836",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0837",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0838",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0839",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0840",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0845",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0846",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0851",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0852",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0853",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0854",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0855",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0860",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0861",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0866",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0867",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0868",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0869",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0870",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0875",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0876",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0881",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0882",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0883",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0884",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0885",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0890",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0891",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0896",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0897",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0898",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0899",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0900",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-0901",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0903",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0907",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0914",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0918",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0919",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0921",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0923",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0927",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0934",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0938",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0939",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0941",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0943",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0947",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0954",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0958",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0959",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0961",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0963",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0967",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0974",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0978",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0979",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0981",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0983",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0987",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0994",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0998",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-0999",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1007",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1014",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1017",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1027",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1028",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1030",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1032",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1033",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1034",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1036",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1037",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1047",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1054",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1057",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1067",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1068",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1070",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1072",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1074",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1076",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1077",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1087",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1094",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1097",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1107",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1108",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1110",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1112",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S1-IR19-1114",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1116",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S1-IR19-1117",
+      "sourceSet": "r19_1120",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-005",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-006",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-013",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-021",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-022",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-024",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-027",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-029",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-033",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-039",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-040",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-041",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-042",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-043",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-044",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-049",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-051",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-054",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-059",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-060",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-061",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-062",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-063",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-064",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-072",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-073",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-074",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-075",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-076",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-077",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-078",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-079",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-080",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-081",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-082",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-083",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-084",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-085",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-086",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-087",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-088",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-089",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-091",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-092",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-094",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-098",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-099",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-100",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-101",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-102",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-108",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-109",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-113",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-114",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-115",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-136",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-141",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-159",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-165",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-166",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-167",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-170",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-175",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-177",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-178",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-182",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-207",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-209",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-223",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-224",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-225",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-227",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-233",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-240",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-244",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-247",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-253",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-254",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-258",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-265",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-269",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-272",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-278",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-279",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-283",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-290",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-294",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-297",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-303",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-304",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-308",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-315",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-319",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-322",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-328",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-329",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-330",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-335",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-339",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-340",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-341",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-348",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-350",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-355",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-359",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-360",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-361",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-368",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-370",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-375",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-379",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-380",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-381",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-388",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-390",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-395",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-399",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-400",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-401",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-408",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-412",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-419",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-423",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-424",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-432",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-439",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-443",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-444",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-452",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-459",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-463",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-464",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-470",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-471",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-475",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-478",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-482",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-484",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-486",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-488",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-493",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-503",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-505",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-506",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-507",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-510",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-511",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-512",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-514",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-515",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-516",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-524",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-526",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-531",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-532",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-533",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-541",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-542",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-546",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-549",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-554",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-558",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-560",
+      "sourceSet": "r18_corrected_567",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-002",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-003",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-010",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-011",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-014",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-016",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-017",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-021",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-023",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-024",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-026",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-028",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-030",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-032",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-033",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-034",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-035",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-036",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-038",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-040",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-041",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-042",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-043",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-047",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-049",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-050",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-051",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-053",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-054",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-055",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-060",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-069",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-081",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-082",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-083",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-084",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-085",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-087",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-089",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-091",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-092",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-095",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-096",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-097",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-098",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-099",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-100",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-101",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-102",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-105",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-107",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-108",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-111",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-113",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-114",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-115",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-116",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-118",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-119",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-121",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-122",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-123",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-126",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-127",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-128",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-129",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-131",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-134",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-136",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-138",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-141",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-143",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-144",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-146",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-149",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-150",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-152",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-161",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-164",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-166",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-172",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-178",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-179",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-181",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-182",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-183",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-185",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-186",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-188",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-189",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-191",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-192",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-193",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-198",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-200",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-201",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-203",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-205",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-206",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "REASON_SPECIFICITY"
+    },
+    {
+      "oracleId": "S3-IR17-208",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-209",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "S3-IR17-210",
+      "sourceSet": "r17_accepted_control",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-MDG-0161",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-MDG-0164",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-MDG-0166",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-MDG-0168",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0521",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0526",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0531",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0536",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0546",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0551",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0556",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0561",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0566",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0571",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0576",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0581",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0586",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0596",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0601",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0606",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0611",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0616",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0621",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0626",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0631",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0636",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0641",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0646",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0651",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0656",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0661",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0666",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0671",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0676",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0681",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0686",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0691",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0696",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0701",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0706",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0711",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ENT-0716",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0781",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0782",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0784",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0785",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0787",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0788",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0790",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0791",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0793",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0794",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0842",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0843",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0845",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0846",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0849",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0850",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0852",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0855",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0856",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0858",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0859",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0862",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0863",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0865",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0868",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0869",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0871",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0872",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0875",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0876",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0878",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0881",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0882",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0883",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0884",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0885",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0887",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0888",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0889",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0891",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0894",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0895",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0896",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0897",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0898",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0900",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0901",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0902",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0904",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0907",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0908",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0909",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0910",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0911",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0913",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0914",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0915",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0917",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0920",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0924",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0925",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0926",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0928",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0929",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0930",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0931",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0933",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0937",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0938",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0939",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0941",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0942",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0943",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0944",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0946",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0950",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0951",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0952",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0954",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0955",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0956",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0957",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0959",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0963",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0964",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0965",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0967",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0968",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0969",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0970",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0972",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0976",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0977",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0978",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0980",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0981",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0982",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0983",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0985",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-ACX-0989",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0990",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0991",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0993",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0994",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0995",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-ACX-0996",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-0999",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1000",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1002",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1003",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1010",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1011",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1013",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1014",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1021",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1022",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1024",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1025",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1032",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1033",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1035",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1036",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1043",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1044",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1046",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1047",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1054",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1055",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1057",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1058",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1065",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1066",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1068",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1069",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1076",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1077",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1079",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1080",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1087",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1088",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1090",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1091",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1098",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1099",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-QTO-1101",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-QTO-1102",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-NEG-1112",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1209",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1210",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1211",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1212",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1213",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1215",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1216",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1217",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1222",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1223",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1224",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1225",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1226",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1228",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1229",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1230",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1235",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1236",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1237",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1238",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1239",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1241",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1242",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1243",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1246",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1247",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1248",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1249",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1250",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1251",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1252",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1253",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1254",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1255",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1256",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1257",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1258",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1259",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1260",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1261",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1262",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1263",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1264",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1265",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1266",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1267",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1268",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1269",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1270",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1271",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1272",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1273",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1274",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1275",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1276",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1277",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1278",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1279",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1280",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1281",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1282",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1283",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1284",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1287",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1288",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1289",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1290",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1291",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1293",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1294",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1295",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1300",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1301",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1302",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1303",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1304",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1306",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-LBL-1307",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-LBL-1308",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1420",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1421",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1422",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1425",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1426",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1427",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1428",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1429",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1430",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1432",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1433",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1434",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1438",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1440",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1442",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1446",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1448",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1450",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1454",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1458",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1461",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1462",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1466",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1470",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1474",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1478",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1482",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1486",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1490",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1494",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1498",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1502",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1506",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1510",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1514",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1518",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1522",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1525",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1526",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1530",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1534",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1538",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1542",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1546",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1549",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    },
+    {
+      "oracleId": "R20N-FIL-1550",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1554",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1558",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1562",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1566",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1570",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1574",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1578",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1579",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20N-FIL-1580",
+      "sourceSet": "r20_new",
+      "primaryCluster": "RELATION_MISSING"
+    },
+    {
+      "oracleId": "R20MM-0014",
+      "sourceSet": "r20_new",
+      "primaryCluster": "DECISION_PRECEDENCE"
+    }
+  ]
+}

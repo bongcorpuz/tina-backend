@@ -1,0 +1,14 @@
+{
+  "decisionPassed": 3439,
+  "decisionFailed": 281,
+  "relationFailed": 268,
+  "reasonFailed": 775,
+  "decByDir": {
+    "ALLOW->REFUSE": 103,
+    "ALLOW->CLARIFY": 40,
+    "REFUSE->ALLOW": 75,
+    "REFUSE->CLARIFY": 53,
+    "CLARIFY->ALLOW": 10
+  },
+  "overall": 2944
+}

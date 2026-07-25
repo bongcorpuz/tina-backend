@@ -1,0 +1,7 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c4_reconstructed_2870_candidate-commit5r1c4-dev-01-ord01-2026-07-25T10-29-12-965Z",
+  "analyzerSha256": "e2dfdf05b290e1f117d81e93305f5e6064a53d7518325a9c9d31d2aa99cd871d",
+  "expected": "e2dfdf05b290e1f117d81e93305f5e6064a53d7518325a9c9d31d2aa99cd871d",
+  "match": true,
+  "oracleVersion": "R3"
+}

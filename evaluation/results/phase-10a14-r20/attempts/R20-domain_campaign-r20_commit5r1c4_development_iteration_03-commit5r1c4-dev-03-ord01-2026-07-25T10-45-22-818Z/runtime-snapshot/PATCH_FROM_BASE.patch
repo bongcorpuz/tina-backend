@@ -1,0 +1,36 @@
+diff --git a/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c4_dev03_2955.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c4_dev04_dec281.js
+index 0ee5b2f1..2074df37 100644
+--- a/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c4_dev03_2955.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c4_dev04_dec281.js
+@@ -506,7 +506,21 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+   const hasTaxPredicate = includesAny(lo, TAX_PREDICATE_TERMS).length > 0 || RE.treatment.test(lo);
+   // A specific treatment verb (deduct/vat/withholding/customs) is itself an anchor.
+   const specificTreatmentVerb = RE.deduct.test(lo) || RE.vat.test(lo) || RE.withholding.test(lo) || RE.customs.test(lo);
+-  const hasAnchor = (!!target || explicitTaxAnchor || specificTreatmentVerb || /\bthe business\b|\bour\b|\bthis transaction\b|services\b|\bthis sale\b|\bthe expense\b|expense\b/.test(lo)) && !nonTaxHomograph;
++
++  // Contentless referent: a bare tax-attribute question whose only subject is a
++  // pronoun/determiner ("this", "that", "it", "the <attribute>", "there", "I") with
++  // NO concrete taxable subject noun. "Is this deductible?", "What is the penalty?",
++  // "When is the return due?", "What form should I use?". These have a tax verb but
++  // no resolvable tax relation -> no_tax_relation. A concrete subject ("input VAT for
++  // a culture class", "late deficiency interest") defeats this and anchors normally.
++  const concreteSubject = !!(target) || includesAny(lo, ORDINARY_OBJECT_TERMS).length > 0
++    || /\bdeficiency interest\b|\bculture class\b|\bincome from\b|\bsale\b|\bimport(?:ed|s)?\b|\bproperty\b|\bcompensation\b|\bdividend|\binterest income\b|\broyalt|\brent(?:al)?\b|\bfringe benefit\b|\bestate\b|\bdonation\b|\btransaction\b|\bexpense\b|\bfor (?:a|an|the|our|my) [a-z]/.test(lo);
++  const barePronounSubject = /^(?:is|are|does|do|can|should|when|what|how|will)\b[^?]*\b(?:this|that|it|the|there|i|these|those)\b/.test(lo)
++    && !concreteSubject
++    && /\b(?:deductib|credited|exempt|surcharge|penalty|period|deadline|rate|threshold|holding period|tariff|return due|filing deadline|registration|assessment|protest|appeal|form should i use|notice period)\b/.test(lo);
++  const contentlessReferent = barePronounSubject;
++
++  const hasAnchor = (!!target || explicitTaxAnchor || specificTreatmentVerb || /\bthe business\b|\bour\b|\bthis transaction\b|services\b|\bthis sale\b|\bthe expense\b|expense\b/.test(lo)) && !nonTaxHomograph && !contentlessReferent;
+ 
+   // Compliance detection (RF-01) — checked before generic treatment.
+   const isCompliance = RE.compliance.test(lo);
+@@ -523,7 +537,7 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+     else if (RE.deduct.test(lo) && hasAnchor) add('ASKS_DEDUCTIBILITY_OF', 'task', target || 'subject');
+     else if (RE.withholding.test(lo) && hasAnchor && !isCompliance) add('ASKS_WITHHOLDING_ON', 'task', target || 'subject');
+     else if (RE.customs.test(lo) && hasAnchor) add('ASKS_CUSTOMS_DUTY_ON', 'task', target || 'subject');
+-    else if (isCompliance) add('ASKS_TAX_COMPLIANCE_FOR', 'task', target || 'transaction');
++    else if (isCompliance && !contentlessReferent) add('ASKS_TAX_COMPLIANCE_FOR', 'task', target || 'transaction');
+     else if (hasTaxPredicate && hasAnchor) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+     else if (isQuestion && strongTaxContext && !RE.danglingScenarioRef.test(lo)) add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+     // A tax term/entity present in a question with no non-tax framing -> tax task.

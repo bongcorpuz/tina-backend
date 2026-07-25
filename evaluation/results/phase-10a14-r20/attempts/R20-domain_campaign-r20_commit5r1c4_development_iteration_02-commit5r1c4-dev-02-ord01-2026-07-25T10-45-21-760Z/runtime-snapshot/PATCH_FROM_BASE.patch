@@ -1,0 +1,46 @@
+diff --git a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c4_reconstructed_2870_candidate-commit5r1c4-dev-01-ord01-2026-07-25T10-29-12-965Z/runtime-snapshot/philippine-tax-intent-analyzer.js b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c4_dev03_2955.js
+index 2e71038d..0ee5b2f1 100644
+--- a/C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c4_reconstructed_2870_candidate-commit5r1c4-dev-01-ord01-2026-07-25T10-29-12-965Z/runtime-snapshot/philippine-tax-intent-analyzer.js
++++ b/C:/Users/USER/AppData/Local/Temp/claude/c--Projects-tina-dev-factory/41c48ca1-2847-414b-818c-1ee1981e27c4/scratchpad/c4_dev03_2955.js
+@@ -440,6 +440,26 @@ function buildRelations(clauses, primary, acronymMentions, fullLo) {
+     else add('ASKS_TAX_TREATMENT_OF', 'task', target || 'subject');
+     return relations;
+   }
++  // Label-binding: a tax-shaped acronym bound to an ordinary label-noun (product
++  // code, database field label, course/training code, channel/team name, internal
++  // label/phrase) via a naming, assignment or checklist act, with NO genuine tax
++  // question predicate. "Name the product code MCIT", "Tag the product code as
++  // MCIT", "The product code should be MCIT", "Create a checklist for database
++  // field label FLD". This is a non-tax label/name -> REFUSE. The genuine-tax carve
++  // -out above ("...reported to BIR?", "What taxes apply...", "VATable") already
++  // returned before reaching here, so the tax-question rows are unaffected.
++  const labelNoun = /\b(?:product code|database field(?: label)?|field (?:label|abbreviation)|course code|training code|channel name|team name|file ?name|variable name|internal (?:label|phrase|project (?:name|phrase|code)|code(?: ?name)?)|sprint label|report ?name|server name|codename|project (?:code|phrase|name))\b/;
++  const labelBinding = labelNoun.test(fullLo)
++    && (/\b(?:name|label|tag|call(?:ed)?|assign|use|set|rename|title)\b/.test(fullLo)
++      || /\bis (?:only )?(?:an? |our )?[a-z ]*\b(?:label|code|name|phrase)\b/.test(fullLo)
++      || /\bshould be\b/.test(fullLo)
++      || /\bcreate a checklist for\b/.test(fullLo)
++      || /\bis called\b/.test(fullLo));
++  if (labelBinding && !genuineTaxQuestionPredicate && !hasStrongTaxAnchor && !RE.negationReview.test(fullLo) && !hasNegationFraming) {
++    if (/\bcreate a checklist for\b|\bchecklist\b/.test(fullLo)) { add('REQUESTS_NON_TAX_ACTION_ON', primary.taskVerb || 'action', target || 'object'); relations._homographVeto = true; return relations; }
++    add('NAMES_AS_INTERNAL_LABEL', target || 'name', 'label'); relations._homographVeto = true; return relations;
++  }
++
+   if (hasHomographTaxToken && hasNonTaxDomainNoun && !hasStrongTaxAnchor && !genuineTaxQuestionPredicate && !RE.negationReview.test(fullLo) && !hasNegationFraming) {
+     // If there is an explicit non-tax action verb or "as <label>", record it; else
+     // flag a homograph veto so the decision resolves to REFUSE / no_tax_relation.
+@@ -571,6 +591,14 @@ export function decideTaxBoundaryFromEvidence(evidence) {
+   const expandsNonTax = has('EXPANDS_AS_NON_TAX');
+   const quotesTerm = has('QUOTES_TERM');
+ 
++  // 0. Dangling scenario referent ("What about <subject> for scenario N?") is a
++  // decision-level CLARIFY regardless of any tax lexical the subject carries: there
++  // is no resolvable tax relation, only a dangling reference. This precedes the
++  // treatment/compliance rules so a compliance-shaped subject cannot force ALLOW.
++  if (evidence.danglingScenario) {
++    const acrAmbiguous = acr.some((a) => a.ambiguous);
++    return decide('CLARIFY', acrAmbiguous ? 'ambiguous_tax_acronym' : 'no_tax_relation', 0.50);
++  }
+   // 1. Negation + explicit tax review -> ALLOW.
+   if (negatesTax && (hasTreatment || hasCompliance)) return decide('ALLOW', 'tax_negation_but_tax_review_requested', 0.80);
+   // 2. Internal label / name.

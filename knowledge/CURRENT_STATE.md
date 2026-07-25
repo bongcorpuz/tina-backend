@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-25T06:37:00Z`
+`2026-07-25T11:00:00Z`
 
 Repository:
 
@@ -31,8 +31,8 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C3
-ARCHITECTURE REMEDIATION CONTINUATION 3 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C4
+LAYER-LOCKED ARCHITECTURE REMEDIATION CONTINUATION 4 AGAINST R3
 DECISION: INCOMPLETE — ARCHITECTURE REMEDIATION NOT CLOSED
 ```
 
@@ -45,25 +45,41 @@ ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
 
 Reconstructed candidate:
 
-`2,819 / 3,720`
-
-Best governed C3 candidate:
-
 `2,870 / 3,720`
 
-Remaining failed rows:
+Best overall governed C4 candidate:
 
-`850`
+`2,955 / 3,720`
 
-Best-candidate mismatch matrix:
+Best decision-layer result:
+
+`3,439 / 3,720`
+
+Remaining decision mismatches:
+
+`281`
+
+Layer status:
 
 ```text
-decision mismatches:       404
-reason mismatches:         849
-relation mismatches:       315
-material false allows:     155
+decision lock:   not achieved (best decision 3,439/3,720; accepted base 3,411/3,720)
+relation lock:   not started
+reason lock:     not started
+standalone:      not achieved
+integration:     not performed
+freeze:          not performed
+```
+
+Best accepted base (dev-02) mismatch matrix:
+
+```text
+overall passed:            2,955 / 3,720
+decision mismatches:       309
+relation mismatches:       250
+reason mismatches:         764
+material false allows:     113
 material false refusals:   143
-clarify mismatches:        106
+clarify mismatches:         53
 metamorphic groups passed:  72 / 100
 ```
 
@@ -79,22 +95,29 @@ live services restored to the committed baseline
 Blocker:
 
 ```text
-persistent decision-layer tradeoffs between genuine mixed-domain tax
-questions and homograph traps, together with inherited reason-family
-granularity that continues to oscillate under coupled patching
+mutually trading decision-precedence clusters:
+- ALLOW expected but REFUSE produced;
+- REFUSE expected but ALLOW produced;
+- REFUSE expected but CLARIFY produced;
+together with concrete-subject and homograph discrimination that reopens
+one category when another is tightened (the dev-03 contentless-referent
+guard improved decisions 309->281 but reopened tax_compliance_task 108->90,
+so it was rejected as the next base).
 ```
 
 Preserved candidates:
 
 ```text
-reconstructed 2,819:
-  attempt: R20-domain_campaign-r20_commit5r1c3_reconstructed_2819_candidate-commit5r1c3-dev-01
-best governed 2,870:
-  attempt: R20-domain_campaign-r20_commit5r1c3_development_iteration_02-commit5r1c3-dev-02
-runtime snapshots preserved in the attempt directories (not applied to services/)
+reconstructed 2,870 (dev-01):
+  attempt: R20-domain_campaign-r20_commit5r1c4_reconstructed_2870_candidate-commit5r1c4-dev-01
+accepted best base 2,955 (dev-02):
+  attempt: R20-domain_campaign-r20_commit5r1c4_development_iteration_02-commit5r1c4-dev-02
+rejected decision candidate, 3,439 decisions (dev-03):
+  attempt: R20-domain_campaign-r20_commit5r1c4_development_iteration_03-commit5r1c4-dev-03
+runtime snapshots + patches preserved in the attempt directories (not applied to services/)
 ```
 
-2,870 / 3,720 is NOT closure and NOT a PASS.
+Neither candidate is closure and neither is a PASS.
 
 ## Why COMMIT 4R3 Was Required
 
@@ -200,7 +223,7 @@ remaining template conflicts:
 0
 
 status:
-FROZEN CANONICAL DEVELOPMENT EVIDENCE FOR COMMIT 5R1-C2
+FROZEN CANONICAL DEVELOPMENT EVIDENCE FOR R20 RUNTIME REMEDIATION
 NOT INDEPENDENT
 NOT UNSEEN
 NOT A HOLDOUT
@@ -252,31 +275,44 @@ R3 reconstructed dev-02 (governed):
 
 R3 best COMMIT 5R1-C2 candidate (governed):
 2,819 / 3,720
+
+R3 best COMMIT 5R1-C3 candidate (governed):
+2,870 / 3,720
+
+R3 best COMMIT 5R1-C4 candidate — overall (governed):
+2,955 / 3,720
+
+R3 best COMMIT 5R1-C4 result — decision layer (governed):
+3,439 / 3,720
 ```
 
 The R2 scores are historical only.
 
-The best current governed R3 candidate is 2,870 / 3,720, preserved as the COMMIT 5R1-C3
-dev-02 attempt runtime-snapshot (with its patch from the reconstructed 2,819 candidate and
-hashes). The reconstructed 2,819 candidate is preserved as the COMMIT 5R1-C3 dev-01 attempt.
+The best current governed R3 candidate is the accepted COMMIT 5R1-C4 dev-02 candidate at
+2,955 / 3,720 overall (decision layer 3,411 / 3,720), preserved as its attempt runtime-snapshot
+(with its patch from the reconstructed 2,870 candidate and hashes). The reconstructed 2,870
+candidate is preserved as the COMMIT 5R1-C4 dev-01 attempt. The dev-03 candidate reached the
+best decision-layer result (3,439 / 3,720) but was rejected as the next base because it reopened
+a closed category (tax_compliance_task 108 -> 90); it is preserved as the COMMIT 5R1-C4 dev-03
+attempt.
 
-Neither is applied to the live `services/` tree; the live runtime is the committed baseline.
-COMMIT 5R1-C4 must resume from the preserved 2,870 candidate.
+None is applied to the live `services/` tree; the live runtime is the committed baseline.
+COMMIT 5R1-C5 must resume from the accepted 2,955 candidate.
 
 ## Current Evidence Registry
 
 ```text
 cumulativeThrough:
-commit5r1c3-incomplete
+commit5r1c4-incomplete
 
 runtimeClosure:
 false
 
 total attempts:
-43
+46
 
-COMMIT 5R1-C3 new attempts:
-2
+COMMIT 5R1-C4 new attempts:
+3
 
 closureComplete:
 true
@@ -293,18 +329,18 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C4
-ARCHITECTURE REMEDIATION CONTINUATION 4 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C5
+LAYER-LOCKED ARCHITECTURE REMEDIATION CONTINUATION 5 AGAINST R3
 ```
 
-COMMIT 5R1-C4 must:
+COMMIT 5R1-C5 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the preserved COMMIT 5R1-C3 dev-02 candidate (best governed R3 = 2,870 / 3,720);
+2. reconstruct the accepted COMMIT 5R1-C4 dev-02 candidate (best overall R3 = 2,955 / 3,720; decision 3,411 / 3,720);
 3. execute it as a new governed R3 campaign;
 4. preserve the actual R3 result;
-5. continue clause-level task/target/relation remediation without changing R3;
-6. achieve standalone 3,720/3,720 on decision, reason and relation;
+5. continue the layer-locked decision lane first — reach 0 decision mismatches without reopening any closed category (tax_compliance_task, acronym_homograph_control), refining the concrete-subject / homograph discriminator so the mutually-trading clusters resolve together;
+6. only then lock decision, close the relation lane, then the reason lane, to standalone 3,720/3,720;
 7. integrate only after standalone closure;
 8. achieve integrated production-boundary 3,720/3,720;
 9. pass focused, relevant legacy, structural-generalization, anti-overfit and determinism gates;
@@ -317,7 +353,7 @@ COMMIT 6 is not the next task; it becomes the next task only after a successful 
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C4 (and any further continuations) runtime closure and freeze
+COMMIT 5R1-C5 (and any further continuations) runtime closure and freeze
 → COMMIT 6 post-freeze campaigns and focused evidence
 → deterministic clean cycles
 → staging clean cycles

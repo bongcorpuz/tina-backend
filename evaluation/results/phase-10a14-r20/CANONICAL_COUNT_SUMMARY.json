@@ -1,11 +1,11 @@
 {
   "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c3-incomplete",
+  "cumulativeThrough": "commit5r1c4-incomplete",
   "runtimeClosure": false,
   "registrySummary": {
-    "totalAttempts": 43,
+    "totalAttempts": 46,
     "byCategory": {
-      "domain_campaign": 11,
+      "domain_campaign": 14,
       "focused_suite": 1,
       "other": 7,
       "synthetic_validator": 24
@@ -20,6 +20,9 @@
       "r20_commit5r1c2_reconstructed_dev02_against_r3": 1,
       "r20_commit5r1c3_development_iteration_02": 1,
       "r20_commit5r1c3_reconstructed_2819_candidate": 1,
+      "r20_commit5r1c4_development_iteration_02": 1,
+      "r20_commit5r1c4_development_iteration_03": 1,
+      "r20_commit5r1c4_reconstructed_2870_candidate": 1,
       "r20_pre_fix_corrected_r18_567": 1,
       "r20_pre_fix_ir19_1120": 1,
       "r20_commit3_analyzer_focused_suite": 1,
@@ -55,21 +58,23 @@
       "r20_commit4r3_template_equivalence": 1,
       "r20_commit4r3_unchanged_field_and_reason_contract": 1
     },
-    "completed": 43,
+    "completed": 46,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 43,
+    "controlling": 46,
     "nonControlling": 0,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0
   },
-  "commit5r1c3": {
+  "commit5r1c4": {
     "decision": "INCOMPLETE_ARCHITECTURE_REMEDIATION_NOT_CLOSED",
-    "reconstructed2819R3": "2819/3720",
-    "bestGovernedR3": "2870/3720",
-    "remainingFailed": 850,
+    "reconstructed2870R3": "2870/3720",
+    "bestOverallGovernedR3": "2955/3720",
+    "bestDecisionLayerResult": "3439/3720",
+    "remainingDecisionMismatches": 309,
+    "decisionLayerLock": "NOT ACHIEVED",
     "runtimeFrozen": false,
     "analyzerModified": false,
     "r3Edited": false

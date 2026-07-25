@@ -1,0 +1,20 @@
+{
+  "decisionLayerLock": "NOT ACHIEVED",
+  "bestDecisionResult": "3439/3720",
+  "bestDecisionCandidate": "dev-03 (rejected as next base due to tax_compliance_task 108->90 closed-category regression)",
+  "bestAcceptedBase": "dev-02 (decision 3411/3720, overall 2955/3720)",
+  "remainingDecisionMismatches": 309,
+  "decByDir": {
+    "ALLOW->REFUSE": 103,
+    "ALLOW->CLARIFY": 40,
+    "REFUSE->ALLOW": 103,
+    "REFUSE->CLARIFY": 53,
+    "CLARIFY->ALLOW": 10
+  },
+  "reason": "Mutually-trading decision-precedence clusters (ALLOW->REFUSE, REFUSE->ALLOW, REFUSE->CLARIFY). Tightening the concrete-subject discriminator to fix REFUSE->ALLOW reopened tax_compliance_task; the two directions trade under coupled patching.",
+  "relationLayerLock": "NOT STARTED",
+  "reasonLayerLock": "NOT STARTED",
+  "standaloneClosure": "NOT ACHIEVED",
+  "productionIntegration": "NOT PERFORMED",
+  "runtimeFreeze": "NOT PERFORMED"
+}

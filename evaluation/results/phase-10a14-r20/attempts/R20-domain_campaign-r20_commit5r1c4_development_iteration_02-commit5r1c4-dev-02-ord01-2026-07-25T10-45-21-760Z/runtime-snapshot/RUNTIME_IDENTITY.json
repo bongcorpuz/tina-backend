@@ -1,0 +1,7 @@
+{
+  "note": "development_iteration_accepted. Decision lane: (a) dangling-scenario referent forced to CLARIFY before treatment/compliance rules; (b) label-binding — tax-shaped acronym bound to an ordinary label-noun via a naming/assignment/checklist act, guarded by absence of a genuine tax question predicate -> NAMES_AS_INTERNAL_LABEL/REQUESTS_NON_TAX_ACTION_ON REFUSE. NOT applied to services/ (unit INCOMPLETE).",
+  "analyzerSha256": "6a7d20af9d9bd9e5f79e4878de91579eada81daf0047d84ee39871830aaf3907",
+  "patchBaseSnapshot": "philippine-tax-intent-analyzer.js",
+  "oracleVersion": "R3",
+  "activeLayer": "decision"
+}

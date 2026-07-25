@@ -1,0 +1,12 @@
+{
+  "sourceSnapshot": "…commit5r1c3-dev-02…/runtime-snapshot/philippine-tax-intent-analyzer.js",
+  "snapshotSha256": "e2dfdf05b290e1f117d81e93305f5e6064a53d7518325a9c9d31d2aa99cd871d",
+  "expected": "e2dfdf05b290e1f117d81e93305f5e6064a53d7518325a9c9d31d2aa99cd871d",
+  "matches": true,
+  "patchBase": "live COMMIT 3 baseline a23364bc",
+  "patchFile": "COMMIT_5R1C4_RECONSTRUCTED_2870.patch",
+  "patchSha256": "90f6f132d4570a9bb9ad1d8bcfd1abd51ab7ae0c653bf82cccb5d6d9b90eef47",
+  "boundaryUnchanged": true,
+  "patternsUnchanged": true,
+  "oracleVersion": "R3"
+}
