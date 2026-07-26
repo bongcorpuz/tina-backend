@@ -1,0 +1,170 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c11_reconstructed_3720_candidate-commit5r1c11-dev-01-ord01-2026-07-26T05-15-49-108Z",
+  "expected": {
+    "overall": 3097,
+    "decision": 3720,
+    "decisionMismatches": 0,
+    "fa": 0,
+    "fr": 0,
+    "clarify": 0,
+    "cfPassed": 698,
+    "cfFailed": 58
+  },
+  "actual": {
+    "overall": 3097,
+    "decision": 3720,
+    "decisionMismatches": 0,
+    "fa": 0,
+    "fr": 0,
+    "clarify": 0,
+    "cfPassed": 698,
+    "cfFailed": 58
+  },
+  "actualRelationMismatches": 167,
+  "actualReasonMismatches": 562,
+  "closedControls": {
+    "controls": [
+      {
+        "control": "tax_compliance_task",
+        "passed": 108,
+        "total": 108,
+        "closed": true
+      },
+      {
+        "control": "acronym_homograph_control",
+        "passed": 200,
+        "total": 200,
+        "closed": true
+      },
+      {
+        "control": "ambiguous_clarification_control",
+        "passed": 150,
+        "total": 150,
+        "closed": true
+      },
+      {
+        "control": "internal_label_proper_name",
+        "passed": 104,
+        "total": 104,
+        "closed": true
+      },
+      {
+        "control": "quoted_term_only",
+        "passed": 110,
+        "total": 110,
+        "closed": true
+      }
+    ],
+    "allClosed": true
+  },
+  "richContextGuard": {
+    "probes": [
+      {
+        "shape": "bare_term",
+        "query": "holding period",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "recognized_polysemous_acronym",
+        "query": "RMC",
+        "expected": "CLARIFY",
+        "actual": "CLARIFY",
+        "pass": true
+      },
+      {
+        "shape": "issuance_context",
+        "query": "What did the RMC issuance say about VAT?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "procedure_context",
+        "query": "Explain RMC for BIR issuances.",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "ordinary_homograph",
+        "query": "Can a supplier reject a return of goods?",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      },
+      {
+        "shape": "richer_tax_sentence",
+        "query": "How is the holding period applied to a capital gains tax computation on land?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "metadata_suffixed_contentless",
+        "query": "What is the holding period? Context 1.",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      }
+    ],
+    "allPass": true
+  },
+  "counterfactual": {
+    "total": 756,
+    "passed": 698,
+    "failed": 58,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 322,
+        "failed": 9
+      },
+      "v4": {
+        "total": 177,
+        "passed": 154,
+        "failed": 23
+      },
+      "v5": {
+        "total": 134,
+        "passed": 121,
+        "failed": 13
+      },
+      "v6": {
+        "total": 114,
+        "passed": 101,
+        "failed": 13
+      }
+    },
+    "byFamily": {
+      "filipino_taglish": 1,
+      "concrete_target_relation_expanded": 1,
+      "contentless_referent": 4,
+      "tax_vs_civil_domain_expanded": 3,
+      "concrete_vs_contentless": 6,
+      "antecedent_vs_metadata": 2,
+      "primary_tax_vs_subordinate_label": 2,
+      "governed_tax_relations": 8,
+      "multiclause_reversal": 1,
+      "substring_traps": 2,
+      "tax_token_in_non_tax_imperative": 1,
+      "tax_term_cross_domain": 1,
+      "tax_claim_vs_ordinary_claim": 1,
+      "bir_registration_vs_event_registration": 1,
+      "taxable_output_vs_console_output": 1,
+      "legal_title_vs_internal_label": 4,
+      "primary_tax_vs_subordinate_code": 3,
+      "unambiguous_vs_polysemous_acronym": 5,
+      "metadata_suffix_vs_antecedent": 1,
+      "filipino_taglish_v5": 1,
+      "canonical_concept_vs_polysemous": 1,
+      "richer_issuance_vs_bare_token": 1,
+      "tax_context_vs_metadata_only": 4,
+      "concise_tax_phrase_vs_ordinary": 1,
+      "predicate_over_target_vs_contentless": 1,
+      "rich_context_ladder": 1
+    }
+  }
+}

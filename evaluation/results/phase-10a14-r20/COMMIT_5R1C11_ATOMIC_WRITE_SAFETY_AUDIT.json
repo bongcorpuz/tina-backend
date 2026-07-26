@@ -1,0 +1,56 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "generatedUtc": "2026-07-26T05:15:50.421Z",
+  "protocol": "in-repository sibling temp file ending in .js -> verify non-zero -> parse/import and verify all nine exports -> hash -> atomic rename -> rehash destination",
+  "externalScratchpadUsedForRuntimeWrite": false,
+  "writes": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "afterSha256Normalized": "19b14234506314450aa6705d9cd56a3b287850e9e528f774915cf9e52d667fcf",
+      "beforeBytes": 31742,
+      "afterBytes": 108652,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c11tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "beforeBytes": 12192,
+      "afterBytes": 12192,
+      "tempFileUsed": "philippine-tax-domain-boundary.c11tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "beforeBytes": 65451,
+      "afterBytes": 65451,
+      "tempFileUsed": "philippine-tax-boundary-patterns.c11tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "zeroByteIncidents": 0,
+  "truncationIncidents": 0,
+  "unexpectedWriteEvents": 0
+}

@@ -1,0 +1,24 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c11_reconstructed_3720_candidate-commit5r1c11-dev-01-ord01-2026-07-26T05-15-49-108Z",
+  "appliedRuntimeIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 108652,
+      "normalizedLfSha256": "19b14234506314450aa6705d9cd56a3b287850e9e528f774915cf9e52d667fcf",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "42360feadc5be5f1f7d203551ed5296eb0f4338eb59ba8b9fc6ecea2d6fe61ce"
+  },
+  "patchSha256": "ef9cb54e4d96a5d0bd3ef463f69e0a8ed6968fc75f04170c15b2b1f16ed9ebdc",
+  "patchBytes": 128988
+}

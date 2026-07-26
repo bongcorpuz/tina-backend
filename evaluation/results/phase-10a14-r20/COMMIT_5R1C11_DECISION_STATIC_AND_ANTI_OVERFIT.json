@@ -1,0 +1,29 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "checks": {
+    "no_oracle_import": "PASS",
+    "no_complete_frozen_query": "PASS",
+    "no_complete_counterfactual_query": "PASS",
+    "no_oracle_id": "PASS",
+    "no_source_set_lookup": "PASS",
+    "no_category_lookup": "PASS",
+    "no_counterfactual_family_lookup": "PASS",
+    "no_expected_value_lookup": "PASS",
+    "no_metamorphic_marker": "PASS",
+    "no_numeric_scenario_branch": "PASS",
+    "no_test_environment_branch": "PASS",
+    "no_model_or_network": "PASS",
+    "no_io_or_time_or_random": "PASS",
+    "no_reason_code_driven_decision": "PASS",
+    "typed_task_target_evidence": "PASS",
+    "no_controlling_global_homograph_veto": "PASS",
+    "no_invented_acronym_expansion": "PASS",
+    "word_boundary_domain_matching": "PASS",
+    "typed_target_completeness_present": "PASS",
+    "tax_domain_object_required_for_compliance": "PASS",
+    "narrow_canonical_acronym_set": "PASS"
+  },
+  "failed": [],
+  "result": "PASS",
+  "note": "Evaluated against executable code with comments stripped. Also checks that no complete counterfactual query and no counterfactual family name is embedded in runtime."
+}

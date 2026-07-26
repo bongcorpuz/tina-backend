@@ -1,0 +1,11 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "generatedUtc": "2026-07-26T05:17:12.841Z",
+  "totalFailures": 58,
+  "structurallyValid": 58,
+  "flaggedPossibleSuiteDefect": 0,
+  "originalExpectationsPreservedUnchanged": true,
+  "correctionApplied": false,
+  "policy": "A counterfactual correction is permitted only for a demonstrated suite defect, only through a versioned correction artifact, and only when proven generic. No correction was applied in this pass; flagged rows remain as authored and are treated as genuine failures to be closed by runtime architecture.",
+  "flaggedRows": []
+}

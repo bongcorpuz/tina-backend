@@ -1,0 +1,73 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "generatedUtc": "2026-07-26T05:45:49.885Z",
+  "decisionLayerLockAchieved": false,
+  "disposition": "NOT_ACHIEVED_COUNTERFACTUAL_SUITE_NOT_FULLY_CLOSED",
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_05-commit5r1c11-dev-05-ord01-2026-07-26T05-31-24-436Z",
+  "verificationAttemptId": "R20-domain_campaign-r20_commit5r1c11_decision_layer_lock_verification-commit5r1c11-lock-ord01-2026-07-26T05-44-18-629Z",
+  "verificationExecuted": true,
+  "r3DecisionPassed": 3720,
+  "r3DecisionMismatches": 0,
+  "falseAllows": 0,
+  "falseRefusals": 0,
+  "clarifyMismatches": 0,
+  "closedControlsPreserved": true,
+  "richContextGuardPass": true,
+  "counterfactual": {
+    "total": 756,
+    "passed": 739,
+    "failed": 17,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 331,
+        "failed": 0
+      },
+      "v4": {
+        "total": 177,
+        "passed": 171,
+        "failed": 6
+      },
+      "v5": {
+        "total": 134,
+        "passed": 128,
+        "failed": 6
+      },
+      "v6": {
+        "total": 114,
+        "passed": 109,
+        "failed": 5
+      }
+    },
+    "byFamily": {
+      "antecedent_vs_metadata": 1,
+      "primary_tax_vs_subordinate_label": 1,
+      "multiclause_reversal": 1,
+      "tax_token_in_non_tax_imperative": 1,
+      "bare_tax_topic": 2,
+      "tax_claim_vs_ordinary_claim": 1,
+      "taxable_output_vs_console_output": 1,
+      "legal_title_vs_internal_label": 4,
+      "primary_tax_vs_subordinate_code": 3,
+      "unambiguous_vs_polysemous_acronym": 1,
+      "richer_issuance_vs_bare_token": 1
+    }
+  },
+  "lockConditions": {
+    "r3DecisionEquals3720": true,
+    "falseAllowsZero": true,
+    "falseRefusalsZero": true,
+    "clarifyMismatchesZero": true,
+    "counterfactualSuiteFullyPasses": false,
+    "closedControlsAllClosed": true,
+    "richContextGuardPass": true,
+    "runtimeIdentityStable": true
+  },
+  "whyNotLocked": "R3 holds an exact 3,720/3,720 with zero false allows, zero false refusals and zero clarify mismatches, all closed controls preserved, the seven-shape rich-context guard passing, and a stable runtime identity across a separate clean verification campaign. Seven of eight lock conditions are met. The lock additionally requires the complete combined counterfactual suite to pass; 17 of 756 queries still fail, so the lock is not declared.",
+  "runtimeSnapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_05-commit5r1c11-dev-05-ord01-2026-07-26T05-31-24-436Z/runtime-snapshot",
+  "decisionLayerClosure": false,
+  "runtimeClosure": false,
+  "runtimeMutableForRelationWork": true,
+  "relationLaneStarted": false,
+  "reasonLaneStarted": false
+}

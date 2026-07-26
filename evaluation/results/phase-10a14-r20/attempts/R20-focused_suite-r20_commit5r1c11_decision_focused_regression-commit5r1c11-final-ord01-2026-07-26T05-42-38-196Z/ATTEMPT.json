@@ -1,0 +1,45 @@
+{
+  "attemptId": "R20-focused_suite-r20_commit5r1c11_decision_focused_regression-commit5r1c11-final-ord01-2026-07-26T05-42-38-196Z",
+  "attemptCategory": "focused_suite",
+  "gateName": "r20_commit5r1c11_decision_focused_regression",
+  "cycle": "commit5r1c11-final",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "8790c726413e1ef4eddf04e6ccf0f8c30df1baa9",
+  "evidenceHeadAtStart": "8790c726413e1ef4eddf04e6ccf0f8c30df1baa9",
+  "runtimeBaselineCommit": "8790c726413e1ef4eddf04e6ccf0f8c30df1baa9",
+  "runtimeTreeDigest": "d18f9035c52ffb88fc4cae5f38713611a67ef9f1d5b8c5767bc05ea70242b04f",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "2ecb0132803d655308d02f01b044f81e004974c10b210537fd53ffd67eb88a3d",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "commit5r1c11-gates.mjs"
+  ],
+  "commandHash": "90d16399efc417fa42b62dd797ae78f6450faea06c9b845edf5f0ea6aed30553",
+  "startedAt": "2026-07-26T05:42:38.572Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-26T05:42:39.550Z",
+  "exitCode": 0,
+  "disposition": "controlling_decision_focused_regression",
+  "evidenceHeadAtEnd": "8790c726413e1ef4eddf04e6ccf0f8c30df1baa9",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C11_DECISION_FOCUSED_RESULT.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit5r1c11_decision_focused_regression-commit5r1c11-final-ord01-2026-07-26T05-42-38-196Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit5r1c11_decision_focused_regression-commit5r1c11-final-ord01-2026-07-26T05-42-38-196Z/stderr.txt",
+  "stdoutSha256": "41c9a5b87ef061585bad1965dc5aeb418669decc5b2c6279cd238835cc17cdd9",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

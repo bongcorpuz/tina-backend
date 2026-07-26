@@ -1,0 +1,6 @@
+iteration 02
+R3 decision=3720/3720 decisionMismatches=0 fa=0 fr=0 clarify=0
+r3InvariantHeld=true
+overall=3097/3720 reason=562 relation=162
+closedControls=ALL CLOSED richContextGuard=PASS
+counterfactual=707/756 failed=49 (v3 6, v4 21, v5 9, v6 13)

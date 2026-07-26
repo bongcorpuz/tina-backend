@@ -1,0 +1,188 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "verificationAttemptId": "R20-domain_campaign-r20_commit5r1c11_decision_layer_lock_verification-commit5r1c11-lock-ord01-2026-07-26T05-44-18-629Z",
+  "noRuntimeOrTestChangeDuringVerification": true,
+  "runtimeIdentityBefore": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 115390,
+      "normalizedLfSha256": "bbd2a313afc1b26e02348e86d7740136a39703f21c7d33b250368ab44031f40a",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "8c0ac8337b66528883185d337300f8b24293a05e245bb839c7f02b7f65863f93"
+  },
+  "runtimeIdentityAfter": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 115390,
+      "normalizedLfSha256": "bbd2a313afc1b26e02348e86d7740136a39703f21c7d33b250368ab44031f40a",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "8c0ac8337b66528883185d337300f8b24293a05e245bb839c7f02b7f65863f93"
+  },
+  "identityStable": true,
+  "decisionPassed": 3720,
+  "decisionMismatches": 0,
+  "falseAllows": 0,
+  "falseRefusals": 0,
+  "clarifyMismatches": 0,
+  "closedControls": {
+    "controls": [
+      {
+        "control": "tax_compliance_task",
+        "passed": 108,
+        "total": 108,
+        "closed": true
+      },
+      {
+        "control": "acronym_homograph_control",
+        "passed": 200,
+        "total": 200,
+        "closed": true
+      },
+      {
+        "control": "ambiguous_clarification_control",
+        "passed": 150,
+        "total": 150,
+        "closed": true
+      },
+      {
+        "control": "internal_label_proper_name",
+        "passed": 104,
+        "total": 104,
+        "closed": true
+      },
+      {
+        "control": "quoted_term_only",
+        "passed": 110,
+        "total": 110,
+        "closed": true
+      }
+    ],
+    "allClosed": true
+  },
+  "richContextGuard": {
+    "probes": [
+      {
+        "shape": "bare_term",
+        "query": "holding period",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "recognized_polysemous_acronym",
+        "query": "RMC",
+        "expected": "CLARIFY",
+        "actual": "CLARIFY",
+        "pass": true
+      },
+      {
+        "shape": "issuance_context",
+        "query": "What did the RMC issuance say about VAT?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "procedure_context",
+        "query": "Explain RMC for BIR issuances.",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "ordinary_homograph",
+        "query": "Can a supplier reject a return of goods?",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      },
+      {
+        "shape": "richer_tax_sentence",
+        "query": "How is the holding period applied to a capital gains tax computation on land?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "metadata_suffixed_contentless",
+        "query": "What is the holding period? Context 1.",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      }
+    ],
+    "allPass": true
+  },
+  "counterfactual": {
+    "total": 756,
+    "passed": 739,
+    "failed": 17,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 331,
+        "failed": 0
+      },
+      "v4": {
+        "total": 177,
+        "passed": 171,
+        "failed": 6
+      },
+      "v5": {
+        "total": 134,
+        "passed": 128,
+        "failed": 6
+      },
+      "v6": {
+        "total": 114,
+        "passed": 109,
+        "failed": 5
+      }
+    },
+    "byFamily": {
+      "antecedent_vs_metadata": 1,
+      "primary_tax_vs_subordinate_label": 1,
+      "multiclause_reversal": 1,
+      "tax_token_in_non_tax_imperative": 1,
+      "bare_tax_topic": 2,
+      "tax_claim_vs_ordinary_claim": 1,
+      "taxable_output_vs_console_output": 1,
+      "legal_title_vs_internal_label": 4,
+      "primary_tax_vs_subordinate_code": 3,
+      "unambiguous_vs_polysemous_acronym": 1,
+      "richer_issuance_vs_bare_token": 1
+    }
+  },
+  "lockConditions": {
+    "r3DecisionEquals3720": true,
+    "falseAllowsZero": true,
+    "falseRefusalsZero": true,
+    "clarifyMismatchesZero": true,
+    "counterfactualSuiteFullyPasses": false,
+    "closedControlsAllClosed": true,
+    "richContextGuardPass": true,
+    "runtimeIdentityStable": true
+  },
+  "lockAchieved": false,
+  "note": "R3 holds an exact 3,720/3,720 with all closed controls and the rich-context guard intact, but the lock requires the complete combined counterfactual suite to pass. 17 of 756 queries still fail, so the lock is not declared."
+}

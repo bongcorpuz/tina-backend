@@ -1,0 +1,5 @@
+{
+  "hypothesis": "An enumerated metadata suffix never supplies a target, so the contentless guard is evaluated on the metadata-stripped clause; it is exempted when that clause names a tax instrument, a recognised acronym or substantive tax subject matter, which is what protects the richer issuance questions. A governed tax predicate whose subject is a plain definite noun phrase now counts as an anchor. A naming or titling action over a token is label binding even when the token is a statute name.",
+  "affectedFamilies": "concrete_vs_contentless, metadata_suffix_vs_antecedent, tax_context_vs_metadata_only, legal_title_vs_internal_label, governed_tax_relations",
+  "iteration": "03"
+}

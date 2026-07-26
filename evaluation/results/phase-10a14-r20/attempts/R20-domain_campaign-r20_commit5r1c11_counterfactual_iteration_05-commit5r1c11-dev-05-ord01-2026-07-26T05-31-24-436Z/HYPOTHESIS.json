@@ -1,0 +1,5 @@
+{
+  "hypothesis": "Six structural families: a tax amount or rate whose target follows a preposition; a recognised tax concept in a treatment or application frame over an entity; a procedure scoped to a taxpayer or the revenue authority; a statute named as the subject of a tax question, which defeats the non-tax action reading; a subordinate code clause under a governed tax predicate, which does not make naming primary; and an ordinary personal or social frame, which governs its own target and refuses rather than clarifies.",
+  "affectedFamilies": "governed_tax_relations, legal_title_vs_internal_label, primary_tax_vs_subordinate_code, tax_claim_vs_ordinary_claim, bir_registration_vs_event_registration, filipino_taglish",
+  "iteration": "05"
+}

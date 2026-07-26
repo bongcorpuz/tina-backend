@@ -1,0 +1,72 @@
+{
+ "all_three_decisions": {
+  "total": 3720,
+  "passed": 3720,
+  "failed": 0
+ },
+ "closed_decision_controls": {
+  "total": 672,
+  "passed": 672,
+  "failed": 0
+ },
+ "target_completeness": {
+  "total": 310,
+  "passed": 310,
+  "failed": 0
+ },
+ "contextual_acronyms": {
+  "total": 1624,
+  "passed": 1624,
+  "failed": 0
+ },
+ "label_binding": {
+  "total": 260,
+  "passed": 260,
+  "failed": 0
+ },
+ "quoted_term_scope": {
+  "total": 155,
+  "passed": 155,
+  "failed": 0
+ },
+ "non_tax_actions": {
+  "total": 942,
+  "passed": 942,
+  "failed": 0
+ },
+ "concrete_tax_relations": {
+  "total": 1139,
+  "passed": 1139,
+  "failed": 0
+ },
+ "resolved_referents": {
+  "total": 57,
+  "passed": 57,
+  "failed": 0
+ },
+ "compliance_vs_treatment": {
+  "total": 436,
+  "passed": 436,
+  "failed": 0
+ },
+ "ordinary_homographs": {
+  "total": 92,
+  "passed": 92,
+  "failed": 0
+ },
+ "multi_clause": {
+  "total": 130,
+  "passed": 130,
+  "failed": 0
+ },
+ "filipino_taglish": {
+  "total": 357,
+  "passed": 357,
+  "failed": 0
+ },
+ "numeric_scenario_invariance": {
+  "total": 1462,
+  "passed": 1462,
+  "failed": 0
+ }
+}

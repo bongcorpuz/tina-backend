@@ -1,0 +1,5 @@
+{
+  "hypothesis": "The metadata-contentless guard cannot be discriminated by whether a tax name appears, because a contentless query and a rich issuance query both name a tax. The real discriminator is whether the metadata-stripped clause has a non-deictic subject of its own. A definite noun-phrase subject governed by an explicit tax predicate is a concrete target and builds the matching treatment relation.",
+  "affectedFamilies": "concrete_vs_contentless, metadata_suffix_vs_antecedent, tax_context_vs_metadata_only, governed_tax_relations, predicate_over_target_vs_contentless",
+  "iteration": "04"
+}

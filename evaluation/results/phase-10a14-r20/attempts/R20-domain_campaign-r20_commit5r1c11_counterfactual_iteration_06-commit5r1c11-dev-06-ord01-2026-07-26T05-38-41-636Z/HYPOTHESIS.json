@@ -1,0 +1,5 @@
+{
+  "hypothesis": "Added statute-subject, ordinary-claim and imperative-print evidence with decision rules, plus antecedent-resolved, nominalised-transaction and subordinate-code-keeps-tax-reading relation shapes. R3 held at 3720/3720 with controls and the rich-context guard intact, but the counterfactual score stayed at 741/756: the new relation shapes are consumed by earlier branches in the chain and the new decision rules sit after a rule that already decides. Recorded as a flat candidate that introduces no regression.",
+  "affectedFamilies": "legal_title_vs_internal_label, primary_tax_vs_subordinate_code, tax_claim_vs_ordinary_claim, taxable_output_vs_console_output, governed_tax_relations",
+  "iteration": "06"
+}

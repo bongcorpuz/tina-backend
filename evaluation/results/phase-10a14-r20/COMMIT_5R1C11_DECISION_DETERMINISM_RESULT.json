@@ -1,0 +1,10 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "queries": 150,
+  "repetitionsPerQuery": 100,
+  "totalEvaluations": 15000,
+  "decisionDrift": 0,
+  "byteDriftInDecisionRelevantEvidence": 0,
+  "mutationFailures": 0,
+  "result": "PASS"
+}

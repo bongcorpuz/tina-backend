@@ -1,0 +1,41 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "generatedUtc": "2026-07-26T05:45:49.885Z",
+  "priorAttempts": 98,
+  "newAttempts": 18,
+  "totalAttempts": 116,
+  "byCategory": {
+    "domain_campaign": 54,
+    "focused_suite": 11,
+    "other": 9,
+    "synthetic_validator": 42
+  },
+  "controlling": 114,
+  "nonControlling": 2,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "cumulativeThrough": "commit5r1c11-incomplete",
+  "runtimeClosure": false,
+  "decisionLayerClosure": false,
+  "closureComplete": true,
+  "newAttemptIds": [
+    "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_02-commit5r1c11-dev-02-ord01-2026-07-26T05-20-16-595Z",
+    "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_03-commit5r1c11-dev-03-ord01-2026-07-26T05-24-25-572Z",
+    "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_04-commit5r1c11-dev-04-ord01-2026-07-26T05-27-10-529Z",
+    "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_05-commit5r1c11-dev-05-ord01-2026-07-26T05-31-24-436Z",
+    "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_06-commit5r1c11-dev-06-ord01-2026-07-26T05-38-41-636Z",
+    "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_07-commit5r1c11-dev-07-ord01-2026-07-26T05-44-16-663Z",
+    "R20-domain_campaign-r20_commit5r1c11_decision_layer_lock_verification-commit5r1c11-lock-ord01-2026-07-26T05-40-04-947Z",
+    "R20-domain_campaign-r20_commit5r1c11_decision_layer_lock_verification-commit5r1c11-lock-ord01-2026-07-26T05-44-18-629Z",
+    "R20-domain_campaign-r20_commit5r1c11_reconstructed_3720_candidate-commit5r1c11-dev-01-ord01-2026-07-26T05-15-49-108Z",
+    "R20-focused_suite-r20_commit5r1c11_decision_focused_regression-commit5r1c11-final-ord01-2026-07-26T05-40-57-526Z",
+    "R20-focused_suite-r20_commit5r1c11_decision_focused_regression-commit5r1c11-final-ord01-2026-07-26T05-42-38-196Z",
+    "R20-focused_suite-r20_commit5r1c11_decision_focused_regression-commit5r1c11-final-ord01-2026-07-26T05-43-49-964Z",
+    "R20-synthetic_validator-r20_commit5r1c11_decision_determinism_and_no_mutation-commit5r1c11-final-ord01-2026-07-26T05-40-59-696Z",
+    "R20-synthetic_validator-r20_commit5r1c11_decision_determinism_and_no_mutation-commit5r1c11-final-ord01-2026-07-26T05-42-40-004Z",
+    "R20-synthetic_validator-r20_commit5r1c11_decision_determinism_and_no_mutation-commit5r1c11-final-ord01-2026-07-26T05-43-51-684Z",
+    "R20-synthetic_validator-r20_commit5r1c11_decision_static_and_anti_overfit-commit5r1c11-final-ord01-2026-07-26T05-40-59-255Z",
+    "R20-synthetic_validator-r20_commit5r1c11_decision_static_and_anti_overfit-commit5r1c11-final-ord01-2026-07-26T05-42-39-628Z",
+    "R20-synthetic_validator-r20_commit5r1c11_decision_static_and_anti_overfit-commit5r1c11-final-ord01-2026-07-26T05-43-51-317Z"
+  ]
+}

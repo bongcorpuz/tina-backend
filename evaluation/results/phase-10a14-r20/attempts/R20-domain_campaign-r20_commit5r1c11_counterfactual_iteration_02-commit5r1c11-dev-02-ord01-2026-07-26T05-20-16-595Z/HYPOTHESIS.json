@@ -1,0 +1,5 @@
+{
+  "hypothesis": "The dominant ALLOW->REFUSE family built no tax relation at all: the C10 tightening required a TAX_DOMAIN_OBJECT match before a compliance relation, but that vocabulary omitted core instruments and predicates (annual return, final tax, deductible, registration fee), so genuine tax questions fell to the REFUSE fallback. Widened the tax-domain vocabulary, made a governed tax predicate over the target sufficient attachment for a compliance relation, and treated an explanatory verb over a recognised tax acronym or concept as a definition request.",
+  "affectedFamilies": "governed_tax_relations, tax_sense_vs_ordinary_sense, canonical_concept_vs_polysemous, concise_tax_phrase_vs_ordinary",
+  "iteration": "02"
+}

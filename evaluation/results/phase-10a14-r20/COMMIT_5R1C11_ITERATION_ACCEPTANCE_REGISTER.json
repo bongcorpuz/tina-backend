@@ -1,0 +1,74 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "generatedUtc": "2026-07-26T05:45:49.885Z",
+  "acceptanceRule": "R3 must remain 3,720/3,720; counterfactual failures must decrease; no closed-control or rich-context regression; no exact-query or oracle-specific logic. A flat candidate is accepted only when it closes a documented structural pair.",
+  "decisions": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_02-commit5r1c11-dev-02-ord01-2026-07-26T05-20-16-595Z",
+      "priorCounterfactualFailures": 58,
+      "newCounterfactualFailures": 49,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with R3, controls and guard all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_03-commit5r1c11-dev-03-ord01-2026-07-26T05-24-25-572Z",
+      "priorCounterfactualFailures": 49,
+      "newCounterfactualFailures": 44,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with R3, controls and guard all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_04-commit5r1c11-dev-04-ord01-2026-07-26T05-27-10-529Z",
+      "priorCounterfactualFailures": 44,
+      "newCounterfactualFailures": 25,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with R3, controls and guard all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_05-commit5r1c11-dev-05-ord01-2026-07-26T05-31-24-436Z",
+      "priorCounterfactualFailures": 25,
+      "newCounterfactualFailures": 15,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with R3, controls and guard all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_06-commit5r1c11-dev-06-ord01-2026-07-26T05-38-41-636Z",
+      "priorCounterfactualFailures": 15,
+      "newCounterfactualFailures": 15,
+      "counterfactualFailuresDecreased": false,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "disposition": "FLAT_SUPERSEDED",
+      "rationale": "flat: introduced no regression but closed no documented pair, so the prior accepted base was restored"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_07-commit5r1c11-dev-07-ord01-2026-07-26T05-44-16-663Z",
+      "priorCounterfactualFailures": 15,
+      "newCounterfactualFailures": 17,
+      "counterfactualFailuresDecreased": false,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "disposition": "REJECTED",
+      "rationale": "counterfactual failures did not decrease"
+    }
+  ],
+  "rejectedAndFlatCandidatesPreserved": true
+}

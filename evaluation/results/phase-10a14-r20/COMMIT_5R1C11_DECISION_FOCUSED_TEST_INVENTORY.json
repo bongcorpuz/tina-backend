@@ -1,0 +1,20 @@
+{
+  "unit": "COMMIT 5R1-C11",
+  "coverage": [
+    "all_three_decisions",
+    "closed_decision_controls",
+    "target_completeness",
+    "contextual_acronyms",
+    "label_binding",
+    "quoted_term_scope",
+    "non_tax_actions",
+    "concrete_tax_relations",
+    "resolved_referents",
+    "compliance_vs_treatment",
+    "ordinary_homographs",
+    "multi_clause",
+    "filipino_taglish",
+    "numeric_scenario_invariance"
+  ],
+  "basis": "R3 rows partitioned by structural feature; no exact-query or oracle-id lookup in runtime"
+}

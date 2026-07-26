@@ -1,0 +1,5 @@
+{
+  "hypothesis": "Anti-overfit remediation: the new no_complete_counterfactual_query check found two v4 suite entries whose exact text had been added to the runtime vocabulary in C9, so those queries passed by name rather than by structure. Both were removed from CONCISE_TAX_PHRASE_RE and BARE_TAX_TOPIC_RE. The generic alternatives still cover the concept structurally. Counterfactual falls 741 to 739, which is the honest cost of removing the leakage; R3 holds at 3720/3720 and anti-overfit now passes 21/21.",
+  "affectedFamilies": "concise_tax_phrase_vs_ordinary, tax_claim_vs_ordinary_claim",
+  "iteration": "07"
+}

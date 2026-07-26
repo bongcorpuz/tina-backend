@@ -1,0 +1,7 @@
+clean verification
+R3 decision=3720/3720 fa=0 fr=0 clarify=0
+closedControls=ALL CLOSED richContextGuard=PASS
+counterfactual=739/756 failed=17
+runtimeIdentityStable=true
+LOCK_CONDITIONS={"r3DecisionEquals3720":true,"falseAllowsZero":true,"falseRefusalsZero":true,"clarifyMismatchesZero":true,"counterfactualSuiteFullyPasses":false,"closedControlsAllClosed":true,"richContextGuardPass":true,"runtimeIdentityStable":true}
+LOCK_ACHIEVED=false
