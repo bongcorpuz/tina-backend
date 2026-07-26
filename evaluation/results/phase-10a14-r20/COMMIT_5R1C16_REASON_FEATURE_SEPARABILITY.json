@@ -1,0 +1,659 @@
+{
+  "unit": "COMMIT 5R1-C16",
+  "generatedUtc": "2026-07-26T15:00:50.865Z",
+  "method": "Each candidate feature is computed from runtime-available clause/relation evidence only and measured over all 3,720 R3 rows. Precision is the share of the dominant expected reason within the feature support set; coverage is the share of that reason captured; counterexamples are support rows carrying any other expected reason.",
+  "prohibitedControls": [
+    "mere tax-token presence",
+    "mere homograph-token presence on an imperative",
+    "primaryCategory or any oracle metadata",
+    "exact template/query/source-set/ID matching"
+  ],
+  "featureCount": 21,
+  "measured": [
+    {
+      "feature": "naming_act",
+      "support": 28,
+      "dominantExpectedReason": "non_tax_label_or_name",
+      "dominantCount": 28,
+      "precision": 1,
+      "coverageOfDominant": 0.1393,
+      "counterexampleCount": 0,
+      "supportByExpected": {
+        "non_tax_label_or_name": 28
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 784,
+        "explicit_non_tax_task": 897,
+        "quoted_tax_term_only": 120,
+        "non_tax_label_or_name": 173,
+        "no_tax_relation": 563,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 79,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "expansion_act",
+      "support": 18,
+      "dominantExpectedReason": "non_tax_expansion",
+      "dominantCount": 18,
+      "precision": 1,
+      "coverageOfDominant": 0.2045,
+      "counterexampleCount": 0,
+      "supportByExpected": {
+        "non_tax_expansion": 18
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 784,
+        "explicit_non_tax_task": 897,
+        "non_tax_label_or_name": 201,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 563,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 70,
+        "tax_definition_with_context": 79,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "request_with_action_target",
+      "support": 453,
+      "dominantExpectedReason": "explicit_non_tax_task",
+      "dominantCount": 407,
+      "precision": 0.8985,
+      "coverageOfDominant": 0.4537,
+      "counterexampleCount": 46,
+      "supportByExpected": {
+        "explicit_non_tax_task": 407,
+        "quoted_tax_term_only": 24,
+        "no_tax_relation": 7,
+        "tax_treatment_of_ordinary_object": 1,
+        "tax_definition_with_context": 6,
+        "non_tax_label_or_name": 8
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 783,
+        "explicit_non_tax_task": 490,
+        "non_tax_label_or_name": 193,
+        "no_tax_relation": 556,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 73,
+        "quoted_tax_term_only": 96,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "speech_act_request",
+      "support": 785,
+      "dominantExpectedReason": "explicit_non_tax_task",
+      "dominantCount": 671,
+      "precision": 0.8548,
+      "coverageOfDominant": 0.748,
+      "counterexampleCount": 114,
+      "supportByExpected": {
+        "explicit_non_tax_task": 671,
+        "quoted_tax_term_only": 80,
+        "no_tax_relation": 19,
+        "tax_treatment_of_ordinary_object": 1,
+        "tax_definition_with_context": 6,
+        "non_tax_label_or_name": 8
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 783,
+        "explicit_non_tax_task": 226,
+        "non_tax_label_or_name": 193,
+        "ambiguous_tax_acronym": 220,
+        "no_tax_relation": 544,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 73,
+        "quoted_tax_term_only": 40,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "quotation_act",
+      "support": 120,
+      "dominantExpectedReason": "quoted_tax_term_only",
+      "dominantCount": 90,
+      "precision": 0.75,
+      "coverageOfDominant": 0.75,
+      "counterexampleCount": 30,
+      "supportByExpected": {
+        "non_tax_label_or_name": 20,
+        "quoted_tax_term_only": 90,
+        "no_tax_relation": 10
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 784,
+        "explicit_non_tax_task": 897,
+        "non_tax_label_or_name": 181,
+        "ambiguous_tax_acronym": 220,
+        "no_tax_relation": 553,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 79,
+        "quoted_tax_term_only": 30,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "unresolved_referent",
+      "support": 150,
+      "dominantExpectedReason": "no_tax_relation",
+      "dominantCount": 100,
+      "precision": 0.6667,
+      "coverageOfDominant": 0.1776,
+      "counterexampleCount": 50,
+      "supportByExpected": {
+        "no_tax_relation": 100,
+        "ambiguous_tax_acronym": 50
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 784,
+        "explicit_non_tax_task": 897,
+        "non_tax_label_or_name": 201,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 463,
+        "ambiguous_tax_acronym": 170,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 79,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "negation_present",
+      "support": 76,
+      "dominantExpectedReason": "explicit_non_tax_task",
+      "dominantCount": 50,
+      "precision": 0.6579,
+      "coverageOfDominant": 0.0557,
+      "counterexampleCount": 26,
+      "supportByExpected": {
+        "explicit_non_tax_task": 50,
+        "tax_negation_but_tax_review_requested": 26
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 784,
+        "explicit_non_tax_task": 847,
+        "non_tax_label_or_name": 201,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 563,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 79
+      }
+    },
+    {
+      "feature": "external_object_under_tax_predicate",
+      "support": 602,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 392,
+      "precision": 0.6512,
+      "coverageOfDominant": 0.5,
+      "counterexampleCount": 210,
+      "supportByExpected": {
+        "explicit_tax_task_relation": 111,
+        "tax_treatment_of_ordinary_object": 392,
+        "tax_compliance_task": 72,
+        "explicit_non_tax_task": 11,
+        "no_tax_relation": 11,
+        "tax_negation_but_tax_review_requested": 5
+      },
+      "negativeByExpected": {
+        "tax_compliance_task": 219,
+        "tax_treatment_of_ordinary_object": 392,
+        "explicit_tax_task_relation": 340,
+        "explicit_non_tax_task": 886,
+        "non_tax_label_or_name": 201,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 552,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 79,
+        "tax_negation_but_tax_review_requested": 21
+      }
+    },
+    {
+      "feature": "target_is_external_object",
+      "support": 804,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 396,
+      "precision": 0.4925,
+      "coverageOfDominant": 0.5051,
+      "counterexampleCount": 408,
+      "supportByExpected": {
+        "explicit_tax_task_relation": 157,
+        "tax_treatment_of_ordinary_object": 396,
+        "tax_compliance_task": 72,
+        "explicit_non_tax_task": 99,
+        "no_tax_relation": 54,
+        "ambiguous_tax_acronym": 20,
+        "tax_definition_with_context": 1,
+        "tax_negation_but_tax_review_requested": 5
+      },
+      "negativeByExpected": {
+        "tax_compliance_task": 219,
+        "tax_treatment_of_ordinary_object": 388,
+        "explicit_tax_task_relation": 294,
+        "explicit_non_tax_task": 798,
+        "non_tax_label_or_name": 201,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 509,
+        "ambiguous_tax_acronym": 200,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 78,
+        "tax_negation_but_tax_review_requested": 21
+      }
+    },
+    {
+      "feature": "target_is_tax_procedure",
+      "support": 571,
+      "dominantExpectedReason": "tax_compliance_task",
+      "dominantCount": 278,
+      "precision": 0.4869,
+      "coverageOfDominant": 0.9553,
+      "counterexampleCount": 293,
+      "supportByExpected": {
+        "tax_compliance_task": 278,
+        "tax_treatment_of_ordinary_object": 50,
+        "non_tax_label_or_name": 31,
+        "explicit_non_tax_task": 68,
+        "no_tax_relation": 118,
+        "explicit_tax_task_relation": 12,
+        "non_tax_expansion": 1,
+        "tax_definition_with_context": 13
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 439,
+        "tax_treatment_of_ordinary_object": 734,
+        "tax_compliance_task": 13,
+        "explicit_non_tax_task": 829,
+        "quoted_tax_term_only": 120,
+        "non_tax_label_or_name": 170,
+        "no_tax_relation": 445,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 87,
+        "tax_definition_with_context": 66,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "definition_act",
+      "support": 153,
+      "dominantExpectedReason": "ambiguous_tax_acronym",
+      "dominantCount": 72,
+      "precision": 0.4706,
+      "coverageOfDominant": 0.3273,
+      "counterexampleCount": 81,
+      "supportByExpected": {
+        "explicit_non_tax_task": 3,
+        "no_tax_relation": 10,
+        "non_tax_label_or_name": 1,
+        "tax_definition_with_context": 37,
+        "ambiguous_tax_acronym": 72,
+        "non_tax_expansion": 30
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 451,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 784,
+        "explicit_non_tax_task": 894,
+        "non_tax_label_or_name": 200,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 553,
+        "ambiguous_tax_acronym": 148,
+        "non_tax_expansion": 58,
+        "tax_definition_with_context": 42,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "procedure_requested_outcome",
+      "support": 438,
+      "dominantExpectedReason": "tax_compliance_task",
+      "dominantCount": 169,
+      "precision": 0.3858,
+      "coverageOfDominant": 0.5808,
+      "counterexampleCount": 269,
+      "supportByExpected": {
+        "tax_compliance_task": 169,
+        "non_tax_label_or_name": 30,
+        "explicit_non_tax_task": 68,
+        "no_tax_relation": 107,
+        "explicit_tax_task_relation": 10,
+        "non_tax_expansion": 1,
+        "tax_definition_with_context": 13,
+        "tax_treatment_of_ordinary_object": 40
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 441,
+        "tax_compliance_task": 122,
+        "tax_treatment_of_ordinary_object": 744,
+        "explicit_non_tax_task": 829,
+        "quoted_tax_term_only": 120,
+        "non_tax_label_or_name": 171,
+        "no_tax_relation": 456,
+        "ambiguous_tax_acronym": 220,
+        "non_tax_expansion": 87,
+        "tax_definition_with_context": 66,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "speech_act_question",
+      "support": 1880,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 674,
+      "precision": 0.3585,
+      "coverageOfDominant": 0.8597,
+      "counterexampleCount": 1206,
+      "supportByExpected": {
+        "explicit_tax_task_relation": 306,
+        "tax_compliance_task": 222,
+        "tax_treatment_of_ordinary_object": 674,
+        "explicit_non_tax_task": 108,
+        "non_tax_label_or_name": 21,
+        "ambiguous_tax_acronym": 172,
+        "no_tax_relation": 350,
+        "tax_definition_with_context": 25,
+        "non_tax_expansion": 2
+      },
+      "negativeByExpected": {
+        "explicit_non_tax_task": 789,
+        "non_tax_label_or_name": 180,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 213,
+        "tax_compliance_task": 69,
+        "explicit_tax_task_relation": 145,
+        "tax_treatment_of_ordinary_object": 110,
+        "non_tax_expansion": 86,
+        "ambiguous_tax_acronym": 48,
+        "tax_definition_with_context": 54,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "explicit_action_head_and_target",
+      "support": 1421,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 488,
+      "precision": 0.3434,
+      "coverageOfDominant": 0.6224,
+      "counterexampleCount": 933,
+      "supportByExpected": {
+        "tax_compliance_task": 93,
+        "explicit_tax_task_relation": 140,
+        "tax_treatment_of_ordinary_object": 488,
+        "explicit_non_tax_task": 439,
+        "quoted_tax_term_only": 12,
+        "non_tax_label_or_name": 28,
+        "ambiguous_tax_acronym": 122,
+        "no_tax_relation": 67,
+        "non_tax_expansion": 2,
+        "tax_definition_with_context": 30
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 311,
+        "tax_compliance_task": 198,
+        "tax_treatment_of_ordinary_object": 296,
+        "explicit_non_tax_task": 458,
+        "non_tax_label_or_name": 173,
+        "no_tax_relation": 496,
+        "ambiguous_tax_acronym": 98,
+        "non_tax_expansion": 86,
+        "tax_definition_with_context": 49,
+        "quoted_tax_term_only": 108,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "question_no_tax_predicate",
+      "support": 624,
+      "dominantExpectedReason": "no_tax_relation",
+      "dominantCount": 209,
+      "precision": 0.3349,
+      "coverageOfDominant": 0.3712,
+      "counterexampleCount": 415,
+      "supportByExpected": {
+        "explicit_tax_task_relation": 144,
+        "explicit_non_tax_task": 108,
+        "non_tax_label_or_name": 21,
+        "ambiguous_tax_acronym": 123,
+        "no_tax_relation": 209,
+        "tax_treatment_of_ordinary_object": 4,
+        "tax_definition_with_context": 13,
+        "non_tax_expansion": 2
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 307,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 780,
+        "explicit_non_tax_task": 789,
+        "non_tax_label_or_name": 180,
+        "quoted_tax_term_only": 120,
+        "no_tax_relation": 354,
+        "ambiguous_tax_acronym": 97,
+        "non_tax_expansion": 86,
+        "tax_definition_with_context": 66,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "target_is_tax_concept_itself",
+      "support": 935,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 307,
+      "precision": 0.3283,
+      "coverageOfDominant": 0.3916,
+      "counterexampleCount": 628,
+      "supportByExpected": {
+        "tax_compliance_task": 159,
+        "tax_treatment_of_ordinary_object": 307,
+        "explicit_tax_task_relation": 107,
+        "non_tax_label_or_name": 87,
+        "ambiguous_tax_acronym": 45,
+        "explicit_non_tax_task": 18,
+        "no_tax_relation": 53,
+        "tax_definition_with_context": 39,
+        "quoted_tax_term_only": 99,
+        "tax_negation_but_tax_review_requested": 21
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 344,
+        "tax_treatment_of_ordinary_object": 477,
+        "tax_compliance_task": 132,
+        "explicit_non_tax_task": 879,
+        "non_tax_label_or_name": 114,
+        "quoted_tax_term_only": 21,
+        "no_tax_relation": 510,
+        "ambiguous_tax_acronym": 175,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 40,
+        "tax_negation_but_tax_review_requested": 5
+      }
+    },
+    {
+      "feature": "tax_concept_and_no_external_object",
+      "support": 935,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 307,
+      "precision": 0.3283,
+      "coverageOfDominant": 0.3916,
+      "counterexampleCount": 628,
+      "supportByExpected": {
+        "tax_compliance_task": 159,
+        "tax_treatment_of_ordinary_object": 307,
+        "explicit_tax_task_relation": 107,
+        "non_tax_label_or_name": 87,
+        "ambiguous_tax_acronym": 45,
+        "explicit_non_tax_task": 18,
+        "no_tax_relation": 53,
+        "tax_definition_with_context": 39,
+        "quoted_tax_term_only": 99,
+        "tax_negation_but_tax_review_requested": 21
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 344,
+        "tax_treatment_of_ordinary_object": 477,
+        "tax_compliance_task": 132,
+        "explicit_non_tax_task": 879,
+        "non_tax_label_or_name": 114,
+        "quoted_tax_term_only": 21,
+        "no_tax_relation": 510,
+        "ambiguous_tax_acronym": 175,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 40,
+        "tax_negation_but_tax_review_requested": 5
+      }
+    },
+    {
+      "feature": "explicit_action_head_only",
+      "support": 958,
+      "dominantExpectedReason": "no_tax_relation",
+      "dominantCount": 308,
+      "precision": 0.3215,
+      "coverageOfDominant": 0.5471,
+      "counterexampleCount": 650,
+      "supportByExpected": {
+        "explicit_tax_task_relation": 119,
+        "tax_compliance_task": 112,
+        "tax_treatment_of_ordinary_object": 92,
+        "explicit_non_tax_task": 258,
+        "no_tax_relation": 308,
+        "non_tax_label_or_name": 10,
+        "ambiguous_tax_acronym": 50,
+        "tax_definition_with_context": 1,
+        "quoted_tax_term_only": 8
+      },
+      "negativeByExpected": {
+        "tax_compliance_task": 179,
+        "explicit_tax_task_relation": 332,
+        "tax_treatment_of_ordinary_object": 692,
+        "explicit_non_tax_task": 639,
+        "non_tax_label_or_name": 191,
+        "quoted_tax_term_only": 112,
+        "ambiguous_tax_acronym": 170,
+        "no_tax_relation": 255,
+        "non_tax_expansion": 88,
+        "tax_definition_with_context": 78,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "assertion_no_tax_predicate",
+      "support": 436,
+      "dominantExpectedReason": "no_tax_relation",
+      "dominantCount": 113,
+      "precision": 0.2592,
+      "coverageOfDominant": 0.2007,
+      "counterexampleCount": 323,
+      "supportByExpected": {
+        "non_tax_label_or_name": 64,
+        "explicit_tax_task_relation": 70,
+        "non_tax_expansion": 85,
+        "no_tax_relation": 113,
+        "explicit_non_tax_task": 63,
+        "tax_treatment_of_ordinary_object": 1,
+        "ambiguous_tax_acronym": 21,
+        "tax_definition_with_context": 15,
+        "quoted_tax_term_only": 4
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 381,
+        "tax_compliance_task": 291,
+        "tax_treatment_of_ordinary_object": 783,
+        "explicit_non_tax_task": 834,
+        "non_tax_label_or_name": 137,
+        "quoted_tax_term_only": 116,
+        "no_tax_relation": 450,
+        "ambiguous_tax_acronym": 199,
+        "non_tax_expansion": 3,
+        "tax_definition_with_context": 64,
+        "tax_negation_but_tax_review_requested": 26
+      }
+    },
+    {
+      "feature": "speech_act_assertion",
+      "support": 856,
+      "dominantExpectedReason": "no_tax_relation",
+      "dominantCount": 180,
+      "precision": 0.2103,
+      "coverageOfDominant": 0.3197,
+      "counterexampleCount": 676,
+      "supportByExpected": {
+        "non_tax_label_or_name": 172,
+        "tax_compliance_task": 68,
+        "explicit_tax_task_relation": 133,
+        "non_tax_expansion": 86,
+        "no_tax_relation": 180,
+        "explicit_non_tax_task": 83,
+        "tax_treatment_of_ordinary_object": 14,
+        "ambiguous_tax_acronym": 24,
+        "tax_definition_with_context": 30,
+        "quoted_tax_term_only": 40,
+        "tax_negation_but_tax_review_requested": 26
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 318,
+        "tax_compliance_task": 223,
+        "tax_treatment_of_ordinary_object": 770,
+        "explicit_non_tax_task": 814,
+        "quoted_tax_term_only": 80,
+        "non_tax_label_or_name": 29,
+        "no_tax_relation": 383,
+        "ambiguous_tax_acronym": 196,
+        "tax_definition_with_context": 49,
+        "non_tax_expansion": 2
+      }
+    },
+    {
+      "feature": "unresolved_acronym",
+      "support": 1200,
+      "dominantExpectedReason": "tax_treatment_of_ordinary_object",
+      "dominantCount": 236,
+      "precision": 0.1967,
+      "coverageOfDominant": 0.301,
+      "counterexampleCount": 964,
+      "supportByExpected": {
+        "tax_compliance_task": 165,
+        "tax_treatment_of_ordinary_object": 236,
+        "non_tax_label_or_name": 168,
+        "explicit_non_tax_task": 56,
+        "quoted_tax_term_only": 32,
+        "explicit_tax_task_relation": 188,
+        "ambiguous_tax_acronym": 130,
+        "no_tax_relation": 73,
+        "non_tax_expansion": 48,
+        "tax_definition_with_context": 78,
+        "tax_negation_but_tax_review_requested": 26
+      },
+      "negativeByExpected": {
+        "explicit_tax_task_relation": 263,
+        "tax_compliance_task": 126,
+        "tax_treatment_of_ordinary_object": 548,
+        "explicit_non_tax_task": 841,
+        "non_tax_label_or_name": 33,
+        "no_tax_relation": 490,
+        "ambiguous_tax_acronym": 90,
+        "non_tax_expansion": 40,
+        "tax_definition_with_context": 1,
+        "quoted_tax_term_only": 88
+      }
+    }
+  ]
+}

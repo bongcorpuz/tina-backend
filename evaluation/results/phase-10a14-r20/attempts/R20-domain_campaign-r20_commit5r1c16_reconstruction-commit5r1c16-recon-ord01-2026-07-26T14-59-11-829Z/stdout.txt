@@ -1,0 +1,17 @@
+R3 verified ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54 rows=3720
+snapshot identity verified; tree digest e8577e35efc7bc3193b796e1bd7a6a422a98f8568411b69b2f67c496f0c85ba7
+live baseline analyzer = 8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308
+files differing from candidate: philippine-tax-intent-analyzer.js
+attempt allocated R20-domain_campaign-r20_commit5r1c16_reconstruction-commit5r1c16-recon-ord01-2026-07-26T14-59-11-829Z
+candidate installed; tree digest e8577e35efc7bc3193b796e1bd7a6a422a98f8568411b69b2f67c496f0c85ba7
+canonical  = 3106 / 3720
+decision   = 3720 / 3720   FA=0 FR=0 CL=0
+relation   = 3720 / 3720   mismatches=0
+reason mismatches = 614
+counterfactual = 756 / 756
+relation counterfactual = 282 / 282
+clause probes = 68 / 68
+reason passed = 3106 / 3720
+reason suite v8 = 304 / 344
+closedControls allClosed=true  guard=7/7  antiMemorization=true
+reconstruction discrepancies = 0

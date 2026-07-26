@@ -1,0 +1,1125 @@
+{
+  "unit": "COMMIT 5R1-C16",
+  "generatedUtc": "2026-07-26T15:00:51.356Z",
+  "featureKeys": [
+    "reasonSpeechAct",
+    "reasonPredicateClass",
+    "reasonControllingRelation",
+    "targetIsTaxConceptItself",
+    "targetIsExternalObject",
+    "targetIsTaxProcedure",
+    "namingAct",
+    "quotationAct",
+    "expansionAct",
+    "definitionAct",
+    "reasonUnresolvedKind",
+    "negationScope",
+    "requestedActionExplicit",
+    "requestedTargetPresent"
+  ],
+  "minimalPairsFound": 400,
+  "minimalPairsByDiscriminatingFeature": {
+    "reasonControllingRelation": {
+      "count": 239,
+      "transitions": {
+        "explicit_tax_task_relation | tax_treatment_of_ordinary_object": 6,
+        "tax_treatment_of_ordinary_object | tax_compliance_task": 6,
+        "tax_treatment_of_ordinary_object | no_tax_relation": 25,
+        "tax_compliance_task | no_tax_relation": 8,
+        "tax_treatment_of_ordinary_object | explicit_tax_task_relation": 42,
+        "explicit_tax_task_relation | tax_compliance_task": 9,
+        "explicit_tax_task_relation | non_tax_label_or_name": 12,
+        "explicit_tax_task_relation | explicit_non_tax_task": 9,
+        "explicit_tax_task_relation | no_tax_relation": 81,
+        "tax_compliance_task | explicit_tax_task_relation": 15,
+        "explicit_tax_task_relation | ambiguous_tax_acronym": 3,
+        "tax_compliance_task | tax_treatment_of_ordinary_object": 9,
+        "explicit_non_tax_task | no_tax_relation": 2,
+        "explicit_non_tax_task | ambiguous_tax_acronym": 7,
+        "explicit_non_tax_task | tax_definition_with_context": 1,
+        "non_tax_label_or_name | explicit_non_tax_task": 3,
+        "non_tax_label_or_name | explicit_tax_task_relation": 1
+      }
+    },
+    "reasonPredicateClass": {
+      "count": 36,
+      "transitions": {
+        "explicit_tax_task_relation | tax_treatment_of_ordinary_object": 35,
+        "explicit_non_tax_task | no_tax_relation": 1
+      }
+    },
+    "requestedTargetPresent": {
+      "count": 62,
+      "transitions": {
+        "explicit_tax_task_relation | tax_treatment_of_ordinary_object": 29,
+        "tax_treatment_of_ordinary_object | explicit_tax_task_relation": 6,
+        "explicit_non_tax_task | no_tax_relation": 27
+      }
+    },
+    "requestedActionExplicit": {
+      "count": 18,
+      "transitions": {
+        "tax_treatment_of_ordinary_object | explicit_tax_task_relation": 12,
+        "tax_compliance_task | tax_treatment_of_ordinary_object": 6
+      }
+    },
+    "targetIsTaxConceptItself": {
+      "count": 4,
+      "transitions": {
+        "tax_compliance_task | explicit_tax_task_relation": 4
+      }
+    },
+    "reasonUnresolvedKind": {
+      "count": 6,
+      "transitions": {
+        "explicit_tax_task_relation | tax_treatment_of_ordinary_object": 3,
+        "explicit_tax_task_relation | tax_definition_with_context": 3
+      }
+    },
+    "reasonSpeechAct": {
+      "count": 28,
+      "transitions": {
+        "explicit_non_tax_task | no_tax_relation": 28
+      }
+    },
+    "targetIsExternalObject": {
+      "count": 1,
+      "transitions": {
+        "explicit_non_tax_task | no_tax_relation": 1
+      }
+    },
+    "quotationAct": {
+      "count": 6,
+      "transitions": {
+        "explicit_non_tax_task | quoted_tax_term_only": 3,
+        "explicit_non_tax_task | no_tax_relation": 3
+      }
+    }
+  },
+  "residualRowsRepresented": 614,
+  "residualFeatureVectors": 69,
+  "residualRowsInSeparableVectors": 378,
+  "residualRowsInCollidingVectors": 236,
+  "vectorSummary": [
+    {
+      "vector": "assertion|none|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 87,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "no_tax_relation": 84,
+        "explicit_non_tax_task": 3
+      },
+      "actual": {
+        "explicit_non_tax_task": 83,
+        "non_tax_expansion": 4
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1020",
+        "S1-IR19-1026",
+        "S1-IR19-1060"
+      ]
+    },
+    {
+      "vector": "request|none|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 49,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "no_tax_relation": 11,
+        "explicit_non_tax_task": 38
+      },
+      "actual": {
+        "quoted_tax_term_only": 10,
+        "explicit_non_tax_task": 1,
+        "non_tax_label_or_name": 38
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0216",
+        "S1-IR19-0236",
+        "S1-IR19-0256"
+      ]
+    },
+    {
+      "vector": "question|none|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 40,
+      "distinctExpectedReasons": 3,
+      "separable": false,
+      "expected": {
+        "no_tax_relation": 26,
+        "non_tax_expansion": 1,
+        "explicit_non_tax_task": 13
+      },
+      "actual": {
+        "explicit_non_tax_task": 26,
+        "no_tax_relation": 14
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-348",
+        "S2-IR18-DOM-368",
+        "S2-IR18-DOM-388"
+      ]
+    },
+    {
+      "vector": "question|withholding|ASKS_WITHHOLDING_ON|none",
+      "count": 33,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 33
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 33
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0004",
+        "S1-IR19-0024",
+        "S1-IR19-0044"
+      ]
+    },
+    {
+      "vector": "question|none|ASKS_TAX_TREATMENT_OF|acronym",
+      "count": 27,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 27
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 25,
+        "tax_definition_with_context": 2
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0607",
+        "S1-IR19-0610",
+        "S1-IR19-0617"
+      ]
+    },
+    {
+      "vector": "question|procedure|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 26,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 26
+      },
+      "actual": {
+        "explicit_non_tax_task": 26
+      },
+      "exampleOracleIds": [
+        "S3-IR17-089",
+        "S3-IR17-097",
+        "S3-IR17-098"
+      ]
+    },
+    {
+      "vector": "question|none|NEGATES_TAX_RELEVANCE|none",
+      "count": 25,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_non_tax_task": 25
+      },
+      "actual": {
+        "no_tax_relation": 25
+      },
+      "exampleOracleIds": [
+        "R20N-NEG-1107",
+        "R20N-NEG-1109",
+        "R20N-NEG-1111"
+      ]
+    },
+    {
+      "vector": "assertion|procedure|NAMES_AS_INTERNAL_LABEL|acronym",
+      "count": 23,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "non_tax_label_or_name": 23
+      },
+      "actual": {
+        "explicit_non_tax_task": 23
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0204",
+        "S1-IR19-0224",
+        "S1-IR19-0244"
+      ]
+    },
+    {
+      "vector": "question|taxability|ASKS_TAX_TREATMENT_OF|none",
+      "count": 21,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 21
+      },
+      "actual": {
+        "explicit_tax_task_relation": 21
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0613",
+        "S1-IR19-0623",
+        "S1-IR19-0643"
+      ]
+    },
+    {
+      "vector": "question|none|REQUESTS_NON_TAX_ACTION_ON|referent",
+      "count": 20,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 20
+      },
+      "actual": {
+        "ambiguous_tax_acronym": 20
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0757",
+        "S1-IR19-0760",
+        "S1-IR19-0772"
+      ]
+    },
+    {
+      "vector": "question|tax_concept|ASKS_TAX_TREATMENT_OF|none",
+      "count": 16,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 16
+      },
+      "actual": {
+        "explicit_tax_task_relation": 16
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0007",
+        "S1-IR19-0027",
+        "S1-IR19-0047"
+      ]
+    },
+    {
+      "vector": "question|deductibility|ASKS_DEDUCTIBILITY_OF|none",
+      "count": 15,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 15
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 15
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0601",
+        "S1-IR19-0621",
+        "S1-IR19-0631"
+      ]
+    },
+    {
+      "vector": "assertion|procedure|ASKS_TAX_COMPLIANCE_FOR|acronym",
+      "count": 14,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "tax_compliance_task": 10,
+        "tax_definition_with_context": 4
+      },
+      "actual": {
+        "explicit_tax_task_relation": 10,
+        "tax_compliance_task": 4
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0405",
+        "S1-IR19-0425",
+        "S1-IR19-0445"
+      ]
+    },
+    {
+      "vector": "question|none|ASKS_TAX_TREATMENT_OF|none",
+      "count": 13,
+      "distinctExpectedReasons": 3,
+      "separable": false,
+      "expected": {
+        "explicit_tax_task_relation": 8,
+        "tax_treatment_of_ordinary_object": 1,
+        "no_tax_relation": 4
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 8,
+        "explicit_tax_task_relation": 1,
+        "explicit_non_tax_task": 4
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0618",
+        "S1-IR19-0648",
+        "S1-IR19-0678"
+      ]
+    },
+    {
+      "vector": "assertion|procedure|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 13,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 13
+      },
+      "actual": {
+        "explicit_non_tax_task": 13
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1040",
+        "S1-IR19-1080",
+        "S1-IR19-1120"
+      ]
+    },
+    {
+      "vector": "question|procedure|ASKS_TAX_COMPLIANCE_FOR|acronym",
+      "count": 12,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "tax_compliance_task": 11,
+        "tax_definition_with_context": 1
+      },
+      "actual": {
+        "explicit_tax_task_relation": 11,
+        "tax_compliance_task": 1
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0014",
+        "S1-IR19-0034",
+        "S1-IR19-0054"
+      ]
+    },
+    {
+      "vector": "question|procedure|ASKS_TAX_TREATMENT_OF|none",
+      "count": 11,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "tax_compliance_task": 10,
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "explicit_tax_task_relation": 10,
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0019",
+        "S1-IR19-0039",
+        "S1-IR19-0059"
+      ]
+    },
+    {
+      "vector": "question|procedure|ASKS_TAX_TREATMENT_OF|acronym",
+      "count": 10,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "tax_compliance_task": 10
+      },
+      "actual": {
+        "explicit_tax_task_relation": 10
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0012",
+        "S1-IR19-0032",
+        "S1-IR19-0052"
+      ]
+    },
+    {
+      "vector": "question|procedure|REQUESTS_NON_TAX_ACTION_ON|referent",
+      "count": 10,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 10
+      },
+      "actual": {
+        "ambiguous_tax_acronym": 10
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0755",
+        "S1-IR19-0770",
+        "S1-IR19-0785"
+      ]
+    },
+    {
+      "vector": "assertion|none|EXPANDS_AS_NON_TAX|none",
+      "count": 9,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 9
+      },
+      "actual": {
+        "non_tax_expansion": 9
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1028",
+        "S1-IR19-1034",
+        "S1-IR19-1036"
+      ]
+    },
+    {
+      "vector": "assertion|vat|ASKS_VAT_TREATMENT_OF|acronym",
+      "count": 8,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 8
+      },
+      "actual": {
+        "explicit_non_tax_task": 8
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-214",
+        "S2-IR18-DOM-215",
+        "S2-IR18-DOM-251"
+      ]
+    },
+    {
+      "vector": "request|none|REQUESTS_NON_TAX_ACTION_ON|acronym",
+      "count": 7,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 7
+      },
+      "actual": {
+        "explicit_non_tax_task": 7
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1014",
+        "S1-IR19-1054",
+        "S1-IR19-1094"
+      ]
+    },
+    {
+      "vector": "question_marked_assertion|taxability|ASKS_TAX_TREATMENT_OF|none",
+      "count": 6,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 6
+      },
+      "actual": {
+        "explicit_tax_task_relation": 6
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0907",
+        "S1-IR19-0927",
+        "S1-IR19-0947"
+      ]
+    },
+    {
+      "vector": "assertion|customs|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 6,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 6
+      },
+      "actual": {
+        "explicit_non_tax_task": 6
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1016",
+        "S1-IR19-1056",
+        "S1-IR19-1096"
+      ]
+    },
+    {
+      "vector": "question|deductibility|ASKS_DEDUCTIBILITY_OF|acronym",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 5
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 5
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0611",
+        "S1-IR19-0641",
+        "S1-IR19-0671"
+      ]
+    },
+    {
+      "vector": "question|vat|ASKS_VAT_TREATMENT_OF|acronym",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 5
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 5
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0901",
+        "S1-IR19-0921",
+        "S1-IR19-0941"
+      ]
+    },
+    {
+      "vector": "question_marked_assertion|none|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 5
+      },
+      "actual": {
+        "explicit_non_tax_task": 5
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0910",
+        "S1-IR19-0930",
+        "S1-IR19-0950"
+      ]
+    },
+    {
+      "vector": "question_marked_assertion|procedure|(none)|acronym",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_non_tax_task": 5
+      },
+      "actual": {
+        "no_tax_relation": 5
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0914",
+        "S1-IR19-0934",
+        "S1-IR19-0954"
+      ]
+    },
+    {
+      "vector": "question|tax_concept|ASKS_TAX_COMPLIANCE_FOR|none",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 5
+      },
+      "actual": {
+        "tax_compliance_task": 5
+      },
+      "exampleOracleIds": [
+        "S1-IR19-0919",
+        "S1-IR19-0939",
+        "S1-IR19-0959"
+      ]
+    },
+    {
+      "vector": "assertion|withholding|ASKS_WITHHOLDING_ON|none",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 5
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 5
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-005",
+        "S2-IR18-DOM-006",
+        "S2-IR18-DOM-007"
+      ]
+    },
+    {
+      "vector": "question|none|EXPANDS_AS_NON_TAX|none",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 5
+      },
+      "actual": {
+        "non_tax_expansion": 5
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-240",
+        "S2-IR18-DOM-265",
+        "S2-IR18-DOM-290"
+      ]
+    },
+    {
+      "vector": "question|none|(none)|acronym",
+      "count": 5,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 5
+      },
+      "actual": {
+        "explicit_non_tax_task": 5
+      },
+      "exampleOracleIds": [
+        "S3-IR17-121",
+        "S3-IR17-122",
+        "S3-IR17-126"
+      ]
+    },
+    {
+      "vector": "question|none|NAMES_AS_INTERNAL_LABEL|acronym",
+      "count": 4,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "explicit_tax_task_relation": 3,
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 3,
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1033",
+        "S1-IR19-1073",
+        "S1-IR19-1113"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|NAMES_AS_INTERNAL_LABEL|acronym",
+      "count": 4,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 4
+      },
+      "actual": {
+        "non_tax_label_or_name": 4
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-175",
+        "S2-IR18-DOM-177",
+        "S2-IR18-DOM-178"
+      ]
+    },
+    {
+      "vector": "question|none|REQUESTS_NON_TAX_ACTION_ON|acronym",
+      "count": 4,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_non_tax_task": 4
+      },
+      "actual": {
+        "no_tax_relation": 4
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-243",
+        "S2-IR18-DOM-268",
+        "S2-IR18-DOM-293"
+      ]
+    },
+    {
+      "vector": "assertion|taxability|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 4,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 4
+      },
+      "actual": {
+        "explicit_non_tax_task": 4
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-254",
+        "S2-IR18-DOM-279",
+        "S2-IR18-DOM-304"
+      ]
+    },
+    {
+      "vector": "question|tax_concept|ASKS_CUSTOMS_DUTY_ON|none",
+      "count": 4,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 4
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 4
+      },
+      "exampleOracleIds": [
+        "S3-IR17-021",
+        "S3-IR17-024",
+        "S3-IR17-030"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|ASKS_TAX_TREATMENT_OF|acronym",
+      "count": 4,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "tax_definition_with_context": 4
+      },
+      "actual": {
+        "explicit_tax_task_relation": 4
+      },
+      "exampleOracleIds": [
+        "R20N-ACX-0989",
+        "R20N-ACX-0990",
+        "R20N-ACX-0994"
+      ]
+    },
+    {
+      "vector": "request|procedure|REQUESTS_NON_TAX_ACTION_ON|acronym",
+      "count": 3,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_non_tax_task": 3
+      },
+      "actual": {
+        "non_tax_label_or_name": 3
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1004",
+        "S1-IR19-1044",
+        "S1-IR19-1084"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|EXPANDS_AS_NON_TAX|none",
+      "count": 3,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 3
+      },
+      "actual": {
+        "non_tax_expansion": 3
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1030",
+        "S1-IR19-1070",
+        "S1-IR19-1110"
+      ]
+    },
+    {
+      "vector": "question_marked_assertion|tax_concept|EXPANDS_AS_NON_TAX|none",
+      "count": 3,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 3
+      },
+      "actual": {
+        "non_tax_expansion": 3
+      },
+      "exampleOracleIds": [
+        "S1-IR19-1032",
+        "S1-IR19-1072",
+        "S1-IR19-1112"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|ASKS_TAX_TREATMENT_OF|none",
+      "count": 3,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 3
+      },
+      "actual": {
+        "explicit_tax_task_relation": 3
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-021",
+        "S2-IR18-DOM-022",
+        "S2-IR18-DOM-062"
+      ]
+    },
+    {
+      "vector": "assertion|taxability|ASKS_TAX_TREATMENT_OF|none",
+      "count": 3,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 1,
+        "no_tax_relation": 2
+      },
+      "actual": {
+        "explicit_tax_task_relation": 1,
+        "explicit_non_tax_task": 2
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-064",
+        "S2-IR18-DOM-181",
+        "S2-IR18-DOM-547"
+      ]
+    },
+    {
+      "vector": "question|procedure|(none)|acronym",
+      "count": 3,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 3
+      },
+      "actual": {
+        "explicit_non_tax_task": 3
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-491",
+        "S3-IR17-115",
+        "S3-IR17-116"
+      ]
+    },
+    {
+      "vector": "question|tax_concept|ASKS_TAX_TREATMENT_OF|acronym",
+      "count": 3,
+      "distinctExpectedReasons": 2,
+      "separable": false,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 1,
+        "tax_definition_with_context": 2
+      },
+      "actual": {
+        "explicit_tax_task_relation": 3
+      },
+      "exampleOracleIds": [
+        "S3-IR17-054",
+        "R20N-ACX-0991",
+        "R20N-ACX-0996"
+      ]
+    },
+    {
+      "vector": "assertion|deductibility|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 2,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 2
+      },
+      "actual": {
+        "explicit_non_tax_task": 2
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-170",
+        "S2-IR18-DOM-223"
+      ]
+    },
+    {
+      "vector": "assertion|taxability|(none)|none",
+      "count": 2,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 2
+      },
+      "actual": {
+        "explicit_non_tax_task": 2
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-216",
+        "S2-IR18-DOM-217"
+      ]
+    },
+    {
+      "vector": "question|tax_concept|ASKS_DEFINITION_OF|acronym",
+      "count": 2,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 2
+      },
+      "actual": {
+        "tax_definition_with_context": 2
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-514",
+        "S2-IR18-DOM-516"
+      ]
+    },
+    {
+      "vector": "question|tax_concept|ASKS_CUSTOMS_DUTY_ON|acronym",
+      "count": 2,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 2
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 2
+      },
+      "exampleOracleIds": [
+        "S3-IR17-003",
+        "S3-IR17-014"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|ASKS_CUSTOMS_DUTY_ON|none",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 1
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-024"
+      ]
+    },
+    {
+      "vector": "assertion|deductibility|ASKS_DEDUCTIBILITY_OF|none",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 1
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-061"
+      ]
+    },
+    {
+      "vector": "assertion|none|ASKS_TAX_TREATMENT_OF|none",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "explicit_tax_task_relation": 1
+      },
+      "actual": {
+        "tax_treatment_of_ordinary_object": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-073"
+      ]
+    },
+    {
+      "vector": "assertion|none|NAMES_AS_INTERNAL_LABEL|acronym",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "non_tax_label_or_name": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-182"
+      ]
+    },
+    {
+      "vector": "assertion|none|(none)|none",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-199"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|REQUESTS_NON_TAX_ACTION_ON|none",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-207"
+      ]
+    },
+    {
+      "vector": "assertion|vat|NAMES_AS_INTERNAL_LABEL|acronym",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "non_tax_label_or_name": 1
+      },
+      "actual": {
+        "no_tax_relation": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-212"
+      ]
+    },
+    {
+      "vector": "assertion|vat|(none)|acronym",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-213"
+      ]
+    },
+    {
+      "vector": "assertion|tax_concept|REQUESTS_NON_TAX_ACTION_ON|acronym",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-515"
+      ]
+    },
+    {
+      "vector": "request|procedure|ASKS_TAX_COMPLIANCE_FOR|none",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "explicit_non_tax_task": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-541"
+      ]
+    },
+    {
+      "vector": "assertion|none|(none)|acronym",
+      "count": 1,
+      "distinctExpectedReasons": 1,
+      "separable": true,
+      "expected": {
+        "no_tax_relation": 1
+      },
+      "actual": {
+        "non_tax_expansion": 1
+      },
+      "exampleOracleIds": [
+        "S2-IR18-DOM-543"
+      ]
+    }
+  ],
+  "note": "A residual row is separable only when every residual row sharing its runtime feature vector carries the same expected reason. Rows in colliding vectors cannot be fixed by any rule over these features and require a further feature, not a narrower regex.",
+  "oracleIdsAreAnalysisEvidenceOnly": true
+}
