@@ -1,0 +1,3273 @@
+{
+  "suite": "COMMIT_5R1C15_REASON_COUNTERFACTUAL_V8",
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:24:21.391Z",
+  "purpose": "Reason-lane counterfactual closure. Structural templates only; expectations authored before any runtime change.",
+  "authority": "CLAUSE_LEVEL_INTENT_SCHEMA.md + RELATION_AND_PRECEDENCE_SPEC.md",
+  "scoring": "strict equality on the single controlling reason code (matching the frozen scorer), plus the declared decision; forbidden reasons must not be emitted",
+  "queryCount": 344,
+  "pairCount": 172,
+  "reasonFamiliesCovered": [
+    "ambiguous_tax_acronym",
+    "explicit_non_tax_task",
+    "explicit_tax_task_relation",
+    "no_tax_relation",
+    "non_tax_expansion",
+    "non_tax_label_or_name",
+    "quoted_tax_term_only",
+    "tax_compliance_task",
+    "tax_definition_with_context",
+    "tax_negation_but_tax_review_requested",
+    "tax_treatment_of_ordinary_object"
+  ],
+  "exactR3Leakage": 0,
+  "exactOtherSuiteLeakage": 0,
+  "expectationsAuthoredBeforeExecution": true,
+  "denominatorFrozenAfterAuthoring": true,
+  "queries": [
+    {
+      "query": "Is the sailmaker fee subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#1",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#1",
+      "side": "b"
+    },
+    {
+      "query": "Is the quarry haulage subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#2",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#2",
+      "side": "b"
+    },
+    {
+      "query": "Is the orchard netting subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#3",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#3",
+      "side": "b"
+    },
+    {
+      "query": "Is the foundry casting subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#4",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#4",
+      "side": "b"
+    },
+    {
+      "query": "Is the bakery oven subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#5",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#5",
+      "side": "b"
+    },
+    {
+      "query": "Is the cobbler bench subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#6",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#6",
+      "side": "b"
+    },
+    {
+      "query": "Is the tannery lining subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#7",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#7",
+      "side": "b"
+    },
+    {
+      "query": "Is the glazier panel subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#8",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#8",
+      "side": "b"
+    },
+    {
+      "query": "Is the apiary frame subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#9",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#9",
+      "side": "b"
+    },
+    {
+      "query": "Is the loom shuttle subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#10",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#10",
+      "side": "b"
+    },
+    {
+      "query": "Is the ferry gangway subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#11",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#11",
+      "side": "b"
+    },
+    {
+      "query": "Is the salt pan rake subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#12",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#12",
+      "side": "b"
+    },
+    {
+      "query": "Is the copra dryer subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#13",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#13",
+      "side": "b"
+    },
+    {
+      "query": "Is the abaca baler subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#14",
+      "side": "a"
+    },
+    {
+      "query": "How do we compute donor tax for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "specific_vs_generic_allow",
+      "pair": "specific_vs_generic_allow#14",
+      "side": "b"
+    },
+    {
+      "query": "Is the sailmaker fee deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#15",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#15",
+      "side": "b"
+    },
+    {
+      "query": "Is the quarry haulage deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#16",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#16",
+      "side": "b"
+    },
+    {
+      "query": "Is the orchard netting deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#17",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#17",
+      "side": "b"
+    },
+    {
+      "query": "Is the foundry casting deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#18",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#18",
+      "side": "b"
+    },
+    {
+      "query": "Is the bakery oven deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#19",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#19",
+      "side": "b"
+    },
+    {
+      "query": "Is the cobbler bench deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#20",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#20",
+      "side": "b"
+    },
+    {
+      "query": "Is the tannery lining deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#21",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#21",
+      "side": "b"
+    },
+    {
+      "query": "Is the glazier panel deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#22",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#22",
+      "side": "b"
+    },
+    {
+      "query": "Is the apiary frame deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#23",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#23",
+      "side": "b"
+    },
+    {
+      "query": "Is the loom shuttle deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#24",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#24",
+      "side": "b"
+    },
+    {
+      "query": "Is the ferry gangway deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#25",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#25",
+      "side": "b"
+    },
+    {
+      "query": "Is the salt pan rake deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#26",
+      "side": "a"
+    },
+    {
+      "query": "How do we document net operating loss carry-over?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "ordinary_object_vs_direct_tax_task",
+      "pair": "ordinary_object_vs_direct_tax_task#26",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the sailmaker fee?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#27",
+      "side": "a"
+    },
+    {
+      "query": "Is the sailmaker fee subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#27",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the sailmaker fee?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#28",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the sailmaker fee?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#28",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the quarry haulage?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#29",
+      "side": "a"
+    },
+    {
+      "query": "Is the quarry haulage subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#29",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the quarry haulage?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#30",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the quarry haulage?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#30",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the orchard netting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#31",
+      "side": "a"
+    },
+    {
+      "query": "Is the orchard netting subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#31",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the orchard netting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#32",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the orchard netting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#32",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the foundry casting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#33",
+      "side": "a"
+    },
+    {
+      "query": "Is the foundry casting subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#33",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the foundry casting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#34",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the foundry casting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#34",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the bakery oven?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#35",
+      "side": "a"
+    },
+    {
+      "query": "Is the bakery oven subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#35",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the bakery oven?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#36",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the bakery oven?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#36",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the cobbler bench?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#37",
+      "side": "a"
+    },
+    {
+      "query": "Is the cobbler bench subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#37",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the cobbler bench?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#38",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the cobbler bench?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#38",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the tannery lining?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#39",
+      "side": "a"
+    },
+    {
+      "query": "Is the tannery lining subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#39",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the tannery lining?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#40",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the tannery lining?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#40",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the glazier panel?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#41",
+      "side": "a"
+    },
+    {
+      "query": "Is the glazier panel subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#41",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the glazier panel?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#42",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the glazier panel?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#42",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the apiary frame?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#43",
+      "side": "a"
+    },
+    {
+      "query": "Is the apiary frame subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#43",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the apiary frame?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#44",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the apiary frame?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#44",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the loom shuttle?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#45",
+      "side": "a"
+    },
+    {
+      "query": "Is the loom shuttle subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#45",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the loom shuttle?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#46",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the loom shuttle?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#46",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the ferry gangway?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#47",
+      "side": "a"
+    },
+    {
+      "query": "Is the ferry gangway subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#47",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the ferry gangway?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#48",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the ferry gangway?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#48",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form should we file for the salt pan rake?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#49",
+      "side": "a"
+    },
+    {
+      "query": "Is the salt pan rake subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#49",
+      "side": "b"
+    },
+    {
+      "query": "What is the deadline for remitting withholding tax on the salt pan rake?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#50",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax due on the salt pan rake?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "compliance_registration_vs_treatment",
+      "pair": "compliance_registration_vs_treatment#50",
+      "side": "b"
+    },
+    {
+      "query": "What does VQZ mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#51",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#51",
+      "side": "b"
+    },
+    {
+      "query": "What does KRM mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#52",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#52",
+      "side": "b"
+    },
+    {
+      "query": "What does TBN mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#53",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#53",
+      "side": "b"
+    },
+    {
+      "query": "What does PLW mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#54",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#54",
+      "side": "b"
+    },
+    {
+      "query": "What does DGF mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#55",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#55",
+      "side": "b"
+    },
+    {
+      "query": "What does NSK mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#56",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#56",
+      "side": "b"
+    },
+    {
+      "query": "What does HRV mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#57",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#57",
+      "side": "b"
+    },
+    {
+      "query": "What does CMB mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#58",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#58",
+      "side": "b"
+    },
+    {
+      "query": "What does JYT mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#59",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#59",
+      "side": "b"
+    },
+    {
+      "query": "What does WFL mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#60",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#60",
+      "side": "b"
+    },
+    {
+      "query": "What does BXR mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#61",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#61",
+      "side": "b"
+    },
+    {
+      "query": "What does QNP mean in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#62",
+      "side": "a"
+    },
+    {
+      "query": "RMC?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "definition_vs_ambiguous_acronym",
+      "pair": "definition_vs_ambiguous_acronym#62",
+      "side": "b"
+    },
+    {
+      "query": "Rename the badminton net folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#63",
+      "side": "a"
+    },
+    {
+      "query": "The phrase VQZ is only an internal label for our badminton net.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#63",
+      "side": "b"
+    },
+    {
+      "query": "Rename the harmonica case folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#64",
+      "side": "a"
+    },
+    {
+      "query": "The phrase KRM is only an internal label for our harmonica case.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#64",
+      "side": "b"
+    },
+    {
+      "query": "Rename the sundial plinth folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#65",
+      "side": "a"
+    },
+    {
+      "query": "The phrase TBN is only an internal label for our sundial plinth.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#65",
+      "side": "b"
+    },
+    {
+      "query": "Rename the canoe paddle folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#66",
+      "side": "a"
+    },
+    {
+      "query": "The phrase PLW is only an internal label for our canoe paddle.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#66",
+      "side": "b"
+    },
+    {
+      "query": "Rename the lantern wick folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#67",
+      "side": "a"
+    },
+    {
+      "query": "The phrase DGF is only an internal label for our lantern wick.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#67",
+      "side": "b"
+    },
+    {
+      "query": "Rename the trellis post folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#68",
+      "side": "a"
+    },
+    {
+      "query": "The phrase NSK is only an internal label for our trellis post.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#68",
+      "side": "b"
+    },
+    {
+      "query": "Rename the zither string folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#69",
+      "side": "a"
+    },
+    {
+      "query": "The phrase HRV is only an internal label for our zither string.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#69",
+      "side": "b"
+    },
+    {
+      "query": "Rename the cairn marker folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#70",
+      "side": "a"
+    },
+    {
+      "query": "The phrase CMB is only an internal label for our cairn marker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#70",
+      "side": "b"
+    },
+    {
+      "query": "Rename the abacus bead folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#71",
+      "side": "a"
+    },
+    {
+      "query": "The phrase JYT is only an internal label for our abacus bead.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#71",
+      "side": "b"
+    },
+    {
+      "query": "Rename the quilt batting folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#72",
+      "side": "a"
+    },
+    {
+      "query": "The phrase WFL is only an internal label for our quilt batting.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#72",
+      "side": "b"
+    },
+    {
+      "query": "Rename the birdhouse perch folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#73",
+      "side": "a"
+    },
+    {
+      "query": "The phrase BXR is only an internal label for our birdhouse perch.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#73",
+      "side": "b"
+    },
+    {
+      "query": "Rename the marble chute folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#74",
+      "side": "a"
+    },
+    {
+      "query": "The phrase QNP is only an internal label for our marble chute.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#74",
+      "side": "b"
+    },
+    {
+      "query": "Rename the kaleidoscope tube folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#75",
+      "side": "a"
+    },
+    {
+      "query": "The phrase ZTM is only an internal label for our kaleidoscope tube.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#75",
+      "side": "b"
+    },
+    {
+      "query": "Rename the pennant halyard folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#76",
+      "side": "a"
+    },
+    {
+      "query": "The phrase FHD is only an internal label for our pennant halyard.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "nontax_action_vs_label",
+      "pair": "nontax_action_vs_label#76",
+      "side": "b"
+    },
+    {
+      "query": "In our system, VQZ stands for valley quiz zone.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#77",
+      "side": "a"
+    },
+    {
+      "query": "What does VQZ refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#77",
+      "side": "b"
+    },
+    {
+      "query": "In our system, KRM stands for kite repair manual.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#78",
+      "side": "a"
+    },
+    {
+      "query": "What does KRM refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#78",
+      "side": "b"
+    },
+    {
+      "query": "In our system, TBN stands for timber bench notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#79",
+      "side": "a"
+    },
+    {
+      "query": "What does TBN refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#79",
+      "side": "b"
+    },
+    {
+      "query": "In our system, PLW stands for pillow loft warmer.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#80",
+      "side": "a"
+    },
+    {
+      "query": "What does PLW refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#80",
+      "side": "b"
+    },
+    {
+      "query": "In our system, DGF stands for dune glider frame.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#81",
+      "side": "a"
+    },
+    {
+      "query": "What does DGF refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#81",
+      "side": "b"
+    },
+    {
+      "query": "In our system, NSK stands for noodle stall kit.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#82",
+      "side": "a"
+    },
+    {
+      "query": "What does NSK refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#82",
+      "side": "b"
+    },
+    {
+      "query": "In our system, HRV stands for harvest rota view.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#83",
+      "side": "a"
+    },
+    {
+      "query": "What does HRV refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#83",
+      "side": "b"
+    },
+    {
+      "query": "In our system, CMB stands for compost bin marker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#84",
+      "side": "a"
+    },
+    {
+      "query": "What does CMB refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#84",
+      "side": "b"
+    },
+    {
+      "query": "In our system, JYT stands for jetty yard tally.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#85",
+      "side": "a"
+    },
+    {
+      "query": "What does JYT refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#85",
+      "side": "b"
+    },
+    {
+      "query": "In our system, WFL stands for wool felt liner.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#86",
+      "side": "a"
+    },
+    {
+      "query": "What does WFL refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#86",
+      "side": "b"
+    },
+    {
+      "query": "In our system, BXR stands for bamboo raft plan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#87",
+      "side": "a"
+    },
+    {
+      "query": "What does BXR refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#87",
+      "side": "b"
+    },
+    {
+      "query": "In our system, QNP stands for quarry noise log.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#88",
+      "side": "a"
+    },
+    {
+      "query": "What does QNP refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#88",
+      "side": "b"
+    },
+    {
+      "query": "In our system, ZTM stands for zoo mural sketch.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#89",
+      "side": "a"
+    },
+    {
+      "query": "What does ZTM refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#89",
+      "side": "b"
+    },
+    {
+      "query": "In our system, FHD stands for fern hedge guide.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "forbiddenReasons": [
+        "tax_definition_with_context"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#90",
+      "side": "a"
+    },
+    {
+      "query": "What does FHD refer to in Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_definition_with_context",
+      "forbiddenReasons": [
+        "non_tax_expansion"
+      ],
+      "family": "expansion_vs_definition",
+      "pair": "expansion_vs_definition#90",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#91",
+      "side": "a"
+    },
+    {
+      "query": "Our badminton net project is code-named VQZ in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#91",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#92",
+      "side": "a"
+    },
+    {
+      "query": "Our harmonica case project is code-named KRM in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#92",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#93",
+      "side": "a"
+    },
+    {
+      "query": "Our sundial plinth project is code-named TBN in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#93",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#94",
+      "side": "a"
+    },
+    {
+      "query": "Our canoe paddle project is code-named PLW in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#94",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#95",
+      "side": "a"
+    },
+    {
+      "query": "Our lantern wick project is code-named DGF in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#95",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#96",
+      "side": "a"
+    },
+    {
+      "query": "Our trellis post project is code-named NSK in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#96",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#97",
+      "side": "a"
+    },
+    {
+      "query": "Our zither string project is code-named HRV in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#97",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#98",
+      "side": "a"
+    },
+    {
+      "query": "Our cairn marker project is code-named CMB in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#98",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#99",
+      "side": "a"
+    },
+    {
+      "query": "Our abacus bead project is code-named JYT in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#99",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#100",
+      "side": "a"
+    },
+    {
+      "query": "Our quilt batting project is code-named WFL in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#100",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#101",
+      "side": "a"
+    },
+    {
+      "query": "Our birdhouse perch project is code-named BXR in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#101",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"documentary stamp tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#102",
+      "side": "a"
+    },
+    {
+      "query": "Our marble chute project is code-named QNP in the tracker.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "quotation_vs_label",
+      "pair": "quotation_vs_label#102",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the sailmaker fee anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#103",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the badminton net.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#103",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the quarry haulage anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#104",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the harmonica case.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#104",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the orchard netting anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#105",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the sundial plinth.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#105",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the foundry casting anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#106",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the canoe paddle.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#106",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the bakery oven anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#107",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the lantern wick.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#107",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the cobbler bench anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#108",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the trellis post.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#108",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the tannery lining anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#109",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the zither string.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#109",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the glazier panel anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#110",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the cairn marker.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#110",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the apiary frame anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#111",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the abacus bead.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#111",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the loom shuttle anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#112",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the quilt batting.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#112",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the ferry gangway anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#113",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the birdhouse perch.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#113",
+      "side": "b"
+    },
+    {
+      "query": "This may be non-tax, but please review the VAT treatment of the salt pan rake anyway.",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_negation_but_tax_review_requested",
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#114",
+      "side": "a"
+    },
+    {
+      "query": "I am not asking about tax; just describe the marble chute.",
+      "expectedDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_negation_but_tax_review_requested"
+      ],
+      "family": "negation_review_vs_ordinary_negation",
+      "pair": "negation_review_vs_ordinary_negation#114",
+      "side": "b"
+    },
+    {
+      "query": "Translate the badminton net handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#115",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 20?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#115",
+      "side": "b"
+    },
+    {
+      "query": "Translate the harmonica case handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#116",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 21?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#116",
+      "side": "b"
+    },
+    {
+      "query": "Translate the sundial plinth handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#117",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 22?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#117",
+      "side": "b"
+    },
+    {
+      "query": "Translate the canoe paddle handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#118",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 23?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#118",
+      "side": "b"
+    },
+    {
+      "query": "Translate the lantern wick handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#119",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 24?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#119",
+      "side": "b"
+    },
+    {
+      "query": "Translate the trellis post handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#120",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 25?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#120",
+      "side": "b"
+    },
+    {
+      "query": "Translate the zither string handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#121",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 26?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#121",
+      "side": "b"
+    },
+    {
+      "query": "Translate the cairn marker handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#122",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 27?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#122",
+      "side": "b"
+    },
+    {
+      "query": "Translate the abacus bead handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#123",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 28?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#123",
+      "side": "b"
+    },
+    {
+      "query": "Translate the quilt batting handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#124",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 29?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#124",
+      "side": "b"
+    },
+    {
+      "query": "Translate the birdhouse perch handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#125",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 30?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#125",
+      "side": "b"
+    },
+    {
+      "query": "Translate the marble chute handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#126",
+      "side": "a"
+    },
+    {
+      "query": "What about it for scenario 31?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#126",
+      "side": "b"
+    },
+    {
+      "query": "Although the sailmaker fee is taxable, rename the badminton net archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#127",
+      "side": "a"
+    },
+    {
+      "query": "Although the badminton net is ordinary, is the sailmaker fee subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#127",
+      "side": "b"
+    },
+    {
+      "query": "Although the quarry haulage is taxable, rename the harmonica case archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#128",
+      "side": "a"
+    },
+    {
+      "query": "Although the harmonica case is ordinary, is the quarry haulage subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#128",
+      "side": "b"
+    },
+    {
+      "query": "Although the orchard netting is taxable, rename the sundial plinth archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#129",
+      "side": "a"
+    },
+    {
+      "query": "Although the sundial plinth is ordinary, is the orchard netting subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#129",
+      "side": "b"
+    },
+    {
+      "query": "Although the foundry casting is taxable, rename the canoe paddle archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#130",
+      "side": "a"
+    },
+    {
+      "query": "Although the canoe paddle is ordinary, is the foundry casting subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#130",
+      "side": "b"
+    },
+    {
+      "query": "Although the bakery oven is taxable, rename the lantern wick archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#131",
+      "side": "a"
+    },
+    {
+      "query": "Although the lantern wick is ordinary, is the bakery oven subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#131",
+      "side": "b"
+    },
+    {
+      "query": "Although the cobbler bench is taxable, rename the trellis post archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#132",
+      "side": "a"
+    },
+    {
+      "query": "Although the trellis post is ordinary, is the cobbler bench subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#132",
+      "side": "b"
+    },
+    {
+      "query": "Although the tannery lining is taxable, rename the zither string archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#133",
+      "side": "a"
+    },
+    {
+      "query": "Although the zither string is ordinary, is the tannery lining subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#133",
+      "side": "b"
+    },
+    {
+      "query": "Although the glazier panel is taxable, rename the cairn marker archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#134",
+      "side": "a"
+    },
+    {
+      "query": "Although the cairn marker is ordinary, is the glazier panel subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#134",
+      "side": "b"
+    },
+    {
+      "query": "Although the apiary frame is taxable, rename the abacus bead archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#135",
+      "side": "a"
+    },
+    {
+      "query": "Although the abacus bead is ordinary, is the apiary frame subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#135",
+      "side": "b"
+    },
+    {
+      "query": "Although the loom shuttle is taxable, rename the quilt batting archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#136",
+      "side": "a"
+    },
+    {
+      "query": "Although the quilt batting is ordinary, is the loom shuttle subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#136",
+      "side": "b"
+    },
+    {
+      "query": "Although the ferry gangway is taxable, rename the birdhouse perch archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#137",
+      "side": "a"
+    },
+    {
+      "query": "Although the birdhouse perch is ordinary, is the ferry gangway subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#137",
+      "side": "b"
+    },
+    {
+      "query": "Although the salt pan rake is taxable, rename the marble chute archive.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#138",
+      "side": "a"
+    },
+    {
+      "query": "Although the marble chute is ordinary, is the salt pan rake subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "primary_vs_subordinate_reason",
+      "pair": "primary_vs_subordinate_reason#138",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa sailmaker fee?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#139",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang badminton net listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#139",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa quarry haulage?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#140",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang harmonica case listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#140",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa orchard netting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#141",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang sundial plinth listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#141",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa foundry casting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#142",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang canoe paddle listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#142",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa bakery oven?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#143",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang lantern wick listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#143",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa cobbler bench?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#144",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang trellis post listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#144",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa tannery lining?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#145",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang zither string listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#145",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa glazier panel?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#146",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang cairn marker listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#146",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa apiary frame?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#147",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang abacus bead listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#147",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa loom shuttle?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#148",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang quilt batting listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#148",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa ferry gangway?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#149",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang birdhouse perch listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#149",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa salt pan rake?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#150",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang marble chute listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#150",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa copra dryer?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#151",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang kaleidoscope tube listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#151",
+      "side": "b"
+    },
+    {
+      "query": "May VAT ba sa abaca baler?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#152",
+      "side": "a"
+    },
+    {
+      "query": "Ayusin ang pennant halyard listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "english_vs_filipino_reason",
+      "pair": "english_vs_filipino_reason#152",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa sailmaker fee?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#153",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang sailmaker fee para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#153",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa quarry haulage?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#154",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang quarry haulage para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#154",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa orchard netting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#155",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang orchard netting para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#155",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa foundry casting?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#156",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang foundry casting para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#156",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa bakery oven?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#157",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang bakery oven para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#157",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa cobbler bench?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#158",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang cobbler bench para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#158",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa tannery lining?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#159",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang tannery lining para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#159",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa glazier panel?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#160",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang glazier panel para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#160",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa apiary frame?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#161",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang apiary frame para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#161",
+      "side": "b"
+    },
+    {
+      "query": "Ano ang deadline sa pag-file ng withholding tax sa loom shuttle?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#162",
+      "side": "a"
+    },
+    {
+      "query": "Deductible ba ang loom shuttle para sa income tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_compliance_vs_treatment",
+      "pair": "filipino_compliance_vs_treatment#162",
+      "side": "b"
+    },
+    {
+      "query": "What is VQZ under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#163",
+      "side": "a"
+    },
+    {
+      "query": "How is the sailmaker fee treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#163",
+      "side": "b"
+    },
+    {
+      "query": "What is KRM under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#164",
+      "side": "a"
+    },
+    {
+      "query": "How is the quarry haulage treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#164",
+      "side": "b"
+    },
+    {
+      "query": "What is TBN under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#165",
+      "side": "a"
+    },
+    {
+      "query": "How is the orchard netting treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#165",
+      "side": "b"
+    },
+    {
+      "query": "What is PLW under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#166",
+      "side": "a"
+    },
+    {
+      "query": "How is the foundry casting treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#166",
+      "side": "b"
+    },
+    {
+      "query": "What is DGF under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#167",
+      "side": "a"
+    },
+    {
+      "query": "How is the bakery oven treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#167",
+      "side": "b"
+    },
+    {
+      "query": "What is NSK under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#168",
+      "side": "a"
+    },
+    {
+      "query": "How is the cobbler bench treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#168",
+      "side": "b"
+    },
+    {
+      "query": "What is HRV under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#169",
+      "side": "a"
+    },
+    {
+      "query": "How is the tannery lining treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#169",
+      "side": "b"
+    },
+    {
+      "query": "What is CMB under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#170",
+      "side": "a"
+    },
+    {
+      "query": "How is the glazier panel treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#170",
+      "side": "b"
+    },
+    {
+      "query": "What is JYT under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#171",
+      "side": "a"
+    },
+    {
+      "query": "How is the apiary frame treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#171",
+      "side": "b"
+    },
+    {
+      "query": "What is WFL under the National Internal Revenue Code?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "non_tax_label_or_name"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#172",
+      "side": "a"
+    },
+    {
+      "query": "How is the loom shuttle treated for Philippine tax purposes?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "explicit_non_tax_task",
+        "quoted_tax_term_only"
+      ],
+      "family": "residual_family_coverage",
+      "pair": "residual_family_coverage#172",
+      "side": "b"
+    }
+  ]
+}

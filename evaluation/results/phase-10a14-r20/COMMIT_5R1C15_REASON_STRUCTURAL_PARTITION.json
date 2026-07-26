@@ -1,0 +1,69 @@
+{
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:19:30.816Z",
+  "partition": {
+    "specific_instead_of_explicit_tax_task": 117,
+    "generic_instead_of_ordinary_object_treatment": 52,
+    "generic_instead_of_compliance": 41,
+    "nontax_action_instead_of_label": 23,
+    "nontax_action_instead_of_quotation": 11,
+    "no_tax_relation_pairing": 324,
+    "ambiguous_acronym_versus_no_tax_relation": 50,
+    "wrong_nontax_family": 44,
+    "nontax_action_instead_of_expansion": 1,
+    "wrong_specific_allow_family": 8,
+    "generic_instead_of_definition": 8
+  },
+  "remediationFamilies": {
+    "generic_instead_of_ordinary_object_treatment": "ALLOW specificity — the generic residual reason stood in for ordinary-object treatment",
+    "generic_instead_of_compliance": "ALLOW specificity — compliance family not selected",
+    "generic_instead_of_definition": "ALLOW specificity — definition-with-context family not selected",
+    "specific_instead_of_explicit_tax_task": "ALLOW specificity — a specific family was used where the residual family is required",
+    "wrong_specific_allow_family": "ALLOW specificity — wrong specific family among compliance/treatment/definition",
+    "nontax_action_instead_of_label": "non-tax specificity — label/name family not selected",
+    "nontax_action_instead_of_expansion": "non-tax specificity — expansion family not selected",
+    "nontax_action_instead_of_quotation": "non-tax specificity — quotation family not selected",
+    "wrong_nontax_family": "non-tax specificity — wrong family among action/label/expansion/quotation",
+    "ambiguous_acronym_versus_no_tax_relation": "acronym ambiguity — CLARIFY family selection",
+    "negation_review_precedence": "negation precedence — tax-review override family",
+    "no_tax_relation_pairing": "no-tax-relation family, including the authorized REFUSE/CLARIFY pairing",
+    "tax_reason_expected_nontax_emitted": "cross-lane — a tax reason is required but a non-tax family was emitted",
+    "nontax_reason_expected_tax_emitted": "cross-lane — a non-tax reason is required but a tax family was emitted",
+    "other_family_substitution": "residual family substitution"
+  },
+  "partitionByDecision": {
+    "specific_instead_of_explicit_tax_task": {
+      "ALLOW": 117
+    },
+    "generic_instead_of_ordinary_object_treatment": {
+      "ALLOW": 52
+    },
+    "generic_instead_of_compliance": {
+      "ALLOW": 41
+    },
+    "nontax_action_instead_of_label": {
+      "REFUSE": 23
+    },
+    "nontax_action_instead_of_quotation": {
+      "REFUSE": 11
+    },
+    "no_tax_relation_pairing": {
+      "REFUSE": 324
+    },
+    "ambiguous_acronym_versus_no_tax_relation": {
+      "CLARIFY": 50
+    },
+    "wrong_nontax_family": {
+      "REFUSE": 44
+    },
+    "nontax_action_instead_of_expansion": {
+      "REFUSE": 1
+    },
+    "wrong_specific_allow_family": {
+      "ALLOW": 8
+    },
+    "generic_instead_of_definition": {
+      "ALLOW": 8
+    }
+  }
+}

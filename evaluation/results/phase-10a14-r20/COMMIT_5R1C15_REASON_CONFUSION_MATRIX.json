@@ -1,0 +1,74 @@
+{
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:19:30.815Z",
+  "confusion": {
+    "explicit_tax_task_relation": {
+      "missingCount": 117,
+      "emittedInstead": {
+        "tax_treatment_of_ordinary_object": 108,
+        "tax_compliance_task": 5,
+        "tax_definition_with_context": 4
+      }
+    },
+    "tax_treatment_of_ordinary_object": {
+      "missingCount": 52,
+      "emittedInstead": {
+        "explicit_tax_task_relation": 52
+      }
+    },
+    "tax_compliance_task": {
+      "missingCount": 41,
+      "emittedInstead": {
+        "explicit_tax_task_relation": 41
+      }
+    },
+    "non_tax_label_or_name": {
+      "missingCount": 24,
+      "emittedInstead": {
+        "explicit_non_tax_task": 23,
+        "no_tax_relation": 1
+      }
+    },
+    "quoted_tax_term_only": {
+      "missingCount": 11,
+      "emittedInstead": {
+        "explicit_non_tax_task": 11
+      }
+    },
+    "no_tax_relation": {
+      "missingCount": 318,
+      "emittedInstead": {
+        "explicit_non_tax_task": 291,
+        "non_tax_expansion": 22,
+        "non_tax_label_or_name": 5
+      }
+    },
+    "ambiguous_tax_acronym": {
+      "missingCount": 50,
+      "emittedInstead": {
+        "no_tax_relation": 50
+      }
+    },
+    "explicit_non_tax_task": {
+      "missingCount": 49,
+      "emittedInstead": {
+        "no_tax_relation": 5,
+        "non_tax_label_or_name": 41,
+        "non_tax_expansion": 3
+      }
+    },
+    "non_tax_expansion": {
+      "missingCount": 1,
+      "emittedInstead": {
+        "explicit_non_tax_task": 1
+      }
+    },
+    "tax_definition_with_context": {
+      "missingCount": 16,
+      "emittedInstead": {
+        "tax_compliance_task": 8,
+        "explicit_tax_task_relation": 8
+      }
+    }
+  }
+}

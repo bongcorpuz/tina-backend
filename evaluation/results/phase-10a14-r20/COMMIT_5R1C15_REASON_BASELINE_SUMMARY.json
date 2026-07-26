@@ -1,0 +1,83 @@
+{
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:19:29.834Z",
+  "baselineCandidate": "locked C14 dev-02 (reconstructed)",
+  "servicesTreeDigest": "e34842a9976b038ac0e8730fe7f94e5ffa9db94e2c4887b11e0f60eef763118c",
+  "r3Counts": {
+    "total": 3720,
+    "canonicalPassed": 3041,
+    "decisionMismatches": 0,
+    "reasonMismatches": 679,
+    "relationMismatches": 0,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "relationRowsWithExpectations": 1623,
+    "relationRowsPassed": 1623,
+    "relationPassed": 3720,
+    "decisionPassed": 3720
+  },
+  "reasonPassed": 3041,
+  "reasonMismatches": 679,
+  "expectedFamilyDistribution": {
+    "explicit_tax_task_relation": 451,
+    "tax_compliance_task": 291,
+    "tax_treatment_of_ordinary_object": 784,
+    "explicit_non_tax_task": 897,
+    "non_tax_label_or_name": 201,
+    "quoted_tax_term_only": 120,
+    "no_tax_relation": 563,
+    "ambiguous_tax_acronym": 220,
+    "non_tax_expansion": 88,
+    "tax_definition_with_context": 79,
+    "tax_negation_but_tax_review_requested": 26
+  },
+  "perFamilySatisfaction": {
+    "explicit_tax_task_relation": {
+      "required": 451,
+      "satisfied": 334
+    },
+    "tax_compliance_task": {
+      "required": 291,
+      "satisfied": 250
+    },
+    "tax_treatment_of_ordinary_object": {
+      "required": 784,
+      "satisfied": 732
+    },
+    "explicit_non_tax_task": {
+      "required": 897,
+      "satisfied": 848
+    },
+    "non_tax_label_or_name": {
+      "required": 201,
+      "satisfied": 177
+    },
+    "quoted_tax_term_only": {
+      "required": 120,
+      "satisfied": 109
+    },
+    "no_tax_relation": {
+      "required": 563,
+      "satisfied": 245
+    },
+    "ambiguous_tax_acronym": {
+      "required": 220,
+      "satisfied": 170
+    },
+    "non_tax_expansion": {
+      "required": 88,
+      "satisfied": 87
+    },
+    "tax_definition_with_context": {
+      "required": 79,
+      "satisfied": 63
+    },
+    "tax_negation_but_tax_review_requested": {
+      "required": 26,
+      "satisfied": 26
+    }
+  },
+  "decisionLockHeld": true,
+  "relationLockHeld": true
+}

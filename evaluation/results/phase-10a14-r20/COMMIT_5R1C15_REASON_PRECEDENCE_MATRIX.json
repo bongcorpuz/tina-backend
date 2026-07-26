@@ -1,0 +1,110 @@
+{
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:19:30.500Z",
+  "precedenceOrder": [
+    "identify the primary task",
+    "identify the task target",
+    "link tax predicates to the target",
+    "distinguish tax questions about ordinary objects from non-tax tasks",
+    "detect labels, quotations, names and alternate meanings",
+    "handle acronym definition intent",
+    "handle negation and contradiction",
+    "resolve ambiguity",
+    "produce decision and reason code"
+  ],
+  "ruleMatrix": {
+    "RF-10": {
+      "total": 501,
+      "passed": 364,
+      "families": {
+        "explicit_tax_task_relation": 450,
+        "tax_treatment_of_ordinary_object": 11,
+        "tax_compliance_task": 40
+      }
+    },
+    "RF-01": {
+      "total": 155,
+      "passed": 134,
+      "families": {
+        "tax_compliance_task": 143,
+        "tax_treatment_of_ordinary_object": 11,
+        "explicit_tax_task_relation": 1
+      }
+    },
+    "RF-02": {
+      "total": 218,
+      "passed": 166,
+      "families": {
+        "tax_treatment_of_ordinary_object": 218
+      }
+    },
+    "RF-05": {
+      "total": 242,
+      "passed": 231,
+      "families": {
+        "explicit_non_tax_task": 242
+      }
+    },
+    "RF-06": {
+      "total": 97,
+      "passed": 73,
+      "families": {
+        "non_tax_label_or_name": 97
+      }
+    },
+    "RF-08": {
+      "total": 20,
+      "passed": 0,
+      "families": {
+        "quoted_tax_term_only": 10,
+        "no_tax_relation": 10
+      }
+    },
+    "RF-04": {
+      "total": 200,
+      "passed": 150,
+      "families": {
+        "ambiguous_tax_acronym": 100,
+        "no_tax_relation": 100
+      }
+    },
+    "RF-11": {
+      "total": 455,
+      "passed": 146,
+      "families": {
+        "no_tax_relation": 453,
+        "non_tax_expansion": 2
+      }
+    },
+    "RF-07": {
+      "total": 8,
+      "passed": 8,
+      "families": {
+        "non_tax_expansion": 8
+      }
+    },
+    "RF-03": {
+      "total": 1,
+      "passed": 1,
+      "families": {
+        "tax_definition_with_context": 1
+      }
+    },
+    "(none)": {
+      "total": 1823,
+      "passed": 1768,
+      "families": {
+        "tax_treatment_of_ordinary_object": 544,
+        "explicit_non_tax_task": 655,
+        "ambiguous_tax_acronym": 120,
+        "non_tax_expansion": 78,
+        "tax_definition_with_context": 78,
+        "quoted_tax_term_only": 110,
+        "tax_negation_but_tax_review_requested": 26,
+        "non_tax_label_or_name": 104,
+        "tax_compliance_task": 108
+      }
+    }
+  },
+  "note": "RF rule ids are analysis evidence only. They index the frozen contract and must never appear in runtime logic."
+}

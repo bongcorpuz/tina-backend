@@ -1,0 +1,89 @@
+{
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:19:29.479Z",
+  "scorerPath": "evaluation/runner/phase-10a14-r20/commit5r1-oracle-runner.mjs",
+  "scorerExpression": "reasonPass = out.reasonFamily === r.expectedReasonCodeFamily",
+  "exactFieldsCompared": {
+    "actual": "TaxBoundaryEvidence.reasonCode (a single string)",
+    "expected": "R3 row expectedReasonCodeFamily (a single string)",
+    "comparison": "strict === on one scalar field"
+  },
+  "normalizationAndAliasRules": {
+    "normalization": "none — compared verbatim, case-sensitive",
+    "aliases": "none permitted; no alias or fallback code may be added",
+    "closedFamilies": [
+      "explicit_tax_task_relation",
+      "tax_treatment_of_ordinary_object",
+      "tax_compliance_task",
+      "tax_definition_with_context",
+      "ambiguous_tax_acronym",
+      "explicit_non_tax_task",
+      "non_tax_label_or_name",
+      "non_tax_expansion",
+      "quoted_tax_term_only",
+      "tax_negation_but_tax_review_requested",
+      "no_tax_relation"
+    ],
+    "familiesAdded": 0
+  },
+  "singleCodeVersusListSemantics": "SINGLE controlling code. Exactly one reason code per evaluation; there is no list, no set and no partial credit.",
+  "decisionReasonCompatibility": {
+    "observedPairings": {
+      "explicit_tax_task_relation": [
+        "ALLOW"
+      ],
+      "tax_compliance_task": [
+        "ALLOW"
+      ],
+      "tax_treatment_of_ordinary_object": [
+        "ALLOW"
+      ],
+      "explicit_non_tax_task": [
+        "REFUSE"
+      ],
+      "non_tax_label_or_name": [
+        "REFUSE"
+      ],
+      "quoted_tax_term_only": [
+        "REFUSE"
+      ],
+      "no_tax_relation": [
+        "CLARIFY",
+        "REFUSE"
+      ],
+      "ambiguous_tax_acronym": [
+        "CLARIFY"
+      ],
+      "non_tax_expansion": [
+        "REFUSE"
+      ],
+      "tax_definition_with_context": [
+        "ALLOW"
+      ],
+      "tax_negation_but_tax_review_requested": [
+        "ALLOW"
+      ]
+    },
+    "note": "The precedence spec lists one nominal decision per family, but R3 itself pairs no_tax_relation with BOTH REFUSE and CLARIFY. That pairing is authorized by frozen evidence and must not be rejected merely because it is unusual."
+  },
+  "invalidCodeHandling": "A code outside the closed set can never equal an expectation and is rejected outright by the reason-integrity gate.",
+  "emptyOrNullHandling": {
+    "rowsWithNullExpectation": 0,
+    "behaviour": "every R3 row carries exactly one expected family; there is no empty/null case to score"
+  },
+  "precedenceRuleUsedByR3": {
+    "source": "reasonAdjudication.ruleId on each row, where present",
+    "authority": "frozen_relation_and_precedence_contract",
+    "note": "RF rule ids are ANALYSIS EVIDENCE ONLY and must never become runtime features."
+  },
+  "relationsScoredIndependently": true,
+  "relationsScoredIndependentlyNote": "The scorer computes decisionPass, reasonPass and relationPass separately; a row passes canonically only when all three hold. Reason therefore cannot be repaired by changing a relation, and the relation lane is already locked at 3,720/3,720.",
+  "familiesOutsideClosedSet": [],
+  "semanticsProbe": {
+    "strict_string_equality": true,
+    "case_insensitive": false,
+    "list_semantics": false,
+    "null_expected_present": false
+  },
+  "authority": "CLAUSE_LEVEL_INTENT_SCHEMA.md + RELATION_AND_PRECEDENCE_SPEC.md (immutable at COMMIT 1)"
+}

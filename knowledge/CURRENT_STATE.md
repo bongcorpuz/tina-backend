@@ -31,15 +31,104 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C14
-RELATION-LAYER LOCK CONTINUATION — PRIMARY-vs-SUBORDINATE CLAUSE SEGMENTATION
-DECISION: INCOMPLETE — RELATION LAYER LOCK ACHIEVED;
-          REASON LANE PENDING
+PHASE-10A14-R20 — COMMIT 5R1-C15
+REASON-LAYER CLOSURE AGAINST R3
+DECISION: INCOMPLETE — REASON LAYER REMEDIATION NOT CLOSED;
+          DECISION AND RELATION LOCKS PRESERVED
 ```
 
-**The relation layer is locked.** The eight-query `primary_vs_subordinate` gap carried
-forward from C13 is closed, and a separate clean verification campaign against an
-unchanged runtime met **all sixteen** lock conditions:
+**The reason lane is not closed and the reason lock is NOT declared.** Five of five
+permitted material iterations were used, closing **65 of 679** reason mismatches
+(679 → 614). The decision and relation locks were preserved exactly on every accepted
+candidate:
+
+```text
+R3 reason                     3,106 / 3,720   (mismatches 614, from 679)
+canonical overall             3,106 / 3,720
+R3 decision                   3,720 / 3,720   FA 0  FR 0  clarify 0
+R3 relation                   3,720 / 3,720   (mismatches 0)
+decision counterfactual         756 / 756
+relation counterfactual         282 / 282
+clause probes                    68 / 68
+reason-focused suite v8         304 / 344     (from 278)
+closed controls               all closed
+rich-context guard            7 / 7
+reason integrity              PASS (no invalid code, no unauthorized pairing)
+anti-memorization             PASS
+```
+
+Because R3 reason is not exact, **no clean reason-lock verification was run**: §12
+authorizes it only after reason mismatches reach zero. The lane is recorded as **open**.
+
+### The reason scoring contract, established before coding
+
+The frozen scorer computes `out.reasonFamily === r.expectedReasonCodeFamily` — **strict
+equality on one scalar field**, case-sensitive, no aliasing, no list semantics and no
+partial credit. Exactly one controlling reason code per evaluation. Decision, reason and
+relation are scored **independently**, so reason cannot be repaired by altering a
+relation, and no relation was altered to obtain a reason score.
+
+R3 authorizes `no_tax_relation` with **both** REFUSE (463 rows) and CLARIFY (100 rows).
+That pairing was honoured rather than rejected as unusual. All expected families lie
+inside the closed set of eleven; none was added.
+
+### What was closed, and by what principle
+
+```text
+speech act separates the two REFUSE families      the largest single insight
+  explicit_non_tax_task requires a non-tax ACTION to be requested; a QUESTION about
+  subject matter carrying no tax relation is explained by no_tax_relation.
+  Measured: 12.0% interrogative vs 60.3% (REFUSE) and 100% (CLARIFY).
+
+reason follows the controlling relation           compliance / definition / label
+  an explicit filing-or-remittance frame is a compliance task; a definitional verb
+  under controlling tax context is a tax definition; an asserted naming act is
+  explained by the label relation; a text operation over a term is a quotation act.
+
+what is UNRESOLVED selects the CLARIFY family     50 rows
+  a materially ambiguous TOPIC needs the term disambiguated exactly as an ambiguous
+  acronym does; an unambiguously tax-domain topic simply has no relation. Both remain
+  CLARIFY, so the decision lane is untouched.
+```
+
+### Why the lane did not close — stated plainly
+
+The 679 failures span **438 distinct templates**; the largest accounts for 10 rows and
+the top thirteen cover only 130. There is no small set of high-yield rules left.
+
+Two candidate discriminators were tested and **rejected on the evidence**, not adopted:
+
+```text
+tax-token presence          24.4% vs 40.8% — does not separate the REFUSE families
+homograph token on an       16.7% vs 36.8% — separates in the WRONG direction
+  imperative
+```
+
+The two largest residual groups are **mutually contradictory on near-identical
+structure**: "Is the purchase of a cooling fan deductible for income tax?" requires the
+generic `explicit_tax_task_relation` while "Are receipts from a medical prescription
+taxable?" requires `tax_treatment_of_ordinary_object`. The oracle's own structured
+fields (`taskVerb`, `taskTarget`, `nonTaxObjects`) are null on every row in both
+families, so they supply no discriminator, and `primaryCategory` is forbidden as a
+runtime feature. Closing these rows would require many narrow rules of exactly the kind
+the anti-memorization gate exists to reject.
+
+Separability itself is not in doubt: normalizing away trailing enumeration devices
+yields 2,675 distinct templates and **zero templates mapping to two different expected
+reasons**. The lane is closable in principle; it needs further structural insight, not
+more narrow rules.
+
+Residual confusion (614), largest first:
+
+```text
+232  no_tax_relation            <- explicit_non_tax_task
+108  explicit_tax_task_relation <- tax_treatment_of_ordinary_object
+ 52  tax_treatment_of_ordinary_object <- explicit_tax_task_relation
+ 47  explicit_non_tax_task      <- no_tax_relation
+ 41  tax_compliance_task        <- explicit_tax_task_relation
+ 41  explicit_non_tax_task      <- non_tax_label_or_name
+ 30  no_tax_relation            <- ambiguous_tax_acronym
+```
 
 ```text
 R3 decision                 3,720 / 3,720
@@ -106,21 +195,22 @@ They were **not deleted and not weakened into passes** — they still fix the no
 behaviour so a later unit cannot regress it silently. No runtime change was made to
 manufacture a pass for any of them.
 
-Locked C14 relation candidate (preserved, not live):
+Best C15 reason candidate (preserved, not live):
 
 ```text
 candidate attempt:
-R20-domain_campaign-r20_commit5r1c14_clause_relation_iteration_02-commit5r1c14-dev-02
-verification attempt:
-R20-focused_suite-r20_commit5r1c14_relation_lock_verification-commit5r1c14-lock
+R20-domain_campaign-r20_commit5r1c15_reason_iteration_06-commit5r1c15-dev-06
 patch:
-evaluation/results/phase-10a14-r20/COMMIT_5R1C14_RELATION_LOCKED_CANDIDATE.patch
-lock record:
-evaluation/results/phase-10a14-r20/COMMIT_5R1C14_RELATION_LOCK.json
+evaluation/results/phase-10a14-r20/COMMIT_5R1C15_BEST_REASON_CANDIDATE.patch
+record:
+evaluation/results/phase-10a14-r20/COMMIT_5R1C15_REASON_LOCK.json
 ```
 
-Relation-layer closure is **not** runtime closure, **not** standalone closure, and
-**not** R20 PASS. The reason lane has not been started.
+No verification attempt exists: §12 authorizes a clean reason-lock verification only
+after reason mismatches reach zero, and they did not.
+
+Decision- and relation-layer closure are **not** runtime closure, **not** standalone
+closure, and **not** R20 PASS. The reason lane remains open.
 
 R3 remains canonical and unchanged:
 
@@ -144,31 +234,34 @@ The C12 dev-05 snapshot was verified file-by-file against the required normalize
 hashes and the services tree digest `184119a7…`, and only an authorized runtime file
 differed from the live baseline.
 
-Reconstructed accepted C13 base (new governed campaign, controlling):
+Reconstructed locked C14 base (new governed campaign, controlling):
 
 ```text
 canonical overall = 3,041 / 3,720
 R3 decision       = 3,720 / 3,720
 R3 relation       = 3,720 / 3,720   (0 mismatches)
-decision counterfactual = 756 / 756
-relation counterfactual =  274 / 282
-reason mismatches =   679
-reconstruction discrepancies = 0 (exact identity match on every metric)
-```
-
-The C13 dev-06 snapshot was verified file-by-file against the required normalized-LF
-hashes and the services tree digest `f2bb9051…`, and only an authorized runtime file
-differed from the live baseline.
-
-Locked C14 relation candidate:
-
-```text
-R3 decision       = 3,720 / 3,720
-R3 relation       = 3,720 / 3,720   (0 mismatches)
+R3 reason         = 3,041 / 3,720   (679 mismatches)
 decision counterfactual = 756 / 756
 relation counterfactual =  282 / 282
 clause probes     =    68 / 68
-reason mismatches =   679   (diagnostic only in C14; unchanged from the base)
+reconstruction discrepancies = 0 (exact identity match on every metric)
+```
+
+The C14 dev-02 snapshot was verified file-by-file against the required normalized-LF
+hashes and the services tree digest `e34842a9…`, and only an authorized runtime file
+differed from the live baseline.
+
+Best accepted C15 reason candidate:
+
+```text
+canonical overall = 3,106 / 3,720
+R3 decision       = 3,720 / 3,720
+R3 relation       = 3,720 / 3,720   (0 mismatches)
+R3 reason         = 3,106 / 3,720   (614 mismatches, from 679)
+decision counterfactual = 756 / 756
+relation counterfactual =  282 / 282
+clause probes     =    68 / 68
+reason-focused suite    =  304 / 344   (from 278)
 ```
 
 ### The relation scoring contract, established before coding
@@ -288,11 +381,21 @@ exact R3, decision-suite and relation-suite leakage = 0
 Remaining structural clusters:
 
 ```text
-none - the decision and relation lanes are both closed and locked
+none in the decision or relation lanes - both remain closed and locked
 R3 decision 3,720 / 3,720 | R3 relation 3,720 / 3,720
-decision counterfactual 756 / 756 | relation counterfactual 282 / 282
-the reason lane is the only remaining Phase 10A analyzer lane (679 mismatches)
+decision counterfactual 756 / 756 | relation counterfactual 282 / 282 | probes 68 / 68
+the reason lane remains OPEN: 614 mismatches across a long tail of templates
 ```
+
+The reason residual is genuinely long-tailed. The 679 baseline failures spanned 438
+distinct templates, the largest accounting for 10 rows; 65 were closed by three
+structural principles and the remainder need further insight rather than more narrow
+rules. The two largest residual groups are mutually contradictory on near-identical
+structure, and the oracle's own `taskVerb`, `taskTarget` and `nonTaxObjects` fields are
+null on every row in both, so they supply no discriminator. Full analysis is preserved in
+`COMMIT_5R1C15_REASON_MISMATCH_INVENTORY.json`,
+`COMMIT_5R1C15_REASON_CONFUSION_MATRIX.json` and
+`COMMIT_5R1C15_REASON_PRECEDENCE_MATRIX.json`.
 
 Adjudication of the relation-focused residual is recorded in full in
 `COMMIT_5R1C13_RELATION_SUITE_ADJUDICATION.md`. Of 33 residual failures, 16 were my own
@@ -330,9 +433,12 @@ expected-decision shortcut was used; the correction is entirely structural.
 Remaining Phase 10A work is the reason lane, then standalone closure, then integration
 and runtime freeze.
 
-Material iterations: 1 of 4 permitted were used, accepted on the first candidate. A
-separate clean relation-lock verification campaign was executed against an unchanged
-runtime and is recorded in full; it met all sixteen lock conditions.
+Material iterations: 5 of 5 permitted were used, all accepted. Three candidates
+regressed R3 reason during development (742, 687 and 685 against a 679 baseline) and
+each was narrowed against measured evidence within its own iteration before acceptance;
+no candidate carrying a regression was registered as an accepted base. No clean
+reason-lock verification was run, because §12 authorizes it only after reason mismatches
+reach zero.
 
 Rich-context regression guard (introduced after the C9 iteration-06 regression on richer
 RMC-issuance questions) — final state of all seven shapes:
@@ -397,9 +503,11 @@ Layer status:
 ```text
 decision lock:   ACHIEVED and PRESERVED - R3 3,720/3,720 and counterfactual 756/756,
                  re-verified under the C13 candidate
-relation lock:   ACHIEVED - R3 relation 3,720/3,720 and relation counterfactual
-                 282/282, all 16 lock conditions met, independently verified
-reason lock:     not started
+relation lock:   ACHIEVED and PRESERVED - R3 relation 3,720/3,720 and relation
+                 counterfactual 282/282, re-verified under the C15 candidate
+reason lock:     NOT ACHIEVED - R3 reason 3,106/3,720 (614 mismatches, from 679);
+                 5 of 5 material iterations used; no lock verification was run
+                 because reason mismatches did not reach zero
 standalone:      not achieved
 integration:     not performed
 freeze:          not performed
@@ -864,7 +972,7 @@ COMMIT 5R1-C7 must resume from the accepted 3,464-decision candidate.
 
 ```text
 cumulativeThrough:
-commit5r1c14
+commit5r1c15-incomplete
 
 runtimeClosure:
 false
@@ -873,13 +981,13 @@ decisionLayerClosure:
 true
 
 total attempts:
-133
+139
 
 by category:
-domain_campaign 69 | focused_suite 13 | other 9 | synthetic_validator 42
+domain_campaign 75 | focused_suite 13 | other 9 | synthetic_validator 42
 
 controlling / non-controlling:
-131 / 2
+137 / 2
 
 COMMIT 5R1-C6 new attempts:
 4
@@ -920,6 +1028,10 @@ COMMIT 5R1-C14 new attempts:
 3 (1 reconstruction, 1 material clause/relation iteration,
    1 clean relation-lock verification)
 
+COMMIT 5R1-C15 new attempts:
+6 (1 reconstruction, 5 material reason iterations;
+   no lock verification — reason mismatches did not reach zero)
+
 closureComplete:
 true
 
@@ -935,8 +1047,8 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C15
-REASON-LAYER CLOSURE AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C16
+REASON-LAYER CLOSURE CONTINUATION 16 AGAINST R3
 ```
 
 Preflight preconditions carried forward from COMMIT 5R1-C7-P1 and still holding:
@@ -947,18 +1059,18 @@ analyzer identity policy: Git blob canonical; normalized-LF content identity acc
 working-tree drift:       none unresolved
 root residue:             none
 roadmap:                  tracked strategic governance
-parent chain:             use the pushed C14 commit as the new starting HEAD
+parent chain:             use the pushed C15 commit as the new starting HEAD
 ```
 
-COMMIT 5R1-C15 must:
+COMMIT 5R1-C16 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the LOCKED C14 relation candidate (R3 decision 3,720 / 3,720; R3 relation 3,720 / 3,720; decision counterfactual 756 / 756; relation counterfactual 282 / 282) from its preserved attempt snapshot and verify the recorded services tree digest;
+2. reconstruct the best accepted C15 reason candidate (R3 decision 3,720 / 3,720; R3 relation 3,720 / 3,720; R3 reason 3,106 / 3,720; decision counterfactual 756 / 756; relation counterfactual 282 / 282; clause probes 68 / 68) from its preserved attempt snapshot and verify the recorded services tree digest;
 3. execute it as a new governed R3 campaign and preserve the actual result;
 4. preserve all C7 through C10 analysis and the combined counterfactual v3+v4+v5+v6 controls;
-5. hold the decision lock AND the relation lock intact — R3 decision 3,720 / 3,720, R3 relation 3,720 / 3,720, decision counterfactual 756 / 756, relation counterfactual 282 / 282, clause probes, closed controls, rich-context guard and anti-memorization — while remediating the reason lane only; any decision or relation regression rejects the candidate immediately;
+5. hold the decision lock AND the relation lock intact — R3 decision 3,720 / 3,720, R3 relation 3,720 / 3,720, decision counterfactual 756 / 756, relation counterfactual 282 / 282, clause probes 68 / 68, closed controls, rich-context guard and anti-memorization — while closing the remaining 614 reason mismatches; any decision or relation regression rejects the candidate immediately;
 6. permit up to five new material decision iterations;
-7. require exact decision 3,720 / 3,720, exact relation 3,720 / 3,720, both counterfactual suites fully passing AND a materially reduced reason-mismatch count, plus a separate clean lock-verification run, before declaring a reason lock;
+7. require exact decision 3,720 / 3,720, exact relation 3,720 / 3,720, exact reason 3,720 / 3,720, all suites fully passing, plus a separate clean lock-verification run, before declaring the reason lock;
 8. not begin standalone closure, integration or freeze;
 9. update CURRENT_STATE as the final substantive change;
 10. commit, push and STOP.
@@ -972,7 +1084,7 @@ closure, integration and a successful runtime freeze in later units.
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C15 reason-layer closure
+COMMIT 5R1-C16 reason-layer closure continuation
 → reason-layer closure
 → standalone overall closure
 → integration and runtime freeze

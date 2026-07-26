@@ -1,0 +1,94 @@
+{
+  "unit": "COMMIT 5R1-C15",
+  "generatedUtc": "2026-07-26T14:39:52.024Z",
+  "outcome": "INCOMPLETE — REASON LAYER REMEDIATION NOT CLOSED",
+  "decisionLayerClosure": true,
+  "relationLayerClosure": true,
+  "reasonLayerClosure": false,
+  "standaloneClosure": false,
+  "runtimeClosure": false,
+  "reasonLockAchieved": false,
+  "iterationCeilingReached": true,
+  "materialIterationsUsed": 5,
+  "materialIterationsPermitted": 5,
+  "baselineReasonMismatches": 679,
+  "bestReasonMismatches": 614,
+  "reasonMismatchesClosed": 65,
+  "r3ReasonResult": "3106/3720",
+  "canonicalOverall": "3106/3720",
+  "r3DecisionResult": "3720/3720",
+  "r3RelationResult": "3720/3720",
+  "decisionCounterfactualResult": "756/756",
+  "relationCounterfactualResult": "282/282",
+  "clauseProbeResult": "68/68",
+  "reasonCounterfactualResult": "304/344",
+  "reasonCounterfactualBaseline": "278/344",
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "focusedReasonRegression": false,
+  "reasonIntegrity": true,
+  "staticGates": {
+    "antiMemorization": true,
+    "clauseSchema": true
+  },
+  "residualReasonConfusion": {
+    "explicit_tax_task_relation <- tax_treatment_of_ordinary_object": 108,
+    "tax_treatment_of_ordinary_object <- explicit_tax_task_relation": 52,
+    "tax_compliance_task <- explicit_tax_task_relation": 41,
+    "non_tax_label_or_name <- explicit_non_tax_task": 23,
+    "no_tax_relation <- quoted_tax_term_only": 10,
+    "no_tax_relation <- ambiguous_tax_acronym": 30,
+    "no_tax_relation <- explicit_non_tax_task": 206,
+    "explicit_non_tax_task <- no_tax_relation": 47,
+    "explicit_tax_task_relation <- tax_compliance_task": 5,
+    "explicit_non_tax_task <- non_tax_label_or_name": 41,
+    "explicit_non_tax_task <- non_tax_expansion": 3,
+    "no_tax_relation <- non_tax_expansion": 22,
+    "no_tax_relation <- non_tax_label_or_name": 5,
+    "non_tax_label_or_name <- no_tax_relation": 1,
+    "explicit_tax_task_relation <- tax_definition_with_context": 4,
+    "non_tax_expansion <- no_tax_relation": 1,
+    "tax_definition_with_context <- tax_compliance_task": 6,
+    "tax_definition_with_context <- explicit_tax_task_relation": 8,
+    "quoted_tax_term_only <- explicit_non_tax_task": 1
+  },
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c15_reason_iteration_06-commit5r1c15-dev-06-ord01-2026-07-26T14-39-00-091Z",
+  "runtimeHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 149714,
+      "normalizedLfSha256": "8a1f124a4c31b68431d185ecdf31c7356ad4bd254cf019cb287d13fc8defdd81",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "e8577e35efc7bc3193b796e1bd7a6a422a98f8568411b69b2f67c496f0c85ba7"
+  },
+  "servicesTreeDigest": "e8577e35efc7bc3193b796e1bd7a6a422a98f8568411b69b2f67c496f0c85ba7",
+  "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c15_reason_iteration_06-commit5r1c15-dev-06-ord01-2026-07-26T14-39-00-091Z/runtime-snapshot",
+  "patchPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C15_BEST_REASON_CANDIDATE.patch",
+  "reconstruction": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c15_reconstruction-commit5r1c15-recon-ord01-2026-07-26T14-18-21-071Z",
+    "exactReproduction": true,
+    "discrepancies": []
+  },
+  "oracleIntegrity": {
+    "oracle": "R3",
+    "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "rows": 3720,
+    "expectationsEdited": 0
+  },
+  "suitesUnchanged": {
+    "decision": true,
+    "relation": true,
+    "clauseProbes": true
+  },
+  "nextExactTask": "PHASE-10A14-R20 — COMMIT 5R1-C16: REASON-LAYER CLOSURE CONTINUATION 16 AGAINST R3"
+}
