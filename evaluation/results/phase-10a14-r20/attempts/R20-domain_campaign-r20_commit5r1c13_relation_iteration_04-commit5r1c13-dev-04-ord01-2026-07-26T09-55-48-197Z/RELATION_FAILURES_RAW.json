@@ -1,0 +1,881 @@
+{
+  "count": 36,
+  "failures": [
+    {
+      "oracleId": "R20N-ENT-0536",
+      "query": "insurance policy deductible clause",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "query": "delivery app service surcharge",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "query": "in-game points reward levy",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ENT-0611",
+      "query": "library book return deadline",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0696",
+      "query": "car wash membership levy",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0697",
+      "query": "Explain the car wash membership levy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0698",
+      "query": "Summarize the car wash membership levy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0699",
+      "query": "Format the car wash membership levy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0700",
+      "query": "List the car wash membership levy details.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0855",
+      "query": "In our system, RMC stands for radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0856",
+      "query": "Note: RMC = radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0858",
+      "query": "We use RMC for radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0859",
+      "query": "RMC, i.e. radio music channel, is used here.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0862",
+      "query": "Set RMC to mean radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0863",
+      "query": "Treat RMC as the radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0865",
+      "query": "By RMC we mean the radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0868",
+      "query": "In our system, FAN stands for cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0869",
+      "query": "Note: FAN = cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0871",
+      "query": "We use FAN for cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0872",
+      "query": "FAN, i.e. cooling device fan, is used here.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0875",
+      "query": "Set FAN to mean cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0876",
+      "query": "Treat FAN as the cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0878",
+      "query": "By FAN we mean the cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0883",
+      "query": "Here FLD is the field level design.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0887",
+      "query": "Our FLD is the field level design.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0896",
+      "query": "Here CAR is the company annual retreat.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0900",
+      "query": "Our CAR is the company annual retreat.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0909",
+      "query": "Here PT is the physical therapy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0913",
+      "query": "Our PT is the physical therapy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0985",
+      "query": "Explain PT for Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0989",
+      "query": "Clarify PT in Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0990",
+      "query": "Describe PT under Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0994",
+      "query": "Interpret PT in Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0995",
+      "query": "Detail PT in Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1579",
+      "query": "Ayusin ang cooling fan setting.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1580",
+      "query": "Alin ang cooling fan na bibilhin?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    }
+  ]
+}

@@ -1,0 +1,2582 @@
+{
+  "count": 99,
+  "failures": [
+    {
+      "oracleId": "R20N-ENT-0536",
+      "query": "insurance policy deductible clause",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "query": "delivery app service surcharge",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "query": "in-game points reward levy",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ENT-0611",
+      "query": "library book return deadline",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0696",
+      "query": "car wash membership levy",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0697",
+      "query": "Explain the car wash membership levy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0698",
+      "query": "Summarize the car wash membership levy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0699",
+      "query": "Format the car wash membership levy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ENT-0700",
+      "query": "List the car wash membership levy details.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0855",
+      "query": "In our system, RMC stands for radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0856",
+      "query": "Note: RMC = radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0858",
+      "query": "We use RMC for radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0859",
+      "query": "RMC, i.e. radio music channel, is used here.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0862",
+      "query": "Set RMC to mean radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0863",
+      "query": "Treat RMC as the radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0865",
+      "query": "By RMC we mean the radio music channel.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0868",
+      "query": "In our system, FAN stands for cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0869",
+      "query": "Note: FAN = cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0871",
+      "query": "We use FAN for cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0872",
+      "query": "FAN, i.e. cooling device fan, is used here.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0875",
+      "query": "Set FAN to mean cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0876",
+      "query": "Treat FAN as the cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0878",
+      "query": "By FAN we mean the cooling device fan.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0883",
+      "query": "Here FLD is the field level design.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0887",
+      "query": "Our FLD is the field level design.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0896",
+      "query": "Here CAR is the company annual retreat.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0900",
+      "query": "Our CAR is the company annual retreat.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0909",
+      "query": "Here PT is the physical therapy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0913",
+      "query": "Our PT is the physical therapy.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-ACX-0926",
+      "query": "What does PAN refer to in a BIR assessment?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0928",
+      "query": "PAN in a BIR assessment means what?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0931",
+      "query": "What is PAN within a BIR assessment?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0939",
+      "query": "What does FLD refer to in a BIR deficiency notice?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0941",
+      "query": "FLD in a BIR deficiency notice means what?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0944",
+      "query": "What is FLD within a BIR deficiency notice?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0952",
+      "query": "What does RMC refer to in BIR issuances?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0954",
+      "query": "RMC in BIR issuances means what?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0957",
+      "query": "What is RMC within BIR issuances?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0965",
+      "query": "What does DST refer to in Philippine tax?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0967",
+      "query": "DST in Philippine tax means what?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0970",
+      "query": "What is DST within Philippine tax?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0978",
+      "query": "What does CAR refer to in a BIR estate tax clearance?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0980",
+      "query": "CAR in a BIR estate tax clearance means what?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0983",
+      "query": "What is CAR within a BIR estate tax clearance?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0985",
+      "query": "Explain PT for Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0989",
+      "query": "Clarify PT in Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0990",
+      "query": "Describe PT under Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0991",
+      "query": "What does PT refer to in Philippine percentage tax?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0993",
+      "query": "PT in Philippine percentage tax means what?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0994",
+      "query": "Interpret PT in Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0995",
+      "query": "Detail PT in Philippine percentage tax.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-ACX-0996",
+      "query": "What is PT within Philippine percentage tax?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1422",
+      "query": "Ano ang tamang BIR form para sa cooling fan?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1425",
+      "query": "Kailangan bang i-withhold ang buwis sa cooking pan?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-FIL-1426",
+      "query": "Ano ang tamang BIR form para sa cooking pan?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1430",
+      "query": "Ano ang tamang BIR form para sa website design?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1433",
+      "query": "Kailangan bang i-withhold ang buwis sa music channel?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-FIL-1434",
+      "query": "Ano ang tamang BIR form para sa music channel?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1438",
+      "query": "Ano ang tamang BIR form para sa software company?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1442",
+      "query": "Ano ang tamang BIR form para sa school raffle?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1446",
+      "query": "Ano ang tamang BIR form para sa charity fun run?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1450",
+      "query": "Ano ang tamang BIR form para sa mobile app?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1454",
+      "query": "Ano ang tamang BIR form para sa marketing service?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1458",
+      "query": "Ano ang tamang BIR form para sa equipment repair?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1461",
+      "query": "Kailangan bang i-withhold ang buwis sa delivery van?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-FIL-1462",
+      "query": "Ano ang tamang BIR form para sa delivery van?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1466",
+      "query": "Ano ang tamang BIR form para sa office chair?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1470",
+      "query": "Ano ang tamang BIR form para sa server rack?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1474",
+      "query": "Ano ang tamang BIR form para sa coffee machine?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1478",
+      "query": "Ano ang tamang BIR form para sa company vehicle?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1482",
+      "query": "Ano ang tamang BIR form para sa printing service?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1486",
+      "query": "Ano ang tamang BIR form para sa catering service?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1490",
+      "query": "Ano ang tamang BIR form para sa training seminar?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1494",
+      "query": "Ano ang tamang BIR form para sa consulting engagement?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1498",
+      "query": "Ano ang tamang BIR form para sa billboard rental?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1502",
+      "query": "Ano ang tamang BIR form para sa warehouse space?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1506",
+      "query": "Ano ang tamang BIR form para sa solar panel?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1510",
+      "query": "Ano ang tamang BIR form para sa security service?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1514",
+      "query": "Ano ang tamang BIR form para sa cloud subscription?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1518",
+      "query": "Ano ang tamang BIR form para sa company laptop?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1522",
+      "query": "Ano ang tamang BIR form para sa industrial oven?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1525",
+      "query": "Kailangan bang i-withhold ang buwis sa delivery drone?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-FIL-1526",
+      "query": "Ano ang tamang BIR form para sa delivery drone?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1530",
+      "query": "Ano ang tamang BIR form para sa retail shelf?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1534",
+      "query": "Ano ang tamang BIR form para sa packaging material?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1538",
+      "query": "Ano ang tamang BIR form para sa company uniform?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1542",
+      "query": "Ano ang tamang BIR form para sa water dispenser?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1546",
+      "query": "Ano ang tamang BIR form para sa CCTV system?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1549",
+      "query": "Kailangan bang i-withhold ang buwis sa delivery motorcycle?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": true
+    },
+    {
+      "oracleId": "R20N-FIL-1550",
+      "query": "Ano ang tamang BIR form para sa delivery motorcycle?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1554",
+      "query": "Ano ang tamang BIR form para sa point-of-sale terminal?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1558",
+      "query": "Ano ang tamang BIR form para sa air conditioner?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1562",
+      "query": "Ano ang tamang BIR form para sa generator set?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1566",
+      "query": "Ano ang tamang BIR form para sa company signage?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1570",
+      "query": "Ano ang tamang BIR form para sa forklift?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1574",
+      "query": "Ano ang tamang BIR form para sa refrigerated truck?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1578",
+      "query": "Ano ang tamang BIR form para sa network switch?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1579",
+      "query": "Ayusin ang cooling fan setting.",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    },
+    {
+      "oracleId": "R20N-FIL-1580",
+      "query": "Alin ang cooling fan na bibilhin?",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "primaryTaskClause": null,
+      "taskVerb": null,
+      "taskTarget": null,
+      "decisionPass": true,
+      "reasonPass": false
+    }
+  ]
+}

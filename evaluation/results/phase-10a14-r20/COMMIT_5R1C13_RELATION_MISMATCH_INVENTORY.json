@@ -1,0 +1,4898 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T09:45:41.406Z",
+  "baselineCandidate": "locked C12 dev-05 (reconstructed)",
+  "integrity": {
+    "rows": 162,
+    "expected": 162,
+    "missing": 0,
+    "duplicateAssignment": 0,
+    "unclassified": 0,
+    "possibleOracleConflict": 0,
+    "extraOnlyRows": 0
+  },
+  "partition": {
+    "wrong_non_tax_relation": 46,
+    "wrong_definition_or_acronym_relation": 71,
+    "wrong_specific_relation": 45
+  },
+  "inventory": [
+    {
+      "oracleId": "R20N-ENT-0521",
+      "queryHash": "a0847463b619e908",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0526",
+      "queryHash": "b0c23b89b1d69e25",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0531",
+      "queryHash": "767a5663c6ffa14a",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0536",
+      "queryHash": "a1a4c0c91cfcfba3",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "queryHash": "6c48e8d4721922f2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0546",
+      "queryHash": "0b30938ebee94c5b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0551",
+      "queryHash": "e474c8acb9460405",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0556",
+      "queryHash": "d1f7ce14d13d4b98",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0561",
+      "queryHash": "56aa6841ed6e9a15",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0566",
+      "queryHash": "58cffa6240bcdfa8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0571",
+      "queryHash": "d29ac6aaa481acb3",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0576",
+      "queryHash": "e091cc45e583a8cd",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0581",
+      "queryHash": "751bbd11a78aede1",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0586",
+      "queryHash": "15df14556affa5d8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "queryHash": "59d80a0c2b7114e3",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0596",
+      "queryHash": "ef8648f926be0a57",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0601",
+      "queryHash": "75587e313e5834a6",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0606",
+      "queryHash": "0c100ee2bd540b3e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0611",
+      "queryHash": "67364f7d081a7e4d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0616",
+      "queryHash": "6aa8973aa9afb5cc",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0621",
+      "queryHash": "9753a5fc75678045",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0626",
+      "queryHash": "41b8a891195428b0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0631",
+      "queryHash": "73789bc65b23715d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0636",
+      "queryHash": "642d0381840264fb",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0641",
+      "queryHash": "72e09075913cfc72",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0646",
+      "queryHash": "2d02fa2c500a13a9",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0651",
+      "queryHash": "54cca1126601d7f4",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0656",
+      "queryHash": "bd2931ed524061a8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0661",
+      "queryHash": "9fd4f49024c1b679",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0666",
+      "queryHash": "de033573fc7d515e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0671",
+      "queryHash": "1f45264d080ed4ff",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0676",
+      "queryHash": "a0a70852a6d12983",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0681",
+      "queryHash": "3c29bf5d2cef95ff",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0686",
+      "queryHash": "fd151280380a85ce",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0691",
+      "queryHash": "fe2b8185bd346fcc",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0696",
+      "queryHash": "1447aa1472c67329",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0697",
+      "queryHash": "f766b2d12b9d201e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0698",
+      "queryHash": "4ed330481934dd3b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0699",
+      "queryHash": "d35860009295f56a",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0700",
+      "queryHash": "1f8c5caaee595d90",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0701",
+      "queryHash": "6c903a2d221729e5",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0706",
+      "queryHash": "e4093a06baa92b1b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0711",
+      "queryHash": "0115fc007fdde575",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "explicit_non_tax_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ENT-0716",
+      "queryHash": "ec4b675d46e2b68f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-ACX-0842",
+      "queryHash": "ef74a538b47cd9a2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0843",
+      "queryHash": "078dc0571a76896e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0845",
+      "queryHash": "4e4aeaad71911668",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0846",
+      "queryHash": "f4ac0043b45afaa2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0849",
+      "queryHash": "1b15e69f4fb1256f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0850",
+      "queryHash": "67b94742bf58189b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0852",
+      "queryHash": "a3db82e6c78bf9f7",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0855",
+      "queryHash": "d375bd97411dd3b3",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0856",
+      "queryHash": "fed329f92ae6b2b8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0858",
+      "queryHash": "244678d9a62a240e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0859",
+      "queryHash": "7d6e385bf7c4e565",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0862",
+      "queryHash": "77a98a34e8b8de4b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0863",
+      "queryHash": "ba0bd09712adefea",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0865",
+      "queryHash": "92397f2d4617fdb0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0868",
+      "queryHash": "2f1d71ab054b371f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0869",
+      "queryHash": "8d2ad262ac86baa0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0871",
+      "queryHash": "70d2389f07215656",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0872",
+      "queryHash": "5183d20c4d64093c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0875",
+      "queryHash": "ee464c90382a1285",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0876",
+      "queryHash": "7a010fd99b01885a",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0878",
+      "queryHash": "5d195890d3e0e1e2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0881",
+      "queryHash": "4a023a00df5fc443",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0882",
+      "queryHash": "60e79c0824cc650e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0883",
+      "queryHash": "52c6e10aba456114",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0884",
+      "queryHash": "856dbab5120c849c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0885",
+      "queryHash": "477c8b88c6fb13f7",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0887",
+      "queryHash": "81b4395c932c2794",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0888",
+      "queryHash": "e8116625a6cd80b8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0889",
+      "queryHash": "4794baff7e016af8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0891",
+      "queryHash": "5831810c041c009c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0894",
+      "queryHash": "a42c26e6007a691c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0895",
+      "queryHash": "d37502e97867ed87",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0896",
+      "queryHash": "3007e6039fb9b051",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0897",
+      "queryHash": "81af73c46ebf5210",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0898",
+      "queryHash": "d94312b50f0c5f6c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0900",
+      "queryHash": "ac7100ca90c32069",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0901",
+      "queryHash": "9e142ceb55e21609",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0902",
+      "queryHash": "f5da9e14edc75b82",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0904",
+      "queryHash": "9fdaef3934ad6cb0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0907",
+      "queryHash": "32b9b6b37a88f77e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0908",
+      "queryHash": "4f1b27fb3fec798c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0909",
+      "queryHash": "fd2e1561cb4a57f8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0910",
+      "queryHash": "a29b85eeec4bfe92",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0911",
+      "queryHash": "e1f181e75aa50a98",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0913",
+      "queryHash": "c388979870e1a01c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0914",
+      "queryHash": "9953836eabbd1ecd",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0915",
+      "queryHash": "b6f2416353560fd7",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0917",
+      "queryHash": "e732dc3254fb156f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "non_tax_expansion",
+      "actualReason": "non_tax_expansion",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "EXPANDS_AS_NON_TAX"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0926",
+      "queryHash": "e5d2dad695a666bf",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0928",
+      "queryHash": "3c38a6128733c6e0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0931",
+      "queryHash": "ed25764cf6da0832",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0939",
+      "queryHash": "fa7f6e38379d018d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0941",
+      "queryHash": "5b393ac9adf2222b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0944",
+      "queryHash": "34b80a318f3ba591",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0952",
+      "queryHash": "52d7d0c8bcb5a368",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0954",
+      "queryHash": "8dfc732c372553a2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0957",
+      "queryHash": "3dfab9418fb6b998",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0965",
+      "queryHash": "fc6060a1763bce17",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0967",
+      "queryHash": "0e74c61d37226643",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0970",
+      "queryHash": "a7632f4259737657",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0978",
+      "queryHash": "ef4724f73748cc65",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0980",
+      "queryHash": "93270a8a1a51574f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0983",
+      "queryHash": "aa0dcd2c82bf36c7",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0985",
+      "queryHash": "3a5c87fd85aee9f0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0989",
+      "queryHash": "e9cd1625227330ec",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0990",
+      "queryHash": "f72427adcd6d8b2f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0991",
+      "queryHash": "3e201625a59deb97",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0993",
+      "queryHash": "8125c21003fb6273",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0994",
+      "queryHash": "22a3ffe58dc95727",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0995",
+      "queryHash": "a5c7e2f24acf4425",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-ACX-0996",
+      "queryHash": "19c37436d447bce3",
+      "sourceSet": "r20_new",
+      "primaryCategory": "acronym_capitalization_expansion",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_definition_with_context",
+      "actualReason": "explicit_tax_task_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "missing": [
+        "ASKS_DEFINITION_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_definition_or_acronym_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent"
+    },
+    {
+      "oracleId": "R20N-FIL-1422",
+      "queryHash": "50e576e985c26f5f",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1425",
+      "queryHash": "13094de3360ad0c0",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1426",
+      "queryHash": "d4fe42f665ca1194",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1430",
+      "queryHash": "b206bcc6fc970024",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1433",
+      "queryHash": "ae61bb13fab4be71",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1434",
+      "queryHash": "b909852d21aada11",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1438",
+      "queryHash": "737d56efe10de459",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1442",
+      "queryHash": "9161807ec1c093fb",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1446",
+      "queryHash": "2078f423e9c3a691",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1450",
+      "queryHash": "0ff9eeae83f695cc",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1454",
+      "queryHash": "e205b7d3bb66f35e",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1458",
+      "queryHash": "19bfe80741811f4c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1461",
+      "queryHash": "b0c85011a97cb9e8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1462",
+      "queryHash": "2057d37d9ef1c1b7",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1466",
+      "queryHash": "f8d9dbfb0834dde5",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1470",
+      "queryHash": "748c78107f4d49e6",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1474",
+      "queryHash": "d09202e57398084b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1478",
+      "queryHash": "0083fe4fadc19cea",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1482",
+      "queryHash": "e61b7ce06bd167b6",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1486",
+      "queryHash": "a5673da60e6fc05d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1490",
+      "queryHash": "838d16b661d18fd8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1494",
+      "queryHash": "aaf1d0fd489966bf",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1498",
+      "queryHash": "29489b2aece80553",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1502",
+      "queryHash": "1bd34fa4acc0bf9b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1506",
+      "queryHash": "1582427401552a33",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1510",
+      "queryHash": "802600c72d41f0f8",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1514",
+      "queryHash": "5c431d5680ab077d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1518",
+      "queryHash": "3a0dc68a0716137d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1522",
+      "queryHash": "d36e49c7d3930638",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1525",
+      "queryHash": "032fc7174b0bb85d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1526",
+      "queryHash": "88aa6d96b22abb85",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1530",
+      "queryHash": "9b95aa5bbd1af9c1",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1534",
+      "queryHash": "27a85dc3cdca3b1d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1538",
+      "queryHash": "45c8c1e70e1033b2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1542",
+      "queryHash": "81bb3397fb5e1f1c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1546",
+      "queryHash": "090e88a926c351c2",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1549",
+      "queryHash": "d5ecb4aabe3d701c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": true,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1550",
+      "queryHash": "e8a82c4f5092aafd",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1554",
+      "queryHash": "51312fae76752e97",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1558",
+      "queryHash": "ea8cf892436bc14d",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1562",
+      "queryHash": "0b88375ea7975a0c",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1566",
+      "queryHash": "ff3c1b04839b4adc",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1570",
+      "queryHash": "b9b13106487ce352",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1574",
+      "queryHash": "f7df692461996516",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1578",
+      "queryHash": "0ddf18eff130a539",
+      "sourceSet": "r20_new",
+      "primaryCategory": "mixed_domain_genuine_tax",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "actualReason": "tax_compliance_task",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "actualRelations": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "missing": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "extra": [
+        "ASKS_TAX_COMPLIANCE_FOR"
+      ],
+      "substitutionCardinalityClass": "substitution",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_specific_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "specific tax relation family — select the most specific supported relation from the tax predicate"
+    },
+    {
+      "oracleId": "R20N-FIL-1579",
+      "queryHash": "f6355bc227837e37",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    },
+    {
+      "oracleId": "R20N-FIL-1580",
+      "queryHash": "7da7559b0703fb3b",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "expectedReasonCodeFamily": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "primaryClause": null,
+      "requestedAction": null,
+      "requestedTarget": null,
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actualRelations": [],
+      "missing": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "extra": [],
+      "substitutionCardinalityClass": "omission_from_empty_or_subset",
+      "objectFieldsStatus": "not scored by the frozen scorer; enforced by relation-object integrity",
+      "structuralPartition": "wrong_non_tax_relation",
+      "decisionPass": true,
+      "reasonPass": false,
+      "possibleOracleConflict": false,
+      "genericRemediationFamily": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action"
+    }
+  ],
+  "analysisEvidenceOnlyNotice": "Oracle IDs, query hashes, source sets and cluster names in this file are ANALYSIS EVIDENCE ONLY and must never become runtime features."
+}

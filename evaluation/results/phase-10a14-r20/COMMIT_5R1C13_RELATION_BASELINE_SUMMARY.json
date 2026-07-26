@@ -1,0 +1,84 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T09:45:41.115Z",
+  "baselineCandidate": "locked C12 dev-05 (reconstructed)",
+  "servicesTreeDigest": "184119a72d8d9589fb6d7d560a08ced8d2e2eb97831f7df09438a06daac191b2",
+  "r3Counts": {
+    "total": 3720,
+    "canonicalPassed": 3028,
+    "decisionMismatches": 0,
+    "reasonMismatches": 631,
+    "relationMismatches": 162,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "relationRowsWithExpectations": 1623,
+    "relationRowsPassed": 1461,
+    "relationPassed": 3558,
+    "decisionPassed": 3720
+  },
+  "relationPassed": 3558,
+  "relationMismatches": 162,
+  "rowsWithExpectations": 1623,
+  "rowsWithoutExpectations": 2097,
+  "relationRowsPassed": 1461,
+  "perRelationTypeSatisfaction": {
+    "ASKS_DEDUCTIBILITY_OF": {
+      "required": 64,
+      "satisfied": 64,
+      "missing": 0
+    },
+    "ASKS_VAT_TREATMENT_OF": {
+      "required": 266,
+      "satisfied": 221,
+      "missing": 45
+    },
+    "ASKS_WITHHOLDING_ON": {
+      "required": 40,
+      "satisfied": 40,
+      "missing": 0
+    },
+    "ASKS_CUSTOMS_DUTY_ON": {
+      "required": 40,
+      "satisfied": 40,
+      "missing": 0
+    },
+    "REQUESTS_NON_TAX_ACTION_ON": {
+      "required": 615,
+      "satisfied": 569,
+      "missing": 46
+    },
+    "ASKS_DEFINITION_OF": {
+      "required": 198,
+      "satisfied": 175,
+      "missing": 23
+    },
+    "EXPANDS_AS_NON_TAX": {
+      "required": 78,
+      "satisfied": 30,
+      "missing": 48
+    },
+    "QUOTES_TERM": {
+      "required": 110,
+      "satisfied": 110,
+      "missing": 0
+    },
+    "NEGATES_TAX_RELEVANCE": {
+      "required": 76,
+      "satisfied": 76,
+      "missing": 0
+    },
+    "NAMES_AS_INTERNAL_LABEL": {
+      "required": 104,
+      "satisfied": 104,
+      "missing": 0
+    },
+    "ASKS_TAX_COMPLIANCE_FOR": {
+      "required": 108,
+      "satisfied": 108,
+      "missing": 0
+    }
+  },
+  "decisionLockHeld": true,
+  "reasonMismatchesDiagnostic": 631
+}

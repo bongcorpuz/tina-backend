@@ -1,0 +1,97 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T10:05:40.409Z",
+  "outcome": "INCOMPLETE — R3 RELATION LANE CLOSED; RELATION LOCK NOT DECLARED",
+  "decisionLayerClosure": true,
+  "relationLayerClosure": false,
+  "reasonLayerClosure": false,
+  "runtimeClosure": false,
+  "r3RelationClosed": true,
+  "lockAchieved": false,
+  "lockConditions": {
+    "r3_decision_3720": true,
+    "r3_relation_3720": true,
+    "false_allows_zero": true,
+    "false_refusals_zero": true,
+    "clarify_zero": true,
+    "decision_counterfactual_756": true,
+    "relation_counterfactual_all_pass": false,
+    "closed_controls_all_pass": true,
+    "rich_context_guard_7_7": true,
+    "focused_relation_regression_pass": true,
+    "anti_memorization_pass": true,
+    "reason_integrity_pass": true,
+    "determinism_pass": true,
+    "runtime_identity_unchanged": true
+  },
+  "lockConditionsMet": 13,
+  "lockConditionsTotal": 14,
+  "unmetConditions": [
+    "relation_counterfactual_all_pass"
+  ],
+  "unmetConditionExplanation": "R3 relation is exactly 3,720/3,720 with zero mismatches, and 13 of 14 lock conditions are met. The lock additionally requires the complete relation-focused suite to pass; 8 of 282 controlling queries (family primary_vs_subordinate) still fail on a clause-segmentation gap that is outside the relation lane. That condition is recorded as UNMET, not waived, so the relation lock is NOT declared.",
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c13_relation_iteration_06-commit5r1c13-dev-06-ord01-2026-07-26T10-02-51-081Z",
+  "verificationAttemptId": "R20-focused_suite-r20_commit5r1c13_relation_lock_verification-commit5r1c13-lock-ord01-2026-07-26T10-04-58-510Z",
+  "runtimeHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 134355,
+      "normalizedLfSha256": "42118d2e8fd8c627969d9094e12f9efb431c4712e2472893084c1ca9d6aa4778",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "f2bb9051b576068c13e25708e8db0fdf8d8b0ebfd756f865e4f9bc0797b5ece6"
+  },
+  "servicesTreeDigest": "f2bb9051b576068c13e25708e8db0fdf8d8b0ebfd756f865e4f9bc0797b5ece6",
+  "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c13_relation_iteration_06-commit5r1c13-dev-06-ord01-2026-07-26T10-02-51-081Z/runtime-snapshot",
+  "patchPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C13_RELATION_CANDIDATE.patch",
+  "reconstruction": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c13_reconstruction-commit5r1c13-recon-ord01-2026-07-26T09-44-39-862Z",
+    "exactReproduction": true,
+    "discrepancies": []
+  },
+  "r3DecisionResult": "3720/3720",
+  "r3RelationResult": "3720/3720",
+  "r3RelationMismatches": 0,
+  "decisionCounterfactualResult": "756/756",
+  "relationCounterfactualResult": "274/282",
+  "relationCounterfactualOpenFamily": "primary_vs_subordinate (8 rows) — concessive tax clause with a non-tax primary imperative",
+  "focusedRelationRegression": true,
+  "staticGates": {
+    "antiMemorization": true,
+    "reasonIntegrity": true
+  },
+  "determinism": {
+    "queries": 150,
+    "reps": 100,
+    "evaluations": 15000,
+    "decisionDrift": 0,
+    "relationDrift": 0,
+    "pass": true
+  },
+  "reasonMismatchesDiagnostic": 679,
+  "relationObjectIntegrity": {
+    "unknownType": 0,
+    "missingField": 0,
+    "placeholderTarget": 130,
+    "wholeQuerySpan": 200,
+    "duplicateTuple": 20,
+    "unstableOrder": 0
+  },
+  "oracleIntegrity": {
+    "oracle": "R3",
+    "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "rows": 3720,
+    "expectationsEdited": 0
+  },
+  "materialIterationsUsed": 5,
+  "nextExactTask": "PHASE-10A14-R20 — COMMIT 5R1-C14: RELATION-LAYER CLOSURE CONTINUATION 14 AGAINST R3"
+}

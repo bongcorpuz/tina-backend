@@ -1,0 +1,32 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T09:45:41.411Z",
+  "partition": {
+    "wrong_non_tax_relation": 46,
+    "wrong_definition_or_acronym_relation": 71,
+    "wrong_specific_relation": 45
+  },
+  "remediationFamilies": {
+    "wrong_definition_or_acronym_relation": "definition/expansion relation family — emit ASKS_DEFINITION_OF / EXPANDS_AS_NON_TAX from definition intent",
+    "wrong_non_tax_relation": "non-tax action family — emit label/quotation/non-tax-action relations from the requested action",
+    "wrong_negation_relation": "negation family — emit NEGATES_TAX_RELEVANCE from explicit scoped negation",
+    "wrong_specific_relation": "specific tax relation family — select the most specific supported relation from the tax predicate",
+    "generic_specific_conflict": "specific tax relation family — generic emitted where a specific relation is required",
+    "empty_nonempty_mismatch": "relation emission family — no relation emitted where one is required",
+    "wrong_cardinality_or_cooccurrence": "co-occurrence family — required pair not emitted in full",
+    "missing_only": "generic emission family",
+    "extra_only": "not reachable under containment semantics"
+  },
+  "partitionByExpectedDecision": {
+    "wrong_non_tax_relation": {
+      "REFUSE": 46
+    },
+    "wrong_definition_or_acronym_relation": {
+      "REFUSE": 48,
+      "ALLOW": 23
+    },
+    "wrong_specific_relation": {
+      "ALLOW": 45
+    }
+  }
+}

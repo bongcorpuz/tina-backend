@@ -1,0 +1,1169 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c13_relation_iteration_06-commit5r1c13-dev-06-ord01-2026-07-26T10-02-51-081Z",
+  "iteration": "06",
+  "hypothesis": "Relation-suite generalisation: negation followed by an ordinary imperative requires the NEGATES+REQUESTS_NON_TAX_ACTION_ON pair; an explicit withholding-agent obligation adds ASKS_WITHHOLDING_ON alongside a compliance relation. A concessive-context rule was also added but does not yet take effect, as an earlier path emits the tax relation.",
+  "affectedRelationFamilies": [
+    "negation_vs_tax_review",
+    "withholding_vs_vat_filipino",
+    "primary_vs_subordinate"
+  ],
+  "baseline": {
+    "relationMismatches": 0,
+    "relationSuitePassed": 263
+  },
+  "runtimeIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 134355,
+      "normalizedLfSha256": "42118d2e8fd8c627969d9094e12f9efb431c4712e2472893084c1ca9d6aa4778",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "f2bb9051b576068c13e25708e8db0fdf8d8b0ebfd756f865e4f9bc0797b5ece6"
+  },
+  "relationCounterfactual": {
+    "total": 296,
+    "passed": 263,
+    "failed": 33,
+    "byFamily": {
+      "definition_vs_expansion": 8,
+      "declarative_expansion_forms": 8,
+      "primary_vs_subordinate": 8,
+      "concrete_vs_contentless": 8,
+      "nontax_action_on_tax_token": 1
+    },
+    "failures": [
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#51",
+        "query": "In our system, ZTX stands for portable audio node.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#53",
+        "query": "In our system, QVL stands for campus radio slot.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#55",
+        "query": "In our system, MBK stands for garden watering rig.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#57",
+        "query": "In our system, JPR stands for junior pottery ring.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#59",
+        "query": "In our system, KDN stands for weekend hiking badge.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#61",
+        "query": "In our system, WTF stands for model railway loop.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#63",
+        "query": "In our system, NRB stands for chorus warmup drill.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "definition_vs_expansion",
+        "pair": "definition_vs_expansion#65",
+        "query": "In our system, HGS stands for library shelf marker.",
+        "expectedRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "actualRelations": [
+          "EXPANDS_AS_NON_TAX",
+          "ASKS_DEFINITION_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#67",
+        "query": "What is the ZTX rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#70",
+        "query": "What is the QVL rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#73",
+        "query": "What is the MBK rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#76",
+        "query": "What is the JPR rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#79",
+        "query": "What is the KDN rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#82",
+        "query": "What is the WTF rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#85",
+        "query": "What is the NRB rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "declarative_expansion_forms",
+        "pair": "declarative_expansion_forms#88",
+        "query": "What is the HGS rate under the Tax Code?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#107",
+        "query": "Although the delivery van is taxable, rename the guitar lesson folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#108",
+        "query": "Although the office printer is taxable, rename the hiking trail folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#109",
+        "query": "Although the catering service is taxable, rename the chess tournament folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#110",
+        "query": "Although the freight forwarding is taxable, rename the aquarium filter folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#111",
+        "query": "Although the billboard rental is taxable, rename the bicycle helmet folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#112",
+        "query": "Although the courier package is taxable, rename the pottery kiln folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#113",
+        "query": "Although the training seminar is taxable, rename the garden hose folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "primary_vs_subordinate",
+        "pair": "primary_vs_subordinate#114",
+        "query": "Although the warehouse pallet is taxable, rename the violin string folder.",
+        "expectedRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbiddenRelations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "forbidden": [],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "ALLOW",
+        "decisionOk": false
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#115",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#116",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#117",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#118",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#119",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#120",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#121",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "concrete_vs_contentless",
+        "pair": "concrete_vs_contentless#122",
+        "query": "Is it subject to VAT? Reference 7.",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "actualRelations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "decisionOk": true
+      },
+      {
+        "family": "nontax_action_on_tax_token",
+        "pair": "nontax_action_on_tax_token#145",
+        "query": "Is the chess tournament subject to percentage tax?",
+        "expectedRelations": [],
+        "forbiddenRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "missing": [],
+        "forbidden": [],
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "decisionOk": false
+      }
+    ]
+  },
+  "r3": {
+    "total": 3720,
+    "canonicalPassed": 3041,
+    "decisionMismatches": 0,
+    "reasonMismatches": 679,
+    "relationMismatches": 0,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "relationRowsWithExpectations": 1623,
+    "relationRowsPassed": 1623,
+    "relationPassed": 3720,
+    "decisionPassed": 3720
+  },
+  "decisionCounterfactual": {
+    "total": 756,
+    "passed": 756,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 331,
+        "failed": 0
+      },
+      "v4": {
+        "total": 177,
+        "passed": 177,
+        "failed": 0
+      },
+      "v5": {
+        "total": 134,
+        "passed": 134,
+        "failed": 0
+      },
+      "v6": {
+        "total": 114,
+        "passed": 114,
+        "failed": 0
+      }
+    },
+    "failures": []
+  },
+  "closedControls": {
+    "controls": [
+      {
+        "control": "tax_compliance_task",
+        "passed": 108,
+        "total": 108,
+        "closed": true
+      },
+      {
+        "control": "acronym_homograph_control",
+        "passed": 200,
+        "total": 200,
+        "closed": true
+      },
+      {
+        "control": "ambiguous_clarification_control",
+        "passed": 150,
+        "total": 150,
+        "closed": true
+      },
+      {
+        "control": "internal_label_proper_name",
+        "passed": 104,
+        "total": 104,
+        "closed": true
+      },
+      {
+        "control": "quoted_term_only",
+        "passed": 110,
+        "total": 110,
+        "closed": true
+      }
+    ],
+    "allClosed": true
+  },
+  "richContextGuard": {
+    "probes": [
+      {
+        "shape": "bare_term",
+        "query": "holding period",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "recognized_polysemous_acronym",
+        "query": "RMC",
+        "expected": "CLARIFY",
+        "actual": "CLARIFY",
+        "pass": true
+      },
+      {
+        "shape": "issuance_context",
+        "query": "What did the RMC issuance say about VAT?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "procedure_context",
+        "query": "Explain RMC for BIR issuances.",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "ordinary_homograph",
+        "query": "Can a supplier reject a return of goods?",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      },
+      {
+        "shape": "richer_tax_sentence",
+        "query": "How is the holding period applied to a capital gains tax computation on land?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "metadata_suffixed_contentless",
+        "query": "What is the holding period? Context 1.",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      }
+    ],
+    "allPass": true,
+    "passed": 7,
+    "total": 7
+  },
+  "reasonIntegrity": {
+    "invalidCodeCount": 0,
+    "incompatibleCount": 0,
+    "invalidCode": [],
+    "incompatible": [],
+    "pass": true
+  },
+  "relationObjectIntegrity": {
+    "counts": {
+      "unknownType": 0,
+      "missingField": 0,
+      "placeholderTarget": 130,
+      "wholeQuerySpan": 200,
+      "duplicateTuple": 20,
+      "unstableOrder": 0
+    },
+    "violations": {
+      "unknownType": [],
+      "missingField": [],
+      "placeholderTarget": [
+        {
+          "q": "Explain on-screen display brightness for our training class. Control 3.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Sort records by culture and customs lesson. Control 8.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about medicine prescription period. Control 9.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Change the novels about accountants. Control 11.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which gross estate marketing slogan is best? Control 12.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Create a checklist for Professional Artists Network. Control 15.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Translate conference room booking into plain English. Control 16.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Sort records by school newspaper printing authority. Control 18.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 19.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 19.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Debug the Downtown Theater Association. Control 20.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Explain on-screen display brightness for our training class. Control 23.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Sort records by culture and customs lesson. Control 28.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about medicine prescription period. Control 29.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Change the novels about accountants. Control 31.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which gross estate marketing slogan is best? Control 32.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+          "target": "object",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        }
+      ],
+      "wholeQuerySpan": [
+        {
+          "q": "How do we compute income tax for a Philippine corporation in case 1?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "What BIR form applies to VAT in case 2?",
+          "relation": "ASKS_TAX_COMPLIANCE_FOR"
+        },
+        {
+          "q": "When is the deadline for expanded withholding tax in case 3?",
+          "relation": "ASKS_TAX_COMPLIANCE_FOR"
+        },
+        {
+          "q": "Is the transaction subject to final withholding tax in case 4?",
+          "relation": "ASKS_WITHHOLDING_ON"
+        },
+        {
+          "q": "Can the expense be deducted for percentage tax in case 5?",
+          "relation": "ASKS_DEDUCTIBILITY_OF"
+        },
+        {
+          "q": "What records support documentary stamp tax in case 6?",
+          "relation": "ASKS_TAX_COMPLIANCE_FOR"
+        },
+        {
+          "q": "How should we disclose capital gains tax in case 7?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "What penalty applies for late donor tax in case 9?",
+          "relation": "ASKS_TAX_COMPLIANCE_FOR"
+        },
+        {
+          "q": "How do we document customs duty in case 10?",
+          "relation": "ASKS_CUSTOMS_DUTY_ON"
+        },
+        {
+          "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "What BIR form applies to minimum corporate income tax in case 12?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "When is the deadline for regular corporate income tax in case 13?",
+          "relation": "ASKS_TAX_COMPLIANCE_FOR"
+        },
+        {
+          "q": "Is the transaction subject to BIR registration in case 14?",
+          "relation": "ASKS_TAX_COMPLIANCE_FOR"
+        },
+        {
+          "q": "Can the expense be deducted for withholding tax return in case 15?",
+          "relation": "ASKS_DEDUCTIBILITY_OF"
+        },
+        {
+          "q": "What records support input VAT in case 16?",
+          "relation": "ASKS_VAT_TREATMENT_OF"
+        },
+        {
+          "q": "How should we disclose output VAT in case 17?",
+          "relation": "ASKS_VAT_TREATMENT_OF"
+        },
+        {
+          "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "What penalty applies for late deficiency interest in case 19?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        },
+        {
+          "q": "How do we document NOLCO in case 20?",
+          "relation": "ASKS_TAX_TREATMENT_OF"
+        }
+      ],
+      "duplicateTuple": [
+        {
+          "q": "Which cooking pan brand is best? Control 2.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 19.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 22.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 39.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 42.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 59.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 62.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 79.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 82.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 99.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 102.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 119.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 122.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 139.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 142.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 159.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 162.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 179.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Which cooking pan brand is best? Control 182.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        },
+        {
+          "q": "Make a poster about sports club registration fee. Control 199.",
+          "relation": "REQUESTS_NON_TAX_ACTION_ON"
+        }
+      ],
+      "unstableOrder": []
+    },
+    "pass": false
+  },
+  "antiMemorization": {
+    "checks": {
+      "no_complete_counterfactual_query": true,
+      "no_complete_r3_query": true,
+      "no_query_hash_or_oracle_id": true,
+      "no_suite_or_family_feature": true,
+      "no_cluster_or_category_feature": true,
+      "no_scenario_number_branch": true,
+      "no_expected_decision_map": true,
+      "no_oracle_relation_backfill": true
+    },
+    "failed": [],
+    "pass": true,
+    "leakedCounterfactualQueries": [],
+    "leakedR3Queries": [],
+    "r3TerminologyOverlap": [
+      "expanded withholding tax",
+      "final withholding tax",
+      "tax credit certificate",
+      "documentary stamp tax",
+      "capital gains tax",
+      "optional standard deduction",
+      "books of accounts",
+      "transfer pricing documentation",
+      "registered business enterprise",
+      "tax treaty relief",
+      "local business tax",
+      "real property tax",
+      "substantiation for deductions",
+      "fringe benefit tax",
+      "de minimis benefits",
+      "gross receipts tax",
+      "minimum corporate income tax",
+      "regular corporate income tax",
+      "stock transaction tax",
+      "resident alien tax",
+      "tax on professional fees",
+      "tax accounting period",
+      "annual information return",
+      "refund claim prescription"
+    ],
+    "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+  },
+  "decisionLockHeld": true,
+  "reasonSideEffects": {
+    "reasonMismatches": 679,
+    "note": "diagnostic only in C13; never a rejection ground on its own"
+  },
+  "relationImproved": false,
+  "relationFlat": true,
+  "relationSuiteNoRegression": true,
+  "disposition": "accepted_flat_structural_dependency",
+  "rejectionGrounds": []
+}

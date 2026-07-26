@@ -1,0 +1,35 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T09:45:41.408Z",
+  "confusion": {
+    "REQUESTS_NON_TAX_ACTION_ON": {
+      "missingCount": 46,
+      "emittedInstead": {
+        "(none)": 41,
+        "ASKS_TAX_TREATMENT_OF": 5
+      }
+    },
+    "EXPANDS_AS_NON_TAX": {
+      "missingCount": 48,
+      "emittedInstead": {
+        "ASKS_DEFINITION_OF": 3,
+        "(none)": 36,
+        "REQUESTS_NON_TAX_ACTION_ON": 9
+      }
+    },
+    "ASKS_DEFINITION_OF": {
+      "missingCount": 23,
+      "emittedInstead": {
+        "ASKS_TAX_TREATMENT_OF": 20,
+        "ASKS_TAX_COMPLIANCE_FOR": 3
+      }
+    },
+    "ASKS_VAT_TREATMENT_OF": {
+      "missingCount": 45,
+      "emittedInstead": {
+        "ASKS_TAX_COMPLIANCE_FOR": 40,
+        "ASKS_WITHHOLDING_ON": 5
+      }
+    }
+  }
+}

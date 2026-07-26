@@ -1,0 +1,15 @@
+R3 decision                 = 3720 / 3720
+R3 relation                 = 3720 / 3720  (mismatches 0)
+FA/FR/clarify               = 0/0/0
+decision counterfactual     = 756 / 756
+relation counterfactual     = 274 / 282  (failed 8)
+closed controls             = true
+rich-context guard          = 7 / 7
+focused relation regression = true
+anti-memorization           = true
+reason integrity            = true
+determinism                 = true (15000 evals, decision drift 0, relation drift 0)
+runtime identity unchanged  = true
+lock conditions met         = 13 / 14
+unmet                       = relation_counterfactual_all_pass
+RELATION LOCK ACHIEVED      = false

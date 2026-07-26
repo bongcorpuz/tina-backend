@@ -1,0 +1,63 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T09:45:40.698Z",
+  "scorerPath": "evaluation/runner/phase-10a14-r20/commit5r1-oracle-runner.mjs",
+  "scorerExpression": "relationPass = expectedRels.every((rt) => out.relations.includes(rt))",
+  "exactScorerComparisonFields": {
+    "compared": [
+      "relation"
+    ],
+    "notCompared": [
+      "source",
+      "target",
+      "clauseId",
+      "evidenceSpan"
+    ],
+    "note": "The scorer maps every relation object to its `relation` string before comparison. Object fields therefore do NOT affect scoring and are enforced separately by relationObjectIntegrity."
+  },
+  "setListOrderSemantics": {
+    "semantics": "SET CONTAINMENT (expected subset of actual)",
+    "orderSensitive": false,
+    "duplicateSensitive": false,
+    "extrasFailRow": false,
+    "consequence": "Every relation mismatch is necessarily MISSING-ONLY. An extra emitted relation can never fail an R3 row."
+  },
+  "duplicateHandling": "ignored by scoring; forbidden by relation-object integrity",
+  "emptyRelationSemantics": {
+    "rowsWithNoExpectedRelations": 2097,
+    "behaviour": "a row with no expected relations passes the relation lane unconditionally"
+  },
+  "genericVersusSpecificCooccurrence": {
+    "ASKS_TAX_TREATMENT_OF_appears_as_expectation": false,
+    "note": "The generic treatment relation is never required by R3. Because extras are harmless under containment, emitting it alongside a specific relation is scoring-neutral; suppressing a REQUIRED specific relation is fatal."
+  },
+  "sourceTargetClauseEvidenceSpanAffectScoring": false,
+  "normalizationAndAliasRules": {
+    "aliasing": "none — relation strings are compared verbatim",
+    "relationTypesClosed": [
+      "ASKS_TAX_TREATMENT_OF",
+      "ASKS_TAX_COMPLIANCE_FOR",
+      "ASKS_DEDUCTIBILITY_OF",
+      "ASKS_VAT_TREATMENT_OF",
+      "ASKS_WITHHOLDING_ON",
+      "ASKS_CUSTOMS_DUTY_ON",
+      "ASKS_DEFINITION_OF",
+      "NAMES_AS_INTERNAL_LABEL",
+      "EXPANDS_AS_NON_TAX",
+      "QUOTES_TERM",
+      "NEGATES_TAX_RELEVANCE",
+      "REQUESTS_NON_TAX_ACTION_ON"
+    ],
+    "aliasesAdded": 0,
+    "relationTypesAdded": 0
+  },
+  "invalidRelationHandling": "A relation outside the closed set can never satisfy an expectation and is rejected by relation-object integrity.",
+  "semanticsProbe": {
+    "extra_relations_fail_a_row": false,
+    "order_affects_scoring": false,
+    "duplicates_affect_scoring": false,
+    "empty_expectation_passes": true,
+    "empty_expectation_passes_with_extras": true
+  },
+  "authority": "CLAUSE_LEVEL_INTENT_SCHEMA.md + RELATION_AND_PRECEDENCE_SPEC.md (immutable at COMMIT 1)"
+}

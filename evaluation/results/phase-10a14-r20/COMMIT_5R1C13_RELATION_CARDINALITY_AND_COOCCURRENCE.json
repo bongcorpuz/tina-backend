@@ -1,0 +1,43 @@
+{
+  "unit": "COMMIT 5R1-C13",
+  "generatedUtc": "2026-07-26T09:45:41.404Z",
+  "expectedCardinalityHistogram": {
+    "0": 2097,
+    "1": 1547,
+    "2": 76
+  },
+  "maxExpectedCardinality": 2,
+  "expectedTypeFrequency": {
+    "ASKS_DEDUCTIBILITY_OF": 64,
+    "ASKS_VAT_TREATMENT_OF": 266,
+    "ASKS_WITHHOLDING_ON": 40,
+    "ASKS_CUSTOMS_DUTY_ON": 40,
+    "REQUESTS_NON_TAX_ACTION_ON": 615,
+    "ASKS_DEFINITION_OF": 198,
+    "EXPANDS_AS_NON_TAX": 78,
+    "QUOTES_TERM": 110,
+    "NEGATES_TAX_RELEVANCE": 76,
+    "NAMES_AS_INTERNAL_LABEL": 104,
+    "ASKS_TAX_COMPLIANCE_FOR": 108
+  },
+  "actualTypeFrequencyBaseline": {
+    "ASKS_TAX_TREATMENT_OF": 523,
+    "ASKS_TAX_COMPLIANCE_FOR": 331,
+    "ASKS_WITHHOLDING_ON": 85,
+    "ASKS_DEDUCTIBILITY_OF": 234,
+    "ASKS_CUSTOMS_DUTY_ON": 120,
+    "ASKS_VAT_TREATMENT_OF": 333,
+    "REQUESTS_NON_TAX_ACTION_ON": 901,
+    "NAMES_AS_INTERNAL_LABEL": 214,
+    "EXPANDS_AS_NON_TAX": 59,
+    "ASKS_DEFINITION_OF": 183,
+    "QUOTES_TERM": 110,
+    "NEGATES_TAX_RELEVANCE": 76
+  },
+  "requiredCooccurrencePairs": {
+    "NEGATES_TAX_RELEVANCE + REQUESTS_NON_TAX_ACTION_ON": 50,
+    "ASKS_VAT_TREATMENT_OF + NEGATES_TAX_RELEVANCE": 26
+  },
+  "cooccurrenceRule": "Emit both members only where R3 requires that exact pair. Because extras are scoring-neutral under containment, no pair may be SUPPRESSED, and none must be invented for scoring purposes.",
+  "genericRelationNeverRequired": true
+}

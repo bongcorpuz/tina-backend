@@ -1,0 +1,7 @@
+relation suite   = 232 / 296  (failed 64)
+R3 decision      = 3720 / 3720   FA=0 FR=0 CL=0
+R3 relation      = 3621 / 3720   mismatches=99
+R3 reason (diag) = 720 mismatches
+decision suite   = 756 / 756
+controls=true guard=7/7 antiMem=true reasonIntegrity=true relObjIntegrity=false
+DECISION LOCK HELD = true
