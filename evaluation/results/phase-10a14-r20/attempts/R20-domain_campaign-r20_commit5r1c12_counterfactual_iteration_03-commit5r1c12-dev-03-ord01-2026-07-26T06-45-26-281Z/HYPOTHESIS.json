@@ -1,0 +1,5 @@
+{
+  "hypothesis": "A governed tax predicate stated anywhere in the query stops the label and contentless guards from displacing a real tax question, but the styling/program-artefact guard yields only when the artefact is the OBJECT of a commercial tax transaction, since a tax-shaped word that names or defines an artefact is a homograph. A named statute in a treatment or effect frame, a multi-clause query that explicitly flags its principal tax question, and a bare tax topic carrying a claim, prescription or remedy relation are all governed subject matter.",
+  "affectedFamilies": "primary_tax_vs_subordinate_label, primary_tax_vs_subordinate_code, legal_title_vs_internal_label, multiclause_reversal, bare_tax_topic, taxable_output_vs_console_output",
+  "iteration": "03"
+}

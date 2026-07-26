@@ -1,0 +1,5 @@
+{
+  "hypothesis": "Two defects in the labelBinding expression. The subordinate-clause alternation omitted the prepositions under and with, so a code clause introduced that way was not recognised as subordinate. More seriously, operator precedence bound the expression as (negation && firstAlternative) || rest, so the subordinate-clause negation only guarded the first alternative and the remaining alternatives could still set label binding. The alternation is now parenthesised as a whole.",
+  "affectedFamilies": "primary_tax_vs_subordinate_label, primary_tax_vs_subordinate_code",
+  "iteration": "05"
+}

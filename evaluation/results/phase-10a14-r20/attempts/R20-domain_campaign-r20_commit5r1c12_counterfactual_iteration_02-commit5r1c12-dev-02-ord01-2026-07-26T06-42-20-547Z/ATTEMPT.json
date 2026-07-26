@@ -1,0 +1,49 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z",
+  "attemptCategory": "domain_campaign",
+  "gateName": "r20_commit5r1c12_counterfactual_iteration_02",
+  "cycle": "commit5r1c12-dev-02",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "29c753d9850451a65d5e2d387540da2ee10b3957",
+  "evidenceHeadAtStart": "29c753d9850451a65d5e2d387540da2ee10b3957",
+  "runtimeBaselineCommit": "29c753d9850451a65d5e2d387540da2ee10b3957",
+  "runtimeTreeDigest": "228a910596561b6055a9333ab93bdeb2119cdd2d4371597078a2fe661a0d9705",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "4fb1d9ce9fa65f70199b88ad647efe1553722adc32afde6b1401c70fd56c20ec",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "commit5r1c12-iterate.mjs 02"
+  ],
+  "commandHash": "2766e690bea46c4dc81bc8fd53d349d76b84bd05cf68f950f462669019c83c5c",
+  "startedAt": "2026-07-26T06:42:21.101Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-26T06:42:22.443Z",
+  "exitCode": 0,
+  "disposition": "counterfactual_iteration_recorded",
+  "evidenceHeadAtEnd": "29c753d9850451a65d5e2d387540da2ee10b3957",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/FULL_R3_RESULT.json",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/COUNTERFACTUAL_RESULT.json",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/CLOSED_CONTROLS.json",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/RICH_CONTEXT_GUARD.json",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/ANTI_MEMORIZATION.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z/stderr.txt",
+  "stdoutSha256": "6aed53eb8dadacde8b70d883869b87824a03f186bdb2dc2ff742a49fcfdda975",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

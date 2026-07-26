@@ -1,0 +1,5 @@
+{
+  "hypothesis": "Seven typed structural predicates covering the contract correction classes: a tax actor, proceeding or remedy relation makes a concise phrase a complete tax subject; a revenue issuance that changes a tax or withholding rate is a tax relation without an issuance identifier; a primary label, print, caption or display action controls its own target; an ordinary or program artefact governs its own target but yields to any governed tax predicate including Filipino and negation-framed forms; and antecedent-resolved, nominalised-transaction and subordinate-code-clause targets all build treatment relations.",
+  "affectedFamilies": "tax_procedure_with_domain_attachment, primary_tax_over_subordinate_code, label_or_display_action_controls, ordinary_domain_controls, antecedent_resolved_target, governed_predicate_over_concrete_target",
+  "iteration": "02"
+}

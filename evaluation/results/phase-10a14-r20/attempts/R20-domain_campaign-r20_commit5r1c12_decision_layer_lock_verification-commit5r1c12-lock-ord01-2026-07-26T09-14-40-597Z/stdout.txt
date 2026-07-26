@@ -1,0 +1,8 @@
+clean decision-lock verification
+R3 decision=3720/3720 fa=0 fr=0 clarify=0
+counterfactual=756/756 failed=0
+closedControls=ALL CLOSED richContextGuard=7/7
+focusedRegression=PASS antiMemorization=PASS determinism=PASS
+runtimeIdentityUnchanged=true
+LOCK_CONDITIONS={"r3DecisionEquals3720":true,"falseAllowsZero":true,"falseRefusalsZero":true,"clarifyMismatchesZero":true,"counterfactualSuiteFullyPasses":true,"closedControlsAllClosed":true,"richContextGuardPass":true,"focusedRegressionPass":true,"antiOverfitAndAntiMemorizationPass":true,"determinismPass":true,"runtimeIdentityUnchanged":true}
+LOCK_ACHIEVED=true

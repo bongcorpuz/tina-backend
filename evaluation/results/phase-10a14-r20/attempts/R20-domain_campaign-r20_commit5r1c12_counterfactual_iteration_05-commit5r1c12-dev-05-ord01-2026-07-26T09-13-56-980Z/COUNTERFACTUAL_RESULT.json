@@ -1,0 +1,29 @@
+{
+  "total": 756,
+  "passed": 756,
+  "failed": 0,
+  "bySuite": {
+    "v3": {
+      "total": 331,
+      "passed": 331,
+      "failed": 0
+    },
+    "v4": {
+      "total": 177,
+      "passed": 177,
+      "failed": 0
+    },
+    "v5": {
+      "total": 134,
+      "passed": 134,
+      "failed": 0
+    },
+    "v6": {
+      "total": 114,
+      "passed": 114,
+      "failed": 0
+    }
+  },
+  "byFamily": {},
+  "failures": []
+}

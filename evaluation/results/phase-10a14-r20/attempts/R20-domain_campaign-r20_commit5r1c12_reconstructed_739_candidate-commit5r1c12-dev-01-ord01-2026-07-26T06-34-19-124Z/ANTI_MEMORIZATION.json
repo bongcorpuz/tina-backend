@@ -1,0 +1,50 @@
+{
+  "checks": {
+    "no_complete_counterfactual_query": false,
+    "no_complete_r3_query": false,
+    "no_query_hash_or_oracle_id": true,
+    "no_suite_or_family_feature": true,
+    "no_cluster_or_category_feature": true,
+    "no_scenario_number_branch": true,
+    "no_expected_decision_map": true
+  },
+  "failed": [
+    "no_complete_counterfactual_query",
+    "no_complete_r3_query"
+  ],
+  "pass": false,
+  "leakedCounterfactualQueries": [
+    "double taxation agreement relief",
+    "revenue district office registration",
+    "deficiency interest computation",
+    "revenue district office registration"
+  ],
+  "leakedR3Queries": [
+    "expanded withholding tax",
+    "final withholding tax",
+    "tax credit certificate",
+    "documentary stamp tax",
+    "capital gains tax",
+    "optional standard deduction",
+    "books of accounts",
+    "transfer pricing documentation",
+    "registered business enterprise",
+    "tax treaty relief",
+    "local business tax",
+    "real property tax",
+    "substantiation for deductions",
+    "fringe benefit tax",
+    "de minimis benefits",
+    "gross receipts tax",
+    "minimum corporate income tax",
+    "regular corporate income tax",
+    "stock transaction tax",
+    "resident alien tax",
+    "tax on professional fees",
+    "tax accounting period",
+    "annual information return",
+    "refund claim prescription",
+    "private lease weekend deadline",
+    "deadline for homework"
+  ]
+}

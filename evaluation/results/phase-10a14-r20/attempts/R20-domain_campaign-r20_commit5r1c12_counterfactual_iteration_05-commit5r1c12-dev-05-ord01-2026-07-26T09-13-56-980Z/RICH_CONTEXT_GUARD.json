@@ -1,0 +1,56 @@
+{
+  "probes": [
+    {
+      "shape": "bare_term",
+      "query": "holding period",
+      "expected": "ALLOW",
+      "actual": "ALLOW",
+      "pass": true
+    },
+    {
+      "shape": "recognized_polysemous_acronym",
+      "query": "RMC",
+      "expected": "CLARIFY",
+      "actual": "CLARIFY",
+      "pass": true
+    },
+    {
+      "shape": "issuance_context",
+      "query": "What did the RMC issuance say about VAT?",
+      "expected": "ALLOW",
+      "actual": "ALLOW",
+      "pass": true
+    },
+    {
+      "shape": "procedure_context",
+      "query": "Explain RMC for BIR issuances.",
+      "expected": "ALLOW",
+      "actual": "ALLOW",
+      "pass": true
+    },
+    {
+      "shape": "ordinary_homograph",
+      "query": "Can a supplier reject a return of goods?",
+      "expected": "REFUSE",
+      "actual": "REFUSE",
+      "pass": true
+    },
+    {
+      "shape": "richer_tax_sentence",
+      "query": "How is the holding period applied to a capital gains tax computation on land?",
+      "expected": "ALLOW",
+      "actual": "ALLOW",
+      "pass": true
+    },
+    {
+      "shape": "metadata_suffixed_contentless",
+      "query": "What is the holding period? Context 1.",
+      "expected": "REFUSE",
+      "actual": "REFUSE",
+      "pass": true
+    }
+  ],
+  "allPass": true,
+  "passed": 7,
+  "total": 7
+}

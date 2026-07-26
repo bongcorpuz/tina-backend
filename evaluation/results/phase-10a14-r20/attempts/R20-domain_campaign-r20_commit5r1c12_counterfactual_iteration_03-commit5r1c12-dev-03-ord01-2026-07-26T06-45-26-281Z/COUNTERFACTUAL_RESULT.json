@@ -1,0 +1,58 @@
+{
+  "total": 756,
+  "passed": 753,
+  "failed": 3,
+  "bySuite": {
+    "v3": {
+      "total": 331,
+      "passed": 331,
+      "failed": 0
+    },
+    "v4": {
+      "total": 177,
+      "passed": 176,
+      "failed": 1
+    },
+    "v5": {
+      "total": 134,
+      "passed": 133,
+      "failed": 1
+    },
+    "v6": {
+      "total": 114,
+      "passed": 113,
+      "failed": 1
+    }
+  },
+  "byFamily": {
+    "primary_tax_vs_subordinate_label": 1,
+    "unambiguous_vs_polysemous_acronym": 1,
+    "legal_title_vs_internal_label": 1
+  },
+  "failures": [
+    {
+      "suite": "v4",
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the equipment purchase deductible even though we filed it under an internal project code?",
+      "expected": "ALLOW",
+      "actual": "REFUSE",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "suite": "v5",
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how CWT works for a domestic company.",
+      "expected": "ALLOW",
+      "actual": "CLARIFY",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "suite": "v6",
+      "family": "legal_title_vs_internal_label",
+      "query": "Does the Customs Modernization and Tariff Act change the duty on this shipment?",
+      "expected": "ALLOW",
+      "actual": "REFUSE",
+      "contrast": "a named statute inside a tax question is subject matter; assigning it as a name is label binding"
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "unit": "COMMIT 5R1-C12",
+  "generatedUtc": "2026-07-26T09:15:54.486Z",
+  "decisionLayerLockAchieved": true,
+  "decisionLayerClosure": true,
+  "runtimeClosure": false,
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_05-commit5r1c12-dev-05-ord01-2026-07-26T09-13-56-980Z",
+  "verificationAttemptId": "R20-domain_campaign-r20_commit5r1c12_decision_layer_lock_verification-commit5r1c12-lock-ord01-2026-07-26T09-14-40-597Z",
+  "runtimeHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 122933,
+      "normalizedLfSha256": "555a587e0f6e448a153ca9b031655923620479f336ce362c7787c2dbd99b31ff",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "184119a72d8d9589fb6d7d560a08ced8d2e2eb97831f7df09438a06daac191b2"
+  },
+  "servicesTreeDigest": "184119a72d8d9589fb6d7d560a08ced8d2e2eb97831f7df09438a06daac191b2",
+  "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_05-commit5r1c12-dev-05-ord01-2026-07-26T09-13-56-980Z/runtime-snapshot",
+  "lockedCandidatePatch": "evaluation/results/phase-10a14-r20/COMMIT_5R1C12_LOCKED_CANDIDATE.patch",
+  "r3Result": {
+    "decisionPassed": 3720,
+    "decisionMismatches": 0,
+    "falseAllows": 0,
+    "falseRefusals": 0,
+    "clarifyMismatches": 0
+  },
+  "counterfactualResult": {
+    "total": 756,
+    "passed": 756,
+    "failed": 0,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 331,
+        "failed": 0
+      },
+      "v4": {
+        "total": 177,
+        "passed": 177,
+        "failed": 0
+      },
+      "v5": {
+        "total": 134,
+        "passed": 134,
+        "failed": 0
+      },
+      "v6": {
+        "total": 114,
+        "passed": 114,
+        "failed": 0
+      }
+    }
+  },
+  "focusedRegression": {
+    "allBucketsPass": true
+  },
+  "antiMemorization": {
+    "pass": true,
+    "checks": {
+      "no_complete_counterfactual_query": true,
+      "no_complete_r3_query": true,
+      "no_query_hash_or_oracle_id": true,
+      "no_suite_or_family_feature": true,
+      "no_cluster_or_category_feature": true,
+      "no_scenario_number_branch": true,
+      "no_expected_decision_map": true
+    }
+  },
+  "determinism": {
+    "decisionDrift": 0,
+    "byteDrift": 0,
+    "pass": true
+  },
+  "closedControls": {
+    "controls": [
+      {
+        "control": "tax_compliance_task",
+        "passed": 108,
+        "total": 108,
+        "closed": true
+      },
+      {
+        "control": "acronym_homograph_control",
+        "passed": 200,
+        "total": 200,
+        "closed": true
+      },
+      {
+        "control": "ambiguous_clarification_control",
+        "passed": 150,
+        "total": 150,
+        "closed": true
+      },
+      {
+        "control": "internal_label_proper_name",
+        "passed": 104,
+        "total": 104,
+        "closed": true
+      },
+      {
+        "control": "quoted_term_only",
+        "passed": 110,
+        "total": 110,
+        "closed": true
+      }
+    ],
+    "allClosed": true
+  },
+  "richContextGuard": {
+    "probes": [
+      {
+        "shape": "bare_term",
+        "query": "holding period",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "recognized_polysemous_acronym",
+        "query": "RMC",
+        "expected": "CLARIFY",
+        "actual": "CLARIFY",
+        "pass": true
+      },
+      {
+        "shape": "issuance_context",
+        "query": "What did the RMC issuance say about VAT?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "procedure_context",
+        "query": "Explain RMC for BIR issuances.",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "ordinary_homograph",
+        "query": "Can a supplier reject a return of goods?",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      },
+      {
+        "shape": "richer_tax_sentence",
+        "query": "How is the holding period applied to a capital gains tax computation on land?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "metadata_suffixed_contentless",
+        "query": "What is the holding period? Context 1.",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      }
+    ],
+    "allPass": true,
+    "passed": 7,
+    "total": 7
+  },
+  "lockConditions": {
+    "r3DecisionEquals3720": true,
+    "falseAllowsZero": true,
+    "falseRefusalsZero": true,
+    "clarifyMismatchesZero": true,
+    "counterfactualSuiteFullyPasses": true,
+    "closedControlsAllClosed": true,
+    "richContextGuardPass": true,
+    "focusedRegressionPass": true,
+    "antiOverfitAndAntiMemorizationPass": true,
+    "determinismPass": true,
+    "runtimeIdentityUnchanged": true
+  },
+  "runtimeIdentityUnchangedDuringVerification": true,
+  "relationLaneStarted": false,
+  "reasonLaneStarted": false,
+  "integrationPerformed": false,
+  "freezePerformed": false,
+  "note": "Decision lock achieved and independently verified. This is decision-layer closure only: it is not runtime closure, not standalone closure, and not R20 PASS."
+}

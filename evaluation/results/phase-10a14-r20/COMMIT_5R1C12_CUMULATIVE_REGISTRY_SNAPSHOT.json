@@ -1,0 +1,29 @@
+{
+  "unit": "COMMIT 5R1-C12",
+  "generatedUtc": "2026-07-26T09:15:54.486Z",
+  "priorAttempts": 116,
+  "newAttempts": 6,
+  "totalAttempts": 122,
+  "byCategory": {
+    "domain_campaign": 60,
+    "focused_suite": 11,
+    "other": 9,
+    "synthetic_validator": 42
+  },
+  "controlling": 120,
+  "nonControlling": 2,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "cumulativeThrough": "commit5r1c12",
+  "runtimeClosure": false,
+  "decisionLayerClosure": true,
+  "closureComplete": true,
+  "newAttemptIds": [
+    "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z",
+    "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_03-commit5r1c12-dev-03-ord01-2026-07-26T06-45-26-281Z",
+    "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_04-commit5r1c12-dev-04-ord01-2026-07-26T09-12-02-871Z",
+    "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_05-commit5r1c12-dev-05-ord01-2026-07-26T09-13-56-980Z",
+    "R20-domain_campaign-r20_commit5r1c12_decision_layer_lock_verification-commit5r1c12-lock-ord01-2026-07-26T09-14-40-597Z",
+    "R20-domain_campaign-r20_commit5r1c12_reconstructed_739_candidate-commit5r1c12-dev-01-ord01-2026-07-26T06-34-19-124Z"
+  ]
+}

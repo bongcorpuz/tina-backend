@@ -1,0 +1,13 @@
+{
+  "unit": "COMMIT 5R1-C12",
+  "generatedUtc": "2026-07-26T09:15:54.486Z",
+  "priorAttemptsPreserved": 116,
+  "newAttempts": 6,
+  "totalAttempts": 122,
+  "everyAttemptHasCaptures": true,
+  "lockVerificationExecutedAndRecorded": true,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "closureComplete": true,
+  "decisionLockStatusAccurate": true
+}

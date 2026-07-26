@@ -1,0 +1,7 @@
+iteration 02
+R3 decision=3720/3720 fa=0 fr=0 clarify=0 invariant=true
+overall=3025/3720 reason=634 relation=162
+closedControls=ALL CLOSED richContextGuard=7/7
+counterfactual=748/756 failed=8 (v3 0, v4 3, v5 3, v6 2)
+antiMemorization=PASS
+acceptable=true

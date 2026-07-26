@@ -1,0 +1,9 @@
+snapshot identity verified; servicesTreeDigest=8c0ac8337b6652888318
+authorized runtime files differing from baseline: ["philippine-tax-intent-analyzer.js"]
+allocated R20-domain_campaign-r20_commit5r1c12_reconstructed_739_candidate-commit5r1c12-dev-01-ord01-2026-07-26T06-34-19-124Z
+applied; verified servicesTreeDigest=8c0ac8337b6652888318
+overall=3077/3720 decision=3720/3720 fa=0 fr=0 clarify=0
+relation=162 reason=582
+closedControls=ALL CLOSED richContextGuard=7/7
+counterfactual=739/756 failed=17 (v3 0, v4 6, v5 6, v6 5)
+antiMemorization=FAIL ["no_complete_counterfactual_query","no_complete_r3_query"]

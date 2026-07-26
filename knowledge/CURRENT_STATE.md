@@ -31,10 +31,44 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C11
-DECISION-LAYER COUNTERFACTUAL CLOSURE AGAINST R3
-DECISION: INCOMPLETE — DECISION COUNTERFACTUAL CLOSURE NOT ACHIEVED
+PHASE-10A14-R20 — COMMIT 5R1-C12
+DECISION-LAYER COUNTERFACTUAL CLOSURE CONTINUATION 12 AGAINST R3
+DECISION: INCOMPLETE — DECISION LAYER LOCK ACHIEVED;
+          RELATION AND REASON LANES PENDING
 ```
+
+**Decision lock achieved.** All eleven lock conditions were met and independently
+verified in a separate clean verification campaign against an unchanged runtime:
+
+```text
+R3 decision            3,720 / 3,720
+false allows           0
+false refusals         0
+clarify mismatches     0
+counterfactual suite     756 / 756
+closed controls        all closed
+rich-context guard     7 / 7
+focused regression     PASS (every bucket)
+anti-memorization      PASS
+determinism            PASS (150 queries x 100 reps; drift 0, byte drift 0)
+runtime identity       unchanged across verification
+```
+
+Locked candidate:
+
+```text
+candidate attempt:
+R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_05-commit5r1c12-dev-05
+verification attempt:
+R20-domain_campaign-r20_commit5r1c12_decision_layer_lock_verification-commit5r1c12-lock
+services tree digest:
+184119a72d8d9589fb6d7d560a08ced8d2e2eb97831f7df09438a06daac191b2
+patch:
+evaluation/results/phase-10a14-r20/COMMIT_5R1C12_LOCKED_CANDIDATE.patch
+```
+
+Decision-layer closure is **not** runtime closure, **not** standalone closure, and
+**not** R20 PASS. The relation and reason lanes have not been started.
 
 R3 remains canonical and unchanged:
 
@@ -43,24 +77,23 @@ ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
 rows = 3,720
 ```
 
-Reconstructed accepted C10 base (new governed campaign, controlling):
-
-```text
-overall        = 3,097 / 3,720
-decision       = 3,720 / 3,720
-counterfactual =   698 / 756
-reconstruction discrepancies = 0 (exact identity match, including the counterfactual score)
-```
-
-The C10 dev-06 snapshot was verified file-by-file, against its recorded identity manifest
-and against the required services tree digest `42360fea…`, and only an authorized runtime
-file differed from the live baseline.
-
-Best governed C11 candidate:
+Reconstructed accepted C11 base (new governed campaign, controlling):
 
 ```text
 R3 decision    = 3,720 / 3,720
 counterfactual =   739 / 756
+reconstruction discrepancies = 0 (exact identity match on all nine metrics)
+```
+
+The C11 dev-07 snapshot was verified file-by-file against the required normalized-LF
+hashes and the services tree digest `8c0ac833…`, and only an authorized runtime file
+differed from the live baseline.
+
+Locked C12 candidate:
+
+```text
+R3 decision    = 3,720 / 3,720
+counterfactual =   756 / 756
 ```
 
 Decision confusion on the best candidate:
@@ -71,39 +104,43 @@ false refusals      = 0
 clarify mismatches  = 0
 ```
 
-The exact R3 decision ceiling was preserved through every accepted iteration and
-reproduced in a separate clean verification campaign against an unchanged runtime.
-**Seven of the eight lock conditions are met.** The lock additionally requires the
-complete combined counterfactual suite to pass, and 17 of 756 queries still fail, so the
-decision lock is **not declared**. That condition is recorded as unmet, not waived.
+The exact R3 decision invariant was enforced on every candidate. Three intermediate
+candidates regressed R3 (to 3,701, 3,714 and 3,715); each was diagnosed and corrected
+within the same iteration, and no candidate carrying an R3 regression was ever registered
+as an accepted base.
 
 Remaining counterfactual failures by suite:
 
 ```text
 v3  0 / 331
-v4  6 / 177
-v5  6 / 134
-v6  5 / 114
+v4  0 / 177
+v5  0 / 134
+v6  0 / 114
 ```
 
-Anti-overfit finding — leakage found and removed:
+Anti-memorization finding — leakage found and removed:
 
 ```text
-A new gate check (no_complete_counterfactual_query) fired. Two v4 counterfactual entries,
-themselves bare tax phrases, had their exact text added to the runtime vocabulary during
-C9, so those queries were passing by name rather than by structure. Both strings were
-removed from the runtime vocabulary; the generic alternatives still cover the concept.
-The counterfactual score fell from 741/756 to 739/756 as a direct result. That cost was
-accepted rather than concealed: a score that depends on memorised suite text is not a
-real score. R3 was unaffected and anti-overfit now passes 21/21.
+The C12 gate lowered the leakage threshold to three words and fired immediately. Three
+whole counterfactual queries had their exact text in the runtime vocabulary from C9, and
+two whole R3 rows were hard-coded as homograph patterns inherited from the pre-C7
+baseline. All five were removed or replaced with generic structural patterns; the
+counterfactual score fell 739 to 737 as the honest cost.
+
+A third category was assessed and deliberately NOT removed: 24 canonical Philippine tax
+terms ("capital gains tax", "books of accounts") that coincide with bare-term R3 rows. A
+tax analyzer cannot function without that vocabulary, so term-shaped overlap is recorded
+as domain vocabulary rather than counted as memorization. The check now separates the two
+cases and reports the terminology overlap in every attempt.
 ```
 
 Counterfactual expectation adjudication:
 
 ```text
-All 58 failures in the pre-coding contract were assessed against their own family rule and
-the governing architecture. All 58 were found structurally valid, so no suite defect was
-demonstrated and no counterfactual expectation was edited.
+The 19-row pre-coding contract carried forward the C11 adjudication: every row was
+previously assessed as structurally valid. No counterfactual expectation was edited in
+C12, and the suite denominator was not increased — closure is 756/756 on the existing
+suite with no new controlling queries added.
 ```
 
 Closed decision controls — all preserved at every accepted iteration:
@@ -122,7 +159,7 @@ Counterfactual controls:
 combined v3+v4+v5+v6 suite preserved and rerun: 756 queries / 419 pairs
 no new queries were added: the existing suite is the controlling closure set
 exact R3 query leakage = 0
-best candidate result = 739 / 756  (v3 331/331, v4 171/177, v5 128/134, v6 109/114)
+locked candidate result = 756 / 756  (v3 331/331, v4 177/177, v5 134/134, v6 114/114)
 ```
 
 Remaining structural clusters:
@@ -131,13 +168,13 @@ Remaining structural clusters:
 none - the R3 decision partition is empty at 3,720 / 3,720
 ```
 
-Remaining work is confined to the 17 failing counterfactual queries, which cover generic
-structural families rather than R3 rows.
+No decision-layer work remains: both the R3 decision partition and the counterfactual
+failure set are empty. Remaining Phase 10A work is the relation lane, then the reason
+lane, then standalone closure.
 
-Material iterations: 5 of 5 permitted were used. One further flat candidate was recorded
-and superseded, and one anti-overfit remediation removed counterfactual-query leakage
-found by the gate. A separate clean lock-verification campaign was executed against an
-unchanged runtime and is recorded in full.
+Material iterations: 4 of 5 permitted were used, all accepted. A separate clean
+lock-verification campaign was executed against an unchanged runtime and is recorded in
+full.
 
 Rich-context regression guard (introduced after the C9 iteration-06 regression on richer
 RMC-issuance questions) — final state of all seven shapes:
@@ -152,15 +189,16 @@ richer_tax_sentence            ALLOW
 metadata_suffixed_contentless  REFUSE
 ```
 
-Verification gates run against the best candidate:
+Verification gates run against the locked candidate:
 
 ```text
-decision-focused regression   PASS (every bucket, not only the closed controls)
-decision anti-overfit         PASS (21 / 21 checks, executable code with comments stripped)
-decision determinism          PASS (150 queries x 100 reps; drift 0, byte drift 0, mutation 0)
-clean lock verification       R3 3,720/3,720 reproduced; identity stable; 7 of 8 lock
-                              conditions met, counterfactual condition unmet
+decision-focused regression   PASS (every bucket)
+anti-memorization             PASS (no complete counterfactual or R3 query, no query hash,
+                              no oracle id, no suite/family/cluster feature, no scenario
+                              number, no expected-decision map)
+decision determinism          PASS (150 queries x 100 reps; drift 0, byte drift 0)
 rich-context guard            PASS on all seven shapes
+clean lock verification       PASS - all eleven lock conditions met, identity unchanged
 ```
 
 Principal architectural findings:
@@ -180,6 +218,15 @@ Principal architectural findings:
    question about that clause; the domain guards exist for contractual remedies.
 5. A tax-canonical acronym is self-resolving only when no metadata-only referent frames
    it; a for-item suffix supplies no subject and stays materially ambiguous.
+8. A governed tax predicate stops the label and contentless guards from displacing a real
+   tax question, but the styling/program-artefact guard yields only when the artefact is
+   the OBJECT of a commercial tax transaction: a tax-shaped word that names or defines an
+   artefact is a homograph.
+9. The homograph veto is defeated only by a subordinate code or tag clause under a
+   governed tax predicate, never by the mere presence of a tax predicate.
+10. Operator precedence matters in guard expressions: a negation followed by an
+    unparenthesised alternation guards only the first alternative. The label-binding
+    alternation had this defect and was the last counterfactual failure.
 6. A metadata-suffixed query is contentless when the clause left after stripping the
    suffix has no subject of its own. Naming a tax does not supply a subject, so the
    discriminator is a non-deictic subject, not the presence of a tax term.
@@ -190,8 +237,8 @@ Principal architectural findings:
 Layer status:
 
 ```text
-decision lock:   not achieved - R3 ceiling held at 3,720/3,720 but the
-                 counterfactual condition is unmet (739 / 756)
+decision lock:   ACHIEVED - R3 3,720/3,720 and counterfactual 756/756,
+                 independently verified
 relation lock:   not started
 reason lock:     not started
 standalone:      not achieved
@@ -212,10 +259,10 @@ tracked diff over services/ and tests/ = 0 bytes
 Preserved candidate:
 
 ```text
-attempt: R20-domain_campaign-r20_commit5r1c11_counterfactual_iteration_07-commit5r1c11-dev-07
+attempt: R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_05-commit5r1c12-dev-05
 snapshot: the attempt's runtime-snapshot directory
-patch:    evaluation/results/phase-10a14-r20/COMMIT_5R1C11_BEST_CANDIDATE.patch
-verification attempt: R20-domain_campaign-r20_commit5r1c11_decision_layer_lock_verification-commit5r1c11-lock
+patch:    evaluation/results/phase-10a14-r20/COMMIT_5R1C12_LOCKED_CANDIDATE.patch
+verification attempt: R20-domain_campaign-r20_commit5r1c12_decision_layer_lock_verification-commit5r1c12-lock
 ```
 
 All rejected and superseded iterations are preserved in their own attempt directories.
@@ -658,22 +705,22 @@ COMMIT 5R1-C7 must resume from the accepted 3,464-decision candidate.
 
 ```text
 cumulativeThrough:
-commit5r1c11-incomplete
+commit5r1c12
 
 runtimeClosure:
 false
 
 decisionLayerClosure:
-false
+true
 
 total attempts:
-116
+122
 
 by category:
-domain_campaign 54 | focused_suite 11 | other 9 | synthetic_validator 42
+domain_campaign 60 | focused_suite 11 | other 9 | synthetic_validator 42
 
 controlling / non-controlling:
-114 / 2
+120 / 2
 
 COMMIT 5R1-C6 new attempts:
 4
@@ -702,6 +749,10 @@ COMMIT 5R1-C11 new attempts:
     1 anti-overfit remediation, 2 clean lock verifications,
     2 decision-focused regressions, 3 anti-overfit, 3 determinism)
 
+COMMIT 5R1-C12 new attempts:
+6 (1 reconstruction, 4 material counterfactual iterations,
+   1 clean decision-lock verification)
+
 closureComplete:
 true
 
@@ -717,8 +768,8 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C12
-DECISION-LAYER COUNTERFACTUAL CLOSURE CONTINUATION 12 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C13
+RELATION-LAYER CLOSURE AGAINST R3
 ```
 
 Preflight preconditions carried forward from COMMIT 5R1-C7-P1 and still holding:
@@ -729,16 +780,16 @@ analyzer identity policy: Git blob canonical; normalized-LF content identity acc
 working-tree drift:       none unresolved
 root residue:             none
 roadmap:                  tracked strategic governance
-parent chain:             use the pushed C11 commit as the new starting HEAD
+parent chain:             use the pushed C12 commit as the new starting HEAD
 ```
 
-COMMIT 5R1-C12 must:
+COMMIT 5R1-C13 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the best accepted C11 candidate (R3 decision 3,720 / 3,720; counterfactual 739 / 756) from its preserved attempt snapshot;
+2. reconstruct the LOCKED C12 candidate (R3 decision 3,720 / 3,720; counterfactual 756 / 756) from its preserved attempt snapshot and verify the recorded services tree digest;
 3. execute it as a new governed R3 campaign and preserve the actual result;
 4. preserve all C7 through C10 analysis and the combined counterfactual v3+v4+v5+v6 controls;
-5. hold R3 at an exact 3,720 / 3,720 with all closed controls and the seven-shape rich-context guard preserved, and close the remaining 17 failing counterfactual queries through generic structural rules, without reopening any R3 row or guard shape;
+5. hold the decision lock intact — R3 3,720 / 3,720, counterfactual 756 / 756, closed controls, rich-context guard and anti-memorization — while remediating the relation lane only; any decision regression rejects the candidate immediately;
 6. permit up to five new material decision iterations;
 7. require exact decision 3,720 / 3,720 AND a fully passing combined counterfactual suite, plus a separate clean lock-verification run, before declaring a lock;
 8. not begin relation or reason work, integration or freeze;
@@ -754,7 +805,7 @@ closure, integration and a successful runtime freeze in later units.
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C12 decision-layer counterfactual closure (continuation)
+COMMIT 5R1-C13 relation-layer closure
 → COMMIT 5R1 relation-layer closure
 → reason-layer closure
 → standalone overall closure

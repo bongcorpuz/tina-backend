@@ -1,0 +1,56 @@
+{
+  "unit": "COMMIT 5R1-C12",
+  "generatedUtc": "2026-07-26T09:15:54.486Z",
+  "acceptanceRule": "R3 must remain 3,720/3,720 with zero FA/FR/clarify; counterfactual failures must decrease; closed controls closed; rich-context guard 7/7; anti-memorization pass.",
+  "decisions": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_02-commit5r1c12-dev-02-ord01-2026-07-26T06-42-20-547Z",
+      "priorCounterfactualFailures": 19,
+      "newCounterfactualFailures": 8,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "antiMemorizationPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with the R3 invariant, controls, guard and anti-memorization all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_03-commit5r1c12-dev-03-ord01-2026-07-26T06-45-26-281Z",
+      "priorCounterfactualFailures": 8,
+      "newCounterfactualFailures": 3,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "antiMemorizationPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with the R3 invariant, controls, guard and anti-memorization all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_04-commit5r1c12-dev-04-ord01-2026-07-26T09-12-02-871Z",
+      "priorCounterfactualFailures": 3,
+      "newCounterfactualFailures": 1,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "antiMemorizationPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with the R3 invariant, controls, guard and anti-memorization all intact"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c12_counterfactual_iteration_05-commit5r1c12-dev-05-ord01-2026-07-26T09-13-56-980Z",
+      "priorCounterfactualFailures": 1,
+      "newCounterfactualFailures": 0,
+      "counterfactualFailuresDecreased": true,
+      "r3InvariantHeld": true,
+      "closedControlsPreserved": true,
+      "richContextGuardPass": true,
+      "antiMemorizationPass": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "counterfactual failures decreased with the R3 invariant, controls, guard and anti-memorization all intact"
+    }
+  ],
+  "intermediateRegressionsCorrected": "Three intermediate candidates regressed R3 (to 3,701, 3,714 and 3,715 respectively). Each was corrected within the same iteration rather than accepted, and no candidate carrying an R3 regression was ever registered as an accepted base."
+}
