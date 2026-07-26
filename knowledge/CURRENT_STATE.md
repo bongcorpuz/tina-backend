@@ -31,19 +31,142 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
+PHASE-10A14-R20 — COMMIT 5R1-C7
+DECISION-LAYER CLOSURE CONTINUATION 7 AGAINST R3
+DECISION: INCOMPLETE — DECISION LAYER REMEDIATION NOT CLOSED
+```
+
+R3 remains canonical and unchanged:
+
+```text
+ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
+rows = 3,720
+```
+
+Reconstructed accepted C6 base (new governed campaign, controlling):
+
+```text
+overall  = 3,009 / 3,720
+decision = 3,464 / 3,720
+decision mismatches = 256
+reconstruction discrepancies = 0 (exact identity match on all eight metrics)
+```
+
+Best governed C7 candidate:
+
+```text
+overall  = 3,047 / 3,720
+decision = 3,623 / 3,720
+```
+
+Remaining decision mismatches:
+
+```text
+97
+```
+
+Decision confusion on the best candidate:
+
+```text
+false allows        = 37
+false refusals      = 57
+clarify mismatches  =  3
+```
+
+Closed decision controls — all preserved at every accepted iteration:
+
+```text
+tax_compliance_task             108 / 108
+acronym_homograph_control       200 / 200
+ambiguous_clarification_control 150 / 150
+internal_label_proper_name      104 / 104
+```
+
+Counterfactual controls:
+
+```text
+C7 v3 suite authored before any runtime change:
+  331 new deterministic queries, 197 structural pairs, 15 families
+  exact R3 query leakage = 0 (guard fired 3 times during authoring; each reworded)
+best candidate result = 285 / 331
+```
+
+Remaining structural clusters (97 rows, non-overlapping):
+
+```text
+CONCRETE_TARGET_TAX_RELATION_MISSED          43
+CONCRETE_TARGET_FALSE_TAX_ANCHOR             22
+ACRONYM_DEFINITION_INTENT                    10
+ACRONYM_AS_LABEL_OR_NAME                      9
+TREATMENT_PREDICATE_WITH_RESOLVED_TARGET      5
+COMPLIANCE_PROCEDURE_WITH_IMPLICIT_TARGET     3
+QUOTATION_SCOPE                               3
+CONTEXTUAL_ACRONYM_TAX_CONTEXT_MISSED         2
+```
+
+Material iterations: 5 of 5 permitted were used. The iteration ceiling was reached
+before decision lock, so no clean lock-verification attempt was allocated and none was
+fabricated.
+
+Verification gates run against the best candidate:
+
+```text
+decision-focused regression   closed controls 0 failed
+decision anti-overfit         PASS (17 / 17 checks, executable code with comments stripped)
+decision determinism          PASS (150 queries x 100 reps; drift 0, byte drift 0, mutation 0)
+```
+
+Principal architectural finding:
+
+```text
+The dominant ALLOW -> REFUSE defect was a substring-based global token veto. Non-tax
+domain nouns were matched with raw substring containment, so "app" inside "applies" and
+"car" inside "carry" suppressed genuine tax relations. Word-boundary matching removed
+this. A global token veto is prohibited by the decision evidence contract, so this was a
+contract violation as well as a scoring defect.
+```
+
+Layer status:
+
+```text
+decision lock:   not achieved (best decision 3,623 / 3,720)
+relation lock:   not started
+reason lock:     not started
+standalone:      not achieved
+integration:     not performed
+freeze:          not performed
+```
+
+Runtime:
+
+```text
+not integrated
+not frozen
+runtimeMutable = true
+live services restored to the committed COMMIT 3 baseline
+tracked diff over services/ and tests/ = 0 bytes
+```
+
+Preserved candidate:
+
+```text
+attempt: R20-domain_campaign-r20_commit5r1c7_development_iteration_06-commit5r1c7-dev-06
+snapshot: the attempt's runtime-snapshot directory
+patch:    evaluation/results/phase-10a14-r20/COMMIT_5R1C7_BEST_CANDIDATE.patch
+```
+
+All rejected and superseded iterations are preserved in their own attempt directories.
+
+## Prior Execution Unit — COMMIT 5R1-C7-P1
+
+```text
 PHASE-10A14-R20 — COMMIT 5R1-C7-P1
 PREFLIGHT RUNTIME-IDENTITY RECONCILIATION,
 RESIDUE RECOVERY AND ROADMAP CANONICALIZATION
 DECISION: COMPLETE
 ```
 
-C7 semantic execution:
-
-```text
-NOT STARTED
-```
-
-This unit exists because the attempted COMMIT 5R1-C7 preflight correctly stopped before
+This unit existed because the attempted COMMIT 5R1-C7 preflight correctly stopped before
 runtime reconstruction, attempt allocation, oracle execution, semantic remediation or any
 repository modification. It cleared the preflight ambiguity without losing evidence.
 
@@ -472,7 +595,7 @@ COMMIT 5R1-C7 must resume from the accepted 3,464-decision candidate.
 
 ```text
 cumulativeThrough:
-commit5r1c7p1
+commit5r1c7-incomplete
 
 runtimeClosure:
 false
@@ -481,13 +604,23 @@ decisionLayerClosure:
 false
 
 total attempts:
-57
+69
+
+by category:
+domain_campaign 25 | focused_suite 5 | other 9 | synthetic_validator 30
+
+controlling / non-controlling:
+67 / 2
 
 COMMIT 5R1-C6 new attempts:
 4
 
 COMMIT 5R1-C7-P1 new attempts:
 2 (synthetic_validator, controlling; no domain campaign, no oracle execution)
+
+COMMIT 5R1-C7 new attempts:
+12 (1 reconstruction, 5 material decision iterations, 1 counterfactual suite,
+    1 decision-focused regression, 1 anti-overfit, 1 determinism, 2 analysis)
 
 closureComplete:
 true
@@ -504,11 +637,11 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C7
-DECISION-LAYER CLOSURE CONTINUATION 7 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C8
+DECISION-LAYER CLOSURE CONTINUATION 8 AGAINST R3
 ```
 
-COMMIT 5R1-C7 preflight preconditions were cleared by COMMIT 5R1-C7-P1 and now hold:
+Preflight preconditions carried forward from COMMIT 5R1-C7-P1 and still holding:
 
 ```text
 analyzer identity policy: Git blob canonical; normalized-LF content identity accepted
@@ -516,21 +649,23 @@ analyzer identity policy: Git blob canonical; normalized-LF content identity acc
 working-tree drift:       none unresolved
 root residue:             none
 roadmap:                  tracked strategic governance
-parent chain:             use the C7-P1 commit as the new starting HEAD
+parent chain:             use the pushed C7 commit as the new starting HEAD
 ```
 
-COMMIT 5R1-C7 must:
+COMMIT 5R1-C8 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the accepted COMMIT 5R1-C6 dev-02 candidate (best decision R3 = 3,464 / 3,720; overall 3,009 / 3,720);
-3. execute it as a new governed R3 campaign;
-4. preserve the actual R3 result and rebuild the confusion matrix + partition;
-5. resume the decision lane from the remaining clusters — ALLOW->REFUSE concrete-tax anchoring (104) and CONTEXTUAL_ACRONYM_MISCLASSIFIED (102) — requiring a controlling tax action/predicate on a concrete or resolved target, to reach exactly 0 decision mismatches without reopening any closed control (tax_compliance_task 108/108, acronym_homograph_control 200/200, ambiguous_clarification_control 150/150, internal_label_proper_name 104/104) and passing the combined 400-query counterfactual suite;
-6. verify the lock in a clean governed run; only then proceed to the relation lane (a separate unit);
-7. do not integrate or freeze in the decision-lane unit;
-8. update CURRENT_STATE;
-9. commit and push one atomic evidence commit;
-10. STOP before relation-lane work.
+2. reconstruct the best accepted C7 decision candidate (decision 3,623 / 3,720; overall 3,047 / 3,720) from its preserved attempt snapshot;
+3. execute it as a new governed R3 campaign and preserve the actual result;
+4. preserve all C7 analysis, the structural partition and the counterfactual v3 controls;
+5. continue only the remaining decision clusters — CONCRETE_TARGET_TAX_RELATION_MISSED (43), CONCRETE_TARGET_FALSE_TAX_ANCHOR (22), ACRONYM_DEFINITION_INTENT (10), ACRONYM_AS_LABEL_OR_NAME (9) and the smaller tail — requiring a controlling tax relation over a concrete or resolved target, without reopening any closed control;
+6. permit up to five new material decision iterations;
+7. require exact decision 3,720 / 3,720 plus a separate clean lock-verification run before declaring a lock;
+8. not begin relation or reason work, integration or freeze;
+9. update CURRENT_STATE as the final substantive change;
+10. commit, push and STOP.
+
+Do not add exact-row exceptions. Do not name COMMIT 6 as the next task.
 
 R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
 Decision closure is not runtime closure. COMMIT 6 becomes the next task only after standalone
@@ -539,7 +674,7 @@ closure, integration and a successful runtime freeze in later units.
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C7 decision-layer closure (continuation)
+COMMIT 5R1-C8 decision-layer closure (continuation)
 → COMMIT 5R1 relation-layer closure
 → reason-layer closure
 → standalone overall closure

@@ -1,0 +1,445 @@
+{
+  "total": 331,
+  "passed": 258,
+  "failed": 73,
+  "failures": [
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as VAT_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the CGT rate applied to this sale of equipment?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is CGT computed for a domestic corporation?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as CGT_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"DST\".",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as DST_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"MCIT\".",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as MCIT_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"OSD\".",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as OSD_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"RCIT\".",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as RCIT_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"EWT\".",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as EWT_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"FWT\".",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as FWT_2026.xlsx",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "AR?",
+      "expected": "CLARIFY",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "CV?",
+      "expected": "CLARIFY",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it deductible? Situation 7.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that deductible? Item 12.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it subject to VAT? Situation 7.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that subject to VAT? Item 12.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it subject to withholding tax? Situation 7.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that subject to withholding tax? Item 12.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it taxable income? Situation 7.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that taxable income? Item 12.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it zero-rated? Situation 7.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that zero-rated? Item 12.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Spell the word \"DST\" backwards.",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How many letters are in \"DST\"?",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How is CGT applied to a sale of real property?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Spell the word \"MCIT\" backwards.",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How many letters are in \"MCIT\"?",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Please book the venue, and also name the folder VAT.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Also name the folder VAT, and please book the venue.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Draft the party invite, then tag the file DST.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Then tag the file DST, after drafting the party invite.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Kailan ang birthday party ng anak ko?",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a company laptop subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is imported raw sugar subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is factory utilities subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a delivery motorcycle deductible against gross income?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a delivery motorcycle subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is seminar registration fees subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is an office lease deposit subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is freight and handling charges subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a distributor commission subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is employee medical allowance subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a purchased trademark subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is spare parts inventory subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible? Case AA-9.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due? Case AA-9.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use? Case AA-9.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline? Case AA-9.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT? Case AA-9.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "How much tax is due for the imported machinery we purchased?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Our team writes PAN to mean the pantry access notice.",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Our team writes CAR to mean the carpool arrival record.",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Please read PAN as the pantry access notice.",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Please read CAR as the carpool arrival record.",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the interest income subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the dividend subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the insurance premium deductible?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c7_development_iteration_03-commit5r1c7-dev-03-ord01-2026-07-25T23-49-32-332Z",
+  "oracleVersion": "R3",
+  "counts": {
+    "total": 3720,
+    "canonicalPassed": 3047,
+    "decisionMismatches": 179,
+    "reasonMismatches": 662,
+    "relationMismatches": 209,
+    "materialFalseAllows": 59,
+    "materialFalseRefusals": 96,
+    "clarifyMismatches": 24,
+    "bySourceSet": {
+      "r19_1120": {
+        "total": 1120,
+        "passed": 892
+      },
+      "r18_corrected_567": {
+        "total": 567,
+        "passed": 448
+      },
+      "r17_accepted_control": {
+        "total": 210,
+        "passed": 104
+      },
+      "r20_new": {
+        "total": 1823,
+        "passed": 1603
+      }
+    },
+    "byCategory": {
+      "explicit_tax_control": {
+        "total": 200,
+        "passed": 180
+      },
+      "explicit_non_tax_control": {
+        "total": 200,
+        "passed": 180
+      },
+      "acronym_homograph_control": {
+        "total": 200,
+        "passed": 200
+      },
+      "mixed_domain_genuine_tax": {
+        "total": 510,
+        "passed": 378
+      },
+      "ambiguous_clarification_control": {
+        "total": 150,
+        "passed": 100
+      },
+      "filipino_taglish_control": {
+        "total": 100,
+        "passed": 70
+      },
+      "metamorphic": {
+        "total": 380,
+        "passed": 331
+      },
+      "explicit_tax": {
+        "total": 112,
+        "passed": 71
+      },
+      "explicit_non_tax": {
+        "total": 117,
+        "passed": 93
+      },
+      "substring_homograph_trap": {
+        "total": 100,
+        "passed": 76
+      },
+      "ambiguous": {
+        "total": 80,
+        "passed": 76
+      },
+      "filipino_taglish": {
+        "total": 60,
+        "passed": 57
+      },
+      "acronym_context": {
+        "total": 38,
+        "passed": 30
+      },
+      "customs_tariff_tax": {
+        "total": 30,
+        "passed": 19
+      },
+      "capital_gain_tax": {
+        "total": 30,
+        "passed": 12
+      },
+      "bir_enforcement_tax": {
+        "total": 20,
+        "passed": 20
+      },
+      "private_contract_non_tax": {
+        "total": 30,
+        "passed": 10
+      },
+      "court_labor_sec_non_tax": {
+        "total": 30,
+        "passed": 6
+      },
+      "generic_ambiguous": {
+        "total": 30,
+        "passed": 19
+      },
+      "filipino_taglish_mixed": {
+        "total": 20,
+        "passed": 10
+      },
+      "substring_traps": {
+        "total": 20,
+        "passed": 8
+      },
+      "explicit_non_tax_task": {
+        "total": 565,
+        "passed": 523
+      },
+      "acronym_capitalization_expansion": {
+        "total": 276,
+        "passed": 170
+      },
+      "quoted_term_only": {
+        "total": 110,
+        "passed": 97
+      },
+      "negation_contradiction": {
+        "total": 100,
+        "passed": 99
+      },
+      "internal_label_proper_name": {
+        "total": 104,
+        "passed": 104
+      },
+      "tax_compliance_task": {
+        "total": 108,
+        "passed": 108
+      }
+    },
+    "metamorphicGroupsTotal": 100,
+    "metamorphicGroupsFailed": 31,
+    "metamorphicGroupsPassed": 69
+  },
+  "decisionPassed": 3541
+}

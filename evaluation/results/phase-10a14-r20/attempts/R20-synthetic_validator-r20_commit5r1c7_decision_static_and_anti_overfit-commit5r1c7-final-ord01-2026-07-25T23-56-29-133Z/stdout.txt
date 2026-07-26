@@ -1,0 +1,1 @@
+failed=["no_complete_frozen_query","no_category_lookup","no_numeric_scenario_branch"]

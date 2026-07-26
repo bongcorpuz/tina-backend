@@ -1,0 +1,8 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c7_reconstructed_3464_candidate-commit5r1c7-dev-01-ord01-2026-07-25T23-34-56-085Z",
+  "discrepancyCount": 0,
+  "discrepancies": [],
+  "identityReconciled": true,
+  "note": "Governed reconstruction reproduced the accepted C6 dev-02 result exactly. The new governed result controls."
+}

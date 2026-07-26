@@ -1,0 +1,47 @@
+{
+ "all_three_decisions": {
+  "total": 3720,
+  "passed": 3623,
+  "failed": 97
+ },
+ "closed_decision_controls": {
+  "total": 562,
+  "passed": 562,
+  "failed": 0
+ },
+ "contextual_acronyms": {
+  "total": 1624,
+  "passed": 1574,
+  "failed": 50
+ },
+ "label_binding": {
+  "total": 185,
+  "passed": 179,
+  "failed": 6
+ },
+ "quoted_term_scope": {
+  "total": 112,
+  "passed": 109,
+  "failed": 3
+ },
+ "non_tax_actions": {
+  "total": 942,
+  "passed": 926,
+  "failed": 16
+ },
+ "filipino_taglish": {
+  "total": 327,
+  "passed": 315,
+  "failed": 12
+ },
+ "multi_clause": {
+  "total": 119,
+  "passed": 118,
+  "failed": 1
+ },
+ "numeric_scenario": {
+  "total": 1462,
+  "passed": 1444,
+  "failed": 18
+ }
+}

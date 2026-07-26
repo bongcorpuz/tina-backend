@@ -1,0 +1,37 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "generatedUtc": "2026-07-25T23:58:52.843Z",
+  "priorAttempts": 57,
+  "newAttempts": 12,
+  "totalAttempts": 69,
+  "byCategory": {
+    "domain_campaign": 25,
+    "focused_suite": 5,
+    "other": 9,
+    "synthetic_validator": 30
+  },
+  "controlling": 67,
+  "nonControlling": 2,
+  "failed": 0,
+  "retries": 0,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "cumulativeThrough": "commit5r1c7-incomplete",
+  "runtimeClosure": false,
+  "decisionLayerClosure": false,
+  "closureComplete": true,
+  "newAttemptIds": [
+    "R20-domain_campaign-r20_commit5r1c7_development_iteration_02-commit5r1c7-dev-02-ord01-2026-07-25T23-47-22-720Z",
+    "R20-domain_campaign-r20_commit5r1c7_development_iteration_03-commit5r1c7-dev-03-ord01-2026-07-25T23-49-32-332Z",
+    "R20-domain_campaign-r20_commit5r1c7_development_iteration_04-commit5r1c7-dev-04-ord01-2026-07-25T23-50-49-053Z",
+    "R20-domain_campaign-r20_commit5r1c7_development_iteration_05-commit5r1c7-dev-05-ord01-2026-07-25T23-53-57-028Z",
+    "R20-domain_campaign-r20_commit5r1c7_development_iteration_06-commit5r1c7-dev-06-ord01-2026-07-25T23-55-29-678Z",
+    "R20-domain_campaign-r20_commit5r1c7_reconstructed_3464_candidate-commit5r1c7-dev-01-ord01-2026-07-25T23-34-56-085Z",
+    "R20-focused_suite-r20_commit5r1c7_decision_focused_regression-commit5r1c7-final-ord01-2026-07-25T23-56-27-798Z",
+    "R20-focused_suite-r20_commit5r1c7_decision_focused_regression-commit5r1c7-final-ord01-2026-07-25T23-57-37-989Z",
+    "R20-synthetic_validator-r20_commit5r1c7_decision_determinism_and_no_mutation-commit5r1c7-final-ord01-2026-07-25T23-56-29-659Z",
+    "R20-synthetic_validator-r20_commit5r1c7_decision_determinism_and_no_mutation-commit5r1c7-final-ord01-2026-07-25T23-57-39-342Z",
+    "R20-synthetic_validator-r20_commit5r1c7_decision_static_and_anti_overfit-commit5r1c7-final-ord01-2026-07-25T23-56-29-133Z",
+    "R20-synthetic_validator-r20_commit5r1c7_decision_static_and_anti_overfit-commit5r1c7-final-ord01-2026-07-25T23-57-38-995Z"
+  ]
+}

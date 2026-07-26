@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c7_reconstructed_3464_candidate-commit5r1c7-dev-01-ord01-2026-07-25T23-34-56-085Z",
+  "basis": "reconstructed C6 dev-02 candidate",
+  "total": 3720,
+  "matrix": {
+    "expected_ALLOW__actual_ALLOW": 1488,
+    "expected_ALLOW__actual_REFUSE": 104,
+    "expected_ALLOW__actual_CLARIFY": 39,
+    "expected_REFUSE__actual_ALLOW": 62,
+    "expected_REFUSE__actual_REFUSE": 1666,
+    "expected_REFUSE__actual_CLARIFY": 41,
+    "expected_CLARIFY__actual_ALLOW": 10,
+    "expected_CLARIFY__actual_REFUSE": 0,
+    "expected_CLARIFY__actual_CLARIFY": 310
+  },
+  "diagonal": 3464,
+  "offDiagonal": 256,
+  "duplicateOracleIds": 0,
+  "missingOracleIds": 0
+}

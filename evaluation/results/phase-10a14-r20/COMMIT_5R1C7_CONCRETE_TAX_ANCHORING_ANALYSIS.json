@@ -1,0 +1,185 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "totalAllowToNonAllow": 57,
+  "decompositionBasis": "structural relation between the requested action and its target, not vocabulary",
+  "subclusters": [
+    {
+      "subcluster": "explicit_deductibility_over_concrete_target",
+      "count": 2,
+      "oracleIds": [
+        "R20N-FIL-1427",
+        "R20MM-0014"
+      ],
+      "sampleQueries": [
+        "Deductible ba ang website design para sa income tax?",
+        "Deductible ba ang website design para sa income tax? [MM-R20-03]"
+      ]
+    },
+    {
+      "subcluster": "explicit_vat_treatment_over_concrete_target",
+      "count": 0,
+      "oracleIds": [],
+      "sampleQueries": []
+    },
+    {
+      "subcluster": "explicit_withholding_over_concrete_payment",
+      "count": 1,
+      "oracleIds": [
+        "R20N-FIL-1437"
+      ],
+      "sampleQueries": [
+        "Kailangan bang i-withhold ang buwis sa software company?"
+      ]
+    },
+    {
+      "subcluster": "explicit_customs_duty_over_imported_target",
+      "count": 3,
+      "oracleIds": [
+        "S3-IR17-002",
+        "S3-IR17-010",
+        "S3-IR17-017"
+      ],
+      "sampleQueries": [
+        "Explain tariff classification for imported apparel under Philippine customs rules.",
+        "Does the Tariff and Customs Code affect Philippine import duty?",
+        "Can tariff classification change the import duty rate?"
+      ]
+    },
+    {
+      "subcluster": "explicit_taxability_over_income_or_activity",
+      "count": 5,
+      "oracleIds": [
+        "S1-IR19-1023",
+        "S1-IR19-1063",
+        "S1-IR19-1103",
+        "S2-IR18-DOM-064",
+        "S3-IR17-105"
+      ],
+      "sampleQueries": [
+        "Are school raffle receipts taxable? Group MM-12.",
+        "Are school raffle receipts taxable? Group MM-32.",
+        "Are school raffle receipts taxable? Group MM-52."
+      ]
+    },
+    {
+      "subcluster": "compliance_request_with_concrete_entity_or_procedure",
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-098",
+        "S2-IR18-DOM-558",
+        "R20N-ACX-0920",
+        "R20N-FIL-1430"
+      ],
+      "sampleQueries": [
+        "TIN registration",
+        "What is TIN registration?",
+        "Explain PAN for a BIR assessment."
+      ]
+    },
+    {
+      "subcluster": "resolved_pronoun_with_concrete_antecedent",
+      "count": 0,
+      "oracleIds": [],
+      "sampleQueries": []
+    },
+    {
+      "subcluster": "multi_clause_task_conflict",
+      "count": 22,
+      "oracleIds": [
+        "S1-IR19-1023",
+        "S1-IR19-1033",
+        "S1-IR19-1037",
+        "S1-IR19-1063",
+        "S1-IR19-1073",
+        "S1-IR19-1077",
+        "S1-IR19-1103",
+        "S1-IR19-1113",
+        "S1-IR19-1117",
+        "S3-IR17-002",
+        "S3-IR17-010",
+        "R20N-ACX-0920",
+        "R20N-ACX-0933",
+        "R20N-ACX-0946",
+        "R20N-ACX-0950",
+        "R20N-ACX-0951",
+        "R20N-ACX-0955",
+        "R20N-ACX-0956",
+        "R20N-ACX-0959",
+        "R20N-ACX-0972",
+        "R20N-ACX-0985",
+        "R20N-NEG-1112"
+      ],
+      "sampleQueries": [
+        "Are school raffle receipts taxable? Group MM-12.",
+        "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+        "Does authority to print receipts apply? Group MM-19."
+      ]
+    },
+    {
+      "subcluster": "filipino_taglish_structural",
+      "count": 4,
+      "oracleIds": [
+        "R20N-FIL-1427",
+        "R20N-FIL-1428",
+        "R20N-FIL-1430",
+        "R20MM-0014"
+      ],
+      "sampleQueries": [
+        "Deductible ba ang website design para sa income tax?",
+        "May VAT ba ang website design?",
+        "Ano ang tamang BIR form para sa website design?"
+      ]
+    },
+    {
+      "subcluster": "context_n_contentless_referent",
+      "count": 0,
+      "oracleIds": [],
+      "sampleQueries": []
+    },
+    {
+      "subcluster": "no_detected_tax_relation_surface",
+      "count": 33,
+      "oracleIds": [
+        "S1-IR19-1033",
+        "S1-IR19-1037",
+        "S1-IR19-1073",
+        "S1-IR19-1077",
+        "S1-IR19-1113",
+        "S1-IR19-1117",
+        "S2-IR18-DOM-029",
+        "S2-IR18-DOM-085",
+        "S2-IR18-DOM-088",
+        "S2-IR18-DOM-089",
+        "S2-IR18-DOM-091",
+        "S2-IR18-DOM-092",
+        "S2-IR18-DOM-094",
+        "S2-IR18-DOM-099",
+        "S2-IR18-DOM-100",
+        "S2-IR18-DOM-101",
+        "S2-IR18-DOM-102",
+        "S2-IR18-DOM-108",
+        "S2-IR18-DOM-109",
+        "S2-IR18-DOM-514",
+        "S2-IR18-DOM-516",
+        "S3-IR17-002",
+        "S3-IR17-010",
+        "S3-IR17-017",
+        "S3-IR17-032",
+        "S3-IR17-036",
+        "S3-IR17-051",
+        "R20N-ACX-0933",
+        "R20N-ACX-0946",
+        "R20N-ACX-0950",
+        "R20N-ACX-0951",
+        "R20N-ACX-0955",
+        "R20N-ACX-0956"
+      ],
+      "sampleQueries": [
+        "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+        "Does authority to print receipts apply? Group MM-19.",
+        "Is PAN sale VATable if PAN is a product code? Group MM-37."
+      ]
+    }
+  ],
+  "proposedRuleConstraint": "An ALLOW rule must require a controlling tax relation attached to a concrete or resolved target. A blanket \"tax word + concrete noun = ALLOW\" rule is prohibited."
+}

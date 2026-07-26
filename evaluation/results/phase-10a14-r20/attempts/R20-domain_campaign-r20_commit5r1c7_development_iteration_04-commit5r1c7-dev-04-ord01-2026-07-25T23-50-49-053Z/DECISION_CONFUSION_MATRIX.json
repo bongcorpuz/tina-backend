@@ -1,0 +1,18 @@
+{
+  "total": 3720,
+  "matrix": {
+    "expected_ALLOW__actual_ALLOW": 1535,
+    "expected_ALLOW__actual_REFUSE": 76,
+    "expected_ALLOW__actual_CLARIFY": 20,
+    "expected_REFUSE__actual_ALLOW": 28,
+    "expected_REFUSE__actual_REFUSE": 1719,
+    "expected_REFUSE__actual_CLARIFY": 22,
+    "expected_CLARIFY__actual_ALLOW": 10,
+    "expected_CLARIFY__actual_REFUSE": 0,
+    "expected_CLARIFY__actual_CLARIFY": 310
+  },
+  "diagonal": 3564,
+  "offDiagonal": 156,
+  "duplicateOracleIds": 0,
+  "missingOracleIds": 0
+}

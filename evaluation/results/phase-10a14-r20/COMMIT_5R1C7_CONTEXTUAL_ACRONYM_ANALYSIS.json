@@ -1,0 +1,217 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "totalAcronymRows": 50,
+  "subclusters": [
+    {
+      "subcluster": "bare_acronym_definition_no_context",
+      "count": 10,
+      "oracleIds": [
+        "S2-IR18-DOM-514",
+        "S2-IR18-DOM-516",
+        "R20N-ACX-0781",
+        "R20N-ACX-0782",
+        "R20N-ACX-0784",
+        "R20N-ACX-0785",
+        "R20N-ACX-0787",
+        "R20N-ACX-0788",
+        "R20N-ACX-0790",
+        "R20N-ACX-0791"
+      ],
+      "sampleQueries": [
+        "What is MCIT?",
+        "What is RCIT?",
+        "What does RMC mean?"
+      ],
+      "expectedDecisions": [
+        "ALLOW",
+        "CLARIFY"
+      ],
+      "actualDecisions": [
+        "CLARIFY",
+        "ALLOW"
+      ]
+    },
+    {
+      "subcluster": "acronym_definition_with_tax_context",
+      "count": 2,
+      "oracleIds": [
+        "S2-IR18-DOM-511",
+        "S2-IR18-DOM-558"
+      ],
+      "sampleQueries": [
+        "What is a taxable CSS class?",
+        "What is TIN registration?"
+      ],
+      "expectedDecisions": [
+        "REFUSE",
+        "ALLOW"
+      ],
+      "actualDecisions": [
+        "ALLOW",
+        "REFUSE"
+      ]
+    },
+    {
+      "subcluster": "acronym_in_tax_compliance_procedure",
+      "count": 3,
+      "oracleIds": [
+        "S2-IR18-DOM-098",
+        "R20N-ACX-0920",
+        "R20N-FIL-1430"
+      ],
+      "sampleQueries": [
+        "TIN registration",
+        "Explain PAN for a BIR assessment.",
+        "Ano ang tamang BIR form para sa website design?"
+      ],
+      "expectedDecisions": [
+        "ALLOW"
+      ],
+      "actualDecisions": [
+        "REFUSE"
+      ]
+    },
+    {
+      "subcluster": "acronym_in_tax_treatment_question",
+      "count": 18,
+      "oracleIds": [
+        "S1-IR19-1023",
+        "S1-IR19-1063",
+        "S1-IR19-1103",
+        "S2-IR18-DOM-214",
+        "S2-IR18-DOM-215",
+        "S2-IR18-DOM-251",
+        "S2-IR18-DOM-276",
+        "S2-IR18-DOM-301",
+        "S2-IR18-DOM-326",
+        "S2-IR18-DOM-471",
+        "S2-IR18-DOM-503",
+        "S2-IR18-DOM-505",
+        "R20N-ACX-0959",
+        "R20N-ACX-0972",
+        "R20N-ACX-0985",
+        "R20N-NEG-1112",
+        "R20N-FIL-1428",
+        "R20MM-0014"
+      ],
+      "sampleQueries": [
+        "Are school raffle receipts taxable? Group MM-12.",
+        "Are school raffle receipts taxable? Group MM-32.",
+        "Are school raffle receipts taxable? Group MM-52."
+      ],
+      "expectedDecisions": [
+        "ALLOW",
+        "REFUSE"
+      ],
+      "actualDecisions": [
+        "REFUSE",
+        "ALLOW"
+      ]
+    },
+    {
+      "subcluster": "acronym_assigned_as_label_or_code",
+      "count": 9,
+      "oracleIds": [
+        "S1-IR19-1033",
+        "S1-IR19-1073",
+        "S1-IR19-1113",
+        "S2-IR18-DOM-214",
+        "S2-IR18-DOM-215",
+        "S2-IR18-DOM-251",
+        "S2-IR18-DOM-276",
+        "S2-IR18-DOM-301",
+        "S2-IR18-DOM-326"
+      ],
+      "sampleQueries": [
+        "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+        "Is PAN sale VATable if PAN is a product code? Group MM-37.",
+        "Is PAN sale VATable if PAN is a product code? Group MM-57."
+      ],
+      "expectedDecisions": [
+        "ALLOW",
+        "REFUSE"
+      ],
+      "actualDecisions": [
+        "REFUSE",
+        "ALLOW"
+      ]
+    },
+    {
+      "subcluster": "quoted_metalinguistic_acronym",
+      "count": 0,
+      "oracleIds": [],
+      "sampleQueries": [],
+      "expectedDecisions": [],
+      "actualDecisions": []
+    },
+    {
+      "subcluster": "ordinary_or_non_tax_homograph",
+      "count": 0,
+      "oracleIds": [],
+      "sampleQueries": [],
+      "expectedDecisions": [],
+      "actualDecisions": []
+    },
+    {
+      "subcluster": "multi_clause_acronym_context",
+      "count": 28,
+      "oracleIds": [
+        "S1-IR19-1023",
+        "S1-IR19-1033",
+        "S1-IR19-1037",
+        "S1-IR19-1063",
+        "S1-IR19-1073",
+        "S1-IR19-1077",
+        "S1-IR19-1103",
+        "S1-IR19-1113",
+        "S1-IR19-1117",
+        "S2-IR18-DOM-251",
+        "S2-IR18-DOM-276",
+        "S2-IR18-DOM-301",
+        "S2-IR18-DOM-326",
+        "S2-IR18-DOM-503",
+        "S2-IR18-DOM-505",
+        "R20N-ACX-0793",
+        "R20N-ACX-0794",
+        "R20N-ACX-0920",
+        "R20N-ACX-0933",
+        "R20N-ACX-0946",
+        "R20N-ACX-0950",
+        "R20N-ACX-0951",
+        "R20N-ACX-0955",
+        "R20N-ACX-0956",
+        "R20N-ACX-0959",
+        "R20N-ACX-0972",
+        "R20N-ACX-0985",
+        "R20N-NEG-1112"
+      ],
+      "sampleQueries": [
+        "Are school raffle receipts taxable? Group MM-12.",
+        "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+        "Does authority to print receipts apply? Group MM-19."
+      ],
+      "expectedDecisions": [
+        "ALLOW",
+        "REFUSE",
+        "CLARIFY"
+      ],
+      "actualDecisions": [
+        "REFUSE",
+        "ALLOW",
+        "CLARIFY"
+      ]
+    }
+  ],
+  "governingRules": {
+    "bareMateriallyAmbiguousNoContext": "CLARIFY",
+    "explicitBirOrTaxDefinitionContext": "ALLOW",
+    "taxProcedureOrTreatmentRelation": "ALLOW",
+    "explicitNonTaxExpansion": "REFUSE",
+    "labelNameOrCodeAssignment": "REFUSE",
+    "quotedOrTextManipulationOnly": "REFUSE"
+  },
+  "constraints": [
+    "Never invent an acronym expansion.",
+    "Capitalization must not be the controlling rule."
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "architecturalHypothesis": "Five structural defects: (1) word-boundary matching for non-tax domain nouns, replacing a substring-based global token veto that fired on ordinary morphology (app in applies); (2) scenario-tag invariance so enumerated corpus tags cannot suppress a tax relation; (3) non-tax controlling domain governs its target; (4) PH tax authority terms resolve acronym ambiguity only with substantive surrounding context; (5) explicit non-tax expansion binding controls the target.",
+  "iteration": "02"
+}

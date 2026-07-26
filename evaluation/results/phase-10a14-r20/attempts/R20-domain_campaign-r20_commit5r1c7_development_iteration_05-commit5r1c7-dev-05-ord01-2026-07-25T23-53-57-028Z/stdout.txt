@@ -1,0 +1,6 @@
+iteration 05
+overall=3077/3720 decision=3608/3720 decisionMismatches=112
+falseAllows=47 falseRefusals=62 clarifyMismatches=3
+reason=601 relation=200 metamorphic=69/100
+closedControls=ALL CLOSED
+counterfactual=285/331

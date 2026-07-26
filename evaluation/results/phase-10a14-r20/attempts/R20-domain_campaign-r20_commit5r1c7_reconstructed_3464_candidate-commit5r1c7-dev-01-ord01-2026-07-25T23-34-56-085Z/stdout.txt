@@ -1,0 +1,6 @@
+snapshot verified; analyzer=7801adda7831bb43
+allocated R20-domain_campaign-r20_commit5r1c7_reconstructed_3464_candidate-commit5r1c7-dev-01-ord01-2026-07-25T23-34-56-085Z
+applied; servicesTreeDigest=ca45622d3f6e9ad4
+overall=3009/3720 decision=3464/3720 decMismatch=256
+reason=710 relation=209 fa=72 fr=143 cm=41
+metamorphic=72/100

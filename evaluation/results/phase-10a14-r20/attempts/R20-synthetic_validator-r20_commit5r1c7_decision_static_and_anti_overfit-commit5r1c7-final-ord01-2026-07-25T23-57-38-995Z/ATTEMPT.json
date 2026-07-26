@@ -1,0 +1,45 @@
+{
+  "attemptId": "R20-synthetic_validator-r20_commit5r1c7_decision_static_and_anti_overfit-commit5r1c7-final-ord01-2026-07-25T23-57-38-995Z",
+  "attemptCategory": "synthetic_validator",
+  "gateName": "r20_commit5r1c7_decision_static_and_anti_overfit",
+  "cycle": "commit5r1c7-final",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "516a7c454eaed7ff185b491e11861dee79991103",
+  "evidenceHeadAtStart": "516a7c454eaed7ff185b491e11861dee79991103",
+  "runtimeBaselineCommit": "516a7c454eaed7ff185b491e11861dee79991103",
+  "runtimeTreeDigest": "2f1d619f54ec8c73ab651bd8a80d6018e9856b81bd2d9c9421d918477aa56cdf",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "2548f06a687a20b49b6fb5236bcccc50f2f3a36bb525b01afb1e09fe4df26e72",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "commit5r1c7-gates.mjs"
+  ],
+  "commandHash": "a6edca2c37624fc7bdfed548f258959db8b7559f9776db4c15342b23ecd4006d",
+  "startedAt": "2026-07-25T23:57:39.272Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-25T23:57:39.299Z",
+  "exitCode": 0,
+  "disposition": "controlling_static_anti_overfit_pass",
+  "evidenceHeadAtEnd": "516a7c454eaed7ff185b491e11861dee79991103",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C7_DECISION_STATIC_AND_ANTI_OVERFIT.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7_decision_static_and_anti_overfit-commit5r1c7-final-ord01-2026-07-25T23-57-38-995Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c7_decision_static_and_anti_overfit-commit5r1c7-final-ord01-2026-07-25T23-57-38-995Z/stderr.txt",
+  "stdoutSha256": "e1f54fef286653766820e270f3d2130110bfa6d3c146191d1ad1460c56ac746f",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

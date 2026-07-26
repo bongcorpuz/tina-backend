@@ -1,0 +1,68 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "generatedUtc": "2026-07-25T23:58:52.843Z",
+  "acceptanceRule": "decision mismatches decrease; closed decision controls remain closed; no material increase in false allows/refusals/clarify; relevant counterfactuals pass; no exact-query or oracle leakage",
+  "decisions": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c7_development_iteration_02-commit5r1c7-dev-02-ord01-2026-07-25T23-47-22-720Z",
+      "priorDecisionMismatches": 256,
+      "newDecisionMismatches": 186,
+      "decreased": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 669,
+        "relationMismatches": 209
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c7_development_iteration_03-commit5r1c7-dev-03-ord01-2026-07-25T23-49-32-332Z",
+      "priorDecisionMismatches": 186,
+      "newDecisionMismatches": 179,
+      "decreased": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 662,
+        "relationMismatches": 209
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c7_development_iteration_04-commit5r1c7-dev-04-ord01-2026-07-25T23-50-49-053Z",
+      "priorDecisionMismatches": 179,
+      "newDecisionMismatches": 156,
+      "decreased": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 656,
+        "relationMismatches": 209
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c7_development_iteration_05-commit5r1c7-dev-05-ord01-2026-07-25T23-53-57-028Z",
+      "priorDecisionMismatches": 156,
+      "newDecisionMismatches": 112,
+      "decreased": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 601,
+        "relationMismatches": 200
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c7_development_iteration_06-commit5r1c7-dev-06-ord01-2026-07-25T23-55-29-678Z",
+      "priorDecisionMismatches": 112,
+      "newDecisionMismatches": 97,
+      "decreased": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 630,
+        "relationMismatches": 200
+      }
+    }
+  ],
+  "rejectedCandidatesPreserved": true
+}

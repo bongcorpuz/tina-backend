@@ -1,0 +1,288 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "residualCount": 34,
+  "byCluster": {
+    "ACRONYM_AS_LABEL_OR_NAME": 9,
+    "CONCRETE_TARGET_FALSE_TAX_ANCHOR": 22,
+    "QUOTATION_SCOPE": 3
+  },
+  "multiClauseDefects": 18,
+  "filipinoTaglishDefects": 0,
+  "targetResolutionDefects": 9,
+  "fallbackDefects": 0,
+  "rows": [
+    {
+      "oracleId": "S1-IR19-1033",
+      "query": "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "query": "Is PAN sale VATable if PAN is a product code? Group MM-37.",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "query": "Is PAN sale VATable if PAN is a product code? Group MM-57.",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-195",
+      "query": "permanent establishment in architecture",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-199",
+      "query": "reconsideration request for exam grade",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-201",
+      "query": "notice for informal conference agenda",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-214",
+      "query": "input VAT as form input label",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-215",
+      "query": "output VAT as console output label",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-229",
+      "query": "return due in library books",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-251",
+      "query": "Input VAT into this web form field. Variant 1.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-276",
+      "query": "Input VAT into this web form field. Variant 2.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-301",
+      "query": "Input VAT into this web form field. Variant 3.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-326",
+      "query": "Input VAT into this web form field. Variant 4.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-330",
+      "query": "Is this deductible? Context 1.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-350",
+      "query": "Is this deductible? Context 2.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-370",
+      "query": "Is this deductible? Context 3.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-390",
+      "query": "Is this deductible? Context 4.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-471",
+      "query": "Is this font taxable in CSS?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-503",
+      "query": "Input VAT into a text box.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-505",
+      "query": "Output VAT from a function.",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S3-IR17-102",
+      "query": "Can a supplier reject a return of goods?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S3-IR17-107",
+      "query": "What if a payment due date falls on a weekend?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S3-IR17-132",
+      "query": "What return date appears in a summons?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S3-IR17-134",
+      "query": "What report must a corporation file after board changes?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S3-IR17-136",
+      "query": "What is the due date for a position paper?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "S3-IR17-139",
+      "query": "What is the deadline for a labor appeal bond?",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-ENT-0571",
+      "query": "office cabinet filing layout",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-ENT-0696",
+      "query": "car wash membership levy",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-ENT-0711",
+      "query": "dental appointment deadline",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-ACX-0793",
+      "query": "Please clarify RMC.",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-ACX-0794",
+      "query": "PLEASE CLARIFY RMC.",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-QTO-1010",
+      "query": "Count the letters in \"transfer pricing\".",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "CLARIFY",
+      "primaryCluster": "QUOTATION_SCOPE",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-QTO-1013",
+      "query": "Repeat the phrase \"transfer pricing\".",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "CLARIFY",
+      "primaryCluster": "QUOTATION_SCOPE",
+      "coveredByGenericRule": true
+    },
+    {
+      "oracleId": "R20N-QTO-1014",
+      "query": "Alphabetize the words \"transfer pricing\".",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "CLARIFY",
+      "primaryCluster": "QUOTATION_SCOPE",
+      "coveredByGenericRule": true
+    }
+  ],
+  "noExactQueryPatchPermitted": true
+}

@@ -1,0 +1,4379 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "authoredBeforeRuntimeChange": true,
+  "expectationSource": "structural rules authored by the executor; no model-generated expectations",
+  "exactR3QueryLeakage": 0,
+  "families": [
+    "concrete_target_relation",
+    "concrete_vs_label",
+    "contextual_acronym",
+    "resolved_vs_unresolved",
+    "compliance_vs_treatment",
+    "quoted_vs_substantive",
+    "multiclause_task_focus",
+    "filipino_taglish",
+    "tax_vs_civil_domain",
+    "numeric_invariance",
+    "concrete_target_relation_expanded",
+    "contentless_referent",
+    "authority_term_vs_homograph",
+    "explicit_non_tax_expansion",
+    "tax_vs_civil_domain_expanded"
+  ],
+  "pairCount": 197,
+  "queryCount": 331,
+  "pairs": [
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is a delivery van deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of a delivery van next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of a delivery van?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about a delivery van.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is office air-conditioning units deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of office air-conditioning units next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of office air-conditioning units?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about office air-conditioning units.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is warehouse rent deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of warehouse rent next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of warehouse rent?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about warehouse rent.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is a consultant retainer deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of a consultant retainer next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of a consultant retainer?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about a consultant retainer.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is imported packaging film deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of imported packaging film next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of imported packaging film?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about imported packaging film.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is staff uniforms deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of staff uniforms next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of staff uniforms?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about staff uniforms.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is a company generator deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of a company generator next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of a company generator?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about a company generator.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is legal retainer fees deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of legal retainer fees next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of legal retainer fees?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about legal retainer fees.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is branch electricity deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of branch electricity next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of branch electricity?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about branch electricity.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax predicate governs the target vs ordinary logistics action",
+      "a": {
+        "query": "Is a leased forklift deductible for income tax purposes?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please arrange delivery of a leased forklift next Tuesday.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation",
+      "contrast": "tax treatment vs marketing copy",
+      "a": {
+        "query": "What is the VAT treatment of a leased forklift?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write a short advertisement about a leased forklift.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the VAT rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"VAT\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is VAT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as VAT_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the CGT rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"CGT\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is CGT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as CGT_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the DST rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"DST\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is DST computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as DST_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the MCIT rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"MCIT\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is MCIT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as MCIT_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the OSD rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"OSD\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is OSD computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as OSD_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the RCIT rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"RCIT\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is RCIT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as RCIT_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the EWT rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"EWT\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is EWT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as EWT_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "tax relation over a target vs assigning the token as a label",
+      "a": {
+        "query": "Is the FWT rate applied to this sale of equipment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Name the new spreadsheet column \"FWT\".",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_label",
+      "contrast": "computation relation vs filename binding",
+      "a": {
+        "query": "How is FWT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Save the report file as FWT_2026.xlsx",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "explicit tax context vs explicit non-tax expansion",
+      "a": {
+        "query": "What does PAN mean in BIR tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "In our system, PAN stands for the staff carpool roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "tax procedure relation vs label binding",
+      "a": {
+        "query": "Is PAN required when filing the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Treat PAN as the label for our internal archive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "bare materially ambiguous acronym with no controlling context",
+      "a": {
+        "query": "PAN?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Note: PAN = weekend hiking club.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "explicit tax context vs explicit non-tax expansion",
+      "a": {
+        "query": "What does CAR mean in BIR tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "In our system, CAR stands for the staff carpool roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "tax procedure relation vs label binding",
+      "a": {
+        "query": "Is CAR required when filing the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Treat CAR as the label for our internal archive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "bare materially ambiguous acronym with no controlling context",
+      "a": {
+        "query": "CAR?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Note: CAR = weekend hiking club.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "explicit tax context vs explicit non-tax expansion",
+      "a": {
+        "query": "What does PT mean in BIR tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "In our system, PT stands for the staff carpool roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "tax procedure relation vs label binding",
+      "a": {
+        "query": "Is PT required when filing the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Treat PT as the label for our internal archive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "bare materially ambiguous acronym with no controlling context",
+      "a": {
+        "query": "PT?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Note: PT = weekend hiking club.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "explicit tax context vs explicit non-tax expansion",
+      "a": {
+        "query": "What does AR mean in BIR tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "In our system, AR stands for the staff carpool roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "tax procedure relation vs label binding",
+      "a": {
+        "query": "Is AR required when filing the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Treat AR as the label for our internal archive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "bare materially ambiguous acronym with no controlling context",
+      "a": {
+        "query": "AR?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Note: AR = weekend hiking club.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "explicit tax context vs explicit non-tax expansion",
+      "a": {
+        "query": "What does CV mean in BIR tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "In our system, CV stands for the staff carpool roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "tax procedure relation vs label binding",
+      "a": {
+        "query": "Is CV required when filing the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Treat CV as the label for our internal archive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "bare materially ambiguous acronym with no controlling context",
+      "a": {
+        "query": "CV?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Note: CV = weekend hiking club.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "explicit tax context vs explicit non-tax expansion",
+      "a": {
+        "query": "What does BOC mean in BIR tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "In our system, BOC stands for the staff carpool roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "tax procedure relation vs label binding",
+      "a": {
+        "query": "Is BOC required when filing the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Treat BOC as the label for our internal archive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contextual_acronym",
+      "contrast": "bare materially ambiguous acronym with no controlling context",
+      "a": {
+        "query": "BOC?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Note: BOC = weekend hiking club.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent",
+      "a": {
+        "query": "We bought a service vehicle this quarter. Is it deductible?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it deductible? Situation 7.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag",
+      "a": {
+        "query": "Our firm paid a security agency monthly. Is that payment deductible?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that deductible? Item 12.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent",
+      "a": {
+        "query": "We bought a service vehicle this quarter. Is it subject to VAT?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to VAT? Situation 7.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag",
+      "a": {
+        "query": "Our firm paid a security agency monthly. Is that payment subject to VAT?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to VAT? Item 12.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent",
+      "a": {
+        "query": "We bought a service vehicle this quarter. Is it subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to withholding tax? Situation 7.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag",
+      "a": {
+        "query": "Our firm paid a security agency monthly. Is that payment subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to withholding tax? Item 12.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent",
+      "a": {
+        "query": "We bought a service vehicle this quarter. Is it taxable income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it taxable income? Situation 7.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag",
+      "a": {
+        "query": "Our firm paid a security agency monthly. Is that payment taxable income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that taxable income? Item 12.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent",
+      "a": {
+        "query": "We bought a service vehicle this quarter. Is it zero-rated?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it zero-rated? Situation 7.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag",
+      "a": {
+        "query": "Our firm paid a security agency monthly. Is that payment zero-rated?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that zero-rated? Item 12.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "contrast": "procedure relation and treatment relation are both governed tax relations",
+      "a": {
+        "query": "Which BIR form is used to remit expanded withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How is expanded withholding tax computed on rentals?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "contrast": "procedure relation and treatment relation are both governed tax relations",
+      "a": {
+        "query": "When must the quarterly percentage tax return be filed?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is percentage tax deductible as an expense?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "contrast": "procedure relation and treatment relation are both governed tax relations",
+      "a": {
+        "query": "Where do I register books of accounts?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Are bookkeeping fees subject to VAT?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "contrast": "procedure relation and treatment relation are both governed tax relations",
+      "a": {
+        "query": "How do I secure a certificate of registration?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the registration fee a deductible expense?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "contrast": "procedure relation and treatment relation are both governed tax relations",
+      "a": {
+        "query": "What attachment supports a claim for creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How is creditable withholding tax applied against income tax due?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "substantive tax use vs metalinguistic text manipulation",
+      "a": {
+        "query": "How is VAT applied to a sale of real property?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Spell the word \"VAT\" backwards.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "tax definition vs character counting",
+      "a": {
+        "query": "Define VAT under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How many letters are in \"VAT\"?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "substantive tax use vs metalinguistic text manipulation",
+      "a": {
+        "query": "How is DST applied to a sale of real property?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Spell the word \"DST\" backwards.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "tax definition vs character counting",
+      "a": {
+        "query": "Define DST under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How many letters are in \"DST\"?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "substantive tax use vs metalinguistic text manipulation",
+      "a": {
+        "query": "How is CGT applied to a sale of real property?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Spell the word \"CGT\" backwards.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "tax definition vs character counting",
+      "a": {
+        "query": "Define CGT under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How many letters are in \"CGT\"?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "substantive tax use vs metalinguistic text manipulation",
+      "a": {
+        "query": "How is MCIT applied to a sale of real property?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Spell the word \"MCIT\" backwards.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "contrast": "tax definition vs character counting",
+      "a": {
+        "query": "Define MCIT under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How many letters are in \"MCIT\"?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "multiclause_task_focus",
+      "contrast": "clause-order reversal preserves the primary requested action",
+      "a": {
+        "query": "Our books are messy, but my main question is whether the equipment purchase is VAT-creditable.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "My main question is whether the equipment purchase is VAT-creditable, although our books are messy.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "multiclause_task_focus",
+      "contrast": "clause-order reversal preserves the primary requested action",
+      "a": {
+        "query": "Before anything else, is the freight charge subject to withholding tax? We can discuss the ledger later.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "We can discuss the ledger later; before anything else, is the freight charge subject to withholding tax?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "multiclause_task_focus",
+      "contrast": "clause-order reversal preserves the primary requested action",
+      "a": {
+        "query": "Ignore the office move for now — is the terminal leave benefit taxable?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the terminal leave benefit taxable? Ignore the office move for now.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "multiclause_task_focus",
+      "contrast": "non-tax primary action preserved under clause reversal",
+      "a": {
+        "query": "Please book the venue, and also name the folder VAT.",
+        "expected": "REFUSE"
+      },
+      "b": {
+        "query": "Also name the folder VAT, and please book the venue.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "multiclause_task_focus",
+      "contrast": "non-tax primary action preserved under clause reversal",
+      "a": {
+        "query": "Draft the party invite, then tag the file DST.",
+        "expected": "REFUSE"
+      },
+      "b": {
+        "query": "Then tag the file DST, after drafting the party invite.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Ang bilihin ng kagamitan, deductible ba ito sa income tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Pakiluto naman ng adobo para sa handaan.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "May VAT ba ang serbisyo ng contractor namin?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Ano ang pangalan ng bagong folder namin?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Kailan dapat i-file ang quarterly return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Kailan ang birthday party ng anak ko?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Paano kinakalkula ang withholding tax sa upa?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Paano maglaro ng basketball?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Taxable ba ang bonus na natanggap ng empleyado?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Masarap ba ang bagong kainan sa kanto?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "contrast": "tax relation vs private civil/corporate remedy question",
+      "a": {
+        "query": "Is the rental payment subject to expanded withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can my landlord evict a tenant for one late payment?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "contrast": "tax relation vs private civil/corporate remedy question",
+      "a": {
+        "query": "Is the contractor payment subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can a contractor be sued for missing a deadline?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "contrast": "tax relation vs private civil/corporate remedy question",
+      "a": {
+        "query": "Are director fees subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can the board remove a director under corporate law?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "contrast": "tax relation vs private civil/corporate remedy question",
+      "a": {
+        "query": "Is the sale of shares subject to capital gains tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can a shareholder inspect corporate records?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "What penalty applies for late payment of deficiency interest?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What penalty applies for late payment of deficiency interest?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "What penalty applies for late payment of deficiency interest in scenario 3?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What penalty applies for late payment of deficiency interest in scenario 3?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "What penalty applies for late payment of deficiency interest in scenario 77?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What penalty applies for late payment of deficiency interest in scenario 77?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "What penalty applies for late payment of deficiency interest Batch QQ-5.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What penalty applies for late payment of deficiency interest Batch QQ-5.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Can input VAT be claimed on a training seminar?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can input VAT be claimed on a training seminar?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Can input VAT be claimed on a training seminar in scenario 3?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can input VAT be claimed on a training seminar in scenario 3?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Can input VAT be claimed on a training seminar in scenario 77?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can input VAT be claimed on a training seminar in scenario 77?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Can input VAT be claimed on a training seminar Batch QQ-5.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can input VAT be claimed on a training seminar Batch QQ-5.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Does transfer pricing documentation apply?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does transfer pricing documentation apply?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Does transfer pricing documentation apply in scenario 3?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does transfer pricing documentation apply in scenario 3?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Does transfer pricing documentation apply in scenario 77?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does transfer pricing documentation apply in scenario 77?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "numeric_invariance",
+      "contrast": "scenario tag must not alter a governed tax decision",
+      "a": {
+        "query": "Does transfer pricing documentation apply Batch QQ-5.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does transfer pricing documentation apply Batch QQ-5.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a company laptop deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a company laptop.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a company laptop subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a company laptop.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a company laptop subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a company laptop.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is imported raw sugar deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for imported raw sugar.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is imported raw sugar subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for imported raw sugar.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is imported raw sugar subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for imported raw sugar.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a service contractor invoice deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a service contractor invoice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a service contractor invoice subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a service contractor invoice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a service contractor invoice subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a service contractor invoice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is factory utilities deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for factory utilities.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is factory utilities subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for factory utilities.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is factory utilities subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for factory utilities.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a delivery motorcycle deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a delivery motorcycle.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a delivery motorcycle subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a delivery motorcycle.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a delivery motorcycle subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a delivery motorcycle.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is seminar registration fees deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for seminar registration fees.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is seminar registration fees subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for seminar registration fees.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is seminar registration fees subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for seminar registration fees.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is an office lease deposit deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for an office lease deposit.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is an office lease deposit subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for an office lease deposit.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is an office lease deposit subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for an office lease deposit.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is freight and handling charges deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for freight and handling charges.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is freight and handling charges subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for freight and handling charges.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is freight and handling charges subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for freight and handling charges.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a distributor commission deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a distributor commission.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a distributor commission subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a distributor commission.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a distributor commission subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a distributor commission.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is employee medical allowance deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for employee medical allowance.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is employee medical allowance subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for employee medical allowance.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is employee medical allowance subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for employee medical allowance.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a purchased trademark deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a purchased trademark.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a purchased trademark subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a purchased trademark.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is a purchased trademark subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for a purchased trademark.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is spare parts inventory deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for spare parts inventory.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is spare parts inventory subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for spare parts inventory.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task",
+      "a": {
+        "query": "Is spare parts inventory subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please summarise the vendor brochure for spare parts inventory.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "Is this deductible for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this deductible? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "Is this deductible for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this deductible? Case AA-9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "Is this deductible for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this deductible? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "When is the return due for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "When is the return due? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "When is the return due for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "When is the return due? Case AA-9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "When is the return due for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "When is the return due? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "What form should I use for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What form should I use? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "What form should I use for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What form should I use? Case AA-9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "What form should I use for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What form should I use? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "What is the filing deadline for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the filing deadline? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "What is the filing deadline for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the filing deadline? Case AA-9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "What is the filing deadline for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the filing deadline? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "Is it subject to VAT for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to VAT? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "Is it subject to VAT for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to VAT? Case AA-9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "Is it subject to VAT for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to VAT? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "How much tax is due for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How much tax is due? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "How much tax is due for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How much tax is due? Case AA-9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "contentless_referent",
+      "contrast": "concrete resolved target vs contentless tagged attribute",
+      "a": {
+        "query": "How much tax is due for the imported machinery we purchased?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How much tax is due? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is RMC under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to RMC.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does RMC apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of RMC in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is RCIT under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to RCIT.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does RCIT apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of RCIT in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is MCIT under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to MCIT.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does MCIT apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of MCIT in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is OSD under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to OSD.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does OSD apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of OSD in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is CTA under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to CTA.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does CTA apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of CTA in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is DST under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to DST.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does DST apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of DST in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is EWT under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to EWT.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does EWT apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of EWT in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "PH tax authority term definition vs folder naming",
+      "a": {
+        "query": "What is FWT under Philippine tax rules?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Rename the backup folder to FWT.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "contrast": "tax application relation vs text manipulation",
+      "a": {
+        "query": "How does FWT apply to a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the letters of FWT in reverse order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PAN required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Within this document, PAN refers to the pantry access notice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is CAR required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Within this document, CAR refers to the carpool arrival record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PT required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Within this document, PT refers to the paint touch-up ticket.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PAN required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "For clarity, PAN abbreviates the pantry access notice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is CAR required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "For clarity, CAR abbreviates the carpool arrival record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PT required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "For clarity, PT abbreviates the paint touch-up ticket.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PAN required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Our team writes PAN to mean the pantry access notice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is CAR required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Our team writes CAR to mean the carpool arrival record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PT required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Our team writes PT to mean the paint touch-up ticket.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PAN required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Throughout the manual, PAN denotes the pantry access notice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is CAR required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Throughout the manual, CAR denotes the carpool arrival record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PT required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Throughout the manual, PT denotes the paint touch-up ticket.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PAN required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please read PAN as the pantry access notice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is CAR required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please read CAR as the carpool arrival record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PT required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please read PT as the paint touch-up ticket.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PAN required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "By convention PAN indicates the pantry access notice.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is CAR required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "By convention CAR indicates the carpool arrival record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding",
+      "a": {
+        "query": "Is PT required on the BIR registration form?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "By convention PT indicates the paint touch-up ticket.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy",
+      "a": {
+        "query": "Is the professional fee subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What notice period ends a private lease?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy",
+      "a": {
+        "query": "Is the interest income subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What remedies exist if a supplier breaches our purchase order?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy",
+      "a": {
+        "query": "Are royalties subject to final withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Which tribunal hears an unpaid personal loan dispute?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy",
+      "a": {
+        "query": "Is the dividend subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How long may a corporation delay its general membership meeting?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy",
+      "a": {
+        "query": "Is the equipment lease subject to VAT?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Must a residential sublease be witnessed by two people?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy",
+      "a": {
+        "query": "Is the insurance premium deductible?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "May a company reclaim relocation costs from a departing hire?",
+        "expected": "REFUSE"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "family": "concrete_target_relation",
+      "query": "Is a delivery van deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of a delivery van next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of a delivery van?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about a delivery van.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is office air-conditioning units deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of office air-conditioning units next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of office air-conditioning units?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about office air-conditioning units.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is warehouse rent deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of warehouse rent next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of warehouse rent?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about warehouse rent.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is a consultant retainer deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of a consultant retainer next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of a consultant retainer?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about a consultant retainer.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is imported packaging film deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of imported packaging film next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of imported packaging film?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about imported packaging film.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is staff uniforms deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of staff uniforms next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of staff uniforms?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about staff uniforms.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is a company generator deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of a company generator next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of a company generator?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about a company generator.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is legal retainer fees deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of legal retainer fees next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of legal retainer fees?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about legal retainer fees.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is branch electricity deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of branch electricity next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of branch electricity?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about branch electricity.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Is a leased forklift deductible for income tax purposes?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Please arrange delivery of a leased forklift next Tuesday.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax predicate governs the target vs ordinary logistics action"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "What is the VAT treatment of a leased forklift?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_target_relation",
+      "query": "Write a short advertisement about a leased forklift.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax treatment vs marketing copy"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the VAT rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"VAT\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is VAT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as VAT_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the CGT rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"CGT\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is CGT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as CGT_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the DST rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"DST\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is DST computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as DST_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the MCIT rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"MCIT\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is MCIT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as MCIT_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the OSD rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"OSD\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is OSD computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as OSD_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the RCIT rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"RCIT\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is RCIT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as RCIT_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the EWT rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"EWT\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is EWT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as EWT_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Is the FWT rate applied to this sale of equipment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Name the new spreadsheet column \"FWT\".",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation over a target vs assigning the token as a label"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "How is FWT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "concrete_vs_label",
+      "query": "Save the report file as FWT_2026.xlsx",
+      "expectedDecision": "REFUSE",
+      "contrast": "computation relation vs filename binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "What does PAN mean in BIR tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "In our system, PAN stands for the staff carpool roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Is PAN required when filing the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Treat PAN as the label for our internal archive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "PAN?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Note: PAN = weekend hiking club.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "What does CAR mean in BIR tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "In our system, CAR stands for the staff carpool roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Is CAR required when filing the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Treat CAR as the label for our internal archive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "CAR?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Note: CAR = weekend hiking club.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "What does PT mean in BIR tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "In our system, PT stands for the staff carpool roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Is PT required when filing the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Treat PT as the label for our internal archive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "PT?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Note: PT = weekend hiking club.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "What does AR mean in BIR tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "In our system, AR stands for the staff carpool roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Is AR required when filing the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Treat AR as the label for our internal archive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "AR?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Note: AR = weekend hiking club.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "What does CV mean in BIR tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "In our system, CV stands for the staff carpool roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Is CV required when filing the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Treat CV as the label for our internal archive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "CV?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Note: CV = weekend hiking club.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "What does BOC mean in BIR tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "In our system, BOC stands for the staff carpool roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax context vs explicit non-tax expansion"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Is BOC required when filing the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Treat BOC as the label for our internal archive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label binding"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "BOC?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "contextual_acronym",
+      "query": "Note: BOC = weekend hiking club.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous acronym with no controlling context"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "We bought a service vehicle this quarter. Is it deductible?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it deductible? Situation 7.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Our firm paid a security agency monthly. Is that payment deductible?",
+      "expectedDecision": "ALLOW",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that deductible? Item 12.",
+      "expectedDecision": "REFUSE",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "We bought a service vehicle this quarter. Is it subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it subject to VAT? Situation 7.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Our firm paid a security agency monthly. Is that payment subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that subject to VAT? Item 12.",
+      "expectedDecision": "REFUSE",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "We bought a service vehicle this quarter. Is it subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it subject to withholding tax? Situation 7.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Our firm paid a security agency monthly. Is that payment subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that subject to withholding tax? Item 12.",
+      "expectedDecision": "REFUSE",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "We bought a service vehicle this quarter. Is it taxable income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it taxable income? Situation 7.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Our firm paid a security agency monthly. Is that payment taxable income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that taxable income? Item 12.",
+      "expectedDecision": "REFUSE",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "We bought a service vehicle this quarter. Is it zero-rated?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is it zero-rated? Situation 7.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent vs contentless tagged referent"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Our firm paid a security agency monthly. Is that payment zero-rated?",
+      "expectedDecision": "ALLOW",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "resolved_vs_unresolved",
+      "query": "Is that zero-rated? Item 12.",
+      "expectedDecision": "REFUSE",
+      "contrast": "resolved antecedent vs bare attribute with scenario tag"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "Which BIR form is used to remit expanded withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "How is expanded withholding tax computed on rentals?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "When must the quarterly percentage tax return be filed?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "Is percentage tax deductible as an expense?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "Where do I register books of accounts?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "Are bookkeeping fees subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "How do I secure a certificate of registration?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "Is the registration fee a deductible expense?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "What attachment supports a claim for creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "query": "How is creditable withholding tax applied against income tax due?",
+      "expectedDecision": "ALLOW",
+      "contrast": "procedure relation and treatment relation are both governed tax relations"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How is VAT applied to a sale of real property?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Spell the word \"VAT\" backwards.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Define VAT under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How many letters are in \"VAT\"?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How is DST applied to a sale of real property?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Spell the word \"DST\" backwards.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Define DST under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How many letters are in \"DST\"?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How is CGT applied to a sale of real property?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Spell the word \"CGT\" backwards.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Define CGT under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How many letters are in \"CGT\"?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How is MCIT applied to a sale of real property?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Spell the word \"MCIT\" backwards.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text manipulation"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "Define MCIT under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "quoted_vs_substantive",
+      "query": "How many letters are in \"MCIT\"?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs character counting"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Our books are messy, but my main question is whether the equipment purchase is VAT-creditable.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "My main question is whether the equipment purchase is VAT-creditable, although our books are messy.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Before anything else, is the freight charge subject to withholding tax? We can discuss the ledger later.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "We can discuss the ledger later; before anything else, is the freight charge subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Ignore the office move for now — is the terminal leave benefit taxable?",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Is the terminal leave benefit taxable? Ignore the office move for now.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Please book the venue, and also name the folder VAT.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Also name the folder VAT, and please book the venue.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Draft the party invite, then tag the file DST.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "multiclause_task_focus",
+      "query": "Then tag the file DST, after drafting the party invite.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Ang bilihin ng kagamitan, deductible ba ito sa income tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Pakiluto naman ng adobo para sa handaan.",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "May VAT ba ang serbisyo ng contractor namin?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Ano ang pangalan ng bagong folder namin?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Kailan dapat i-file ang quarterly return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Kailan ang birthday party ng anak ko?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Paano kinakalkula ang withholding tax sa upa?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Paano maglaro ng basketball?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Taxable ba ang bonus na natanggap ng empleyado?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Masarap ba ang bagong kainan sa kanto?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Is the rental payment subject to expanded withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Can my landlord evict a tenant for one late payment?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Is the contractor payment subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Can a contractor be sued for missing a deadline?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Are director fees subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Can the board remove a director under corporate law?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Is the sale of shares subject to capital gains tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "tax_vs_civil_domain",
+      "query": "Can a shareholder inspect corporate records?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs private civil/corporate remedy question"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "What penalty applies for late payment of deficiency interest?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "What penalty applies for late payment of deficiency interest in scenario 3?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "What penalty applies for late payment of deficiency interest in scenario 77?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "What penalty applies for late payment of deficiency interest Batch QQ-5.",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Can input VAT be claimed on a training seminar?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Can input VAT be claimed on a training seminar in scenario 3?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Can input VAT be claimed on a training seminar in scenario 77?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Can input VAT be claimed on a training seminar Batch QQ-5.",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Does transfer pricing documentation apply?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Does transfer pricing documentation apply in scenario 3?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Does transfer pricing documentation apply in scenario 77?",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "numeric_invariance",
+      "query": "Does transfer pricing documentation apply Batch QQ-5.",
+      "expectedDecision": "ALLOW",
+      "contrast": "scenario tag must not alter a governed tax decision"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a company laptop deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for a company laptop.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a company laptop subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a company laptop subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is imported raw sugar deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for imported raw sugar.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is imported raw sugar subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is imported raw sugar subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a service contractor invoice deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for a service contractor invoice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a service contractor invoice subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a service contractor invoice subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is factory utilities deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for factory utilities.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is factory utilities subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is factory utilities subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a delivery motorcycle deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for a delivery motorcycle.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a delivery motorcycle subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a delivery motorcycle subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is seminar registration fees deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for seminar registration fees.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is seminar registration fees subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is seminar registration fees subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is an office lease deposit deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for an office lease deposit.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is an office lease deposit subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is an office lease deposit subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is freight and handling charges deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for freight and handling charges.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is freight and handling charges subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is freight and handling charges subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a distributor commission deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for a distributor commission.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a distributor commission subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a distributor commission subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is employee medical allowance deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for employee medical allowance.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is employee medical allowance subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is employee medical allowance subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a purchased trademark deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for a purchased trademark.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a purchased trademark subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a purchased trademark subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is spare parts inventory deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Please summarise the vendor brochure for spare parts inventory.",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is spare parts inventory subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "concrete_target_relation_expanded",
+      "query": "Is spare parts inventory subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax predicate over concrete target vs ordinary document task"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible for the imported machinery we purchased?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible? Case AA-9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is this deductible? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due for the imported machinery we purchased?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due? Case AA-9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "When is the return due? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use for the imported machinery we purchased?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use? Case AA-9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What form should I use? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline for the imported machinery we purchased?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline? Case AA-9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "What is the filing deadline? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT for the imported machinery we purchased?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT? Case AA-9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "Is it subject to VAT? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "How much tax is due for the imported machinery we purchased?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "How much tax is due? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "How much tax is due? Case AA-9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "contentless_referent",
+      "query": "How much tax is due? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete resolved target vs contentless tagged attribute"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is RMC under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to RMC.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does RMC apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of RMC in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is RCIT under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to RCIT.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does RCIT apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of RCIT in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is MCIT under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to MCIT.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does MCIT apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of MCIT in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is OSD under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to OSD.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does OSD apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of OSD in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is CTA under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to CTA.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does CTA apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of CTA in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is DST under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to DST.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does DST apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of DST in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is EWT under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to EWT.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does EWT apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of EWT in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "What is FWT under Philippine tax rules?",
+      "expectedDecision": "ALLOW",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Rename the backup folder to FWT.",
+      "expectedDecision": "REFUSE",
+      "contrast": "PH tax authority term definition vs folder naming"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "How does FWT apply to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "authority_term_vs_homograph",
+      "query": "Print the letters of FWT in reverse order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax application relation vs text manipulation"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Is PAN required on the BIR registration form?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Within this document, PAN refers to the pantry access notice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Is CAR required on the BIR registration form?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Within this document, CAR refers to the carpool arrival record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Is PT required on the BIR registration form?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Within this document, PT refers to the paint touch-up ticket.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "For clarity, PAN abbreviates the pantry access notice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "For clarity, CAR abbreviates the carpool arrival record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "For clarity, PT abbreviates the paint touch-up ticket.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Our team writes PAN to mean the pantry access notice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Our team writes CAR to mean the carpool arrival record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Our team writes PT to mean the paint touch-up ticket.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Throughout the manual, PAN denotes the pantry access notice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Throughout the manual, CAR denotes the carpool arrival record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Throughout the manual, PT denotes the paint touch-up ticket.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Please read PAN as the pantry access notice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Please read CAR as the carpool arrival record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "Please read PT as the paint touch-up ticket.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "By convention PAN indicates the pantry access notice.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "By convention CAR indicates the carpool arrival record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "explicit_non_tax_expansion",
+      "query": "By convention PT indicates the paint touch-up ticket.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs explicit non-tax expansion binding"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the professional fee subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "What notice period ends a private lease?",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the interest income subject to final tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "What remedies exist if a supplier breaches our purchase order?",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Are royalties subject to final withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Which tribunal hears an unpaid personal loan dispute?",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the dividend subject to final tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "How long may a corporation delay its general membership meeting?",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the equipment lease subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Must a residential sublease be witnessed by two people?",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the insurance premium deductible?",
+      "expectedDecision": "ALLOW",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    },
+    {
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "May a company reclaim relocation costs from a departing hire?",
+      "expectedDecision": "REFUSE",
+      "contrast": "governed tax relation vs private civil or non-tax regulatory remedy"
+    }
+  ]
+}

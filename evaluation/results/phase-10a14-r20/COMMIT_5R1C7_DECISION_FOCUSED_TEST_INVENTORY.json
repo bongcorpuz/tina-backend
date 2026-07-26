@@ -1,0 +1,15 @@
+{
+  "unit": "COMMIT 5R1-C7",
+  "coverage": [
+    "all_three_decisions",
+    "closed_decision_controls",
+    "contextual_acronyms",
+    "label_binding",
+    "quoted_term_scope",
+    "non_tax_actions",
+    "filipino_taglish",
+    "multi_clause",
+    "numeric_scenario"
+  ],
+  "basis": "R3 rows partitioned by structural feature; no exact-query or oracle-id lookup"
+}
