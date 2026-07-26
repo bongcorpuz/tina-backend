@@ -1,0 +1,34 @@
+[
+  {
+    "oracleId": "S3-IR17-105",
+    "query": "Can a private lease include a taxable costs clause?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "private_contract_non_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S3-IR17-144",
+    "query": "Is it taxable?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "generic_ambiguous",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "no_tax_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  }
+]

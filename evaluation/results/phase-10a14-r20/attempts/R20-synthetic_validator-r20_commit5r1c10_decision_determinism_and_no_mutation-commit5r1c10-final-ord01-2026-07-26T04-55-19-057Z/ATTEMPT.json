@@ -1,0 +1,45 @@
+{
+  "attemptId": "R20-synthetic_validator-r20_commit5r1c10_decision_determinism_and_no_mutation-commit5r1c10-final-ord01-2026-07-26T04-55-19-057Z",
+  "attemptCategory": "synthetic_validator",
+  "gateName": "r20_commit5r1c10_decision_determinism_and_no_mutation",
+  "cycle": "commit5r1c10-final",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "9d4182ff95006406367fea3c40cd74265e67b9be",
+  "evidenceHeadAtStart": "9d4182ff95006406367fea3c40cd74265e67b9be",
+  "runtimeBaselineCommit": "9d4182ff95006406367fea3c40cd74265e67b9be",
+  "runtimeTreeDigest": "42360feadc5be5f1f7d203551ed5296eb0f4338eb59ba8b9fc6ecea2d6fe61ce",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "19b14234506314450aa6705d9cd56a3b287850e9e528f774915cf9e52d667fcf",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "commit5r1c10-gates.mjs"
+  ],
+  "commandHash": "f333e8b857cf1df4903bcf1bf1f014ca15d254980efea524780c9f38a78e2dd0",
+  "startedAt": "2026-07-26T04:55:19.292Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-26T04:55:20.003Z",
+  "exitCode": 0,
+  "disposition": "controlling_determinism_validator",
+  "evidenceHeadAtEnd": "9d4182ff95006406367fea3c40cd74265e67b9be",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C10_DECISION_DETERMINISM_RESULT.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c10_decision_determinism_and_no_mutation-commit5r1c10-final-ord01-2026-07-26T04-55-19-057Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c10_decision_determinism_and_no_mutation-commit5r1c10-final-ord01-2026-07-26T04-55-19-057Z/stderr.txt",
+  "stdoutSha256": "dba0db24df9706cfe0a10e96dca2b3c7625dbea0b23eaf92bbecad096bac932e",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

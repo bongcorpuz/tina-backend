@@ -1,0 +1,437 @@
+{
+  "combined": {
+    "total": 756,
+    "passed": 698,
+    "failed": 58
+  },
+  "bySuite": {
+    "v3": {
+      "total": 331,
+      "passed": 322,
+      "failed": 9
+    },
+    "v4": {
+      "total": 177,
+      "passed": 154,
+      "failed": 23
+    },
+    "v5": {
+      "total": 134,
+      "passed": 121,
+      "failed": 13
+    },
+    "v6": {
+      "total": 114,
+      "passed": 101,
+      "failed": 13
+    }
+  },
+  "failures": [
+    {
+      "suite": "v3",
+      "family": "filipino_taglish",
+      "query": "Kailan ang birthday party ng anak ko?",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "suite": "v3",
+      "family": "concrete_target_relation_expanded",
+      "query": "Is a delivery motorcycle deductible against gross income?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "contentless_referent",
+      "query": "When is the return due for the imported machinery we purchased?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "contentless_referent",
+      "query": "What form should I use for the imported machinery we purchased?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "contentless_referent",
+      "query": "What is the filing deadline for the imported machinery we purchased?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "contentless_referent",
+      "query": "How much tax is due for the imported machinery we purchased?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the interest income subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the dividend subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v3",
+      "family": "tax_vs_civil_domain_expanded",
+      "query": "Is the insurance premium deductible?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "concrete_vs_contentless",
+      "query": "Is the delivery tricycle we bought deductible against gross income?",
+      "expected": "ALLOW",
+      "actual": "CLARIFY"
+    },
+    {
+      "suite": "v4",
+      "family": "concrete_vs_contentless",
+      "query": "Is it subject to value-added tax? Situation 8.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v4",
+      "family": "concrete_vs_contentless",
+      "query": "Is that subject to value-added tax? Item 13.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v4",
+      "family": "concrete_vs_contentless",
+      "query": "Is it subject to creditable withholding tax? Situation 9.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v4",
+      "family": "concrete_vs_contentless",
+      "query": "Is that subject to creditable withholding tax? Item 14.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v4",
+      "family": "concrete_vs_contentless",
+      "query": "Is the imported conveyor belt subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "antecedent_vs_metadata",
+      "query": "Is it subject to customs duty? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v4",
+      "family": "antecedent_vs_metadata",
+      "query": "We received royalty income from a licensee. Is it subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the equipment purchase deductible even though we filed it under an internal project code?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the imported panel dutiable when the panel is labelled with a warehouse tag?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "Is interest income from a time deposit subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "Is interest income from a time deposit subject to final tax in our internal wiki page title?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "Is a dividend received by a resident individual subject to final tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "Is a dividend received by a resident individual subject to final tax in our internal wiki page title?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "Is the insurance premium on company vehicles deductible?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "Is the insurance premium on company vehicles deductible in our internal wiki page title?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "How much tax is due on imported machinery for a manufacturer?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "governed_tax_relations",
+      "query": "How much tax is due on imported machinery for a manufacturer in our internal wiki page title?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "multiclause_reversal",
+      "query": "Our ledger is behind, but the real question is whether the generator lease is VATable.",
+      "expected": "ALLOW",
+      "actual": "CLARIFY"
+    },
+    {
+      "suite": "v4",
+      "family": "substring_traps",
+      "query": "What is the deadline to file the annual return?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "substring_traps",
+      "query": "What penalty applies to a late annual return?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v4",
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Print the output VAT caption on the summary page.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v4",
+      "family": "tax_term_cross_domain",
+      "query": "Is the taxpayer entitled to a refund claim before prescription lapses?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "What is the prescriptive period for a motor insurance claim?",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v5",
+      "family": "bir_registration_vs_event_registration",
+      "query": "What is the annual registration fee for a taxpayer?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "taxable_output_vs_console_output",
+      "query": "Is the sale of a licensed typeface subject to value-added tax?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "legal_title_vs_internal_label",
+      "query": "Title the archive folder NIRC for convenience.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v5",
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Is the equipment transfer taxable even though it is filed under a project code?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Is the imported panel dutiable when the panel bears a warehouse code?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how CWT works for a domestic company.",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how IAET works for a domestic company.",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain CAR in a BIR deficiency assessment.",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain AR in a BIR deficiency assessment.",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain PT in a BIR deficiency assessment.",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v5",
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Is it subject to value-added tax? Reference 43.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v5",
+      "family": "filipino_taglish_v5",
+      "query": "Deductible ba ang bayad sa paaralan ng anak ko sa club?",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v6",
+      "family": "canonical_concept_vs_polysemous",
+      "query": "IAET treatment for a domestic company",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v6",
+      "family": "richer_issuance_vs_bare_token",
+      "query": "How does the revenue issuance change the withholding rate on rentals?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v6",
+      "family": "tax_context_vs_metadata_only",
+      "query": "What holding period applies? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v6",
+      "family": "tax_context_vs_metadata_only",
+      "query": "What is the prescriptive period? Reference 41.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v6",
+      "family": "tax_context_vs_metadata_only",
+      "query": "What prescriptive period applies? Matter 3.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v6",
+      "family": "tax_context_vs_metadata_only",
+      "query": "What grace period applies to a taxpayer claiming a refund?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v6",
+      "family": "legal_title_vs_internal_label",
+      "query": "Does the Customs Modernization and Tariff Act change the duty on this shipment?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v6",
+      "family": "legal_title_vs_internal_label",
+      "query": "Name the invoicing template NIRC in the shared drive.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v6",
+      "family": "legal_title_vs_internal_label",
+      "query": "How does the Tariff and Customs Code treat a re-imported article?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v6",
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Is the imported reel dutiable when the reel is tagged with a warehouse code?",
+      "expected": "ALLOW",
+      "actual": "REFUSE"
+    },
+    {
+      "suite": "v6",
+      "family": "concise_tax_phrase_vs_ordinary",
+      "query": "staff birthday calendar entry",
+      "expected": "REFUSE",
+      "actual": "CLARIFY"
+    },
+    {
+      "suite": "v6",
+      "family": "predicate_over_target_vs_contentless",
+      "query": "Is it subject to value-added tax? Situation 11.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    },
+    {
+      "suite": "v6",
+      "family": "rich_context_ladder",
+      "query": "What prescriptive period applies? Group MM-77.",
+      "expected": "REFUSE",
+      "actual": "ALLOW"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "unit": "COMMIT 5R1-C10",
+  "generatedUtc": "2026-07-26T04:56:40.765Z",
+  "progression": [
+    {
+      "cycle": "commit5r1c10-dev-01",
+      "decisionPassed": 3706,
+      "decisionMismatches": 14,
+      "falseAllows": 7,
+      "falseRefusals": 7,
+      "clarifyMismatches": 0,
+      "counterfactual": "0/0"
+    },
+    {
+      "cycle": "commit5r1c10-dev-02",
+      "decisionPassed": 3712,
+      "decisionMismatches": 8,
+      "falseAllows": 1,
+      "falseRefusals": 7,
+      "clarifyMismatches": 0,
+      "counterfactual": "676/756"
+    },
+    {
+      "cycle": "commit5r1c10-dev-03",
+      "decisionPassed": 3716,
+      "decisionMismatches": 4,
+      "falseAllows": 0,
+      "falseRefusals": 4,
+      "clarifyMismatches": 0,
+      "counterfactual": "678/756"
+    },
+    {
+      "cycle": "commit5r1c10-dev-04",
+      "decisionPassed": 3718,
+      "decisionMismatches": 2,
+      "falseAllows": 0,
+      "falseRefusals": 2,
+      "clarifyMismatches": 0,
+      "counterfactual": "682/756"
+    },
+    {
+      "cycle": "commit5r1c10-dev-05",
+      "decisionPassed": 3720,
+      "decisionMismatches": 0,
+      "falseAllows": 0,
+      "falseRefusals": 0,
+      "clarifyMismatches": 0,
+      "counterfactual": "682/756"
+    },
+    {
+      "cycle": "commit5r1c10-dev-06",
+      "decisionPassed": 3720,
+      "decisionMismatches": 0,
+      "falseAllows": 0,
+      "falseRefusals": 0,
+      "clarifyMismatches": 0,
+      "counterfactual": "698/756"
+    }
+  ],
+  "startingDecisionMismatches": 14,
+  "bestDecisionMismatches": 0,
+  "netDecisionImprovement": 14
+}

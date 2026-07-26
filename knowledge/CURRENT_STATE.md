@@ -31,8 +31,8 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C9
-DECISION-LAYER CLOSURE CONTINUATION 9 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C10
+DECISION-LAYER CLOSURE CONTINUATION 10 AGAINST R3
 DECISION: INCOMPLETE — DECISION LAYER REMEDIATION NOT CLOSED
 ```
 
@@ -43,39 +43,45 @@ ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54
 rows = 3,720
 ```
 
-Reconstructed accepted C8 base (new governed campaign, controlling):
-
-```text
-overall  = 3,088 / 3,720
-decision = 3,669 / 3,720
-decision mismatches = 51
-reconstruction discrepancies = 0 (exact identity match on all eight metrics)
-```
-
-The C8 dev-06 snapshot was verified against all four required hashes before it was
-applied — analyzer `9f2dcf8c…`, domain-boundary `0c894087…`, patterns `3bdd5b85…`,
-services tree digest `664eb862…`.
-
-Best governed C9 candidate:
+Reconstructed accepted C9 base (new governed campaign, controlling):
 
 ```text
 overall  = 3,097 / 3,720
 decision = 3,706 / 3,720
+decision mismatches = 14
+reconstruction discrepancies = 0 (exact identity match)
+```
+
+The C9 dev-05 snapshot was verified file-by-file and against the required services tree
+digest `878b9bb2…` before it was applied, and only an authorized runtime file differed
+from the live baseline.
+
+Best governed C10 candidate:
+
+```text
+overall  = 3,097 / 3,720
+decision = 3,720 / 3,720
 ```
 
 Remaining decision mismatches:
 
 ```text
-14
+0
 ```
 
 Decision confusion on the best candidate:
 
 ```text
-false allows        = 7
-false refusals      = 7
+false allows        = 0
+false refusals      = 0
 clarify mismatches  = 0
 ```
+
+The exact R3 decision ceiling was reached and reproduced in a separate clean verification
+campaign against an unchanged runtime, with a stable services tree digest across the
+campaign. The decision lock was nevertheless **not declared**, because the lock condition
+also requires the complete combined decision counterfactual suite to pass, and 58 of 756
+counterfactual queries still fail. That condition is recorded as unmet, not waived.
 
 Closed decision controls — all preserved at every accepted iteration:
 
@@ -90,64 +96,73 @@ quoted_term_only                closed
 Counterfactual controls:
 
 ```text
-C7 v3 + C8 v4 combined suite preserved and rerun: 508 queries, 291 pairs
-C9 v5 extension authored before any runtime change:
-  134 new deterministic queries, 67 structural pairs, 16 families
-combined suite = 642 queries / 358 pairs
+C7 v3 + C8 v4 + C9 v5 combined suite preserved and rerun: 642 queries, 358 pairs
+C10 v6 extension authored before any runtime change:
+  114 new deterministic queries, 61 structural pairs, 13 families
+combined suite = 756 queries / 419 pairs
 exact R3 query leakage = 0 (guard fired twice during authoring; both reworded)
-best candidate result = 586 / 642  (v3 319/331, v4 153/177, v5 114/134)
+best candidate result = 698 / 756  (v3 322/331, v4 154/177, v5 121/134, v6 101/114)
 ```
 
-Remaining structural clusters (14 rows, non-overlapping):
+Remaining structural clusters:
 
 ```text
-CONCRETE_TARGET_TAX_RELATION_MISSED           5
-ACRONYM_DEFINITION_INTENT                     4
-CONCRETE_TARGET_FALSE_TAX_ANCHOR              3
-COMPLIANCE_PROCEDURE_WITH_IMPLICIT_TARGET     1
-ACRONYM_AS_LABEL_OR_NAME                      1
+none - the R3 decision partition is empty at 3,720 / 3,720
 ```
 
-Directional split: ALLOW->REFUSE 6, REFUSE->ALLOW 7, ALLOW->CLARIFY 1.
+Remaining work is confined to the 58 failing counterfactual queries, which cover generic
+structural families rather than R3 rows.
 
-Material iterations: 5 of 5 permitted were used — 4 accepted, 1 rejected. Iteration 06
-was rejected as net negative against R3 (3,703 versus the accepted 3,706): it introduced
-three new failures on richer RMC-issuance questions without fixing the holding-period
-rows. It is preserved as a rejected attempt and the iteration-05 candidate was restored
-as the best base. The iteration ceiling was reached before decision lock, so no clean
-lock-verification attempt was allocated and none was fabricated.
+Material iterations: 5 of 5 permitted were used, all accepted. A separate clean
+lock-verification campaign was executed against an unchanged runtime and is recorded in
+full.
+
+Rich-context regression guard (introduced after the C9 iteration-06 regression on richer
+RMC-issuance questions) — final state of all seven shapes:
+
+```text
+bare_term                      ALLOW
+recognized_acronym             CLARIFY
+acronym_with_issuance_context  ALLOW
+acronym_with_procedure_context ALLOW
+ordinary_homograph             REFUSE
+richer_tax_sentence            ALLOW
+metadata_suffixed_contentless  REFUSE
+```
 
 Verification gates run against the best candidate:
 
 ```text
-decision-focused regression   closed controls 0 failed
-decision anti-overfit         PASS (20 / 20 checks, executable code with comments stripped)
+decision-focused regression   PASS (every bucket, not only the closed controls)
+decision anti-overfit         PASS (21 / 21 checks, executable code with comments stripped)
 decision determinism          PASS (150 queries x 100 reps; drift 0, byte drift 0, mutation 0)
+clean lock verification       R3 3,720/3,720 reproduced; runtime identity stable
 ```
 
 Principal architectural findings:
 
 ```text
-1. A tax-compliance relation requires a tax-domain object, institution or procedure. The
-   procedural word alone (return, due, file, claim, registration, list, output,
-   assessment) carries an ordinary sense that keeps its own domain. An explicit tax
-   predicate governing the target always defeats the ordinary reading, so the governing
-   relation decides rather than the object noun.
-2. Clause hierarchy is now explicit in decision precedence: a governed tax predicate over
-   the primary target outranks a competing non-tax action relation that is incidental or
-   subordinate to it, and a subordinate product-code clause cannot veto a genuine tax
-   question.
-3. The tax-canonical acronym set is deliberately narrow (MCIT, RCIT, NOLCO, IAET, SLSP).
-   DST and VAT are excluded because the frozen evidence treats them as materially
-   polysemous, so they still CLARIFY without controlling context.
-4. A named statute, code or agency inside a tax question is subject matter, not label
-   binding; the action and object control, never capitalization.
+1. A tax-compliance relation requires a tax-domain object, institution or procedure at the
+   relation-building stage, not merely at the decision layer. The procedural word alone
+   (return, due, file, claim, registration, list, output, assessment) carries an ordinary
+   sense that keeps its own domain.
+2. A governed tax predicate over the primary target defeats every domain guard - the
+   controlling relation decides, not the domain of a surrounding noun. This now holds
+   uniformly across the domain-noun veto, the controlling-domain guard and the homograph
+   veto.
+3. A named statute, code or instrument inside a tax question is subject matter and
+   survives the homograph veto; assigning one as a name remains label binding.
+4. A contract question whose requested subject is the tax treatment itself is a tax
+   question about that clause; the domain guards exist for contractual remedies.
+5. A tax-canonical acronym is self-resolving only when no metadata-only referent frames
+   it; a for-item suffix supplies no subject and stays materially ambiguous.
 ```
 
 Layer status:
 
 ```text
-decision lock:   not achieved (best decision 3,706 / 3,720)
+decision lock:   not achieved - R3 ceiling reached but the counterfactual
+                 condition is unmet (698 / 756)
 relation lock:   not started
 reason lock:     not started
 standalone:      not achieved
@@ -168,9 +183,10 @@ tracked diff over services/ and tests/ = 0 bytes
 Preserved candidate:
 
 ```text
-attempt: R20-domain_campaign-r20_commit5r1c9_development_iteration_05-commit5r1c9-dev-05
+attempt: R20-domain_campaign-r20_commit5r1c10_development_iteration_06-commit5r1c10-dev-06
 snapshot: the attempt's runtime-snapshot directory
-patch:    evaluation/results/phase-10a14-r20/COMMIT_5R1C9_BEST_CANDIDATE.patch
+patch:    evaluation/results/phase-10a14-r20/COMMIT_5R1C10_BEST_CANDIDATE.patch
+verification attempt: R20-domain_campaign-r20_commit5r1c10_decision_layer_lock_verification-commit5r1c10-lock
 ```
 
 All rejected and superseded iterations are preserved in their own attempt directories.
@@ -613,7 +629,7 @@ COMMIT 5R1-C7 must resume from the accepted 3,464-decision candidate.
 
 ```text
 cumulativeThrough:
-commit5r1c9-incomplete
+commit5r1c10-incomplete
 
 runtimeClosure:
 false
@@ -622,13 +638,13 @@ decisionLayerClosure:
 false
 
 total attempts:
-88
+98
 
 by category:
-domain_campaign 38 | focused_suite 7 | other 9 | synthetic_validator 34
+domain_campaign 45 | focused_suite 8 | other 9 | synthetic_validator 36
 
 controlling / non-controlling:
-86 / 2
+96 / 2
 
 COMMIT 5R1-C6 new attempts:
 4
@@ -648,6 +664,10 @@ COMMIT 5R1-C9 new attempts:
 10 (1 preserved technical failure, 1 reconstruction, 5 material decision iterations,
     1 decision-focused regression, 1 anti-overfit, 1 determinism)
 
+COMMIT 5R1-C10 new attempts:
+10 (1 reconstruction, 5 material decision iterations, 1 clean lock verification,
+    1 decision-focused regression, 1 anti-overfit, 1 determinism)
+
 closureComplete:
 true
 
@@ -663,8 +683,8 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C10
-DECISION-LAYER CLOSURE CONTINUATION 10 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C11
+DECISION-LAYER CLOSURE CONTINUATION 11 AGAINST R3
 ```
 
 Preflight preconditions carried forward from COMMIT 5R1-C7-P1 and still holding:
@@ -675,18 +695,18 @@ analyzer identity policy: Git blob canonical; normalized-LF content identity acc
 working-tree drift:       none unresolved
 root residue:             none
 roadmap:                  tracked strategic governance
-parent chain:             use the pushed C9 commit as the new starting HEAD
+parent chain:             use the pushed C10 commit as the new starting HEAD
 ```
 
-COMMIT 5R1-C10 must:
+COMMIT 5R1-C11 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the best accepted C9 decision candidate (decision 3,706 / 3,720; overall 3,097 / 3,720) from its preserved attempt snapshot;
+2. reconstruct the best accepted C10 decision candidate (decision 3,720 / 3,720; overall 3,097 / 3,720) from its preserved attempt snapshot;
 3. execute it as a new governed R3 campaign and preserve the actual result;
-4. preserve all C7, C8 and C9 analysis, the 14-row decision contract and the combined counterfactual v3+v4+v5 controls;
-5. continue only the remaining decision clusters — CONCRETE_TARGET_TAX_RELATION_MISSED (5), ACRONYM_DEFINITION_INTENT (4), CONCRETE_TARGET_FALSE_TAX_ANCHOR (3), COMPLIANCE_PROCEDURE_WITH_IMPLICIT_TARGET (1) and ACRONYM_AS_LABEL_OR_NAME (1) — requiring a controlling tax relation over a concrete or resolved target, without reopening any closed control;
+4. preserve all C7 through C10 analysis and the combined counterfactual v3+v4+v5+v6 controls;
+5. hold R3 at an exact 3,720 / 3,720 with all closed controls preserved, and close the remaining 58 failing counterfactual queries through generic structural rules, without reopening any R3 row or richer-context shape;
 6. permit up to five new material decision iterations;
-7. require exact decision 3,720 / 3,720 plus a separate clean lock-verification run before declaring a lock;
+7. require exact decision 3,720 / 3,720 AND a fully passing combined counterfactual suite, plus a separate clean lock-verification run, before declaring a lock;
 8. not begin relation or reason work, integration or freeze;
 9. update CURRENT_STATE as the final substantive change;
 10. commit, push and STOP.
@@ -700,7 +720,7 @@ closure, integration and a successful runtime freeze in later units.
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C10 decision-layer closure (continuation)
+COMMIT 5R1-C11 decision-layer closure (continuation)
 → COMMIT 5R1 relation-layer closure
 → reason-layer closure
 → standalone overall closure

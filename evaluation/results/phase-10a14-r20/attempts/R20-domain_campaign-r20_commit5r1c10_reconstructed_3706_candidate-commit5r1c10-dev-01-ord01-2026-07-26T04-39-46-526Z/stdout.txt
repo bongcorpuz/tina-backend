@@ -1,0 +1,7 @@
+snapshot verified; servicesTreeDigest=878b9bb2ce877d612493
+authorized runtime files differing from baseline: ["philippine-tax-intent-analyzer.js"]
+allocated R20-domain_campaign-r20_commit5r1c10_reconstructed_3706_candidate-commit5r1c10-dev-01-ord01-2026-07-26T04-39-46-526Z
+applied; verified servicesTreeDigest=878b9bb2ce877d612493
+overall=3097/3720 decision=3706/3720 decisionMismatches=14
+fa=7 fr=7 cm=0 reason=562 relation=167
+closedControls=ALL CLOSED

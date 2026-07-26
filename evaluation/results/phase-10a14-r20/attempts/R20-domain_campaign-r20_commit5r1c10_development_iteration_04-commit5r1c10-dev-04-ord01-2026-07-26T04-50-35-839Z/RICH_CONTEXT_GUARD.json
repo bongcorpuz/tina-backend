@@ -1,0 +1,46 @@
+{
+  "probes": [
+    {
+      "shape": "bare_term",
+      "query": "holding period",
+      "note": "bare tax term",
+      "decision": "ALLOW"
+    },
+    {
+      "shape": "recognized_acronym",
+      "query": "RMC",
+      "note": "bare recognised acronym",
+      "decision": "CLARIFY"
+    },
+    {
+      "shape": "acronym_with_issuance_context",
+      "query": "What did the RMC issuance say about VAT?",
+      "note": "richer issuance question",
+      "decision": "ALLOW"
+    },
+    {
+      "shape": "acronym_with_procedure_context",
+      "query": "Explain RMC for BIR issuances.",
+      "note": "procedure context",
+      "decision": "ALLOW"
+    },
+    {
+      "shape": "ordinary_homograph",
+      "query": "Can a supplier reject a return of goods?",
+      "note": "ordinary sense",
+      "decision": "REFUSE"
+    },
+    {
+      "shape": "richer_tax_sentence",
+      "query": "How is the holding period applied to a capital gains tax computation on land?",
+      "note": "rich tax sentence",
+      "decision": "ALLOW"
+    },
+    {
+      "shape": "metadata_suffixed_contentless",
+      "query": "What is the holding period? Context 1.",
+      "note": "metadata-only context",
+      "decision": "REFUSE"
+    }
+  ]
+}

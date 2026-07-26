@@ -1,0 +1,7 @@
+iteration 02
+overall=3103/3720 decision=3712/3720 decisionMismatches=8
+falseAllows=1 falseRefusals=7 clarifyMismatches=0
+reason=556 relation=167 metamorphic=67/100
+closedControls=ALL CLOSED
+counterfactual combined=676/756 (v3 312/331, v4 152/177, v5 116/134, v6 96/114)
+richContextGuard=bare_term:ALLOW recognized_acronym:CLARIFY acronym_with_issuance_context:ALLOW acronym_with_procedure_context:ALLOW ordinary_homograph:REFUSE richer_tax_sentence:ALLOW metadata_suffixed_contentless:REFUSE

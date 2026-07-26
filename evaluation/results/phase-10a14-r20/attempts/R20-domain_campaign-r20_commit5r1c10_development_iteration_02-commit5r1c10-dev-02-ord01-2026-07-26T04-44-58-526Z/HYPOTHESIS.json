@@ -1,0 +1,4 @@
+{
+  "structuralHypothesis": "A tax-compliance relation now requires a tax-domain object, institution or procedure at the relation-building stage rather than relying on the decision-layer guard alone, so ordinary senses of return, due, file, claim, registration and list keep their own domain. The tax-domain vocabulary was extended with genuine filing-system and assessment terms (eFPS, eBIRForms, surcharge, annual information return, registered business enterprise). A definition frame whose only extra content is an enumerated metadata suffix has no target. A Filipino tax predicate over a named object survives the ordinary-domain and non-tax-action guards.",
+  "iteration": "02"
+}

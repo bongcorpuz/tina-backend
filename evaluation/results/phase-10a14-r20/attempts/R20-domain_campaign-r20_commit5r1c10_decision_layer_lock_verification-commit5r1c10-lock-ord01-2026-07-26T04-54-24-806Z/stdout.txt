@@ -1,0 +1,8 @@
+clean lock verification
+overall=3097/3720 decision=3720/3720 decisionMismatches=0
+fa=0 fr=0 clarify=0
+closedControls=ALL CLOSED
+counterfactual=698/756 failed=58
+runtimeIdentityStable=true
+LOCK_CONDITIONS={"decisionEquals3720":true,"decisionMismatchesZero":true,"falseAllowsZero":true,"falseRefusalsZero":true,"clarifyMismatchesZero":true,"allCounterfactualsPass":false,"allClosedControlsClosed":true,"runtimeIdentityStableAcrossVerification":true}
+LOCK_ACHIEVED=false

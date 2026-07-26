@@ -1,0 +1,8 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c10_reconstructed_3706_candidate-commit5r1c10-dev-01-ord01-2026-07-26T04-39-46-526Z",
+  "decisionPassed": 3706,
+  "decisionMismatches": 14,
+  "materialFalseAllows": 7,
+  "materialFalseRefusals": 7,
+  "clarifyMismatches": 0
+}

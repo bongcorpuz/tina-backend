@@ -1,0 +1,98 @@
+{
+  "unit": "COMMIT 5R1-C10",
+  "generatedUtc": "2026-07-26T04:56:40.765Z",
+  "acceptanceRule": "accept only when decision mismatches decrease, or a flat candidate proves material generic counterfactual improvement without R3 or closed-control regression; reject negative candidates and restore the prior accepted candidate",
+  "decisions": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c10_development_iteration_02-commit5r1c10-dev-02-ord01-2026-07-26T04-44-58-526Z",
+      "priorDecisionMismatches": 14,
+      "newDecisionMismatches": 8,
+      "decisionMismatchesDecreased": true,
+      "flatWithCounterfactualGain": false,
+      "counterfactualPassed": 676,
+      "priorCounterfactualPassed": null,
+      "closedControlsPreserved": true,
+      "falseAllows": 1,
+      "falseRefusals": 7,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 556,
+        "relationMismatches": 167
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c10_development_iteration_03-commit5r1c10-dev-03-ord01-2026-07-26T04-48-27-112Z",
+      "priorDecisionMismatches": 8,
+      "newDecisionMismatches": 4,
+      "decisionMismatchesDecreased": true,
+      "flatWithCounterfactualGain": false,
+      "counterfactualPassed": 678,
+      "priorCounterfactualPassed": 676,
+      "closedControlsPreserved": true,
+      "falseAllows": 0,
+      "falseRefusals": 4,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 564,
+        "relationMismatches": 167
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c10_development_iteration_04-commit5r1c10-dev-04-ord01-2026-07-26T04-50-35-839Z",
+      "priorDecisionMismatches": 4,
+      "newDecisionMismatches": 2,
+      "decisionMismatchesDecreased": true,
+      "flatWithCounterfactualGain": false,
+      "counterfactualPassed": 682,
+      "priorCounterfactualPassed": 678,
+      "closedControlsPreserved": true,
+      "falseAllows": 0,
+      "falseRefusals": 2,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 562,
+        "relationMismatches": 167
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c10_development_iteration_05-commit5r1c10-dev-05-ord01-2026-07-26T04-52-11-203Z",
+      "priorDecisionMismatches": 2,
+      "newDecisionMismatches": 0,
+      "decisionMismatchesDecreased": true,
+      "flatWithCounterfactualGain": false,
+      "counterfactualPassed": 682,
+      "priorCounterfactualPassed": 682,
+      "closedControlsPreserved": true,
+      "falseAllows": 0,
+      "falseRefusals": 0,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 562,
+        "relationMismatches": 167
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c10_development_iteration_06-commit5r1c10-dev-06-ord01-2026-07-26T04-53-46-807Z",
+      "priorDecisionMismatches": 0,
+      "newDecisionMismatches": 0,
+      "decisionMismatchesDecreased": false,
+      "flatWithCounterfactualGain": true,
+      "counterfactualPassed": 698,
+      "priorCounterfactualPassed": 682,
+      "closedControlsPreserved": true,
+      "falseAllows": 0,
+      "falseRefusals": 0,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "flat on R3 but materially improved generic counterfactual coverage with no control regression",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 562,
+        "relationMismatches": 167
+      }
+    }
+  ],
+  "rejectedCandidatesPreserved": true
+}

@@ -1,0 +1,60 @@
+{
+  "unit": "COMMIT 5R1-C10",
+  "generatedUtc": "2026-07-26T04:56:40.765Z",
+  "decisionLayerLockAchieved": false,
+  "disposition": "NOT_ACHIEVED_COUNTERFACTUAL_CONDITION_UNMET",
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c10_development_iteration_06-commit5r1c10-dev-06-ord01-2026-07-26T04-53-46-807Z",
+  "verificationAttemptId": "R20-domain_campaign-r20_commit5r1c10_decision_layer_lock_verification-commit5r1c10-lock-ord01-2026-07-26T04-54-24-806Z",
+  "verificationExecuted": true,
+  "r3DecisionPassed": 3720,
+  "r3DecisionMismatches": 0,
+  "falseAllows": 0,
+  "falseRefusals": 0,
+  "clarifyMismatches": 0,
+  "closedControlsPreserved": true,
+  "counterfactual": {
+    "total": 756,
+    "passed": 698,
+    "failed": 58,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 322,
+        "failed": 9
+      },
+      "v4": {
+        "total": 177,
+        "passed": 154,
+        "failed": 23
+      },
+      "v5": {
+        "total": 134,
+        "passed": 121,
+        "failed": 13
+      },
+      "v6": {
+        "total": 114,
+        "passed": 101,
+        "failed": 13
+      }
+    }
+  },
+  "lockConditions": {
+    "decisionEquals3720": true,
+    "decisionMismatchesZero": true,
+    "falseAllowsZero": true,
+    "falseRefusalsZero": true,
+    "clarifyMismatchesZero": true,
+    "allCounterfactualsPass": false,
+    "allClosedControlsClosed": true,
+    "runtimeIdentityStableAcrossVerification": true
+  },
+  "whyNotLocked": "R3 reached an exact 3,720/3,720 with zero false allows, zero false refusals, zero clarify mismatches, all closed controls preserved and a stable runtime identity across a separate clean verification campaign. The lock additionally requires the complete combined decision counterfactual suite to pass; 58 of 756 counterfactual queries still fail, so the lock condition is unmet and no lock is declared.",
+  "runtimeSnapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c10_development_iteration_06-commit5r1c10-dev-06-ord01-2026-07-26T04-53-46-807Z/runtime-snapshot",
+  "decisionLayerClosure": false,
+  "runtimeClosure": false,
+  "runtimeMutableForRelationWork": true,
+  "decisionRegressionRule": "REJECT_CANDIDATE",
+  "relationLaneStarted": false,
+  "reasonLaneStarted": false
+}
