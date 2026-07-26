@@ -1,0 +1,11 @@
+open eight       = 8 / 8
+clause probes    = 68 / 68  (failed 0)
+relation suite   = 282 / 282  (failed 0)
+clause schema    = true  {"emptyClause":0,"idNotPositional":0,"notExactlyOnePrimary":0,"unstable":0,"roleOutsideSchema":0}
+focused relation = true
+R3 decision      = 3720 / 3720   FA=0 FR=0 CL=0
+R3 relation      = 3720 / 3720   mismatches=0
+R3 reason (diag) = 679
+decision suite   = 756 / 756
+controls=true guard=7/7 antiMem=true reasonInt=true
+DECISION LOCK HELD = true   R3 RELATION HELD = true

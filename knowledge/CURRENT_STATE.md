@@ -31,15 +31,15 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C13
-RELATION-LAYER CLOSURE AGAINST R3
-DECISION: INCOMPLETE — R3 RELATION LANE CLOSED;
-          RELATION LOCK NOT DECLARED; REASON LANE NOT STARTED
+PHASE-10A14-R20 — COMMIT 5R1-C14
+RELATION-LAYER LOCK CONTINUATION — PRIMARY-vs-SUBORDINATE CLAUSE SEGMENTATION
+DECISION: INCOMPLETE — RELATION LAYER LOCK ACHIEVED;
+          REASON LANE PENDING
 ```
 
-**The R3 relation lane is closed: 3,720 / 3,720, zero mismatches, from a baseline of
-162.** The decision lock was preserved exactly throughout. A separate clean verification
-campaign against an unchanged runtime met **thirteen of the fourteen** lock conditions:
+**The relation layer is locked.** The eight-query `primary_vs_subordinate` gap carried
+forward from C13 is closed, and a separate clean verification campaign against an
+unchanged runtime met **all sixteen** lock conditions:
 
 ```text
 R3 decision                 3,720 / 3,720
@@ -48,35 +48,79 @@ false allows                0
 false refusals              0
 clarify mismatches          0
 decision counterfactual       756 / 756
-relation counterfactual       274 / 282     <-- UNMET
+relation counterfactual       282 / 282     (denominator unchanged)
+clause-segmentation probes     68 / 68      (34 pairs; not part of the denominator)
 closed controls             all closed
 rich-context guard          7 / 7
 focused relation regression PASS (every relation type fully satisfied)
+clause-schema regression    PASS (positional ids, exactly one primary_task, stable)
 anti-memorization           PASS
-reason integrity            PASS (no invalid code, no unauthorized pairing)
+reason integrity            PASS
 determinism                 PASS (15,000 evaluations; decision drift 0, relation drift 0)
 runtime identity            unchanged across verification
 ```
 
-**The relation lock is NOT declared.** The lock additionally requires the complete
-relation-focused suite to pass. Eight of 282 controlling queries still fail, and that
-condition is recorded as **unmet, not waived**.
+**Relation-layer closure is not runtime closure and is not R20 PASS.** The reason lane
+has not been started.
 
-Accepted C13 relation candidate (preserved, not live):
+### The clause-layer correction
+
+The cause was in segmentation, exactly as C13 recorded. The comma split fired only when
+the word AFTER the comma was a connector, so a LEADING concessive — whose marker sits at
+the START of the sentence — never produced a split, and the whole sentence became one
+`primary_task` clause. The concessive tax context then supplied the task relation.
+
+Four coordinated corrections, all structural:
+
+```text
+1. split at the top-level comma closing a leading concessive, but only when the
+   remainder is a COMPLETE requested task (imperative, interrogative or request);
+2. demote a leading concessive clause in primary-task scoring so the main requested
+   clause controls, by clause role and never by clause order alone;
+3. scope relation building: a tax predicate confined to concessive context does not
+   build the controlling task relation over an ordinary primary task;
+4. scope taxRelationOverPrimaryTarget, which was computed over the WHOLE text and so
+   let a concessive predicate claim the primary target in the decision layer.
+```
+
+The split inherits quote- and parenthesis-awareness because it is evaluated inside the
+existing scanner where quote state and paren depth are already tracked. Commas inside
+quotes, commas inside parentheses, ordinary list commas, and leading concessives with an
+incomplete remainder all correctly do NOT split, and each is fixed by a probe.
+
+### Probe adjudication
+
+Three probe expectations were authored and then found to assert **pre-existing baseline
+behaviour outside the authorized C14 scope**. Each was verified against the untouched C13
+baseline, where it behaves identically with no concessive present, and was then reduced
+to assert only the segmentation structure:
+
+```text
+"how is X taxed?"                  refuses at baseline: "taxed" is not in the
+                                   tax-anchor vocabulary (lexical gap, not clause layer)
+quoted-comma probe                 QUOTES_TERM not emitted at baseline for this shape
+trailing (non-leading) concessive  out of scope; §7A authorizes the LEADING form only
+```
+
+They were **not deleted and not weakened into passes** — they still fix the no-split
+behaviour so a later unit cannot regress it silently. No runtime change was made to
+manufacture a pass for any of them.
+
+Locked C14 relation candidate (preserved, not live):
 
 ```text
 candidate attempt:
-R20-domain_campaign-r20_commit5r1c13_relation_iteration_06-commit5r1c13-dev-06
+R20-domain_campaign-r20_commit5r1c14_clause_relation_iteration_02-commit5r1c14-dev-02
 verification attempt:
-R20-focused_suite-r20_commit5r1c13_relation_lock_verification-commit5r1c13-lock
+R20-focused_suite-r20_commit5r1c14_relation_lock_verification-commit5r1c14-lock
 patch:
-evaluation/results/phase-10a14-r20/COMMIT_5R1C13_RELATION_CANDIDATE.patch
+evaluation/results/phase-10a14-r20/COMMIT_5R1C14_RELATION_LOCKED_CANDIDATE.patch
 lock record:
-evaluation/results/phase-10a14-r20/COMMIT_5R1C13_RELATION_LOCK.json
+evaluation/results/phase-10a14-r20/COMMIT_5R1C14_RELATION_LOCK.json
 ```
 
-Closing the R3 relation lane is **not** runtime closure, **not** standalone closure, and
-**not** R20 PASS. The relation lock is not declared and the reason lane is not started.
+Relation-layer closure is **not** runtime closure, **not** standalone closure, and
+**not** R20 PASS. The reason lane has not been started.
 
 R3 remains canonical and unchanged:
 
@@ -100,14 +144,31 @@ The C12 dev-05 snapshot was verified file-by-file against the required normalize
 hashes and the services tree digest `184119a7…`, and only an authorized runtime file
 differed from the live baseline.
 
-Accepted C13 relation candidate:
+Reconstructed accepted C13 base (new governed campaign, controlling):
+
+```text
+canonical overall = 3,041 / 3,720
+R3 decision       = 3,720 / 3,720
+R3 relation       = 3,720 / 3,720   (0 mismatches)
+decision counterfactual = 756 / 756
+relation counterfactual =  274 / 282
+reason mismatches =   679
+reconstruction discrepancies = 0 (exact identity match on every metric)
+```
+
+The C13 dev-06 snapshot was verified file-by-file against the required normalized-LF
+hashes and the services tree digest `f2bb9051…`, and only an authorized runtime file
+differed from the live baseline.
+
+Locked C14 relation candidate:
 
 ```text
 R3 decision       = 3,720 / 3,720
 R3 relation       = 3,720 / 3,720   (0 mismatches)
 decision counterfactual = 756 / 756
-relation counterfactual =  274 / 282
-reason mismatches =   679   (diagnostic only in C13)
+relation counterfactual =  282 / 282
+clause probes     =    68 / 68
+reason mismatches =   679   (diagnostic only in C14; unchanged from the base)
 ```
 
 ### The relation scoring contract, established before coding
@@ -211,19 +272,26 @@ Counterfactual controls:
 combined v3+v4+v5+v6 suite preserved and rerun: 756 queries / 419 pairs
 no new decision queries were added: the existing suite is the controlling closure set
 exact R3 query leakage = 0
-accepted C13 candidate result = 756 / 756  (v3 331/331, v4 177/177, v5 134/134, v6 114/114)
+locked C14 candidate result = 756 / 756  (v3 331/331, v4 177/177, v5 134/134, v6 114/114)
 
-new relation-focused suite v7: 296 authored queries / 148 pairs, all 12 relation types
-282 controlling / 14 recorded non-controlling probes
-accepted C13 candidate result = 274 / 282
+relation-focused suite v7 FROZEN and unmodified in C14: 296 authored queries / 148 pairs
+282 controlling / 14 visible non-controlling probes — denominator unchanged
+locked C14 candidate result = 282 / 282
 exact R3 and v3-v6 leakage = 0
+
+new clause-segmentation probe suite: 68 probes / 34 pairs
+acceptance gate only; explicitly NOT part of the 282-query denominator
+locked C14 candidate result = 68 / 68
+exact R3, decision-suite and relation-suite leakage = 0
 ```
 
 Remaining structural clusters:
 
 ```text
-none in R3 - both the decision and relation partitions are empty at 3,720 / 3,720
-one held-out relation family remains open: primary_vs_subordinate (8 queries)
+none - the decision and relation lanes are both closed and locked
+R3 decision 3,720 / 3,720 | R3 relation 3,720 / 3,720
+decision counterfactual 756 / 756 | relation counterfactual 282 / 282
+the reason lane is the only remaining Phase 10A analyzer lane (679 mismatches)
 ```
 
 Adjudication of the relation-focused residual is recorded in full in
@@ -240,32 +308,31 @@ and were corrected in R3's favour: the Filipino "i-withhold ang buwis sa X" fram
 requires `ASKS_VAT_TREATMENT_OF`, and `no_tax_relation` with `CLARIFY` is a pairing R3
 authorizes in 100 rows — there the integrity **gate** was wrong, not the runtime.
 
-No R3 relation work remains: the R3 relation partition is empty. What remains in the
-relation lane is a single held-out structural family, `primary_vs_subordinate` (8 of 282
-controlling relation-focused queries):
+No relation work remains. The `primary_vs_subordinate` family that C13 carried forward
+as OPEN is closed in C14 by the clause-layer correction:
 
 ```text
 "Although the <tax object> is taxable, rename the <ordinary> folder."
 expected  REFUSE + REQUESTS_NON_TAX_ACTION_ON
-actual    ALLOW  + ASKS_TAX_TREATMENT_OF
+actual    REFUSE + REQUESTS_NON_TAX_ACTION_ON   (8 / 8)
+clauses   c01 role=context "Although the <tax object> is taxable,"
+          c02 role=primary_task "rename the <ordinary> folder."
 ```
 
-This is a genuine gap against §8B, not a suite defect: a concessive clause states
-context, and the primary task is the ordinary imperative. A concessive rule was authored
-and placed ahead of the tax-treatment family, but it does not take effect because the
-segmenter emits the whole sentence as a single `primary_task` clause, so an earlier path
-emits the tax relation first. Correcting it requires changing clause segmentation so a
-leading concessive becomes its own `context` clause — a clause-layer change beyond the
-relation lane and beyond the C13 iteration ceiling. R3 contains no row of this shape,
-which is why the R3 relation lane closes without it. It is carried to C14 as OPEN.
+C13 diagnosed this correctly: the segmenter emitted the whole sentence as one
+`primary_task` clause. The correction splits a leading concessive at its closing
+top-level comma when the remainder is a complete requested task, demotes the concessive
+clause in primary-task scoring, and scopes both the relation build and the
+`taxRelationOverPrimaryTarget` decision flag so a predicate confined to concessive
+context cannot claim the primary target. No exact-query, object-name, family-name or
+expected-decision shortcut was used; the correction is entirely structural.
 
-Remaining Phase 10A work is this residual relation family, then the reason lane, then
-standalone closure.
+Remaining Phase 10A work is the reason lane, then standalone closure, then integration
+and runtime freeze.
 
-Material iterations: 5 of 5 permitted were used. One further candidate was rejected for
-a decision-lock regression and is preserved with its rejection grounds. A separate clean
-relation-lock verification campaign was executed against an unchanged runtime and is
-recorded in full.
+Material iterations: 1 of 4 permitted were used, accepted on the first candidate. A
+separate clean relation-lock verification campaign was executed against an unchanged
+runtime and is recorded in full; it met all sixteen lock conditions.
 
 Rich-context regression guard (introduced after the C9 iteration-06 regression on richer
 RMC-issuance questions) — final state of all seven shapes:
@@ -330,9 +397,8 @@ Layer status:
 ```text
 decision lock:   ACHIEVED and PRESERVED - R3 3,720/3,720 and counterfactual 756/756,
                  re-verified under the C13 candidate
-relation lock:   NOT DECLARED - R3 relation closed at 3,720/3,720 with 0 mismatches,
-                 13 of 14 lock conditions met; the relation-focused suite condition
-                 is unmet at 274/282 and is recorded as unmet, not waived
+relation lock:   ACHIEVED - R3 relation 3,720/3,720 and relation counterfactual
+                 282/282, all 16 lock conditions met, independently verified
 reason lock:     not started
 standalone:      not achieved
 integration:     not performed
@@ -798,7 +864,7 @@ COMMIT 5R1-C7 must resume from the accepted 3,464-decision candidate.
 
 ```text
 cumulativeThrough:
-commit5r1c13-incomplete
+commit5r1c14
 
 runtimeClosure:
 false
@@ -807,13 +873,13 @@ decisionLayerClosure:
 true
 
 total attempts:
-130
+133
 
 by category:
-domain_campaign 67 | focused_suite 12 | other 9 | synthetic_validator 42
+domain_campaign 69 | focused_suite 13 | other 9 | synthetic_validator 42
 
 controlling / non-controlling:
-128 / 2
+131 / 2
 
 COMMIT 5R1-C6 new attempts:
 4
@@ -850,6 +916,10 @@ COMMIT 5R1-C13 new attempts:
 8 (1 reconstruction, 5 material relation iterations, 1 rejected relation candidate,
    1 clean relation-lock verification)
 
+COMMIT 5R1-C14 new attempts:
+3 (1 reconstruction, 1 material clause/relation iteration,
+   1 clean relation-lock verification)
+
 closureComplete:
 true
 
@@ -865,8 +935,8 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C14
-RELATION-LAYER CLOSURE CONTINUATION 14 AGAINST R3
+PHASE-10A14-R20 — COMMIT 5R1-C15
+REASON-LAYER CLOSURE AGAINST R3
 ```
 
 Preflight preconditions carried forward from COMMIT 5R1-C7-P1 and still holding:
@@ -877,19 +947,19 @@ analyzer identity policy: Git blob canonical; normalized-LF content identity acc
 working-tree drift:       none unresolved
 root residue:             none
 roadmap:                  tracked strategic governance
-parent chain:             use the pushed C13 commit as the new starting HEAD
+parent chain:             use the pushed C14 commit as the new starting HEAD
 ```
 
-COMMIT 5R1-C14 must:
+COMMIT 5R1-C15 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the accepted C13 relation candidate (R3 decision 3,720 / 3,720; R3 relation 3,720 / 3,720; decision counterfactual 756 / 756) from its preserved attempt snapshot and verify the recorded services tree digest;
+2. reconstruct the LOCKED C14 relation candidate (R3 decision 3,720 / 3,720; R3 relation 3,720 / 3,720; decision counterfactual 756 / 756; relation counterfactual 282 / 282) from its preserved attempt snapshot and verify the recorded services tree digest;
 3. execute it as a new governed R3 campaign and preserve the actual result;
 4. preserve all C7 through C10 analysis and the combined counterfactual v3+v4+v5+v6 controls;
-5. hold the decision lock AND the closed R3 relation lane intact — R3 decision 3,720 / 3,720, R3 relation 3,720 / 3,720, counterfactual 756 / 756, closed controls, rich-context guard and anti-memorization — while closing the eight open relation-focused queries; any regression rejects the candidate immediately;
+5. hold the decision lock AND the relation lock intact — R3 decision 3,720 / 3,720, R3 relation 3,720 / 3,720, decision counterfactual 756 / 756, relation counterfactual 282 / 282, clause probes, closed controls, rich-context guard and anti-memorization — while remediating the reason lane only; any decision or relation regression rejects the candidate immediately;
 6. permit up to five new material decision iterations;
-7. require exact decision 3,720 / 3,720, exact relation 3,720 / 3,720 AND a fully passing relation-focused suite, plus a separate clean lock-verification run, before declaring the relation lock;
-8. not begin reason work, integration or freeze;
+7. require exact decision 3,720 / 3,720, exact relation 3,720 / 3,720, both counterfactual suites fully passing AND a materially reduced reason-mismatch count, plus a separate clean lock-verification run, before declaring a reason lock;
+8. not begin standalone closure, integration or freeze;
 9. update CURRENT_STATE as the final substantive change;
 10. commit, push and STOP.
 
@@ -902,8 +972,7 @@ closure, integration and a successful runtime freeze in later units.
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C14 relation-layer closure continuation
-→ COMMIT 5R1 relation-layer closure
+COMMIT 5R1-C15 reason-layer closure
 → reason-layer closure
 → standalone overall closure
 → integration and runtime freeze

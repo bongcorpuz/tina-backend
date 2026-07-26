@@ -1,0 +1,45 @@
+{
+  "attemptId": "R20-focused_suite-r20_commit5r1c14_relation_lock_verification-commit5r1c14-lock-ord01-2026-07-26T13-08-02-513Z",
+  "attemptCategory": "focused_suite",
+  "gateName": "r20_commit5r1c14_relation_lock_verification",
+  "cycle": "commit5r1c14-lock",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "fa2f2975c96c668bce91a613ec088c7ac64cd39a",
+  "evidenceHeadAtStart": "fa2f2975c96c668bce91a613ec088c7ac64cd39a",
+  "runtimeBaselineCommit": "fa2f2975c96c668bce91a613ec088c7ac64cd39a",
+  "runtimeTreeDigest": "e34842a9976b038ac0e8730fe7f94e5ffa9db94e2c4887b11e0f60eef763118c",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "d88d748f16e6b2e1a10b04a5587227867a467bf6b815573eb8d9d3435440a607",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c14-verify.mjs"
+  ],
+  "commandHash": "7d351073920daed6bc9041eaa8d8e0b225a3e0491981c6188fdb477e0b8f336d",
+  "startedAt": "2026-07-26T13:08:02.827Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-26T13:08:05.438Z",
+  "exitCode": 0,
+  "disposition": "relation_lock_verified",
+  "evidenceHeadAtEnd": "fa2f2975c96c668bce91a613ec088c7ac64cd39a",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C14_RELATION_LOCK_VERIFICATION_RESULT.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit5r1c14_relation_lock_verification-commit5r1c14-lock-ord01-2026-07-26T13-08-02-513Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-focused_suite-r20_commit5r1c14_relation_lock_verification-commit5r1c14-lock-ord01-2026-07-26T13-08-02-513Z/stderr.txt",
+  "stdoutSha256": "aef910a822e6a8d02dca5916f04441ef802c8d3c498ee4dfbe1683be6fc77648",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

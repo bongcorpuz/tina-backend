@@ -1,0 +1,813 @@
+{
+  "suite": "COMMIT_5R1C14_CLAUSE_PROBE_SUITE",
+  "unit": "COMMIT 5R1-C14",
+  "generatedUtc": "2026-07-26T13:06:49.889Z",
+  "purpose": "Clause-segmentation acceptance gate for the leading-concessive correction.",
+  "notPartOfRelationDenominator": true,
+  "relationDenominatorUnchanged": "282 controlling relation-suite queries",
+  "authority": "CLAUSE_LEVEL_INTENT_SCHEMA.md + RELATION_AND_PRECEDENCE_SPEC.md",
+  "expectationsAuthoredBeforeExecution": true,
+  "exactR3Leakage": 0,
+  "exactSuiteLeakage": 0,
+  "probeCount": 68,
+  "pairCount": 34,
+  "probes": [
+    {
+      "query": "Although the scaffolding rental is taxable, rename the ukulele case directory.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "rename the ukulele case directory",
+      "primaryTaskExcludes": "although",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#1",
+      "side": "a"
+    },
+    {
+      "query": "Although the ukulele case is ordinary, what BIR form applies to the scaffolding rental?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "what bir form applies",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#1",
+      "side": "b"
+    },
+    {
+      "query": "Although the crane hire is taxable, rename the trekking pole directory.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "rename the trekking pole directory",
+      "primaryTaskExcludes": "although",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#2",
+      "side": "a"
+    },
+    {
+      "query": "Although the trekking pole is ordinary, what BIR form applies to the crane hire?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "what bir form applies",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#2",
+      "side": "b"
+    },
+    {
+      "query": "Although the dredging service is taxable, rename the domino set directory.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "rename the domino set directory",
+      "primaryTaskExcludes": "although",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#3",
+      "side": "a"
+    },
+    {
+      "query": "Although the domino set is ordinary, what BIR form applies to the dredging service?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "what bir form applies",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#3",
+      "side": "b"
+    },
+    {
+      "query": "Although the pipeline survey is taxable, rename the terrarium lid directory.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "rename the terrarium lid directory",
+      "primaryTaskExcludes": "although",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#4",
+      "side": "a"
+    },
+    {
+      "query": "Although the terrarium lid is ordinary, what BIR form applies to the pipeline survey?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "what bir form applies",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#4",
+      "side": "b"
+    },
+    {
+      "query": "Although the kiln installation is taxable, rename the skate ramp directory.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "rename the skate ramp directory",
+      "primaryTaskExcludes": "although",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#5",
+      "side": "a"
+    },
+    {
+      "query": "Although the skate ramp is ordinary, what BIR form applies to the kiln installation?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "what bir form applies",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#5",
+      "side": "b"
+    },
+    {
+      "query": "Although the turbine overhaul is taxable, rename the origami tray directory.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "rename the origami tray directory",
+      "primaryTaskExcludes": "although",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#6",
+      "side": "a"
+    },
+    {
+      "query": "Although the origami tray is ordinary, what BIR form applies to the turbine overhaul?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "what bir form applies",
+      "family": "concessive_although_nontax_imperative",
+      "pair": "concessive_although_nontax_imperative#6",
+      "side": "b"
+    },
+    {
+      "query": "Even though the scaffolding rental is deductible, print the ukulele case label.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "print the ukulele case label",
+      "family": "concessive_even_though",
+      "pair": "concessive_even_though#7",
+      "side": "a"
+    },
+    {
+      "query": "Even though the ukulele case is ordinary, is the scaffolding rental deductible?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_even_though",
+      "pair": "concessive_even_though#7",
+      "side": "b"
+    },
+    {
+      "query": "Though the scaffolding rental is subject to VAT, sort the ukulele case photos.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "sort the ukulele case photos",
+      "family": "concessive_though",
+      "pair": "concessive_though#8",
+      "side": "a"
+    },
+    {
+      "query": "Though the ukulele case is ordinary, is the scaffolding rental subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_though",
+      "pair": "concessive_though#8",
+      "side": "b"
+    },
+    {
+      "query": "While the scaffolding rental is taxable, archive the ukulele case records.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "archive the ukulele case records",
+      "family": "concessive_while",
+      "pair": "concessive_while#9",
+      "side": "a"
+    },
+    {
+      "query": "While the ukulele case is ordinary, how is the scaffolding rental taxed?",
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "how is the scaffolding rental taxed",
+      "family": "concessive_while",
+      "pair": "concessive_while#9",
+      "side": "b"
+    },
+    {
+      "query": "Even though the crane hire is deductible, print the trekking pole label.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "print the trekking pole label",
+      "family": "concessive_even_though",
+      "pair": "concessive_even_though#10",
+      "side": "a"
+    },
+    {
+      "query": "Even though the trekking pole is ordinary, is the crane hire deductible?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_even_though",
+      "pair": "concessive_even_though#10",
+      "side": "b"
+    },
+    {
+      "query": "Though the crane hire is subject to VAT, sort the trekking pole photos.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "sort the trekking pole photos",
+      "family": "concessive_though",
+      "pair": "concessive_though#11",
+      "side": "a"
+    },
+    {
+      "query": "Though the trekking pole is ordinary, is the crane hire subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_though",
+      "pair": "concessive_though#11",
+      "side": "b"
+    },
+    {
+      "query": "While the crane hire is taxable, archive the trekking pole records.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "archive the trekking pole records",
+      "family": "concessive_while",
+      "pair": "concessive_while#12",
+      "side": "a"
+    },
+    {
+      "query": "While the trekking pole is ordinary, how is the crane hire taxed?",
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "how is the crane hire taxed",
+      "family": "concessive_while",
+      "pair": "concessive_while#12",
+      "side": "b"
+    },
+    {
+      "query": "Even though the dredging service is deductible, print the domino set label.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "print the domino set label",
+      "family": "concessive_even_though",
+      "pair": "concessive_even_though#13",
+      "side": "a"
+    },
+    {
+      "query": "Even though the domino set is ordinary, is the dredging service deductible?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_even_though",
+      "pair": "concessive_even_though#13",
+      "side": "b"
+    },
+    {
+      "query": "Though the dredging service is subject to VAT, sort the domino set photos.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "forbiddenRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "sort the domino set photos",
+      "family": "concessive_though",
+      "pair": "concessive_though#14",
+      "side": "a"
+    },
+    {
+      "query": "Though the domino set is ordinary, is the dredging service subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_though",
+      "pair": "concessive_though#14",
+      "side": "b"
+    },
+    {
+      "query": "While the dredging service is taxable, archive the domino set records.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "archive the domino set records",
+      "family": "concessive_while",
+      "pair": "concessive_while#15",
+      "side": "a"
+    },
+    {
+      "query": "While the domino set is ordinary, how is the dredging service taxed?",
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "how is the dredging service taxed",
+      "family": "concessive_while",
+      "pair": "concessive_while#15",
+      "side": "b"
+    },
+    {
+      "query": "Kahit taxable ang scaffolding rental, i-rename ang ukulele case folder.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "i-rename ang ukulele case folder",
+      "family": "concessive_kahit",
+      "pair": "concessive_kahit#16",
+      "side": "a"
+    },
+    {
+      "query": "Kahit ordinary ang ukulele case, may VAT ba ang scaffolding rental?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_kahit",
+      "pair": "concessive_kahit#16",
+      "side": "b"
+    },
+    {
+      "query": "Bagaman taxable ang scaffolding rental, ayusin ang ukulele case listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "ayusin ang ukulele case listahan",
+      "family": "concessive_bagaman",
+      "pair": "concessive_bagaman#17",
+      "side": "a"
+    },
+    {
+      "query": "Bagaman ordinary ang ukulele case, magkano ang buwis sa scaffolding rental?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_bagaman",
+      "pair": "concessive_bagaman#17",
+      "side": "b"
+    },
+    {
+      "query": "Kahit taxable ang crane hire, i-rename ang trekking pole folder.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "i-rename ang trekking pole folder",
+      "family": "concessive_kahit",
+      "pair": "concessive_kahit#18",
+      "side": "a"
+    },
+    {
+      "query": "Kahit ordinary ang trekking pole, may VAT ba ang crane hire?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_kahit",
+      "pair": "concessive_kahit#18",
+      "side": "b"
+    },
+    {
+      "query": "Bagaman taxable ang crane hire, ayusin ang trekking pole listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "ayusin ang trekking pole listahan",
+      "family": "concessive_bagaman",
+      "pair": "concessive_bagaman#19",
+      "side": "a"
+    },
+    {
+      "query": "Bagaman ordinary ang trekking pole, magkano ang buwis sa crane hire?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_bagaman",
+      "pair": "concessive_bagaman#19",
+      "side": "b"
+    },
+    {
+      "query": "Kahit taxable ang dredging service, i-rename ang domino set folder.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "i-rename ang domino set folder",
+      "family": "concessive_kahit",
+      "pair": "concessive_kahit#20",
+      "side": "a"
+    },
+    {
+      "query": "Kahit ordinary ang domino set, may VAT ba ang dredging service?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_kahit",
+      "pair": "concessive_kahit#20",
+      "side": "b"
+    },
+    {
+      "query": "Bagaman taxable ang dredging service, ayusin ang domino set listahan.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "ayusin ang domino set listahan",
+      "family": "concessive_bagaman",
+      "pair": "concessive_bagaman#21",
+      "side": "a"
+    },
+    {
+      "query": "Bagaman ordinary ang domino set, magkano ang buwis sa dredging service?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_bagaman",
+      "pair": "concessive_bagaman#21",
+      "side": "b"
+    },
+    {
+      "query": "Although renaming the ukulele case folder was requested, is the scaffolding rental taxable?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "is the scaffolding rental taxable",
+      "family": "reversed_nontax_context_tax_task",
+      "pair": "reversed_nontax_context_tax_task#22",
+      "side": "a"
+    },
+    {
+      "query": "Although the scaffolding rental is taxable, delete the ukulele case draft.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "delete the ukulele case draft",
+      "family": "reversed_nontax_context_tax_task",
+      "pair": "reversed_nontax_context_tax_task#22",
+      "side": "b"
+    },
+    {
+      "query": "Although renaming the trekking pole folder was requested, is the crane hire taxable?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "is the crane hire taxable",
+      "family": "reversed_nontax_context_tax_task",
+      "pair": "reversed_nontax_context_tax_task#23",
+      "side": "a"
+    },
+    {
+      "query": "Although the crane hire is taxable, delete the trekking pole draft.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "delete the trekking pole draft",
+      "family": "reversed_nontax_context_tax_task",
+      "pair": "reversed_nontax_context_tax_task#23",
+      "side": "b"
+    },
+    {
+      "query": "Although renaming the domino set folder was requested, is the dredging service taxable?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "is the dredging service taxable",
+      "family": "reversed_nontax_context_tax_task",
+      "pair": "reversed_nontax_context_tax_task#24",
+      "side": "a"
+    },
+    {
+      "query": "Although the dredging service is taxable, delete the domino set draft.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "primaryTaskContains": "delete the domino set draft",
+      "family": "reversed_nontax_context_tax_task",
+      "pair": "reversed_nontax_context_tax_task#24",
+      "side": "b"
+    },
+    {
+      "query": "Although the scaffolding rental is exempt, is withholding tax required on it?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_tax_context_tax_task",
+      "pair": "concessive_tax_context_tax_task#25",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax required on the scaffolding rental?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "expectedClauseCount": 1,
+      "family": "concessive_tax_context_tax_task",
+      "pair": "concessive_tax_context_tax_task#25",
+      "side": "b"
+    },
+    {
+      "query": "Although the crane hire is exempt, is withholding tax required on it?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_tax_context_tax_task",
+      "pair": "concessive_tax_context_tax_task#26",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax required on the crane hire?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "expectedClauseCount": 1,
+      "family": "concessive_tax_context_tax_task",
+      "pair": "concessive_tax_context_tax_task#26",
+      "side": "b"
+    },
+    {
+      "query": "Although the dredging service is exempt, is withholding tax required on it?",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "concessive_tax_context_tax_task",
+      "pair": "concessive_tax_context_tax_task#27",
+      "side": "a"
+    },
+    {
+      "query": "Is withholding tax required on the dredging service?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_WITHHOLDING_ON"
+      ],
+      "expectedClauseCount": 1,
+      "family": "concessive_tax_context_tax_task",
+      "pair": "concessive_tax_context_tax_task#27",
+      "side": "b"
+    },
+    {
+      "query": "Count the letters in the phrase \"although, however, and\".",
+      "expectedDecision": "REFUSE",
+      "expectedClauseCount": 1,
+      "family": "no_split_quoted_comma",
+      "pair": "no_split_quoted_comma#28",
+      "side": "a"
+    },
+    {
+      "query": "Repeat the phrase \"even though, print\".",
+      "expectedDecision": "REFUSE",
+      "expectedClauseCount": 1,
+      "family": "no_split_quoted_comma",
+      "pair": "no_split_quoted_comma#28",
+      "side": "b"
+    },
+    {
+      "query": "Is the scaffolding rental (although imported, locally assembled) subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 1,
+      "family": "no_split_parenthesized_comma",
+      "pair": "no_split_parenthesized_comma#29",
+      "side": "a"
+    },
+    {
+      "query": "Is the crane hire (though leased, not owned) subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 1,
+      "family": "no_split_parenthesized_comma",
+      "pair": "no_split_parenthesized_comma#29",
+      "side": "b"
+    },
+    {
+      "query": "Rename the ukulele case, the trekking pole and the domino set.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 1,
+      "family": "no_split_ordinary_list_comma",
+      "pair": "no_split_ordinary_list_comma#30",
+      "side": "a"
+    },
+    {
+      "query": "Is the scaffolding rental, crane hire or dredging service subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedRelations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ],
+      "expectedClauseCount": 1,
+      "family": "no_split_ordinary_list_comma",
+      "pair": "no_split_ordinary_list_comma#30",
+      "side": "b"
+    },
+    {
+      "query": "Although taxable, uncertain.",
+      "expectedClauseCount": 1,
+      "family": "no_split_incomplete_remainder",
+      "pair": "no_split_incomplete_remainder#31",
+      "side": "a"
+    },
+    {
+      "query": "Although the crane hire is taxable, rename the domino set file.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "no_split_incomplete_remainder",
+      "pair": "no_split_incomplete_remainder#31",
+      "side": "b"
+    },
+    {
+      "query": "ALTHOUGH THE CRANE HIRE IS TAXABLE, RENAME THE DOMINO SET FOLDER.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "variant_capitalization",
+      "pair": "variant_capitalization#32",
+      "side": "a"
+    },
+    {
+      "query": "although the crane hire is taxable, rename the domino set folder",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 2,
+      "family": "variant_capitalization",
+      "pair": "variant_capitalization#32",
+      "side": "b"
+    },
+    {
+      "query": "Although the dredging service is taxable, rename the terrarium lid folder. Then archive it.",
+      "expectedDecision": "REFUSE",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 3,
+      "family": "variant_multiclause",
+      "pair": "variant_multiclause#33",
+      "side": "a"
+    },
+    {
+      "query": "Although the dredging service is taxable, what BIR form applies? Reply briefly.",
+      "expectedDecision": "ALLOW",
+      "forbiddenRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "expectedClauseCount": 3,
+      "family": "variant_multiclause",
+      "pair": "variant_multiclause#33",
+      "side": "b"
+    },
+    {
+      "query": "The crane hire is taxable, so rename the skate ramp folder.",
+      "expectedClauseCount": 1,
+      "family": "variant_no_leading_concessive",
+      "pair": "variant_no_leading_concessive#34",
+      "side": "a"
+    },
+    {
+      "query": "Rename the skate ramp folder although the crane hire is taxable.",
+      "expectedDecision": "REFUSE",
+      "expectedClauseCount": 1,
+      "family": "variant_no_leading_concessive",
+      "pair": "variant_no_leading_concessive#34",
+      "side": "b"
+    }
+  ]
+}

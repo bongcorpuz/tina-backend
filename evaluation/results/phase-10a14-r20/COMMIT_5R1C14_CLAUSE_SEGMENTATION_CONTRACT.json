@@ -1,0 +1,55 @@
+{
+  "unit": "COMMIT 5R1-C14",
+  "generatedUtc": "2026-07-26T13:06:49.890Z",
+  "currentBehaviour": {
+    "splitRule": "a top-level comma splits ONLY when the FOLLOWING word is in CONNECTORS",
+    "connectors": [
+      "however",
+      "although",
+      "but",
+      "and",
+      "pero",
+      "ngunit",
+      "kahit",
+      "at"
+    ],
+    "consequence": "A LEADING concessive puts the marker at the start of the sentence, not after the comma, so no split occurs and the whole sentence becomes a single primary_task clause."
+  },
+  "authorizedCorrection": {
+    "scope": "leading concessive context only",
+    "markers": [
+      "although",
+      "even though",
+      "though",
+      "while",
+      "kahit",
+      "bagaman"
+    ],
+    "trigger": "normalized text begins with a concessive marker AND contains a top-level comma",
+    "splitCondition": "split only when the post-comma span contains a complete requested task (imperative, interrogative or explicit request)",
+    "requiredShape": {
+      "c01": "role=context, leading concessive span",
+      "c02": "role=primary_task, actual requested action and target"
+    },
+    "safety": [
+      "quote-aware",
+      "parenthesis-aware",
+      "top-level comma only",
+      "deterministic",
+      "stable clause ordering and positional IDs"
+    ],
+    "mustNotSplit": [
+      "ordinary comma-separated lists",
+      "commas inside quotes",
+      "commas inside parentheses",
+      "a leading concessive whose remainder is not a complete task"
+    ],
+    "precedence": "the main requested clause controls over concessive context; decided by clause role and requested action, never by clause order alone"
+  },
+  "prohibited": {
+    "exactQueryShortcut": "no branch on the eight controlling queries, object names, folder names, pair numbers, suite/family names, query hashes or expected decisions",
+    "relationBackfill": "relations are extracted before decision and reason; never backfilled from an expected decision",
+    "globalTaxSuppression": "tax relations in genuine primary tax tasks must remain intact"
+  },
+  "denominatorPolicy": "The 282-query controlling relation suite is frozen. Clause probes are an additional acceptance gate and do not change the denominator."
+}
