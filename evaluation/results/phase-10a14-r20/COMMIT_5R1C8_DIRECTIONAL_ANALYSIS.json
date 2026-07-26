@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C8",
+  "falseAllows": 16,
+  "falseRefusals": 35,
+  "clarifyMismatches": 10,
+  "byDirection": {
+    "ALLOW->REFUSE": 25,
+    "ALLOW->CLARIFY": 10,
+    "REFUSE->ALLOW": 16
+  },
+  "byTargetCompletenessAndDirection": {
+    "LABEL_OR_NAME__ALLOW->REFUSE": 4,
+    "AMBIGUOUS__ALLOW->CLARIFY": 5,
+    "CONCRETE__ALLOW->CLARIFY": 5,
+    "CONCRETE__ALLOW->REFUSE": 19,
+    "LABEL_OR_NAME__REFUSE->ALLOW": 1,
+    "CONCRETE__REFUSE->ALLOW": 10,
+    "CONTENTLESS_DEICTIC__REFUSE->ALLOW": 5,
+    "CONTENTLESS_DEICTIC__ALLOW->REFUSE": 2
+  }
+}

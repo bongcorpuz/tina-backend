@@ -1,0 +1,4 @@
+{
+  "structuralHypothesis": "Corrected plural forms in quotation-operation detection so count/format/repeat/alphabetize/list over quoted words are recognised as text manipulation. An ordinary noun phrase whose head names a non-tax activity (car wash membership, school exam, dental appointment, cabinet layout) governs its own target, so a tax-shaped modifier cannot anchor a tax relation. An explicit Filipino/Taglish tax predicate (buwis, i-withhold with tax framing) is a governed tax relation rather than an ordinary action.",
+  "iteration": "06"
+}

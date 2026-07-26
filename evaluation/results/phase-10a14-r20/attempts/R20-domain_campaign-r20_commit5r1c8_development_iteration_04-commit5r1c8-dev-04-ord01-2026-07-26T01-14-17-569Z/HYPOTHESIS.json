@@ -1,0 +1,4 @@
+{
+  "structuralHypothesis": "Widened quotation detection to letter/character counting, casing and ordering operations, and emitted QUOTES_TERM for recognized tax acronyms as well as spelled-out tax words, so a text operation over a tax-shaped token is a quotation action rather than acronym ambiguity. Added a recognized-PH-tax-acronym relation branch requiring a governed relation word (rate, computation, application, treatment, filing) so bare-acronym tax questions carry a relation.",
+  "iteration": "04"
+}

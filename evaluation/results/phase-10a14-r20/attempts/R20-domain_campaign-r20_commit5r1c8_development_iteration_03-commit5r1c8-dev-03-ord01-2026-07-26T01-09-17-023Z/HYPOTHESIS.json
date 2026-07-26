@@ -1,0 +1,4 @@
+{
+  "structuralHypothesis": "Generalized the enumerated metadata suffix family (Context/Situation/Item/Matter/Reference/Case/Group/Batch/Set/Variant) so no single keyword is privileged; an index never supplies a target. Fixed a latent stem bug where TREATMENT_ATTRIBUTE_RE carried a trailing word boundary after a stem, so deductib could never match deductible. A deictic resolved by a concrete antecedent in the same query, or a query naming a concrete tax instrument, is not contentless.",
+  "iteration": "03"
+}

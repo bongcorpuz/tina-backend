@@ -1,0 +1,83 @@
+{
+  "unit": "COMMIT 5R1-C8",
+  "generatedUtc": "2026-07-26T01:21:23.663Z",
+  "acceptanceRule": "decision mismatches decrease; closed controls remain closed; relevant counterfactual families improve or pass; no material hidden FA/FR/CLARIFY trade; no exact-row or oracle-specific logic",
+  "decisions": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c8_development_iteration_02-commit5r1c8-dev-02-ord01-2026-07-26T01-03-43-409Z",
+      "priorDecisionMismatches": 97,
+      "newDecisionMismatches": 84,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 424,
+      "counterfactualImprovedOrHeld": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "acceptanceBasis": "decision mismatches decreased",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 613,
+        "relationMismatches": 204
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c8_development_iteration_03-commit5r1c8-dev-03-ord01-2026-07-26T01-09-17-023Z",
+      "priorDecisionMismatches": 84,
+      "newDecisionMismatches": 85,
+      "decisionMismatchesDecreased": false,
+      "counterfactualPassed": 454,
+      "counterfactualImprovedOrHeld": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "acceptanceBasis": "decision-safe generalization: counterfactual coverage improved with closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 613,
+        "relationMismatches": 204
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c8_development_iteration_04-commit5r1c8-dev-04-ord01-2026-07-26T01-14-17-569Z",
+      "priorDecisionMismatches": 85,
+      "newDecisionMismatches": 85,
+      "decisionMismatchesDecreased": false,
+      "counterfactualPassed": 467,
+      "counterfactualImprovedOrHeld": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "acceptanceBasis": "decision-safe generalization: counterfactual coverage improved with closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 613,
+        "relationMismatches": 204
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c8_development_iteration_05-commit5r1c8-dev-05-ord01-2026-07-26T01-16-39-352Z",
+      "priorDecisionMismatches": 85,
+      "newDecisionMismatches": 75,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 467,
+      "counterfactualImprovedOrHeld": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "acceptanceBasis": "decision mismatches decreased",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 603,
+        "relationMismatches": 204
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c8_development_iteration_06-commit5r1c8-dev-06-ord01-2026-07-26T01-19-18-909Z",
+      "priorDecisionMismatches": 75,
+      "newDecisionMismatches": 51,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 469,
+      "counterfactualImprovedOrHeld": true,
+      "closedControlsPreserved": true,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "acceptanceBasis": "decision mismatches decreased",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 577,
+        "relationMismatches": 190
+      }
+    }
+  ],
+  "rejectedCandidatesPreserved": true
+}

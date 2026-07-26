@@ -1,0 +1,12 @@
+{
+  "unit": "COMMIT 5R1-C8",
+  "restorationPerformed": true,
+  "method": "git checkout -- services/<file> for each governed runtime file",
+  "trackedDiffBytesAfterRestore": 0,
+  "analyzerNormalizedLfAfterRestore": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+  "expectedBaselineNormalizedLf": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+  "bestCandidatePreservedAt": "evaluation/results/phase-10a14-r20/COMMIT_5R1C8_BEST_CANDIDATE.patch",
+  "candidateAlsoPreservedInAttemptSnapshots": true,
+  "integrationPerformed": false,
+  "freezePerformed": false
+}

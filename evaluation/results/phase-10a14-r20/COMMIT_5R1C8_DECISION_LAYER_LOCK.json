@@ -1,0 +1,22 @@
+{
+  "unit": "COMMIT 5R1-C8",
+  "generatedUtc": "2026-07-26T01:21:23.663Z",
+  "decisionLayerLockAchieved": false,
+  "disposition": "NOT_ACHIEVED_ITERATION_CEILING_REACHED",
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c8_development_iteration_06-commit5r1c8-dev-06-ord01-2026-07-26T01-19-18-909Z",
+  "verificationAttemptId": null,
+  "verificationNotExecutedReason": "A clean lock-verification campaign is allocated only after a candidate reaches decision 3720/3720. The best candidate reached 3669/3720, so no verification was run and none was fabricated.",
+  "runtimeSnapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c8_development_iteration_06-commit5r1c8-dev-06-ord01-2026-07-26T01-19-18-909Z/runtime-snapshot",
+  "decisionPassed": 3669,
+  "decisionMismatches": 51,
+  "falseAllows": 16,
+  "falseRefusals": 35,
+  "clarifyMismatches": 0,
+  "closedControlsPreserved": true,
+  "decisionLayerClosure": false,
+  "runtimeClosure": false,
+  "runtimeMutableForRelationWork": true,
+  "decisionRegressionRule": "REJECT_CANDIDATE",
+  "relationLaneStarted": false,
+  "reasonLaneStarted": false
+}

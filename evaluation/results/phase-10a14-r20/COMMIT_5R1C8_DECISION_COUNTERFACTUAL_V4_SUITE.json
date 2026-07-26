@@ -1,0 +1,2218 @@
+{
+  "unit": "COMMIT 5R1-C8",
+  "authoredBeforeRuntimeChange": true,
+  "expectationSource": "structural rules authored by the executor; no model-generated expectations",
+  "exactR3QueryLeakage": 0,
+  "families": [
+    "concrete_vs_contentless",
+    "antecedent_vs_metadata",
+    "primary_tax_vs_subordinate_label",
+    "primary_label_vs_incidental_token",
+    "governed_tax_relations",
+    "acronym_states",
+    "quotation_scope",
+    "multiclause_reversal",
+    "filipino_taglish",
+    "substring_traps",
+    "tax_token_in_non_tax_imperative",
+    "tax_term_cross_domain",
+    "bare_tax_topic",
+    "metadata_suffix_invariance"
+  ],
+  "pairCount": 94,
+  "queryCount": 177,
+  "pairs": [
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with metadata suffix",
+      "a": {
+        "query": "Is the delivery tricycle we bought deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it deductible against gross income? Situation 7.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with item suffix",
+      "a": {
+        "query": "Is the delivery tricycle we bought deductible against gross income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that deductible against gross income? Item 12.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with metadata suffix",
+      "a": {
+        "query": "Is the warehouse rental we pay subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to value-added tax? Situation 8.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with item suffix",
+      "a": {
+        "query": "Is the warehouse rental we pay subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to value-added tax? Item 13.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with metadata suffix",
+      "a": {
+        "query": "Is the consultancy fee we paid subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to creditable withholding tax? Situation 9.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with item suffix",
+      "a": {
+        "query": "Is the consultancy fee we paid subject to creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to creditable withholding tax? Item 14.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with metadata suffix",
+      "a": {
+        "query": "Is the imported conveyor belt subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to final tax? Situation 10.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with item suffix",
+      "a": {
+        "query": "Is the imported conveyor belt subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to final tax? Item 15.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with metadata suffix",
+      "a": {
+        "query": "Is the staff medical allowance part of taxable income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it part of taxable income? Situation 11.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "contrast": "concrete target vs contentless deictic with item suffix",
+      "a": {
+        "query": "Is the staff medical allowance part of taxable income?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that part of taxable income? Item 16.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not",
+      "a": {
+        "query": "Our firm purchased a service van last quarter. Is it deductible?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it deductible? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not",
+      "a": {
+        "query": "We paid a security agency monthly retainers. Is that subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to withholding tax? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not",
+      "a": {
+        "query": "The company imported laboratory glassware. Is it subject to customs duty?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to customs duty? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not",
+      "a": {
+        "query": "We received royalty income from a licensee. Is it subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to final tax? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not",
+      "a": {
+        "query": "The branch leased a commercial generator. Is that subject to VAT?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to VAT? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question",
+      "a": {
+        "query": "Is the sale of the pump VATable if the pump is tagged with our internal product code?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Tag the pump record with our internal product code.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question",
+      "a": {
+        "query": "Is the equipment purchase deductible even though we filed it under an internal project code?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "File the equipment record under an internal project code.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question",
+      "a": {
+        "query": "Is the freight charge subject to withholding tax although the invoice is stored under a short code?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Store the freight invoice under a short code.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question",
+      "a": {
+        "query": "Is the imported panel dutiable when the panel is labelled with a warehouse tag?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Label the imported panel with a warehouse tag.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token",
+      "a": {
+        "query": "How is VAT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter VAT into the second web form field.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax rate relation vs assigning the token as a UI caption",
+      "a": {
+        "query": "What is the VAT rate on this sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Use VAT as the caption of the console output panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token",
+      "a": {
+        "query": "How is CGT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter CGT into the second web form field.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax rate relation vs assigning the token as a UI caption",
+      "a": {
+        "query": "What is the CGT rate on this sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Use CGT as the caption of the console output panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token",
+      "a": {
+        "query": "How is DST computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter DST into the second web form field.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax rate relation vs assigning the token as a UI caption",
+      "a": {
+        "query": "What is the DST rate on this sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Use DST as the caption of the console output panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token",
+      "a": {
+        "query": "How is EWT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter EWT into the second web form field.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax rate relation vs assigning the token as a UI caption",
+      "a": {
+        "query": "What is the EWT rate on this sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Use EWT as the caption of the console output panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token",
+      "a": {
+        "query": "How is MCIT computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter MCIT into the second web form field.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax rate relation vs assigning the token as a UI caption",
+      "a": {
+        "query": "What is the MCIT rate on this sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Use MCIT as the caption of the console output panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token",
+      "a": {
+        "query": "How is OSD computed for a domestic corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter OSD into the second web form field.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "contrast": "tax rate relation vs assigning the token as a UI caption",
+      "a": {
+        "query": "What is the OSD rate on this sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Use OSD as the caption of the console output panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "How is capital gains tax computed on a sale of unlisted shares?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How is capital gains tax computed on a sale of unlisted shares in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "What capital gains tax rate applies to an individual selling land?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What capital gains tax rate applies to an individual selling land in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "Is interest income from a time deposit subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is interest income from a time deposit subject to final tax in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "Is a dividend received by a resident individual subject to final tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is a dividend received by a resident individual subject to final tax in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "Is the insurance premium on company vehicles deductible?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the insurance premium on company vehicles deductible in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "How much tax is due on imported machinery for a manufacturer?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How much tax is due on imported machinery for a manufacturer in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "Is the professional fee paid to a consultant subject to expanded withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the professional fee paid to a consultant subject to expanded withholding tax in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "governed_tax_relations",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it",
+      "a": {
+        "query": "What documentary stamp tax applies to an original issue of shares?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What documentary stamp tax applies to an original issue of shares in our internal wiki page title?",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "bare materially ambiguous token with no controlling context",
+      "a": {
+        "query": "PAN?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Within this memo, PAN refers to the shuttle roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "tax procedure relation vs label assignment",
+      "a": {
+        "query": "Is PAN required when filing the annual information return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set PAN as the caption of the pantry notice board.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "bare materially ambiguous token with no controlling context",
+      "a": {
+        "query": "CAR?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Within this memo, CAR refers to the shuttle roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "tax procedure relation vs label assignment",
+      "a": {
+        "query": "Is CAR required when filing the annual information return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set CAR as the caption of the pantry notice board.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "bare materially ambiguous token with no controlling context",
+      "a": {
+        "query": "FAN?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Within this memo, FAN refers to the shuttle roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "tax procedure relation vs label assignment",
+      "a": {
+        "query": "Is FAN required when filing the annual information return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set FAN as the caption of the pantry notice board.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "bare materially ambiguous token with no controlling context",
+      "a": {
+        "query": "AR?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Within this memo, AR refers to the shuttle roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "tax procedure relation vs label assignment",
+      "a": {
+        "query": "Is AR required when filing the annual information return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set AR as the caption of the pantry notice board.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "bare materially ambiguous token with no controlling context",
+      "a": {
+        "query": "PT?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Within this memo, PT refers to the shuttle roster.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "acronym_states",
+      "contrast": "tax procedure relation vs label assignment",
+      "a": {
+        "query": "Is PT required when filing the annual information return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set PT as the caption of the pantry notice board.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "substantive tax use vs metalinguistic text operation",
+      "a": {
+        "query": "How does VAT apply to a lease of commercial space?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write the word \"VAT\" using only lowercase letters.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "tax definition vs alphabetical sorting",
+      "a": {
+        "query": "Define VAT under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Sort the words \"VAT\" and \"levy\" alphabetically.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "substantive tax use vs metalinguistic text operation",
+      "a": {
+        "query": "How does DST apply to a lease of commercial space?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write the word \"DST\" using only lowercase letters.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "tax definition vs alphabetical sorting",
+      "a": {
+        "query": "Define DST under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Sort the words \"DST\" and \"levy\" alphabetically.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "substantive tax use vs metalinguistic text operation",
+      "a": {
+        "query": "How does CGT apply to a lease of commercial space?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write the word \"CGT\" using only lowercase letters.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "tax definition vs alphabetical sorting",
+      "a": {
+        "query": "Define CGT under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Sort the words \"CGT\" and \"levy\" alphabetically.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "substantive tax use vs metalinguistic text operation",
+      "a": {
+        "query": "How does EWT apply to a lease of commercial space?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Write the word \"EWT\" using only lowercase letters.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "quotation_scope",
+      "contrast": "tax definition vs alphabetical sorting",
+      "a": {
+        "query": "Define EWT under Philippine tax rules.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Sort the words \"EWT\" and \"levy\" alphabetically.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "multiclause_reversal",
+      "contrast": "clause-order reversal preserves the primary requested action",
+      "a": {
+        "query": "Our ledger is behind, but the real question is whether the generator lease is VATable.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "The real question is whether the generator lease is VATable, though our ledger is behind.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "multiclause_reversal",
+      "contrast": "clause-order reversal preserves the primary requested action",
+      "a": {
+        "query": "Set the archive aside for now: is the courier fee subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the courier fee subject to withholding tax? Set the archive aside for now.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "multiclause_reversal",
+      "contrast": "non-tax primary action preserved under clause reversal",
+      "a": {
+        "query": "Book the meeting room, and label the folder CGT.",
+        "expected": "REFUSE"
+      },
+      "b": {
+        "query": "Label the folder CGT, and book the meeting room.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "multiclause_reversal",
+      "contrast": "non-tax primary action preserved under clause reversal",
+      "a": {
+        "query": "Draft the newsletter, then title the sheet DST.",
+        "expected": "REFUSE"
+      },
+      "b": {
+        "query": "Title the sheet DST, then draft the newsletter.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Deductible ba ang binili naming service van sa income tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Pakisulat ng maikling tula tungkol sa tag-ulan.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "May VAT ba ang upa sa bodega namin?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Ano ang pangalan ng bagong folder sa desktop?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Kailangan bang i-withhold ang buwis sa bayad sa kontraktor?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Kailangan bang i-print ang poster para sa palaro?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Taxable ba ang natanggap na komisyon ng ahente?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Masarap ba ang bagong panaderya sa kanto?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "substring_traps",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring",
+      "a": {
+        "query": "Is the equipment rental subject to VAT?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How do I organise a taxonomy of our product lines?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "substring_traps",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring",
+      "a": {
+        "query": "Is the delivery charge subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can I book a taxicab for the airport run?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "substring_traps",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring",
+      "a": {
+        "query": "What is the deadline to file the annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the syntax for a nested lookup formula?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "substring_traps",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring",
+      "a": {
+        "query": "Is the imported motor subject to customs duty?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How do I import a spreadsheet into the reporting tool?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "substring_traps",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring",
+      "a": {
+        "query": "What penalty applies to a late annual return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What penalty applies in a shootout under the league rules?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token",
+      "a": {
+        "query": "Is input VAT creditable against output VAT for a trading company?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Enter the input VAT figure into the third column of the sheet.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token",
+      "a": {
+        "query": "Is output VAT payable on a consignment sale?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Print the output VAT caption on the summary page.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token",
+      "a": {
+        "query": "Is the withholding tax certificate required for this payment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Attach the withholding tax certificate scan to the shared drive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain",
+      "a": {
+        "query": "Does a permanent establishment arise for a foreign contractor in the Philippines?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What permanent structure is required for a heritage building restoration?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain",
+      "a": {
+        "query": "How do I file a request for reconsideration of a deficiency assessment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How do I request reconsideration of a university grade?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain",
+      "a": {
+        "query": "What happens at a notice for informal conference with the BIR?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What goes on the agenda of an informal team conference?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain",
+      "a": {
+        "query": "Is the taxpayer entitled to a refund claim before prescription lapses?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is a customer entitled to a refund claim on a delayed parcel?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "tax sparing credit rules",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "weekend hiking club",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "situs of local business taxation",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "office pantry roster",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "remedies available to an assessed taxpayer",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "annual sports festival",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "taxable accounting period election",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "library shelving plan",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "double taxation agreement relief",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "staff carpool schedule",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "resident alien taxation rules",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "canteen menu rotation",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "prescription of a refund claim",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "parking sticker renewal",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bare_tax_topic",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not",
+      "a": {
+        "query": "business tax situs allocation",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "lobby signage refresh",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Are charity bazaar receipts taxable?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Are charity bazaar receipts taxable? Group MM-91.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Are charity bazaar receipts taxable?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Are charity bazaar receipts taxable? Batch RR-8.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Are charity bazaar receipts taxable?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Are charity bazaar receipts taxable? Set QQ-3.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Does the authority to print receipts requirement apply?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does the authority to print receipts requirement apply? Group MM-91.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Does the authority to print receipts requirement apply?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does the authority to print receipts requirement apply? Batch RR-8.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Does the authority to print receipts requirement apply?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Does the authority to print receipts requirement apply? Set QQ-3.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Is the delivery fee subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the delivery fee subject to withholding tax? Group MM-91.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Is the delivery fee subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the delivery fee subject to withholding tax? Batch RR-8.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision",
+      "a": {
+        "query": "Is the delivery fee subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is the delivery fee subject to withholding tax? Set QQ-3.",
+        "expected": "ALLOW"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is the delivery tricycle we bought deductible against gross income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is it deductible against gross income? Situation 7.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is that deductible against gross income? Item 12.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with item suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is the warehouse rental we pay subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is it subject to value-added tax? Situation 8.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is that subject to value-added tax? Item 13.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with item suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is the consultancy fee we paid subject to creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is it subject to creditable withholding tax? Situation 9.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is that subject to creditable withholding tax? Item 14.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with item suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is the imported conveyor belt subject to final tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is it subject to final tax? Situation 10.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is that subject to final tax? Item 15.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with item suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is the staff medical allowance part of taxable income?",
+      "expectedDecision": "ALLOW",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is it part of taxable income? Situation 11.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with metadata suffix"
+    },
+    {
+      "family": "concrete_vs_contentless",
+      "query": "Is that part of taxable income? Item 16.",
+      "expectedDecision": "REFUSE",
+      "contrast": "concrete target vs contentless deictic with item suffix"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "Our firm purchased a service van last quarter. Is it deductible?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "Is it deductible? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "We paid a security agency monthly retainers. Is that subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "Is that subject to withholding tax? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "The company imported laboratory glassware. Is it subject to customs duty?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "Is it subject to customs duty? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "We received royalty income from a licensee. Is it subject to final tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "Is it subject to final tax? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "The branch leased a commercial generator. Is that subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "antecedent_vs_metadata",
+      "query": "Is that subject to VAT? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix does not"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the sale of the pump VATable if the pump is tagged with our internal product code?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Tag the pump record with our internal product code.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the equipment purchase deductible even though we filed it under an internal project code?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "File the equipment record under an internal project code.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the freight charge subject to withholding tax although the invoice is stored under a short code?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Store the freight invoice under a short code.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Is the imported panel dutiable when the panel is labelled with a warehouse tag?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_label",
+      "query": "Label the imported panel with a warehouse tag.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a subordinate label clause must not veto a genuine tax-treatment question"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "How is VAT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Enter VAT into the second web form field.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "What is the VAT rate on this sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Use VAT as the caption of the console output panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "How is CGT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Enter CGT into the second web form field.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "What is the CGT rate on this sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Use CGT as the caption of the console output panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "How is DST computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Enter DST into the second web form field.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "What is the DST rate on this sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Use DST as the caption of the console output panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "How is EWT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Enter EWT into the second web form field.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "What is the EWT rate on this sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Use EWT as the caption of the console output panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "How is MCIT computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Enter MCIT into the second web form field.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "What is the MCIT rate on this sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Use MCIT as the caption of the console output panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "How is OSD computed for a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Enter OSD into the second web form field.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax computation relation vs an imperative data-entry action naming the token"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "What is the OSD rate on this sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "primary_label_vs_incidental_token",
+      "query": "Use OSD as the caption of the console output panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax rate relation vs assigning the token as a UI caption"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "How is capital gains tax computed on a sale of unlisted shares?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "How is capital gains tax computed on a sale of unlisted shares in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "What capital gains tax rate applies to an individual selling land?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "What capital gains tax rate applies to an individual selling land in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is interest income from a time deposit subject to final tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is interest income from a time deposit subject to final tax in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is a dividend received by a resident individual subject to final tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is a dividend received by a resident individual subject to final tax in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is the insurance premium on company vehicles deductible?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is the insurance premium on company vehicles deductible in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "How much tax is due on imported machinery for a manufacturer?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "How much tax is due on imported machinery for a manufacturer in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is the professional fee paid to a consultant subject to expanded withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "Is the professional fee paid to a consultant subject to expanded withholding tax in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "What documentary stamp tax applies to an original issue of shares?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "governed_tax_relations",
+      "query": "What documentary stamp tax applies to an original issue of shares in our internal wiki page title?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a governed tax relation stays ALLOW; incidental wording must not change it"
+    },
+    {
+      "family": "acronym_states",
+      "query": "PAN?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Within this memo, PAN refers to the shuttle roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Is PAN required when filing the annual information return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Set PAN as the caption of the pantry notice board.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "CAR?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Within this memo, CAR refers to the shuttle roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Is CAR required when filing the annual information return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Set CAR as the caption of the pantry notice board.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "FAN?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Within this memo, FAN refers to the shuttle roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Is FAN required when filing the annual information return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Set FAN as the caption of the pantry notice board.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "AR?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Within this memo, AR refers to the shuttle roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Is AR required when filing the annual information return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Set AR as the caption of the pantry notice board.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "PT?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Within this memo, PT refers to the shuttle roster.",
+      "expectedDecision": "REFUSE",
+      "contrast": "bare materially ambiguous token with no controlling context"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Is PT required when filing the annual information return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "acronym_states",
+      "query": "Set PT as the caption of the pantry notice board.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax procedure relation vs label assignment"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "How does VAT apply to a lease of commercial space?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Write the word \"VAT\" using only lowercase letters.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Define VAT under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Sort the words \"VAT\" and \"levy\" alphabetically.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "How does DST apply to a lease of commercial space?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Write the word \"DST\" using only lowercase letters.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Define DST under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Sort the words \"DST\" and \"levy\" alphabetically.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "How does CGT apply to a lease of commercial space?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Write the word \"CGT\" using only lowercase letters.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Define CGT under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Sort the words \"CGT\" and \"levy\" alphabetically.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "How does EWT apply to a lease of commercial space?",
+      "expectedDecision": "ALLOW",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Write the word \"EWT\" using only lowercase letters.",
+      "expectedDecision": "REFUSE",
+      "contrast": "substantive tax use vs metalinguistic text operation"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Define EWT under Philippine tax rules.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "quotation_scope",
+      "query": "Sort the words \"EWT\" and \"levy\" alphabetically.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax definition vs alphabetical sorting"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Our ledger is behind, but the real question is whether the generator lease is VATable.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "The real question is whether the generator lease is VATable, though our ledger is behind.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Set the archive aside for now: is the courier fee subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Is the courier fee subject to withholding tax? Set the archive aside for now.",
+      "expectedDecision": "ALLOW",
+      "contrast": "clause-order reversal preserves the primary requested action"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Book the meeting room, and label the folder CGT.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Label the folder CGT, and book the meeting room.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Draft the newsletter, then title the sheet DST.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "multiclause_reversal",
+      "query": "Title the sheet DST, then draft the newsletter.",
+      "expectedDecision": "REFUSE",
+      "contrast": "non-tax primary action preserved under clause reversal"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Deductible ba ang binili naming service van sa income tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Pakisulat ng maikling tula tungkol sa tag-ulan.",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "May VAT ba ang upa sa bodega namin?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Ano ang pangalan ng bagong folder sa desktop?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Kailangan bang i-withhold ang buwis sa bayad sa kontraktor?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Kailangan bang i-print ang poster para sa palaro?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Taxable ba ang natanggap na komisyon ng ahente?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish",
+      "query": "Masarap ba ang bagong panaderya sa kanto?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "substring_traps",
+      "query": "Is the equipment rental subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "How do I organise a taxonomy of our product lines?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "Is the delivery charge subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "Can I book a taxicab for the airport run?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "What is the deadline to file the annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "What is the syntax for a nested lookup formula?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "Is the imported motor subject to customs duty?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "How do I import a spreadsheet into the reporting tool?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "What penalty applies to a late annual return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "substring_traps",
+      "query": "What penalty applies in a shootout under the league rules?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax relation vs an ordinary word merely containing a tax-shaped substring"
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Is input VAT creditable against output VAT for a trading company?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token"
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Enter the input VAT figure into the third column of the sheet.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token"
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Is output VAT payable on a consignment sale?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token"
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Print the output VAT caption on the summary page.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token"
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Is the withholding tax certificate required for this payment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token"
+    },
+    {
+      "family": "tax_token_in_non_tax_imperative",
+      "query": "Attach the withholding tax certificate scan to the shared drive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax relation over a target vs an imperative data-handling action naming the same token"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "Does a permanent establishment arise for a foreign contractor in the Philippines?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "What permanent structure is required for a heritage building restoration?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "How do I file a request for reconsideration of a deficiency assessment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "How do I request reconsideration of a university grade?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "What happens at a notice for informal conference with the BIR?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "What goes on the agenda of an informal team conference?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "Is the taxpayer entitled to a refund claim before prescription lapses?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "tax_term_cross_domain",
+      "query": "Is a customer entitled to a refund claim on a delayed parcel?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax instrument in its own domain vs the same words in an unrelated professional domain"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "tax sparing credit rules",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "weekend hiking club",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "situs of local business taxation",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "office pantry roster",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "remedies available to an assessed taxpayer",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "annual sports festival",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "taxable accounting period election",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "library shelving plan",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "double taxation agreement relief",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "staff carpool schedule",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "resident alien taxation rules",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "canteen menu rotation",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "prescription of a refund claim",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "parking sticker renewal",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "business tax situs allocation",
+      "expectedDecision": "ALLOW",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "bare_tax_topic",
+      "query": "lobby signage refresh",
+      "expectedDecision": "REFUSE",
+      "contrast": "a bare governed tax topic is self-resolving subject matter; a bare non-tax topic is not"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Are charity bazaar receipts taxable?",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Are charity bazaar receipts taxable? Group MM-91.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Are charity bazaar receipts taxable? Batch RR-8.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Are charity bazaar receipts taxable? Set QQ-3.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Does the authority to print receipts requirement apply?",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Does the authority to print receipts requirement apply? Group MM-91.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Does the authority to print receipts requirement apply? Batch RR-8.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Does the authority to print receipts requirement apply? Set QQ-3.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Is the delivery fee subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Is the delivery fee subject to withholding tax? Group MM-91.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Is the delivery fee subject to withholding tax? Batch RR-8.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    },
+    {
+      "family": "metadata_suffix_invariance",
+      "query": "Is the delivery fee subject to withholding tax? Set QQ-3.",
+      "expectedDecision": "ALLOW",
+      "contrast": "an enumerated metadata suffix carries no target and must not alter a governed decision"
+    }
+  ]
+}

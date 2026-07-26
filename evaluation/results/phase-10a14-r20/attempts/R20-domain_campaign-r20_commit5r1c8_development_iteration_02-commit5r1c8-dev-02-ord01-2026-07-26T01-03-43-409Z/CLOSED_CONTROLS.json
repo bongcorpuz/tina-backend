@@ -1,0 +1,29 @@
+{
+  "controls": [
+    {
+      "control": "tax_compliance_task",
+      "passed": 108,
+      "total": 108,
+      "closed": true
+    },
+    {
+      "control": "acronym_homograph_control",
+      "passed": 200,
+      "total": 200,
+      "closed": true
+    },
+    {
+      "control": "ambiguous_clarification_control",
+      "passed": 150,
+      "total": 150,
+      "closed": true
+    },
+    {
+      "control": "internal_label_proper_name",
+      "passed": 104,
+      "total": 104,
+      "closed": true
+    }
+  ],
+  "allClosed": true
+}
