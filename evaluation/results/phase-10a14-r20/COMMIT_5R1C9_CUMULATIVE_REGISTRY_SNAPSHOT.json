@@ -1,0 +1,35 @@
+{
+  "unit": "COMMIT 5R1-C9",
+  "generatedUtc": "2026-07-26T04:17:09.180Z",
+  "priorAttempts": 78,
+  "newAttempts": 10,
+  "totalAttempts": 88,
+  "byCategory": {
+    "domain_campaign": 38,
+    "focused_suite": 7,
+    "other": 9,
+    "synthetic_validator": 34
+  },
+  "controlling": 86,
+  "nonControlling": 2,
+  "failed": 0,
+  "retries": 0,
+  "orphanResults": 0,
+  "danglingAttempts": 0,
+  "cumulativeThrough": "commit5r1c9-incomplete",
+  "runtimeClosure": false,
+  "decisionLayerClosure": false,
+  "closureComplete": true,
+  "newAttemptIds": [
+    "R20-domain_campaign-r20_commit5r1c9_development_iteration_02-commit5r1c9-dev-02-ord01-2026-07-26T01-49-53-571Z",
+    "R20-domain_campaign-r20_commit5r1c9_development_iteration_03-commit5r1c9-dev-03-ord01-2026-07-26T01-53-56-195Z",
+    "R20-domain_campaign-r20_commit5r1c9_development_iteration_04-commit5r1c9-dev-04-ord01-2026-07-26T01-55-32-514Z",
+    "R20-domain_campaign-r20_commit5r1c9_development_iteration_05-commit5r1c9-dev-05-ord01-2026-07-26T01-56-49-353Z",
+    "R20-domain_campaign-r20_commit5r1c9_development_iteration_06-commit5r1c9-dev-06-ord01-2026-07-26T01-59-01-568Z",
+    "R20-domain_campaign-r20_commit5r1c9_reconstructed_3669_candidate-commit5r1c9-dev-01-ord01-2026-07-26T01-43-17-269Z",
+    "R20-domain_campaign-r20_commit5r1c9_reconstructed_3669_candidate-commit5r1c9-dev-01-ord01-2026-07-26T01-44-05-284Z",
+    "R20-focused_suite-r20_commit5r1c9_decision_focused_regression-commit5r1c9-final-ord01-2026-07-26T04-15-57-505Z",
+    "R20-synthetic_validator-r20_commit5r1c9_decision_determinism_and_no_mutation-commit5r1c9-final-ord01-2026-07-26T04-15-59-384Z",
+    "R20-synthetic_validator-r20_commit5r1c9_decision_static_and_anti_overfit-commit5r1c9-final-ord01-2026-07-26T04-15-59-030Z"
+  ]
+}

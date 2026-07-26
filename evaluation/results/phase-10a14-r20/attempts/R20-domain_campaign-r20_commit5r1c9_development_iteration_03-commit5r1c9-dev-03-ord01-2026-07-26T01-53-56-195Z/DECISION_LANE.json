@@ -1,0 +1,8 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c9_development_iteration_03-commit5r1c9-dev-03-ord01-2026-07-26T01-53-56-195Z",
+  "decisionPassed": 3686,
+  "decisionMismatches": 34,
+  "materialFalseAllows": 12,
+  "materialFalseRefusals": 22,
+  "clarifyMismatches": 0
+}

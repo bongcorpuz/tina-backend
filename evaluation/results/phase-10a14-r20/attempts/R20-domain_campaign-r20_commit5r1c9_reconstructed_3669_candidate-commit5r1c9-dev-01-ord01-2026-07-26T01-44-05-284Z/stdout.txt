@@ -1,0 +1,6 @@
+snapshot identity verified; servicesTreeDigest=664eb8624220e80f2276
+allocated R20-domain_campaign-r20_commit5r1c9_reconstructed_3669_candidate-commit5r1c9-dev-01-ord01-2026-07-26T01-44-05-284Z
+applied; verified servicesTreeDigest=664eb8624220e80f2276
+overall=3088/3720 decision=3669/3720 decisionMismatches=51
+fa=16 fr=35 cm=0 reason=577 relation=190
+closedControls=ALL CLOSED

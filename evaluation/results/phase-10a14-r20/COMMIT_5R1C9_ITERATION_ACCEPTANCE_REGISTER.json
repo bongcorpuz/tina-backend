@@ -1,0 +1,93 @@
+{
+  "unit": "COMMIT 5R1-C9",
+  "generatedUtc": "2026-07-26T04:17:09.180Z",
+  "acceptanceRule": "decision mismatches decrease, or a documented decision-safe structural generalization materially improves counterfactual coverage without increasing R3 mismatches; closed controls remain closed; false-allow/refusal trade explicit; no oracle-specific logic. A flat R3 candidate is not automatically accepted.",
+  "decisions": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c9_development_iteration_02-commit5r1c9-dev-02-ord01-2026-07-26T01-49-53-571Z",
+      "priorDecisionMismatches": 51,
+      "newDecisionMismatches": 41,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 581,
+      "counterfactualImproved": true,
+      "closedControlsPreserved": true,
+      "falseAllows": 11,
+      "falseRefusals": 30,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with all closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 576,
+        "relationMismatches": 190
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c9_development_iteration_03-commit5r1c9-dev-03-ord01-2026-07-26T01-53-56-195Z",
+      "priorDecisionMismatches": 41,
+      "newDecisionMismatches": 34,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 582,
+      "counterfactualImproved": true,
+      "closedControlsPreserved": true,
+      "falseAllows": 12,
+      "falseRefusals": 22,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with all closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 592,
+        "relationMismatches": 182
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c9_development_iteration_04-commit5r1c9-dev-04-ord01-2026-07-26T01-55-32-514Z",
+      "priorDecisionMismatches": 34,
+      "newDecisionMismatches": 19,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 585,
+      "counterfactualImproved": true,
+      "closedControlsPreserved": true,
+      "falseAllows": 7,
+      "falseRefusals": 12,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with all closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 574,
+        "relationMismatches": 167
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c9_development_iteration_05-commit5r1c9-dev-05-ord01-2026-07-26T01-56-49-353Z",
+      "priorDecisionMismatches": 19,
+      "newDecisionMismatches": 14,
+      "decisionMismatchesDecreased": true,
+      "counterfactualPassed": 586,
+      "counterfactualImproved": true,
+      "closedControlsPreserved": true,
+      "falseAllows": 7,
+      "falseRefusals": 7,
+      "disposition": "ACCEPTED_AS_NEXT_BASE",
+      "rationale": "decision mismatches decreased with all closed controls preserved",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 562,
+        "relationMismatches": 167
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c9_development_iteration_06-commit5r1c9-dev-06-ord01-2026-07-26T01-59-01-568Z",
+      "priorDecisionMismatches": 14,
+      "newDecisionMismatches": 17,
+      "decisionMismatchesDecreased": false,
+      "counterfactualPassed": 586,
+      "counterfactualImproved": false,
+      "closedControlsPreserved": true,
+      "falseAllows": 7,
+      "falseRefusals": 10,
+      "disposition": "REJECTED",
+      "rationale": "net negative against R3: decision mismatches did not decrease, so the candidate was rejected and the prior accepted base was restored",
+      "reasonRelationChangeRecordedSeparately": {
+        "reasonMismatches": 561,
+        "relationMismatches": 167
+      }
+    }
+  ],
+  "rejectedCandidatesPreserved": true
+}

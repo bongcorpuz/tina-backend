@@ -1,0 +1,78 @@
+{
+  "unit": "COMMIT 5R1-C9",
+  "buckets": {
+    "all_three_decisions": {
+      "total": 3720,
+      "passed": 3706,
+      "failed": 14
+    },
+    "closed_decision_controls": {
+      "total": 672,
+      "passed": 672,
+      "failed": 0
+    },
+    "target_completeness": {
+      "total": 310,
+      "passed": 306,
+      "failed": 4
+    },
+    "contextual_acronyms": {
+      "total": 1624,
+      "passed": 1623,
+      "failed": 1
+    },
+    "label_binding": {
+      "total": 260,
+      "passed": 259,
+      "failed": 1
+    },
+    "quoted_term_scope": {
+      "total": 155,
+      "passed": 154,
+      "failed": 1
+    },
+    "non_tax_actions": {
+      "total": 942,
+      "passed": 939,
+      "failed": 3
+    },
+    "concrete_tax_relations": {
+      "total": 1139,
+      "passed": 1134,
+      "failed": 5
+    },
+    "resolved_referents": {
+      "total": 57,
+      "passed": 57,
+      "failed": 0
+    },
+    "compliance_vs_treatment": {
+      "total": 436,
+      "passed": 435,
+      "failed": 1
+    },
+    "ordinary_homographs": {
+      "total": 92,
+      "passed": 91,
+      "failed": 1
+    },
+    "multi_clause": {
+      "total": 130,
+      "passed": 128,
+      "failed": 2
+    },
+    "filipino_taglish": {
+      "total": 357,
+      "passed": 355,
+      "failed": 2
+    },
+    "numeric_scenario_invariance": {
+      "total": 1462,
+      "passed": 1458,
+      "failed": 4
+    }
+  },
+  "closedControlsFailed": 0,
+  "requiredForLock": "failed decision-focused tests = 0 (not met while decision mismatches remain)",
+  "result": "CLOSED_CONTROLS_PASS"
+}

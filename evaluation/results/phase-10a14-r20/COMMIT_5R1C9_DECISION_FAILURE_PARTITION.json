@@ -1,0 +1,148 @@
+{
+  "unit": "COMMIT 5R1-C9",
+  "basisAttempt": "R20-domain_campaign-r20_commit5r1c9_development_iteration_05-commit5r1c9-dev-05-ord01-2026-07-26T01-56-49-353Z",
+  "decisionMismatches": 14,
+  "partitionedRows": 14,
+  "missing": 0,
+  "duplicatePrimaryAssignments": 0,
+  "possibleOracleConflicts": 0,
+  "clusterCounts": {
+    "CONCRETE_TARGET_TAX_RELATION_MISSED": 5,
+    "COMPLIANCE_PROCEDURE_WITH_IMPLICIT_TARGET": 1,
+    "ACRONYM_DEFINITION_INTENT": 4,
+    "CONCRETE_TARGET_FALSE_TAX_ANCHOR": 3,
+    "ACRONYM_AS_LABEL_OR_NAME": 1
+  },
+  "directionCounts": {
+    "ALLOW->CLARIFY": 1,
+    "ALLOW->REFUSE": 6,
+    "REFUSE->ALLOW": 7
+  },
+  "targetCompletenessCounts": {
+    "AMBIGUOUS": 1,
+    "CONCRETE": 7,
+    "CONTENTLESS_DEICTIC": 5,
+    "LABEL_OR_NAME": 1
+  },
+  "primaryTaskCounts": {
+    "UNDETERMINED": 1,
+    "TAX_COMPLIANCE": 4,
+    "DEFINITION": 4,
+    "LABEL_BINDING": 1,
+    "TAX_TREATMENT": 4
+  },
+  "rows": [
+    {
+      "oracleId": "S2-IR18-DOM-029",
+      "query": "RCIT",
+      "direction": "ALLOW->CLARIFY",
+      "primaryCluster": "CONCRETE_TARGET_TAX_RELATION_MISSED",
+      "targetCompleteness": "AMBIGUOUS",
+      "primaryTask": "UNDETERMINED"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-109",
+      "query": "refund claim prescription",
+      "direction": "ALLOW->REFUSE",
+      "primaryCluster": "COMPLIANCE_PROCEDURE_WITH_IMPLICIT_TARGET",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_COMPLIANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-338",
+      "query": "What is the holding period? Context 1.",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "ACRONYM_DEFINITION_INTENT",
+      "targetCompleteness": "CONTENTLESS_DEICTIC",
+      "primaryTask": "DEFINITION"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-358",
+      "query": "What is the holding period? Context 2.",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "ACRONYM_DEFINITION_INTENT",
+      "targetCompleteness": "CONTENTLESS_DEICTIC",
+      "primaryTask": "DEFINITION"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-378",
+      "query": "What is the holding period? Context 3.",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "ACRONYM_DEFINITION_INTENT",
+      "targetCompleteness": "CONTENTLESS_DEICTIC",
+      "primaryTask": "DEFINITION"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-398",
+      "query": "What is the holding period? Context 4.",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "ACRONYM_DEFINITION_INTENT",
+      "targetCompleteness": "CONTENTLESS_DEICTIC",
+      "primaryTask": "DEFINITION"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-541",
+      "query": "Make an alphalist of students alphabetically.",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_COMPLIANCE"
+    },
+    {
+      "oracleId": "S3-IR17-010",
+      "query": "Does the Tariff and Customs Code affect Philippine import duty?",
+      "direction": "ALLOW->REFUSE",
+      "primaryCluster": "ACRONYM_AS_LABEL_OR_NAME",
+      "targetCompleteness": "LABEL_OR_NAME",
+      "primaryTask": "LABEL_BINDING"
+    },
+    {
+      "oracleId": "S3-IR17-102",
+      "query": "Can a supplier reject a return of goods?",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_COMPLIANCE"
+    },
+    {
+      "oracleId": "S3-IR17-105",
+      "query": "Can a private lease include a taxable costs clause?",
+      "direction": "ALLOW->REFUSE",
+      "primaryCluster": "CONCRETE_TARGET_TAX_RELATION_MISSED",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_TREATMENT"
+    },
+    {
+      "oracleId": "S3-IR17-107",
+      "query": "What if a payment due date falls on a weekend?",
+      "direction": "REFUSE->ALLOW",
+      "primaryCluster": "CONCRETE_TARGET_FALSE_TAX_ANCHOR",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_COMPLIANCE"
+    },
+    {
+      "oracleId": "S3-IR17-144",
+      "query": "Is it taxable?",
+      "direction": "ALLOW->REFUSE",
+      "primaryCluster": "CONCRETE_TARGET_TAX_RELATION_MISSED",
+      "targetCompleteness": "CONTENTLESS_DEICTIC",
+      "primaryTask": "TAX_TREATMENT"
+    },
+    {
+      "oracleId": "R20N-FIL-1437",
+      "query": "Kailangan bang i-withhold ang buwis sa software company?",
+      "direction": "ALLOW->REFUSE",
+      "primaryCluster": "CONCRETE_TARGET_TAX_RELATION_MISSED",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_TREATMENT"
+    },
+    {
+      "oracleId": "R20N-FIL-1529",
+      "query": "Kailangan bang i-withhold ang buwis sa retail shelf?",
+      "direction": "ALLOW->REFUSE",
+      "primaryCluster": "CONCRETE_TARGET_TAX_RELATION_MISSED",
+      "targetCompleteness": "CONCRETE",
+      "primaryTask": "TAX_TREATMENT"
+    }
+  ]
+}

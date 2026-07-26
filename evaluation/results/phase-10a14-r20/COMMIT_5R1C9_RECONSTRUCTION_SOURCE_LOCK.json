@@ -1,0 +1,33 @@
+{
+  "unit": "COMMIT 5R1-C9",
+  "generatedUtc": "2026-07-26T01:44:05.282Z",
+  "sourceAttempt": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c8_development_iteration_06-commit5r1c8-dev-06-ord01-2026-07-26T01-19-18-909Z/",
+  "requiredNormalizedLfSha256": {
+    "philippine-tax-intent-analyzer.js": "9f2dcf8c24743cf173c5987fee6f1d3ea9b8ba8fbdd8615a61249218ded58a60",
+    "philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "requiredServicesTreeDigest": "664eb8624220e80f2276b4c12ee6223b4c7e89424bc7e076674092f9330932c3",
+  "verifiedExact": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "liveBaselineBeforeApply": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 31742,
+      "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+  },
+  "identityPolicy": "Git blob canonical; normalized-LF SHA-256 for content comparison under core.autocrlf=true"
+}

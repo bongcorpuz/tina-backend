@@ -1,0 +1,1638 @@
+{
+  "unit": "COMMIT 5R1-C9",
+  "authoredBeforeRuntimeChange": true,
+  "expectationSource": "structural rules authored by the executor; no model-generated expectations",
+  "exactR3QueryLeakage": 0,
+  "families": [
+    "tax_return_vs_goods_return",
+    "tax_filing_vs_computer_file",
+    "tax_claim_vs_ordinary_claim",
+    "bir_registration_vs_event_registration",
+    "alphalist_vs_alphabetical_list",
+    "taxable_output_vs_console_output",
+    "legal_title_vs_internal_label",
+    "primary_tax_vs_subordinate_code",
+    "unambiguous_vs_polysemous_acronym",
+    "concise_tax_phrase_vs_ordinary_phrase",
+    "metadata_suffix_vs_antecedent",
+    "filipino_taglish_v5",
+    "due_date_homograph",
+    "regulatory_report_vs_tax_report",
+    "explicit_tax_context_resolves_acronym",
+    "concrete_target_vs_styling_object"
+  ],
+  "pairCount": 67,
+  "queryCount": 134,
+  "pairs": [
+    {
+      "family": "tax_return_vs_goods_return",
+      "contrast": "tax return filing vs merchandise return",
+      "a": {
+        "query": "When must the annual income tax return be filed by a corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can a shopper reject a return of damaged crockery?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "contrast": "tax return vs library loan return",
+      "a": {
+        "query": "What return covers quarterly percentage tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "When is a borrowed atlas due back at the reading room?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "contrast": "amended tax return vs consumer goods return",
+      "a": {
+        "query": "Is an amended income tax return allowed after assessment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "May a buyer return a mismatched sofa to the showroom?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "contrast": "tax return date vs judicial return date",
+      "a": {
+        "query": "What return date applies to the annual information return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What return date is printed on a court summons?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "contrast": "tax filing vs opening a computer file",
+      "a": {
+        "query": "How do I file the quarterly VAT declaration?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How do I open a spreadsheet file in the reporting tool?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "contrast": "tax filing deadline vs file naming",
+      "a": {
+        "query": "What is the filing deadline for the annual income tax return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the naming convention for an archived project file?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "contrast": "tax form filing vs file storage",
+      "a": {
+        "query": "Which BIR form is filed for creditable withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Which folder holds the exported ledger file?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "contrast": "tax refund claim vs insurance claim",
+      "a": {
+        "query": "What is the prescriptive period for a tax refund claim?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the prescriptive period for a motor insurance claim?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "contrast": "input tax claim vs consumer compensation claim",
+      "a": {
+        "query": "Can input tax be claimed on imported raw materials?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Can a passenger claim compensation for a delayed ferry?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "contrast": "tax credit claim vs warranty claim",
+      "a": {
+        "query": "How is a claim for excess creditable withholding tax carried over?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How is a warranty claim escalated to the manufacturer?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "contrast": "tax registration vs event registration",
+      "a": {
+        "query": "How do I complete BIR registration for a new branch?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "How do I complete registration for the weekend fun run?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "contrast": "tax registration vs club registration",
+      "a": {
+        "query": "Is registration with the revenue district office required for a sole proprietor?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is registration required for the neighbourhood chess ladder?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "contrast": "taxpayer registration fee vs membership fee",
+      "a": {
+        "query": "What is the annual registration fee for a taxpayer?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the annual registration fee for a gym membership?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "alphalist_vs_alphabetical_list",
+      "contrast": "tax alphalist vs alphabetising a roster",
+      "a": {
+        "query": "Which alphalist supports the annual withholding tax return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Arrange the choir roster in alphabetical order.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "alphalist_vs_alphabetical_list",
+      "contrast": "tax alphalist vs alphabetical sorting",
+      "a": {
+        "query": "Must the alphalist of payees accompany the withholding return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Please sort the seminar attendees alphabetically by surname.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "contrast": "output tax vs program console output",
+      "a": {
+        "query": "Is output tax due on a consignment sale of goods?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Send the console output of the build to the log panel.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "contrast": "output tax offset vs function return value",
+      "a": {
+        "query": "How is output tax offset against input tax by a trader?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Return the computed output from the helper routine.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "contrast": "VAT on a typeface sale vs a stylesheet typeface",
+      "a": {
+        "query": "Is the sale of a licensed typeface subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this heading typeface defined in the stylesheet?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "contrast": "named statute in a tax question vs assigning a storage label",
+      "a": {
+        "query": "Does the Tariff and Customs Modernization Act govern this importation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Store the shipping manifest under the label CUSTOMS.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "contrast": "named code in a tax question vs folder titling",
+      "a": {
+        "query": "What does the National Internal Revenue Code say about deficiency interest?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Title the archive folder NIRC for convenience.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "contrast": "named statute vs deck tagging",
+      "a": {
+        "query": "Does the Ease of Paying Taxes Act change the filing venue?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Tag the onboarding deck as EOPT for the team drive.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "contrast": "a subordinate code clause must not veto a genuine tax question",
+      "a": {
+        "query": "Is the sale of the pump subject to VAT if the pump carries an internal product code?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Assign an internal product code to the pump record.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "contrast": "subordinate code clause vs primary coding action",
+      "a": {
+        "query": "Is the equipment transfer taxable even though it is filed under a project code?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "File the equipment record under a project code.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "contrast": "subordinate code clause vs primary code assignment",
+      "a": {
+        "query": "Is the imported panel dutiable when the panel bears a warehouse code?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Give the imported panel a warehouse code.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept",
+      "a": {
+        "query": "Describe how MCIT works for a domestic company.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set MCIT as the caption of the lobby noticeboard.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept",
+      "a": {
+        "query": "Describe how RCIT works for a domestic company.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set RCIT as the caption of the lobby noticeboard.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept",
+      "a": {
+        "query": "Describe how NOLCO works for a domestic company.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set NOLCO as the caption of the lobby noticeboard.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept",
+      "a": {
+        "query": "Describe how CWT works for a domestic company.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set CWT as the caption of the lobby noticeboard.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept",
+      "a": {
+        "query": "Describe how IAET works for a domestic company.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Set IAET as the caption of the lobby noticeboard.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows",
+      "a": {
+        "query": "PAN?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Explain PAN in a BIR deficiency assessment.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows",
+      "a": {
+        "query": "CAR?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Explain CAR in a BIR deficiency assessment.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows",
+      "a": {
+        "query": "FAN?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Explain FAN in a BIR deficiency assessment.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows",
+      "a": {
+        "query": "AR?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Explain AR in a BIR deficiency assessment.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows",
+      "a": {
+        "query": "PT?",
+        "expected": "CLARIFY"
+      },
+      "b": {
+        "query": "Explain PT in a BIR deficiency assessment.",
+        "expected": "ALLOW"
+      }
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not",
+      "a": {
+        "query": "taxable compensation of a rank-and-file employee",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "weekend hiking club roster",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not",
+      "a": {
+        "query": "capital gains tax computation on land",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "office pantry restocking plan",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not",
+      "a": {
+        "query": "import duty treatment under customs law",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "annual sportsfest programme",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not",
+      "a": {
+        "query": "refund claim prescription period",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "reading room shelving plan",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not",
+      "a": {
+        "query": "revenue district office registration",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "staff carpool schedule",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not",
+      "a": {
+        "query": "deficiency interest computation",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "lobby signage refresh",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot",
+      "a": {
+        "query": "Our branch acquired a standby generator last month. Is it taxable?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it taxable? Reference 41.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot",
+      "a": {
+        "query": "Our branch acquired a standby generator last month. Is it deductible?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it deductible? Reference 42.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot",
+      "a": {
+        "query": "Our branch acquired a standby generator last month. Is it subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to value-added tax? Reference 43.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot",
+      "a": {
+        "query": "Our branch acquired a standby generator last month. Is it subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is it subject to withholding tax? Reference 44.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "contrast": "resolved antecedent vs contentless metadata suffix",
+      "a": {
+        "query": "We paid a freight forwarder for the shipment. Is that subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is that subject to withholding tax? Matter 3.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Kailangan bang i-withhold ang buwis sa bayad sa taga-disenyo ng website?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Pakiayos naman ang upuan para sa pulong bukas.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "May VAT ba ang serbisyo ng taga-linis na kontraktor?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Ano ang pangalan ng bagong grupo sa chat?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Deductible ba ang binili naming lamesa para sa opisina?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Deductible ba ang bayad sa paaralan ng anak ko sa club?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Ano ang tamang BIR form para sa upa ng bodega?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Ano ang tamang form para sa aplikasyon sa gym?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "contrast": "parallel structural contrast without translation",
+      "a": {
+        "query": "Taxable ba ang bonus na natanggap ng empleyado?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Masarap ba ang bagong tindahan ng kape?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "due_date_homograph",
+      "contrast": "tax remittance due date vs rental return date",
+      "a": {
+        "query": "What is the due date for remitting expanded withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the due date for returning the rented projector?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "due_date_homograph",
+      "contrast": "tax due-date rule vs social scheduling",
+      "a": {
+        "query": "What happens if a tax payment due date falls on a holiday?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What happens if a book club meeting falls on a holiday?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "due_date_homograph",
+      "contrast": "tax protest deadline vs academic deadline",
+      "a": {
+        "query": "What is the deadline to protest a deficiency assessment?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the deadline to submit a school science project?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "due_date_homograph",
+      "contrast": "tax refund deadline vs league appeal deadline",
+      "a": {
+        "query": "What is the deadline to file a claim for refund of erroneously paid tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What is the deadline to appeal a sports league suspension?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "regulatory_report_vs_tax_report",
+      "contrast": "tax return support vs corporate-registry reporting",
+      "a": {
+        "query": "What report supports the annual income tax return of a corporation?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "What report must a corporation submit after changing directors?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "regulatory_report_vs_tax_report",
+      "contrast": "tax schedule vs corporate minutes",
+      "a": {
+        "query": "Which schedule accompanies the corporate income tax return?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Which minutes accompany a board resignation notice?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not",
+      "a": {
+        "query": "Explain how FLD is served in a BIR deficiency case.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Explain FLD in the stage lighting plan.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not",
+      "a": {
+        "query": "Describe how FLD is served in a BIR deficiency case.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Describe FLD in the stage lighting plan.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not",
+      "a": {
+        "query": "Interpret how FLD is served in a BIR deficiency case.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Interpret FLD in the stage lighting plan.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not",
+      "a": {
+        "query": "Clarify how FLD is served in a BIR deficiency case.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Clarify FLD in the stage lighting plan.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token",
+      "a": {
+        "query": "Explain DST for Philippine tax purposes.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Explain DST for the daylight schedule.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token",
+      "a": {
+        "query": "Describe DST for Philippine tax purposes.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Describe DST for the daylight schedule.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token",
+      "a": {
+        "query": "Interpret DST for Philippine tax purposes.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Interpret DST for the daylight schedule.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token",
+      "a": {
+        "query": "Clarify DST for Philippine tax purposes.",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Clarify DST for the daylight schedule.",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute",
+      "a": {
+        "query": "Is the sale of a delivery drone subject to value-added tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this heading colour defined in the theme file?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute",
+      "a": {
+        "query": "Is the purchase of a retail shelf deductible for income tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this shelf component styled by the layout sheet?",
+        "expected": "REFUSE"
+      }
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute",
+      "a": {
+        "query": "Is the licence for design software subject to withholding tax?",
+        "expected": "ALLOW"
+      },
+      "b": {
+        "query": "Is this font weight applied by the stylesheet class?",
+        "expected": "REFUSE"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "When must the annual income tax return be filed by a corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax return filing vs merchandise return"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "Can a shopper reject a return of damaged crockery?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax return filing vs merchandise return"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "What return covers quarterly percentage tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax return vs library loan return"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "When is a borrowed atlas due back at the reading room?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax return vs library loan return"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "Is an amended income tax return allowed after assessment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "amended tax return vs consumer goods return"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "May a buyer return a mismatched sofa to the showroom?",
+      "expectedDecision": "REFUSE",
+      "contrast": "amended tax return vs consumer goods return"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "What return date applies to the annual information return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax return date vs judicial return date"
+    },
+    {
+      "family": "tax_return_vs_goods_return",
+      "query": "What return date is printed on a court summons?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax return date vs judicial return date"
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "query": "How do I file the quarterly VAT declaration?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax filing vs opening a computer file"
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "query": "How do I open a spreadsheet file in the reporting tool?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax filing vs opening a computer file"
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "query": "What is the filing deadline for the annual income tax return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax filing deadline vs file naming"
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "query": "What is the naming convention for an archived project file?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax filing deadline vs file naming"
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "query": "Which BIR form is filed for creditable withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax form filing vs file storage"
+    },
+    {
+      "family": "tax_filing_vs_computer_file",
+      "query": "Which folder holds the exported ledger file?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax form filing vs file storage"
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "What is the prescriptive period for a tax refund claim?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax refund claim vs insurance claim"
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "What is the prescriptive period for a motor insurance claim?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax refund claim vs insurance claim"
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "Can input tax be claimed on imported raw materials?",
+      "expectedDecision": "ALLOW",
+      "contrast": "input tax claim vs consumer compensation claim"
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "Can a passenger claim compensation for a delayed ferry?",
+      "expectedDecision": "REFUSE",
+      "contrast": "input tax claim vs consumer compensation claim"
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "How is a claim for excess creditable withholding tax carried over?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax credit claim vs warranty claim"
+    },
+    {
+      "family": "tax_claim_vs_ordinary_claim",
+      "query": "How is a warranty claim escalated to the manufacturer?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax credit claim vs warranty claim"
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "query": "How do I complete BIR registration for a new branch?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax registration vs event registration"
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "query": "How do I complete registration for the weekend fun run?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax registration vs event registration"
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "query": "Is registration with the revenue district office required for a sole proprietor?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax registration vs club registration"
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "query": "Is registration required for the neighbourhood chess ladder?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax registration vs club registration"
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "query": "What is the annual registration fee for a taxpayer?",
+      "expectedDecision": "ALLOW",
+      "contrast": "taxpayer registration fee vs membership fee"
+    },
+    {
+      "family": "bir_registration_vs_event_registration",
+      "query": "What is the annual registration fee for a gym membership?",
+      "expectedDecision": "REFUSE",
+      "contrast": "taxpayer registration fee vs membership fee"
+    },
+    {
+      "family": "alphalist_vs_alphabetical_list",
+      "query": "Which alphalist supports the annual withholding tax return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax alphalist vs alphabetising a roster"
+    },
+    {
+      "family": "alphalist_vs_alphabetical_list",
+      "query": "Arrange the choir roster in alphabetical order.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax alphalist vs alphabetising a roster"
+    },
+    {
+      "family": "alphalist_vs_alphabetical_list",
+      "query": "Must the alphalist of payees accompany the withholding return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax alphalist vs alphabetical sorting"
+    },
+    {
+      "family": "alphalist_vs_alphabetical_list",
+      "query": "Please sort the seminar attendees alphabetically by surname.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax alphalist vs alphabetical sorting"
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "query": "Is output tax due on a consignment sale of goods?",
+      "expectedDecision": "ALLOW",
+      "contrast": "output tax vs program console output"
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "query": "Send the console output of the build to the log panel.",
+      "expectedDecision": "REFUSE",
+      "contrast": "output tax vs program console output"
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "query": "How is output tax offset against input tax by a trader?",
+      "expectedDecision": "ALLOW",
+      "contrast": "output tax offset vs function return value"
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "query": "Return the computed output from the helper routine.",
+      "expectedDecision": "REFUSE",
+      "contrast": "output tax offset vs function return value"
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "query": "Is the sale of a licensed typeface subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "VAT on a typeface sale vs a stylesheet typeface"
+    },
+    {
+      "family": "taxable_output_vs_console_output",
+      "query": "Is this heading typeface defined in the stylesheet?",
+      "expectedDecision": "REFUSE",
+      "contrast": "VAT on a typeface sale vs a stylesheet typeface"
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "query": "Does the Tariff and Customs Modernization Act govern this importation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "named statute in a tax question vs assigning a storage label"
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "query": "Store the shipping manifest under the label CUSTOMS.",
+      "expectedDecision": "REFUSE",
+      "contrast": "named statute in a tax question vs assigning a storage label"
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "query": "What does the National Internal Revenue Code say about deficiency interest?",
+      "expectedDecision": "ALLOW",
+      "contrast": "named code in a tax question vs folder titling"
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "query": "Title the archive folder NIRC for convenience.",
+      "expectedDecision": "REFUSE",
+      "contrast": "named code in a tax question vs folder titling"
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "query": "Does the Ease of Paying Taxes Act change the filing venue?",
+      "expectedDecision": "ALLOW",
+      "contrast": "named statute vs deck tagging"
+    },
+    {
+      "family": "legal_title_vs_internal_label",
+      "query": "Tag the onboarding deck as EOPT for the team drive.",
+      "expectedDecision": "REFUSE",
+      "contrast": "named statute vs deck tagging"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Is the sale of the pump subject to VAT if the pump carries an internal product code?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a subordinate code clause must not veto a genuine tax question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Assign an internal product code to the pump record.",
+      "expectedDecision": "REFUSE",
+      "contrast": "a subordinate code clause must not veto a genuine tax question"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Is the equipment transfer taxable even though it is filed under a project code?",
+      "expectedDecision": "ALLOW",
+      "contrast": "subordinate code clause vs primary coding action"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "File the equipment record under a project code.",
+      "expectedDecision": "REFUSE",
+      "contrast": "subordinate code clause vs primary coding action"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Is the imported panel dutiable when the panel bears a warehouse code?",
+      "expectedDecision": "ALLOW",
+      "contrast": "subordinate code clause vs primary code assignment"
+    },
+    {
+      "family": "primary_tax_vs_subordinate_code",
+      "query": "Give the imported panel a warehouse code.",
+      "expectedDecision": "REFUSE",
+      "contrast": "subordinate code clause vs primary code assignment"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how MCIT works for a domestic company.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Set MCIT as the caption of the lobby noticeboard.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how RCIT works for a domestic company.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Set RCIT as the caption of the lobby noticeboard.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how NOLCO works for a domestic company.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Set NOLCO as the caption of the lobby noticeboard.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how CWT works for a domestic company.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Set CWT as the caption of the lobby noticeboard.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Describe how IAET works for a domestic company.",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Set IAET as the caption of the lobby noticeboard.",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax-canonical acronym with no material competing ordinary sense, used as the requested tax concept"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "PAN?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain PAN in a BIR deficiency assessment.",
+      "expectedDecision": "ALLOW",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "CAR?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain CAR in a BIR deficiency assessment.",
+      "expectedDecision": "ALLOW",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "FAN?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain FAN in a BIR deficiency assessment.",
+      "expectedDecision": "ALLOW",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "AR?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain AR in a BIR deficiency assessment.",
+      "expectedDecision": "ALLOW",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "PT?",
+      "expectedDecision": "CLARIFY",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "unambiguous_vs_polysemous_acronym",
+      "query": "Explain PT in a BIR deficiency assessment.",
+      "expectedDecision": "ALLOW",
+      "contrast": "materially polysemous acronym: bare form clarifies, explicit tax context allows"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "taxable compensation of a rank-and-file employee",
+      "expectedDecision": "ALLOW",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "weekend hiking club roster",
+      "expectedDecision": "REFUSE",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "capital gains tax computation on land",
+      "expectedDecision": "ALLOW",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "office pantry restocking plan",
+      "expectedDecision": "REFUSE",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "import duty treatment under customs law",
+      "expectedDecision": "ALLOW",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "annual sportsfest programme",
+      "expectedDecision": "REFUSE",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "refund claim prescription period",
+      "expectedDecision": "ALLOW",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "reading room shelving plan",
+      "expectedDecision": "REFUSE",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "revenue district office registration",
+      "expectedDecision": "ALLOW",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "staff carpool schedule",
+      "expectedDecision": "REFUSE",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "deficiency interest computation",
+      "expectedDecision": "ALLOW",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "concise_tax_phrase_vs_ordinary_phrase",
+      "query": "lobby signage refresh",
+      "expectedDecision": "REFUSE",
+      "contrast": "a coherent tax-domain phrase is a governed request; an ordinary phrase is not"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Our branch acquired a standby generator last month. Is it taxable?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Is it taxable? Reference 41.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Our branch acquired a standby generator last month. Is it deductible?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Is it deductible? Reference 42.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Our branch acquired a standby generator last month. Is it subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Is it subject to value-added tax? Reference 43.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Our branch acquired a standby generator last month. Is it subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Is it subject to withholding tax? Reference 44.",
+      "expectedDecision": "REFUSE",
+      "contrast": "same-query concrete antecedent resolves the deictic; a metadata suffix cannot"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "We paid a freight forwarder for the shipment. Is that subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "resolved antecedent vs contentless metadata suffix"
+    },
+    {
+      "family": "metadata_suffix_vs_antecedent",
+      "query": "Is that subject to withholding tax? Matter 3.",
+      "expectedDecision": "REFUSE",
+      "contrast": "resolved antecedent vs contentless metadata suffix"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Kailangan bang i-withhold ang buwis sa bayad sa taga-disenyo ng website?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Pakiayos naman ang upuan para sa pulong bukas.",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "May VAT ba ang serbisyo ng taga-linis na kontraktor?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Ano ang pangalan ng bagong grupo sa chat?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Deductible ba ang binili naming lamesa para sa opisina?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Deductible ba ang bayad sa paaralan ng anak ko sa club?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Ano ang tamang BIR form para sa upa ng bodega?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Ano ang tamang form para sa aplikasyon sa gym?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Taxable ba ang bonus na natanggap ng empleyado?",
+      "expectedDecision": "ALLOW",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "filipino_taglish_v5",
+      "query": "Masarap ba ang bagong tindahan ng kape?",
+      "expectedDecision": "REFUSE",
+      "contrast": "parallel structural contrast without translation"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What is the due date for remitting expanded withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax remittance due date vs rental return date"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What is the due date for returning the rented projector?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax remittance due date vs rental return date"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What happens if a tax payment due date falls on a holiday?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax due-date rule vs social scheduling"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What happens if a book club meeting falls on a holiday?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax due-date rule vs social scheduling"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What is the deadline to protest a deficiency assessment?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax protest deadline vs academic deadline"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What is the deadline to submit a school science project?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax protest deadline vs academic deadline"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What is the deadline to file a claim for refund of erroneously paid tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax refund deadline vs league appeal deadline"
+    },
+    {
+      "family": "due_date_homograph",
+      "query": "What is the deadline to appeal a sports league suspension?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax refund deadline vs league appeal deadline"
+    },
+    {
+      "family": "regulatory_report_vs_tax_report",
+      "query": "What report supports the annual income tax return of a corporation?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax return support vs corporate-registry reporting"
+    },
+    {
+      "family": "regulatory_report_vs_tax_report",
+      "query": "What report must a corporation submit after changing directors?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax return support vs corporate-registry reporting"
+    },
+    {
+      "family": "regulatory_report_vs_tax_report",
+      "query": "Which schedule accompanies the corporate income tax return?",
+      "expectedDecision": "ALLOW",
+      "contrast": "tax schedule vs corporate minutes"
+    },
+    {
+      "family": "regulatory_report_vs_tax_report",
+      "query": "Which minutes accompany a board resignation notice?",
+      "expectedDecision": "REFUSE",
+      "contrast": "tax schedule vs corporate minutes"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Explain how FLD is served in a BIR deficiency case.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Explain FLD in the stage lighting plan.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Describe how FLD is served in a BIR deficiency case.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Describe FLD in the stage lighting plan.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Interpret how FLD is served in a BIR deficiency case.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Interpret FLD in the stage lighting plan.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Clarify how FLD is served in a BIR deficiency case.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Clarify FLD in the stage lighting plan.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit BIR context resolves the token; an explicit non-tax setting does not"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Explain DST for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Explain DST for the daylight schedule.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Describe DST for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Describe DST for the daylight schedule.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Interpret DST for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Interpret DST for the daylight schedule.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Clarify DST for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "explicit_tax_context_resolves_acronym",
+      "query": "Clarify DST for the daylight schedule.",
+      "expectedDecision": "REFUSE",
+      "contrast": "explicit tax framing vs explicit non-tax framing of the same token"
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "query": "Is the sale of a delivery drone subject to value-added tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute"
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "query": "Is this heading colour defined in the theme file?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute"
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "query": "Is the purchase of a retail shelf deductible for income tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute"
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "query": "Is this shelf component styled by the layout sheet?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute"
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "query": "Is the licence for design software subject to withholding tax?",
+      "expectedDecision": "ALLOW",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute"
+    },
+    {
+      "family": "concrete_target_vs_styling_object",
+      "query": "Is this font weight applied by the stylesheet class?",
+      "expectedDecision": "REFUSE",
+      "contrast": "a tax predicate over a concrete commercial target vs a styling attribute"
+    }
+  ]
+}

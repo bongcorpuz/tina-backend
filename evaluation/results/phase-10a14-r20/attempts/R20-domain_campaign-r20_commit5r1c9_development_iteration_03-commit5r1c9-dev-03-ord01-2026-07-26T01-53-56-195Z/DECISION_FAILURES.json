@@ -1,0 +1,582 @@
+[
+  {
+    "oracleId": "S1-IR19-1033",
+    "query": "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+    "sourceSet": "r19_1120",
+    "primaryCategory": "metamorphic",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "explicit_tax_task_relation",
+    "actualReasonFamily": "non_tax_label_or_name",
+    "expectedRelations": [],
+    "actualRelations": [
+      "NAMES_AS_INTERNAL_LABEL"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S1-IR19-1073",
+    "query": "Is PAN sale VATable if PAN is a product code? Group MM-37.",
+    "sourceSet": "r19_1120",
+    "primaryCategory": "metamorphic",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "explicit_tax_task_relation",
+    "actualReasonFamily": "non_tax_label_or_name",
+    "expectedRelations": [],
+    "actualRelations": [
+      "NAMES_AS_INTERNAL_LABEL"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S1-IR19-1113",
+    "query": "Is PAN sale VATable if PAN is a product code? Group MM-57.",
+    "sourceSet": "r19_1120",
+    "primaryCategory": "metamorphic",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "explicit_tax_task_relation",
+    "actualReasonFamily": "non_tax_label_or_name",
+    "expectedRelations": [],
+    "actualRelations": [
+      "NAMES_AS_INTERNAL_LABEL"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-029",
+    "query": "RCIT",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "explicit_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "CLARIFY",
+    "expectedReasonCodeFamily": "explicit_tax_task_relation",
+    "actualReasonFamily": "ambiguous_tax_acronym",
+    "expectedRelations": [],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-109",
+    "query": "refund claim prescription",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "explicit_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "explicit_tax_task_relation",
+    "actualReasonFamily": "no_tax_relation",
+    "expectedRelations": [],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-236",
+    "query": "Pick a VAT paint shade. Variant 1.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "substring_homograph_trap",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "explicit_non_tax_task",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-261",
+    "query": "Pick a VAT paint shade. Variant 2.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "substring_homograph_trap",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "explicit_non_tax_task",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-286",
+    "query": "Pick a VAT paint shade. Variant 3.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "substring_homograph_trap",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "explicit_non_tax_task",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-311",
+    "query": "Pick a VAT paint shade. Variant 4.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "substring_homograph_trap",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "explicit_non_tax_task",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-338",
+    "query": "What is the holding period? Context 1.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "ambiguous",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-358",
+    "query": "What is the holding period? Context 2.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "ambiguous",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-378",
+    "query": "What is the holding period? Context 3.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "ambiguous",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-398",
+    "query": "What is the holding period? Context 4.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "ambiguous",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "explicit_tax_task_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-501",
+    "query": "Design a VAT invoice icon only.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "metamorphic",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "explicit_non_tax_task",
+    "actualReasonFamily": "tax_compliance_task",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_COMPLIANCE_FOR"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S2-IR18-DOM-541",
+    "query": "Make an alphalist of students alphabetically.",
+    "sourceSet": "r18_corrected_567",
+    "primaryCategory": "acronym_context",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "tax_compliance_task",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_COMPLIANCE_FOR"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S3-IR17-010",
+    "query": "Does the Tariff and Customs Code affect Philippine import duty?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "customs_tariff_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "no_tax_relation",
+    "expectedRelations": [],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S3-IR17-102",
+    "query": "Can a supplier reject a return of goods?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "private_contract_non_tax",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "tax_compliance_task",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_COMPLIANCE_FOR"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S3-IR17-105",
+    "query": "Can a private lease include a taxable costs clause?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "private_contract_non_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S3-IR17-107",
+    "query": "What if a payment due date falls on a weekend?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "private_contract_non_tax",
+    "expectedDecision": "REFUSE",
+    "actualDecision": "ALLOW",
+    "expectedReasonCodeFamily": "no_tax_relation",
+    "actualReasonFamily": "tax_compliance_task",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_COMPLIANCE_FOR"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "S3-IR17-144",
+    "query": "Is it taxable?",
+    "sourceSet": "r17_accepted_control",
+    "primaryCategory": "generic_ambiguous",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "no_tax_relation",
+    "expectedRelations": [],
+    "actualRelations": [
+      "ASKS_TAX_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "R20N-ACX-0920",
+    "query": "Explain PAN for a BIR assessment.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [
+      "REQUESTS_NON_TAX_ACTION_ON"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-ACX-0933",
+    "query": "Explain FLD for a BIR deficiency notice.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [
+      "REQUESTS_NON_TAX_ACTION_ON"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-ACX-0946",
+    "query": "Explain RMC for BIR issuances.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [
+      "REQUESTS_NON_TAX_ACTION_ON"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-ACX-0950",
+    "query": "Clarify RMC in BIR issuances.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "CLARIFY",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "ambiguous_tax_acronym",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-ACX-0951",
+    "query": "Describe RMC under BIR issuances.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "CLARIFY",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "ambiguous_tax_acronym",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-ACX-0955",
+    "query": "Interpret RMC in BIR issuances.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "CLARIFY",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "ambiguous_tax_acronym",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-ACX-0956",
+    "query": "Detail RMC in BIR issuances.",
+    "sourceSet": "r20_new",
+    "primaryCategory": "acronym_capitalization_expansion",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "CLARIFY",
+    "expectedReasonCodeFamily": "tax_definition_with_context",
+    "actualReasonFamily": "ambiguous_tax_acronym",
+    "expectedRelations": [
+      "ASKS_DEFINITION_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-FIL-1425",
+    "query": "Kailangan bang i-withhold ang buwis sa cooking pan?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-FIL-1433",
+    "query": "Kailangan bang i-withhold ang buwis sa music channel?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-FIL-1437",
+    "query": "Kailangan bang i-withhold ang buwis sa software company?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "R20N-FIL-1461",
+    "query": "Kailangan bang i-withhold ang buwis sa delivery van?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-FIL-1525",
+    "query": "Kailangan bang i-withhold ang buwis sa delivery drone?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  },
+  {
+    "oracleId": "R20N-FIL-1529",
+    "query": "Kailangan bang i-withhold ang buwis sa retail shelf?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": true
+  },
+  {
+    "oracleId": "R20N-FIL-1549",
+    "query": "Kailangan bang i-withhold ang buwis sa delivery motorcycle?",
+    "sourceSet": "r20_new",
+    "primaryCategory": "mixed_domain_genuine_tax",
+    "expectedDecision": "ALLOW",
+    "actualDecision": "REFUSE",
+    "expectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+    "actualReasonFamily": "explicit_non_tax_task",
+    "expectedRelations": [
+      "ASKS_VAT_TREATMENT_OF"
+    ],
+    "actualRelations": [],
+    "decisionPass": false,
+    "reasonPass": false,
+    "relationPass": false
+  }
+]

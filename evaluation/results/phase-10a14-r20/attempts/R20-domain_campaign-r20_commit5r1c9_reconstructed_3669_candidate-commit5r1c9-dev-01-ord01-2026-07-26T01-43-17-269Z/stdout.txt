@@ -1,0 +1,1 @@
+snapshot identity verified; allocation completed; atomic write aborted at export verification before any destination replace
