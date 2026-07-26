@@ -1,9 +1,97 @@
 {
-  "task": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c17-incomplete",
-  "runtimeClosure": false,
+  "unit": "COMMIT 5R1-C17",
+  "generatedUtc": "2026-07-26T23:39:34.371Z",
+  "path": "knowledge/CURRENT_STATE.md",
+  "startingBlob": "e4e874d51a6ee1e3891b7be42b773b66b9cf4538",
+  "finalBlob": "c57514970995328055ed83a6c1069cbb8b77dd28",
+  "outcome": "INCOMPLETE_REASON_LAYER_REMEDIATION_NOT_CLOSED",
+  "activePhase": "PHASE-10A14-R20",
+  "phase10AOpen": true,
+  "canonicalOracle": "R3",
+  "canonicalOracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
   "decisionLayerClosure": true,
-  "registrySummary": {
+  "relationLayerClosure": true,
+  "reasonLayerClosure": false,
+  "standaloneClosure": false,
+  "runtimeClosure": false,
+  "runtimeFrozen": false,
+  "runtimeMutable": true,
+  "reasonLockAchieved": false,
+  "verificationCampaignRun": false,
+  "verificationNotRunReason": "Section 15 authorizes a clean reason-lock verification only after reason mismatches reach zero; they did not.",
+  "r3DecisionResult": "3720/3720",
+  "r3RelationResult": "3720/3720",
+  "r3ReasonResult": "3243/3720",
+  "canonicalOverall": "3243/3720",
+  "baselineReasonMismatches": 614,
+  "bestReasonMismatches": 477,
+  "reasonMismatchesClosed": 58,
+  "decisionCounterfactualResult": "756/756",
+  "relationCounterfactualResult": "282/282",
+  "clauseProbeResult": "68/68",
+  "reasonCounterfactualResult": "304/344",
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "materialIterationsUsed": 2,
+  "iterationCeilingReached": true,
+  "oracleExpectationsEdited": 0,
+  "suiteDenominatorsIncreased": false,
+  "lockedSuitesUnchanged": {
+    "decision": true,
+    "relation": true,
+    "clauseProbes": true,
+    "reasonSuiteV8": true
+  },
+  "observabilityEnrichment": {
+    "residualRowsAtStart": 535,
+    "underC16Features": {
+      "separable": 325,
+      "colliding": 210
+    },
+    "underEnrichedFeatures": {
+      "separable": 494,
+      "colliding": 41
+    },
+    "collisionReduction": 169,
+    "finding": "The C16 236-row ceiling was a FEATURE-OBSERVABILITY DEFECT, not an oracle limit. Enriched deterministic features cut collisions from 210 to 41 and raised the reachable ceiling from 325 to 494 of 535 rows."
+  },
+  "separabilityAtEndOfC17": {
+    "residualRows": 477,
+    "underC16Features": {
+      "separable": 284,
+      "colliding": 193
+    },
+    "underEnrichedFeatures": {
+      "separable": 436,
+      "colliding": 41
+    },
+    "note": "Recomputed against the C17 residual so C18 inherits current evidence. 436 rows remain reachable under enriched features."
+  },
+  "possibleLearnabilityConflict": {
+    "status": "CANDIDATES_ONLY_NOT_CONFIRMED",
+    "vectors": 4,
+    "rows": 41,
+    "note": "Four vectors remain identical across all enriched features while requiring different reasons; three are strongly dominated by one reason. Because enrichment removed 169 of 210 C16 collisions, these are NOT yet demonstrated to be oracle defects. Preserved in full; no exception added, no oracle change, no closure claimed on their account."
+  },
+  "collisionProbeResult": "134/196",
+  "collisionProbesNotPartOfDenominator": true,
+  "reasonSuiteV8Frozen": true,
+  "reasonSuiteV8Result": "304/344",
+  "roadmapUnchanged": true,
+  "roadmapSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+  "immutableSpecsUnchanged": true,
+  "liveRuntimeRestoredToBaseline": true,
+  "integrationPerformed": false,
+  "freezePerformed": false,
+  "standaloneClosureStarted": false,
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+  "nextExactTask": "PHASE-10A14-R20 — COMMIT 5R1-C18: REASON-LAYER CLOSURE CONTINUATION 18 AGAINST R3",
+  "encoding": "utf-8",
+  "lineEnding": "LF",
+  "isFinalSubstantiveFileChange": true,
+  "placeholdersRemaining": 0,
+  "unsupportedClaims": 0,
+  "registryTotals": {
     "totalAttempts": 122,
     "byCategory": {
       "domain_campaign": 85,
@@ -135,104 +223,16 @@
     "danglingAttempts": 0,
     "total": 149
   },
-  "commit5r1c6": {
-    "decision": "INCOMPLETE_DECISION_LAYER_NOT_CLOSED",
-    "reconstructedAccepted2959": "2959/3720",
-    "bestGovernedC6Overall": "3009/3720",
-    "bestDecisionLayerResult": "3464/3720",
-    "remainingDecisionMismatches": 256,
-    "decisionLayerLock": "NOT ACHIEVED",
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  },
-  "commit5r1c7p1": {
-    "decision": "COMPLETE_PREFLIGHT_RECONCILIATION",
-    "analyzerIdentityClassification": "CRLF_WORKTREE_NORMALIZATION_ONLY",
-    "restorationRequired": false,
-    "rootResidueRemaining": 0,
-    "roadmapTracked": true,
-    "c7SemanticExecutionStarted": false,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  },
-  "commit5r1c7": {
-    "decision": "INCOMPLETE_DECISION_LAYER_NOT_CLOSED",
-    "reconstructedC6Base": "3009/3720 overall, 3464/3720 decision (exact identity match, 0 discrepancies)",
-    "bestGovernedC7Overall": "3047/3720",
-    "bestDecisionLayerResult": "3623/3720",
-    "remainingDecisionMismatches": 97,
-    "decisionLayerLock": "NOT ACHIEVED",
-    "materialIterationsUsed": 5,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  },
-  "commit5r1c8": {
-    "decision": "INCOMPLETE_DECISION_LAYER_NOT_CLOSED",
-    "reconstructedC7Base": "3047/3720 overall, 3623/3720 decision (exact identity match, 0 discrepancies)",
-    "bestGovernedC8Overall": "3088/3720",
-    "bestDecisionLayerResult": "3669/3720",
-    "remainingDecisionMismatches": 51,
-    "decisionLayerLock": "NOT ACHIEVED",
-    "materialIterationsUsed": 5,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  },
-  "commit5r1c9": {
-    "decision": "INCOMPLETE_DECISION_LAYER_NOT_CLOSED",
-    "reconstructedC8Base": "3088/3720 overall, 3669/3720 decision (exact identity match, 0 discrepancies)",
-    "bestGovernedC9Overall": "3097/3720",
-    "bestDecisionLayerResult": "3706/3720",
-    "remainingDecisionMismatches": 14,
-    "decisionLayerLock": "NOT ACHIEVED",
-    "materialIterationsUsed": 5,
-    "rejectedIterations": 1,
-    "technicalFailuresPreserved": 1,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false,
-    "acceptedIterations": 4,
-    "rejectedIterationNote": "Iteration 06 alone was rejected (3,703 vs accepted 3,706); iterations 02-05 were each accepted as the next base at the time they were produced."
-  },
-  "commit5r1c10": {
-    "decision": "INCOMPLETE_DECISION_LAYER_NOT_CLOSED",
-    "reconstructedC9Base": "3097/3720 overall, 3706/3720 decision (exact identity match, 0 discrepancies)",
-    "bestGovernedC10Overall": "3097/3720",
-    "bestDecisionLayerResult": "3720/3720",
-    "remainingDecisionMismatches": 0,
-    "r3ExactCeilingReached": true,
-    "decisionLayerLock": "NOT ACHIEVED - counterfactual condition unmet",
-    "counterfactualCombined": "698/756",
-    "materialIterationsUsed": 5,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  },
-  "commit5r1c11": {
-    "decision": "INCOMPLETE_DECISION_COUNTERFACTUAL_CLOSURE_NOT_ACHIEVED",
-    "reconstructedC10Base": "3097/3720 overall, 3720/3720 decision, 698/756 counterfactual (0 discrepancies)",
-    "r3DecisionResult": "3720/3720 held throughout",
-    "bestCounterfactualResult": "739/756",
-    "remainingCounterfactualFailures": 17,
-    "decisionLayerLock": "NOT ACHIEVED - counterfactual suite not fully closed",
-    "antiOverfitLeakageFoundAndRemoved": true,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  },
-  "commit5r1c12": {
-    "decision": "INCOMPLETE_DECISION_LAYER_LOCK_ACHIEVED_RELATION_AND_REASON_PENDING",
-    "reconstructedC11Base": "3720/3720 R3 decision, 739/756 counterfactual (0 discrepancies)",
-    "r3DecisionResult": "3720/3720",
-    "counterfactualResult": "756/756",
-    "decisionLayerLock": "ACHIEVED",
-    "materialIterationsUsed": 4,
-    "antiMemorizationLeakageFoundAndRemoved": true,
-    "runtimeFrozen": false,
-    "analyzerModified": false,
-    "r3Edited": false
-  }
+  "sourceEvidencePaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_BASELINE_GATES.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_BEST_CANDIDATE_GATES.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_BEST_REASON_CANDIDATE.patch",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_COLLISION_GROUP_ANALYSIS.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_COLLISION_PROBE_SUITE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_ENRICHED_FEATURE_SPEC.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_ENRICHED_SEPARABILITY_BASELINE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_REASON_LOCK.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_REASON_OBSERVABILITY_AUDIT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_SECURITY_AND_SCOPE.md"
+  ]
 }

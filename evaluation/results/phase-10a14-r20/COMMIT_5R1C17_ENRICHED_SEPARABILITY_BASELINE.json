@@ -1,0 +1,15 @@
+{
+  "unit": "COMMIT 5R1-C17",
+  "generatedUtc": "2026-07-26T23:35:53.015Z",
+  "residualRows": 477,
+  "underC16Features": {
+    "separable": 284,
+    "colliding": 193
+  },
+  "underEnrichedFeatures": {
+    "separable": 436,
+    "colliding": 41
+  },
+  "reachableCeiling": 436,
+  "irreducibleUnderDeterministicParsing": 41
+}

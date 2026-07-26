@@ -1,0 +1,1924 @@
+{
+  "suite": "COMMIT_5R1C17_COLLISION_PROBE_SUITE",
+  "unit": "COMMIT 5R1-C17",
+  "generatedUtc": "2026-07-26T23:26:30.921Z",
+  "purpose": "Collision-focused acceptance gate for the enriched reason-observability layer.",
+  "notPartOfReasonSuiteDenominator": true,
+  "reasonSuiteDenominatorUnchanged": "344 controlling queries",
+  "authority": "CLAUSE_LEVEL_INTENT_SCHEMA.md + RELATION_AND_PRECEDENCE_SPEC.md",
+  "expectationsAuthoredBeforeExecution": true,
+  "exactR3Leakage": 0,
+  "exactOtherSuiteLeakage": 0,
+  "probeCount": 196,
+  "pairCount": 98,
+  "probes": [
+    {
+      "query": "tide chart poster inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#1",
+      "side": "a"
+    },
+    {
+      "query": "Sort the tide chart poster inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#1",
+      "side": "b"
+    },
+    {
+      "query": "kite spool rack inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#2",
+      "side": "a"
+    },
+    {
+      "query": "Sort the kite spool rack inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#2",
+      "side": "b"
+    },
+    {
+      "query": "lantern paper roll inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#3",
+      "side": "a"
+    },
+    {
+      "query": "Sort the lantern paper roll inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#3",
+      "side": "b"
+    },
+    {
+      "query": "mango crate liner inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#4",
+      "side": "a"
+    },
+    {
+      "query": "Sort the mango crate liner inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#4",
+      "side": "b"
+    },
+    {
+      "query": "bamboo flute case inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#5",
+      "side": "a"
+    },
+    {
+      "query": "Sort the bamboo flute case inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#5",
+      "side": "b"
+    },
+    {
+      "query": "shell lamp shade inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#6",
+      "side": "a"
+    },
+    {
+      "query": "Sort the shell lamp shade inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#6",
+      "side": "b"
+    },
+    {
+      "query": "coral tank pump inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#7",
+      "side": "a"
+    },
+    {
+      "query": "Sort the coral tank pump inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#7",
+      "side": "b"
+    },
+    {
+      "query": "reed mat binder inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#8",
+      "side": "a"
+    },
+    {
+      "query": "Sort the reed mat binder inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#8",
+      "side": "b"
+    },
+    {
+      "query": "clay pot glaze inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#9",
+      "side": "a"
+    },
+    {
+      "query": "Sort the clay pot glaze inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#9",
+      "side": "b"
+    },
+    {
+      "query": "palm leaf fan inventory notes",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#10",
+      "side": "a"
+    },
+    {
+      "query": "Sort the palm leaf fan inventory notes.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_topic_fragment_vs_operation",
+      "pair": "collision_topic_fragment_vs_operation#10",
+      "side": "b"
+    },
+    {
+      "query": "Translate the tide chart poster handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#11",
+      "side": "a"
+    },
+    {
+      "query": "Delete the tide chart poster draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#11",
+      "side": "b"
+    },
+    {
+      "query": "Translate the kite spool rack handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#12",
+      "side": "a"
+    },
+    {
+      "query": "Delete the kite spool rack draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#12",
+      "side": "b"
+    },
+    {
+      "query": "Translate the lantern paper roll handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#13",
+      "side": "a"
+    },
+    {
+      "query": "Delete the lantern paper roll draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#13",
+      "side": "b"
+    },
+    {
+      "query": "Translate the mango crate liner handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#14",
+      "side": "a"
+    },
+    {
+      "query": "Delete the mango crate liner draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#14",
+      "side": "b"
+    },
+    {
+      "query": "Translate the bamboo flute case handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#15",
+      "side": "a"
+    },
+    {
+      "query": "Delete the bamboo flute case draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#15",
+      "side": "b"
+    },
+    {
+      "query": "Translate the shell lamp shade handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#16",
+      "side": "a"
+    },
+    {
+      "query": "Delete the shell lamp shade draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#16",
+      "side": "b"
+    },
+    {
+      "query": "Translate the coral tank pump handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#17",
+      "side": "a"
+    },
+    {
+      "query": "Delete the coral tank pump draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#17",
+      "side": "b"
+    },
+    {
+      "query": "Translate the reed mat binder handbook into plain English.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "quoted_tax_term_only"
+      ],
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#18",
+      "side": "a"
+    },
+    {
+      "query": "Delete the reed mat binder draft file.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#18",
+      "side": "b"
+    },
+    {
+      "query": "What is the tide chart poster storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#19",
+      "side": "a"
+    },
+    {
+      "query": "Which tide chart poster brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#19",
+      "side": "b"
+    },
+    {
+      "query": "What is the kite spool rack storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#20",
+      "side": "a"
+    },
+    {
+      "query": "Which kite spool rack brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#20",
+      "side": "b"
+    },
+    {
+      "query": "What is the lantern paper roll storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#21",
+      "side": "a"
+    },
+    {
+      "query": "Which lantern paper roll brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#21",
+      "side": "b"
+    },
+    {
+      "query": "What is the mango crate liner storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#22",
+      "side": "a"
+    },
+    {
+      "query": "Which mango crate liner brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#22",
+      "side": "b"
+    },
+    {
+      "query": "What is the bamboo flute case storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#23",
+      "side": "a"
+    },
+    {
+      "query": "Which bamboo flute case brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#23",
+      "side": "b"
+    },
+    {
+      "query": "What is the shell lamp shade storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#24",
+      "side": "a"
+    },
+    {
+      "query": "Which shell lamp shade brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#24",
+      "side": "b"
+    },
+    {
+      "query": "What is the coral tank pump storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#25",
+      "side": "a"
+    },
+    {
+      "query": "Which coral tank pump brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#25",
+      "side": "b"
+    },
+    {
+      "query": "What is the reed mat binder storage depth?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#26",
+      "side": "a"
+    },
+    {
+      "query": "Which reed mat binder brand is best?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "no_tax_relation"
+      ],
+      "family": "collision_question_vs_evaluation",
+      "pair": "collision_question_vs_evaluation#26",
+      "side": "b"
+    },
+    {
+      "query": "Is the pier docking charge subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#27",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#27",
+      "side": "b"
+    },
+    {
+      "query": "Is the silo cleaning run subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#28",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#28",
+      "side": "b"
+    },
+    {
+      "query": "Is the kiln relining job subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#29",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#29",
+      "side": "b"
+    },
+    {
+      "query": "Is the trawler net repair subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#30",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#30",
+      "side": "b"
+    },
+    {
+      "query": "Is the grain drying batch subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#31",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#31",
+      "side": "b"
+    },
+    {
+      "query": "Is the ice plant output subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#32",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#32",
+      "side": "b"
+    },
+    {
+      "query": "Is the copra press run subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#33",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#33",
+      "side": "b"
+    },
+    {
+      "query": "Is the ferry hull survey subject to percentage tax?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#34",
+      "side": "a"
+    },
+    {
+      "query": "How is percentage tax computed for a Philippine corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#34",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the pier docking charge?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#35",
+      "side": "a"
+    },
+    {
+      "query": "Is the pier docking charge subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#35",
+      "side": "b"
+    },
+    {
+      "query": "What records support the pier docking charge deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#36",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the pier docking charge return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#36",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the silo cleaning run?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#37",
+      "side": "a"
+    },
+    {
+      "query": "Is the silo cleaning run subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#37",
+      "side": "b"
+    },
+    {
+      "query": "What records support the silo cleaning run deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#38",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the silo cleaning run return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#38",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the kiln relining job?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#39",
+      "side": "a"
+    },
+    {
+      "query": "Is the kiln relining job subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#39",
+      "side": "b"
+    },
+    {
+      "query": "What records support the kiln relining job deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#40",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the kiln relining job return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#40",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the trawler net repair?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#41",
+      "side": "a"
+    },
+    {
+      "query": "Is the trawler net repair subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#41",
+      "side": "b"
+    },
+    {
+      "query": "What records support the trawler net repair deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#42",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the trawler net repair return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#42",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the grain drying batch?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#43",
+      "side": "a"
+    },
+    {
+      "query": "Is the grain drying batch subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#43",
+      "side": "b"
+    },
+    {
+      "query": "What records support the grain drying batch deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#44",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the grain drying batch return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#44",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the ice plant output?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#45",
+      "side": "a"
+    },
+    {
+      "query": "Is the ice plant output subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#45",
+      "side": "b"
+    },
+    {
+      "query": "What records support the ice plant output deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#46",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the ice plant output return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#46",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the copra press run?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#47",
+      "side": "a"
+    },
+    {
+      "query": "Is the copra press run subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#47",
+      "side": "b"
+    },
+    {
+      "query": "What records support the copra press run deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#48",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the copra press run return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#48",
+      "side": "b"
+    },
+    {
+      "query": "Which BIR form applies to the ferry hull survey?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#49",
+      "side": "a"
+    },
+    {
+      "query": "Is the ferry hull survey subject to VAT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "requested_outcome",
+      "pair": "requested_outcome#49",
+      "side": "b"
+    },
+    {
+      "query": "What records support the ferry hull survey deduction?",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#50",
+      "side": "a"
+    },
+    {
+      "query": "When is the deadline for filing the ferry hull survey return?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#50",
+      "side": "b"
+    },
+    {
+      "query": "The phrase XQD is only an internal label for our tide chart poster.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#51",
+      "side": "a"
+    },
+    {
+      "query": "Delete the XQD project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#51",
+      "side": "b"
+    },
+    {
+      "query": "The phrase BNV is only an internal label for our kite spool rack.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#52",
+      "side": "a"
+    },
+    {
+      "query": "Delete the BNV project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#52",
+      "side": "b"
+    },
+    {
+      "query": "The phrase RTK is only an internal label for our lantern paper roll.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#53",
+      "side": "a"
+    },
+    {
+      "query": "Delete the RTK project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#53",
+      "side": "b"
+    },
+    {
+      "query": "The phrase PYW is only an internal label for our mango crate liner.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#54",
+      "side": "a"
+    },
+    {
+      "query": "Delete the PYW project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#54",
+      "side": "b"
+    },
+    {
+      "query": "The phrase GZL is only an internal label for our bamboo flute case.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#55",
+      "side": "a"
+    },
+    {
+      "query": "Delete the GZL project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#55",
+      "side": "b"
+    },
+    {
+      "query": "The phrase MFH is only an internal label for our shell lamp shade.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#56",
+      "side": "a"
+    },
+    {
+      "query": "Delete the MFH project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#56",
+      "side": "b"
+    },
+    {
+      "query": "The phrase JCT is only an internal label for our coral tank pump.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#57",
+      "side": "a"
+    },
+    {
+      "query": "Delete the JCT project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#57",
+      "side": "b"
+    },
+    {
+      "query": "The phrase VWS is only an internal label for our reed mat binder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#58",
+      "side": "a"
+    },
+    {
+      "query": "Delete the VWS project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#58",
+      "side": "b"
+    },
+    {
+      "query": "The phrase KDP is only an internal label for our clay pot glaze.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#59",
+      "side": "a"
+    },
+    {
+      "query": "Delete the KDP project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#59",
+      "side": "b"
+    },
+    {
+      "query": "The phrase NHB is only an internal label for our palm leaf fan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_label_or_name",
+      "forbiddenReasons": [
+        "explicit_non_tax_task"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#60",
+      "side": "a"
+    },
+    {
+      "query": "Delete the NHB project folder.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "forbiddenReasons": [
+        "non_tax_label_or_name"
+      ],
+      "family": "naming_vs_operation_on_named",
+      "pair": "naming_vs_operation_on_named#60",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#61",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the pier docking charge taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#61",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#62",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the silo cleaning run taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#62",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#63",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the kiln relining job taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#63",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#64",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the trawler net repair taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#64",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#65",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the grain drying batch taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#65",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#66",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the ice plant output taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#66",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#67",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the copra press run taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#67",
+      "side": "b"
+    },
+    {
+      "query": "How is improperly accumulated earnings tax applied to a domestic corporation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "forbiddenReasons": [
+        "tax_treatment_of_ordinary_object"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#68",
+      "side": "a"
+    },
+    {
+      "query": "Are receipts from the ferry hull survey taxable?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "forbiddenReasons": [
+        "explicit_tax_task_relation"
+      ],
+      "family": "tax_concept_vs_external_target",
+      "pair": "tax_concept_vs_external_target#68",
+      "side": "b"
+    },
+    {
+      "query": "What is XQD for item 40?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#69",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 40?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#69",
+      "side": "b"
+    },
+    {
+      "query": "What is BNV for item 41?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#70",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 41?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#70",
+      "side": "b"
+    },
+    {
+      "query": "What is RTK for item 42?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#71",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 42?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#71",
+      "side": "b"
+    },
+    {
+      "query": "What is PYW for item 43?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#72",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 43?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#72",
+      "side": "b"
+    },
+    {
+      "query": "What is GZL for item 44?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#73",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 44?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#73",
+      "side": "b"
+    },
+    {
+      "query": "What is MFH for item 45?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#74",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 45?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#74",
+      "side": "b"
+    },
+    {
+      "query": "What is JCT for item 46?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#75",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 46?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#75",
+      "side": "b"
+    },
+    {
+      "query": "What is VWS for item 47?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "ambiguous_tax_acronym",
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#76",
+      "side": "a"
+    },
+    {
+      "query": "What about professional fees for matter 47?",
+      "expectedDecision": "CLARIFY",
+      "expectedReason": "no_tax_relation",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#76",
+      "side": "b"
+    },
+    {
+      "query": "Is the pier docking charge subject to BIR registration?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#77",
+      "side": "a"
+    },
+    {
+      "query": "Explain how the pier docking charge is treated for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#77",
+      "side": "b"
+    },
+    {
+      "query": "Is the silo cleaning run subject to BIR registration?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#78",
+      "side": "a"
+    },
+    {
+      "query": "Explain how the silo cleaning run is treated for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#78",
+      "side": "b"
+    },
+    {
+      "query": "Is the kiln relining job subject to BIR registration?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#79",
+      "side": "a"
+    },
+    {
+      "query": "Explain how the kiln relining job is treated for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#79",
+      "side": "b"
+    },
+    {
+      "query": "Is the trawler net repair subject to BIR registration?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#80",
+      "side": "a"
+    },
+    {
+      "query": "Explain how the trawler net repair is treated for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#80",
+      "side": "b"
+    },
+    {
+      "query": "Is the grain drying batch subject to BIR registration?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#81",
+      "side": "a"
+    },
+    {
+      "query": "Explain how the grain drying batch is treated for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#81",
+      "side": "b"
+    },
+    {
+      "query": "Is the ice plant output subject to BIR registration?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#82",
+      "side": "a"
+    },
+    {
+      "query": "Explain how the ice plant output is treated for Philippine tax purposes.",
+      "expectedDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "family": "compliance_vs_explanation",
+      "pair": "compliance_vs_explanation#82",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang tide chart poster talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#83",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa pier docking charge?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#83",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang kite spool rack talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#84",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa silo cleaning run?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#84",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang lantern paper roll talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#85",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa kiln relining job?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#85",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang mango crate liner talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#86",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa trawler net repair?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#86",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang bamboo flute case talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#87",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa grain drying batch?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#87",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang shell lamp shade talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#88",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa ice plant output?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#88",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang coral tank pump talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#89",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa copra press run?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#89",
+      "side": "b"
+    },
+    {
+      "query": "Ayusin ang reed mat binder talaan.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#90",
+      "side": "a"
+    },
+    {
+      "query": "May VAT ba sa ferry hull survey?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "family": "filipino_operation_vs_topic",
+      "pair": "filipino_operation_vs_topic#90",
+      "side": "b"
+    },
+    {
+      "query": "In our system, XQD stands for dock rope tally.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#91",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#91",
+      "side": "b"
+    },
+    {
+      "query": "In our system, BNV stands for kite spool index.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#92",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#92",
+      "side": "b"
+    },
+    {
+      "query": "In our system, RTK stands for lamp shade log.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#93",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#93",
+      "side": "b"
+    },
+    {
+      "query": "In our system, PYW stands for crate liner note.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#94",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#94",
+      "side": "b"
+    },
+    {
+      "query": "In our system, GZL stands for flute case chart.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#95",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#95",
+      "side": "b"
+    },
+    {
+      "query": "In our system, MFH stands for tank pump list.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#96",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#96",
+      "side": "b"
+    },
+    {
+      "query": "In our system, JCT stands for mat binder guide.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#97",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#97",
+      "side": "b"
+    },
+    {
+      "query": "In our system, VWS stands for pot glaze sheet.",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "non_tax_expansion",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#98",
+      "side": "a"
+    },
+    {
+      "query": "Count the letters in the phrase \"estate tax\".",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "quoted_tax_term_only",
+      "family": "closed_family_preservation",
+      "pair": "closed_family_preservation#98",
+      "side": "b"
+    }
+  ]
+}

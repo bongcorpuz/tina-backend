@@ -1,0 +1,339 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+  "oracle": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "sourceAttempt": "R20-domain_campaign-r20_commit5r1c16_reason_iteration_06-commit5r1c16-dev-06-ord01-2026-07-26T15-12-41-920Z",
+  "snapshotVerification": {
+    "philippine-tax-intent-analyzer.js": {
+      "bytes": 155098,
+      "normalizedLfSha256": "505c423da82c172c8d9e0afbd762256e0a98dcb3729c1f5a3be53d073ca317f3",
+      "expected": "505c423da82c172c8d9e0afbd762256e0a98dcb3729c1f5a3be53d073ca317f3",
+      "match": true
+    },
+    "philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "expected": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "match": true
+    },
+    "philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "expected": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "match": true
+    }
+  },
+  "snapshotTreeDigest": "1ac0d4609b9dcc6d6c507805f29f354f4f1f11c5a7ed36d65ed6fe5c778901c3",
+  "requiredTreeDigest": "1ac0d4609b9dcc6d6c507805f29f354f4f1f11c5a7ed36d65ed6fe5c778901c3",
+  "liveBaselineBeforeInstall": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 31742,
+      "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+  },
+  "installedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 155098,
+      "normalizedLfSha256": "505c423da82c172c8d9e0afbd762256e0a98dcb3729c1f5a3be53d073ca317f3",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "1ac0d4609b9dcc6d6c507805f29f354f4f1f11c5a7ed36d65ed6fe5c778901c3"
+  },
+  "writeAudit": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "afterSha256Normalized": "505c423da82c172c8d9e0afbd762256e0a98dcb3729c1f5a3be53d073ca317f3",
+      "beforeBytes": 31742,
+      "afterBytes": 155098,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c17tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "beforeBytes": 12192,
+      "afterBytes": 12192,
+      "tempFileUsed": "philippine-tax-domain-boundary.c17tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "beforeBytes": 65451,
+      "afterBytes": 65451,
+      "tempFileUsed": "philippine-tax-boundary-patterns.c17tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "expected": {
+    "canonicalPassed": 3185,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 535,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "counterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 304
+  },
+  "actual": {
+    "canonicalPassed": 3185,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 535,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "counterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 304
+  },
+  "discrepancies": [],
+  "exactReproduction": true,
+  "r3Counts": {
+    "total": 3720,
+    "canonicalPassed": 3185,
+    "decisionMismatches": 0,
+    "reasonMismatches": 535,
+    "relationMismatches": 0,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "relationRowsWithExpectations": 1623,
+    "relationRowsPassed": 1623,
+    "relationPassed": 3720,
+    "decisionPassed": 3720
+  },
+  "counterfactual": {
+    "total": 756,
+    "passed": 756,
+    "bySuite": {
+      "v3": {
+        "total": 331,
+        "passed": 331,
+        "failed": 0
+      },
+      "v4": {
+        "total": 177,
+        "passed": 177,
+        "failed": 0
+      },
+      "v5": {
+        "total": 134,
+        "passed": 134,
+        "failed": 0
+      },
+      "v6": {
+        "total": 114,
+        "passed": 114,
+        "failed": 0
+      }
+    }
+  },
+  "closedControls": {
+    "controls": [
+      {
+        "control": "tax_compliance_task",
+        "passed": 108,
+        "total": 108,
+        "closed": true
+      },
+      {
+        "control": "acronym_homograph_control",
+        "passed": 200,
+        "total": 200,
+        "closed": true
+      },
+      {
+        "control": "ambiguous_clarification_control",
+        "passed": 150,
+        "total": 150,
+        "closed": true
+      },
+      {
+        "control": "internal_label_proper_name",
+        "passed": 104,
+        "total": 104,
+        "closed": true
+      },
+      {
+        "control": "quoted_term_only",
+        "passed": 110,
+        "total": 110,
+        "closed": true
+      }
+    ],
+    "allClosed": true
+  },
+  "richContextGuard": {
+    "probes": [
+      {
+        "shape": "bare_term",
+        "query": "holding period",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "recognized_polysemous_acronym",
+        "query": "RMC",
+        "expected": "CLARIFY",
+        "actual": "CLARIFY",
+        "pass": true
+      },
+      {
+        "shape": "issuance_context",
+        "query": "What did the RMC issuance say about VAT?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "procedure_context",
+        "query": "Explain RMC for BIR issuances.",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "ordinary_homograph",
+        "query": "Can a supplier reject a return of goods?",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      },
+      {
+        "shape": "richer_tax_sentence",
+        "query": "How is the holding period applied to a capital gains tax computation on land?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "metadata_suffixed_contentless",
+        "query": "What is the holding period? Context 1.",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      }
+    ],
+    "allPass": true,
+    "passed": 7,
+    "total": 7
+  },
+  "antiMemorization": {
+    "checks": {
+      "no_complete_counterfactual_query": true,
+      "no_complete_r3_query": true,
+      "no_query_hash_or_oracle_id": true,
+      "no_suite_or_family_feature": true,
+      "no_cluster_or_category_feature": true,
+      "no_scenario_number_branch": true,
+      "no_expected_decision_map": true,
+      "no_oracle_relation_backfill": true
+    },
+    "failed": [],
+    "pass": true,
+    "leakedCounterfactualQueries": [],
+    "leakedR3Queries": [],
+    "r3TerminologyOverlap": [
+      "expanded withholding tax",
+      "final withholding tax",
+      "tax credit certificate",
+      "documentary stamp tax",
+      "capital gains tax",
+      "optional standard deduction",
+      "books of accounts",
+      "transfer pricing documentation",
+      "registered business enterprise",
+      "tax treaty relief",
+      "local business tax",
+      "real property tax",
+      "substantiation for deductions",
+      "fringe benefit tax",
+      "de minimis benefits",
+      "gross receipts tax",
+      "minimum corporate income tax",
+      "regular corporate income tax",
+      "stock transaction tax",
+      "resident alien tax",
+      "tax on professional fees",
+      "tax accounting period",
+      "annual information return",
+      "refund claim prescription"
+    ],
+    "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+  },
+  "reasonCounterfactual": {
+    "total": 344,
+    "passed": 304,
+    "failed": 40,
+    "byFamily": {
+      "compliance_vs_treatment": 12,
+      "nontax_action_vs_label": 15,
+      "quotation_vs_label": 1,
+      "no_tax_refuse_vs_clarify": 12
+    }
+  },
+  "clauseProbes": {
+    "total": 68,
+    "passed": 68,
+    "failed": 0
+  },
+  "relationCounterfactual": {
+    "total": 282,
+    "passed": 282,
+    "failed": 0,
+    "byFamily": {},
+    "nonControllingProbes": 14
+  },
+  "relationScoringSemantics": "expected-set containment on the relation field only"
+}

@@ -1,0 +1,122 @@
+{
+  "unit": "COMMIT 5R1-C17",
+  "generatedUtc": "2026-07-26T23:35:53.007Z",
+  "method": "All residual rows are described using deterministic runtime-observable features derived from the primary clause and the locked relation output. No oracle metadata, expected reason, source set, query id or template identity is used as a feature.",
+  "residualRows": 477,
+  "c16FeatureKeys": [
+    "speechAct",
+    "predicateClass",
+    "controllingRelation",
+    "unresolvedKind"
+  ],
+  "enrichedFeatureKeys": [
+    "speechAct",
+    "predicateClass",
+    "controllingRelation",
+    "unresolvedKind",
+    "questionOperator",
+    "requestOperationClass",
+    "assertionClass",
+    "predicateAttachment",
+    "predicateArgumentStructure",
+    "requestedOutcomeClass",
+    "targetSemanticRole",
+    "targetSyntacticRole",
+    "topicCompleteness",
+    "ambiguityObject",
+    "contextAttachment"
+  ],
+  "c16Baseline": {
+    "vectors": 61,
+    "separableRows": 284,
+    "collidingRows": 193
+  },
+  "enrichedResult": {
+    "vectors": 169,
+    "separableRows": 436,
+    "collidingRows": 41
+  },
+  "collisionReductionTotal": 152,
+  "perFeatureCollisionReduction": [
+    {
+      "feature": "targetSyntacticRole",
+      "collidingRowsAfter": 98,
+      "collisionReduction": 95,
+      "separableRowsAfter": 379,
+      "vectorCount": 90
+    },
+    {
+      "feature": "requestedOutcomeClass",
+      "collidingRowsAfter": 100,
+      "collisionReduction": 93,
+      "separableRowsAfter": 377,
+      "vectorCount": 86
+    },
+    {
+      "feature": "targetSemanticRole",
+      "collidingRowsAfter": 122,
+      "collisionReduction": 71,
+      "separableRowsAfter": 355,
+      "vectorCount": 91
+    },
+    {
+      "feature": "requestOperationClass",
+      "collidingRowsAfter": 126,
+      "collisionReduction": 67,
+      "separableRowsAfter": 351,
+      "vectorCount": 65
+    },
+    {
+      "feature": "topicCompleteness",
+      "collidingRowsAfter": 153,
+      "collisionReduction": 40,
+      "separableRowsAfter": 324,
+      "vectorCount": 69
+    },
+    {
+      "feature": "questionOperator",
+      "collidingRowsAfter": 156,
+      "collisionReduction": 37,
+      "separableRowsAfter": 321,
+      "vectorCount": 87
+    },
+    {
+      "feature": "contextAttachment",
+      "collidingRowsAfter": 167,
+      "collisionReduction": 26,
+      "separableRowsAfter": 310,
+      "vectorCount": 76
+    },
+    {
+      "feature": "assertionClass",
+      "collidingRowsAfter": 176,
+      "collisionReduction": 17,
+      "separableRowsAfter": 301,
+      "vectorCount": 78
+    },
+    {
+      "feature": "predicateArgumentStructure",
+      "collidingRowsAfter": 177,
+      "collisionReduction": 16,
+      "separableRowsAfter": 300,
+      "vectorCount": 74
+    },
+    {
+      "feature": "predicateAttachment",
+      "collidingRowsAfter": 183,
+      "collisionReduction": 10,
+      "separableRowsAfter": 294,
+      "vectorCount": 67
+    },
+    {
+      "feature": "ambiguityObject",
+      "collidingRowsAfter": 193,
+      "collisionReduction": 0,
+      "separableRowsAfter": 284,
+      "vectorCount": 61
+    }
+  ],
+  "allResidualRowsRepresented": false,
+  "noOracleOnlyFeature": true,
+  "noExactTemplateFeature": true
+}

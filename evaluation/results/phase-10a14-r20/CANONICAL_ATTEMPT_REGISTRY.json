@@ -1,11 +1,11 @@
 {
   "generatedAt": "2026-07-26T09:15:54.486Z",
   "phase": "PHASE-10A14-R20",
-  "cumulativeThrough": "commit5r1c16-incomplete",
+  "cumulativeThrough": "commit5r1c17-incomplete",
   "summary": {
     "totalAttempts": 122,
     "byCategory": {
-      "domain_campaign": 81,
+      "domain_campaign": 85,
       "focused_suite": 13,
       "other": 9,
       "synthetic_validator": 42
@@ -126,13 +126,13 @@
     "completed": 122,
     "failed": 0,
     "technicalIncomplete": 0,
-    "controlling": 143,
+    "controlling": 147,
     "nonControlling": 2,
     "retries": 0,
     "transientFailures": 0,
     "orphanResults": 0,
     "danglingAttempts": 0,
-    "total": 145
+    "total": 149
   },
   "danglingAttemptIds": [],
   "attempts": [
@@ -3058,6 +3058,107 @@
         "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c16_reconstruction-commit5r1c16-recon-ord01-2026-07-26T14-59-11-829Z/RELATION_FAILURES_RAW.json"
       ],
       "stdoutSha256": "366618429eda61ff54af4588916d29a6f8dd093a88d5b8b8a90bbe266ec32f15",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_03-commit5r1c17-dev-03-ord01-2026-07-26T23-32-35-347Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5r1c17_reason_iteration_03",
+      "cycle": "commit5r1c17-dev-03",
+      "attemptOrdinal": 1,
+      "retryOf": null,
+      "retryReason": null,
+      "startedAt": "2026-07-26T23:32:36.003Z",
+      "endedAt": "2026-07-26T23:32:47.072Z",
+      "exitCode": 0,
+      "status": "completed",
+      "disposition": "rejected",
+      "controlling": true,
+      "evidenceHeadAtStart": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "evidenceHeadAtEnd": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "runtimeTreeDigest": "e9869cec59a3e45e8dd547e3a63b64d6749bab847d5d8d17219a0334655cd6b6",
+      "oracleVersion": "R3",
+      "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c17_reason_iteration_03-commit5r1c17-dev-03-ord01-2026-07-26T23-32-35-347Z/ITERATION_RESULT.json"
+      ],
+      "stdoutSha256": "188049488b8e638c4ead1f477135d3b486aaf3f2e73196c954ceeec45a42eff0",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_04-commit5r1c17-dev-04-ord01-2026-07-26T23-33-55-730Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5r1c17_reason_iteration_04",
+      "cycle": "commit5r1c17-dev-04",
+      "attemptOrdinal": 1,
+      "retryOf": null,
+      "retryReason": null,
+      "startedAt": "2026-07-26T23:33:56.388Z",
+      "endedAt": "2026-07-26T23:34:07.249Z",
+      "exitCode": 0,
+      "status": "completed",
+      "disposition": "accepted_reason_improvement",
+      "controlling": true,
+      "evidenceHeadAtStart": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "evidenceHeadAtEnd": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "runtimeTreeDigest": "66460530da35b66d024da9430ec5b545436e780838f31545f957605d3cd6cd22",
+      "oracleVersion": "R3",
+      "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c17_reason_iteration_04-commit5r1c17-dev-04-ord01-2026-07-26T23-33-55-730Z/ITERATION_RESULT.json"
+      ],
+      "stdoutSha256": "e999ab41fd3641644da3119d977b6dd2b2197ae30c838aa6ac33ed9443e1cb9c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5r1c17_reason_iteration_05",
+      "cycle": "commit5r1c17-dev-05",
+      "attemptOrdinal": 1,
+      "retryOf": null,
+      "retryReason": null,
+      "startedAt": "2026-07-26T23:35:10.924Z",
+      "endedAt": "2026-07-26T23:35:21.738Z",
+      "exitCode": 0,
+      "status": "completed",
+      "disposition": "accepted_reason_improvement",
+      "controlling": true,
+      "evidenceHeadAtStart": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "evidenceHeadAtEnd": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "runtimeTreeDigest": "90983f5784a52b16c70138b0ce4475f1da5386317ae803e4c510a35e87601841",
+      "oracleVersion": "R3",
+      "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z/ITERATION_RESULT.json"
+      ],
+      "stdoutSha256": "bb488250f06a69706d0756adf69b781a4e2f51e351aadc25ea94a8cde2c49c1b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "r20_commit5r1c17_reconstruction",
+      "cycle": "commit5r1c17-recon",
+      "attemptOrdinal": 1,
+      "retryOf": null,
+      "retryReason": null,
+      "startedAt": "2026-07-26T23:22:34.648Z",
+      "endedAt": "2026-07-26T23:22:37.667Z",
+      "exitCode": 0,
+      "status": "completed",
+      "disposition": "accepted_reconstruction_exact",
+      "controlling": true,
+      "evidenceHeadAtStart": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "evidenceHeadAtEnd": "288223a36d0e40ebb8004a82a325b6cb68a7264a",
+      "runtimeTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+      "oracleVersion": "R3",
+      "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z/RECONSTRUCTION_RESULT.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z/RELATION_FAILURES_RAW.json"
+      ],
+      "stdoutSha256": "d08ffa27b951377ba612ea4f8dcce59ec55c8ed845bfb4d47d317dbcd3a06c23",
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
