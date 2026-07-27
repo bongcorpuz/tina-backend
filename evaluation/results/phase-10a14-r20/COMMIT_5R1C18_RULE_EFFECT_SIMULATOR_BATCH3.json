@@ -1,0 +1,301 @@
+{
+  "unit": "COMMIT 5R1-C18",
+  "generatedUtc": "2026-07-27T02:24:50.808Z",
+  "note": "Third simulation batch. Each candidate tightened against the exact correct-row regressions exposed by batch 2.",
+  "simulations": [
+    {
+      "rule": "procedural_outcome_is_compliance",
+      "principle": "A requested procedural outcome (filing, registration, remittance, form selection, deadline, late-compliance penalty) is a compliance task.",
+      "conditionSupport": 21,
+      "rowsChanged": 21,
+      "TP_CORRECTED": 21,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 21,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0014",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0034",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0054",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0074",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0094",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0114",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        }
+      ]
+    },
+    {
+      "rule": "naming_assignment_assigns_identifier",
+      "principle": "The primary act ASSIGNS or CHANGES an identifier. An operation on an already named artefact is not a naming act.",
+      "conditionSupport": 46,
+      "rowsChanged": 10,
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 36,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0204",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0224",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0244",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0264",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0284",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0304",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        }
+      ]
+    },
+    {
+      "rule": "bare_placeholder_subject_is_tax_task",
+      "principle": "A BARE generic placeholder subject — the head noun immediately carrying the predicate, with no modifier naming a real thing — leaves the tax concept as the requested subject.",
+      "conditionSupport": 10,
+      "rowsChanged": 10,
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0004",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0024",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0044",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0064",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0084",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0104",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        }
+      ]
+    },
+    {
+      "rule": "topic_fragment_without_any_tax_token",
+      "principle": "A bare topic fragment carrying no tax-shaped token requests no operation and establishes no tax relation.",
+      "conditionSupport": 121,
+      "rowsChanged": 24,
+      "TP_CORRECTED": 14,
+      "FP_CORRECT_ROW_REGRESSION": 7,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 3,
+      "UNCHANGED": 97,
+      "netMismatchDelta": 7,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "R20N-ENT-0571",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "office cabinet filing layout"
+        },
+        {
+          "oracleId": "R20N-ENT-0581",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "chess club tournament penalty"
+        },
+        {
+          "oracleId": "R20N-ENT-0611",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "library book return deadline"
+        },
+        {
+          "oracleId": "R20N-ENT-0656",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "photography portfolio layout"
+        },
+        {
+          "oracleId": "R20N-ENT-0676",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "school exam deadline"
+        },
+        {
+          "oracleId": "R20N-ENT-0701",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "e-sports tournament bracket"
+        },
+        {
+          "oracleId": "R20N-ENT-0711",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "dental appointment deadline"
+        }
+      ],
+      "wrongToWrong": [
+        {
+          "oracleId": "S1-IR19-1026",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1066",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1106",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        }
+      ],
+      "correctedSample": [
+        {
+          "oracleId": "S2-IR18-DOM-113",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-115",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-120",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-159",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-166",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-204",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "rule": "expansion_excludes_question_and_denial",
+      "principle": "A local reassignment is asserted. An interrogative or a denial is not a reassignment, so with no tax relation the absent relation explains it.",
+      "conditionSupport": 6,
+      "rowsChanged": 6,
+      "TP_CORRECTED": 5,
+      "FP_CORRECT_ROW_REGRESSION": 1,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 4,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S3-IR17-202",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "Is the BOC a band of chords?"
+        }
+      ],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S2-IR18-DOM-240",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-265",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-290",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-315",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-475",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        }
+      ]
+    }
+  ]
+}

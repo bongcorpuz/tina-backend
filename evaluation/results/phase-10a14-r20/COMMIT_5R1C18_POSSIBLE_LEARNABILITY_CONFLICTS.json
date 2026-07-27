@@ -1,0 +1,256 @@
+{
+  "unit": "COMMIT 5R1-C18",
+  "generatedUtc": "2026-07-27T02:35:34.634Z",
+  "status": "CANDIDATES_ONLY_NOT_CONFIRMED",
+  "rationale": "C17 already showed that a \"hard ceiling\" fell once features were enriched, and C18 closed a further 70 rows including a 41-row group C17 had left colliding. Rows that still share a vector are therefore recorded as candidates, not adjudicated oracle defects. No exception was added, R3 was not modified, and no closure is claimed on their account.",
+  "collidingRows": 84,
+  "collidingVectors": [
+    {
+      "vector": "speechAct=assertion|controllingRelation=REQUESTS_NON_TAX_ACTION_ON|targetSemanticRole=other|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=true|hasDirectObject=false|objectComplement=false|imperativeHead=false",
+      "count": 27,
+      "expected": {
+        "explicit_non_tax_task": 23,
+        "no_tax_relation": 4
+      },
+      "examples": [
+        {
+          "oracleId": "S1-IR19-1038",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1078",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1118",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|controllingRelation=REQUESTS_NON_TAX_ACTION_ON|targetSemanticRole=other|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=false|hasDirectObject=true|objectComplement=false|imperativeHead=false",
+      "count": 13,
+      "expected": {
+        "no_tax_relation": 2,
+        "non_tax_expansion": 1,
+        "explicit_non_tax_task": 10
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-099",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S3-IR17-188",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S3-IR17-206",
+          "expected": "non_tax_expansion",
+          "actual": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|controllingRelation=ASKS_TAX_COMPLIANCE_FOR|targetSemanticRole=procedure|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=acronym|topicFragment=false|hasDirectObject=true|objectComplement=false|imperativeHead=false",
+      "count": 12,
+      "expected": {
+        "tax_compliance_task": 11,
+        "tax_definition_with_context": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S1-IR19-0014",
+          "expected": "tax_compliance_task",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0034",
+          "expected": "tax_compliance_task",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0054",
+          "expected": "tax_compliance_task",
+          "actual": "explicit_tax_task_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=assertion|controllingRelation=REQUESTS_NON_TAX_ACTION_ON|targetSemanticRole=procedure|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=true|hasDirectObject=false|objectComplement=false|imperativeHead=false",
+      "count": 7,
+      "expected": {
+        "no_tax_relation": 3,
+        "explicit_non_tax_task": 4
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-159",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-166",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-228",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|controllingRelation=ASKS_TAX_TREATMENT_OF|targetSemanticRole=other|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=false|hasDirectObject=false|objectComplement=false|imperativeHead=false",
+      "count": 7,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 6,
+        "no_tax_relation": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-470",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-510",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S3-IR17-016",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|controllingRelation=ASKS_TAX_TREATMENT_OF|targetSemanticRole=transaction|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=false|hasDirectObject=true|objectComplement=false|imperativeHead=false",
+      "count": 6,
+      "expected": {
+        "explicit_tax_task_relation": 3,
+        "no_tax_relation": 3
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-032",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S3-IR17-035",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S3-IR17-043",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|controllingRelation=ASKS_CUSTOMS_DUTY_ON|targetSemanticRole=transaction|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=false|hasDirectObject=false|objectComplement=false|imperativeHead=false",
+      "count": 4,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 1,
+        "explicit_tax_task_relation": 3
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-010",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S3-IR17-021",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S3-IR17-024",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=assertion|controllingRelation=REQUESTS_NON_TAX_ACTION_ON|targetSemanticRole=artefact|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=true|hasDirectObject=false|objectComplement=false|imperativeHead=false",
+      "count": 3,
+      "expected": {
+        "no_tax_relation": 1,
+        "explicit_non_tax_task": 2
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-120",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-121",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        },
+        {
+          "oracleId": "R20N-ENT-0561",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|controllingRelation=ASKS_TAX_TREATMENT_OF|targetSemanticRole=tax_concept|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=acronym|topicFragment=false|hasDirectObject=true|objectComplement=false|imperativeHead=false",
+      "count": 3,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 1,
+        "tax_definition_with_context": 2
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-054",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "R20N-ACX-0991",
+          "expected": "tax_definition_with_context",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "R20N-ACX-0996",
+          "expected": "tax_definition_with_context",
+          "actual": "explicit_tax_task_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=assertion|controllingRelation=REQUESTS_NON_TAX_ACTION_ON|targetSemanticRole=other|modalOperator=none|polarity=positive|namingAssignment=false|localDefinitionOperator=false|documentLocalScope=false|unresolvedKind=none|topicFragment=true|hasDirectObject=true|objectComplement=false|imperativeHead=false",
+      "count": 2,
+      "expected": {
+        "no_tax_relation": 1,
+        "explicit_non_tax_task": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-115",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "R20N-ENT-0536",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        }
+      ]
+    }
+  ],
+  "requiresSeparatelyAuthorizedAdjudication": false
+}

@@ -1,0 +1,451 @@
+{
+  "unit": "COMMIT 5R1-C18",
+  "generatedUtc": "2026-07-27T02:22:44.483Z",
+  "method": "Each candidate rule is simulated against the accepted C17 runtime over all 3,720 R3 rows. Rows are classified TP_CORRECTED / FP_CORRECT_ROW_REGRESSION / FP_WRONG_TO_DIFFERENT_WRONG / UNCHANGED. A rule is forecast acceptable only when it regresses zero currently-correct rows, moves zero wrong rows to a different wrong reason, and has a positive net delta.",
+  "c17MethodologicalCorrection": "Family-wide precision is not the acceptance statistic. A rule acts on the rows matched by its exact runtime condition; those are the rows measured here.",
+  "correctRowsAtBaseline": 3243,
+  "residualRowsAtBaseline": 477,
+  "simulations": [
+    {
+      "rule": "procedural_outcome_is_compliance",
+      "principle": "A requested procedural outcome (filing, registration, remittance, form selection, deadline, late-compliance penalty) is a compliance task.",
+      "conditionSupport": 21,
+      "rowsChanged": 21,
+      "TP_CORRECTED": 21,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 21,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0014",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0034",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0054",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0074",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0094",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0114",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        }
+      ]
+    },
+    {
+      "rule": "naming_assignment_assigns_identifier",
+      "principle": "The primary act ASSIGNS or CHANGES an identifier (name it X, call it X, is only an internal label). An operation on an already named artefact is not a naming act.",
+      "conditionSupport": 46,
+      "rowsChanged": 10,
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 36,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0204",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0224",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0244",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0264",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0284",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0304",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        }
+      ]
+    },
+    {
+      "rule": "topic_fragment_requests_nothing",
+      "principle": "A bare topic fragment names subject matter without requesting an operation; with no tax relation the absent relation explains the refusal.",
+      "conditionSupport": 130,
+      "rowsChanged": 19,
+      "TP_CORRECTED": 12,
+      "FP_CORRECT_ROW_REGRESSION": 4,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 3,
+      "UNCHANGED": 111,
+      "netMismatchDelta": 8,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "R20N-ENT-0586",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "gym loyalty membership perk"
+        },
+        {
+          "oracleId": "R20N-ENT-0596",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "mall parking surcharge signage"
+        },
+        {
+          "oracleId": "R20N-ENT-0656",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "photography portfolio layout"
+        },
+        {
+          "oracleId": "R20N-ENT-0701",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "e-sports tournament bracket"
+        }
+      ],
+      "wrongToWrong": [
+        {
+          "oracleId": "S1-IR19-1026",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1066",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1106",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        }
+      ],
+      "correctedSample": [
+        {
+          "oracleId": "S2-IR18-DOM-113",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-115",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-120",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-160",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-204",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-229",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "rule": "local_equational_reassignment",
+      "principle": "A local equational or definitional reassignment (X means Y here, X stands for Y in this document) is an expansion. A descriptive assertion, comparison, denial or question is not.",
+      "conditionSupport": 8,
+      "rowsChanged": 0,
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 8,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": []
+    },
+    {
+      "rule": "equational_without_local_scope_is_not_expansion",
+      "principle": "An equational form WITHOUT document-local scope, or posed as a question, is not a local reassignment; with no tax relation it is explained by the absent relation.",
+      "conditionSupport": 0,
+      "rowsChanged": 0,
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": []
+    },
+    {
+      "rule": "deontic_modal_directs_an_operation",
+      "principle": "A deontic modal over an ordinary action directs an operation even without an imperative head.",
+      "conditionSupport": 1,
+      "rowsChanged": 0,
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 1,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": []
+    },
+    {
+      "rule": "external_object_governed_by_tax_predicate",
+      "principle": "When a transaction/receipt/service/asset is the governed target of the tax predicate, the ordinary-object treatment family controls.",
+      "conditionSupport": 92,
+      "rowsChanged": 92,
+      "TP_CORRECTED": 25,
+      "FP_CORRECT_ROW_REGRESSION": 67,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": -42,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S1-IR19-0001",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 1?"
+        },
+        {
+          "oracleId": "S1-IR19-0021",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 21?"
+        },
+        {
+          "oracleId": "S1-IR19-0041",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 41?"
+        },
+        {
+          "oracleId": "S1-IR19-0061",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 61?"
+        },
+        {
+          "oracleId": "S1-IR19-0081",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 81?"
+        },
+        {
+          "oracleId": "S1-IR19-0101",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 101?"
+        },
+        {
+          "oracleId": "S1-IR19-0121",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 121?"
+        },
+        {
+          "oracleId": "S1-IR19-0141",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 141?"
+        },
+        {
+          "oracleId": "S1-IR19-0161",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 161?"
+        },
+        {
+          "oracleId": "S1-IR19-0181",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object",
+          "query": "How do we compute income tax for a Philippine corporation in case 181?"
+        }
+      ],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0613",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0623",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0643",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0653",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0673",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0683",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_treatment_of_ordinary_object"
+        }
+      ]
+    },
+    {
+      "rule": "tax_concept_is_the_requested_subject",
+      "principle": "When the requested subject is the tax concept/procedure itself and no external object is governed, the residual tax-task family controls.",
+      "conditionSupport": 204,
+      "rowsChanged": 204,
+      "TP_CORRECTED": 7,
+      "FP_CORRECT_ROW_REGRESSION": 197,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": -190,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S1-IR19-0010",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How do we document customs duty in case 10?"
+        },
+        {
+          "oracleId": "S1-IR19-0016",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "What records support input VAT in case 16?"
+        },
+        {
+          "oracleId": "S1-IR19-0017",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How should we disclose output VAT in case 17?"
+        },
+        {
+          "oracleId": "S1-IR19-0030",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How do we document customs duty in case 30?"
+        },
+        {
+          "oracleId": "S1-IR19-0036",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "What records support input VAT in case 36?"
+        },
+        {
+          "oracleId": "S1-IR19-0037",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How should we disclose output VAT in case 37?"
+        },
+        {
+          "oracleId": "S1-IR19-0050",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How do we document customs duty in case 50?"
+        },
+        {
+          "oracleId": "S1-IR19-0056",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "What records support input VAT in case 56?"
+        },
+        {
+          "oracleId": "S1-IR19-0057",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How should we disclose output VAT in case 57?"
+        },
+        {
+          "oracleId": "S1-IR19-0070",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "How do we document customs duty in case 70?"
+        }
+      ],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S2-IR18-DOM-005",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-006",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-007",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-072",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-412",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-432",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        }
+      ]
+    }
+  ]
+}

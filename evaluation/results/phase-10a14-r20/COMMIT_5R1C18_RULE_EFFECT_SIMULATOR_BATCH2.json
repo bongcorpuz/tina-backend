@@ -1,0 +1,488 @@
+{
+  "unit": "COMMIT 5R1-C18",
+  "generatedUtc": "2026-07-27T02:24:04.771Z",
+  "note": "Second simulation batch, refined against observed residual groupings. Same four effect classes and the same acceptance forecast.",
+  "simulations": [
+    {
+      "rule": "procedural_outcome_is_compliance",
+      "principle": "A requested procedural outcome (filing, registration, remittance, form selection, deadline, late-compliance penalty) is a compliance task.",
+      "conditionSupport": 21,
+      "rowsChanged": 21,
+      "TP_CORRECTED": 21,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 21,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0014",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0034",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0054",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0074",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0094",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        },
+        {
+          "oracleId": "S1-IR19-0114",
+          "from": "explicit_tax_task_relation",
+          "to": "tax_compliance_task"
+        }
+      ]
+    },
+    {
+      "rule": "naming_assignment_assigns_identifier",
+      "principle": "The primary act ASSIGNS or CHANGES an identifier. An operation on an already named artefact is not a naming act.",
+      "conditionSupport": 46,
+      "rowsChanged": 10,
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 36,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0204",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0224",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0244",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0264",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0284",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        },
+        {
+          "oracleId": "S1-IR19-0304",
+          "from": "explicit_non_tax_task",
+          "to": "non_tax_label_or_name"
+        }
+      ]
+    },
+    {
+      "rule": "topic_fragment_no_artefact",
+      "principle": "A bare topic fragment naming non-artefact subject matter requests no operation; with no tax relation the absent relation explains the refusal.",
+      "conditionSupport": 118,
+      "rowsChanged": 13,
+      "TP_CORRECTED": 6,
+      "FP_CORRECT_ROW_REGRESSION": 4,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 3,
+      "UNCHANGED": 105,
+      "netMismatchDelta": 2,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "R20N-ENT-0586",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "gym loyalty membership perk"
+        },
+        {
+          "oracleId": "R20N-ENT-0596",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "mall parking surcharge signage"
+        },
+        {
+          "oracleId": "R20N-ENT-0656",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "photography portfolio layout"
+        },
+        {
+          "oracleId": "R20N-ENT-0701",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "e-sports tournament bracket"
+        }
+      ],
+      "wrongToWrong": [
+        {
+          "oracleId": "S1-IR19-1026",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1066",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1106",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        }
+      ],
+      "correctedSample": [
+        {
+          "oracleId": "S2-IR18-DOM-115",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-160",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-204",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-229",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-515",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-565",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "rule": "definition_operator_with_tax_context",
+      "principle": "A definitional operator asked inside controlling tax context is a tax definition.",
+      "conditionSupport": 0,
+      "rowsChanged": 0,
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": [],
+      "correctedSample": []
+    },
+    {
+      "rule": "assertion_fragment_over_artefact_is_action",
+      "principle": "A fragment naming a concrete artefact is a request to act on that artefact.",
+      "conditionSupport": 12,
+      "rowsChanged": 6,
+      "TP_CORRECTED": 2,
+      "FP_CORRECT_ROW_REGRESSION": 4,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 6,
+      "netMismatchDelta": -2,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S2-IR18-DOM-114",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task",
+          "query": "font kerning in a typeface"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-122",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task",
+          "query": "JavaScript promise handling"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-150",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task",
+          "query": "love letter draft"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-165",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task",
+          "query": "return statement in JavaScript"
+        }
+      ],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S2-IR18-DOM-121",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "R20N-ENT-0561",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        }
+      ]
+    },
+    {
+      "rule": "generic_placeholder_subject_is_tax_task",
+      "principle": "A generic placeholder subject (the transaction, a taxpayer, the corporation) names no particular thing; the sentence is about the tax concept itself, so the residual tax-task family controls.",
+      "conditionSupport": 44,
+      "rowsChanged": 44,
+      "TP_CORRECTED": 15,
+      "FP_CORRECT_ROW_REGRESSION": 29,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": -14,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "R20N-MDG-0057",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company vehicle deductible for income tax for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0058",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company vehicle subject to VAT for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0059",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company vehicle subject to withholding tax for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0060",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company vehicle subject to customs duty for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0097",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company laptop deductible for income tax for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0098",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company laptop subject to VAT for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0099",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company laptop subject to withholding tax for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0100",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company laptop subject to customs duty for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0117",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company uniform deductible for income tax for our business?"
+        },
+        {
+          "oracleId": "R20N-MDG-0118",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation",
+          "query": "Is the company uniform subject to VAT for our business?"
+        }
+      ],
+      "wrongToWrong": [],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-0004",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0024",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0044",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0064",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0084",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S1-IR19-0104",
+          "from": "tax_treatment_of_ordinary_object",
+          "to": "explicit_tax_task_relation"
+        }
+      ]
+    },
+    {
+      "rule": "expansion_requires_local_reassignment",
+      "principle": "A local equational reassignment is an expansion; a descriptive assertion, comparison, denial or question is not.",
+      "conditionSupport": 104,
+      "rowsChanged": 104,
+      "TP_CORRECTED": 20,
+      "FP_CORRECT_ROW_REGRESSION": 81,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 3,
+      "UNCHANGED": 0,
+      "netMismatchDelta": -61,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S1-IR19-1012",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "RMC is a music channel. Group MM-06."
+        },
+        {
+          "oracleId": "S1-IR19-1052",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "RMC is a music channel. Group MM-26."
+        },
+        {
+          "oracleId": "S1-IR19-1092",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "RMC is a music channel. Group MM-46."
+        },
+        {
+          "oracleId": "S2-IR18-DOM-539",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "SLSP is an unknown acronym in my app logs."
+        },
+        {
+          "oracleId": "S2-IR18-DOM-553",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "FAN is a cooling fan device."
+        },
+        {
+          "oracleId": "S2-IR18-DOM-561",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "RR is a railroad abbreviation."
+        },
+        {
+          "oracleId": "S2-IR18-DOM-563",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "RMC is a radio music channel."
+        },
+        {
+          "oracleId": "S2-IR18-DOM-567",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "CMTA is a club acronym with no tax context."
+        },
+        {
+          "oracleId": "S3-IR17-202",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "Is the BOC a band of chords?"
+        },
+        {
+          "oracleId": "R20N-ACX-0841",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "PAN means personal area network."
+        }
+      ],
+      "wrongToWrong": [
+        {
+          "oracleId": "S1-IR19-1026",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1066",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1106",
+          "expected": "explicit_non_tax_task",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        }
+      ],
+      "correctedSample": [
+        {
+          "oracleId": "S1-IR19-1028",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1030",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1032",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1034",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1036",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        },
+        {
+          "oracleId": "S1-IR19-1068",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation"
+        }
+      ]
+    }
+  ]
+}
