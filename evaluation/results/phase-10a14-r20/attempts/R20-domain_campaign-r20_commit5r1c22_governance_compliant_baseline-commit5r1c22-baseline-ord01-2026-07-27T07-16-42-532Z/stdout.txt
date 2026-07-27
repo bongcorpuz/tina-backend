@@ -1,0 +1,15 @@
+C20 governed baseline snapshot verified; services tree digest 68f35b67344ce865204d82072d1a1138e78daaa44c0eacc24df68afd8cd0abcc
+attempt allocated R20-domain_campaign-r20_commit5r1c22_governance_compliant_baseline-commit5r1c22-baseline-ord01-2026-07-27T07-16-42-532Z
+collision probes = 148 / 196  (failed 48)
+reason suite     = 320 / 344  (failed 24)
+reason integrity = true  (invalid 0, incompatible 0)
+R3 reason        = 3449 / 3720   mismatches=271
+R3 decision      = 3720 / 3720   FA=0 FR=0 CL=0
+R3 relation      = 3720 / 3720   mismatches=0
+canonical overall= 3449 / 3720
+focused reason   = false
+decision suite   = 756 / 756
+relation suite   = 282 / 282
+clause probes    = 68 / 68
+controls=true guard=7/7 antiMem=true
+DECISION LOCK = true   RELATION LOCK = true

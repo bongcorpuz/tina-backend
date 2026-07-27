@@ -1,0 +1,951 @@
+{
+  "unit": "COMMIT 5R1-C22",
+  "generatedUtc": "2026-07-27T07:22:08.076Z",
+  "strengthenedGateVersion": "commit5r1c22-static-redteam-v1",
+  "c21AcceptedTechnicalCandidate": {
+    "label": "accepted C21 technical candidate",
+    "inspectedFiles": [
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+      "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-05.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-06.cjs"
+    ],
+    "missingFiles": [],
+    "findings": [
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "scenario_number_branch",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "scenario_number_branch",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "fixture_membership_fields",
+        "category": "suite/family/cluster/category identifiers",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "scenario_number_branch",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-05.cjs",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-05.cjs",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-06.cjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      }
+    ],
+    "blockingFindings": [
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "scenario_number_branch",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "scenario_number_branch",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "fixture_membership_fields",
+        "category": "suite/family/cluster/category identifiers",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "scenario_number_branch",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-candidates.mjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-02.cjs",
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-03.cjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-05.cjs",
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-05.cjs",
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "severity": "fail"
+      },
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-06.cjs",
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "severity": "fail"
+      }
+    ],
+    "pass": false
+  },
+  "establishedC18C20StructuralLayer": {
+    "label": "established C20 governed baseline",
+    "inspectedFiles": [
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C20_BEST_REASON_CANDIDATE.patch",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-override.mjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-patch-02.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-patch-03.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-patch-04.cjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-patch-05.cjs"
+    ],
+    "missingFiles": [],
+    "findings": [
+      {
+        "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-override.mjs",
+        "id": "fixture_membership_fields",
+        "category": "suite/family/cluster/category identifiers",
+        "severity": "recorded_noncandidate_context"
+      }
+    ],
+    "blockingFindings": [],
+    "pass": true
+  },
+  "redTeamSummary": {
+    "unit": "COMMIT 5R1-C22",
+    "generatedUtc": "2026-07-27T07:22:08.075Z",
+    "cases": [
+      {
+        "id": "scenario_item_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "variant_number",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "translate_plain_english_template",
+        "category": "anchored near-complete query template",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "sports_club_fee_fixture",
+        "category": "complete exact query or fixture literal",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "school_newspaper_fixture",
+        "category": "complete exact query or fixture literal",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "band_jazz_fixture",
+        "category": "complete exact query or fixture literal",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "books_novels_accountants_fixture",
+        "category": "complete exact query or fixture literal",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "board_game_mechanic_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "deficiency_interest_taglish_template",
+        "category": "anchored near-complete query template",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "bir_assessment_protest_template",
+        "category": "anchored near-complete query template",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "gross_estate_joke_fixture",
+        "category": "ordinary-object or joke-specific whitelist",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "css_class_variant_template",
+        "category": "scenario/control/item/variant numbers used to choose a reason",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "product_code_vatable_template",
+        "category": "fixture-specific phrase alternation",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "cooking_fan_alternation",
+        "category": "alternations of fixture-specific phrases",
+        "expected": "FAIL",
+        "c21Detected": true
+      },
+      {
+        "id": "joke_band_song_alternation",
+        "category": "ordinary-object or joke-specific whitelist",
+        "expected": "FAIL",
+        "c21Detected": true
+      }
+    ],
+    "knownC21FailuresAllDetected": true,
+    "c20EstablishedLayerPasses": true
+  },
+  "pass": true,
+  "interpretation": "PASS means the strengthened gate catches C21 and preserves the established C20 governed baseline as the highest compliant base."
+}

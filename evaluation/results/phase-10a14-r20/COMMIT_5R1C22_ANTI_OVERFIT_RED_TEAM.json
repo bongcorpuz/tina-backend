@@ -1,0 +1,98 @@
+{
+  "unit": "COMMIT 5R1-C22",
+  "generatedUtc": "2026-07-27T07:22:08.075Z",
+  "cases": [
+    {
+      "id": "scenario_item_number",
+      "category": "scenario/control/item/variant numbers used to choose a reason",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "variant_number",
+      "category": "scenario/control/item/variant numbers used to choose a reason",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "translate_plain_english_template",
+      "category": "anchored near-complete query template",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "sports_club_fee_fixture",
+      "category": "complete exact query or fixture literal",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "school_newspaper_fixture",
+      "category": "complete exact query or fixture literal",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "band_jazz_fixture",
+      "category": "complete exact query or fixture literal",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "books_novels_accountants_fixture",
+      "category": "complete exact query or fixture literal",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "board_game_mechanic_fixture",
+      "category": "ordinary-object or joke-specific whitelist",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "deficiency_interest_taglish_template",
+      "category": "anchored near-complete query template",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "bir_assessment_protest_template",
+      "category": "anchored near-complete query template",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "gross_estate_joke_fixture",
+      "category": "ordinary-object or joke-specific whitelist",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "css_class_variant_template",
+      "category": "scenario/control/item/variant numbers used to choose a reason",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "product_code_vatable_template",
+      "category": "fixture-specific phrase alternation",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "cooking_fan_alternation",
+      "category": "alternations of fixture-specific phrases",
+      "expected": "FAIL",
+      "c21Detected": true
+    },
+    {
+      "id": "joke_band_song_alternation",
+      "category": "ordinary-object or joke-specific whitelist",
+      "expected": "FAIL",
+      "c21Detected": true
+    }
+  ],
+  "knownC21FailuresAllDetected": true,
+  "c20EstablishedLayerPasses": true
+}

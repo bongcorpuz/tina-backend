@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-27T05:52:36.983Z`
+`2026-07-27T07:22:13.847Z`
 
 Repository:
 
@@ -17,9 +17,9 @@ Branch:
 ## Current Controlling Phase
 
 ```text
-PHASE 10 — V1 RELEASE GATES
-PHASE 10A — TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
-PHASE 10A14-R20 — ACTIVE / IN PROGRESS
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
 ```
 
 Phase 10A is OPEN.
@@ -31,62 +31,104 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 - COMMIT 5R1-C21
-COMPOSITION-SAFE REASON-LAYER CLOSURE CONTINUATION
-DECISION: INCOMPLETE - REASON LAYER REMEDIATION NOT CLOSED;
+PHASE-10A14-R20 - COMMIT 5R1-C22
+ANTI-OVERFIT GATE REMEDIATION AND C21 RULE ADJUDICATION
+DECISION: INCOMPLETE - C21 TECHNICAL SCORE RECONSTRUCTED BUT NOT GOVERNANCE-CONTROLLING;
+          GOVERNANCE-COMPLIANT BASELINE RESTORED TO C20;
           DECISION AND RELATION LOCKS PRESERVED
 ```
 
-The reason lane remains open. C21 reconstructed the accepted C20 candidate exactly,
-then used five registered material runtime campaigns: four accepted
-(`dev-02`, `dev-04`, `dev-05`, `dev-06`) and one rejected
-(`dev-03`, rejected by composition non-interference). The mechanical iteration
-account is:
+C22 confirmed a C21 governance defect. The accepted C21 technical runtime
+reproduces exactly, but its anti-memorization gate was a false negative: C21
+reported `no_scenario_number_branch = true` while the accepted runtime contained
+`/^what is [a-z]{3} for item \\d+\\?$/i` and multiple anchored fixture-shaped
+query-template branches.
+
+Technical C21 reconstruction:
 
 ```text
-reconstruction campaigns      1
-material runtime iterations   5
-accepted material iterations  4
-rejected material iterations  1
-material budget remaining     0
-iterationCeilingReached       true  (5 >= 5)
+attempt                         R20-domain_campaign-r20_commit5r1c22_c21_technical_reconstruction-commit5r1c22-c21-recon-ord01-2026-07-27T07-16-31-880Z
+R3 reason                       3531 / 3,720   (mismatches 189)
+canonical overall               3531 / 3,720
+R3 decision                     3720 / 3,720
+R3 relation                     3720 / 3,720
+decision counterfactual           756 / 756
+relation counterfactual           282 / 282
+clause probes                      68 / 68
+reason-focused suite v8            344 / 344
+collision probes                  188 / 196
+old anti-memorization             PASS (false negative)
 ```
 
-C21 also reconciled C20's historical ceiling flag: C20 used four material iterations out
-of five, so its committed `iterationCeilingReached = true` was a
-`HISTORICAL_ITERATION_CEILING_FLAG_DEFECT`. No C20 score, gate, candidate,
-disposition or runtime evidence is invalidated. C19's controlling account remains four
-material iterations, two accepted and two rejected, plus one separate reconstruction.
-
-Best C21 result:
+C22 rule adjudication removed every C21-added override from the compliant
+baseline. No C21 rule had the required deterministic generalization packet; the
+impermissible classes included `TEMPLATE_OVERFIT`, `LEXICAL_FILLER_WHITELIST`
+and `SCENARIO_NUMBER_DEPENDENT`. The strengthened C22 anti-overfit gate:
 
 ```text
-R3 reason                     3,531 / 3,720   (mismatches 189, from 271)
-canonical overall             3,531 / 3,720
-R3 decision                   3,720 / 3,720   FA 0  FR 0  clarify 0
-R3 relation                   3,720 / 3,720   (mismatches 0)
-decision counterfactual         756 / 756
-relation counterfactual         282 / 282
-clause probes                    68 / 68
-reason-focused suite v8         344 / 344
-collision probes                188 / 196
-target equivalence              PASS
-placement non-interference      PASS
-composition non-interference    PASS
-reason integrity                PASS
-anti-memorization               PASS
+C21 accepted technical candidate     FAIL (expected red-team failure)
+established C20 governed baseline    PASS
+red-team C21 predicates detected      true
+strengthened gate result             PASS
 ```
 
-Because R3 reason still has 189 mismatches, no clean reason-lock verification was run.
-The live runtime was restored to the committed baseline; the best C21 runtime is
-preserved in the dev-06 attempt snapshot and in
-`COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch`.
+Governance-compliant baseline after C21 removal:
+
+```text
+attempt                         R20-domain_campaign-r20_commit5r1c22_governance_compliant_baseline-commit5r1c22-baseline-ord01-2026-07-27T07-16-42-532Z
+baseline source                 accepted C20 reason candidate
+R3 reason                       3449 / 3,720   (mismatches 271)
+canonical overall               3449 / 3,720
+R3 decision                     3720 / 3,720
+R3 relation                     3720 / 3,720
+decision counterfactual           756 / 756
+relation counterfactual           282 / 282
+clause probes                      68 / 68
+reason-focused suite v8            320 / 344
+collision probes                  148 / 196
+decision lock                     true
+relation lock                     true
+reason lock                       false
+```
+
+Score attribution:
+
+```text
+C21 technical score                 3,531 / 3,720
+governance-compliant score          3,449 / 3,720
+C21 technical rows credited         82
+C21 rows retained after adjudication 0
+rows lost when C21 rules removed     82
+rows recovered structurally in C22   0
+```
+
+The live runtime is restored to the committed baseline; no service, oracle,
+roadmap, frozen suite or frozen probe change is controlling in C22.
+
+Registry after C22:
+
+```text
+cumulativeThrough       commit5r1c22-incomplete
+total attempts          172
+domain_campaign         108
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             170
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
 
 Next exact task:
 
 ```text
-PHASE-10A14-R20 - COMMIT 5R1-C22
-REASON-LAYER CLOSURE CONTINUATION 22 AGAINST R3
+PHASE-10A14-R20 - COMMIT 5R1-C23
+REASON-LAYER CLOSURE CONTINUATION 23 AGAINST THE GOVERNANCE-COMPLIANT C20 BASE
 ```
 
 R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.

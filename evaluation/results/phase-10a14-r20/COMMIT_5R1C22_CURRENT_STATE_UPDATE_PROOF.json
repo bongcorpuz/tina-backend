@@ -1,0 +1,51 @@
+{
+  "unit": "COMMIT 5R1-C22",
+  "generatedUtc": "2026-07-27T07:22:13.847Z",
+  "currentStateUpdateIsFinalSubstantiveChange": true,
+  "registry": {
+    "total": 172,
+    "byCategory": {
+      "domain_campaign": 108,
+      "focused_suite": 13,
+      "other": 9,
+      "synthetic_validator": 42
+    },
+    "controlling": 170,
+    "nonControlling": 2,
+    "orphanResults": 0,
+    "danglingAttempts": 0,
+    "cumulativeThrough": "commit5r1c22-incomplete"
+  },
+  "c21Technical": {
+    "canonicalPassed": 3531,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 189,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 188
+  },
+  "governanceBaseline": {
+    "canonicalPassed": 3449,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 271,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 320,
+    "collisionProbesPassed": 148
+  },
+  "strengthenedGatePass": true,
+  "liveRuntimeRestoredToHead": true
+}

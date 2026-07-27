@@ -1,0 +1,16 @@
+{
+  "unit": "COMMIT 5R1-C22",
+  "generatedUtc": "2026-07-27T07:22:08.059Z",
+  "initialClassification": "ANTI_MEMORIZATION_GATE_FALSE_NEGATIVE",
+  "committedC21AntiMemorizationResult": {
+    "no_scenario_number_branch": true,
+    "source": "COMMIT_5R1C21_REASON_LOCK.json"
+  },
+  "contradictoryAcceptedPredicate": {
+    "predicate": "/^what is [a-z]{3} for item \\d+\\?$/i",
+    "sourceRule": "unknown_acronym_item_question_clarifies",
+    "detected": true
+  },
+  "determination": "ANTI_MEMORIZATION_GATE_FALSE_NEGATIVE",
+  "consequence": "C21 technical score is preserved as reproduced evidence but is not governance-controlling."
+}

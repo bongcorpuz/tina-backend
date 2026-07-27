@@ -1,0 +1,211 @@
+{
+  "unit": "COMMIT 5R1-C22",
+  "generatedUtc": "2026-07-27T07:22:08.080Z",
+  "technicalC21Score": {
+    "canonicalPassed": 3531,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 189,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 188
+  },
+  "governanceCompliantScore": {
+    "canonicalPassed": 3449,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 271,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 320,
+    "collisionProbesPassed": 148
+  },
+  "c21OverrideRowsCreditedTechnical": 82,
+  "c21OverrideRowsRetainedAfterAdjudication": 0,
+  "rowsLostWhenOverfitRulesRemoved": 82,
+  "rowsRecoveredByStructuralReplacements": 0,
+  "finalGovernanceCompliantBaseline": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c22_governance_compliant_baseline-commit5r1c22-baseline-ord01-2026-07-27T07-16-42-532Z",
+    "actual": {
+      "canonicalPassed": 3449,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "relationMismatches": 0,
+      "reasonMismatches": 271,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 320,
+      "collisionProbesPassed": 148
+    },
+    "runtimeIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 171748,
+        "normalizedLfSha256": "66b13c4d5f42eabf115c2347c81e96458ea1986de99dc58da7e67e82fbafb0d9",
+        "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+      },
+      "servicesTreeDigest": "68f35b67344ce865204d82072d1a1138e78daaa44c0eacc24df68afd8cd0abcc"
+    },
+    "exact": true,
+    "restoredHeadAfterEvidence": true
+  },
+  "attributionByRule": [
+    {
+      "rule": "translate_document_handbook_has_no_relation",
+      "creditedRows": 10,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "tune_named_music_channel_has_no_relation",
+      "creditedRows": 3,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "bare_club_fee_fragment_has_no_relation",
+      "creditedRows": 3,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "project_code_lang_question_is_non_tax_task",
+      "creditedRows": 5,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "print_authority_school_newspaper_is_non_tax_task",
+      "creditedRows": 3,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "boc_band_play_jazz_is_non_tax_task",
+      "creditedRows": 4,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "books_means_novels_is_non_tax_task",
+      "creditedRows": 3,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "ordinary_gloss_statement_has_no_relation",
+      "creditedRows": 9,
+      "retainedRows": 0,
+      "classification": "LEXICAL_FILLER_WHITELIST",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "concrete_percentage_tax_subject_is_ordinary_object",
+      "creditedRows": 0,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "records_support_deduction_is_tax_task",
+      "creditedRows": 0,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "filing_deadline_for_return_is_compliance",
+      "creditedRows": 0,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "unknown_acronym_item_question_clarifies",
+      "creditedRows": 0,
+      "retainedRows": 0,
+      "classification": "SCENARIO_NUMBER_DEPENDENT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "deficiency_interest_late_payment_is_tax_task",
+      "creditedRows": 5,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "deadline_to_protest_assessment_is_compliance",
+      "creditedRows": 1,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "alphabetize_quoted_tax_term_is_quote_only",
+      "creditedRows": 1,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "ordinary_parenthetical_expansion_has_no_relation",
+      "creditedRows": 13,
+      "retainedRows": 0,
+      "classification": "LEXICAL_FILLER_WHITELIST",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "ordinary_token_operation_has_no_relation",
+      "creditedRows": 16,
+      "retainedRows": 0,
+      "classification": "SCENARIO_NUMBER_DEPENDENT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "purchase_deductible_subject_is_tax_task",
+      "creditedRows": 3,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    },
+    {
+      "rule": "product_code_sale_vatable_is_tax_task",
+      "creditedRows": 3,
+      "retainedRows": 0,
+      "classification": "TEMPLATE_OVERFIT",
+      "disposition": "REMOVE_FROM_GOVERNANCE_BASELINE"
+    }
+  ]
+}

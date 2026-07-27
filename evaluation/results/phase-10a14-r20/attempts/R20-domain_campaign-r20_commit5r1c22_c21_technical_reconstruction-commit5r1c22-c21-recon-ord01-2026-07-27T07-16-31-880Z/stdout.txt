@@ -1,0 +1,15 @@
+C21 snapshot identity verified; services tree digest dc7cd13f66843bb25bda8996ed380f8bf0911bc6bd6c313d10ab9a4b90f64567
+attempt allocated R20-domain_campaign-r20_commit5r1c22_c21_technical_reconstruction-commit5r1c22-c21-recon-ord01-2026-07-27T07-16-31-880Z
+collision probes = 188 / 196  (failed 8)
+reason suite     = 344 / 344  (failed 0)
+reason integrity = true  (invalid 0, incompatible 0)
+R3 reason        = 3531 / 3720   mismatches=189
+R3 decision      = 3720 / 3720   FA=0 FR=0 CL=0
+R3 relation      = 3720 / 3720   mismatches=0
+canonical overall= 3531 / 3720
+focused reason   = false
+decision suite   = 756 / 756
+relation suite   = 282 / 282
+clause probes    = 68 / 68
+controls=true guard=7/7 antiMem=true
+DECISION LOCK = true   RELATION LOCK = true
