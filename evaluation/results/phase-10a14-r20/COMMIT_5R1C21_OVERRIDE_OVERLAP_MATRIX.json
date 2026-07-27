@@ -1,0 +1,1547 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:24:13.754Z",
+  "overlapMatrix": [
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "translate_document_handbook_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "tune_named_music_channel_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "bare_club_fee_fragment_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "project_code_lang_question_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "print_authority_school_newspaper_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "boc_band_play_jazz_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "books_means_novels_is_non_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "ordinary_gloss_statement_has_no_relation",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "records_support_deduction_is_tax_task",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "filing_deadline_for_return_is_compliance",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reason_iteration_05-commit5r1c17-dev-05-ord01-2026-07-26T23-35-10-202Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c17_reconstruction-commit5r1c17-recon-ord01-2026-07-26T23-22-34-193Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_02-commit5r1c18-dev-02-ord01-2026-07-27T02-28-05-960Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_03-commit5r1c18-dev-03-ord01-2026-07-27T02-29-54-847Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reason_iteration_05-commit5r1c18-dev-05-ord01-2026-07-27T02-34-51-139Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c18_reconstruction-commit5r1c18-recon-ord01-2026-07-27T02-20-55-414Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_02-commit5r1c19-dev-02-ord01-2026-07-27T03-03-34-382Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C17-C19 accepted reason-layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    },
+    {
+      "newRule": "unknown_acronym_item_question_clarifies",
+      "existingRule": "C20 accepted pure override layer delta",
+      "sourceUnit": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+      "intersectionCount": 0,
+      "intersectionSample": [],
+      "classification": "DISJOINT",
+      "conflictingTarget": false,
+      "orderDependent": false
+    }
+  ],
+  "allDisjoint": true
+}

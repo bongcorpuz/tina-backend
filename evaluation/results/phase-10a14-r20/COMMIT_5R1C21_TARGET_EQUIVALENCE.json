@@ -1,0 +1,12 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:39:25.430Z",
+  "stage": "actual",
+  "shadowMatchedCount": 146,
+  "runtimeOverrideAssignedCount": 146,
+  "missingFromRuntime": 0,
+  "unexpectedInRuntime": 0,
+  "missingSample": [],
+  "unexpectedSample": [],
+  "pass": true
+}

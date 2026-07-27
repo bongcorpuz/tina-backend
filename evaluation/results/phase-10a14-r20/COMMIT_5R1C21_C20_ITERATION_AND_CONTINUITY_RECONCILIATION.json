@@ -1,0 +1,78 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:12:21.429Z",
+  "scope": "Section 3 reconciliation of C20 iteration accounting before C21 reconstruction or semantic coding.",
+  "registryBackedC20Evidence": {
+    "registryIncrease": {
+      "before": 159,
+      "after": 164,
+      "increase": 5
+    },
+    "campaigns": [
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_02-commit5r1c20-dev-02-ord01-2026-07-27T04-30-14-594Z",
+        "cycle": "commit5r1c20-dev-02",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_03-commit5r1c20-dev-03-ord01-2026-07-27T04-33-20-794Z",
+        "cycle": "commit5r1c20-dev-03",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_04-commit5r1c20-dev-04-ord01-2026-07-27T04-35-23-076Z",
+        "cycle": "commit5r1c20-dev-04",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+        "cycle": "commit5r1c20-dev-05",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+        "cycle": "commit5r1c20-recon",
+        "disposition": "accepted_reconstruction_exact",
+        "status": "completed"
+      }
+    ],
+    "reconstructionCount": 1,
+    "materialRuntimeIterations": 4,
+    "acceptedMaterialIterations": 4,
+    "rejectedMaterialIterations": 0,
+    "otherMaterialDispositions": [],
+    "permitted": 5
+  },
+  "committedInconsistency": {
+    "source": "COMMIT_5R1C20_REASON_LOCK.json",
+    "materialIterationsUsed": 4,
+    "materialIterationsPermitted": 5,
+    "iterationCeilingReached": true
+  },
+  "requiredMechanicalDerivation": {
+    "expression": "materialIterationsUsed >= materialIterationsPermitted",
+    "materialIterationsUsed": 4,
+    "materialIterationsPermitted": 5,
+    "derivedIterationCeilingReached": false
+  },
+  "determination": "HISTORICAL_ITERATION_CEILING_FLAG_DEFECT",
+  "consequence": {
+    "c20ScoreInvalidated": false,
+    "c20GateInvalidated": false,
+    "c20CandidateInvalidated": false,
+    "c20AttemptDispositionInvalidated": false,
+    "c20RuntimeEvidenceInvalidated": false,
+    "c20FilesRewritten": 0,
+    "prospectiveCorrectionInC21CurrentStateRequired": true
+  },
+  "orphanCheck": {
+    "attemptDirectoriesOnDisk": 5,
+    "registeredC20Attempts": 5,
+    "orphanDirectories": 0,
+    "danglingRegisteredAttempts": 0
+  }
+}

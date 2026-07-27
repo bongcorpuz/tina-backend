@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-27T04:41:16Z`
+`2026-07-27T05:52:36.983Z`
 
 Repository:
 
@@ -29,6 +29,69 @@ R20 is not PASS and is not governance-satisfied.
 Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closure.
 
 ## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C21
+COMPOSITION-SAFE REASON-LAYER CLOSURE CONTINUATION
+DECISION: INCOMPLETE - REASON LAYER REMEDIATION NOT CLOSED;
+          DECISION AND RELATION LOCKS PRESERVED
+```
+
+The reason lane remains open. C21 reconstructed the accepted C20 candidate exactly,
+then used five registered material runtime campaigns: four accepted
+(`dev-02`, `dev-04`, `dev-05`, `dev-06`) and one rejected
+(`dev-03`, rejected by composition non-interference). The mechanical iteration
+account is:
+
+```text
+reconstruction campaigns      1
+material runtime iterations   5
+accepted material iterations  4
+rejected material iterations  1
+material budget remaining     0
+iterationCeilingReached       true  (5 >= 5)
+```
+
+C21 also reconciled C20's historical ceiling flag: C20 used four material iterations out
+of five, so its committed `iterationCeilingReached = true` was a
+`HISTORICAL_ITERATION_CEILING_FLAG_DEFECT`. No C20 score, gate, candidate,
+disposition or runtime evidence is invalidated. C19's controlling account remains four
+material iterations, two accepted and two rejected, plus one separate reconstruction.
+
+Best C21 result:
+
+```text
+R3 reason                     3,531 / 3,720   (mismatches 189, from 271)
+canonical overall             3,531 / 3,720
+R3 decision                   3,720 / 3,720   FA 0  FR 0  clarify 0
+R3 relation                   3,720 / 3,720   (mismatches 0)
+decision counterfactual         756 / 756
+relation counterfactual         282 / 282
+clause probes                    68 / 68
+reason-focused suite v8         344 / 344
+collision probes                188 / 196
+target equivalence              PASS
+placement non-interference      PASS
+composition non-interference    PASS
+reason integrity                PASS
+anti-memorization               PASS
+```
+
+Because R3 reason still has 189 mismatches, no clean reason-lock verification was run.
+The live runtime was restored to the committed baseline; the best C21 runtime is
+preserved in the dev-06 attempt snapshot and in
+`COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch`.
+
+Next exact task:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C22
+REASON-LAYER CLOSURE CONTINUATION 22 AGAINST R3
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C20
 
 ```text
 PHASE-10A14-R20 — COMMIT 5R1-C20
@@ -874,14 +937,16 @@ expected-decision shortcut was used; the correction is entirely structural.
 Remaining Phase 10A work is the reason lane, then standalone closure, then integration
 and runtime freeze.
 
-Material iterations: 5 registered material iterations were used in C19 — two accepted
-and two rejected, plus one spent recovering a rule whose runtime placement was wrong.
-Both rejections concerned the same rule: it passed branch equivalence 6 = 6 yet regressed
-R3 393 → 403 because the branch it replaced also served 28 rows the predicate never
-matched, and hoisting it to the head of the decision walk regressed further to 460. Both
-were rejected and the prior snapshot restored. No candidate carrying a regression was
-registered as an accepted base. No clean reason-lock verification was run, because §15
-authorizes it only after reason mismatches reach zero.
+Material iterations: the registry-backed C19 account is four material iterations
+(two accepted and two rejected), plus one separate reconstruction. The stale historical
+claim that five registered material iterations were used in C19 is superseded by the
+C20 reconciliation and by the C21 accounting note above. Both C19 rejections concerned
+the same rule: it passed branch equivalence 6 = 6 yet regressed R3 393 -> 403 because
+the branch it replaced also served 28 rows the predicate never matched, and hoisting it
+to the head of the decision walk regressed further to 460. Both were rejected and the
+prior snapshot restored. No candidate carrying a regression was registered as an
+accepted base. No clean reason-lock verification was run, because §15 authorizes it
+only after reason mismatches reach zero.
 
 The C18 iteration count is corrected here: the registry records **four** material C18
 iterations, not five. See the reconciliation section above.
@@ -1523,8 +1588,8 @@ All prior attempts and failed/incomplete development states remain immutable.
 ## Next Exact Task
 
 ```text
-PHASE-10A14-R20 — COMMIT 5R1-C21
-REASON-LAYER CLOSURE CONTINUATION 21 AGAINST R3
+PHASE-10A14-R20 - COMMIT 5R1-C22
+REASON-LAYER CLOSURE CONTINUATION 22 AGAINST R3
 ```
 
 Preflight preconditions carried forward from COMMIT 5R1-C7-P1 and still holding:
@@ -1535,16 +1600,16 @@ analyzer identity policy: Git blob canonical; normalized-LF content identity acc
 working-tree drift:       none unresolved
 root residue:             none
 roadmap:                  tracked strategic governance
-parent chain:             use the pushed C20 commit as the new starting HEAD
+parent chain:             use the pushed C21 commit as the new starting HEAD
 ```
 
-COMMIT 5R1-C21 must:
+COMMIT 5R1-C22 must:
 
 1. verify R3 and all immutable history;
-2. reconstruct the best accepted C19 reason candidate (R3 decision 3,720 / 3,720; R3 relation 3,720 / 3,720; R3 reason 3,337 / 3,720; decision counterfactual 756 / 756; relation counterfactual 282 / 282; clause probes 68 / 68; reason suite 320 / 344; collision probes 140 / 196) from its preserved attempt snapshot and verify the recorded services tree digest;
+2. reconstruct the best accepted C21 reason candidate (R3 decision 3,720 / 3,720; R3 relation 3,720 / 3,720; R3 reason 3,531 / 3,720; decision counterfactual 756 / 756; relation counterfactual 282 / 282; clause probes 68 / 68; reason suite 344 / 344; collision probes 188 / 196) from the dev-06 preserved attempt snapshot or `COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch`, and verify the recorded runtime/service hashes;
 3. execute it as a new governed R3 campaign and preserve the actual result;
-4. preserve all C7 through C10 analysis and the combined counterfactual v3+v4+v5+v6 controls;
-5. hold the decision lock AND the relation lock intact — R3 decision 3,720 / 3,720, R3 relation 3,720 / 3,720, decision counterfactual 756 / 756, relation counterfactual 282 / 282, clause probes 68 / 68, closed controls, rich-context guard and anti-memorization — while closing the remaining 383 reason mismatches, of which 306 are reachable; every rule must use one shared predicate across simulator and runtime, AND must additionally be shown not to divert rows outside its matched set, which branch equivalence alone does not establish;
+4. preserve all C7 through C21 analysis and the combined counterfactual v3+v4+v5+v6 controls;
+5. hold the decision lock AND the relation lock intact — R3 decision 3,720 / 3,720, R3 relation 3,720 / 3,720, decision counterfactual 756 / 756, relation counterfactual 282 / 282, clause probes 68 / 68, closed controls, rich-context guard and anti-memorization — while closing the remaining 189 reason mismatches; every rule must use one shared predicate across simulator and runtime, AND must additionally be shown not to divert rows outside its matched set, which branch equivalence alone does not establish;
 6. permit up to five new material decision iterations;
 7. require exact decision 3,720 / 3,720, exact relation 3,720 / 3,720, exact reason 3,720 / 3,720, all suites fully passing, plus a separate clean lock-verification run, before declaring the reason lock;
 8. not begin standalone closure, integration or freeze;
@@ -1560,7 +1625,7 @@ closure, integration and a successful runtime freeze in later units.
 ## Remaining Phase 10A Sequence
 
 ```text
-COMMIT 5R1-C21 reason-layer closure continuation
+COMMIT 5R1-C22 reason-layer closure continuation
 → reason-layer closure
 → standalone overall closure
 → integration and runtime freeze

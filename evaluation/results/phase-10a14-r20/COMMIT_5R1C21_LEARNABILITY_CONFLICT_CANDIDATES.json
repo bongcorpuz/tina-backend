@@ -1,0 +1,409 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:52:35.581Z",
+  "status": "CANDIDATES_ONLY_NOT_CONFIRMED",
+  "residualRows": 189,
+  "residualSample": [
+    {
+      "oracleId": "S1-IR19-1017",
+      "query": "Are tuition receipts for culture classes taxable? Group MM-09.",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S1-IR19-1057",
+      "query": "Are tuition receipts for culture classes taxable? Group MM-29.",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S1-IR19-1097",
+      "query": "Are tuition receipts for culture classes taxable? Group MM-49.",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-005",
+      "query": "withholding tax",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_WITHHOLDING_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-006",
+      "query": "expanded withholding tax",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_WITHHOLDING_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "query": "final withholding tax",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_WITHHOLDING_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-021",
+      "query": "excise tax",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-022",
+      "query": "capital gains tax",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-024",
+      "query": "import duty",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_CUSTOMS_DUTY_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-059",
+      "query": "withholding certificate",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_WITHHOLDING_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-061",
+      "query": "deductible representation expense",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_DEDUCTIBILITY_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-062",
+      "query": "fringe benefit tax",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-064",
+      "query": "taxable compensation",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-072",
+      "query": "deficiency withholding tax",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_WITHHOLDING_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-073",
+      "query": "stock transaction tax",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-113",
+      "query": "CSS grid layout",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-115",
+      "query": "color palette selection",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-120",
+      "query": "software variable naming",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-121",
+      "query": "TypeScript interface design",
+      "expectedReason": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-134",
+      "query": "pharmacology trial design",
+      "expectedReason": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-159",
+      "query": "private lease weekend deadline",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-160",
+      "query": "office duty roster",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-166",
+      "query": "filing cabinet organization",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-192",
+      "query": "official receipt layout design",
+      "expectedReason": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-199",
+      "query": "reconsideration request for exam grade",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": []
+    },
+    {
+      "oracleId": "S2-IR18-DOM-204",
+      "query": "assessment in classroom rubric",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-212",
+      "query": "subject to VAT as variable name in code",
+      "expectedReason": "non_tax_label_or_name",
+      "actualReason": "no_tax_relation",
+      "decision": "REFUSE",
+      "relations": [
+        "NAMES_AS_INTERNAL_LABEL"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-214",
+      "query": "input VAT as form input label",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "ASKS_VAT_TREATMENT_OF"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-221",
+      "query": "VAT paint swatch",
+      "expectedReason": "explicit_non_tax_task",
+      "actualReason": "no_tax_relation",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-228",
+      "query": "deadline in school calendar",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-229",
+      "query": "return due in library books",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-233",
+      "query": "Set the taxable variable to true. Variant 1.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "non_tax_label_or_name",
+      "decision": "REFUSE",
+      "relations": [
+        "NAMES_AS_INTERNAL_LABEL"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-258",
+      "query": "Set the taxable variable to true. Variant 2.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "non_tax_label_or_name",
+      "decision": "REFUSE",
+      "relations": [
+        "NAMES_AS_INTERNAL_LABEL"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-283",
+      "query": "Set the taxable variable to true. Variant 3.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "non_tax_label_or_name",
+      "decision": "REFUSE",
+      "relations": [
+        "NAMES_AS_INTERNAL_LABEL"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-308",
+      "query": "Set the taxable variable to true. Variant 4.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "non_tax_label_or_name",
+      "decision": "REFUSE",
+      "relations": [
+        "NAMES_AS_INTERNAL_LABEL"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-348",
+      "query": "What form should I use? Context 1.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-368",
+      "query": "What form should I use? Context 2.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-388",
+      "query": "What form should I use? Context 3.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-408",
+      "query": "What form should I use? Context 4.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "relations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ]
+    },
+    {
+      "oracleId": "S2-IR18-DOM-412",
+      "query": "Kailan due ang withholding tax? Batch 1.",
+      "expectedReason": "explicit_tax_task_relation",
+      "actualReason": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "relations": [
+        "ASKS_WITHHOLDING_ON"
+      ]
+    }
+  ],
+  "noOracleChange": true,
+  "noNarrowException": true,
+  "next": "PHASE-10A14-R20 - COMMIT 5R1-C22 REASON-LAYER CLOSURE CONTINUATION 22 AGAINST R3"
+}

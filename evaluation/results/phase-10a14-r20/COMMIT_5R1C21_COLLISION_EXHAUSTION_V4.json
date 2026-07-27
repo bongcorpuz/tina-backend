@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:52:35.579Z",
+  "residualRows": 189,
+  "reasonConfusionResidual": {
+    "tax_treatment_of_ordinary_object <- explicit_tax_task_relation": 27,
+    "explicit_tax_task_relation <- tax_treatment_of_ordinary_object": 19,
+    "no_tax_relation <- explicit_non_tax_task": 84,
+    "explicit_non_tax_task <- no_tax_relation": 48,
+    "non_tax_label_or_name <- no_tax_relation": 1,
+    "no_tax_relation <- non_tax_label_or_name": 5,
+    "explicit_tax_task_relation <- tax_definition_with_context": 4,
+    "non_tax_expansion <- no_tax_relation": 1
+  },
+  "collisionProbeResult": "188/196",
+  "remainingCollisionProbeFailures": {
+    "acronym_vs_topic_ambiguity": 8
+  },
+  "determination": "REASON_LAYER_NOT_CLOSED_ITERATION_CEILING_REACHED",
+  "note": "Remaining rows require further authorized C22 remediation. No R3 oracle edit, exact-row exception or fixture-membership branch was added."
+}

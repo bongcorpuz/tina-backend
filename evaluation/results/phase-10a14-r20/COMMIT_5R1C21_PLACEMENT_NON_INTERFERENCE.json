@@ -1,0 +1,17 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:39:25.431Z",
+  "stage": "actual",
+  "unmatchedRowsChecked": 4114,
+  "unmatchedReasonDrift": 0,
+  "unmatchedDecisionDrift": 0,
+  "unmatchedRelationDrift": 0,
+  "unmatchedBranchSignatureDrift": 0,
+  "driftSamples": {
+    "reason": [],
+    "decision": [],
+    "relation": [],
+    "branchSignature": []
+  },
+  "pass": true
+}

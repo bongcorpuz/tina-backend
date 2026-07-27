@@ -1,0 +1,45 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c21_reason_iteration_04-commit5r1c21-dev-04-ord01-2026-07-27T05-34-56-893Z",
+  "attemptCategory": "domain_campaign",
+  "gateName": "r20_commit5r1c21_reason_iteration_04",
+  "cycle": "commit5r1c21-dev-04",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "da4b9199d9a6f526bf5e7dcf9efc235a985a6359",
+  "evidenceHeadAtStart": "da4b9199d9a6f526bf5e7dcf9efc235a985a6359",
+  "runtimeBaselineCommit": "da4b9199d9a6f526bf5e7dcf9efc235a985a6359",
+  "runtimeTreeDigest": "5ed267341607747055d2161c2ad55b38807d81c918e01c5139d3bd2e1d8953f5",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "a6b32d7a3c0309120aa7042bfebd84e5b5b46bb8de86dfb08a06f0f0ce60f381",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c21-patch-04.cjs"
+  ],
+  "commandHash": "ba783c40aa096cf1476b5cb2ce4f987cf66422debb18e14686284c80bb73fdd3",
+  "startedAt": "2026-07-27T05:34:57.337Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-27T05:35:05.336Z",
+  "exitCode": 0,
+  "disposition": "accepted_reason_improvement",
+  "evidenceHeadAtEnd": "da4b9199d9a6f526bf5e7dcf9efc235a985a6359",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_04-commit5r1c21-dev-04-ord01-2026-07-27T05-34-56-893Z/ITERATION_RESULT.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_04-commit5r1c21-dev-04-ord01-2026-07-27T05-34-56-893Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_04-commit5r1c21-dev-04-ord01-2026-07-27T05-34-56-893Z/stderr.txt",
+  "stdoutSha256": "0034072f59939edc2b95ac55f1bd28aa8c67bd4d20f2ad1a03798776f45d1e90",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

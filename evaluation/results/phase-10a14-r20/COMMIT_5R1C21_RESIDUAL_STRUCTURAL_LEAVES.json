@@ -1,0 +1,1136 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:21:21.890Z",
+  "residualRows": 271,
+  "pureStructuralLeafRows": 78,
+  "separableAfterNewFeatureRows": 193,
+  "collidingRows": 0,
+  "unresolvedParseRows": 0,
+  "leaves": [
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|translate|none|into|absent|false|false",
+      "ids": [
+        "S1-IR19-0216",
+        "S1-IR19-0236",
+        "S1-IR19-0256",
+        "S1-IR19-0276",
+        "S1-IR19-0296",
+        "S1-IR19-0316",
+        "S1-IR19-0336",
+        "S1-IR19-0356",
+        "S1-IR19-0376",
+        "S1-IR19-0396"
+      ],
+      "count": 10,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|(none)|question|false|none|none|none|none|absent|false|true",
+      "ids": [
+        "S1-IR19-0914",
+        "S1-IR19-0934",
+        "S1-IR19-0954",
+        "S1-IR19-0974",
+        "S1-IR19-0994"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_compliance_task|ASKS_TAX_COMPLIANCE_FOR|question|true|may|may|none|none|absent|false|true",
+      "ids": [
+        "S1-IR19-0919",
+        "S1-IR19-0939",
+        "S1-IR19-0959",
+        "S1-IR19-0979",
+        "S1-IR19-0999"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_DEDUCTIBILITY_OF|question|true|is|is|none|for|present|false|false",
+      "ids": [
+        "S1-IR19-1007",
+        "S1-IR19-1047",
+        "S1-IR19-1087"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|tune|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1014",
+        "S1-IR19-1054",
+        "S1-IR19-1094",
+        "S2-IR18-DOM-244",
+        "S2-IR18-DOM-269",
+        "S2-IR18-DOM-294",
+        "S2-IR18-DOM-319"
+      ],
+      "count": 7,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|are|are|none|for|absent|false|false",
+      "ids": [
+        "S1-IR19-1017",
+        "S1-IR19-1057",
+        "S1-IR19-1097"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_non_tax_task|non_tax_expansion|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|true|none|none|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1026",
+        "S1-IR19-1066",
+        "S1-IR19-1106"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|EXPANDS_AS_NON_TAX|fragment_or_assertion|true|is|none|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1028",
+        "S1-IR19-1068",
+        "S1-IR19-1108"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|EXPANDS_AS_NON_TAX|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1030",
+        "S1-IR19-1070",
+        "S1-IR19-1110"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|EXPANDS_AS_NON_TAX|question|true|none|none|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1032",
+        "S1-IR19-1072",
+        "S1-IR19-1112"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|NAMES_AS_INTERNAL_LABEL|question|true|is|is|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1033",
+        "S1-IR19-1073",
+        "S1-IR19-1113"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|EXPANDS_AS_NON_TAX|fragment_or_assertion|true|none|none|none|none|absent|false|false",
+      "ids": [
+        "S1-IR19-1034",
+        "S1-IR19-1036",
+        "S1-IR19-1074",
+        "S1-IR19-1076",
+        "S1-IR19-1114",
+        "S1-IR19-1116"
+      ],
+      "count": 6,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|none|to|absent|false|false",
+      "ids": [
+        "S1-IR19-1038",
+        "S1-IR19-1078",
+        "S1-IR19-1118"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|registration|for|present|false|false",
+      "ids": [
+        "S1-IR19-1040",
+        "S1-IR19-1080",
+        "S1-IR19-1120"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_WITHHOLDING_ON|fragment_or_assertion|false|none|none|none|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-005",
+        "S2-IR18-DOM-006",
+        "S2-IR18-DOM-007",
+        "S2-IR18-DOM-072"
+      ],
+      "count": 4,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|fragment_or_assertion|false|none|none|none|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-021",
+        "S2-IR18-DOM-022",
+        "S2-IR18-DOM-062"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-024"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_WITHHOLDING_ON|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-059"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_DEDUCTIBILITY_OF|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-061"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-064"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_TAX_TREATMENT_OF|fragment_or_assertion|false|none|none|none|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-073"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-113",
+        "S2-IR18-DOM-115",
+        "S2-IR18-DOM-120",
+        "S2-IR18-DOM-160",
+        "S2-IR18-DOM-204"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-121",
+        "S2-IR18-DOM-134",
+        "S2-IR18-DOM-192",
+        "S2-IR18-DOM-221",
+        "R20N-ENT-0521",
+        "R20N-ENT-0526",
+        "R20N-ENT-0531",
+        "R20N-ENT-0536",
+        "R20N-ENT-0541",
+        "R20N-ENT-0546",
+        "R20N-ENT-0551",
+        "R20N-ENT-0556",
+        "R20N-ENT-0561",
+        "R20N-ENT-0566",
+        "R20N-ENT-0576",
+        "R20N-ENT-0591",
+        "R20N-ENT-0601",
+        "R20N-ENT-0606",
+        "R20N-ENT-0616",
+        "R20N-ENT-0621",
+        "R20N-ENT-0626",
+        "R20N-ENT-0631",
+        "R20N-ENT-0636",
+        "R20N-ENT-0641",
+        "R20N-ENT-0646",
+        "R20N-ENT-0661",
+        "R20N-ENT-0671",
+        "R20N-ENT-0681",
+        "R20N-ENT-0686",
+        "R20N-ENT-0691",
+        "R20N-ENT-0706",
+        "R20N-ENT-0716"
+      ],
+      "count": 32,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|deadline|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-159",
+        "S2-IR18-DOM-228"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|filing|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-166"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|fragment_or_assertion|false|none|none|none|for|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-199"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "non_tax_label_or_name|no_tax_relation|NAMES_AS_INTERNAL_LABEL|fragment_or_assertion|false|none|none|subject to|to|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-212"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_VAT_TREATMENT_OF|fragment_or_assertion|false|none|none|none|as|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-214"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|none|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-229"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_label_or_name|NAMES_AS_INTERNAL_LABEL|fragment_or_assertion|false|none|none|none|to|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-233",
+        "S2-IR18-DOM-258",
+        "S2-IR18-DOM-283",
+        "S2-IR18-DOM-308"
+      ],
+      "count": 4,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|EXPANDS_AS_NON_TAX|question|true|is|is|none|of|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-240",
+        "S2-IR18-DOM-265",
+        "S2-IR18-DOM-290",
+        "S2-IR18-DOM-315",
+        "S2-IR18-DOM-475"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|question|true|does|does|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-243",
+        "S2-IR18-DOM-268",
+        "S2-IR18-DOM-293",
+        "S2-IR18-DOM-318"
+      ],
+      "count": 4,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|use|none|as|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-247",
+        "S2-IR18-DOM-272",
+        "S2-IR18-DOM-297",
+        "S2-IR18-DOM-322",
+        "S2-IR18-DOM-515"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_VAT_TREATMENT_OF|fragment_or_assertion|false|none|none|none|into|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-251",
+        "S2-IR18-DOM-276",
+        "S2-IR18-DOM-301",
+        "S2-IR18-DOM-326",
+        "S2-IR18-DOM-503"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|add|none|to|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-254",
+        "S2-IR18-DOM-279",
+        "S2-IR18-DOM-304",
+        "S2-IR18-DOM-329"
+      ],
+      "count": 4,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|should|what|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-348",
+        "S2-IR18-DOM-368",
+        "S2-IR18-DOM-388",
+        "S2-IR18-DOM-408"
+      ],
+      "count": 4,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_WITHHOLDING_ON|question|false|none|none|none|none|present|false|true",
+      "ids": [
+        "S2-IR18-DOM-412",
+        "S2-IR18-DOM-432",
+        "S2-IR18-DOM-452"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|is|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-470",
+        "S3-IR17-053",
+        "S3-IR17-144",
+        "S3-IR17-152"
+      ],
+      "count": 4,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|what|what is|none|present|false|false",
+      "ids": [
+        "S2-IR18-DOM-478"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|does|what|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-491"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|make|none|of|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-493"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_DEDUCTIBILITY_OF|question|true|are|what|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-506"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|what|what is|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-510",
+        "S2-IR18-DOM-546"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_definition_with_context|ASKS_DEFINITION_OF|question|true|is|what|what is|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-514",
+        "S2-IR18-DOM-516"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|NAMES_AS_INTERNAL_LABEL|question|true|could|what|none|for|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-531"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_label_or_name|NAMES_AS_INTERNAL_LABEL|fragment_or_assertion|true|is|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-533"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_definition_with_context|ASKS_TAX_TREATMENT_OF|question|true|is|what|what is|none|absent|false|true",
+      "ids": [
+        "S2-IR18-DOM-534",
+        "S2-IR18-DOM-556"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_TAX_COMPLIANCE_FOR|imperative_or_directive|false|none|make|none|of|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-541"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|(none)|fragment_or_assertion|true|none|none|none|of|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-543"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|true|is|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-545"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|non_tax_expansion|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|true|none|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-549"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|true|is|none|none|none|absent|false|false",
+      "ids": [
+        "S2-IR18-DOM-565"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|question|true|is|is|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-003"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_CUSTOMS_DUTY_ON|question|true|does|does|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-010"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|question|false|none|what|none|for|absent|false|false",
+      "ids": [
+        "S3-IR17-014"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|what|what is|of|present|false|false",
+      "ids": [
+        "S3-IR17-016"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|question|false|none|what|records support|none|absent|false|false",
+      "ids": [
+        "S3-IR17-021"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|question|true|is|how|none|for|absent|false|false",
+      "ids": [
+        "S3-IR17-024"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|question|true|are|are|none|under|absent|false|false",
+      "ids": [
+        "S3-IR17-030"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_TAX_TREATMENT_OF|question|true|is|how|none|of|present|false|false",
+      "ids": [
+        "S3-IR17-032"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|is|none|of|absent|false|false",
+      "ids": [
+        "S3-IR17-034"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|when|none|none|present|false|false",
+      "ids": [
+        "S3-IR17-040"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|is|none|from|absent|false|false",
+      "ids": [
+        "S3-IR17-041"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|does|how|none|none|present|false|false",
+      "ids": [
+        "S3-IR17-047"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|does|does|none|to|absent|false|false",
+      "ids": [
+        "S3-IR17-050"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|does|how|none|none|present|false|true",
+      "ids": [
+        "S3-IR17-054"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|none|what|none|to|present|false|false",
+      "ids": [
+        "S3-IR17-055"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|true|is|what|what is|for|present|false|false",
+      "ids": [
+        "S3-IR17-060"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_compliance_task|explicit_tax_task_relation|ASKS_TAX_COMPLIANCE_FOR|question|true|is|what|what is|to|present|false|true",
+      "ids": [
+        "S3-IR17-073"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_TAX_TREATMENT_OF|question|true|is|when|none|under|absent|false|false",
+      "ids": [
+        "S3-IR17-081"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|can|can|none|for|absent|false|false",
+      "ids": [
+        "S3-IR17-082"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|required|to|absent|false|false",
+      "ids": [
+        "S3-IR17-083"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|do|how|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-084",
+        "S3-IR17-109",
+        "S3-IR17-137"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|does|does|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-087",
+        "S3-IR17-194"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|can|can|none|to|absent|false|false",
+      "ids": [
+        "S3-IR17-088"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|what|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-089",
+        "S3-IR17-092"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|can|can|none|for|absent|false|false",
+      "ids": [
+        "S3-IR17-091"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_TAX_TREATMENT_OF|question|true|can|can|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-095"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|what is|to|present|false|false",
+      "ids": [
+        "S3-IR17-097"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|can|can|filing|none|present|false|false",
+      "ids": [
+        "S3-IR17-098",
+        "S3-IR17-128",
+        "S3-IR17-205"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|do|how|none|under|absent|false|false",
+      "ids": [
+        "S3-IR17-099"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|can|can|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-100",
+        "S3-IR17-108",
+        "S3-IR17-118",
+        "S3-IR17-124",
+        "S3-IR17-210"
+      ],
+      "count": 5,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|none|none|absent|true|false",
+      "ids": [
+        "S3-IR17-101"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|(none)|question|true|can|can|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-105"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|what is|to|present|true|false",
+      "ids": [
+        "S3-IR17-111",
+        "S3-IR17-119"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|how|none|to|absent|false|false",
+      "ids": [
+        "S3-IR17-112"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|what is|for|present|false|false",
+      "ids": [
+        "S3-IR17-113",
+        "S3-IR17-139",
+        "S3-IR17-193"
+      ],
+      "count": 3,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|can|can|none|none|absent|true|false",
+      "ids": [
+        "S3-IR17-114"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|is|what|what is|for|present|true|false",
+      "ids": [
+        "S3-IR17-115"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|do|how|none|none|absent|true|false",
+      "ids": [
+        "S3-IR17-116"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|does|how|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-120",
+        "S3-IR17-140"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|is|what|none|none|absent|true|false",
+      "ids": [
+        "S3-IR17-121"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|can|can|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-122",
+        "S3-IR17-138"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|filing|for|present|false|false",
+      "ids": [
+        "S3-IR17-123"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|what is|for|absent|false|false",
+      "ids": [
+        "S3-IR17-125",
+        "S3-IR17-136"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|true|do|how|none|to|absent|false|false",
+      "ids": [
+        "S3-IR17-126"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_TAX_TREATMENT_OF|question|true|is|what|what is|for|absent|false|false",
+      "ids": [
+        "S3-IR17-127"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|what|deadline|none|present|false|false",
+      "ids": [
+        "S3-IR17-129"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|is|none|for|absent|false|false",
+      "ids": [
+        "S3-IR17-130"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|do|how|none|none|absent|true|false",
+      "ids": [
+        "S3-IR17-131",
+        "S3-IR17-191"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|what|none|none|present|false|false",
+      "ids": [
+        "S3-IR17-132"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|must|what|none|none|absent|true|false",
+      "ids": [
+        "S3-IR17-134"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|false|none|none|none|none|present|false|true",
+      "ids": [
+        "S3-IR17-172"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_CUSTOMS_DUTY_ON|question|true|may|may|none|from|absent|false|true",
+      "ids": [
+        "S3-IR17-179"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_TAX_TREATMENT_OF|question|false|none|none|none|none|absent|false|true",
+      "ids": [
+        "S3-IR17-181"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|none|none|none|absent|true|true",
+      "ids": [
+        "S3-IR17-182"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|none|deadline|none|present|false|true",
+      "ids": [
+        "S3-IR17-183"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|none|filing|none|present|false|true",
+      "ids": [
+        "S3-IR17-184"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|(none)|question|false|none|none|none|none|absent|true|true",
+      "ids": [
+        "S3-IR17-185"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|none|none|none|present|true|false",
+      "ids": [
+        "S3-IR17-186"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|false|none|none|none|none|absent|false|true",
+      "ids": [
+        "S3-IR17-188"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "tax_treatment_of_ordinary_object|explicit_tax_task_relation|ASKS_TAX_TREATMENT_OF|question|false|none|none|none|none|absent|false|true",
+      "ids": [
+        "S3-IR17-189"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|can|can|none|none|present|false|false",
+      "ids": [
+        "S3-IR17-192"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|do|how|none|into|absent|true|false",
+      "ids": [
+        "S3-IR17-198"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|what is|none|absent|false|false",
+      "ids": [
+        "S3-IR17-200",
+        "S3-IR17-209"
+      ],
+      "count": 2,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|question|true|do|how|none|to|present|false|false",
+      "ids": [
+        "S3-IR17-201"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "non_tax_expansion|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|question|true|is|what|what is|none|absent|false|false",
+      "ids": [
+        "S3-IR17-206"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|ASKS_TAX_TREATMENT_OF|question|true|is|when|none|none|absent|false|false",
+      "ids": [
+        "S3-IR17-208"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|registration|none|present|false|false",
+      "ids": [
+        "R20N-ENT-0651"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|fragment_or_assertion|false|none|none|none|none|absent|true|false",
+      "ids": [
+        "R20N-ENT-0666"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "quoted_tax_term_only|explicit_non_tax_task|QUOTES_TERM|fragment_or_assertion|false|none|none|none|none|absent|false|false",
+      "ids": [
+        "R20N-QTO-1014"
+      ],
+      "count": 1,
+      "classification": "PURE_STRUCTURAL_LEAF"
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|REQUESTS_NON_TAX_ACTION_ON|question|false|none|none|none|none|absent|false|true",
+      "ids": [
+        "R20N-FIL-1580",
+        "R20N-FIL-1583",
+        "R20N-FIL-1586",
+        "R20N-FIL-1589",
+        "R20N-FIL-1595",
+        "R20N-FIL-1601",
+        "R20N-FIL-1604",
+        "R20N-FIL-1607",
+        "R20N-FIL-1610",
+        "R20N-FIL-1613",
+        "R20N-FIL-1616",
+        "R20N-FIL-1619",
+        "R20N-FIL-1622"
+      ],
+      "count": 13,
+      "classification": "SEPARABLE_AFTER_NEW_FEATURE"
+    }
+  ]
+}

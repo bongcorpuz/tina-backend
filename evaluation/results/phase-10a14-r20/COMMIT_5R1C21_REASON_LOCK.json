@@ -1,0 +1,117 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:52:35.582Z",
+  "outcome": "INCOMPLETE - REASON LAYER REMEDIATION NOT CLOSED",
+  "decisionLayerClosure": true,
+  "relationLayerClosure": true,
+  "reasonLayerClosure": false,
+  "standaloneClosure": false,
+  "runtimeClosure": false,
+  "reasonLockAchieved": false,
+  "iterationAccounting": {
+    "reconstructionCount": 1,
+    "materialDevCount": 5,
+    "acceptedMaterialCount": 4,
+    "rejectedMaterialCount": 1,
+    "otherDispositions": [],
+    "materialBudgetUsed": 5,
+    "materialBudgetPermitted": 5,
+    "materialBudgetRemaining": 0,
+    "iterationCeilingReached": true
+  },
+  "iterationCeilingReached": true,
+  "baselineReasonMismatches": 271,
+  "bestReasonMismatches": 189,
+  "reasonMismatchesClosed": 82,
+  "r3ReasonResult": "3531/3720",
+  "canonicalOverall": "3531/3720",
+  "r3DecisionResult": "3720/3720",
+  "r3RelationResult": "3720/3720",
+  "decisionCounterfactualResult": "756/756",
+  "relationCounterfactualResult": "282/282",
+  "clauseProbeResult": "68/68",
+  "reasonCounterfactualResult": "344/344",
+  "collisionProbeResult": "188/196",
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "reasonIntegrity": true,
+  "antiMemorization": true,
+  "targetEquivalence": {
+    "unit": "COMMIT 5R1-C21",
+    "generatedUtc": "2026-07-27T05:39:25.430Z",
+    "stage": "actual",
+    "shadowMatchedCount": 146,
+    "runtimeOverrideAssignedCount": 146,
+    "missingFromRuntime": 0,
+    "unexpectedInRuntime": 0,
+    "missingSample": [],
+    "unexpectedSample": [],
+    "pass": true
+  },
+  "placementNonInterference": {
+    "unit": "COMMIT 5R1-C21",
+    "generatedUtc": "2026-07-27T05:39:25.431Z",
+    "stage": "actual",
+    "unmatchedRowsChecked": 4114,
+    "unmatchedReasonDrift": 0,
+    "unmatchedDecisionDrift": 0,
+    "unmatchedRelationDrift": 0,
+    "unmatchedBranchSignatureDrift": 0,
+    "driftSamples": {
+      "reason": [],
+      "decision": [],
+      "relation": [],
+      "branchSignature": []
+    },
+    "pass": true
+  },
+  "compositionNonInterference": {
+    "unit": "COMMIT 5R1-C21",
+    "generatedUtc": "2026-07-27T05:39:25.431Z",
+    "stage": "actual",
+    "previouslyGovernedReasonDrift": 0,
+    "previouslyGovernedMatchedSetLoss": 0,
+    "orderDependentDrift": 0,
+    "inheritedOverlapCount": 0,
+    "inheritedOverlapSample": [],
+    "pass": true
+  },
+  "residualReasonConfusion": {
+    "tax_treatment_of_ordinary_object <- explicit_tax_task_relation": 27,
+    "explicit_tax_task_relation <- tax_treatment_of_ordinary_object": 19,
+    "no_tax_relation <- explicit_non_tax_task": 84,
+    "explicit_non_tax_task <- no_tax_relation": 48,
+    "non_tax_label_or_name <- no_tax_relation": 1,
+    "no_tax_relation <- non_tax_label_or_name": 5,
+    "explicit_tax_task_relation <- tax_definition_with_context": 4,
+    "non_tax_expansion <- no_tax_relation": 1
+  },
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z",
+  "rejectedAttemptIds": [
+    "R20-domain_campaign-r20_commit5r1c21_reason_iteration_03-commit5r1c21-dev-03-ord01-2026-07-27T05-32-00-934Z"
+  ],
+  "runtimeHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178406,
+      "normalizedLfSha256": "e74b480398390c775834dc481ff81bea017622c8f098b8c61886e9f1be7eecb0",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "dc7cd13f66843bb25bda8996ed380f8bf0911bc6bd6c313d10ab9a4b90f64567"
+  },
+  "servicesTreeDigest": "dc7cd13f66843bb25bda8996ed380f8bf0911bc6bd6c313d10ab9a4b90f64567",
+  "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z/runtime-snapshot",
+  "patchPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C21_BEST_REASON_CANDIDATE.patch",
+  "reconstructionAttemptId": "R20-domain_campaign-r20_commit5r1c21_reconstruction-commit5r1c21-recon-ord01-2026-07-27T05-18-21-998Z",
+  "c20CeilingFlagDefect": "HISTORICAL_ITERATION_CEILING_FLAG_DEFECT",
+  "nextExactTask": "PHASE-10A14-R20 - COMMIT 5R1-C22: REASON-LAYER CLOSURE CONTINUATION 22 AGAINST R3"
+}

@@ -1,0 +1,11 @@
+{
+  "unit": "COMMIT 5R1-C21",
+  "generatedUtc": "2026-07-27T05:39:25.431Z",
+  "stage": "actual",
+  "previouslyGovernedReasonDrift": 0,
+  "previouslyGovernedMatchedSetLoss": 0,
+  "orderDependentDrift": 0,
+  "inheritedOverlapCount": 0,
+  "inheritedOverlapSample": [],
+  "pass": true
+}

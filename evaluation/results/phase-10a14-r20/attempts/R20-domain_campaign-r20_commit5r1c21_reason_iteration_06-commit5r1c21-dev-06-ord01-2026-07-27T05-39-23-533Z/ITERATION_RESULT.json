@@ -1,0 +1,287 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c21_reason_iteration_06-commit5r1c21-dev-06-ord01-2026-07-27T05-39-23-533Z",
+  "iteration": "06",
+  "hypothesis": "C21 punctuation-safe parenthetical gloss refinement: closes 3 additional R3 reason mismatches without changing prior governed rows",
+  "baseline": {
+    "reasonMismatches": 192,
+    "reasonSuitePassed": 344,
+    "collisionProbesPassed": 188
+  },
+  "runtimeIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178406,
+      "normalizedLfSha256": "e74b480398390c775834dc481ff81bea017622c8f098b8c61886e9f1be7eecb0",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "dc7cd13f66843bb25bda8996ed380f8bf0911bc6bd6c313d10ab9a4b90f64567"
+  },
+  "targetEquivalence": {
+    "unit": "COMMIT 5R1-C21",
+    "generatedUtc": "2026-07-27T05:39:25.430Z",
+    "stage": "actual",
+    "shadowMatchedCount": 146,
+    "runtimeOverrideAssignedCount": 146,
+    "missingFromRuntime": 0,
+    "unexpectedInRuntime": 0,
+    "missingSample": [],
+    "unexpectedSample": [],
+    "pass": true
+  },
+  "placementNonInterference": {
+    "unit": "COMMIT 5R1-C21",
+    "generatedUtc": "2026-07-27T05:39:25.431Z",
+    "stage": "actual",
+    "unmatchedRowsChecked": 4114,
+    "unmatchedReasonDrift": 0,
+    "unmatchedDecisionDrift": 0,
+    "unmatchedRelationDrift": 0,
+    "unmatchedBranchSignatureDrift": 0,
+    "driftSamples": {
+      "reason": [],
+      "decision": [],
+      "relation": [],
+      "branchSignature": []
+    },
+    "pass": true
+  },
+  "compositionNonInterference": {
+    "unit": "COMMIT 5R1-C21",
+    "generatedUtc": "2026-07-27T05:39:25.431Z",
+    "stage": "actual",
+    "previouslyGovernedReasonDrift": 0,
+    "previouslyGovernedMatchedSetLoss": 0,
+    "orderDependentDrift": 0,
+    "inheritedOverlapCount": 0,
+    "inheritedOverlapSample": [],
+    "pass": true
+  },
+  "r3": {
+    "total": 3720,
+    "canonicalPassed": 3531,
+    "decisionMismatches": 0,
+    "reasonMismatches": 189,
+    "relationMismatches": 0,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "relationRowsWithExpectations": 1623,
+    "relationRowsPassed": 1623,
+    "relationPassed": 3720,
+    "decisionPassed": 3720
+  },
+  "reasonPassed": 3531,
+  "reasonConfusionResidual": {
+    "tax_treatment_of_ordinary_object <- explicit_tax_task_relation": 27,
+    "explicit_tax_task_relation <- tax_treatment_of_ordinary_object": 19,
+    "no_tax_relation <- explicit_non_tax_task": 84,
+    "explicit_non_tax_task <- no_tax_relation": 48,
+    "non_tax_label_or_name <- no_tax_relation": 1,
+    "no_tax_relation <- non_tax_label_or_name": 5,
+    "explicit_tax_task_relation <- tax_definition_with_context": 4,
+    "non_tax_expansion <- no_tax_relation": 1
+  },
+  "collisionProbes": {
+    "total": 196,
+    "passed": 188,
+    "failed": 8,
+    "byFamily": {
+      "acronym_vs_topic_ambiguity": 8
+    }
+  },
+  "reasonCounterfactual": {
+    "total": 344,
+    "passed": 344,
+    "failed": 0,
+    "byFamily": {}
+  },
+  "decisionCounterfactual": {
+    "total": 756,
+    "passed": 756,
+    "failed": 0
+  },
+  "relationCounterfactual": {
+    "total": 282,
+    "passed": 282,
+    "failed": 0
+  },
+  "clauseProbes": {
+    "total": 68,
+    "passed": 68,
+    "failed": 0
+  },
+  "closedControls": {
+    "controls": [
+      {
+        "control": "tax_compliance_task",
+        "passed": 108,
+        "total": 108,
+        "closed": true
+      },
+      {
+        "control": "acronym_homograph_control",
+        "passed": 200,
+        "total": 200,
+        "closed": true
+      },
+      {
+        "control": "ambiguous_clarification_control",
+        "passed": 150,
+        "total": 150,
+        "closed": true
+      },
+      {
+        "control": "internal_label_proper_name",
+        "passed": 104,
+        "total": 104,
+        "closed": true
+      },
+      {
+        "control": "quoted_term_only",
+        "passed": 110,
+        "total": 110,
+        "closed": true
+      }
+    ],
+    "allClosed": true
+  },
+  "richContextGuard": {
+    "probes": [
+      {
+        "shape": "bare_term",
+        "query": "holding period",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "recognized_polysemous_acronym",
+        "query": "RMC",
+        "expected": "CLARIFY",
+        "actual": "CLARIFY",
+        "pass": true
+      },
+      {
+        "shape": "issuance_context",
+        "query": "What did the RMC issuance say about VAT?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "procedure_context",
+        "query": "Explain RMC for BIR issuances.",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "ordinary_homograph",
+        "query": "Can a supplier reject a return of goods?",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      },
+      {
+        "shape": "richer_tax_sentence",
+        "query": "How is the holding period applied to a capital gains tax computation on land?",
+        "expected": "ALLOW",
+        "actual": "ALLOW",
+        "pass": true
+      },
+      {
+        "shape": "metadata_suffixed_contentless",
+        "query": "What is the holding period? Context 1.",
+        "expected": "REFUSE",
+        "actual": "REFUSE",
+        "pass": true
+      }
+    ],
+    "allPass": true,
+    "passed": 7,
+    "total": 7
+  },
+  "reasonIntegrity": {
+    "invalidCodeCount": 0,
+    "incompatibleCount": 0,
+    "invalidCode": [],
+    "incompatible": [],
+    "pass": true
+  },
+  "clauseSchemaRegression": {
+    "counts": {
+      "emptyClause": 0,
+      "idNotPositional": 0,
+      "notExactlyOnePrimary": 0,
+      "unstable": 0,
+      "roleOutsideSchema": 0
+    },
+    "violations": {
+      "emptyClause": [],
+      "idNotPositional": [],
+      "notExactlyOnePrimary": [],
+      "unstable": [],
+      "roleOutsideSchema": []
+    },
+    "pass": true
+  },
+  "antiMemorization": {
+    "checks": {
+      "no_complete_counterfactual_query": true,
+      "no_complete_r3_query": true,
+      "no_query_hash_or_oracle_id": true,
+      "no_suite_or_family_feature": true,
+      "no_cluster_or_category_feature": true,
+      "no_scenario_number_branch": true,
+      "no_expected_decision_map": true,
+      "no_oracle_relation_backfill": true
+    },
+    "failed": [],
+    "pass": true,
+    "leakedCounterfactualQueries": [],
+    "leakedR3Queries": [],
+    "r3TerminologyOverlap": [
+      "expanded withholding tax",
+      "final withholding tax",
+      "tax credit certificate",
+      "documentary stamp tax",
+      "capital gains tax",
+      "optional standard deduction",
+      "books of accounts",
+      "transfer pricing documentation",
+      "registered business enterprise",
+      "tax treaty relief",
+      "local business tax",
+      "real property tax",
+      "substantiation for deductions",
+      "fringe benefit tax",
+      "de minimis benefits",
+      "gross receipts tax",
+      "minimum corporate income tax",
+      "regular corporate income tax",
+      "stock transaction tax",
+      "resident alien tax",
+      "tax on professional fees",
+      "tax accounting period",
+      "annual information return",
+      "refund claim prescription"
+    ],
+    "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+  },
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "reasonImproved": true,
+  "reasonSuiteNoRegression": true,
+  "collisionProbeNoRegression": true,
+  "disposition": "accepted_reason_improvement",
+  "rejectionGrounds": []
+}
