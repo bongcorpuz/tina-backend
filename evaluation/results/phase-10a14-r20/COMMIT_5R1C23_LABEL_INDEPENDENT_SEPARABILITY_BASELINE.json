@@ -1,0 +1,12 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:00:31.245Z",
+  "baselineSource": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+  "residualRows": 271,
+  "vectorCount": 122,
+  "pureVectorCount": 120,
+  "pureRows": 244,
+  "collidingVectorCount": 2,
+  "collidingRows": 27,
+  "method": "Label-independent vector over runtime-observable syntax and analyzer evidence; expected labels appear only in distribution metadata."
+}

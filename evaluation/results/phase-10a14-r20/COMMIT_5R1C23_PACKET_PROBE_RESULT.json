@@ -1,0 +1,77 @@
+{
+  "rules": {
+    "filipino_purchase_selection_is_non_tax_task": {
+      "packetPass": true,
+      "positiveRecallPassed": 8,
+      "positiveRecallTotal": 8,
+      "negativePrecisionPassed": 4,
+      "negativePrecisionTotal": 4,
+      "pass": true,
+      "positive": [
+        {
+          "query": "Alin ang printer cartridge na bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Ano ang office chair na bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Aling repair service ang bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Alin ang server upgrade na bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Alin ang camera lens na bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Ano ang catering package na bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Aling software license ang bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        },
+        {
+          "query": "Alin ang warehouse shelf na bibilhin?",
+          "actualReason": "explicit_non_tax_task",
+          "pass": true
+        }
+      ],
+      "negative": [
+        {
+          "query": "Alin ang VAT return na ihahain?",
+          "actualReason": "tax_compliance_task",
+          "pass": true
+        },
+        {
+          "query": "Alin ang withholding tax na babayaran?",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Ano ang tax treatment ng office chair?",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Alin ang invoice na gagamitin for input VAT?",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        }
+      ]
+    }
+  },
+  "pass": true
+}

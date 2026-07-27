@@ -1,0 +1,48 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:08:15.758Z",
+  "baselineSource": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z",
+  "simulations": {
+    "filipino_purchase_selection_is_non_tax_task": {
+      "principle": "A Filipino \"which item should be bought\" question requests an ordinary purchase-selection action; absent tax predicates, the requested-action family controls.",
+      "assigns": "explicit_non_tax_task",
+      "packetPass": true,
+      "matchedResidualRows": 0,
+      "matchedIds": [],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "netDelta": 0,
+      "admissibleForRuntime": false,
+      "effectRows": []
+    },
+    "quoted_text_operation_is_quoted_term_only": {
+      "principle": "A text operation over a quoted term manipulates the quoted words and does not request tax treatment of the term.",
+      "assigns": "quoted_tax_term_only",
+      "packetPass": true,
+      "matchedResidualRows": 1,
+      "matchedIds": [
+        "R20N-QTO-1014"
+      ],
+      "TP_CORRECTED": 1,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "netDelta": 1,
+      "admissibleForRuntime": true,
+      "effectRows": [
+        {
+          "oracleId": "R20N-QTO-1014",
+          "query": "Alphabetize the words \"transfer pricing\".",
+          "expectedReason": "quoted_tax_term_only",
+          "beforeReason": "explicit_non_tax_task",
+          "afterReason": "quoted_tax_term_only",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        }
+      ]
+    }
+  },
+  "acceptedForMaterialIteration": [
+    "quoted_text_operation_is_quoted_term_only"
+  ]
+}

@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-27T07:22:13.847Z`
+`2026-07-27T08:11:39.203Z`
 
 Repository:
 
@@ -31,90 +31,75 @@ Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closu
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 - COMMIT 5R1-C22
-ANTI-OVERFIT GATE REMEDIATION AND C21 RULE ADJUDICATION
-DECISION: INCOMPLETE - C21 TECHNICAL SCORE RECONSTRUCTED BUT NOT GOVERNANCE-CONTROLLING;
-          GOVERNANCE-COMPLIANT BASELINE RESTORED TO C20;
-          DECISION AND RELATION LOCKS PRESERVED
+PHASE-10A14-R20 - COMMIT 5R1-C23
+LABEL-INDEPENDENT STRUCTURAL FEATURE REMEDIATION AND GOVERNANCE-COMPLIANT REASON CLOSURE
+DECISION: INCOMPLETE - ONE STRUCTURAL REASON RULE ACCEPTED;
+          REASON LOCK REMAINS OPEN; DECISION AND RELATION LOCKS PRESERVED
 ```
 
-C22 confirmed a C21 governance defect. The accepted C21 technical runtime
-reproduces exactly, but its anti-memorization gate was a false negative: C21
-reported `no_scenario_number_branch = true` while the accepted runtime contained
-`/^what is [a-z]{3} for item \\d+\\?$/i` and multiple anchored fixture-shaped
-query-template branches.
-
-Technical C21 reconstruction:
+C23 validated the committed C22 governance-compliant baseline and corrected the
+C21 separability defect prospectively.
 
 ```text
-attempt                         R20-domain_campaign-r20_commit5r1c22_c21_technical_reconstruction-commit5r1c22-c21-recon-ord01-2026-07-27T07-16-31-880Z
-R3 reason                       3531 / 3,720   (mismatches 189)
-canonical overall               3531 / 3,720
-R3 decision                     3720 / 3,720
-R3 relation                     3720 / 3,720
-decision counterfactual           756 / 756
-relation counterfactual           282 / 282
-clause probes                      68 / 68
-reason-focused suite v8            344 / 344
-collision probes                  188 / 196
-old anti-memorization             PASS (false negative)
+C22 controlling baseline          accepted C20 governed reason runtime
+C21 technical 3,531 / 3,720       non-controlling
+C21 finding                       EXPECTED_LABEL_FEATURE_CONTAMINATION
+baseline reconstruction attempt   R20-domain_campaign-r20_commit5r1c23_governance_compliant_baseline_reconstruction-commit5r1c23-baseline-ord01-2026-07-27T08-00-18-034Z
+baseline R3 reason                3449 / 3,720   (mismatches 271)
+baseline reason suite             320 / 344
+baseline collision probes         148 / 196
 ```
 
-C22 rule adjudication removed every C21-added override from the compliant
-baseline. No C21 rule had the required deterministic generalization packet; the
-impermissible classes included `TEMPLATE_OVERFIT`, `LEXICAL_FILLER_WHITELIST`
-and `SCENARIO_NUMBER_DEPENDENT`. The strengthened C22 anti-overfit gate:
+Clean label-independent feature analysis:
 
 ```text
-C21 accepted technical candidate     FAIL (expected red-team failure)
-established C20 governed baseline    PASS
-red-team C21 predicates detected      true
-strengthened gate result             PASS
+baseline residual rows            271
+baseline vectors                  122
+baseline colliding rows           27
+post-candidate residual rows      258
+post-candidate vectors            120
+post-candidate colliding rows      27
+classification                    POSSIBLE_R3_REASON_LEARNABILITY_CONFLICT_CANDIDATES remain
 ```
 
-Governance-compliant baseline after C21 removal:
+Accepted C23 structural remediation:
 
 ```text
-attempt                         R20-domain_campaign-r20_commit5r1c22_governance_compliant_baseline-commit5r1c22-baseline-ord01-2026-07-27T07-16-42-532Z
-baseline source                 accepted C20 reason candidate
-R3 reason                       3449 / 3,720   (mismatches 271)
-canonical overall               3449 / 3,720
-R3 decision                     3720 / 3,720
-R3 relation                     3720 / 3,720
-decision counterfactual           756 / 756
-relation counterfactual           282 / 282
-clause probes                      68 / 68
-reason-focused suite v8            320 / 344
+attempt                           R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z
+rule                              filipino_purchase_selection_is_non_tax_task
+principle                         Filipino purchase-selection question requests an ordinary purchase action
+R3 reason                         3462 / 3,720   (mismatches 258)
+net reason gain                   +13
+reason-focused suite v8           320 / 344
 collision probes                  148 / 196
+decision suite                    756 / 756
+relation suite                    282 / 282
+clause probes                     68 / 68
+anti-overfit                      PASS
+generalization packet             PASS
 decision lock                     true
 relation lock                     true
 reason lock                       false
 ```
 
-Score attribution:
+Rejected/deferred in C23:
 
 ```text
-C21 technical score                 3,531 / 3,720
-governance-compliant score          3,449 / 3,720
-C21 technical rows credited         82
-C21 rows retained after adjudication 0
-rows lost when C21 rules removed     82
-rows recovered structurally in C22   0
+quoted_text_operation_is_quoted_term_only
+reason: failed novel positive packet recall in pre-runtime iteration 04
+runtime disposition: not accepted
 ```
 
-The live runtime is restored to the committed baseline; no service, oracle,
-roadmap, frozen suite or frozen probe change is controlling in C22.
-
-Registry after C22:
+Registry after C23:
 
 ```text
-cumulativeThrough       commit5r1c22-incomplete
-total attempts          172
-domain_campaign         108
+cumulativeThrough       commit5r1c23-incomplete
+total attempts          177
+domain_campaign         113
 focused_suite           13
 other                   9
 synthetic_validator     42
-controlling             170
+controlling             175
 non-controlling         2
 orphan                  0
 dangling                0
@@ -124,14 +109,35 @@ reasonLayerClosure      false
 runtimeClosure          false
 ```
 
+The live runtime is restored to the committed backend baseline. Service, oracle,
+roadmap, frozen-suite and frozen-probe tracked diffs are not controlling in C23.
+The pre-existing dirty `C:/Projects/tina-dev-factory` state was captured and
+preserved exactly: `true`.
+
 Next exact task:
 
 ```text
-PHASE-10A14-R20 - COMMIT 5R1-C23
-REASON-LAYER CLOSURE CONTINUATION 23 AGAINST THE GOVERNANCE-COMPLIANT C20 BASE
+PHASE-10A14-R20 - COMMIT 5R1-C24
+REASON-LAYER CLOSURE CONTINUATION 24 AGAINST THE GOVERNANCE-COMPLIANT C23 BASE
 ```
 
 R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C22
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C22
+ANTI-OVERFIT GATE REMEDIATION AND C21 RULE ADJUDICATION
+DECISION: INCOMPLETE - C21 TECHNICAL SCORE RECONSTRUCTED BUT NOT GOVERNANCE-CONTROLLING;
+          GOVERNANCE-COMPLIANT BASELINE RESTORED TO C20;
+          DECISION AND RELATION LOCKS PRESERVED
+```
+
+C22 confirmed a C21 governance defect. The accepted C21 technical runtime
+reproduced exactly at 3,531 / 3,720, but the anti-memorization gate was a false
+negative and every C21-added override was removed from the governance-compliant
+baseline. The controlling C22 baseline was the accepted C20 runtime at 3,449 /
+3,720 reason, with decision and relation locks preserved.
 
 ## Previous Execution Unit - COMMIT 5R1-C20
 

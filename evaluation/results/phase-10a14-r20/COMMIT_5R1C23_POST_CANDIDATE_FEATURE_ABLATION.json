@@ -1,0 +1,126 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:08:15.724Z",
+  "baseline": {
+    "featureCount": 19,
+    "vectorCount": 120,
+    "collidingVectorCount": 2,
+    "collidingRows": 27
+  },
+  "ablations": [
+    {
+      "removedFeature": "speechAct",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "clauseMood",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "finiteVerb",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "auxiliaryOrModal",
+      "vectorCount": 111,
+      "collidingVectorCount": 3,
+      "collidingRows": 29
+    },
+    {
+      "removedFeature": "requestMarker",
+      "vectorCount": 118,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "operationClass",
+      "vectorCount": 119,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "requestedOutcomeClass",
+      "vectorCount": 109,
+      "collidingVectorCount": 3,
+      "collidingRows": 35
+    },
+    {
+      "removedFeature": "headClass",
+      "vectorCount": 118,
+      "collidingVectorCount": 2,
+      "collidingRows": 32
+    },
+    {
+      "removedFeature": "relationSet",
+      "vectorCount": 106,
+      "collidingVectorCount": 8,
+      "collidingRows": 56
+    },
+    {
+      "removedFeature": "relationCount",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "taxPredicateScope",
+      "vectorCount": 116,
+      "collidingVectorCount": 4,
+      "collidingRows": 33
+    },
+    {
+      "removedFeature": "hasQuotedOperand",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "hasParentheticalOperand",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "identifierComplement",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "documentProcedureInstrumentRole",
+      "vectorCount": 116,
+      "collidingVectorCount": 2,
+      "collidingRows": 28
+    },
+    {
+      "removedFeature": "filipinoTaglishMorphology",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "metadataOnlySuffix",
+      "vectorCount": 118,
+      "collidingVectorCount": 3,
+      "collidingRows": 31
+    },
+    {
+      "removedFeature": "acronymReferentCompleteness",
+      "vectorCount": 115,
+      "collidingVectorCount": 4,
+      "collidingRows": 32
+    },
+    {
+      "removedFeature": "targetSpecificity",
+      "vectorCount": 113,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    }
+  ]
+}

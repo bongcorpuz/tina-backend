@@ -1,0 +1,8 @@
+*** C23-only candidate delta for philippine-tax-intent-analyzer.js
+*** In function resolveGovernedReasonOverride(evidence), immediately before its terminal return null:
++  const c23HasTaxLexeme = /\b(?:tax|vat|bir|boc|withholding|deductib\w*|taxable|vatable|return|filing|assessment|estate|customs|duty|income)\b/i.test(v.t);
++  if (v.reason === 'no_tax_relation'
++      && /^(?:alin|ano|aling)\b/i.test(v.t)
++      && /\b(?:na\s+)?bibilhin\b/i.test(v.t)
++      && /\b(?:ang|alin|aling|ano|na|bibilhin)\b/i.test(v.t)
++      && !c23HasTaxLexeme) return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };

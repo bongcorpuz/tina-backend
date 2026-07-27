@@ -1,0 +1,71 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:08:15.718Z",
+  "classification": "EXPECTED_LABEL_FEATURE_CONTAMINATION",
+  "sourceFile": "COMMIT_5R1C21_RESIDUAL_STRUCTURAL_LEAVES.json",
+  "contaminatedVectorCount": 122,
+  "examples": [
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|translate|none|into|absent|false|false",
+      "count": 10,
+      "ids": [
+        "S1-IR19-0216",
+        "S1-IR19-0236",
+        "S1-IR19-0256",
+        "S1-IR19-0276",
+        "S1-IR19-0296",
+        "S1-IR19-0316",
+        "S1-IR19-0336",
+        "S1-IR19-0356",
+        "S1-IR19-0376",
+        "S1-IR19-0396"
+      ]
+    },
+    {
+      "vector": "explicit_non_tax_task|no_tax_relation|(none)|question|false|none|none|none|none|absent|false|true",
+      "count": 5,
+      "ids": [
+        "S1-IR19-0914",
+        "S1-IR19-0934",
+        "S1-IR19-0954",
+        "S1-IR19-0974",
+        "S1-IR19-0994"
+      ]
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_compliance_task|ASKS_TAX_COMPLIANCE_FOR|question|true|may|may|none|none|absent|false|true",
+      "count": 5,
+      "ids": [
+        "S1-IR19-0919",
+        "S1-IR19-0939",
+        "S1-IR19-0959",
+        "S1-IR19-0979",
+        "S1-IR19-0999"
+      ]
+    },
+    {
+      "vector": "explicit_tax_task_relation|tax_treatment_of_ordinary_object|ASKS_DEDUCTIBILITY_OF|question|true|is|is|none|for|present|false|false",
+      "count": 3,
+      "ids": [
+        "S1-IR19-1007",
+        "S1-IR19-1047",
+        "S1-IR19-1087"
+      ]
+    },
+    {
+      "vector": "no_tax_relation|explicit_non_tax_task|REQUESTS_NON_TAX_ACTION_ON|imperative_or_directive|false|none|tune|none|none|absent|false|false",
+      "count": 7,
+      "ids": [
+        "S1-IR19-1014",
+        "S1-IR19-1054",
+        "S1-IR19-1094",
+        "S2-IR18-DOM-244",
+        "S2-IR18-DOM-269",
+        "S2-IR18-DOM-294",
+        "S2-IR18-DOM-319"
+      ]
+    }
+  ],
+  "finding": "C21 structural-leaf vectors serialized expectedReason and actualReason before runtime-observable fields; this made zero-collision separability tautological and non-controlling.",
+  "disposition": "Preserve C21 evidence unchanged; use C23 label-independent vectors prospectively."
+}

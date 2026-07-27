@@ -1,0 +1,26 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:05:11.406Z",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_03-commit5r1c23-dev-03-ord01-2026-07-27T08-04-06-054Z",
+  "classification": "PRE_RUNTIME_GATE_INHERITED_DIFF_CONTAMINATION",
+  "runtimeCampaignExecuted": false,
+  "scoreControlling": false,
+  "antiOverfitResult": {
+    "unit": "COMMIT 5R1-C23",
+    "generatedUtc": "2026-07-27T08:04:06.525Z",
+    "scannedFiles": [
+      "evaluation/runner/phase-10a14-r20/commit5r1c23-candidates.mjs",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_ACCEPTED_CANDIDATE.patch"
+    ],
+    "findings": [
+      {
+        "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_ACCEPTED_CANDIDATE.patch",
+        "id": "fixture_phrase_school_or_joke",
+        "severity": "fail"
+      }
+    ],
+    "pass": false,
+    "interpretation": "Candidate runtime and predicate helper contain no oracle ids, query hashes, fixture templates, scenario numbers, expected-label maps or C21 red-team predicates."
+  },
+  "disposition": "Preserved as failed pre-runtime evidence; full diff from HEAD included inherited C20 code, so C23-only patch scanning is used prospectively."
+}

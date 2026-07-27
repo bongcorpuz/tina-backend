@@ -1,0 +1,11 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:07:19.673Z",
+  "scannedFiles": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c23-candidates.mjs",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_ACCEPTED_CANDIDATE.patch"
+  ],
+  "findings": [],
+  "pass": true,
+  "interpretation": "Candidate runtime and predicate helper contain no oracle ids, query hashes, fixture templates, scenario numbers, expected-label maps or C21 red-team predicates."
+}

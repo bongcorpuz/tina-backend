@@ -1,0 +1,78 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:00:31.282Z",
+  "packets": {
+    "filipino_purchase_selection_is_non_tax_task": {
+      "positives": [
+        "Alin ang printer cartridge na bibilhin?",
+        "Ano ang office chair na bibilhin?",
+        "Aling repair service ang bibilhin?",
+        "Alin ang server upgrade na bibilhin?"
+      ],
+      "lexicalSubstitutions": [
+        "Alin ang camera lens na bibilhin?",
+        "Ano ang catering package na bibilhin?",
+        "Aling software license ang bibilhin?",
+        "Alin ang warehouse shelf na bibilhin?"
+      ],
+      "negativeNearMisses": [
+        "Alin ang VAT return na ihahain?",
+        "Alin ang withholding tax na babayaran?",
+        "Ano ang tax treatment ng office chair?",
+        "Alin ang invoice na gagamitin for input VAT?"
+      ],
+      "grammaticalForms": [
+        "interrogative alin/ano form",
+        "relative na bibilhin form"
+      ],
+      "semanticFillerFamilies": [
+        "physical goods",
+        "services",
+        "software or digital assets"
+      ],
+      "copiedR3FullQueries": 0,
+      "copiedFrozenSuiteFullQueries": 0,
+      "numberingDependency": 0,
+      "distinctNormalizedSyntacticSkeletons": 3,
+      "leaveOneFillerFamilyOutExpected": "PASS",
+      "packetPass": true,
+      "noSingleLiteralNounNecessary": true
+    },
+    "quoted_text_operation_is_quoted_term_only": {
+      "positives": [
+        "Alphabetize the words \"capital gains tax\".",
+        "Sort the words \"inventory relief\".",
+        "Reverse the phrase \"documentary stamp tax\".",
+        "Count the letters in \"output VAT\"."
+      ],
+      "lexicalSubstitutions": [
+        "Alphabetize the words \"delivery receipt\".",
+        "Sort the phrase \"project alpha\".",
+        "Reverse the words \"lease contract\".",
+        "Count the letters in \"withholding tax\"."
+      ],
+      "negativeNearMisses": [
+        "What is capital gains tax?",
+        "Is documentary stamp tax due on this deed?",
+        "Explain output VAT for a retailer.",
+        "Sort invoices by VAT amount."
+      ],
+      "grammaticalForms": [
+        "imperative text operation",
+        "quoted operand command"
+      ],
+      "semanticFillerFamilies": [
+        "tax terms",
+        "ordinary terms",
+        "document labels"
+      ],
+      "copiedR3FullQueries": 0,
+      "copiedFrozenSuiteFullQueries": 0,
+      "numberingDependency": 0,
+      "distinctNormalizedSyntacticSkeletons": 3,
+      "leaveOneFillerFamilyOutExpected": "PASS",
+      "packetPass": true,
+      "noSingleLiteralNounNecessary": true
+    }
+  }
+}

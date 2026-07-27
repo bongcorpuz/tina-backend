@@ -1,0 +1,47 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_04-commit5r1c23-dev-04-ord01-2026-07-27T08-05-18-693Z",
+  "attemptCategory": "domain_campaign",
+  "gateName": "r20_commit5r1c23_reason_iteration_04",
+  "cycle": "commit5r1c23-dev-04",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "631109ce5eebc8d76cb62b77d1fd208738716061",
+  "evidenceHeadAtStart": "631109ce5eebc8d76cb62b77d1fd208738716061",
+  "runtimeBaselineCommit": "631109ce5eebc8d76cb62b77d1fd208738716061",
+  "runtimeTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c23-iterate.mjs"
+  ],
+  "commandHash": "60ae729cce7685eb83b8cf2b9a16e4f9f2eee13daa07e1ffe6c41edb94cb2c09",
+  "startedAt": "2026-07-27T08:05:19.007Z",
+  "status": "completed",
+  "controlling": true,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-27T08:05:19.738Z",
+  "exitCode": 1,
+  "disposition": "rejected_pre_runtime_generalization_packet_failure",
+  "evidenceHeadAtEnd": "631109ce5eebc8d76cb62b77d1fd208738716061",
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_04-commit5r1c23-dev-04-ord01-2026-07-27T08-05-18-693Z/PRE_RUNTIME_PACKET_FAILURE_RESULT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_ANTI_OVERFIT_GATE_RESULT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_PACKET_PROBE_RESULT.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_04-commit5r1c23-dev-04-ord01-2026-07-27T08-05-18-693Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_04-commit5r1c23-dev-04-ord01-2026-07-27T08-05-18-693Z/stderr.txt",
+  "stdoutSha256": "9e2f1c4983040be42decbc29aa735a8675480520b562f4cf7ebef410927c9c5e",
+  "stderrSha256": "74366a58cd9159fd58ba0060dc47ec40f82391e0f88b5ab1e41a7666aa5ea8d1"
+}

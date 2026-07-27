@@ -1,0 +1,181 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:00:31.283Z",
+  "baselineSource": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+  "simulations": {
+    "filipino_purchase_selection_is_non_tax_task": {
+      "principle": "A Filipino \"which item should be bought\" question requests an ordinary purchase-selection action; absent tax predicates, the requested-action family controls.",
+      "assigns": "explicit_non_tax_task",
+      "packetPass": true,
+      "matchedResidualRows": 13,
+      "matchedIds": [
+        "R20N-FIL-1580",
+        "R20N-FIL-1583",
+        "R20N-FIL-1586",
+        "R20N-FIL-1589",
+        "R20N-FIL-1595",
+        "R20N-FIL-1601",
+        "R20N-FIL-1604",
+        "R20N-FIL-1607",
+        "R20N-FIL-1610",
+        "R20N-FIL-1613",
+        "R20N-FIL-1616",
+        "R20N-FIL-1619",
+        "R20N-FIL-1622"
+      ],
+      "TP_CORRECTED": 13,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "netDelta": 13,
+      "admissibleForRuntime": true,
+      "effectRows": [
+        {
+          "oracleId": "R20N-FIL-1580",
+          "query": "Alin ang cooling fan na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1583",
+          "query": "Alin ang cooking pan na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1586",
+          "query": "Alin ang website design na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1589",
+          "query": "Alin ang music channel na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1595",
+          "query": "Alin ang school raffle na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1601",
+          "query": "Alin ang mobile app na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1604",
+          "query": "Alin ang marketing service na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1607",
+          "query": "Alin ang equipment repair na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1610",
+          "query": "Alin ang delivery van na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1613",
+          "query": "Alin ang office chair na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1616",
+          "query": "Alin ang server rack na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1619",
+          "query": "Alin ang coffee machine na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        },
+        {
+          "oracleId": "R20N-FIL-1622",
+          "query": "Alin ang company vehicle na bibilhin?",
+          "expectedReason": "explicit_non_tax_task",
+          "beforeReason": "no_tax_relation",
+          "afterReason": "explicit_non_tax_task",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        }
+      ]
+    },
+    "quoted_text_operation_is_quoted_term_only": {
+      "principle": "A text operation over a quoted term manipulates the quoted words and does not request tax treatment of the term.",
+      "assigns": "quoted_tax_term_only",
+      "packetPass": true,
+      "matchedResidualRows": 1,
+      "matchedIds": [
+        "R20N-QTO-1014"
+      ],
+      "TP_CORRECTED": 1,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "netDelta": 1,
+      "admissibleForRuntime": true,
+      "effectRows": [
+        {
+          "oracleId": "R20N-QTO-1014",
+          "query": "Alphabetize the words \"transfer pricing\".",
+          "expectedReason": "quoted_tax_term_only",
+          "beforeReason": "explicit_non_tax_task",
+          "afterReason": "quoted_tax_term_only",
+          "wasCorrect": false,
+          "becomesCorrect": true
+        }
+      ]
+    }
+  },
+  "acceptedForMaterialIteration": [
+    "filipino_purchase_selection_is_non_tax_task",
+    "quoted_text_operation_is_quoted_term_only"
+  ]
+}

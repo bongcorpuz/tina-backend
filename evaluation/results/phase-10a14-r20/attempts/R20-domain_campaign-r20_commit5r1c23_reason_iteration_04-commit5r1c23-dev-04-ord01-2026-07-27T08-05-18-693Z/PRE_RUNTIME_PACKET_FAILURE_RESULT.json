@@ -1,0 +1,169 @@
+{
+  "unit": "COMMIT 5R1-C23",
+  "generatedUtc": "2026-07-27T08:05:52.946Z",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_04-commit5r1c23-dev-04-ord01-2026-07-27T08-05-18-693Z",
+  "classification": "PRE_RUNTIME_GENERALIZATION_PACKET_FAILURE",
+  "runtimeCampaignExecuted": false,
+  "scoreControlling": false,
+  "antiOverfitResult": {
+    "unit": "COMMIT 5R1-C23",
+    "generatedUtc": "2026-07-27T08:05:19.131Z",
+    "scannedFiles": [
+      "evaluation/runner/phase-10a14-r20/commit5r1c23-candidates.mjs",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_ACCEPTED_CANDIDATE.patch"
+    ],
+    "findings": [],
+    "pass": true,
+    "interpretation": "Candidate runtime and predicate helper contain no oracle ids, query hashes, fixture templates, scenario numbers, expected-label maps or C21 red-team predicates."
+  },
+  "packetProbeResult": {
+    "rules": {
+      "filipino_purchase_selection_is_non_tax_task": {
+        "packetPass": true,
+        "positiveRecallPassed": 8,
+        "positiveRecallTotal": 8,
+        "negativePrecisionPassed": 4,
+        "negativePrecisionTotal": 4,
+        "pass": true,
+        "positive": [
+          {
+            "query": "Alin ang printer cartridge na bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Ano ang office chair na bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Aling repair service ang bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Alin ang server upgrade na bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Alin ang camera lens na bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Ano ang catering package na bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Aling software license ang bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          },
+          {
+            "query": "Alin ang warehouse shelf na bibilhin?",
+            "actualReason": "explicit_non_tax_task",
+            "pass": true
+          }
+        ],
+        "negative": [
+          {
+            "query": "Alin ang VAT return na ihahain?",
+            "actualReason": "tax_compliance_task",
+            "pass": true
+          },
+          {
+            "query": "Alin ang withholding tax na babayaran?",
+            "actualReason": "tax_treatment_of_ordinary_object",
+            "pass": true
+          },
+          {
+            "query": "Ano ang tax treatment ng office chair?",
+            "actualReason": "tax_treatment_of_ordinary_object",
+            "pass": true
+          },
+          {
+            "query": "Alin ang invoice na gagamitin for input VAT?",
+            "actualReason": "tax_treatment_of_ordinary_object",
+            "pass": true
+          }
+        ]
+      },
+      "quoted_text_operation_is_quoted_term_only": {
+        "packetPass": true,
+        "positiveRecallPassed": 4,
+        "positiveRecallTotal": 8,
+        "negativePrecisionPassed": 4,
+        "negativePrecisionTotal": 4,
+        "pass": false,
+        "positive": [
+          {
+            "query": "Alphabetize the words \"capital gains tax\".",
+            "actualReason": "quoted_tax_term_only",
+            "pass": true
+          },
+          {
+            "query": "Sort the words \"inventory relief\".",
+            "actualReason": "explicit_non_tax_task",
+            "pass": false
+          },
+          {
+            "query": "Reverse the phrase \"documentary stamp tax\".",
+            "actualReason": "quoted_tax_term_only",
+            "pass": true
+          },
+          {
+            "query": "Count the letters in \"output VAT\".",
+            "actualReason": "quoted_tax_term_only",
+            "pass": true
+          },
+          {
+            "query": "Alphabetize the words \"delivery receipt\".",
+            "actualReason": "explicit_non_tax_task",
+            "pass": false
+          },
+          {
+            "query": "Sort the phrase \"project alpha\".",
+            "actualReason": "explicit_non_tax_task",
+            "pass": false
+          },
+          {
+            "query": "Reverse the words \"lease contract\".",
+            "actualReason": "no_tax_relation",
+            "pass": false
+          },
+          {
+            "query": "Count the letters in \"withholding tax\".",
+            "actualReason": "quoted_tax_term_only",
+            "pass": true
+          }
+        ],
+        "negative": [
+          {
+            "query": "What is capital gains tax?",
+            "actualReason": "explicit_tax_task_relation",
+            "pass": true
+          },
+          {
+            "query": "Is documentary stamp tax due on this deed?",
+            "actualReason": "explicit_tax_task_relation",
+            "pass": true
+          },
+          {
+            "query": "Explain output VAT for a retailer.",
+            "actualReason": "tax_treatment_of_ordinary_object",
+            "pass": true
+          },
+          {
+            "query": "Sort invoices by VAT amount.",
+            "actualReason": "explicit_tax_task_relation",
+            "pass": true
+          }
+        ]
+      }
+    },
+    "pass": false
+  },
+  "disposition": "Rejected before full runtime scoring; quoted text rule failed novel positive packet recall."
+}
