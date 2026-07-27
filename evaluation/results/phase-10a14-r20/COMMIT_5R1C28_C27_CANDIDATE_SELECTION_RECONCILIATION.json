@@ -1,0 +1,88 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:37:42.440Z",
+  "classification": "C27_ACCEPTED_CANDIDATE_VERSUS_SELECTED_BASE_WORDING_DISTINCTION",
+  "determinations": [
+    "M01 and M02 passed independently as Pareto-safe candidates.",
+    "Independent acceptance did not prove cumulative integration.",
+    "M02 is the selected governance-compliant C27 controlling base because the final recorded control vector is 3462 / 331 / 162.",
+    "M01 remains a preserved Pareto-safe alternative and explicit composition input.",
+    "M03 remains rejected and non-controlling."
+  ],
+  "candidates": {
+    "C27_M01": {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-01-ord01-2026-07-27T13-44-39-553Z",
+      "accepted": true,
+      "rule": "ordinary_subject_to_tax_from_refuse_to_treatment",
+      "actual": {
+        "canonicalPassed": 3462,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3462,
+        "reasonMismatches": 258,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 332,
+        "collisionProbesPassed": 156,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      }
+    },
+    "C27_M02": {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z",
+      "accepted": true,
+      "selectedControllingBase": true,
+      "rule": "support_predicate_over_tax_position_is_treatment",
+      "actual": {
+        "canonicalPassed": 3462,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3462,
+        "reasonMismatches": 258,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 331,
+        "collisionProbesPassed": 162,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      }
+    },
+    "C27_M03": {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z",
+      "accepted": false,
+      "selectedControllingBase": false,
+      "rule": "narrow_contentless_document_transform_no_tax_relation",
+      "actual": {
+        "canonicalPassed": 3410,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3410,
+        "reasonMismatches": 310,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 343,
+        "collisionProbesPassed": 163,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      }
+    }
+  },
+  "c27EvidenceInvalidated": false,
+  "c27FilesModified": false,
+  "pass": true
+}

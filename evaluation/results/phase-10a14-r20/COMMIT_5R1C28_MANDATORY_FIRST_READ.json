@@ -1,0 +1,168 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:37:42.432Z",
+  "files": [
+    {
+      "path": "knowledge/CURRENT_STATE.md",
+      "bytes": 84969,
+      "sha256": "ffa575f9cf50c8e7db3f508486d0651d155489802bbd68705d5cae71e6d72367",
+      "readComplete": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+      "bytes": 14842,
+      "sha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 576425,
+      "sha256": "cb43445c70e2a480cdf3cbee558b8281267241581d2a34e669d5b2bc0ac9f071",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_C26_REPORTING_AND_EVIDENCE_RECONCILIATION.json",
+      "bytes": 1656,
+      "sha256": "719d682fabd214194d105e69c3fa9253410bdcfdf488a61ed47054a4c41f3a62",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_CANDIDATE_DELTA_PROVENANCE_SPEC.md",
+      "bytes": 679,
+      "sha256": "d3ca9d4b5679332edfe38d48939bf20e2b9f4f41a5ce9f22ff579c139a76d2af",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_C26_DELTA_RECONSTRUCTION.json",
+      "bytes": 1321,
+      "sha256": "e9136de1831c8e11f4c66b64cbc439cb1d94eba4eb9681c9c9317eb517aa79e3",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_CANDIDATE_DELTA_REPLAY_RESULT.json",
+      "bytes": 1056,
+      "sha256": "ee4ff065a95ae0674b456d1216fd648dfe99b963386a6fbd63a0505fdb15e523",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_TAINT_AWARE_ANTI_OVERFIT_SPEC.md",
+      "bytes": 1072,
+      "sha256": "62983d28d8c5afca7a344e4d5fdc9df166635a13dd842267911f99941d2d14d2",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_TAINT_SOURCE_TO_RUNTIME_SINK_MAP.json",
+      "bytes": 883,
+      "sha256": "8117e47976b11c017004ae059a48b02e3a44716874e6cc7429a8dd895246941a",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_TAINT_AWARE_ANTI_OVERFIT_RESULT.json",
+      "bytes": 979,
+      "sha256": "36bb72c970a16cfb874c8368e072a910a43f19e9dac06648547abe160212240e",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_MONOTONIC_FEATURE_BASELINE.json",
+      "bytes": 559,
+      "sha256": "c586b95b878272bb3aff326f04f2b71a2c8c12630d99aecf69bd604fe099bc4b",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_MONOTONIC_FEATURE_ABLATION.json",
+      "bytes": 282,
+      "sha256": "6e855fbe4084f0847b8ee619c1c6b60671d805474bc5cbe94eaa042ef294f1ef",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_FAILURE_LAYER_INVENTORY.json",
+      "bytes": 41635,
+      "sha256": "be8ed85d0e9e2f2a91f0ad3d205fbadba976c8c84dc78f5c75c5f0cd47db5227",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_CANDIDATE_HYPOTHESES.json",
+      "bytes": 10824,
+      "sha256": "f8490e20785e831c532dcd7dbe506edf99b0f1112d42a65ebf8882ba492c5c7f",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_CANDIDATE_EXHAUSTION.json",
+      "bytes": 738,
+      "sha256": "bd9846d016d314deb86f2eeffa691895c989df14315983d610e275b2720ebdf4",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_RULE_GENERALIZATION_PACKETS.json",
+      "bytes": 5974,
+      "sha256": "fdd6fd765d379c41f502a7257352b07850fb8b1c1bf784458c7db198d458ebbd",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_DERIVED_PACKET_VALIDATION.json",
+      "bytes": 2437,
+      "sha256": "651c8084cd2b088f375d745dcf5614db50af908052d3d4772028ea0178b80808",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_FINAL_EXECUTION_REPORT.json",
+      "bytes": 22617,
+      "sha256": "d3ac12a81d2943fc6a6cc7108e9428205dafcd23ee27ad9d790ae5f5014bb06b",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C27_EVIDENCE_MANIFEST.sha256",
+      "bytes": 18137,
+      "sha256": "66d7fd2466eb1c847951fdc48f6d963d831cf77e654ff5b07469783e0b895ced",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-01-ord01-2026-07-27T13-44-39-553Z/ITERATION_RESULT.json",
+      "bytes": 60246,
+      "sha256": "80a42c6d39399d5455d0049805e02179689fa0a8f384c54047d24b660bfcd5a3",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-01-ord01-2026-07-27T13-44-39-553Z/C27_ONLY_CANDIDATE.patch",
+      "bytes": 1203,
+      "sha256": "1bba9dfc09dfb0c35cf3d5eacc6b1f4e4a0e93a0ed514704b984dc986b98f5bd",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z/ITERATION_RESULT.json",
+      "bytes": 58411,
+      "sha256": "59099f4074276e8f86a993385c32649c69f65462d51ee7bb4ed693ee64b0bbe5",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z/C27_ONLY_CANDIDATE.patch",
+      "bytes": 1075,
+      "sha256": "252efb60a5a9e52ef1761f5e2f5b723c64f600486dc4d1bab23eae894ec4b41c",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z/ITERATION_RESULT.json",
+      "bytes": 50653,
+      "sha256": "4b6094c012d981bcfe0b4aeff6eaa7b1fee2bf683d30a12c5d21152f7713ef6b",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z/C27_ONLY_CANDIDATE.patch",
+      "bytes": 1281,
+      "sha256": "dd5b90f60e5f05c272726be06ce5cceb9a9e0ed020e640f9219b86070ee0e49e",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CLAUSE_LEVEL_INTENT_SCHEMA.md",
+      "bytes": 2929,
+      "sha256": "10dd95cfc409fcebbfa623b46c9ac3c5aa0bf443fca0b7a97df75e71c3f88a07",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/RELATION_AND_PRECEDENCE_SPEC.md",
+      "bytes": 3010,
+      "sha256": "83089bbd12c27e9ccf8a322dfe04293d3bf2083f71cc4df907d4204befc79432",
+      "readComplete": true
+    }
+  ]
+}

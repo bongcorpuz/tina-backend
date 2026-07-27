@@ -1,0 +1,31 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:38:04.120Z",
+  "entries": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-01-ord01-2026-07-27T14-37-46-271Z",
+      "candidateId": "C28-M01-compose-m02-plus-m01",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-02-ord02-2026-07-27T14-37-52-000Z",
+      "candidateId": "C28-M02-evidentiary-procedure-support",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-03-ord03-2026-07-27T14-37-57-892Z",
+      "candidateId": "C28-M03-acronym-complete-tax-referent",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

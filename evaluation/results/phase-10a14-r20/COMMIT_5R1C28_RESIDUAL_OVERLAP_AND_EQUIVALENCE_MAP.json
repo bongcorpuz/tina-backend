@@ -1,0 +1,24 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:37:46.236Z",
+  "selectedBase": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z",
+  "equivalenceClasses": [
+    {
+      "classId": "C28-EQ-ACRONYM-METADATA-ONLY",
+      "classification": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "minimumMissingFact": "complete referent or substantive tax-procedure context",
+      "runtimeExceptionAuthorized": false
+    },
+    {
+      "classId": "C28-EQ-CONTENTLESS-DOCUMENT",
+      "classification": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "minimumMissingFact": "quoted, attached, or otherwise available document content operand",
+      "runtimeExceptionAuthorized": false
+    }
+  ],
+  "overlapSummary": {
+    "DECISION_DEPENDENT": 0,
+    "REASON_ONLY": 0,
+    "ORACLE_OR_CONTRACT_AMBIGUITY": 0
+  }
+}

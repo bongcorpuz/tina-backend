@@ -4,6 +4,164 @@
 
 Last updated:
 
+`2026-07-27T14:38:11.230Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C28
+GOVERNANCE-COMPLIANT C27 BASE RECONSTRUCTION, PARETO-FRONTIER COMPOSITION AND REASON-LAYER CLOSURE
+DECISION: INCOMPLETE - SELECTED C27 BASE RECONSTRUCTED; C27 ACCEPTED-CANDIDATE VERSUS SELECTED-BASE DISTINCTION RECONCILED;
+          DECISION AND RELATION LOCKS PRESERVED; REASON LOCK REMAINS OPEN
+```
+
+C28 reconciled C27 candidate selection:
+
+```text
+classification                             C27_ACCEPTED_CANDIDATE_VERSUS_SELECTED_BASE_WORDING_DISTINCTION
+selected C27 controlling base              R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z
+M01 status                                 preserved Pareto-safe alternative and explicit composition input
+M02 status                                 selected governance-compliant C27 controlling base
+M03 status                                 rejected and non-controlling
+```
+
+Exact selected C27 base reconstruction:
+
+```text
+services tree digest                       8fb239b7fc56f84a43fd107d84e69e25678ef5dc266c5897c1b7febcf472bc1d
+analyzer normalized-LF SHA-256             f7df5d07caa5a0a45623a954cd3ee3e171fd8747c568018dc55e27f9194c57ee
+domain-boundary normalized-LF SHA-256      0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039
+patterns normalized-LF SHA-256             3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa
+R3 reason                                  3462 / 3,720
+reason suite v8                            331 / 344
+collision probes                           162 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+C28 monotonic feature model:
+
+```text
+vectorCount                                124
+collidingRows                              27
+strict feature superset                    true
+validator                                  PASS
+```
+
+C28 material-attempt accounting:
+
+```text
+governed reconstruction iterations          1
+material reason-remediation iterations      3
+accepted rules                              compose_support_predicate_and_subject_to_tax_treatment
+rejected rules                              procedure_support_requested_over_tax_compliance_act, acronym_definition_with_complete_tax_referent
+frontier rules                              compose_support_predicate_and_subject_to_tax_treatment
+selected controlling attempt                R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-01-ord01-2026-07-27T14-37-46-271Z
+composition attempts                        C28-M01-compose-m02-plus-m01
+order independence                          PASS
+order byte equivalence                       false
+order harmless difference                    Both orders preserve identical frozen-gate metrics; byte difference is insertion-order-only in resolveGovernedReasonOverride.
+```
+
+C28 final selected control vector:
+
+```text
+R3 reason                                  3462 / 3,720
+reason suite v8                            332 / 344
+collision probes                           163 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+Residual failure-layer counts:
+
+```text
+DECISION_DEPENDENT                         0
+REASON_ONLY                                0
+ORACLE_OR_CONTRACT_AMBIGUITY               0
+candidate exhaustion                       false
+remaining viable candidates                true
+```
+
+Registry after C28:
+
+```text
+cumulativeThrough       commit5r1c28-incomplete
+total attempts          192
+domain_campaign         128
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             190
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
+
+Finalization:
+
+```text
+candidate-delta replay                    PASS
+taint-aware anti-overfit                   PASS
+derived packet validation                  PASS
+manifest entries                           80
+manifest bad-hash count                    0
+evidence files including manifest          81
+phase directory file count                 2398
+dev-factory preserved exactly              true
+live runtime restored                      true
+service/oracle/roadmap tracked diff         0
+pre-existing unexplained residue untouched knowledge/TINA_Updated_Controlling_Roadmap_v8.md
+```
+
+Reason lock remains open. The next exact task is:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C29
+REASON-LAYER CLOSURE CONTINUATION 29 AGAINST THE GOVERNANCE-COMPLIANT C28 BASE
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C27
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T13:47:58.149Z`
 
 Repository:

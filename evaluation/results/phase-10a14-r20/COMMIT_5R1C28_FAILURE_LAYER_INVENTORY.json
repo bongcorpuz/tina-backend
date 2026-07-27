@@ -1,0 +1,17 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:37:46.233Z",
+  "selectedBase": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z",
+  "frozenDeficits": {
+    "r3ReasonMismatches": 258,
+    "reasonSuiteFailures": 13,
+    "collisionProbeFailures": 34
+  },
+  "summary": {
+    "DECISION_DEPENDENT": 0,
+    "REASON_ONLY": 0,
+    "ORACLE_OR_CONTRACT_AMBIGUITY": 0
+  },
+  "records": [],
+  "recomputedAgainstExactSelectedC27Base": true
+}

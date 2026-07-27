@@ -1,0 +1,11 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:37:46.225Z",
+  "vectorCount": 124,
+  "collidingRows": 27,
+  "vectorCountAtLeastC27": true,
+  "collidingRowsNoMoreThanC27": true,
+  "removedOrCollapsedC27Fields": [],
+  "stopSemanticWorkDueToMonotonicity": false,
+  "pass": true
+}

@@ -1,0 +1,19 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 62b48ad7..84d9d246 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1229,6 +1229,14 @@ function resolveGovernedReasonOverride(evidence) {
+       && !c27SubjectIsTaxConcept)
+     return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };
+ 
++  const c28AcronymWithCompleteTaxReferent = v.reason === 'ambiguous_tax_acronym'
++      && /\b(?:what does|define|meaning of|stand for)\b/i.test(v.t)
++      && /\b(?:expanded as|means|meaning|stands for)\b/i.test(v.t)
++      && /\b(?:tax|revenue|customs|withholding|vat|income|deduction|bir)\b/i.test(v.t)
++      && !/\b(?:item|scenario|case|variant|sample|batch)\s+[a-z]{0,3}-?\d+\b/i.test(v.t);
++  if (c28AcronymWithCompleteTaxReferent)
++    return { decision: 'ALLOW', reasonCode: 'tax_definition_with_context', confidence: 0.84 };
++
+   return null;
+ }
+ 

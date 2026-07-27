@@ -1,0 +1,55 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:37:41.911Z",
+  "head": "880d37b58857c954033922fc98feb702deac4b78",
+  "parent": "d940980c8129d8cd7dc38b21d3fd2ed2c134dd80",
+  "branch": "feature/source-availability-engine-v1",
+  "sync": "0\t0",
+  "trackedTreeClean": true,
+  "untracked": [
+    ".claude/settings.local.json",
+    ".vscode/extensions.json",
+    "evaluation/factcheck/README.md",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "evaluation/factcheck/hardest-philippine-tax-question.md",
+    "evaluation/runner/phase-10a14-r20/commit5r1c28-execute.mjs",
+    "knowledge/TINA_Updated_Controlling_Roadmap_v8.md"
+  ],
+  "permittedProtectedUntracked": [
+    ".claude/settings.local.json",
+    ".vscode/extensions.json",
+    "evaluation/factcheck/README.md",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "evaluation/factcheck/hardest-philippine-tax-question.md",
+    "evaluation/runner/phase-10a14-r20/commit5r1c28-execute.mjs"
+  ],
+  "unexplainedUntrackedResidue": [
+    "knowledge/TINA_Updated_Controlling_Roadmap_v8.md"
+  ],
+  "protectedUntrackedOnly": false,
+  "unexplainedResidueLeftUntouched": [
+    "knowledge/TINA_Updated_Controlling_Roadmap_v8.md"
+  ],
+  "nodeListenerAbsent": true,
+  "port5173Free": true,
+  "currentStateBlob": "1280897f67c4d002df16f36f63d231b6be674aba",
+  "startingRegistry": {
+    "total": 188,
+    "domain_campaign": 124,
+    "focused_suite": 13,
+    "other": 9,
+    "synthetic_validator": 42,
+    "controlling": 186,
+    "nonControlling": 2,
+    "orphan": 0,
+    "dangling": 0,
+    "cumulativeThrough": "commit5r1c27-incomplete",
+    "decisionLayerClosure": true,
+    "relationLayerClosure": true,
+    "reasonLayerClosure": false,
+    "runtimeClosure": false
+  },
+  "pass": true
+}

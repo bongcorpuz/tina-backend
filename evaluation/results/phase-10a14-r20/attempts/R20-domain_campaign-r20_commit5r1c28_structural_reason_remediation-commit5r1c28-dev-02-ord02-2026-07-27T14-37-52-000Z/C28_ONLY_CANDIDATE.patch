@@ -1,0 +1,19 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 62b48ad7..24941da9 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1229,6 +1229,14 @@ function resolveGovernedReasonOverride(evidence) {
+       && !c27SubjectIsTaxConcept)
+     return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };
+ 
++  const c28ProcedureSupport = v.reason === 'no_tax_relation'
++      && v.rels.includes('REQUESTS_NON_TAX_ACTION_ON')
++      && /\b(?:evidence|proof|records?|substantiat\w*|support)\b/i.test(v.t)
++      && /\b(?:filing|return|registration|remit\w*|payment|deadline|due date)\b/i.test(v.t)
++      && /\b(?:tax|vat|withholding|income|deduction|deductib\w*|input\s+vat|output\s+vat)\b/i.test(v.t);
++  if (c28ProcedureSupport)
++    return { decision: 'ALLOW', reasonCode: 'tax_compliance_task', confidence: 0.86 };
++
+   return null;
+ }
+ 

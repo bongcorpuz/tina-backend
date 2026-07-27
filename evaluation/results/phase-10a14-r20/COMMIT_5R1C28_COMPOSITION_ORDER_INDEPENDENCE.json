@@ -1,0 +1,151 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:38:08.916Z",
+  "commonPredecessor": "C27 reconstructed predecessor for M01 and M02",
+  "m02ThenM01": {
+    "candidateId": "C28-M01-compose-m02-plus-m01",
+    "attemptId": "R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-01-ord01-2026-07-27T14-37-46-271Z",
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 174194,
+        "normalizedLfSha256": "5dc8b32cab17197ef1b5ce55b569793457b0f669f47b5d8de01e5ef24ae0ae93",
+        "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+      },
+      "servicesTreeDigest": "635a2a69ffd2b6ed2da123bf8a9c386032235f47daa2d887e106fe24560bcd56"
+    },
+    "actual": {
+      "canonicalPassed": 3462,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3462,
+      "reasonMismatches": 258,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 332,
+      "collisionProbesPassed": 163,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    }
+  },
+  "m01ThenM02": {
+    "sourceAttempt": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-01-ord01-2026-07-27T13-44-39-553Z",
+    "addedRule": "support_predicate_over_tax_position_is_treatment",
+    "writeAudit": [
+      {
+        "path": "services/philippine-tax-intent-analyzer.js",
+        "beforeSha256Normalized": "b7f95f2c066911d72485512a0014c67ca04a9b0ae06acaf108209c14b37c49bf",
+        "afterSha256Normalized": "0d0ace93d845db98266d222a5bda50244c55cb6f907d13f670fb37ac6f33c295",
+        "beforeBytes": 174724,
+        "afterBytes": 173675,
+        "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": true,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      },
+      {
+        "path": "services/philippine-tax-domain-boundary.js",
+        "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "beforeBytes": 12192,
+        "afterBytes": 12192,
+        "tempFileUsed": "philippine-tax-domain-boundary.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": false,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      },
+      {
+        "path": "services/philippine-tax-boundary-patterns.js",
+        "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "beforeBytes": 65451,
+        "afterBytes": 65451,
+        "tempFileUsed": "philippine-tax-boundary-patterns.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": false,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      },
+      {
+        "path": "services/philippine-tax-intent-analyzer.js",
+        "beforeSha256Normalized": "0d0ace93d845db98266d222a5bda50244c55cb6f907d13f670fb37ac6f33c295",
+        "afterSha256Normalized": "b9cf4892aca98a2b4acd25163ca3cecc35d11a1babedf220d42dc5d2422fd69d",
+        "beforeBytes": 173675,
+        "afterBytes": 174194,
+        "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": true,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      }
+    ],
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 174194,
+        "normalizedLfSha256": "b9cf4892aca98a2b4acd25163ca3cecc35d11a1babedf220d42dc5d2422fd69d",
+        "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+      },
+      "servicesTreeDigest": "b877c0917d20fceee34c296d0471265ed99591f97d666b848ab0c2192a53c10e"
+    },
+    "actual": {
+      "canonicalPassed": 3462,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3462,
+      "reasonMismatches": 258,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 332,
+      "collisionProbesPassed": 163,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    }
+  },
+  "byteEquivalent": false,
+  "metricEquivalent": true,
+  "documentedHarmlessDifference": "Both orders preserve identical frozen-gate metrics; byte difference is insertion-order-only in resolveGovernedReasonOverride.",
+  "orderIndependencePass": true
+}

@@ -1,0 +1,25 @@
+{
+  "unit": "COMMIT 5R1-C28",
+  "generatedUtc": "2026-07-27T14:38:08.918Z",
+  "hypothesesConsidered": 14,
+  "materialIterationsUsed": 3,
+  "acceptedRules": [
+    "compose_support_predicate_and_subject_to_tax_treatment"
+  ],
+  "rejectedRules": [
+    "procedure_support_requested_over_tax_compliance_act",
+    "acronym_definition_with_complete_tax_referent"
+  ],
+  "frontierRules": [
+    "compose_support_predicate_and_subject_to_tax_treatment"
+  ],
+  "selectedControllingRuleSet": [
+    "compose_support_predicate_and_subject_to_tax_treatment"
+  ],
+  "finalSelectedControllingAttempt": "R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-01-ord01-2026-07-27T14-37-46-271Z",
+  "reasonLockAchieved": false,
+  "FORMAL_CANDIDATE_EXHAUSTION": false,
+  "remainingViableCandidatesExist": true,
+  "blockerOrContinuationStatus": "reason lock remains open after C28 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication",
+  "nextPath": "PHASE-10A14-R20 - COMMIT 5R1-C29 REASON-LAYER CLOSURE CONTINUATION 29 AGAINST THE GOVERNANCE-COMPLIANT C28 BASE"
+}
