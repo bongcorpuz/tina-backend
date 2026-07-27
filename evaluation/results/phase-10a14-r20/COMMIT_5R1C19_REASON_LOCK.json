@@ -1,0 +1,142 @@
+{
+  "unit": "COMMIT 5R1-C19",
+  "generatedUtc": "2026-07-27T03:11:58.409Z",
+  "outcome": "INCOMPLETE — REASON LAYER REMEDIATION NOT CLOSED",
+  "decisionLayerClosure": true,
+  "relationLayerClosure": true,
+  "reasonLayerClosure": false,
+  "standaloneClosure": false,
+  "runtimeClosure": false,
+  "reasonLockAchieved": false,
+  "iterationCeilingReached": true,
+  "materialIterationsUsed": 2,
+  "materialIterationsPermitted": 5,
+  "rejectedCandidates": 2,
+  "branchEquivalence": {
+    "unit": "COMMIT 5R1-C19",
+    "generatedUtc": "2026-07-27T03:03:34.281Z",
+    "rules": [
+      {
+        "rule": "definition_outcome_under_tax_context",
+        "simulatorMatchedCount": 14,
+        "runtimeAssignedCount": 14,
+        "missingFromRuntime": 0,
+        "unexpectedInRuntime": 0,
+        "setEquality": true,
+        "simulatorTargetReason": "tax_definition_with_context",
+        "missingSample": []
+      },
+      {
+        "rule": "registration_outcome_is_compliance",
+        "simulatorMatchedCount": 10,
+        "runtimeAssignedCount": 10,
+        "missingFromRuntime": 0,
+        "unexpectedInRuntime": 0,
+        "setEquality": true,
+        "simulatorTargetReason": "tax_compliance_task",
+        "missingSample": []
+      }
+    ],
+    "allPass": true
+  },
+  "c18IterationAccountingReconciliation": "HISTORICAL_ITERATION_ACCOUNTING_DEFECT",
+  "collisionProbeResult": "140/196",
+  "collisionProbesNotPartOfDenominator": true,
+  "baselineReasonMismatches": 407,
+  "bestReasonMismatches": 383,
+  "reasonMismatchesClosed": 24,
+  "r3ReasonResult": "3337/3720",
+  "canonicalOverall": "3337/3720",
+  "r3DecisionResult": "3720/3720",
+  "r3RelationResult": "3720/3720",
+  "decisionCounterfactualResult": "756/756",
+  "relationCounterfactualResult": "282/282",
+  "clauseProbeResult": "68/68",
+  "reasonCounterfactualResult": "320/344",
+  "reasonCounterfactualBaseline": "304/344",
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "focusedReasonRegression": false,
+  "reasonIntegrity": true,
+  "staticGates": {
+    "antiMemorization": true,
+    "clauseSchema": true
+  },
+  "residualReasonConfusion": {
+    "tax_treatment_of_ordinary_object <- explicit_tax_task_relation": 52,
+    "no_tax_relation <- explicit_non_tax_task": 116,
+    "tax_compliance_task <- explicit_tax_task_relation": 11,
+    "explicit_tax_task_relation <- tax_treatment_of_ordinary_object": 98,
+    "explicit_non_tax_task <- no_tax_relation": 60,
+    "explicit_tax_task_relation <- tax_compliance_task": 5,
+    "explicit_non_tax_task <- non_tax_expansion": 3,
+    "no_tax_relation <- non_tax_expansion": 22,
+    "no_tax_relation <- non_tax_label_or_name": 9,
+    "non_tax_label_or_name <- no_tax_relation": 1,
+    "explicit_tax_task_relation <- tax_definition_with_context": 4,
+    "non_tax_expansion <- no_tax_relation": 1,
+    "quoted_tax_term_only <- explicit_non_tax_task": 1
+  },
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z",
+  "runtimeHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 167432,
+      "normalizedLfSha256": "842c54a96ea3250b6bf1ecea11e15f3425d41a56bca20a1b005799594c68476d",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "3ef61436e642cd6a42537dc8cdf349dc5999579d5be65252339059ed5ab28028"
+  },
+  "servicesTreeDigest": "3ef61436e642cd6a42537dc8cdf349dc5999579d5be65252339059ed5ab28028",
+  "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c19_reason_iteration_05-commit5r1c19-dev-05-ord01-2026-07-27T03-09-26-375Z/runtime-snapshot",
+  "patchPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C19_BEST_REASON_CANDIDATE.patch",
+  "reconstruction": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c19_reconstruction-commit5r1c19-recon-ord01-2026-07-27T02-58-09-714Z",
+    "exactReproduction": true,
+    "discrepancies": []
+  },
+  "oracleIntegrity": {
+    "oracle": "R3",
+    "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "rows": 3720,
+    "expectationsEdited": 0
+  },
+  "suitesUnchanged": {
+    "decision": true,
+    "relation": true,
+    "clauseProbes": true,
+    "reasonSuiteV8": true
+  },
+  "branchIdenticalMethod": {
+    "correction": "C18 proved the simulator condition and the runtime branch predicate must be the same predicate. C19 defines each rule once in commit5r1c19-predicates.mjs and injects it verbatim into the runtime, so simulator, runtime and trace harness evaluate byte-identical logic.",
+    "rulesSimulated": 7,
+    "rulesImplemented": 2,
+    "rulesRejectedBeforeImplementation": 4,
+    "candidatesRejectedAfterImplementation": 2,
+    "branchEquivalenceAllPass": true,
+    "newFinding": "Branch equivalence proves the TARGETED row set matches, but not that the runtime placement leaves other rows untouched. Iteration 03 passed equivalence 6=6 and still regressed R3 393 to 403 because the replaced branch also served 28 rows the predicate never matched. Placement safety is a separate property and is carried to C20."
+  },
+  "separabilityAtEndOfC19": {
+    "residualRows": 383,
+    "separable": 306,
+    "colliding": 77,
+    "collidingVectors": 8,
+    "note": "Recomputed with eight further deterministic features listed in section 11. 306 rows remain reachable for C20."
+  },
+  "possibleLearnabilityConflict": {
+    "status": "CANDIDATES_ONLY_NOT_CONFIRMED",
+    "rows": 77,
+    "vectors": 8,
+    "note": "C17 saw one declared ceiling fall to enrichment and C18 closed a 41-row group C17 left colliding. C19 added eight further features and the count moved again. No exception added, no oracle change, no closure claimed."
+  },
+  "nextExactTask": "PHASE-10A14-R20 — COMMIT 5R1-C20: REASON-LAYER CLOSURE CONTINUATION 20 AGAINST R3"
+}

@@ -1,0 +1,200 @@
+{
+  "unit": "COMMIT 5R1-C19",
+  "generatedUtc": "2026-07-27T03:11:34.104Z",
+  "status": "CANDIDATES_ONLY_NOT_CONFIRMED",
+  "rationale": "C17 saw one declared ceiling fall to feature enrichment and C18 closed a 41-row group C17 had left colliding, so a shared vector is not evidence of an oracle defect. C19 added eight further deterministic features and the colliding count moved again. No exception was added, R3 was not modified, and no closure is claimed on their account.",
+  "collidingRows": 77,
+  "collidingVectors": [
+    {
+      "vector": "speechAct=assertion|rel0=REQUESTS_NON_TAX_ACTION_ON|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=none|propositionalTarget=false|verbValency=none|objectComplementType=none|parenForm=false|tokenInitial=false",
+      "count": 23,
+      "expected": {
+        "no_tax_relation": 4,
+        "explicit_non_tax_task": 19
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-120",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-121",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-134",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=assertion|rel0=REQUESTS_NON_TAX_ACTION_ON|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=none|propositionalTarget=false|verbValency=none|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 19,
+      "expected": {
+        "no_tax_relation": 7,
+        "explicit_non_tax_task": 12
+      },
+      "examples": [
+        {
+          "oracleId": "S1-IR19-1040",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S1-IR19-1080",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S1-IR19-1120",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|rel0=REQUESTS_NON_TAX_ACTION_ON|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=none|propositionalTarget=false|verbValency=transitive|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 14,
+      "expected": {
+        "no_tax_relation": 1,
+        "explicit_non_tax_task": 13
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-188",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "R20N-FIL-1580",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        },
+        {
+          "oracleId": "R20N-FIL-1583",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|rel0=ASKS_TAX_TREATMENT_OF|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=what|propositionalTarget=false|verbValency=intransitive|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 7,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 6,
+        "no_tax_relation": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-478",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-510",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-546",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|rel0=ASKS_TAX_TREATMENT_OF|modalOperator=epistemic|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=polar|propositionalTarget=false|verbValency=transitive|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 6,
+      "expected": {
+        "explicit_tax_task_relation": 5,
+        "no_tax_relation": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S1-IR19-0618",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0648",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S1-IR19-0678",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=assertion|rel0=REQUESTS_NON_TAX_ACTION_ON|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=none|propositionalTarget=false|verbValency=transitive|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 4,
+      "expected": {
+        "no_tax_relation": 2,
+        "explicit_non_tax_task": 2
+      },
+      "examples": [
+        {
+          "oracleId": "S2-IR18-DOM-113",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-115",
+          "expected": "no_tax_relation",
+          "actual": "explicit_non_tax_task"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-221",
+          "expected": "explicit_non_tax_task",
+          "actual": "no_tax_relation"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|rel0=ASKS_CUSTOMS_DUTY_ON|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=polar|propositionalTarget=false|verbValency=intransitive|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 2,
+      "expected": {
+        "tax_treatment_of_ordinary_object": 1,
+        "explicit_tax_task_relation": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-010",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        },
+        {
+          "oracleId": "S3-IR17-030",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=question|rel0=ASKS_TAX_TREATMENT_OF|modalOperator=none|polarity=positive|namingComplement=false|localReassign=false|docLocal=false|questionFocus=how|propositionalTarget=false|verbValency=transitive|objectComplementType=none|parenForm=false|tokenInitial=true",
+      "count": 2,
+      "expected": {
+        "explicit_tax_task_relation": 1,
+        "tax_treatment_of_ordinary_object": 1
+      },
+      "examples": [
+        {
+          "oracleId": "S3-IR17-032",
+          "expected": "explicit_tax_task_relation",
+          "actual": "tax_treatment_of_ordinary_object"
+        },
+        {
+          "oracleId": "S3-IR17-054",
+          "expected": "tax_treatment_of_ordinary_object",
+          "actual": "explicit_tax_task_relation"
+        }
+      ]
+    }
+  ],
+  "requiresSeparatelyAuthorizedAdjudication": false
+}

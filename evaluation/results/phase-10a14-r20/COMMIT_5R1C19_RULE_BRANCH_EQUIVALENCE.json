@@ -1,0 +1,228 @@
+{
+  "unit": "COMMIT 5R1-C19",
+  "generatedUtc": "2026-07-27T03:08:02.688Z",
+  "method": "Every rule is defined ONCE in commit5r1c19-predicates.mjs. The simulator imports and calls that same match() function; the runtime patch injects the identical predicate; the trace harness re-evaluates it. No condition is restated.",
+  "c18CorrectionApplied": "C18 restated a condition in the simulator that the runtime branch did not use, forecast it clean, and regressed R3 448 to 454. Shared-predicate identity makes that failure mode structurally impossible.",
+  "correctRowsAtBaseline": 3327,
+  "residualRowsAtBaseline": 393,
+  "simulations": [
+    {
+      "rule": "registration_outcome_is_compliance",
+      "principle": "An explicit registration requirement is a procedural compliance outcome. The requested outcome controls the family, not the grammatical subject of the question.",
+      "assigns": "tax_compliance_task",
+      "conditionSupport": 10,
+      "simulatorMatchedIds": [
+        "S1-IR19-0014",
+        "S1-IR19-0034",
+        "S1-IR19-0054",
+        "S1-IR19-0074",
+        "S1-IR19-0094",
+        "S1-IR19-0114",
+        "S1-IR19-0134",
+        "S1-IR19-0154",
+        "S1-IR19-0174",
+        "S1-IR19-0194"
+      ],
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rule": "parenthetical_gloss_not_expansion",
+      "principle": "A parenthetical gloss supplies a reading as an inline aside rather than predicating it of the token; it reassigns nothing, so the absent relation is the controlling explanation.",
+      "assigns": "no_tax_relation",
+      "conditionSupport": 6,
+      "simulatorMatchedIds": [
+        "S1-IR19-1030",
+        "S1-IR19-1032",
+        "S1-IR19-1070",
+        "S1-IR19-1072",
+        "S1-IR19-1110",
+        "S1-IR19-1112"
+      ],
+      "TP_CORRECTED": 6,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 6,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rule": "expansion_requires_local_reassignment",
+      "principle": "An expansion is a LOCAL equational reassignment asserted in document-local scope. A question, denial or general-world assertion is not a reassignment.",
+      "assigns": "no_tax_relation",
+      "conditionSupport": 6,
+      "simulatorMatchedIds": [
+        "S2-IR18-DOM-240",
+        "S2-IR18-DOM-265",
+        "S2-IR18-DOM-290",
+        "S2-IR18-DOM-315",
+        "S2-IR18-DOM-475",
+        "S3-IR17-202"
+      ],
+      "TP_CORRECTED": 5,
+      "FP_CORRECT_ROW_REGRESSION": 1,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 4,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S3-IR17-202",
+          "from": "non_tax_expansion",
+          "to": "no_tax_relation",
+          "query": "Is the BOC a band of chords?"
+        }
+      ],
+      "wrongToWrong": []
+    },
+    {
+      "rule": "token_gloss_fragment_no_operation",
+      "principle": "A bare \"TOKEN as <ordinary sense>\" fragment glosses a token without requesting an operation and without establishing a tax relation; the absent relation controls.",
+      "assigns": "no_tax_relation",
+      "conditionSupport": 5,
+      "simulatorMatchedIds": [
+        "S2-IR18-DOM-175",
+        "S2-IR18-DOM-176",
+        "S2-IR18-DOM-177",
+        "S2-IR18-DOM-178",
+        "S2-IR18-DOM-182"
+      ],
+      "TP_CORRECTED": 4,
+      "FP_CORRECT_ROW_REGRESSION": 1,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 3,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "S2-IR18-DOM-176",
+          "from": "non_tax_label_or_name",
+          "to": "no_tax_relation",
+          "query": "FLD as field abbreviation"
+        }
+      ],
+      "wrongToWrong": []
+    },
+    {
+      "rule": "definition_outcome_under_tax_context",
+      "principle": "The requested outcome is the MEANING of a term, asked inside genuine tax context. Surrounding procedural or compliance vocabulary does not change the requested outcome.",
+      "assigns": "tax_definition_with_context",
+      "conditionSupport": 0,
+      "simulatorMatchedIds": [],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rule": "operation_on_named_artefact",
+      "principle": "An operation performed on an already named, tagged or code-labelled artefact remains a non-tax action. The naming act requires an as-identifier object complement.",
+      "assigns": "explicit_non_tax_task",
+      "conditionSupport": 0,
+      "simulatorMatchedIds": [],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rule": "bare_topic_fragment_no_operation",
+      "principle": "A bare topic fragment names subject matter without requesting an operation; with no tax relation the absent relation is the controlling explanation.",
+      "assigns": "no_tax_relation",
+      "conditionSupport": 18,
+      "simulatorMatchedIds": [
+        "S2-IR18-DOM-113",
+        "S2-IR18-DOM-115",
+        "S2-IR18-DOM-120",
+        "S2-IR18-DOM-159",
+        "S2-IR18-DOM-160",
+        "S2-IR18-DOM-166",
+        "S2-IR18-DOM-204",
+        "S2-IR18-DOM-228",
+        "S2-IR18-DOM-229",
+        "R20N-ENT-0571",
+        "R20N-ENT-0581",
+        "R20N-ENT-0586",
+        "R20N-ENT-0596",
+        "R20N-ENT-0611",
+        "R20N-ENT-0656",
+        "R20N-ENT-0676",
+        "R20N-ENT-0701",
+        "R20N-ENT-0711"
+      ],
+      "TP_CORRECTED": 9,
+      "FP_CORRECT_ROW_REGRESSION": 9,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "oracleId": "R20N-ENT-0571",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "office cabinet filing layout"
+        },
+        {
+          "oracleId": "R20N-ENT-0581",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "chess club tournament penalty"
+        },
+        {
+          "oracleId": "R20N-ENT-0586",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "gym loyalty membership perk"
+        },
+        {
+          "oracleId": "R20N-ENT-0596",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "mall parking surcharge signage"
+        },
+        {
+          "oracleId": "R20N-ENT-0611",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "library book return deadline"
+        },
+        {
+          "oracleId": "R20N-ENT-0656",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "photography portfolio layout"
+        },
+        {
+          "oracleId": "R20N-ENT-0676",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "school exam deadline"
+        },
+        {
+          "oracleId": "R20N-ENT-0701",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation",
+          "query": "e-sports tournament bracket"
+        }
+      ],
+      "wrongToWrong": []
+    }
+  ]
+}

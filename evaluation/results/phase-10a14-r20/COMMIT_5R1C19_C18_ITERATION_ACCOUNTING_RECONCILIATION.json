@@ -1,0 +1,101 @@
+{
+  "unit": "COMMIT 5R1-C19",
+  "generatedUtc": "2026-07-27T02:57:28.140Z",
+  "scope": "Section 3 reconciliation of C18 iteration accounting against committed registry evidence. Reads only; no C18 file is rewritten or deleted.",
+  "registryTotals": {
+    "before": 149,
+    "after": 154,
+    "increase": 5
+  },
+  "registryBacked": {
+    "newlyRegisteredCampaigns": 5,
+    "reconstruction": 1,
+    "materialRuntimeCampaigns": 4,
+    "accepted": 3,
+    "rejected": 1,
+    "cleanLockVerification": 0,
+    "cycles": [
+      {
+        "cycle": "commit5r1c18-dev-02",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed",
+        "controlling": true
+      },
+      {
+        "cycle": "commit5r1c18-dev-03",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed",
+        "controlling": true
+      },
+      {
+        "cycle": "commit5r1c18-dev-04",
+        "disposition": "rejected",
+        "status": "completed",
+        "controlling": true
+      },
+      {
+        "cycle": "commit5r1c18-dev-05",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed",
+        "controlling": true
+      },
+      {
+        "cycle": "commit5r1c18-recon",
+        "disposition": "accepted_reconstruction_exact",
+        "status": "completed",
+        "controlling": true
+      }
+    ]
+  },
+  "conflictingCommittedClaims": {
+    "commitMessageAndCurrentState": "five of five material iterations (3 accepted, 1 rejected)",
+    "reasonLockRecord": {
+      "materialIterationsUsed": 3,
+      "materialIterationsPermitted": 5,
+      "rejectedCandidates": 2,
+      "iterationCeilingReached": true
+    }
+  },
+  "orphanCheck": {
+    "attemptDirectoriesOnDisk": 154,
+    "registeredAttempts": 154,
+    "orphanDirectories": 0,
+    "danglingRegisteredAttempts": 0,
+    "unregisteredRuntimeAttemptExists": false
+  },
+  "determination": "HISTORICAL_ITERATION_ACCOUNTING_DEFECT",
+  "authoritativeCount": {
+    "materialRuntimeIterations": 4,
+    "accepted": 3,
+    "rejected": 1,
+    "permitted": 5,
+    "ceilingActuallyReached": false,
+    "basis": "registry-backed campaign census"
+  },
+  "defectAnalysis": {
+    "whatWasClaimed": "C18 reported \"five of five material iterations\". Its own reason-lock record separately reported materialIterationsUsed=3 with rejectedCandidates=2, which sums to 5 but does not match the registry either (3 accepted + 1 rejected = 4).",
+    "whatIsTrue": "Four material runtime campaigns were registered and executed: dev-02 accepted, dev-03 accepted, dev-04 rejected, dev-05 accepted. Plus one reconstruction. Five newly registered campaigns in total.",
+    "rootCause": "Pre-implementation rule SIMULATIONS were counted toward the material-iteration budget. Six candidate rules were simulated and rejected before any runtime write; a simulation allocates no attempt, writes no runtime file and produces no evidence-bearing campaign, so it is not a material iteration.",
+    "consequence": "C18 reported its iteration budget as exhausted when one material iteration remained available. No result, score, gate or disposition is affected: every reported metric was produced by a registered campaign and is reproducible.",
+    "scoresAffected": false,
+    "evidenceAffected": false,
+    "registryAffected": false
+  },
+  "sixSimulationsAreNotRuntimeAttempts": {
+    "statement": "The six rules rejected by the C18 rule-effect simulator are recorded in COMMIT_5R1C18_RULE_EFFECT_SIMULATOR.json and its batch files. They are analysis artefacts, not runtime attempts, and are correctly absent from the registry.",
+    "simulatorEvidencePaths": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C18_RULE_EFFECT_SIMULATOR.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C18_RULE_EFFECT_SIMULATOR_BATCH2.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C18_RULE_EFFECT_SIMULATOR_BATCH3.json"
+    ]
+  },
+  "remediation": {
+    "c18FilesRewritten": 0,
+    "c18FilesDeleted": 0,
+    "correctionMethod": "Prospective. The authoritative registry-backed count is recorded here and stated in the C19 CURRENT_STATE update. C18 evidence is preserved exactly as committed."
+  },
+  "currentStateStaleTimestamp": {
+    "observed": "2026-07-25T12:30:00Z",
+    "finding": "The CURRENT_STATE \"Last updated\" value has not tracked the units committed since. It is replaced with the actual C19 final UTC timestamp in the mandatory final update."
+  }
+}

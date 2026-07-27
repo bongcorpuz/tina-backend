@@ -1,0 +1,65 @@
+{
+  "unit": "COMMIT 5R1-C19",
+  "generatedUtc": "2026-07-27T03:08:02.690Z",
+  "residualRows": 393,
+  "perRuleMatchedIds": {
+    "registration_outcome_is_compliance": [
+      "S1-IR19-0014",
+      "S1-IR19-0034",
+      "S1-IR19-0054",
+      "S1-IR19-0074",
+      "S1-IR19-0094",
+      "S1-IR19-0114",
+      "S1-IR19-0134",
+      "S1-IR19-0154",
+      "S1-IR19-0174",
+      "S1-IR19-0194"
+    ],
+    "parenthetical_gloss_not_expansion": [
+      "S1-IR19-1030",
+      "S1-IR19-1032",
+      "S1-IR19-1070",
+      "S1-IR19-1072",
+      "S1-IR19-1110",
+      "S1-IR19-1112"
+    ],
+    "expansion_requires_local_reassignment": [
+      "S2-IR18-DOM-240",
+      "S2-IR18-DOM-265",
+      "S2-IR18-DOM-290",
+      "S2-IR18-DOM-315",
+      "S2-IR18-DOM-475",
+      "S3-IR17-202"
+    ],
+    "token_gloss_fragment_no_operation": [
+      "S2-IR18-DOM-175",
+      "S2-IR18-DOM-176",
+      "S2-IR18-DOM-177",
+      "S2-IR18-DOM-178",
+      "S2-IR18-DOM-182"
+    ],
+    "definition_outcome_under_tax_context": [],
+    "operation_on_named_artefact": [],
+    "bare_topic_fragment_no_operation": [
+      "S2-IR18-DOM-113",
+      "S2-IR18-DOM-115",
+      "S2-IR18-DOM-120",
+      "S2-IR18-DOM-159",
+      "S2-IR18-DOM-160",
+      "S2-IR18-DOM-166",
+      "S2-IR18-DOM-204",
+      "S2-IR18-DOM-228",
+      "S2-IR18-DOM-229",
+      "R20N-ENT-0571",
+      "R20N-ENT-0581",
+      "R20N-ENT-0586",
+      "R20N-ENT-0596",
+      "R20N-ENT-0611",
+      "R20N-ENT-0656",
+      "R20N-ENT-0676",
+      "R20N-ENT-0701",
+      "R20N-ENT-0711"
+    ]
+  },
+  "note": "Matched oracle IDs are analysis evidence used only to prove simulator/runtime set equality. They never become runtime features."
+}

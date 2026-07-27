@@ -1,0 +1,27 @@
+{
+  "unit": "COMMIT 5R1-C19",
+  "generatedUtc": "2026-07-27T03:03:34.281Z",
+  "rules": [
+    {
+      "rule": "definition_outcome_under_tax_context",
+      "simulatorMatchedCount": 14,
+      "runtimeAssignedCount": 14,
+      "missingFromRuntime": 0,
+      "unexpectedInRuntime": 0,
+      "setEquality": true,
+      "simulatorTargetReason": "tax_definition_with_context",
+      "missingSample": []
+    },
+    {
+      "rule": "registration_outcome_is_compliance",
+      "simulatorMatchedCount": 10,
+      "runtimeAssignedCount": 10,
+      "missingFromRuntime": 0,
+      "unexpectedInRuntime": 0,
+      "setEquality": true,
+      "simulatorTargetReason": "tax_compliance_task",
+      "missingSample": []
+    }
+  ],
+  "allPass": true
+}
