@@ -1,0 +1,211 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:38.950Z",
+  "minimumRequired": 12,
+  "hypotheses": [
+    {
+      "id": "E1-support-records",
+      "family": "evidentiary_procedure",
+      "principle": "Support/proof/substantiation asks about evidentiary support of a tax position.",
+      "runtimePredicate": "support predicate plus tax position object, excluding filing/remittance operations",
+      "layerClassification": "CROSS_LAYER_SAFE",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "high",
+      "disposition": "selected_material_iteration_02"
+    },
+    {
+      "id": "E2-filing-deadline",
+      "family": "evidentiary_procedure",
+      "principle": "Filing/remittance/registration/deadline asks procedure when a tax bearer is present.",
+      "runtimePredicate": "procedure outcome plus tax return or remittance bearer",
+      "layerClassification": "CROSS_LAYER_SAFE",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "high",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "E3-document-noun-insufficient",
+      "family": "evidentiary_procedure",
+      "principle": "A document noun alone does not decide the reason; requested outcome controls.",
+      "runtimePredicate": "document noun without support/procedure predicate",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "high",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "A1-recognized-acronym-context",
+      "family": "acronym_referent",
+      "principle": "Recognized acronym with tax-procedure context may clarify or allow depending referent completeness.",
+      "runtimePredicate": "uppercase token plus substantive tax context",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "high",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "A2-ordinary-acronym-topic",
+      "family": "acronym_referent",
+      "principle": "Ordinary-world referent defeats tax-acronym treatment.",
+      "runtimePredicate": "uppercase token plus ordinary referent and no tax procedure context",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "high",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "A3-metadata-only-acronym",
+      "family": "acronym_referent",
+      "principle": "Metadata-only suffix is not a semantic referent.",
+      "runtimePredicate": "uppercase token plus only metadata suffix",
+      "layerClassification": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "high",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "X1-subject-to-tax-cross-layer",
+      "family": "cross_layer_subject_to_tax",
+      "principle": "Remaining subject-to-tax row requires decision plus reason correction, not a reason-only override.",
+      "runtimePredicate": "copular subject-to-tax with ordinary subject span and tax complement",
+      "layerClassification": "CROSS_LAYER_SAFE",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "medium",
+      "disposition": "selected_material_iteration_01"
+    },
+    {
+      "id": "X2-decision-dependent-pair",
+      "family": "cross_layer_subject_to_tax",
+      "principle": "Decision-dependent rows remain eligible only if all locked gates remain exact.",
+      "runtimePredicate": "decision failed, relation met, structurally generalizable predicate",
+      "layerClassification": "CROSS_LAYER_SAFE",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "medium",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "R1-pure-vector-language-transform",
+      "family": "pure_r3_structural_vector",
+      "principle": "A pure vector with language transform and no supplied content may correct reason only.",
+      "runtimePredicate": "language operation plus title-like operand plus no supplied content",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "medium",
+      "disposition": "selected_material_iteration_03"
+    },
+    {
+      "id": "R2-pure-vector-nominal-fragment",
+      "family": "pure_r3_structural_vector",
+      "principle": "A monotonic pure nominal fragment vector can be considered only if collision rows do not increase.",
+      "runtimePredicate": "pure residual vector with no forbidden selectors",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "medium",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "D1-title-no-content",
+      "family": "document_content_or_ambiguity",
+      "principle": "Title-only document transforms differ from transforms over supplied content.",
+      "runtimePredicate": "document title operand and absent quoted/delimited content",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "medium",
+      "disposition": "available_for_material_iteration"
+    },
+    {
+      "id": "D2-contract-ambiguity",
+      "family": "document_content_or_ambiguity",
+      "principle": "Where no runtime-observable distinction separates frozen rows from correct R3 rows, preserve ambiguity evidence.",
+      "runtimePredicate": "same observable features with conflicting expected reasons",
+      "layerClassification": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "targetSets": [
+        "R3 residual",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "baseRelativePredictedDelta": "requires C27 base-relative replay and full gate simulation before acceptance",
+      "simulationPlan": "R3/reason-suite/collision-probe measured from reconstructed retained base",
+      "packetPlan": "4+ positives, 4+ substitutions, 4+ near misses, 2+ constructions, 3+ filler families, 3+ skeletons, leave-one-family-out",
+      "taintRisk": "medium",
+      "disposition": "available_for_material_iteration"
+    }
+  ]
+}

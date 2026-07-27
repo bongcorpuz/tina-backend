@@ -1,0 +1,7 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:47:57.674Z",
+  "removedGeneratedWorkdirs": [],
+  "reason": "Replay results are preserved in CANDIDATE_DELTA_REPLAY_RESULT.json; nested temporary git workdirs are not evidence artifacts.",
+  "pass": true
+}

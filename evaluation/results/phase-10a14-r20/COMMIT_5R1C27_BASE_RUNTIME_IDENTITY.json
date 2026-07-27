@@ -1,0 +1,22 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:26.556Z",
+  "sourceAttempt": "R20-domain_campaign-r20_commit5r1c25_structural_reason_remediation-commit5r1c25-dev-03-ord03-2026-07-27T10-09-28-390Z",
+  "identity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 173029,
+      "normalizedLfSha256": "57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "7af07279b59992c099aef4174680beebfe44ddfe06b36e126687805779aaecaa"
+  },
+  "mismatches": [],
+  "pass": true
+}

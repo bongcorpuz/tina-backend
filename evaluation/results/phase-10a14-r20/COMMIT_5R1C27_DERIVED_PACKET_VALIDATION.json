@@ -1,0 +1,96 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:45:19.363Z",
+  "packets": [
+    {
+      "id": "C27-M01-subject-to-tax-cross-layer",
+      "positiveParaphrases": 4,
+      "lexicalSubstitutions": 4,
+      "negativeNearMisses": 4,
+      "grammaticalConstructions": 2,
+      "semanticFillerFamilies": 3,
+      "derivedNormalizedSkeletons": 3,
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "industrial services",
+          "pass": true
+        },
+        {
+          "family": "commercial charges",
+          "pass": true
+        },
+        {
+          "family": "ordinary document titles",
+          "pass": true
+        }
+      ],
+      "copiedR3Queries": 0,
+      "copiedFrozenSuiteQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0,
+      "pass": true
+    },
+    {
+      "id": "C27-M02-evidentiary-support",
+      "positiveParaphrases": 4,
+      "lexicalSubstitutions": 4,
+      "negativeNearMisses": 4,
+      "grammaticalConstructions": 2,
+      "semanticFillerFamilies": 3,
+      "derivedNormalizedSkeletons": 3,
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "industrial services",
+          "pass": true
+        },
+        {
+          "family": "commercial charges",
+          "pass": true
+        },
+        {
+          "family": "ordinary document titles",
+          "pass": true
+        }
+      ],
+      "copiedR3Queries": 0,
+      "copiedFrozenSuiteQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0,
+      "pass": true
+    },
+    {
+      "id": "C27-M03-contentless-document-title",
+      "positiveParaphrases": 4,
+      "lexicalSubstitutions": 4,
+      "negativeNearMisses": 4,
+      "grammaticalConstructions": 2,
+      "semanticFillerFamilies": 3,
+      "derivedNormalizedSkeletons": 3,
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "industrial services",
+          "pass": true
+        },
+        {
+          "family": "commercial charges",
+          "pass": true
+        },
+        {
+          "family": "ordinary document titles",
+          "pass": true
+        }
+      ],
+      "copiedR3Queries": 0,
+      "copiedFrozenSuiteQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0,
+      "pass": true
+    }
+  ],
+  "materialResultIds": [
+    "C27-M01-subject-to-tax-cross-layer",
+    "C27-M02-evidentiary-support",
+    "C27-M03-contentless-document-title"
+  ],
+  "pass": true
+}

@@ -1,0 +1,1092 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:38.948Z",
+  "summary": {
+    "DECISION_DEPENDENT": 26,
+    "REASON_ONLY": 20,
+    "ORACLE_OR_CONTRACT_AMBIGUITY": 8
+  },
+  "records": [
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#47",
+      "query": "Is the ferry gangway subject to percentage tax?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "compliance_vs_treatment",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#115",
+      "query": "Translate the badminton net handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#116",
+      "query": "Translate the harmonica case handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#117",
+      "query": "Translate the sundial plinth handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#118",
+      "query": "Translate the canoe paddle handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#119",
+      "query": "Translate the lantern wick handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#120",
+      "query": "Translate the trellis post handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#121",
+      "query": "Translate the zither string handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#122",
+      "query": "Translate the cairn marker handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#123",
+      "query": "Translate the abacus bead handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#124",
+      "query": "Translate the quilt batting handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#125",
+      "query": "Translate the birdhouse perch handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#126",
+      "query": "Translate the marble chute handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "no_tax_refuse_vs_clarify",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#11",
+      "query": "Translate the tide chart poster handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#12",
+      "query": "Translate the kite spool rack handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#13",
+      "query": "Translate the lantern paper roll handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#14",
+      "query": "Translate the mango crate liner handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#15",
+      "query": "Translate the bamboo flute case handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#16",
+      "query": "Translate the shell lamp shade handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#17",
+      "query": "Translate the coral tank pump handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#18",
+      "query": "Translate the reed mat binder handbook into plain English.",
+      "decisionMet": true,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": true,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "REFUSE"
+      },
+      "candidateCorrectionLayer": "REASON_ONLY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "collision_request_subtype",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#34",
+      "query": "Is the ferry hull survey subject to percentage tax?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "predicate_attachment",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#36",
+      "query": "What records support the pier docking charge deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#36",
+      "query": "When is the deadline for filing the pier docking charge return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#38",
+      "query": "What records support the silo cleaning run deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#38",
+      "query": "When is the deadline for filing the silo cleaning run return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#40",
+      "query": "What records support the kiln relining job deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#40",
+      "query": "When is the deadline for filing the kiln relining job return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#42",
+      "query": "What records support the trawler net repair deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#42",
+      "query": "When is the deadline for filing the trawler net repair return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#44",
+      "query": "What records support the grain drying batch deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#44",
+      "query": "When is the deadline for filing the grain drying batch return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#46",
+      "query": "What records support the ice plant output deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#46",
+      "query": "When is the deadline for filing the ice plant output return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#48",
+      "query": "What records support the copra press run deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#48",
+      "query": "When is the deadline for filing the copra press run return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#50",
+      "query": "What records support the ferry hull survey deduction?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": null,
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#50",
+      "query": "When is the deadline for filing the ferry hull survey return?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "explicit_non_tax_task",
+        "expectedReason": "tax_compliance_task",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "ALLOW"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "outcome_evidentiary_vs_filing",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#69",
+      "query": "What is XQD for item 40?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#69",
+      "query": "What about professional fees for matter 40?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#70",
+      "query": "What is BNV for item 41?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#70",
+      "query": "What about professional fees for matter 41?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#71",
+      "query": "What is RTK for item 42?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#71",
+      "query": "What about professional fees for matter 42?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#72",
+      "query": "What is PYW for item 43?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#72",
+      "query": "What about professional fees for matter 43?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#73",
+      "query": "What is GZL for item 44?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#73",
+      "query": "What about professional fees for matter 44?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#74",
+      "query": "What is MFH for item 45?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#74",
+      "query": "What about professional fees for matter 45?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#75",
+      "query": "What is JCT for item 46?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#75",
+      "query": "What about professional fees for matter 46?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#76",
+      "query": "What is VWS for item 47?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "ambiguous_tax_acronym",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": "decision expectation conflicts with observable ordinary-topic/acronym distinction and requires later adjudication"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#76",
+      "query": "What about professional fees for matter 47?",
+      "decisionMet": false,
+      "relationMet": true,
+      "reasonMet": false,
+      "structuralFeatureVector": {
+        "decisionMet": false,
+        "relationMet": true,
+        "actualReason": "no_tax_relation",
+        "expectedReason": "no_tax_relation",
+        "actualDecision": "REFUSE",
+        "expectedDecision": "CLARIFY"
+      },
+      "candidateCorrectionLayer": "CROSS_LAYER_SAFE",
+      "r3Overlap": "computed in full R3 gate for each material candidate",
+      "counterfactualOverlap": "acronym_vs_topic_ambiguity",
+      "oracleAmbiguityEvidence": null
+    }
+  ],
+  "pass": true
+}

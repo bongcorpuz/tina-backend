@@ -1,0 +1,19 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index c85c2edc..558e53a1 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1212,6 +1212,14 @@ function resolveGovernedReasonOverride(evidence) {
+       && /\b(?:na\s+)?bibilhin\b/i.test(v.t)
+       && /\b(?:ang|alin|aling|ano|na|bibilhin)\b/i.test(v.t)
+       && !c23HasTaxLexeme) return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };
++  const c27SupportOutcome = v.reason === 'no_tax_relation'
++      && v.rels.includes('REQUESTS_NON_TAX_ACTION_ON')
++      && /\b(?:records?|proof|evidence|substantiat\w*|support)\b/i.test(v.t)
++      && /\b(?:deduction|deductib\w*|input\s+vat|output\s+vat|withholding|income|tax\s+position)\b/i.test(v.t)
++      && !/\b(?:filing|deadline|return|register|registration|remit|payment)\b/i.test(v.t);
++  if (c27SupportOutcome)
++    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.86 };
++
+   return null;
+ }
+ 

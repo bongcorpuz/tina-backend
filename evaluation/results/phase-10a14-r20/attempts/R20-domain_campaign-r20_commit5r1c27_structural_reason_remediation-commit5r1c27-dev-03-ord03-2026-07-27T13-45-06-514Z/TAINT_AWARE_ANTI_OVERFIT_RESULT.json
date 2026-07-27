@@ -1,0 +1,27 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:45:09.637Z",
+  "runtimeBearingFiles": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z/C27_ONLY_CANDIDATE.patch",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z/runtime-snapshot/philippine-tax-domain-boundary.js",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z/runtime-snapshot/philippine-tax-boundary-patterns.js"
+  ],
+  "findings": [],
+  "taintRegeneration": {
+    "sentinel": "C27_TAINT_SENTINEL_D20A1E4D8E97",
+    "generatorUsesOracleIdsHashesExpectedLabelsOrFamilies": false,
+    "runtimeBytesUnchangedAfterSentinelSubstitution": true,
+    "candidatePatchBytesUnchangedAfterSentinelSubstitution": true,
+    "runtimeBytesUnchangedAfterRowShuffle": true,
+    "candidatePatchBytesUnchangedAfterRowShuffle": true,
+    "runtimeGenerationSucceedsAfterEvaluatorLabelsRemoved": true,
+    "runtimeByteHash": "5f68403a237affe70728479cd749a624ddac6f150c08fea2c60728f3d7a0faa7",
+    "patchByteHash": "dd5b90f60e5f05c272726be06ce5cceb9a9e0ed020e640f9219b86070ee0e49e",
+    "generatorInputs": {
+      "rule": "narrow_contentless_document_transform_no_tax_relation",
+      "generatorReadsEvaluatorData": false
+    }
+  },
+  "pass": true
+}

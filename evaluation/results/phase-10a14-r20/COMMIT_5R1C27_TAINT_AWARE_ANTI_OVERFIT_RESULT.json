@@ -1,0 +1,26 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:45:19.374Z",
+  "classificationResolved": "C26_ANTI_OVERFIT_SCOPE_FALSE_POSITIVE_REPLACED_BY_TAINT_AWARE_NON_PROPAGATION_PROOF",
+  "entries": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-01-ord01-2026-07-27T13-44-39-553Z",
+      "candidateId": "C27-M01-subject-to-tax-cross-layer",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z",
+      "candidateId": "C27-M02-evidentiary-support",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z",
+      "candidateId": "C27-M03-contentless-document-title",
+      "findings": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

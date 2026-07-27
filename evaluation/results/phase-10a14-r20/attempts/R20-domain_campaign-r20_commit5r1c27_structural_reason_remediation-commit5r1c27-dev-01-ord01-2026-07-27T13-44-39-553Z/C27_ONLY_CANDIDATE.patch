@@ -1,0 +1,20 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index c85c2edc..94121b8a 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1212,6 +1212,15 @@ function resolveGovernedReasonOverride(evidence) {
+       && /\b(?:na\s+)?bibilhin\b/i.test(v.t)
+       && /\b(?:ang|alin|aling|ano|na|bibilhin)\b/i.test(v.t)
+       && !c23HasTaxLexeme) return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };
++  const c27SubjectToTax = /^(?:is|are)\s+(?:the\s+|a\s+|an\s+)?(.+?)\s+subject\s+to\s+(?:(?:percentage|income|withholding|excise|documentary\s+stamp)\s+tax|vat|tax)\??$/i.exec(v.t);
++  const c27SubjectSpan = c27SubjectToTax ? c27SubjectToTax[1] : '';
++  const c27SubjectIsTaxConcept = /\b(?:tax|vat|withholding|excise|documentary\s+stamp|percentage\s+tax|income\s+tax)\b/i.test(c27SubjectSpan);
++  if (v.reason === 'explicit_non_tax_task'
++      && v.rels.includes('ASKS_TAX_TREATMENT_OF')
++      && c27SubjectToTax
++      && !c27SubjectIsTaxConcept)
++    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };
++
+   return null;
+ }
+ 

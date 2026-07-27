@@ -4,6 +4,164 @@
 
 Last updated:
 
+`2026-07-27T13:47:58.149Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C27
+BASE-RELATIVE DELTA PROVENANCE, TAINT-AWARE ANTI-OVERFIT AND CROSS-LAYER-SAFE REASON CLOSURE
+DECISION: INCOMPLETE - C26 REPORTING AND CANDIDATE-DELTA DEFECTS RECONCILED;
+          ONE PARETO-SAFE CANDIDATE ACCEPTED;
+          DECISION AND RELATION LOCKS PRESERVED; REASON LOCK REMAINS OPEN
+```
+
+C27 corrected C26 reporting prospectively:
+
+```text
+C25 manifest hash entries                  54
+C25 evidence files including manifest          84
+C26 manifest hash entries                  44
+C26 evidence files including manifest      45
+classifications                            C26_CURRENT_STATE_C25_FILE_COUNT_TYPO, C26_CURRENT_STATE_C26_FILE_COUNT_TYPO
+manifest integrity defects                 none for C25 or C26
+```
+
+CONTROLLING PARETO BASE:
+
+```text
+source attempt                             R20-domain_campaign-r20_commit5r1c25_structural_reason_remediation-commit5r1c25-dev-03-ord03-2026-07-27T10-09-28-390Z
+services tree digest                       7af07279b59992c099aef4174680beebfe44ddfe06b36e126687805779aaecaa
+analyzer normalized-LF SHA-256             57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc
+domain-boundary normalized-LF SHA-256      0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039
+patterns normalized-LF SHA-256             3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa
+R3 reason                                  3462 / 3,720
+reason suite v8                            331 / 344
+collision probes                           155 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+```
+
+REJECTED C26 MATERIAL CANDIDATE:
+
+```text
+R3 reason                                  3410 / 3,720
+reason suite v8                            343 / 344
+collision probes                           163 / 196
+controlling candidate                      false
+classification                             rejected due to R3 regression and prior blind anti-overfit false-positive handling
+```
+
+C27 provenance and taint controls:
+
+```text
+candidate-delta provenance finding         C26_CANDIDATE_DELTA_BASELINE_PROVENANCE_DEFECT
+C27 base-relative replay                   PASS
+taint-aware anti-overfit                   PASS
+C26 blind evaluator finding                C26_ANTI_OVERFIT_SCOPE_FALSE_POSITIVE_PENDING_NON_PROPAGATION_PROOF
+C27 non-propagation result                 evaluator taint did not alter runtime or candidate-only patch bytes
+```
+
+C27 monotonic feature model:
+
+```text
+vectorCount                                124
+collidingRows                              27
+strict feature superset                    true
+validator                                  PASS
+```
+
+C27 material-attempt accounting:
+
+```text
+governed reconstruction iterations          1
+material reason-remediation iterations      3
+accepted rules                              ordinary_subject_to_tax_from_refuse_to_treatment, support_predicate_over_tax_position_is_treatment
+rejected rules                              narrow_contentless_document_transform_no_tax_relation
+cross-layer-safe changes                    ordinary_subject_to_tax_from_refuse_to_treatment, support_predicate_over_tax_position_is_treatment
+candidate exhaustion                        false
+remaining viable candidates                 true
+```
+
+C27 final candidate/control status:
+
+```text
+R3 reason                                  3462 / 3,720
+reason suite v8                            331 / 344
+collision probes                           162 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+remaining failure layers                    {"DECISION_DEPENDENT":26,"REASON_ONLY":20,"ORACLE_OR_CONTRACT_AMBIGUITY":8}
+```
+
+Registry after C27:
+
+```text
+cumulativeThrough       commit5r1c27-incomplete
+total attempts          188
+domain_campaign         124
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             186
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
+
+Finalization:
+
+```text
+manifest entries                          83
+evidence files including manifest          231
+dev-factory preserved exactly              true
+live runtime restored                      true
+service/oracle/roadmap tracked diff         0
+```
+
+Reason lock remains open. The next exact task is:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C28
+REASON-LAYER CLOSURE CONTINUATION 28 AGAINST THE GOVERNANCE-COMPLIANT C27 BASE
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C26
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T13:06:19.052Z`
 
 Repository:

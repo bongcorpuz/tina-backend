@@ -1,0 +1,20 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index c85c2edc..10316f28 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1212,6 +1212,15 @@ function resolveGovernedReasonOverride(evidence) {
+       && /\b(?:na\s+)?bibilhin\b/i.test(v.t)
+       && /\b(?:ang|alin|aling|ano|na|bibilhin)\b/i.test(v.t)
+       && !c23HasTaxLexeme) return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };
++  const c27ContentlessDocumentTransform = /^(?:translate|summari[sz]e|explain|rewrite|paraphrase|simplify|render|turn)\b/i.test(v.t)
++      && /\b(?:handbook|manual|guide|document|report|brochure|leaflet|booklet|file|letter|memo|notice|paper|deck|slide|page|chapter)\b/i.test(v.t)
++      && !/[\":;]/.test(v.t)
++      && !/\b(?:following|attached|below|content|paragraph|sentence|issuance|revenue memorandum|revenue regulation|bir|boc|tax|vat|withholding|customs|duty|income|percentage)\b/i.test(v.t);
++  if (v.reason === 'explicit_non_tax_task'
++      && v.rels.includes('REQUESTS_NON_TAX_ACTION_ON')
++      && c27ContentlessDocumentTransform)
++    return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.87 };
++
+   return null;
+ }
+ 

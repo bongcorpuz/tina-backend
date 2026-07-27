@@ -1,0 +1,8 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:38.942Z",
+  "inheritedC26Ablation": "C27 adds no accepted feature coarsening before material simulation",
+  "vectorCountAfterAllAllowedAblations": 124,
+  "collidingRowsAfterAllAllowedAblations": 27,
+  "pass": true
+}

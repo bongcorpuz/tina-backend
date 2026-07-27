@@ -1,0 +1,72 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:55.936Z",
+  "patchPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z/C27_ONLY_CANDIDATE.patch",
+  "baseIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 173029,
+      "normalizedLfSha256": "57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "7af07279b59992c099aef4174680beebfe44ddfe06b36e126687805779aaecaa"
+  },
+  "candidateIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 173548,
+      "normalizedLfSha256": "f7df5d07caa5a0a45623a954cd3ee3e171fd8747c568018dc55e27f9194c57ee",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "8fb239b7fc56f84a43fd107d84e69e25678ef5dc266c5897c1b7febcf472bc1d"
+  },
+  "replayIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 175664,
+      "normalizedLfSha256": "f7df5d07caa5a0a45623a954cd3ee3e171fd8747c568018dc55e27f9194c57ee"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "8fb239b7fc56f84a43fd107d84e69e25678ef5dc266c5897c1b7febcf472bc1d"
+  },
+  "restoredIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 175137,
+      "normalizedLfSha256": "57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "7af07279b59992c099aef4174680beebfe44ddfe06b36e126687805779aaecaa"
+  },
+  "forwardReplayMatchesCandidate": true,
+  "reverseReplayRestoresBase": true,
+  "candidateOnlyPatchExcludesInheritedChanges": true,
+  "pass": true
+}

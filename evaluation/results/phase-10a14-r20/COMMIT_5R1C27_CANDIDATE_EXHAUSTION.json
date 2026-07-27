@@ -1,0 +1,17 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:45:19.378Z",
+  "hypothesesConsidered": 12,
+  "materialIterationsUsed": 3,
+  "acceptedRules": [
+    "ordinary_subject_to_tax_from_refuse_to_treatment",
+    "support_predicate_over_tax_position_is_treatment"
+  ],
+  "rejectedRules": [
+    "narrow_contentless_document_transform_no_tax_relation"
+  ],
+  "FORMAL_CANDIDATE_EXHAUSTION": false,
+  "remainingViableCandidatesExist": true,
+  "blockerOrContinuationStatus": "reason lock remains open after accepted candidate; remaining failures include cross-layer and ambiguity rows needing continuation",
+  "nextPath": "PHASE-10A14-R20 - COMMIT 5R1-C28 REASON-LAYER CLOSURE CONTINUATION 28 AGAINST THE GOVERNANCE-COMPLIANT C27 BASE"
+}

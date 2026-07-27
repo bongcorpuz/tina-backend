@@ -1,0 +1,45 @@
+{
+  "actual": {
+    "canonicalPassed": 3462,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3462,
+    "reasonMismatches": 258,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 332,
+    "collisionProbesPassed": 156,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "pareto": {
+    "r3ReasonNonDecrease": true,
+    "reasonSuiteNonDecrease": true,
+    "collisionProbesNonDecrease": true,
+    "strictImprovement": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true,
+    "decisionCounterfactualExact": true,
+    "relationCounterfactualExact": true,
+    "clauseProbesExact": true,
+    "richContextGuardExact": true,
+    "reasonIntegrityPass": true,
+    "c27AddedRoiViolations": 0,
+    "correctRowRegressions": 0,
+    "wrongToDifferentWrong": 0,
+    "decisionDrift": 0,
+    "relationDrift": 0
+  },
+  "safety": {
+    "targetEquivalence": "PASS",
+    "placementNonInterference": "PASS",
+    "compositionNonInterference": "PASS",
+    "orderIndependence": "PASS"
+  },
+  "accepted": true
+}

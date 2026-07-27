@@ -1,0 +1,31 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:45:19.369Z",
+  "classification": "C26_CANDIDATE_DELTA_BASELINE_PROVENANCE_DEFECT",
+  "c26CandidateOnlyPatchWasFullRuntimeDiffFromCommittedHead": true,
+  "c27Correction": "all material C27 deltas are diff(exact reconstructed retained base, candidate snapshot)",
+  "materialCandidateReplays": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-01-ord01-2026-07-27T13-44-39-553Z",
+      "candidateId": "C27-M01-subject-to-tax-cross-layer",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-02-ord02-2026-07-27T13-44-52-970Z",
+      "candidateId": "C27-M02-evidentiary-support",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c27_structural_reason_remediation-commit5r1c27-dev-03-ord03-2026-07-27T13-45-06-514Z",
+      "candidateId": "C27-M03-contentless-document-title",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,171 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:45:19.364Z",
+  "packets": [
+    {
+      "id": "C27-M01-subject-to-tax-cross-layer",
+      "rule": "ordinary_subject_to_tax_from_refuse_to_treatment",
+      "principle": "A subject-to-tax question with a non-tax subject span and tax complement may require a decision plus reason correction only if locked gates remain exact.",
+      "positives": [
+        "Does the warehouse repair job fall under a stated tax charge?",
+        "What proof supports a claimed tax position for a repair job?",
+        "Convert the workshop guide into plain words.",
+        "Is the dock survey governed by a percentage tax charge?"
+      ],
+      "lexicalSubstitutions": [
+        "records -> proof",
+        "support -> substantiate",
+        "handbook -> manual",
+        "subject to -> governed by"
+      ],
+      "negativeNearMisses": [
+        "Translate the quoted sentence about VAT.",
+        "When is the filing deadline for the return?",
+        "What is an uppercase code in an ordinary project?",
+        "Explain a named revenue issuance about VAT."
+      ],
+      "grammaticalConstructions": [
+        "copular question over subject and tax complement",
+        "interrogative support predicate over tax object"
+      ],
+      "semanticFillerFamilies": [
+        "industrial services",
+        "commercial charges",
+        "ordinary document titles"
+      ],
+      "derivedSkeletons": [
+        "<be> <ordinary-subject> subject to <tax-complement>",
+        "<support-predicate> <tax-position-object>",
+        "<transform-verb> <ordinary-document-title>"
+      ],
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "industrial services",
+          "pass": true
+        },
+        {
+          "family": "commercial charges",
+          "pass": true
+        },
+        {
+          "family": "ordinary document titles",
+          "pass": true
+        }
+      ],
+      "copiedR3Queries": 0,
+      "copiedFrozenSuiteQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0
+    },
+    {
+      "id": "C27-M02-evidentiary-support",
+      "rule": "support_predicate_over_tax_position_is_treatment",
+      "principle": "Records, proof and substantiation supporting a tax position are governed by requested outcome rather than by the document noun alone.",
+      "positives": [
+        "Does the warehouse repair job fall under a stated tax charge?",
+        "What proof supports a claimed tax position for a repair job?",
+        "Convert the workshop guide into plain words.",
+        "Is the dock survey governed by a percentage tax charge?"
+      ],
+      "lexicalSubstitutions": [
+        "records -> proof",
+        "support -> substantiate",
+        "handbook -> manual",
+        "subject to -> governed by"
+      ],
+      "negativeNearMisses": [
+        "Translate the quoted sentence about VAT.",
+        "When is the filing deadline for the return?",
+        "What is an uppercase code in an ordinary project?",
+        "Explain a named revenue issuance about VAT."
+      ],
+      "grammaticalConstructions": [
+        "copular question over subject and tax complement",
+        "interrogative support predicate over tax object"
+      ],
+      "semanticFillerFamilies": [
+        "industrial services",
+        "commercial charges",
+        "ordinary document titles"
+      ],
+      "derivedSkeletons": [
+        "<be> <ordinary-subject> subject to <tax-complement>",
+        "<support-predicate> <tax-position-object>",
+        "<transform-verb> <ordinary-document-title>"
+      ],
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "industrial services",
+          "pass": true
+        },
+        {
+          "family": "commercial charges",
+          "pass": true
+        },
+        {
+          "family": "ordinary document titles",
+          "pass": true
+        }
+      ],
+      "copiedR3Queries": 0,
+      "copiedFrozenSuiteQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0
+    },
+    {
+      "id": "C27-M03-contentless-document-title",
+      "rule": "narrow_contentless_document_transform_no_tax_relation",
+      "principle": "A transform over a title-like document operand with no supplied content and no tax predicate may change reason only.",
+      "positives": [
+        "Does the warehouse repair job fall under a stated tax charge?",
+        "What proof supports a claimed tax position for a repair job?",
+        "Convert the workshop guide into plain words.",
+        "Is the dock survey governed by a percentage tax charge?"
+      ],
+      "lexicalSubstitutions": [
+        "records -> proof",
+        "support -> substantiate",
+        "handbook -> manual",
+        "subject to -> governed by"
+      ],
+      "negativeNearMisses": [
+        "Translate the quoted sentence about VAT.",
+        "When is the filing deadline for the return?",
+        "What is an uppercase code in an ordinary project?",
+        "Explain a named revenue issuance about VAT."
+      ],
+      "grammaticalConstructions": [
+        "copular question over subject and tax complement",
+        "interrogative support predicate over tax object"
+      ],
+      "semanticFillerFamilies": [
+        "industrial services",
+        "commercial charges",
+        "ordinary document titles"
+      ],
+      "derivedSkeletons": [
+        "<be> <ordinary-subject> subject to <tax-complement>",
+        "<support-predicate> <tax-position-object>",
+        "<transform-verb> <ordinary-document-title>"
+      ],
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "industrial services",
+          "pass": true
+        },
+        {
+          "family": "commercial charges",
+          "pass": true
+        },
+        {
+          "family": "ordinary document titles",
+          "pass": true
+        }
+      ],
+      "copiedR3Queries": 0,
+      "copiedFrozenSuiteQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0
+    }
+  ]
+}

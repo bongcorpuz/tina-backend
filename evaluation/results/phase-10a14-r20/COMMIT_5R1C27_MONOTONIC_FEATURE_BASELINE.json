@@ -1,0 +1,25 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:38.941Z",
+  "inheritedFrom": "COMMIT_5R1C26_MONOTONIC_FEATURE_BASELINE.json",
+  "strictFeatureSupersetOfC26": true,
+  "c26": {
+    "vectorCount": 124,
+    "collidingRows": 27
+  },
+  "c27": {
+    "vectorCount": 124,
+    "collidingRows": 27
+  },
+  "forbiddenInputsExcluded": [
+    "expected or actual reason",
+    "expected decision",
+    "oracle ID",
+    "query hash",
+    "suite/family/category",
+    "row position",
+    "fixture membership",
+    "full normalized query"
+  ],
+  "pass": true
+}

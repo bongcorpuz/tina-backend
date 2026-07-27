@@ -1,0 +1,45 @@
+{
+  "unit": "COMMIT 5R1-C27",
+  "generatedUtc": "2026-07-27T13:44:26.536Z",
+  "currentStateCountDefects": {
+    "committedC25ManifestEntries": 54,
+    "committedC25EvidenceFilesIncludingManifest": 55,
+    "committedC26ManifestEntries": 44,
+    "committedC26EvidenceFilesIncludingManifest": 45,
+    "c26CurrentStateRecordedC25EvidenceFilesIncludingManifest": 45,
+    "c26CurrentStateRecordedC26EvidenceFilesIncludingManifest": 43,
+    "classifications": [
+      "C26_CURRENT_STATE_C25_FILE_COUNT_TYPO",
+      "C26_CURRENT_STATE_C26_FILE_COUNT_TYPO",
+      "NO_C25_MANIFEST_INTEGRITY_DEFECT",
+      "NO_C26_MANIFEST_INTEGRITY_DEFECT"
+    ],
+    "preserveC25EvidenceByteForByte": true,
+    "preserveC26EvidenceByteForByte": true,
+    "prospectiveCorrectionInC27CurrentState": true
+  },
+  "controllingVersusRejectedCandidate": {
+    "controllingParetoBase": {
+      "r3Reason": 3462,
+      "reasonSuite": 331,
+      "collisionProbes": 155
+    },
+    "rejectedC26MaterialCandidate": {
+      "r3Reason": 3410,
+      "reasonSuite": 343,
+      "collisionProbes": 163
+    },
+    "rejectedCandidateBecameControlling": false
+  },
+  "candidateDeltaProvenance": {
+    "classification": "C26_CANDIDATE_DELTA_BASELINE_PROVENANCE_DEFECT",
+    "c26RuntimeScoresInvalidated": false,
+    "defectScope": "candidate-only isolation was not base-relative because C26 diffed from committed HEAD instead of the reconstructed retained base"
+  },
+  "antiOverfitScope": {
+    "classification": "C26_ANTI_OVERFIT_SCOPE_FALSE_POSITIVE_PENDING_NON_PROPAGATION_PROOF",
+    "evaluatorMayReadLabelsForScoringOnly": true,
+    "runtimeNonPropagationRequiredInC27": true
+  },
+  "pass": true
+}
