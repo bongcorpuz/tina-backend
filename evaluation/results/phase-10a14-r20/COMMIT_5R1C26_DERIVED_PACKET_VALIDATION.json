@@ -1,0 +1,38 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:34.421Z",
+  "packets": [
+    {
+      "id": "B1-doc-title-no-content",
+      "positiveParaphrases": 4,
+      "lexicalSubstitutions": 4,
+      "negativeNearMisses": 4,
+      "grammaticalConstructions": 2,
+      "semanticFillerFamilies": 3,
+      "derivedNormalizedSkeletons": 3,
+      "leaveOneFamilyOutExecutions": [
+        {
+          "family": "nautical equipment",
+          "pass": true,
+          "note": "predicate does not depend on this family token"
+        },
+        {
+          "family": "household items",
+          "pass": true,
+          "note": "predicate does not depend on this family token"
+        },
+        {
+          "family": "school/training documents",
+          "pass": true,
+          "note": "predicate does not depend on this family token"
+        }
+      ],
+      "copiedR3FullQueries": 0,
+      "copiedFrozenSuiteFullQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

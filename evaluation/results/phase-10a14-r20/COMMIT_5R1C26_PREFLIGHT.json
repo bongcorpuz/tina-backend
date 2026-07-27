@@ -1,0 +1,41 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:25.541Z",
+  "head": "cef0f5d0a04908c1dbfe94a548ab472a0bed35bc",
+  "parent": "999adcde703394cb5dd39a2e3621c9f42872cde4",
+  "branch": "feature/source-availability-engine-v1",
+  "sync": "0\t0",
+  "trackedTreeClean": true,
+  "untracked": [
+    ".claude/settings.local.json",
+    ".vscode/extensions.json",
+    "evaluation/factcheck/README.md",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "evaluation/factcheck/hardest-philippine-tax-question.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C26_PREFLIGHT.json",
+    "evaluation/runner/phase-10a14-r20/commit5r1c26-execute.mjs"
+  ],
+  "protectedUntrackedOnly": true,
+  "badUntracked": [],
+  "nodeListenerAbsent": true,
+  "port5173Free": true,
+  "currentStateBlob": "142611c771ed8b1e761a3370bbe06f8c1886780b",
+  "startingRegistry": {
+    "total": 182,
+    "domain_campaign": 118,
+    "focused_suite": 13,
+    "other": 9,
+    "synthetic_validator": 42,
+    "controlling": 180,
+    "nonControlling": 2,
+    "orphan": 0,
+    "dangling": 0,
+    "cumulativeThrough": "commit5r1c25-incomplete",
+    "decisionLayerClosure": true,
+    "relationLayerClosure": true,
+    "reasonLayerClosure": false,
+    "runtimeClosure": false
+  },
+  "pass": true
+}

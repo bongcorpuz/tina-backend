@@ -1,0 +1,17 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:34.405Z",
+  "classification": "FEATURE_VECTOR_VERSION_NONCOMPARABILITY",
+  "c24V6": {
+    "featureVectors": 120,
+    "collidingRows": 27,
+    "collidingVectors": 2
+  },
+  "c25CoarserKey": {
+    "featureVectors": 26,
+    "collidingRows": 213,
+    "collidingVectors": 11
+  },
+  "determination": "not directly comparable because the C25 feature definition removed/coarsened C24 V6 fields and merged previously distinct vectors",
+  "c25DoesNotProveNewSemanticCollisions": true
+}

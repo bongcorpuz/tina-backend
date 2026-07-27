@@ -1,0 +1,28 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:34.382Z",
+  "policy": "OPEN_REASON_GATE_PARETO_ACCEPTANCE_POLICY",
+  "c25Rule": "external_subject_to_tax_instrument_is_ordinary_object_treatment",
+  "checks": {
+    "r3ReasonDoesNotDecrease": true,
+    "reasonSuiteDoesNotDecrease": true,
+    "collisionProbesDoNotDecrease": true,
+    "atLeastOneOpenGateStrictlyImprovesVsC24Base": true,
+    "decisionRelationClauseGuardIntegrityExact": true,
+    "correctRowRegressionsZero": true,
+    "wrongToDifferentWrongZero": true,
+    "decisionDriftZero": true,
+    "relationDriftZero": true,
+    "targetPlacementCompositionOrderSafety": "inherited from C25 packet/gate evidence; no C26 broadening applied to this base",
+    "transitiveAntiOverfitPass": true,
+    "derivedGeneralizationPass": true
+  },
+  "forbiddenInterpretationsAvoided": {
+    "weightedAveraging": true,
+    "regressionTrading": true,
+    "aggregateScoreAcceptance": true,
+    "frozenSuiteOnlyGainCalledR3Gain": false
+  },
+  "determination": "RETAIN_PROSPECTIVELY_AS_C26_PARETO_BASE",
+  "pass": true
+}

@@ -1,0 +1,136 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:34.420Z",
+  "hypotheses": [
+    {
+      "id": "B1-doc-title-no-content",
+      "family": "document_content",
+      "principle": "A language transform over a document/title/nominal label without supplied content and without tax predicate is no_tax_relation.",
+      "runtimeObservablePredicate": "language transform verb + nominal/document operand + no quoted/delimited/following content + no tax predicate",
+      "targetGateSets": [
+        "collision_request_subtype",
+        "R3 residual"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "medium",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "B2-doc-content-present",
+      "family": "document_content",
+      "principle": "The same operation with supplied content stays explicit_non_tax_task or tax task according to content.",
+      "runtimeObservablePredicate": "language transform verb + quoted/delimited/following content present",
+      "targetGateSets": [
+        "negative controls"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "medium",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "C1-evidence-support",
+      "family": "evidentiary_procedure",
+      "principle": "Records/proof/substantiation supporting a tax position is evidentiary treatment, not filing procedure.",
+      "runtimeObservablePredicate": "support/proof/records predicate + tax object + no filing/remittance deadline operation",
+      "targetGateSets": [
+        "outcome_evidentiary_vs_filing"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "high",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "C2-filing-procedure",
+      "family": "evidentiary_procedure",
+      "principle": "Form/filing/registration/remittance/deadline asks compliance procedure when tax bearer is present.",
+      "runtimeObservablePredicate": "filing/remit/register/deadline outcome + tax predicate bearer",
+      "targetGateSets": [
+        "outcome_evidentiary_vs_filing"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "high",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "D1-bare-acronym-tax-context",
+      "family": "acronym_referent",
+      "principle": "Recognized bare acronym in tax procedure context clarifies rather than refuses.",
+      "runtimeObservablePredicate": "uppercase acronym + tax procedure context + incomplete referent",
+      "targetGateSets": [
+        "acronym_vs_topic_ambiguity"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "high",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "D2-ordinary-topic-acronym",
+      "family": "acronym_referent",
+      "principle": "Ordinary-world acronym or metadata-only suffix without tax context remains no_tax_relation.",
+      "runtimeObservablePredicate": "uppercase token + ordinary referent + no tax procedure context",
+      "targetGateSets": [
+        "acronym_vs_topic_ambiguity"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "medium",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "A1-remaining-subject-to-tax",
+      "family": "remaining_attachment",
+      "principle": "The final subject-to-percentage-tax ordinary event row may be reason-only if decision and relation remain met.",
+      "runtimeObservablePredicate": "subject-to-percentage-tax copular construction + ordinary event head + tax complement",
+      "targetGateSets": [
+        "predicate_attachment"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "medium",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    },
+    {
+      "id": "R3-pure-vector-split",
+      "family": "r3_pure_vector",
+      "principle": "Only a vector-pure structural subtype with no decision/relation dependency can be accepted for R3 residual gain.",
+      "runtimeObservablePredicate": "monotonic feature vector produces a pure expected-reason pocket without forbidden selectors",
+      "targetGateSets": [
+        "R3 residual",
+        "monotonic feature baseline"
+      ],
+      "predictedR3Effect": "non-negative; exact delta must be simulated before activation",
+      "predictedReasonSuiteEffect": "non-negative; exact delta must be simulated before activation",
+      "predictedCollisionProbeEffect": "non-negative; exact delta must be simulated before activation",
+      "crossLayerClassification": "REASON_ONLY",
+      "antiOverfitRisk": "medium",
+      "packetPlan": "4+ paraphrases, 4+ lexical substitutions, 4+ negative near-misses, 2+ constructions, 3+ filler families, 3+ skeletons",
+      "status": "frozen_before_material_iteration"
+    }
+  ]
+}

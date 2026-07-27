@@ -1,0 +1,29 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:42.260Z",
+  "scannedFiles": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c26_structural_reason_remediation-commit5r1c26-dev-01-ord01-2026-07-27T13-02-34-919Z/C26_ONLY_CANDIDATE.patch",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c26_structural_reason_remediation-commit5r1c26-dev-01-ord01-2026-07-27T13-02-34-919Z/FULL_RUNTIME_DIFF_FROM_HEAD.patch",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c26_structural_reason_remediation-commit5r1c26-dev-01-ord01-2026-07-27T13-02-34-919Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+    "evaluation/runner/phase-10a14-r20/commit5r1c26-execute.mjs"
+  ],
+  "findings": [
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c26-execute.mjs",
+      "category": "query hashes"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c26-execute.mjs",
+      "category": "expected labels"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c26-execute.mjs",
+      "category": "suite/family/category selectors"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c26-execute.mjs",
+      "category": "complete fixture query template"
+    }
+  ],
+  "pass": false
+}

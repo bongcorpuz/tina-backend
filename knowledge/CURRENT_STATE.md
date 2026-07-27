@@ -4,6 +4,144 @@
 
 Last updated:
 
+`2026-07-27T13:06:19.052Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C26
+PARETO-GATE ADJUDICATION, MONOTONIC FEATURE RECONCILIATION AND STRUCTURAL REASON CLOSURE
+DECISION: INCOMPLETE - C25 RETAINED PROSPECTIVELY AS THE C26 PARETO BASE;
+          ONE STRUCTURAL REASON RULE REJECTED;
+          DECISION AND RELATION LOCKS PRESERVED; REASON LOCK REMAINS OPEN
+```
+
+C26 corrected C25 reporting prospectively:
+
+```text
+C25 manifest hash entries                  54
+C25 evidence files including manifest          45
+CURRENT_STATE prior record                 53 / 54
+determination                              C25_CURRENT_STATE_MANIFEST_COUNT_REPORTING_DEFECT
+manifest integrity defect                  false
+C25 acceptance-contract deviation          true - dev-03 had zero R3 gain but frozen gate gain
+```
+
+C26 Pareto policy:
+
+```text
+determination                              RETAIN_PROSPECTIVELY_AS_C26_PARETO_BASE
+C25 rule retained as C26 base              true
+base services tree digest                  7af07279b59992c099aef4174680beebfe44ddfe06b36e126687805779aaecaa
+analyzer normalized-LF SHA-256             57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc
+domain-boundary normalized-LF SHA-256      0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039
+patterns normalized-LF SHA-256             3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa
+R3 reason                                  3462 / 3,720
+reason suite v8                            331 / 344
+collision probes                           155 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+```
+
+Feature-version reconciliation:
+
+```text
+classification                             FEATURE_VECTOR_VERSION_NONCOMPARABILITY
+C24 V6 vectors / colliding rows             120 / 27
+C25 coarse vectors / colliding rows          26 / 213
+C26 monotonic vectors / colliding rows       124 / 27
+C26 monotonic feature validator             PASS
+```
+
+C26 material-attempt accounting:
+
+```text
+governed reconstruction iterations          1
+material reason-remediation iterations      1
+accepted rules                              none
+rejected rules                              contentless_document_title_language_transform_is_no_tax_relation
+candidate exhaustion                        false
+remaining viable candidates                 true
+```
+
+C26 final candidate result:
+
+```text
+R3 reason                                  3410 / 3,720
+reason suite v8                            343 / 344
+collision probes                           163 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+cross-layer classifications                 {"DECISION_DEPENDENT":26,"REASON_ONLY":20,"ORACLE_OR_CONTRACT_AMBIGUITY":8}
+```
+
+Registry after C26:
+
+```text
+cumulativeThrough       commit5r1c26-incomplete
+total attempts          184
+domain_campaign         120
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             182
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
+
+Finalization:
+
+```text
+manifest entries                          44
+evidence files including manifest          43
+dev-factory preserved exactly              true
+live runtime restored                      true
+service/oracle/roadmap tracked diff         0
+```
+
+Reason lock remains open. The next exact task is:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C27
+REASON-LAYER CLOSURE CONTINUATION 27 AGAINST THE GOVERNANCE-COMPLIANT C26 BASE
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C25
+
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T10:09:44.520Z`
 
 Repository:

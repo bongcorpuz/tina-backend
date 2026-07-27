@@ -1,0 +1,46 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:34.421Z",
+  "packets": [
+    {
+      "id": "B1-doc-title-no-content",
+      "principle": "contentless document/title language transform is no_tax_relation",
+      "positives": [
+        "Translate the tide chart poster handbook into plain English.",
+        "Summarize the lantern paper roll manual for a training note.",
+        "Explain the coral tank pump guide in simpler terms.",
+        "Rewrite the reed mat binder booklet for a notice board."
+      ],
+      "lexicalSubstitutions": [
+        "Render the kite spool rack handbook in plain words.",
+        "Turn the mango crate liner guide into simple English.",
+        "Paraphrase the bamboo flute case manual for a student.",
+        "Simplify the shell lamp shade booklet."
+      ],
+      "negativeNearMisses": [
+        "Translate \"The invoice is subject to VAT\" into plain English.",
+        "Translate the BIR revenue memorandum into plain English.",
+        "Translate the handbook: VAT applies to the sale.",
+        "Explain the attached paragraph about withholding tax."
+      ],
+      "grammaticalConstructions": [
+        "imperative transform over nominal object",
+        "question-form request over identified title"
+      ],
+      "semanticFillerFamilies": [
+        "nautical equipment",
+        "household items",
+        "school/training documents"
+      ],
+      "derivedSkeletons": [
+        "<transform> the <ordinary-object> <document-role> into plain English",
+        "<transform> the <ordinary-object> <document-role> for <ordinary-purpose>",
+        "<explain> the <ordinary-object> <document-role> in simpler terms"
+      ],
+      "copiedR3FullQueries": 0,
+      "copiedFrozenSuiteFullQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0
+    }
+  ]
+}

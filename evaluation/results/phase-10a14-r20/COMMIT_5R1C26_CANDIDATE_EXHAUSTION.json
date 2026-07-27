@@ -1,0 +1,14 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:42.398Z",
+  "hypothesesConsidered": 8,
+  "materialIterationsUsed": 1,
+  "acceptedRules": [],
+  "rejectedRules": [
+    "contentless_document_title_language_transform_is_no_tax_relation"
+  ],
+  "coverageAcrossRequiredFamilies": true,
+  "FORMAL_CANDIDATE_EXHAUSTION": false,
+  "remainingViableCandidatesExist": true,
+  "reason": "C26 rejected the first material candidate; remaining families require continuation."
+}

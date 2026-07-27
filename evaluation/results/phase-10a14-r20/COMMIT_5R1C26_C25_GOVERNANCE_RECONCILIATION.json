@@ -1,0 +1,48 @@
+{
+  "unit": "COMMIT 5R1-C26",
+  "generatedUtc": "2026-07-27T13:02:25.963Z",
+  "manifestReporting": {
+    "committedManifestEntries": 54,
+    "committedEvidenceFilesIncludingSelfExcludingManifest": 55,
+    "currentStateRecordedManifestEntries": 53,
+    "currentStateRecordedEvidenceFilesIncludingManifest": 54,
+    "classifications": [
+      "C25_CURRENT_STATE_MANIFEST_COUNT_REPORTING_DEFECT",
+      "NO_MANIFEST_INTEGRITY_DEFECT"
+    ],
+    "c25EvidencePreservedByteForByte": true,
+    "prospectiveCorrectionRequiredInC26CurrentState": true
+  },
+  "materialAttemptAccounting": {
+    "governedReconstruction": 1,
+    "registeredMaterialCampaigns": 3,
+    "dev01": {
+      "disposition": "rejected_before_runtime_acceptance",
+      "reason": "no R3-row gain despite frozen-gate gain"
+    },
+    "dev02": {
+      "disposition": "rejected_packet_validation"
+    },
+    "dev03": {
+      "disposition": "activated_and_recorded_accepted"
+    },
+    "allThreeMaterialCampaignsAcceptedRuntimeIterations": false
+  },
+  "acceptanceContractConflict": {
+    "requiredPositiveNetR3MismatchReduction": true,
+    "dev03": {
+      "matchedR3Ids": 0,
+      "tpCorrected": 0,
+      "netMismatchDelta": 0,
+      "reasonSuiteBefore": 320,
+      "reasonSuiteAfter": 331,
+      "collisionProbesBefore": 148,
+      "collisionProbesAfter": 155,
+      "frozenGateNetGain": 18
+    },
+    "classification": "C25_ACCEPTANCE_CONTRACT_DEVIATION",
+    "scoreOrEvidenceFabricated": false,
+    "governingCriterionDefect": true
+  },
+  "pass": true
+}

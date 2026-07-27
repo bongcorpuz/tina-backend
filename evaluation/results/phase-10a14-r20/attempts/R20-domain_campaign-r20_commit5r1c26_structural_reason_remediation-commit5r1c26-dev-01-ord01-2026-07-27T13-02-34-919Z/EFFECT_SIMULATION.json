@@ -1,0 +1,13 @@
+{
+  "r3ReasonNonDecrease": false,
+  "reasonSuiteNonDecrease": true,
+  "collisionProbesNonDecrease": true,
+  "strictImprovement": true,
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "correctRowRegressions": 52,
+  "decisionDrift": 0,
+  "relationDrift": 0,
+  "transitiveAntiOverfitPass": false,
+  "derivedGeneralizationPass": true
+}
