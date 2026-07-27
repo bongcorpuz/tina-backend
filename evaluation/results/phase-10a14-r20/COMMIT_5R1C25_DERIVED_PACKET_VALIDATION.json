@@ -1,0 +1,128 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:31.477Z",
+  "derivedFromActualProbeTexts": true,
+  "validations": [
+    {
+      "rule": "external_subject_to_tax_instrument_is_ordinary_object_treatment",
+      "positiveParaphraseRecall": {
+        "passed": 4,
+        "total": 4
+      },
+      "lexicalSubstitutionRecall": {
+        "passed": 4,
+        "total": 4
+      },
+      "negativeNearMissPrecision": {
+        "passed": 4,
+        "total": 4
+      },
+      "grammaticalConstructionCount": 2,
+      "semanticFillerFamilyCount": 4,
+      "normalizedSyntacticSkeletonCount": 3,
+      "leaveOneFamilyOutExecutions": [
+        {
+          "heldOutFamily": "objects",
+          "executed": true,
+          "passed": true,
+          "note": "predicate uses grammar plus tax-instrument complement, not filler family membership"
+        },
+        {
+          "heldOutFamily": "services",
+          "executed": true,
+          "passed": true,
+          "note": "predicate uses grammar plus tax-instrument complement, not filler family membership"
+        },
+        {
+          "heldOutFamily": "charges_or_fees",
+          "executed": true,
+          "passed": true,
+          "note": "predicate uses grammar plus tax-instrument complement, not filler family membership"
+        },
+        {
+          "heldOutFamily": "transactions_or_events",
+          "executed": true,
+          "passed": true,
+          "note": "predicate uses grammar plus tax-instrument complement, not filler family membership"
+        }
+      ],
+      "positive": [
+        {
+          "query": "Is the repair service subject to VAT?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Is a delivery charge subject to withholding tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Are the subscription fees subject to percentage tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Is the warehouse rental subject to income tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Is the catering package subject to VAT?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Is the software license subject to final tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Is the import handling service subject to customs duty?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        },
+        {
+          "query": "Is the event ticket sale subject to excise tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "pass": true
+        }
+      ],
+      "negative": [
+        {
+          "query": "Is percentage tax applicable?",
+          "actualDecision": "ALLOW",
+          "actualReason": "explicit_tax_task_relation",
+          "pass": true
+        },
+        {
+          "query": "What is percentage tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "explicit_tax_task_relation",
+          "pass": true
+        },
+        {
+          "query": "How do we compute VAT?",
+          "actualDecision": "ALLOW",
+          "actualReason": "explicit_tax_task_relation",
+          "pass": true
+        },
+        {
+          "query": "Is percentage tax subject to income tax?",
+          "actualDecision": "ALLOW",
+          "actualReason": "explicit_tax_task_relation",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "pass": true
+}

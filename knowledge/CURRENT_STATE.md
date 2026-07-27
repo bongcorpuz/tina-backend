@@ -4,6 +4,138 @@
 
 Last updated:
 
+`2026-07-27T10:09:44.520Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C25
+STRUCTURAL FAILURE-FAMILY REMEDIATION AGAINST THE GOVERNANCE-COMPLIANT C24 BASE
+DECISION: INCOMPLETE - PRIORITY A STRUCTURAL RULE ACCEPTED AS BEST C25 CANDIDATE;
+          DECISION AND RELATION LOCKS PRESERVED; REASON LOCK REMAINS OPEN
+```
+
+C25 first reconciled C24 manifest counting:
+
+```text
+C24 registered reconstruction attempts     1
+C24 material remediation iterations        0
+C24 new material rules                     0
+C24 manifest hash entries                  24
+C24 evidence files including manifest      25
+determination                              NO_MANIFEST_INTEGRITY_DEFECT, COUNTING_CONVENTION_RECONCILED
+```
+
+Exact C24-base reconstruction:
+
+```text
+source reconstruction attempt              R20-domain_campaign-r20_commit5r1c24_c23_governed_reconstruction-commit5r1c24-reconstruction-ord01-2026-07-27T09-34-45-594Z
+required candidate source                  R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z
+services tree digest                       f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63
+R3 canonical/reason                        3462 / 3,720
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+R3 reason mismatches                       258
+reason suite v8                            320 / 344
+collision probes                           148 / 196
+```
+
+C25 material iteration accounting:
+
+```text
+governed reconstruction iterations         1
+material reason-remediation iterations     3
+accepted structural rule                   external_subject_to_tax_instrument_is_ordinary_object_treatment
+rejected / deferred hypotheses             11
+candidate exhaustion                       false
+remaining viable candidates                true
+```
+
+C25 accepted candidate outcome:
+
+```text
+R3 canonical/reason                        3462 / 3,720
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+R3 reason mismatches                       258
+reason suite v8                            331 / 344
+collision probes                           155 / 196
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+label-independent colliding rows           213
+label-independent colliding vectors        11
+transitive anti-overfit                    PASS
+derived packet validation                  PASS
+candidate analyzer SHA-256                 57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc
+candidate services tree digest             7af07279b59992c099aef4174680beebfe44ddfe06b36e126687805779aaecaa
+```
+
+Registry after C25:
+
+```text
+cumulativeThrough       commit5r1c25-incomplete
+total attempts          182
+domain_campaign         118
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             180
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
+
+Finalization:
+
+```text
+manifest entries                          53
+evidence files including manifest          54
+dev-factory preserved exactly              true
+live runtime restored                      true
+service/oracle/roadmap tracked diff         0
+```
+
+Reason lock remains open. The accepted C25 rule improves the structural subject-to-tax family while preserving all locked decision, relation, clause, guard and integrity gates, but R3 reason, reason-suite and collision-probe closure are still incomplete.
+
+Next exact task:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C26
+REASON-LAYER CLOSURE CONTINUATION 26 AGAINST THE GOVERNANCE-COMPLIANT C25 BASE
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C24
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T09:34:49.936Z`
 
 Repository:

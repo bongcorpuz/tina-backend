@@ -1,0 +1,9 @@
+
+  const c25SubjectToTax = /^(?:is|are)\s+(?:the\s+|a\s+|an\s+)?(.+?)\s+subject\s+to\s+((?:percentage|value-added|income|final|withholding|excise|documentary\s+stamp|capital\s+gains|estate|donor'?s?|fringe\s+benefit)\s+tax|vat|tax|customs\s+dut(?:y|ies))\??$/i.exec(v.t);
+  const c25SubjectSpan = c25SubjectToTax ? c25SubjectToTax[1] : '';
+  const c25SubjectIsTaxInstrument = /\b(?:tax|vat|withholding|excise|customs\s+dut(?:y|ies)|percentage|income|final|documentary\s+stamp|capital\s+gains|estate\s+tax|donor'?s?\s+tax|fringe\s+benefit)\b/i.test(c25SubjectSpan);
+  if (v.reason === 'explicit_tax_task_relation'
+      && v.rels.includes('ASKS_TAX_TREATMENT_OF')
+      && c25SubjectToTax
+      && !c25SubjectIsTaxInstrument)
+    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.91 };

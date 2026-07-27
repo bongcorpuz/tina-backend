@@ -1,0 +1,13 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:43.013Z",
+  "hypothesesConsidered": 12,
+  "coverageAcrossAllFourFamilies": true,
+  "preRuntimeSimulationForSurvivingHypotheses": [
+    "A1"
+  ],
+  "rejectedOrDeferredHypotheses": 11,
+  "remainingViableCandidatesExist": true,
+  "FORMAL_CANDIDATE_EXHAUSTION": false,
+  "reason": "C25 accepted one positive-net zero-regression structural rule and stops incomplete because the reason lock remains open; other priority families remain viable for C26."
+}

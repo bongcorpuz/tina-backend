@@ -1,0 +1,121 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:28.340Z",
+  "baseline": {
+    "residualRows": 258,
+    "featureCount": 18,
+    "vectorCount": 26,
+    "collidingRows": 213,
+    "collidingVectorCount": 11
+  },
+  "ablations": [
+    {
+      "removedFeature": "grammaticalSubjectSpan",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "taxComplementSpan",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "taxPredicateBearer",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "externalObjectEventHead",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "taxInstrumentHead",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "copularSubjectToTaxConstruction",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "requestedOperation",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "operandContentAvailability",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "documentTitleVersusSuppliedContent",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "evidentiarySupportOutcome",
+      "vectorCount": 25,
+      "collidingVectorCount": 11,
+      "collidingRows": 214
+    },
+    {
+      "removedFeature": "filingRemittanceRegistrationDeadlineOutcome",
+      "vectorCount": 19,
+      "collidingVectorCount": 11,
+      "collidingRows": 234
+    },
+    {
+      "removedFeature": "definitionExpansionRequest",
+      "vectorCount": 17,
+      "collidingVectorCount": 11,
+      "collidingRows": 235
+    },
+    {
+      "removedFeature": "acronymRecognition",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "acronymReferentCompleteness",
+      "vectorCount": 22,
+      "collidingVectorCount": 11,
+      "collidingRows": 220
+    },
+    {
+      "removedFeature": "ordinaryWorldContext",
+      "vectorCount": 17,
+      "collidingVectorCount": 10,
+      "collidingRows": 225
+    },
+    {
+      "removedFeature": "metadataSuffixAttachment",
+      "vectorCount": 25,
+      "collidingVectorCount": 11,
+      "collidingRows": 217
+    },
+    {
+      "removedFeature": "quotedOperandScope",
+      "vectorCount": 26,
+      "collidingVectorCount": 11,
+      "collidingRows": 213
+    },
+    {
+      "removedFeature": "filipinoTaglishMorphology",
+      "vectorCount": 22,
+      "collidingVectorCount": 8,
+      "collidingRows": 216
+    }
+  ]
+}

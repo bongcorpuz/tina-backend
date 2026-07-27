@@ -1,0 +1,50 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:07:02.508Z",
+  "rule": "external_subject_to_tax_instrument_is_ordinary_object_treatment",
+  "matchedIds": [],
+  "matchedRows": [],
+  "tpCorrected": 0,
+  "correctRowRegressions": 0,
+  "wrongToDifferentWrong": 0,
+  "previousOverrideRegressions": 0,
+  "decisionDrift": 0,
+  "relationDrift": 0,
+  "branchSignatureDrift": "not observed; additive reason override only",
+  "reasonSuiteEffect": {
+    "passed": 331,
+    "total": 344,
+    "failed": 13
+  },
+  "collisionProbeEffect": {
+    "passed": 155,
+    "total": 196,
+    "failed": 41,
+    "byFamily": {
+      "collision_request_subtype": 8,
+      "predicate_attachment": 1,
+      "outcome_evidentiary_vs_filing": 16,
+      "acronym_vs_topic_ambiguity": 16
+    }
+  },
+  "netMismatchDelta": 0,
+  "frozenGateNetGain": 18,
+  "writeAudit": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+      "afterSha256Normalized": "57df20a8dad31b1267b5bbd3b92b679acdafcd4a48e0df462b3d7b7e3ca96fdc",
+      "beforeBytes": 172204,
+      "afterBytes": 173029,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "pass": true
+}

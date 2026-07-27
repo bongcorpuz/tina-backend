@@ -1,0 +1,22 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:24.249Z",
+  "c24RegisteredAttempts": {
+    "governedReconstruction": 1,
+    "materialRemediationIterations": 0
+  },
+  "c24NewMaterialRules": 0,
+  "manifestSemantics": {
+    "promptExpectedManifestHashEntries": 23,
+    "manifestHashEntries": 24,
+    "evidenceFilesIncludingSelfExcludingManifest": 25,
+    "currentStateWording": "\"manifest ... (23 files)\" means 23 hashed entries",
+    "userFacingTwentyFourFiles": "total evidence set including the self-excluding manifest",
+    "observedC24ManifestExplanation": "Committed C24 manifest includes the C24 executor script as an additional self-excluding hash entry; C24 evidence is immutable and not rewritten."
+  },
+  "determinations": [
+    "NO_MANIFEST_INTEGRITY_DEFECT",
+    "COUNTING_CONVENTION_RECONCILED"
+  ],
+  "pass": true
+}

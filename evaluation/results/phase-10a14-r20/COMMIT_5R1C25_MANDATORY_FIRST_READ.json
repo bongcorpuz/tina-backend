@@ -1,0 +1,121 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:24.019Z",
+  "files": [
+    {
+      "path": "knowledge/CURRENT_STATE.md",
+      "bytes": 70581,
+      "sha256": "11004c460616d3ee98e7a2b7cd27daf2d0324d712b5176168715c88a55b4e982"
+    },
+    {
+      "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+      "bytes": 14842,
+      "sha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 547249,
+      "sha256": "9ee8af4abcd6e56cba8e536dc1abcb3808e0cfebcd6574a4d72ba31cf8985b3e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C22_ANTI_OVERFIT_GATE_SPEC.md",
+      "bytes": 883,
+      "sha256": "19114e1670c37f4b20e953416e6e74279c8241d9384907a777a1c1352c1bfeda"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C22_ANTI_OVERFIT_RED_TEAM.json",
+      "bytes": 2751,
+      "sha256": "e933e5c0b339da2ed3c0f04e1f6c74b170397d8545306f4ea65d5a0a25e480f1"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C22_ANTI_OVERFIT_GATE_RESULT.json",
+      "bytes": 41915,
+      "sha256": "67c700e27aa369b2039caf6dad5f17f1aff2ab88e2ba025331a521d62e10b297"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_ACCEPTED_CANDIDATE.patch",
+      "bytes": 631,
+      "sha256": "4d0660d1b745fa04bc4b4c6e326f0043f88caefb42cc4267827f90dba6a29220"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C23_LABEL_INDEPENDENT_FEATURE_SPEC.md",
+      "bytes": 829,
+      "sha256": "6a36b83ec997e6bd133e5cb2a79da76d40f6d453ec695a18a08225a0cb35add4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_C23_GOVERNANCE_VALIDATION.json",
+      "bytes": 5522,
+      "sha256": "b590be59b4037b2f084310f6c352cb3b144ae336a49e5de23bd27b300a28c721"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_C23_GENERALIZATION_DERIVATION.json",
+      "bytes": 2376,
+      "sha256": "b5eadd5f425df7157a095c2caa66428c5aef287aa4f0e8f0aee4bf64a6f5b2f3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_C23_TRANSITIVE_ANTI_OVERFIT_RESULT.json",
+      "bytes": 4761,
+      "sha256": "9d74c5986aac338ab3c16abf78a64829d2c2522074f4490238e0f19257e6c085"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_DERIVED_PACKET_VALIDATION.json",
+      "bytes": 2906,
+      "sha256": "66dfdef8a188da12770f8fd36af871fdb9017a6da13def9a447fd7261d015039"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_RELATION_OBJECT_INTEGRITY_CLASSIFICATION.json",
+      "bytes": 1835,
+      "sha256": "bd377ab245f229ea643f8bdd6eaf4a9c4dc3e695ad56aaa8440a1e5edb6e7d67"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_RECONSTRUCTION_RESULT.json",
+      "bytes": 66842,
+      "sha256": "9e613c0a0c26888cec8160b1339177a1a9b484f7799cc12ae48c6eb320476ebc"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_REASON_SUITE_FAILURE_CONTRACT.json",
+      "bytes": 28583,
+      "sha256": "c66b6992472c01092369707e4aec58d0986ea4329e5eca862ae4fd12c34569e7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_COLLISION_PROBE_FAILURE_CONTRACT.json",
+      "bytes": 56195,
+      "sha256": "de592abbcb74273dde436f814be6264844d6d917c3d6fb856767923551b01458"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_RESIDUAL_FEATURE_MATRIX.json",
+      "bytes": 651566,
+      "sha256": "e421261acd86c6f36ad509e5521c2f1ed6a08e8e8bb666dd70e072a7caca7d8b"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_COLLISION_ANALYSIS_V6.json",
+      "bytes": 4369,
+      "sha256": "48698c9b30cf452d2489cd6ebb6d614ee7f68e167855f95e777d7a5340a3d91e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_FEATURE_ABLATION.json",
+      "bytes": 7598,
+      "sha256": "09763c8bb2b6f565a02e660ca4641001c65a15c35e8630807665f532c256b928"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_RULE_GENERALIZATION_PACKETS.json",
+      "bytes": 1587,
+      "sha256": "3de01525588017e8a6ef0a8c03dd6a616686be8e098482d2ada08567354587f9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C24_EVIDENCE_MANIFEST.sha256",
+      "bytes": 4452,
+      "sha256": "a2e9a8d39377a54e365ccef7eac8ce5a0d53c214dfeb633823a539577ff177c0"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CLAUSE_LEVEL_INTENT_SCHEMA.md",
+      "bytes": 2929,
+      "sha256": "10dd95cfc409fcebbfa623b46c9ac3c5aa0bf443fca0b7a97df75e71c3f88a07"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/RELATION_AND_PRECEDENCE_SPEC.md",
+      "bytes": 3010,
+      "sha256": "83089bbd12c27e9ccf8a322dfe04293d3bf2083f71cc4df907d4204befc79432"
+    }
+  ]
+}

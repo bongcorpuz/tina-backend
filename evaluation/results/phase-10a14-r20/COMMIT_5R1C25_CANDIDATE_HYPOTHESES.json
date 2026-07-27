@@ -1,0 +1,181 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:26.410Z",
+  "minimumHypothesesRequired": 12,
+  "hypotheses": [
+    {
+      "id": "A1",
+      "family": "A",
+      "principle": "External grammatical subject before subject-to plus tax instrument complement requests treatment of ordinary object/event.",
+      "runtimeObservablePredicate": "copular subject-to-tax, non-tax subject span, tax instrument complement, baseline explicit_tax_task_relation",
+      "affectedFailureFamilies": [
+        "compliance_vs_treatment",
+        "predicate_attachment"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "positive",
+      "status": "selected_for_pre_runtime_simulation"
+    },
+    {
+      "id": "A2",
+      "family": "A",
+      "principle": "Tax instrument as grammatical subject remains explicit tax task.",
+      "runtimeObservablePredicate": "subject span itself is a tax instrument",
+      "affectedFailureFamilies": [
+        "compliance_vs_treatment",
+        "predicate_attachment"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "negative_control"
+    },
+    {
+      "id": "A3",
+      "family": "A",
+      "principle": "Computation or applicability wording remains explicit tax task.",
+      "runtimeObservablePredicate": "how/compute/applicable/due/required without external subject bearer",
+      "affectedFailureFamilies": [
+        "compliance_vs_treatment",
+        "predicate_attachment"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "rejected_pre_runtime_scope_not_target"
+    },
+    {
+      "id": "B1",
+      "family": "B",
+      "principle": "Language transform of identified document title with no supplied content is no_tax_relation.",
+      "runtimeObservablePredicate": "language operation, title/label operand, no quoted/delimited/following content, no tax predicate scope",
+      "affectedFailureFamilies": [
+        "no_tax_refuse_vs_clarify",
+        "collision_request_subtype"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "positive",
+      "status": "simulated_rejected_due_lower_priority_after_A_viable"
+    },
+    {
+      "id": "B2",
+      "family": "B",
+      "principle": "Language transform of supplied quoted text remains explicit_non_tax_task.",
+      "runtimeObservablePredicate": "language operation with quoted or delimited supplied content",
+      "affectedFailureFamilies": [
+        "no_tax_refuse_vs_clarify",
+        "collision_request_subtype"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "negative_control"
+    },
+    {
+      "id": "B3",
+      "family": "B",
+      "principle": "Language transform of BIR/tax issuance remains explicit tax task or definition context.",
+      "runtimeObservablePredicate": "language operation with tax issuance/instrument context",
+      "affectedFailureFamilies": [
+        "no_tax_refuse_vs_clarify",
+        "collision_request_subtype"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "negative_control"
+    },
+    {
+      "id": "C1",
+      "family": "C",
+      "principle": "Records/proof/evidence supporting a tax position should not be filing procedure.",
+      "runtimeObservablePredicate": "support/substantiation outcome plus tax position object",
+      "affectedFailureFamilies": [
+        "outcome_evidentiary_vs_filing"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "uncertain",
+      "status": "simulated_rejected_due_relation_decision_risk"
+    },
+    {
+      "id": "C2",
+      "family": "C",
+      "principle": "Filing/remittance/registration/deadline outcome is tax_compliance_task.",
+      "runtimeObservablePredicate": "procedure outcome bearer plus tax return/registration/remittance noun",
+      "affectedFailureFamilies": [
+        "outcome_evidentiary_vs_filing"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "uncertain",
+      "status": "simulated_rejected_due_relation_decision_risk"
+    },
+    {
+      "id": "C3",
+      "family": "C",
+      "principle": "Document noun alone does not decide; requested outcome controls.",
+      "runtimeObservablePredicate": "records/form/deadline token without outcome bearer",
+      "affectedFailureFamilies": [
+        "outcome_evidentiary_vs_filing"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "rejected_not_sufficiently_structural"
+    },
+    {
+      "id": "D1",
+      "family": "D",
+      "principle": "Bare uppercase token in definition frame without referent and with metadata suffix remains ambiguous_tax_acronym.",
+      "runtimeObservablePredicate": "definition request, uppercase token, no complete ordinary referent, metadata-only suffix",
+      "affectedFailureFamilies": [
+        "acronym_vs_topic_ambiguity"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "positive_but_risky",
+      "status": "simulated_rejected_due_metadata_selector_risk"
+    },
+    {
+      "id": "D2",
+      "family": "D",
+      "principle": "Ordinary-world referent for acronym-shaped token remains no_tax_relation or explicit non-tax.",
+      "runtimeObservablePredicate": "uppercase token plus ordinary referent/complement",
+      "affectedFailureFamilies": [
+        "acronym_vs_topic_ambiguity"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "negative_control"
+    },
+    {
+      "id": "D3",
+      "family": "D",
+      "principle": "Known tax-procedural acronym in tax context remains explicit tax task.",
+      "runtimeObservablePredicate": "recognized acronym plus tax/procedure context",
+      "affectedFailureFamilies": [
+        "acronym_vs_topic_ambiguity"
+      ],
+      "predictedMatchedSets": "derived by feature extraction over R3 residual, reason suite failures and collision failures",
+      "generalizationPacketPlan": "positive paraphrases, lexical substitutions, negative near misses, grammar alternates, filler families and skeletons generated before activation",
+      "antiOverfitRisk": "blocked if fixture terms, IDs, hashes, family selectors or complete suite queries appear in candidate runtime logic",
+      "expectedNetEffect": "zero",
+      "status": "negative_control"
+    }
+  ]
+}

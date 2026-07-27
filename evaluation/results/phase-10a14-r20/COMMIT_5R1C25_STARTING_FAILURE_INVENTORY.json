@@ -1,0 +1,20 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:26.409Z",
+  "reasonSuiteFailures": 24,
+  "collisionProbeFailures": 48,
+  "r3ResidualRows": 258,
+  "labelIndependentCollidingRows": 27,
+  "labelIndependentCollidingVectors": 2,
+  "reasonSuiteFamilies": {
+    "compliance_vs_treatment": 12,
+    "no_tax_refuse_vs_clarify": 12
+  },
+  "collisionFamilies": {
+    "collision_request_subtype": 8,
+    "predicate_attachment": 8,
+    "outcome_evidentiary_vs_filing": 16,
+    "acronym_vs_topic_ambiguity": 16
+  },
+  "expectedCountsMet": true
+}

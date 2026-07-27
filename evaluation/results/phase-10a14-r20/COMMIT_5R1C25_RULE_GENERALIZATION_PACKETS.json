@@ -1,0 +1,48 @@
+{
+  "unit": "COMMIT 5R1-C25",
+  "generatedUtc": "2026-07-27T10:09:31.444Z",
+  "runtimeActivatedRules": [
+    "external_subject_to_tax_instrument_is_ordinary_object_treatment"
+  ],
+  "packets": {
+    "external_subject_to_tax_instrument_is_ordinary_object_treatment": {
+      "positives": [
+        "Is the repair service subject to VAT?",
+        "Is a delivery charge subject to withholding tax?",
+        "Are the subscription fees subject to percentage tax?",
+        "Is the warehouse rental subject to income tax?"
+      ],
+      "lexicalSubstitutions": [
+        "Is the catering package subject to VAT?",
+        "Is the software license subject to final tax?",
+        "Is the import handling service subject to customs duty?",
+        "Is the event ticket sale subject to excise tax?"
+      ],
+      "negativeNearMisses": [
+        "Is percentage tax applicable?",
+        "What is percentage tax?",
+        "How do we compute VAT?",
+        "Is percentage tax subject to income tax?"
+      ],
+      "grammaticalConstructions": [
+        "copular singular interrogative: Is <external subject> subject to <tax instrument>?",
+        "copular plural interrogative: Are <external subject plural> subject to <tax instrument>?"
+      ],
+      "semanticFillerFamilies": [
+        "objects",
+        "services",
+        "charges_or_fees",
+        "transactions_or_events"
+      ],
+      "normalizedSyntacticSkeletons": [
+        "is <external-subject> subject to <tax-instrument>",
+        "are <external-subject-plural> subject to <tax-instrument>",
+        "is <event-or-transaction> subject to <tax-instrument>"
+      ],
+      "copiedR3FullQueries": 0,
+      "copiedFrozenSuiteFullQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembership": 0
+    }
+  }
+}
