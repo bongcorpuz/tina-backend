@@ -1,0 +1,93 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:14:51.707Z",
+  "preUpdateFileStatus": "untracked",
+  "preUpdateNormalizedLfSha256": "be835539d9e4bbfc3736b82509c4236ea63f37145704bdc9472e1a914dbe8c60",
+  "expectedPreUpdateNormalizedLfSha256": "be835539d9e4bbfc3736b82509c4236ea63f37145704bdc9472e1a914dbe8c60",
+  "hashDifferenceRecorded": null,
+  "semanticValidationResult": {
+    "requiredSubphasesPresent": [
+      {
+        "subphase": "10E-A Identity, account and session security V1",
+        "present": true
+      },
+      {
+        "subphase": "10E-B Application, API and abuse protection V1",
+        "present": true
+      },
+      {
+        "subphase": "10E-C Production transport, domain and secret boundary V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-A Pagination, bounded reads and database scalability V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-B Background tasks and request-path isolation V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-C Error monitoring and release observability V1",
+        "present": true
+      },
+      {
+        "subphase": "10I-P Production billing and real-payment readiness",
+        "present": true
+      }
+    ],
+    "productionReadinessSubphaseIntegrity": true,
+    "sourceOfTruthHierarchyPresent": false,
+    "strategicSectionIntegrity": true,
+    "pass": true
+  },
+  "requiredSubphasesPresent": [
+    {
+      "subphase": "10E-A Identity, account and session security V1",
+      "present": true
+    },
+    {
+      "subphase": "10E-B Application, API and abuse protection V1",
+      "present": true
+    },
+    {
+      "subphase": "10E-C Production transport, domain and secret boundary V1",
+      "present": true
+    },
+    {
+      "subphase": "10F-A Pagination, bounded reads and database scalability V1",
+      "present": true
+    },
+    {
+      "subphase": "10F-B Background tasks and request-path isolation V1",
+      "present": true
+    },
+    {
+      "subphase": "10F-C Error monitoring and release observability V1",
+      "present": true
+    },
+    {
+      "subphase": "10I-P Production billing and real-payment readiness",
+      "present": true
+    }
+  ],
+  "sourceOfTruthHierarchyPresent": true,
+  "v7Unchanged": true,
+  "initialUpdatedNormalizedLfSha256": "76301891587ec2d4b93adfcfc66a5908c258700c16121bd47f80a32cd164bc22",
+  "plannedFinalHeaderUpdate": "replace active C29 wording with actual C29 outcome after evidence execution",
+  "authorizedPathOnly": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+  "pass": true,
+  "finalUpdatedUtc": "2026-07-27T15:15:18.137Z",
+  "finalNormalizedLfSha256": "3c3f6c137af1b90f75896c6d2a5ae6cd5a239f467591b32283a2adbebda422b9",
+  "finalExecutionHeader": {
+    "currentActiveWork": "PHASE-10A14-R20",
+    "currentControllingResult": "COMMIT 5R1-C29 incomplete; COMMIT 5R1-C30 reason-layer continuation is next",
+    "phase10A": "OPEN",
+    "r20": "IN PROGRESS"
+  },
+  "strategicSectionIntegrity": true,
+  "productionReadinessSubphaseIntegrity": true,
+  "sourceOfTruthHierarchyIntegrity": true,
+  "v7ByteForBytePreservation": true,
+  "trackedInC29Commit": true
+}

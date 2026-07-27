@@ -1,0 +1,36 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:14:57.157Z",
+  "clusters": [
+    {
+      "classification": "DECISION_DEPENDENT",
+      "count": 25
+    },
+    {
+      "classification": "RELATION_DEPENDENT",
+      "count": 0
+    },
+    {
+      "classification": "REASON_ONLY",
+      "count": 278
+    },
+    {
+      "classification": "CROSS_LAYER_SAFE_CANDIDATE",
+      "count": 0
+    },
+    {
+      "classification": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "count": 0
+    },
+    {
+      "classification": "UNCLASSIFIED_PENDING_EVIDENCE",
+      "count": 0
+    }
+  ],
+  "priorityClusters": [
+    "metadata-only acronym and ordinary-topic referent boundaries",
+    "refuse-versus-clarify matter antecedent boundary",
+    "ordinary translation/document operand availability boundary"
+  ],
+  "pass": true
+}

@@ -1,0 +1,16 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:15:17.428Z",
+  "removedGeneratedWorkdirs": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-01-ord01-2026-07-27T15-14-57-169Z/delta-work",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-01-ord01-2026-07-27T15-14-57-169Z/delta-replay",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-01-ord01-2026-07-27T15-14-57-169Z/delta-reverse-replay",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-02-ord02-2026-07-27T15-15-03-512Z/delta-work",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-02-ord02-2026-07-27T15-15-03-512Z/delta-replay",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-02-ord02-2026-07-27T15-15-03-512Z/delta-reverse-replay",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z/delta-work",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z/delta-replay",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z/delta-reverse-replay"
+  ],
+  "pass": true
+}

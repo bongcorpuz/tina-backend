@@ -1,0 +1,17 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 4e66bec7..4a8984b9 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1236,6 +1236,12 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c29MetadataOnlyAcronymQuestion)
+     return { decision: 'CLARIFY', reasonCode: 'ambiguous_tax_acronym', confidence: 0.83 };
+ 
++  const c29MatterAntecedentNeedsClarification = v.reason === 'no_tax_relation'
++      && /^what\s+about\s+.+\s+for\s+(?:the\s+)?matter\b/i.test(v.t)
++      && !/\b(?:tax|vat|bir|boc|revenue|withholding|customs|income|deduction|return|filing)\b/i.test(v.t);
++  if (c29MatterAntecedentNeedsClarification)
++    return { decision: 'CLARIFY', reasonCode: 'no_tax_relation', confidence: 0.82 };
++
+   return null;
+ }
+ 

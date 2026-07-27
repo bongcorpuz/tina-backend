@@ -1,0 +1,26 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:15:16.125Z",
+  "c27TaintAwareGovernancePreserved": true,
+  "entries": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-01-ord01-2026-07-27T15-14-57-169Z",
+      "candidateId": "C29-M01-metadata-only-acronym-clarify-boundary",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-02-ord02-2026-07-27T15-15-03-512Z",
+      "candidateId": "C29-M02-matter-antecedent-clarify-boundary",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "candidateId": "C29-M03-ordinary-translation-handbook-no-tax-relation",
+      "findings": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

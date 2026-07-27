@@ -1,0 +1,36 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:15:16.125Z",
+  "surfaces": {
+    "RUNTIME_BEARING": [
+      "candidate runtime snapshot",
+      "candidate-only patch",
+      "imported runtime predicate/helper",
+      "generated source inserted into services"
+    ],
+    "EVALUATOR_ORCHESTRATION": [
+      "runner scripts",
+      "oracle readers",
+      "score calculators",
+      "candidate simulators",
+      "result serializers"
+    ],
+    "EVIDENCE_ONLY": [
+      "reports",
+      "inventories",
+      "immutable fixtures",
+      "manifests"
+    ]
+  },
+  "strictRuntimeBearingProhibition": [
+    "oracle IDs",
+    "query hashes",
+    "expected labels",
+    "suite/family/category selectors",
+    "scenario/control/item/variant numbers",
+    "fixture membership",
+    "complete or near-complete fixture queries",
+    "serialized feature-vector lookup",
+    "fixture noun whitelist controlling output"
+  ]
+}

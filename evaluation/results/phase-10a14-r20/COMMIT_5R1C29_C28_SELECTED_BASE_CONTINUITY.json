@@ -1,0 +1,52 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:14:51.713Z",
+  "classification": "C28_SELECTED_BASE_CONTINUITY",
+  "determinations": [
+    "C28 selected one Pareto-positive controlling candidate over the C27 selected base.",
+    "C29 uses the C28 selected candidate runtime snapshot as its exact active base.",
+    "C28 prior rejected candidates are not rerun unchanged in C29.",
+    "C28 evidence is consumed as immutable input and is not modified."
+  ],
+  "selectedC28Base": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-01-ord01-2026-07-27T14-37-46-271Z",
+    "rule": "compose_support_predicate_and_subject_to_tax_treatment",
+    "actual": {
+      "canonicalPassed": 3462,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3462,
+      "reasonMismatches": 258,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 332,
+      "collisionProbesPassed": 163,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    },
+    "runtimeIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 174194,
+        "normalizedLfSha256": "5dc8b32cab17197ef1b5ce55b569793457b0f669f47b5d8de01e5ef24ae0ae93"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "635a2a69ffd2b6ed2da123bf8a9c386032235f47daa2d887e106fe24560bcd56"
+    }
+  },
+  "c28FinalReportDecision": "INCOMPLETE",
+  "c28EvidenceInvalidated": false,
+  "c28FilesModified": false,
+  "pass": true
+}

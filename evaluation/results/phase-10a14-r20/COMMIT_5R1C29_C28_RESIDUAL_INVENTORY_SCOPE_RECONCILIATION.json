@@ -1,0 +1,35 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:14:57.153Z",
+  "c28InventoryArtifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C28_FAILURE_LAYER_INVENTORY.json",
+  "actualSelectionPredicateUsedByC28Builder": "gates.r3.reasonFailures || [] from commit5r1c28-execute.mjs; scoreR3 returns decisionFailures and relationFailures but no reasonFailures array",
+  "zeroCountsRepresented": "population/filtering defect in the inventory builder, not all open C28 failures",
+  "evidencedClassifications": [
+    "C28_RESIDUAL_INVENTORY_POPULATION_DEFECT",
+    "C28_RESIDUAL_INVENTORY_FILTER_DEFECT",
+    "C28_RESIDUAL_INVENTORY_SCOPE_LABELING_DEFECT",
+    "NO_C28_SCORE_INVALIDATION"
+  ],
+  "recomputedAgainstExactC28SelectedBase": true,
+  "recomputedCounts": {
+    "r3ReasonMismatches": 258,
+    "reasonSuiteFailures": 12,
+    "collisionProbeFailures": 33,
+    "deduplicatedCrossPopulationResiduals": 303
+  },
+  "ambiguityClassReconciliation": [
+    {
+      "classId": "C28-EQ-ACRONYM-METADATA-ONLY",
+      "representedInC29Inventory": true,
+      "disposition": "bounded aggregate ambiguity class retained prospectively"
+    },
+    {
+      "classId": "C28-EQ-CONTENTLESS-DOCUMENT",
+      "representedInC29Inventory": true,
+      "disposition": "bounded aggregate ambiguity class retained prospectively"
+    }
+  ],
+  "explanation": "C28 scores came from full gate execution and remain valid. The 0/0/0 inventory totals came from reading a non-existent reasonFailures array, so the artifact serialized an empty population while the score counters still recorded open gates.",
+  "c28ScoresInvalidated": false,
+  "pass": true
+}

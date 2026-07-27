@@ -4,6 +4,183 @@
 
 Last updated:
 
+`2026-07-27T15:15:18.680Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C29
+ROADMAP V8 GOVERNANCE PROMOTION, C28 RESIDUAL-INVENTORY RECONCILIATION AND REASON-LAYER CLOSURE
+DECISION: INCOMPLETE - C28 SELECTED BASE RECONSTRUCTED; RESIDUAL INVENTORY RECONCILED; REASON LOCK REMAINS OPEN
+```
+
+Roadmap v8 promotion:
+
+```text
+Roadmap v8 tracked in C29                  true
+Roadmap v8 final normalized-LF SHA-256     3c3f6c137af1b90f75896c6d2a5ae6cd5a239f467591b32283a2adbebda422b9
+Roadmap v8 source-of-truth hierarchy       PASS
+Roadmap v7 byte-for-byte preservation      true
+Immediate source hierarchy                 committed evidence/frozen artifacts -> CURRENT_STATE -> Roadmap v8 -> Roadmap v7 historical
+```
+
+Exact C28 selected base reconstruction:
+
+```text
+source attempt                             R20-domain_campaign-r20_commit5r1c28_structural_reason_remediation-commit5r1c28-dev-01-ord01-2026-07-27T14-37-46-271Z
+services tree digest                       635a2a69ffd2b6ed2da123bf8a9c386032235f47daa2d887e106fe24560bcd56
+analyzer normalized-LF SHA-256             5dc8b32cab17197ef1b5ce55b569793457b0f669f47b5d8de01e5ef24ae0ae93
+domain-boundary normalized-LF SHA-256      0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039
+patterns normalized-LF SHA-256             3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa
+R3 reason                                  3462 / 3,720
+reason suite v8                            332 / 344
+collision probes                           163 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+C28 residual-inventory scope reconciliation:
+
+```text
+classification                             C28_RESIDUAL_INVENTORY_POPULATION_DEFECT, C28_RESIDUAL_INVENTORY_FILTER_DEFECT, C28_RESIDUAL_INVENTORY_SCOPE_LABELING_DEFECT, NO_C28_SCORE_INVALIDATION
+why C28 reported 0/0/0                     population/filtering defect in the inventory builder, not all open C28 failures
+C28 score invalidation                     false
+recomputed R3 reason mismatches            258
+recomputed reason-suite failures           12
+recomputed collision-probe failures        33
+deduplicated cross-population residuals    303
+```
+
+C29 residual inventory:
+
+```text
+R3 reason mismatches                       258
+reason-suite failures                      12
+collision-probe failures                   33
+deduplicated cross-population residuals    303
+correct-row controls indexed               55
+DECISION_DEPENDENT                         25
+RELATION_DEPENDENT                         0
+REASON_ONLY                                278
+ORACLE_OR_CONTRACT_AMBIGUITY               0
+UNCLASSIFIED_PENDING_EVIDENCE              0
+```
+
+C29 monotonic feature model:
+
+```text
+vectorCount                                124
+collidingRows                              27
+strict feature superset of C28             true
+validator                                  PASS
+```
+
+C29 material-attempt accounting:
+
+```text
+governed reconstruction iterations          1
+material reason-remediation iterations      3
+accepted rules                              metadata_only_acronym_question_requires_clarification, matter_antecedent_without_tax_nexus_requires_clarification, ordinary_translation_handbook_is_no_tax_relation
+rejected rules                              none
+frontier rules                              metadata_only_acronym_question_requires_clarification, matter_antecedent_without_tax_nexus_requires_clarification, ordinary_translation_handbook_is_no_tax_relation
+selected controlling attempt                R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z
+candidate exhaustion                        false
+remaining viable candidates                 true
+ambiguity or blocker status                 reason lock remains open after C29 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication
+```
+
+C29 final selected control vector:
+
+```text
+R3 reason                                  3462 / 3,720
+reason suite v8                            344 / 344
+collision probes                           187 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+Registry after C29:
+
+```text
+cumulativeThrough       commit5r1c29-incomplete
+total attempts          196
+domain_campaign         132
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             194
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
+
+Finalization:
+
+```text
+candidate-delta replay                    PASS
+taint-aware anti-overfit                   PASS
+Pareto policy                              PASS
+monotonic feature validator                PASS
+derived packet validation                  PASS
+composition/order controls                 PASS
+manifest entries                           84
+manifest bad-hash count                    0
+evidence files including manifest          85
+phase directory file count                 2480
+dev-factory preserved exactly              true
+live runtime restored                      true
+protected untracked directories            .claude/, .vscode/, evaluation/factcheck/ untouched
+Roadmap v8 tracked                         true
+Roadmap v7 modified                        false
+```
+
+Reason lock remains open. The next exact task is:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C30 REASON-LAYER CLOSURE CONTINUATION 30 AGAINST THE GOVERNANCE-COMPLIANT C29 BASE
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C28
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T14:38:11.230Z`
 
 Repository:

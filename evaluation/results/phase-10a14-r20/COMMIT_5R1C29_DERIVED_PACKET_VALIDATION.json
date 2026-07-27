@@ -1,0 +1,32 @@
+{
+  "unit": "COMMIT 5R1-C29",
+  "generatedUtc": "2026-07-27T15:15:16.116Z",
+  "packetCount": 3,
+  "results": [
+    {
+      "candidateId": "C29-M01-metadata-only-acronym-clarify-boundary",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-01-ord01-2026-07-27T15-14-57-169Z",
+      "accepted": true,
+      "packetPass": true
+    },
+    {
+      "candidateId": "C29-M02-matter-antecedent-clarify-boundary",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-02-ord02-2026-07-27T15-15-03-512Z",
+      "accepted": true,
+      "packetPass": true
+    },
+    {
+      "candidateId": "C29-M03-ordinary-translation-handbook-no-tax-relation",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "accepted": true,
+      "packetPass": true
+    }
+  ],
+  "leaveOneFamilyOutExecution": true,
+  "copiedR3Queries": 0,
+  "copiedReasonSuiteQueries": 0,
+  "copiedCollisionProbeQueries": 0,
+  "numberingDependency": 0,
+  "fixtureMembership": 0,
+  "pass": true
+}
