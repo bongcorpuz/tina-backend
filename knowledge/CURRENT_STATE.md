@@ -4,7 +4,7 @@
 
 Last updated:
 
-`2026-07-27T08:11:39.203Z`
+`2026-07-27T09:34:49.936Z`
 
 Repository:
 
@@ -26,80 +26,47 @@ Phase 10A is OPEN.
 
 R20 is not PASS and is not governance-satisfied.
 
-Phases 10B-M0 through 10E remain gated and must not begin before Phase 10A closure.
-
 ## Latest Completed Execution Unit
 
 ```text
-PHASE-10A14-R20 - COMMIT 5R1-C23
-LABEL-INDEPENDENT STRUCTURAL FEATURE REMEDIATION AND GOVERNANCE-COMPLIANT REASON CLOSURE
-DECISION: INCOMPLETE - ONE STRUCTURAL REASON RULE ACCEPTED;
-          REASON LOCK REMAINS OPEN; DECISION AND RELATION LOCKS PRESERVED
+PHASE-10A14-R20 - COMMIT 5R1-C24
+TRANSITIVE GOVERNANCE VALIDATION AND LABEL-INDEPENDENT STRUCTURAL REASON CLOSURE
+DECISION: INCOMPLETE - C23 VALIDATED TRANSITIVELY; RELATION LOCK PRESERVED;
+          REASON LOCK REMAINS OPEN; C23 REMAINS HIGHEST GOVERNANCE-COMPLIANT BASE
 ```
 
-C23 validated the committed C22 governance-compliant baseline and corrected the
-C21 separability defect prospectively.
+C24 validated C23's accepted structural rule through transitive governance evidence.
 
 ```text
-C22 controlling baseline          accepted C20 governed reason runtime
-C21 technical 3,531 / 3,720       non-controlling
-C21 finding                       EXPECTED_LABEL_FEATURE_CONTAMINATION
-baseline reconstruction attempt   R20-domain_campaign-r20_commit5r1c23_governance_compliant_baseline_reconstruction-commit5r1c23-baseline-ord01-2026-07-27T08-00-18-034Z
-baseline R3 reason                3449 / 3,720   (mismatches 271)
-baseline reason suite             320 / 344
-baseline collision probes         148 / 196
-```
-
-Clean label-independent feature analysis:
-
-```text
-baseline residual rows            271
-baseline vectors                  122
-baseline colliding rows           27
-post-candidate residual rows      258
-post-candidate vectors            120
-post-candidate colliding rows      27
-classification                    POSSIBLE_R3_REASON_LEARNABILITY_CONFLICT_CANDIDATES remain
-```
-
-Accepted C23 structural remediation:
-
-```text
-attempt                           R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z
-rule                              filipino_purchase_selection_is_non_tax_task
-principle                         Filipino purchase-selection question requests an ordinary purchase action
-R3 reason                         3462 / 3,720   (mismatches 258)
-net reason gain                   +13
-reason-focused suite v8           320 / 344
+C23 transitive anti-overfit       PASS
+C23 derived generalization        PASS
+relation-object integrity         NON_CONTROLLING_INHERITED_DIAGNOSTIC
+C23 introduced ROI violations     false
+controlling reconstruction        3462 / 3,720
+R3 decision                       3720 / 3,720
+R3 relation                       3720 / 3,720
+R3 reason mismatches              258
+reason suite v8                   320 / 344
 collision probes                  148 / 196
-decision suite                    756 / 756
-relation suite                    282 / 282
-clause probes                     68 / 68
-anti-overfit                      PASS
-generalization packet             PASS
-decision lock                     true
-relation lock                     true
-reason lock                       false
+residual rows                     258
+label-independent vectors         119
+colliding rows                    27
+colliding vectors                 2
+dev-factory preserved exactly     true
+live runtime restored             true
+manifest                          evaluation/results/phase-10a14-r20/COMMIT_5R1C24_EVIDENCE_MANIFEST.sha256 (23 files)
 ```
 
-Rejected/deferred in C23:
+Registry after C24:
 
 ```text
-quoted_text_operation_is_quoted_term_only
-reason: failed novel positive packet recall in pre-runtime iteration 04
-runtime disposition: not accepted
-```
-
-Registry after C23:
-
-```text
-cumulativeThrough       commit5r1c23-incomplete
-total attempts          177
-domain_campaign         113
+cumulativeThrough       commit5r1c24-incomplete
+total attempts          178
+domain_campaign         114
 focused_suite           13
 other                   9
 synthetic_validator     42
-controlling             175
+controlling             176
 non-controlling         2
 orphan                  0
 dangling                0
@@ -109,19 +76,20 @@ reasonLayerClosure      false
 runtimeClosure          false
 ```
 
-The live runtime is restored to the committed backend baseline. Service, oracle,
-roadmap, frozen-suite and frozen-probe tracked diffs are not controlling in C23.
-The pre-existing dirty `C:/Projects/tina-dev-factory` state was captured and
-preserved exactly: `true`.
+Reason lock remains open because R3 reason is 3462 / 3,720, reason suite is 320 / 344, collision probes are 148 / 196, and label-independent residual collisions remain.
+
+The live runtime is restored to the committed backend baseline. C24 did not modify oracle expectations, frozen suites or roadmap v7. The untracked `execution-prompts/` directory was treated as user-supplied controlling-prompt residue and preserved untouched.
 
 Next exact task:
 
 ```text
-PHASE-10A14-R20 - COMMIT 5R1-C24
-REASON-LAYER CLOSURE CONTINUATION 24 AGAINST THE GOVERNANCE-COMPLIANT C23 BASE
+PHASE-10A14-R20 - COMMIT 5R1-C25
+REASON-LAYER CLOSURE CONTINUATION 25 AGAINST THE GOVERNANCE-COMPLIANT C24 BASE
 ```
 
 R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C23
 
 ## Previous Execution Unit - COMMIT 5R1-C22
 

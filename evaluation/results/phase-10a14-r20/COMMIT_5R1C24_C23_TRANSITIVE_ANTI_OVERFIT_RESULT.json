@@ -1,0 +1,87 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:45.584Z",
+  "scope": [
+    "accepted runtime snapshot",
+    "C23-only candidate patch",
+    "full runtime diff",
+    "candidate helper file",
+    "iterate/finalize scripts",
+    "generated candidate-runtime.js",
+    "installed generated source",
+    "imported helper files"
+  ],
+  "scannedFiles": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-domain-boundary.js",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-boundary-patterns.js",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/C23_ONLY_CANDIDATE.patch",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/FULL_RUNTIME_DIFF_FROM_HEAD.patch",
+    "evaluation/runner/phase-10a14-r20/commit5r1c23-candidates.mjs",
+    "evaluation/runner/phase-10a14-r20/commit5r1c23-iterate.mjs",
+    "evaluation/runner/phase-10a14-r20/commit5r1c23-finalize.mjs",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/candidate-runtime.js",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+    "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+    "evaluation/runner/phase-10a14-r20/commit5r1c20-gates.mjs"
+  ],
+  "blockingFindings": [],
+  "contextualNoncandidateReferences": [
+    {
+      "file": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/FULL_RUNTIME_DIFF_FROM_HEAD.patch",
+      "category": "noun or joke whitelist controlling reason",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c23-iterate.mjs",
+      "category": "query hashes",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c23-iterate.mjs",
+      "category": "noun or joke whitelist controlling reason",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+      "category": "query hashes",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+      "category": "expected-label maps",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+      "category": "suite/family/category selectors",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+      "category": "scenario/control/item/variant branches",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+      "category": "fixture membership",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    },
+    {
+      "file": "evaluation/runner/phase-10a14-r20/commit5r1c20-gates.mjs",
+      "category": "suite/family/category selectors",
+      "disposition": "harness_or_evidence_reference_not_candidate_reason_control"
+    }
+  ],
+  "pass": true,
+  "requiredResult": {
+    "oracleIds": "none controlling the reason",
+    "queryHashes": "none controlling the reason",
+    "expectedLabelMaps": "none controlling the reason",
+    "suiteFamilyCategorySelectors": "none controlling the reason",
+    "scenarioControlItemVariantBranches": "none controlling the reason",
+    "fixtureMembership": "none controlling the reason",
+    "nearCompleteQueryTemplates": "none controlling the reason",
+    "nounOrJokeWhitelistControllingReason": "none"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:45.591Z",
+  "classification": "NON_CONTROLLING_INHERITED_DIAGNOSTIC",
+  "classificationOption": "B",
+  "authority": [
+    "RELATION_AND_PRECEDENCE_SPEC closes relation types and reason precedence; R3 relation scoring is relation-string containment.",
+    "COMMIT_5R1C13_RELATION_SCORING_CONTRACT states object fields do not affect scoring and are enforced separately.",
+    "COMMIT_5R1C14_RELATION_LOCK records the same diagnostic family while declaring relationLayerClosure true.",
+    "C23 baseline and accepted iteration both score R3 relation 3720/3720 and relation counterfactual 282/282."
+  ],
+  "immutableContractExcerptHash": "a94a9d85d2287ec3fe98004e86ec70452e8d2c842fc6cab7695d1a032921cdfc",
+  "c14RelationLockCounts": {
+    "unknownType": 0,
+    "missingField": 0,
+    "placeholderTarget": 130,
+    "wholeQuerySpan": 200,
+    "duplicateTuple": 20,
+    "unstableOrder": 0
+  },
+  "c23BaselineCounts": {
+    "unknownType": 0,
+    "missingField": 0,
+    "placeholderTarget": 130,
+    "wholeQuerySpan": 200,
+    "duplicateTuple": 20,
+    "unstableOrder": 0
+  },
+  "c23AcceptedCounts": {
+    "unknownType": 0,
+    "missingField": 0,
+    "placeholderTarget": 130,
+    "wholeQuerySpan": 200,
+    "duplicateTuple": 20,
+    "unstableOrder": 0
+  },
+  "c23IntroducedAdditionalViolations": false,
+  "additionalViolationDelta": {
+    "unknownType": 0,
+    "missingField": 0,
+    "placeholderTarget": 0,
+    "wholeQuerySpan": 0,
+    "duplicateTuple": 0,
+    "unstableOrder": 0
+  },
+  "relationLockPreserved": true,
+  "rationale": "The diagnostic is real and preserved, but it is inherited from the relation-lock baseline and not the required relation scoring lock gate. It must remain visible and separately remediable, but it does not invalidate the C23 relation lock."
+}

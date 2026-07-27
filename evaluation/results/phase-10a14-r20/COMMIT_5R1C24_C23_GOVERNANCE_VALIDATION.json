@@ -1,0 +1,98 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:45.588Z",
+  "c23AcceptedCandidate": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z",
+  "snapshotVerification": {
+    "files": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 172204,
+        "normalizedLfSha256": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+        "expected": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+        "match": true
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "expected": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "match": true
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "expected": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "match": true
+      }
+    },
+    "servicesTreeDigest": "f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63",
+    "expectedServicesTreeDigest": "f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63",
+    "pass": true
+  },
+  "antiOverfit": {
+    "pass": true,
+    "scannedFiles": [
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-domain-boundary.js",
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-boundary-patterns.js",
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/C23_ONLY_CANDIDATE.patch",
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/FULL_RUNTIME_DIFF_FROM_HEAD.patch",
+      "evaluation/runner/phase-10a14-r20/commit5r1c23-candidates.mjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c23-iterate.mjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c23-finalize.mjs",
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/candidate-runtime.js",
+      "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-lib.mjs",
+      "evaluation/runner/phase-10a14-r20/commit5r1c20-gates.mjs"
+    ],
+    "blockingFindings": []
+  },
+  "derivedGeneralization": {
+    "pass": true,
+    "skeletons": 3,
+    "grammar": 2,
+    "fillerFamilies": 3
+  },
+  "attemptAccounting": {
+    "reconstruction": 1,
+    "registeredDevCampaigns": 4,
+    "campaigns": [
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c23_governance_compliant_baseline_reconstruction-commit5r1c23-baseline-ord01-2026-07-27T08-00-18-034Z",
+        "gateName": "r20_commit5r1c23_governance_compliant_baseline_reconstruction",
+        "cycle": "commit5r1c23-baseline",
+        "disposition": "accepted_c23_baseline_reconstruction_exact",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_02-commit5r1c23-dev-02-ord01-2026-07-27T08-01-49-700Z",
+        "gateName": "r20_commit5r1c23_reason_iteration_02",
+        "cycle": "commit5r1c23-dev-02",
+        "disposition": "technical_failure_tooling_extension_no_runtime_change",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_03-commit5r1c23-dev-03-ord01-2026-07-27T08-04-06-054Z",
+        "gateName": "r20_commit5r1c23_reason_iteration_03",
+        "cycle": "commit5r1c23-dev-03",
+        "disposition": "technical_failure_tooling_extension_no_runtime_change",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_04-commit5r1c23-dev-04-ord01-2026-07-27T08-05-18-693Z",
+        "gateName": "r20_commit5r1c23_reason_iteration_04",
+        "cycle": "commit5r1c23-dev-04",
+        "disposition": "rejected_pre_runtime_generalization_packet_failure",
+        "status": "completed"
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z",
+        "gateName": "r20_commit5r1c23_reason_iteration_05",
+        "cycle": "commit5r1c23-dev-05",
+        "disposition": "accepted_c23_structural_reason_iteration",
+        "status": "completed"
+      }
+    ],
+    "interpretation": "Registry derives one reconstruction and four registered dev campaigns; dev-02/dev-03 were technical pre-runtime failures, dev-04 packet failure, dev-05 accepted."
+  },
+  "acceptedRuleGovernanceCompliant": true,
+  "c23RuleRemoved": false
+}

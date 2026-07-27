@@ -1,0 +1,102 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:48.744Z",
+  "validations": [
+    {
+      "unit": "COMMIT 5R1-C24",
+      "generatedUtc": "2026-07-27T09:34:45.585Z",
+      "rule": "filipino_purchase_selection_is_non_tax_task",
+      "derivedFromActualProbeTexts": true,
+      "normalizedSyntacticSkeletons": [
+        "alin ang <object> na bibilhin",
+        "ano ang <object> na bibilhin",
+        "aling <object> ang bibilhin"
+      ],
+      "normalizedSyntacticSkeletonCount": 3,
+      "grammaticalForms": [
+        {
+          "name": "selection-pronoun plus ang plus noun plus na-bibilhin relative clause",
+          "count": 6
+        },
+        {
+          "name": "aling plus noun phrase plus ang bibilhin predicate order",
+          "count": 2
+        }
+      ],
+      "grammaticalFormCount": 2,
+      "semanticFillerFamilies": [
+        {
+          "name": "physical_goods",
+          "queries": [
+            "Alin ang printer cartridge na bibilhin?",
+            "Ano ang office chair na bibilhin?",
+            "Alin ang camera lens na bibilhin?",
+            "Alin ang warehouse shelf na bibilhin?"
+          ]
+        },
+        {
+          "name": "services",
+          "queries": [
+            "Aling repair service ang bibilhin?",
+            "Ano ang catering package na bibilhin?"
+          ]
+        },
+        {
+          "name": "digital_or_infrastructure_assets",
+          "queries": [
+            "Alin ang server upgrade na bibilhin?",
+            "Aling software license ang bibilhin?"
+          ]
+        }
+      ],
+      "semanticFillerFamilyCount": 3,
+      "leaveOneFillerFamilyOutExecutions": [
+        {
+          "heldOutFamily": "physical_goods",
+          "heldOutQueries": [
+            "Alin ang printer cartridge na bibilhin?",
+            "Ano ang office chair na bibilhin?",
+            "Alin ang camera lens na bibilhin?",
+            "Alin ang warehouse shelf na bibilhin?"
+          ],
+          "passed": true
+        },
+        {
+          "heldOutFamily": "services",
+          "heldOutQueries": [
+            "Aling repair service ang bibilhin?",
+            "Ano ang catering package na bibilhin?"
+          ],
+          "passed": true
+        },
+        {
+          "heldOutFamily": "digital_or_infrastructure_assets",
+          "heldOutQueries": [
+            "Alin ang server upgrade na bibilhin?",
+            "Aling software license ang bibilhin?"
+          ],
+          "passed": true
+        }
+      ],
+      "positiveParaphraseRecall": {
+        "passed": 8,
+        "total": 8
+      },
+      "lexicalSubstitutionRecall": {
+        "passed": 4,
+        "total": 4
+      },
+      "negativeNearMissPrecision": {
+        "passed": 4,
+        "total": 4
+      },
+      "taxContextNegativePrecision": {
+        "passed": 4,
+        "total": 4
+      },
+      "pass": true
+    }
+  ],
+  "c24NewMaterialRulesActivated": 0,
+  "pass": true
+}

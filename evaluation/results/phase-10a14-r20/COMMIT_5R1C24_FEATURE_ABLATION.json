@@ -1,0 +1,213 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:36:30.011Z",
+  "baseline": {
+    "featureCount": 19,
+    "vectorCount": 120,
+    "collidingVectorCount": 2,
+    "collidingRows": 27
+  },
+  "ablations": [
+    {
+      "removedFeature": "speechAct",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "clauseMood",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "finiteVerb",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "auxiliaryOrModal",
+      "vectorCount": 111,
+      "collidingVectorCount": 3,
+      "collidingRows": 29
+    },
+    {
+      "removedFeature": "requestMarker",
+      "vectorCount": 118,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "operationClass",
+      "vectorCount": 119,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "requestedOutcomeClass",
+      "vectorCount": 109,
+      "collidingVectorCount": 3,
+      "collidingRows": 35
+    },
+    {
+      "removedFeature": "headClass",
+      "vectorCount": 118,
+      "collidingVectorCount": 2,
+      "collidingRows": 32
+    },
+    {
+      "removedFeature": "relationSet",
+      "vectorCount": 106,
+      "collidingVectorCount": 8,
+      "collidingRows": 56
+    },
+    {
+      "removedFeature": "relationCount",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "taxPredicateScope",
+      "vectorCount": 116,
+      "collidingVectorCount": 4,
+      "collidingRows": 33
+    },
+    {
+      "removedFeature": "hasQuotedOperand",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "hasParentheticalOperand",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "identifierComplement",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "documentProcedureInstrumentRole",
+      "vectorCount": 116,
+      "collidingVectorCount": 2,
+      "collidingRows": 28
+    },
+    {
+      "removedFeature": "filipinoTaglishMorphology",
+      "vectorCount": 120,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    },
+    {
+      "removedFeature": "metadataOnlySuffix",
+      "vectorCount": 118,
+      "collidingVectorCount": 3,
+      "collidingRows": 31
+    },
+    {
+      "removedFeature": "acronymReferentCompleteness",
+      "vectorCount": 115,
+      "collidingVectorCount": 4,
+      "collidingRows": 32
+    },
+    {
+      "removedFeature": "targetSpecificity",
+      "vectorCount": 113,
+      "collidingVectorCount": 2,
+      "collidingRows": 27
+    }
+  ],
+  "recomputedAfter": "C24 governed C23 reconstruction",
+  "evaluatedEnrichment": [
+    {
+      "feature": "deverbal noun versus entity/topic noun",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "action-result nominalization",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "selection/advice versus description",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "document operation versus document subject",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "quoted operand scope",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "tax predicate grammatical bearer",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "tax instrument as head versus modifier",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "external transaction/event head",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "evidentiary support outcome",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "filing/remittance/deadline outcome",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "acronym referent completeness",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "definition versus ordinary-topic question",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "metadata suffix attachment",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    },
+    {
+      "feature": "Filipino/Taglish interrogative and aspect morphology",
+      "runtimeDerivation": "query syntax plus deterministic analyzer evidence only",
+      "c24RuntimeActivated": false,
+      "reason": "C24 preserved C23 as highest governance-compliant candidate; no new material rule was activated before incomplete stop."
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:36:30.011Z",
+  "residualRows": 258,
+  "vectorCount": 120,
+  "separableRows": 231,
+  "collidingRows": 27,
+  "collidingVectorCount": 2,
+  "classification": "POSSIBLE_R3_REASON_LEARNABILITY_CONFLICT_CANDIDATES",
+  "collidingVectors": [
+    {
+      "vector": "speechAct=other|clauseMood=fragment_or_assertion|finiteVerb=false|auxiliaryOrModal=none|requestMarker=false|operationClass=none|requestedOutcomeClass=none|headClass=nominal_or_other|relationSet=REQUESTS_NON_TAX_ACTION_ON|relationCount=1|taxPredicateScope=absent|hasQuotedOperand=false|hasParentheticalOperand=false|identifierComplement=false|documentProcedureInstrumentRole=false|filipinoTaglishMorphology=false|metadataOnlySuffix=false|acronymReferentCompleteness=none|targetSpecificity=bare_or_indefinite",
+      "support": 23,
+      "expectedReasonDistribution": {
+        "no_tax_relation": 2,
+        "explicit_non_tax_task": 21
+      },
+      "pure": false,
+      "counterexamples": [
+        {
+          "oracleId": "S2-IR18-DOM-115",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "query": "color palette selection"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-120",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "query": "software variable naming"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-121",
+          "expectedReason": "explicit_non_tax_task",
+          "actualReason": "no_tax_relation",
+          "query": "TypeScript interface design"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-134",
+          "expectedReason": "explicit_non_tax_task",
+          "actualReason": "no_tax_relation",
+          "query": "pharmacology trial design"
+        },
+        {
+          "oracleId": "R20N-ENT-0521",
+          "expectedReason": "explicit_non_tax_task",
+          "actualReason": "no_tax_relation",
+          "query": "basketball match final buzzer"
+        },
+        {
+          "oracleId": "R20N-ENT-0526",
+          "expectedReason": "explicit_non_tax_task",
+          "actualReason": "no_tax_relation",
+          "query": "penalty box clearance rule"
+        },
+        {
+          "oracleId": "R20N-ENT-0531",
+          "expectedReason": "explicit_non_tax_task",
+          "actualReason": "no_tax_relation",
+          "query": "homework submission portal"
+        },
+        {
+          "oracleId": "R20N-ENT-0541",
+          "expectedReason": "explicit_non_tax_task",
+          "actualReason": "no_tax_relation",
+          "query": "delivery app service surcharge"
+        }
+      ]
+    },
+    {
+      "vector": "speechAct=other|clauseMood=fragment_or_assertion|finiteVerb=false|auxiliaryOrModal=none|requestMarker=false|operationClass=none|requestedOutcomeClass=none|headClass=nominal_or_other|relationSet=ASKS_TAX_TREATMENT_OF|relationCount=1|taxPredicateScope=present|hasQuotedOperand=false|hasParentheticalOperand=false|identifierComplement=false|documentProcedureInstrumentRole=false|filipinoTaglishMorphology=false|metadataOnlySuffix=false|acronymReferentCompleteness=none|targetSpecificity=bare_or_indefinite",
+      "support": 4,
+      "expectedReasonDistribution": {
+        "tax_treatment_of_ordinary_object": 3,
+        "explicit_tax_task_relation": 1
+      },
+      "pure": false,
+      "counterexamples": [
+        {
+          "oracleId": "S2-IR18-DOM-021",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "query": "excise tax"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-022",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "query": "capital gains tax"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-062",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "query": "fringe benefit tax"
+        },
+        {
+          "oracleId": "S2-IR18-DOM-073",
+          "expectedReason": "explicit_tax_task_relation",
+          "actualReason": "tax_treatment_of_ordinary_object",
+          "query": "stock transaction tax"
+        }
+      ]
+    }
+  ],
+  "recomputedAfter": "C24 governed C23 reconstruction"
+}

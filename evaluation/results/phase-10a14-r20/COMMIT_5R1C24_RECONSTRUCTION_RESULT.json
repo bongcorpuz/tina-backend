@@ -1,0 +1,1897 @@
+{
+  "attemptId": "R20-domain_campaign-r20_commit5r1c24_c23_governed_reconstruction-commit5r1c24-reconstruction-ord01-2026-07-27T09-34-45-594Z",
+  "unit": "COMMIT 5R1-C24",
+  "sourceAttempt": "R20-domain_campaign-r20_commit5r1c23_reason_iteration_05-commit5r1c23-dev-05-ord01-2026-07-27T08-07-19-257Z",
+  "snapshotVerification": {
+    "files": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 172204,
+        "normalizedLfSha256": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+        "expected": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+        "match": true
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "expected": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "match": true
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "expected": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "match": true
+      }
+    },
+    "servicesTreeDigest": "f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63",
+    "expectedServicesTreeDigest": "f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63",
+    "pass": true
+  },
+  "installedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 172204,
+      "normalizedLfSha256": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63"
+  },
+  "expected": {
+    "canonicalPassed": 3462,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 258,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 320,
+    "collisionProbesPassed": 148
+  },
+  "actual": {
+    "canonicalPassed": 3462,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "relationMismatches": 0,
+    "reasonMismatches": 258,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 320,
+    "collisionProbesPassed": 148
+  },
+  "discrepancies": [],
+  "exactReproduction": true,
+  "gates": {
+    "label": "c24-c23-governed-reconstruction",
+    "stage": "full",
+    "runtimeIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 172204,
+        "normalizedLfSha256": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+        "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+      },
+      "servicesTreeDigest": "f210d24e87ed48494a1e2489db676be3f1ae12526be6f0c15778c3b5d074be63"
+    },
+    "collisionProbes": {
+      "total": 196,
+      "passed": 148,
+      "failed": 48,
+      "byFamily": {
+        "collision_request_subtype": 8,
+        "predicate_attachment": 8,
+        "outcome_evidentiary_vs_filing": 16,
+        "acronym_vs_topic_ambiguity": 16
+      },
+      "failures": [
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#11",
+          "query": "Translate the tide chart poster handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#12",
+          "query": "Translate the kite spool rack handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#13",
+          "query": "Translate the lantern paper roll handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#14",
+          "query": "Translate the mango crate liner handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#15",
+          "query": "Translate the bamboo flute case handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#16",
+          "query": "Translate the shell lamp shade handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#17",
+          "query": "Translate the coral tank pump handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "collision_request_subtype",
+          "pair": "collision_request_subtype#18",
+          "query": "Translate the reed mat binder handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#27",
+          "query": "Is the pier docking charge subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#28",
+          "query": "Is the silo cleaning run subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#29",
+          "query": "Is the kiln relining job subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#30",
+          "query": "Is the trawler net repair subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#31",
+          "query": "Is the grain drying batch subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#32",
+          "query": "Is the ice plant output subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#33",
+          "query": "Is the copra press run subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "predicate_attachment",
+          "pair": "predicate_attachment#34",
+          "query": "Is the ferry hull survey subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#36",
+          "query": "What records support the pier docking charge deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#36",
+          "query": "When is the deadline for filing the pier docking charge return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#38",
+          "query": "What records support the silo cleaning run deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#38",
+          "query": "When is the deadline for filing the silo cleaning run return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#40",
+          "query": "What records support the kiln relining job deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#40",
+          "query": "When is the deadline for filing the kiln relining job return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#42",
+          "query": "What records support the trawler net repair deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#42",
+          "query": "When is the deadline for filing the trawler net repair return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#44",
+          "query": "What records support the grain drying batch deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#44",
+          "query": "When is the deadline for filing the grain drying batch return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#46",
+          "query": "What records support the ice plant output deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#46",
+          "query": "When is the deadline for filing the ice plant output return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#48",
+          "query": "What records support the copra press run deduction?",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#48",
+          "query": "When is the deadline for filing the copra press run return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#50",
+          "query": "What records support the ferry hull survey deduction?",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "outcome_evidentiary_vs_filing",
+          "pair": "outcome_evidentiary_vs_filing#50",
+          "query": "When is the deadline for filing the ferry hull survey return?",
+          "expectedReason": "tax_compliance_task",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#69",
+          "query": "What is XQD for item 40?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#69",
+          "query": "What about professional fees for matter 40?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#70",
+          "query": "What is BNV for item 41?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#70",
+          "query": "What about professional fees for matter 41?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#71",
+          "query": "What is RTK for item 42?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#71",
+          "query": "What about professional fees for matter 42?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#72",
+          "query": "What is PYW for item 43?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#72",
+          "query": "What about professional fees for matter 43?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#73",
+          "query": "What is GZL for item 44?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#73",
+          "query": "What about professional fees for matter 44?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#74",
+          "query": "What is MFH for item 45?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#74",
+          "query": "What about professional fees for matter 45?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#75",
+          "query": "What is JCT for item 46?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#75",
+          "query": "What about professional fees for matter 46?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#76",
+          "query": "What is VWS for item 47?",
+          "expectedReason": "ambiguous_tax_acronym",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "acronym_vs_topic_ambiguity",
+          "pair": "acronym_vs_topic_ambiguity#76",
+          "query": "What about professional fees for matter 47?",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "no_tax_relation",
+          "expectedDecision": "CLARIFY",
+          "actualDecision": "REFUSE",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        }
+      ],
+      "pairs": 98
+    },
+    "reasonCounterfactual": {
+      "total": 344,
+      "passed": 320,
+      "failed": 24,
+      "byFamily": {
+        "compliance_vs_treatment": 12,
+        "no_tax_refuse_vs_clarify": 12
+      },
+      "failures": [
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#27",
+          "query": "Is the sailmaker fee subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#29",
+          "query": "Is the quarry haulage subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#31",
+          "query": "Is the orchard netting subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#33",
+          "query": "Is the foundry casting subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#35",
+          "query": "Is the bakery oven subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#37",
+          "query": "Is the cobbler bench subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#39",
+          "query": "Is the tannery lining subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#41",
+          "query": "Is the glazier panel subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#43",
+          "query": "Is the apiary frame subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#45",
+          "query": "Is the loom shuttle subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#47",
+          "query": "Is the ferry gangway subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "compliance_vs_treatment",
+          "pair": "compliance_vs_treatment#49",
+          "query": "Is the salt pan rake subject to percentage tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actualReason": "explicit_tax_task_relation",
+          "expectedDecision": "ALLOW",
+          "actualDecision": "ALLOW",
+          "forbiddenReasons": [
+            "tax_compliance_task"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#115",
+          "query": "Translate the badminton net handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#116",
+          "query": "Translate the harmonica case handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#117",
+          "query": "Translate the sundial plinth handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#118",
+          "query": "Translate the canoe paddle handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#119",
+          "query": "Translate the lantern wick handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#120",
+          "query": "Translate the trellis post handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#121",
+          "query": "Translate the zither string handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#122",
+          "query": "Translate the cairn marker handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#123",
+          "query": "Translate the abacus bead handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#124",
+          "query": "Translate the quilt batting handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#125",
+          "query": "Translate the birdhouse perch handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        },
+        {
+          "family": "no_tax_refuse_vs_clarify",
+          "pair": "no_tax_refuse_vs_clarify#126",
+          "query": "Translate the marble chute handbook into plain English.",
+          "expectedReason": "no_tax_relation",
+          "actualReason": "explicit_non_tax_task",
+          "expectedDecision": "REFUSE",
+          "actualDecision": "REFUSE",
+          "forbiddenReasons": [
+            "ambiguous_tax_acronym"
+          ],
+          "forbiddenHit": false,
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ]
+        }
+      ],
+      "pairs": 172,
+      "authoredQueries": 344,
+      "nonControllingProbes": 0,
+      "probes": []
+    },
+    "reasonIntegrity": {
+      "invalidCodeCount": 0,
+      "incompatibleCount": 0,
+      "invalidCode": [],
+      "incompatible": [],
+      "pass": true
+    },
+    "r3": {
+      "total": 3720,
+      "canonicalPassed": 3462,
+      "decisionMismatches": 0,
+      "reasonMismatches": 258,
+      "relationMismatches": 0,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "relationRowsWithExpectations": 1623,
+      "relationRowsPassed": 1623,
+      "relationPassed": 3720,
+      "decisionPassed": 3720
+    },
+    "reasonPassed": 3462,
+    "focusedReasonRegression": {
+      "perFamily": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 417
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 757
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 847
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 200
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 119
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 420
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 87
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "allBucketsPass": false
+    },
+    "decisionFailures": [],
+    "relationFailures": [],
+    "decisionCounterfactual": {
+      "total": 756,
+      "passed": 756,
+      "failed": 0,
+      "bySuite": {
+        "v3": {
+          "total": 331,
+          "passed": 331,
+          "failed": 0
+        },
+        "v4": {
+          "total": 177,
+          "passed": 177,
+          "failed": 0
+        },
+        "v5": {
+          "total": 134,
+          "passed": 134,
+          "failed": 0
+        },
+        "v6": {
+          "total": 114,
+          "passed": 114,
+          "failed": 0
+        }
+      },
+      "byFamily": {},
+      "failures": []
+    },
+    "relationCounterfactual": {
+      "total": 282,
+      "passed": 282,
+      "failed": 0,
+      "byFamily": {},
+      "failures": [],
+      "pairs": 148,
+      "authoredQueries": 296,
+      "nonControllingProbes": 14,
+      "probes": [
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the ZTX rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the QVL rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the MBK rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the JPR rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the KDN rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the WTF rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the NRB rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the HGS rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the guitar lesson subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the hiking trail subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the chess tournament subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the aquarium filter subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the bicycle helmet subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the pottery kiln subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        }
+      ]
+    },
+    "clauseProbes": {
+      "total": 68,
+      "passed": 68,
+      "failed": 0,
+      "byFamily": {},
+      "failures": [],
+      "pairs": 34
+    },
+    "closedControls": {
+      "controls": [
+        {
+          "control": "tax_compliance_task",
+          "passed": 108,
+          "total": 108,
+          "closed": true
+        },
+        {
+          "control": "acronym_homograph_control",
+          "passed": 200,
+          "total": 200,
+          "closed": true
+        },
+        {
+          "control": "ambiguous_clarification_control",
+          "passed": 150,
+          "total": 150,
+          "closed": true
+        },
+        {
+          "control": "internal_label_proper_name",
+          "passed": 104,
+          "total": 104,
+          "closed": true
+        },
+        {
+          "control": "quoted_term_only",
+          "passed": 110,
+          "total": 110,
+          "closed": true
+        }
+      ],
+      "allClosed": true
+    },
+    "richContextGuard": {
+      "probes": [
+        {
+          "shape": "bare_term",
+          "query": "holding period",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "recognized_polysemous_acronym",
+          "query": "RMC",
+          "expected": "CLARIFY",
+          "actual": "CLARIFY",
+          "pass": true
+        },
+        {
+          "shape": "issuance_context",
+          "query": "What did the RMC issuance say about VAT?",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "procedure_context",
+          "query": "Explain RMC for BIR issuances.",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "ordinary_homograph",
+          "query": "Can a supplier reject a return of goods?",
+          "expected": "REFUSE",
+          "actual": "REFUSE",
+          "pass": true
+        },
+        {
+          "shape": "richer_tax_sentence",
+          "query": "How is the holding period applied to a capital gains tax computation on land?",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "metadata_suffixed_contentless",
+          "query": "What is the holding period? Context 1.",
+          "expected": "REFUSE",
+          "actual": "REFUSE",
+          "pass": true
+        }
+      ],
+      "allPass": true,
+      "passed": 7,
+      "total": 7
+    },
+    "relationObjectIntegrity": {
+      "counts": {
+        "unknownType": 0,
+        "missingField": 0,
+        "placeholderTarget": 130,
+        "wholeQuerySpan": 200,
+        "duplicateTuple": 20,
+        "unstableOrder": 0
+      },
+      "violations": {
+        "unknownType": [],
+        "missingField": [],
+        "placeholderTarget": [
+          {
+            "q": "Explain on-screen display brightness for our training class. Control 3.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Sort records by culture and customs lesson. Control 8.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about medicine prescription period. Control 9.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Change the novels about accountants. Control 11.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which gross estate marketing slogan is best? Control 12.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Create a checklist for Professional Artists Network. Control 15.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Translate conference room booking into plain English. Control 16.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Sort records by school newspaper printing authority. Control 18.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 19.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 19.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Debug the Downtown Theater Association. Control 20.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Explain on-screen display brightness for our training class. Control 23.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Sort records by culture and customs lesson. Control 28.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about medicine prescription period. Control 29.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Change the novels about accountants. Control 31.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which gross estate marketing slogan is best? Control 32.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          }
+        ],
+        "wholeQuerySpan": [
+          {
+            "q": "How do we compute income tax for a Philippine corporation in case 1?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What BIR form applies to VAT in case 2?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "When is the deadline for expanded withholding tax in case 3?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "Is the transaction subject to final withholding tax in case 4?",
+            "relation": "ASKS_WITHHOLDING_ON"
+          },
+          {
+            "q": "Can the expense be deducted for percentage tax in case 5?",
+            "relation": "ASKS_DEDUCTIBILITY_OF"
+          },
+          {
+            "q": "What records support documentary stamp tax in case 6?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "How should we disclose capital gains tax in case 7?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What penalty applies for late donor tax in case 9?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "How do we document customs duty in case 10?",
+            "relation": "ASKS_CUSTOMS_DUTY_ON"
+          },
+          {
+            "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What BIR form applies to minimum corporate income tax in case 12?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "When is the deadline for regular corporate income tax in case 13?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "Is the transaction subject to BIR registration in case 14?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "Can the expense be deducted for withholding tax return in case 15?",
+            "relation": "ASKS_DEDUCTIBILITY_OF"
+          },
+          {
+            "q": "What records support input VAT in case 16?",
+            "relation": "ASKS_VAT_TREATMENT_OF"
+          },
+          {
+            "q": "How should we disclose output VAT in case 17?",
+            "relation": "ASKS_VAT_TREATMENT_OF"
+          },
+          {
+            "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What penalty applies for late deficiency interest in case 19?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "How do we document NOLCO in case 20?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          }
+        ],
+        "duplicateTuple": [
+          {
+            "q": "Which cooking pan brand is best? Control 2.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 19.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 22.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 39.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 42.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 59.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 62.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 79.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 82.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 99.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 102.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 119.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 122.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 139.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 142.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 159.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 162.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 179.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 182.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 199.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          }
+        ],
+        "unstableOrder": []
+      },
+      "pass": false
+    },
+    "clauseSchemaRegression": {
+      "counts": {
+        "emptyClause": 0,
+        "idNotPositional": 0,
+        "notExactlyOnePrimary": 0,
+        "unstable": 0,
+        "roleOutsideSchema": 0
+      },
+      "violations": {
+        "emptyClause": [],
+        "idNotPositional": [],
+        "notExactlyOnePrimary": [],
+        "unstable": [],
+        "roleOutsideSchema": []
+      },
+      "pass": true
+    },
+    "antiMemorization": {
+      "checks": {
+        "no_complete_counterfactual_query": true,
+        "no_complete_r3_query": true,
+        "no_query_hash_or_oracle_id": true,
+        "no_suite_or_family_feature": true,
+        "no_cluster_or_category_feature": true,
+        "no_scenario_number_branch": true,
+        "no_expected_decision_map": true,
+        "no_oracle_relation_backfill": true
+      },
+      "failed": [],
+      "pass": true,
+      "leakedCounterfactualQueries": [],
+      "leakedR3Queries": [],
+      "r3TerminologyOverlap": [
+        "expanded withholding tax",
+        "final withholding tax",
+        "tax credit certificate",
+        "documentary stamp tax",
+        "capital gains tax",
+        "optional standard deduction",
+        "books of accounts",
+        "transfer pricing documentation",
+        "registered business enterprise",
+        "tax treaty relief",
+        "local business tax",
+        "real property tax",
+        "substantiation for deductions",
+        "fringe benefit tax",
+        "de minimis benefits",
+        "gross receipts tax",
+        "minimum corporate income tax",
+        "regular corporate income tax",
+        "stock transaction tax",
+        "resident alien tax",
+        "tax on professional fees",
+        "tax accounting period",
+        "annual information return",
+        "refund claim prescription"
+      ],
+      "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+    },
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "writeAudit": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "afterSha256Normalized": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+      "beforeBytes": 31742,
+      "afterBytes": 172204,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "beforeBytes": 12192,
+      "afterBytes": 12192,
+      "tempFileUsed": "philippine-tax-domain-boundary.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "beforeBytes": 65451,
+      "afterBytes": 65451,
+      "tempFileUsed": "philippine-tax-boundary-patterns.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "restoredHeadAfterEvidence": true,
+  "restoredIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 31045,
+      "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 11976,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 64424,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+  },
+  "restoredAudit": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "7f4e0501e682234573d45e74dab0781dea1e6997ec0a09bd20b37db7c339a519",
+      "afterSha256Normalized": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "beforeBytes": 172204,
+      "afterBytes": 31045,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "beforeBytes": 12192,
+      "afterBytes": 11976,
+      "tempFileUsed": "philippine-tax-domain-boundary.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "beforeBytes": 65451,
+      "afterBytes": 64424,
+      "tempFileUsed": "philippine-tax-boundary-patterns.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "decisionLayerClosure": true,
+  "relationLayerClosure": true,
+  "reasonLayerClosure": false,
+  "disposition": "accepted_c24_governed_c23_reconstruction_incomplete_reason_continuation"
+}

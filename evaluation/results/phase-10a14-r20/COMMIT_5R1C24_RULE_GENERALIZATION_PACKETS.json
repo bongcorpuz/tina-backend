@@ -1,0 +1,47 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:48.744Z",
+  "runtimeActivatedRules": [
+    "filipino_purchase_selection_is_non_tax_task"
+  ],
+  "packets": {
+    "filipino_purchase_selection_is_non_tax_task": {
+      "positives": [
+        "Alin ang printer cartridge na bibilhin?",
+        "Ano ang office chair na bibilhin?",
+        "Aling repair service ang bibilhin?",
+        "Alin ang server upgrade na bibilhin?"
+      ],
+      "lexicalSubstitutions": [
+        "Alin ang camera lens na bibilhin?",
+        "Ano ang catering package na bibilhin?",
+        "Aling software license ang bibilhin?",
+        "Alin ang warehouse shelf na bibilhin?"
+      ],
+      "negativeNearMisses": [
+        "Alin ang VAT return na ihahain?",
+        "Alin ang withholding tax na babayaran?",
+        "Ano ang tax treatment ng office chair?",
+        "Alin ang invoice na gagamitin for input VAT?"
+      ],
+      "grammaticalForms": [
+        "interrogative alin/ano form",
+        "relative na bibilhin form"
+      ],
+      "semanticFillerFamilies": [
+        "physical goods",
+        "services",
+        "software or digital assets"
+      ],
+      "copiedR3FullQueries": 0,
+      "copiedFrozenSuiteFullQueries": 0,
+      "numberingDependency": 0,
+      "distinctNormalizedSyntacticSkeletons": 3,
+      "leaveOneFillerFamilyOutExpected": "PASS",
+      "packetPass": true,
+      "noSingleLiteralNounNecessary": true
+    }
+  },
+  "c24NewMaterialRulesActivated": 0,
+  "note": "C24 carries forward the validated C23 structural packet and activates no new material runtime rule."
+}

@@ -1,0 +1,1165 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:48.743Z",
+  "expectedStartingFailures": 48,
+  "actualFailures": 48,
+  "expectedByFamily": {
+    "collision_request_subtype": 8,
+    "predicate_attachment": 8,
+    "outcome_evidentiary_vs_filing": 16,
+    "acronym_vs_topic_ambiguity": 16
+  },
+  "actualByFamily": {
+    "collision_request_subtype": 8,
+    "predicate_attachment": 8,
+    "outcome_evidentiary_vs_filing": 16,
+    "acronym_vs_topic_ambiguity": 16
+  },
+  "pass": true,
+  "failures": [
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#11",
+      "query": "Translate the tide chart poster handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#12",
+      "query": "Translate the kite spool rack handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#13",
+      "query": "Translate the lantern paper roll handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#14",
+      "query": "Translate the mango crate liner handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#15",
+      "query": "Translate the bamboo flute case handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#16",
+      "query": "Translate the shell lamp shade handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#17",
+      "query": "Translate the coral tank pump handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "collision_request_subtype",
+      "pair": "collision_request_subtype#18",
+      "query": "Translate the reed mat binder handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "speech act and operation scope distinguish a requested operation on an ordinary object from ordinary document/topic wording",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#27",
+      "query": "Is the pier docking charge subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#28",
+      "query": "Is the silo cleaning run subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#29",
+      "query": "Is the kiln relining job subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#30",
+      "query": "Is the trawler net repair subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#31",
+      "query": "Is the grain drying batch subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#32",
+      "query": "Is the ice plant output subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#33",
+      "query": "Is the copra press run subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "predicate_attachment",
+      "pair": "predicate_attachment#34",
+      "query": "Is the ferry hull survey subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "grammatical bearer determines whether the tax predicate attaches to an external transaction/item or to the tax concept itself",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#36",
+      "query": "What records support the pier docking charge deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#36",
+      "query": "When is the deadline for filing the pier docking charge return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#38",
+      "query": "What records support the silo cleaning run deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#38",
+      "query": "When is the deadline for filing the silo cleaning run return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#40",
+      "query": "What records support the kiln relining job deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#40",
+      "query": "When is the deadline for filing the kiln relining job return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#42",
+      "query": "What records support the trawler net repair deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#42",
+      "query": "When is the deadline for filing the trawler net repair return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#44",
+      "query": "What records support the grain drying batch deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#44",
+      "query": "When is the deadline for filing the grain drying batch return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#46",
+      "query": "What records support the ice plant output deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#46",
+      "query": "When is the deadline for filing the ice plant output return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#48",
+      "query": "What records support the copra press run deduction?",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#48",
+      "query": "When is the deadline for filing the copra press run return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#50",
+      "query": "What records support the ferry hull survey deduction?",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "outcome_evidentiary_vs_filing",
+      "pair": "outcome_evidentiary_vs_filing#50",
+      "query": "When is the deadline for filing the ferry hull survey return?",
+      "expectedReason": "tax_compliance_task",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "requested outcome distinguishes records/proof/substantiation from filing/registration/remittance/deadline procedure",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#69",
+      "query": "What is XQD for item 40?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#69",
+      "query": "What about professional fees for matter 40?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#70",
+      "query": "What is BNV for item 41?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#70",
+      "query": "What about professional fees for matter 41?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#71",
+      "query": "What is RTK for item 42?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#71",
+      "query": "What about professional fees for matter 42?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#72",
+      "query": "What is PYW for item 43?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#72",
+      "query": "What about professional fees for matter 43?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#73",
+      "query": "What is GZL for item 44?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#73",
+      "query": "What about professional fees for matter 44?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#74",
+      "query": "What is MFH for item 45?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#74",
+      "query": "What about professional fees for matter 45?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#75",
+      "query": "What is JCT for item 46?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#75",
+      "query": "What about professional fees for matter 46?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#76",
+      "query": "What is VWS for item 47?",
+      "expectedReason": "ambiguous_tax_acronym",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    },
+    {
+      "family": "acronym_vs_topic_ambiguity",
+      "pair": "acronym_vs_topic_ambiguity#76",
+      "query": "What about professional fees for matter 47?",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "no_tax_relation",
+      "expectedDecision": "CLARIFY",
+      "actualDecision": "REFUSE",
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "CLARIFY",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "bare acronym/resolved referent/definition intent plus tax or ordinary context distinguishes acronym ambiguity from ordinary topic",
+      "baselineFeatureVector": "derived at runtime from speech act, operation scope, outcome class, grammatical bearer, acronym completeness and context",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "family recorded structurally; no fixture noun, pair number, suite selector or exact query used for runtime control"
+    }
+  ]
+}

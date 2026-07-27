@@ -1,0 +1,681 @@
+{
+  "unit": "COMMIT 5R1-C24",
+  "generatedUtc": "2026-07-27T09:34:48.743Z",
+  "expectedStartingFailures": 24,
+  "actualFailures": 24,
+  "pass": true,
+  "failures": [
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#27",
+      "query": "Is the sailmaker fee subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#29",
+      "query": "Is the quarry haulage subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#31",
+      "query": "Is the orchard netting subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#33",
+      "query": "Is the foundry casting subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#35",
+      "query": "Is the bakery oven subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#37",
+      "query": "Is the cobbler bench subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#39",
+      "query": "Is the tannery lining subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#41",
+      "query": "Is the glazier panel subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#43",
+      "query": "Is the apiary frame subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#45",
+      "query": "Is the loom shuttle subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#47",
+      "query": "Is the ferry gangway subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "compliance_vs_treatment",
+      "pair": "compliance_vs_treatment#49",
+      "query": "Is the salt pan rake subject to percentage tax?",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actualReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "actualDecision": "ALLOW",
+      "forbiddenReasons": [
+        "tax_compliance_task"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "ASKS_TAX_TREATMENT_OF"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "ALLOW",
+        "actualDecision": "ALLOW",
+        "actualRelations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#115",
+      "query": "Translate the badminton net handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#116",
+      "query": "Translate the harmonica case handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#117",
+      "query": "Translate the sundial plinth handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#118",
+      "query": "Translate the canoe paddle handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#119",
+      "query": "Translate the lantern wick handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#120",
+      "query": "Translate the trellis post handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#121",
+      "query": "Translate the zither string handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#122",
+      "query": "Translate the cairn marker handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#123",
+      "query": "Translate the abacus bead handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#124",
+      "query": "Translate the quilt batting handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#125",
+      "query": "Translate the birdhouse perch handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    },
+    {
+      "family": "no_tax_refuse_vs_clarify",
+      "pair": "no_tax_refuse_vs_clarify#126",
+      "query": "Translate the marble chute handbook into plain English.",
+      "expectedReason": "no_tax_relation",
+      "actualReason": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "actualDecision": "REFUSE",
+      "forbiddenReasons": [
+        "ambiguous_tax_acronym"
+      ],
+      "forbiddenHit": false,
+      "actualRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "decisionAndRelation": {
+        "expectedDecision": "REFUSE",
+        "actualDecision": "REFUSE",
+        "actualRelations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ]
+      },
+      "labelIndependentStructuralDistinction": "reason-suite failure requires label-independent structural distinction before any rule activation",
+      "baselineFeatureVector": "derived at runtime from query syntax, requested operation/outcome, relation set, tax predicate scope and operand features",
+      "newFeatureProposal": "not activated in C24",
+      "novelPositiveNegativeProbes": [],
+      "antiOverfitAssessment": "no fixture-number or expected-label selector authorized"
+    }
+  ]
+}
