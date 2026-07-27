@@ -1,0 +1,18 @@
+{
+  "services/philippine-tax-intent-analyzer.js": {
+    "bytes": 170726,
+    "normalizedLfSha256": "437362153a842f6597e9156de7d38857a62abe0f5f8c3a0cd61c1ddde701366e",
+    "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+  },
+  "services/philippine-tax-domain-boundary.js": {
+    "bytes": 12192,
+    "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+  },
+  "services/philippine-tax-boundary-patterns.js": {
+    "bytes": 65451,
+    "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+    "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+  },
+  "servicesTreeDigest": "c9a7d3c55eb18123c0bd47fd359c9cc234cbf66677c10255a6470585b408e904"
+}

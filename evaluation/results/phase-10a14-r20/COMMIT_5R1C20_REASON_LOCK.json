@@ -1,0 +1,157 @@
+{
+  "unit": "COMMIT 5R1-C20",
+  "generatedUtc": "2026-07-27T04:39:51.519Z",
+  "outcome": "INCOMPLETE — REASON LAYER REMEDIATION NOT CLOSED",
+  "decisionLayerClosure": true,
+  "relationLayerClosure": true,
+  "reasonLayerClosure": false,
+  "standaloneClosure": false,
+  "runtimeClosure": false,
+  "reasonLockAchieved": false,
+  "iterationCeilingReached": true,
+  "materialIterationsUsed": 4,
+  "materialIterationsPermitted": 5,
+  "rejectedCandidates": 0,
+  "placementGates": {
+    "unit": "COMMIT 5R1-C20",
+    "generatedUtc": "2026-07-27T04:29:45.931Z",
+    "method": "Every R3 row outside the matched set is compared against the pre-patch baseline on decision, reason, relation set and branch signature. Zero drift on all four is required.",
+    "rule": "token_gloss_assigns_no_identifier",
+    "unmatchedRowsChecked": 3714,
+    "unmatchedReasonDrift": 0,
+    "unmatchedDecisionDrift": 0,
+    "unmatchedRelationDrift": 0,
+    "unmatchedBranchSignatureDrift": 0,
+    "pass": true,
+    "rules": [
+      {
+        "rule": "token_gloss_assigns_no_identifier",
+        "unmatchedRowsChecked": 3714,
+        "drift": 0,
+        "pass": true
+      },
+      {
+        "rule": "nominalized_transaction_head_is_tax_task",
+        "unmatchedRowsChecked": 3655,
+        "unmatchedReasonDrift": 0,
+        "unmatchedDecisionDrift": 0,
+        "unmatchedRelationDrift": 0,
+        "unmatchedBranchSignatureDrift": 0,
+        "targetEquivalencePass": true,
+        "pass": true
+      },
+      {
+        "rule": "external_income_item_is_ordinary_object",
+        "unmatchedRowsChecked": 3693,
+        "drift": 0,
+        "pass": true
+      },
+      {
+        "rule": "filipino_tax_instrument_is_subject + issuance_over_filing_position_is_compliance",
+        "unmatchedRowsChecked": 3698,
+        "drift": 0,
+        "pass": true
+      }
+    ],
+    "allPass": true
+  },
+  "c19IterationAccountingReconciliation": "HISTORICAL_ITERATION_ACCOUNTING_DEFECT",
+  "collisionProbeResult": "148/196",
+  "collisionProbesNotPartOfDenominator": true,
+  "baselineReasonMismatches": 383,
+  "bestReasonMismatches": 271,
+  "reasonMismatchesClosed": 112,
+  "r3ReasonResult": "3449/3720",
+  "canonicalOverall": "3449/3720",
+  "r3DecisionResult": "3720/3720",
+  "r3RelationResult": "3720/3720",
+  "decisionCounterfactualResult": "756/756",
+  "relationCounterfactualResult": "282/282",
+  "clauseProbeResult": "68/68",
+  "reasonCounterfactualResult": "320/344",
+  "reasonCounterfactualBaseline": "304/344",
+  "decisionLockHeld": true,
+  "relationLockHeld": true,
+  "focusedReasonRegression": false,
+  "reasonIntegrity": true,
+  "staticGates": {
+    "antiMemorization": true,
+    "clauseSchema": true
+  },
+  "residualReasonConfusion": {
+    "no_tax_relation <- explicit_non_tax_task": 116,
+    "explicit_non_tax_task <- no_tax_relation": 60,
+    "explicit_tax_task_relation <- tax_compliance_task": 5,
+    "explicit_tax_task_relation <- tax_treatment_of_ordinary_object": 25,
+    "tax_treatment_of_ordinary_object <- explicit_tax_task_relation": 27,
+    "explicit_non_tax_task <- non_tax_expansion": 3,
+    "no_tax_relation <- non_tax_expansion": 22,
+    "non_tax_label_or_name <- no_tax_relation": 1,
+    "no_tax_relation <- non_tax_label_or_name": 5,
+    "explicit_tax_task_relation <- tax_definition_with_context": 4,
+    "tax_compliance_task <- explicit_tax_task_relation": 1,
+    "non_tax_expansion <- no_tax_relation": 1,
+    "quoted_tax_term_only <- explicit_non_tax_task": 1
+  },
+  "candidateAttemptId": "R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z",
+  "runtimeHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 171748,
+      "normalizedLfSha256": "66b13c4d5f42eabf115c2347c81e96458ea1986de99dc58da7e67e82fbafb0d9",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "68f35b67344ce865204d82072d1a1138e78daaa44c0eacc24df68afd8cd0abcc"
+  },
+  "servicesTreeDigest": "68f35b67344ce865204d82072d1a1138e78daaa44c0eacc24df68afd8cd0abcc",
+  "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c20_reason_iteration_05-commit5r1c20-dev-05-ord01-2026-07-27T04-38-01-998Z/runtime-snapshot",
+  "patchPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C20_BEST_REASON_CANDIDATE.patch",
+  "reconstruction": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c20_reconstruction-commit5r1c20-recon-ord01-2026-07-27T04-25-29-273Z",
+    "exactReproduction": true,
+    "discrepancies": []
+  },
+  "oracleIntegrity": {
+    "oracle": "R3",
+    "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "rows": 3720,
+    "expectationsEdited": 0
+  },
+  "suitesUnchanged": {
+    "decision": true,
+    "relation": true,
+    "clauseProbes": true,
+    "reasonSuiteV8": true
+  },
+  "placementSafeMethod": {
+    "architecture": "Additive pure override seam. The original selector is preserved byte-identical as decideTaxBoundaryFromEvidenceOriginal and consulted as the fallback; a wrapper consults resolveGovernedReasonOverride first. No existing branch was replaced, reordered, broadened or narrowed.",
+    "rulesShipped": 5,
+    "rulesRejectedInShadow": 3,
+    "candidatesRejectedAfterImplementation": 0,
+    "targetEquivalenceAllPass": true,
+    "placementNonInterferenceAllPass": true,
+    "forecastAccuracy": "Every shipped rule landed exactly its shadow forecast: +4, +63, +25, +20."
+  },
+  "separabilityAtEndOfC20": {
+    "residualRows": 271,
+    "separable": 200,
+    "colliding": 71,
+    "collidingVectors": 7
+  },
+  "possibleLearnabilityConflict": {
+    "status": "CANDIDATES_ONLY_NOT_CONFIRMED",
+    "rows": 71,
+    "vectors": 7,
+    "note": "Three prior units each saw a declared ceiling move once features or method improved. Remaining shared vectors are candidates, not adjudicated defects. No exception added, no oracle change, no closure claimed."
+  },
+  "nextExactTask": "PHASE-10A14-R20 — COMMIT 5R1-C21: REASON-LAYER CLOSURE CONTINUATION 21 AGAINST R3"
+}

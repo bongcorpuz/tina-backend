@@ -1,0 +1,43 @@
+{
+  "unit": "COMMIT 5R1-C20",
+  "generatedUtc": "2026-07-27T04:29:45.931Z",
+  "method": "Every R3 row outside the matched set is compared against the pre-patch baseline on decision, reason, relation set and branch signature. Zero drift on all four is required.",
+  "rule": "token_gloss_assigns_no_identifier",
+  "unmatchedRowsChecked": 3714,
+  "unmatchedReasonDrift": 0,
+  "unmatchedDecisionDrift": 0,
+  "unmatchedRelationDrift": 0,
+  "unmatchedBranchSignatureDrift": 0,
+  "pass": true,
+  "rules": [
+    {
+      "rule": "token_gloss_assigns_no_identifier",
+      "unmatchedRowsChecked": 3714,
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "rule": "nominalized_transaction_head_is_tax_task",
+      "unmatchedRowsChecked": 3655,
+      "unmatchedReasonDrift": 0,
+      "unmatchedDecisionDrift": 0,
+      "unmatchedRelationDrift": 0,
+      "unmatchedBranchSignatureDrift": 0,
+      "targetEquivalencePass": true,
+      "pass": true
+    },
+    {
+      "rule": "external_income_item_is_ordinary_object",
+      "unmatchedRowsChecked": 3693,
+      "drift": 0,
+      "pass": true
+    },
+    {
+      "rule": "filipino_tax_instrument_is_subject + issuance_over_filing_position_is_compliance",
+      "unmatchedRowsChecked": 3698,
+      "drift": 0,
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

@@ -1,0 +1,85 @@
+{
+  "unit": "COMMIT 5R1-C20",
+  "generatedUtc": "2026-07-27T04:25:01.568Z",
+  "scope": "Section 3 reconciliation of C19 iteration accounting against committed registry evidence. Reads only; no C19 file is rewritten, deleted or silently repaired.",
+  "registryTotals": {
+    "before": 154,
+    "after": 159,
+    "increase": 5
+  },
+  "registryBacked": {
+    "newlyRegisteredCampaigns": 5,
+    "reconstruction": 1,
+    "materialRuntimeCampaigns": 4,
+    "accepted": 2,
+    "rejected": 2,
+    "cleanLockVerification": 0,
+    "cycles": [
+      {
+        "cycle": "commit5r1c19-dev-02",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed"
+      },
+      {
+        "cycle": "commit5r1c19-dev-03",
+        "disposition": "rejected",
+        "status": "completed"
+      },
+      {
+        "cycle": "commit5r1c19-dev-04",
+        "disposition": "rejected",
+        "status": "completed"
+      },
+      {
+        "cycle": "commit5r1c19-dev-05",
+        "disposition": "accepted_reason_improvement",
+        "status": "completed"
+      },
+      {
+        "cycle": "commit5r1c19-recon",
+        "disposition": "accepted_reconstruction_exact",
+        "status": "completed"
+      }
+    ]
+  },
+  "conflictingCommittedClaims": {
+    "commitMessageAndCurrentState": "five registered material iterations (2 accepted, 2 rejected)",
+    "userFacingReport": "five iterations — 2 accepted, 1 rejected, 2 neutral",
+    "reasonLockRecord": {
+      "materialIterationsUsed": 2,
+      "rejectedCandidates": 2,
+      "iterationCeilingReached": true
+    }
+  },
+  "orphanCheck": {
+    "attemptDirectoriesOnDisk": 159,
+    "registeredAttempts": 159,
+    "orphanDirectories": 0,
+    "danglingRegisteredAttempts": 0,
+    "unregisteredRuntimeAttemptExists": false
+  },
+  "determination": "HISTORICAL_ITERATION_ACCOUNTING_DEFECT",
+  "authoritativeCount": {
+    "materialRuntimeIterations": 4,
+    "accepted": 2,
+    "rejected": 2,
+    "permitted": 5,
+    "ceilingActuallyReached": false,
+    "basis": "registry-backed campaign census"
+  },
+  "defectAnalysis": {
+    "whatWasClaimed": "C19 stated \"five registered material iterations\" in its commit message and CURRENT_STATE, and reported \"2 accepted, 1 rejected, 2 neutral\" to the user. Its own reason-lock record stated materialIterationsUsed=2, rejectedCandidates=2, iterationCeilingReached=true.",
+    "whatIsTrue": "The registry records five newly registered C19 campaigns: ONE reconstruction plus FOUR material runtime campaigns (dev-02 accepted, dev-03 rejected, dev-04 rejected, dev-05 accepted).",
+    "rootCause": "Two distinct miscounts. First, the reconstruction campaign was counted toward the material-iteration budget; a reconstruction reproduces a prior candidate and is not a remediation iteration. Second, the user-facing report described two rejected campaigns as \"1 rejected, 2 neutral\", which does not match their registered dispositions — both dev-03 and dev-04 carry disposition \"rejected\".",
+    "consequence": "C19 recorded iterationCeilingReached=true when only four of five material iterations had been used. No result, score, gate or disposition is affected: every reported metric was produced by a registered campaign and is reproducible, and both accepted candidates were correctly registered.",
+    "scoresAffected": false,
+    "evidenceAffected": false,
+    "registryAffected": false
+  },
+  "recurrenceNote": "This is the SECOND consecutive unit with an iteration-accounting defect. C19 reconciled the same class of error in C18 (simulations counted as iterations) and then produced a different miscount of its own (reconstruction counted as an iteration, and rejected campaigns reported as neutral). The prospective fix is mechanical rather than narrative: the material-iteration count must be derived from the registry by filtering for the -dev- cycle pattern, never asserted by hand. C20 derives it that way.",
+  "remediation": {
+    "c19FilesRewritten": 0,
+    "c19FilesDeleted": 0,
+    "correctionMethod": "Prospective. The authoritative registry-backed count is recorded here and stated in the C20 CURRENT_STATE update. C19 evidence is preserved exactly as committed."
+  }
+}

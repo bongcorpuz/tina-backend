@@ -1,0 +1,20 @@
+{
+  "unit": "COMMIT 5R1-C20",
+  "generatedUtc": "2026-07-27T04:36:26.066Z",
+  "method": "Full observable output captured for every R3 row before any change: decision, reason, relation set and a stable branch signature. Unmatched-row drift is measured against this snapshot.",
+  "rowsCaptured": 3718,
+  "reasonDistribution": {
+    "explicit_tax_task_relation": 443,
+    "tax_compliance_task": 285,
+    "tax_treatment_of_ordinary_object": 792,
+    "explicit_non_tax_task": 951,
+    "non_tax_label_or_name": 205,
+    "quoted_tax_term_only": 119,
+    "ambiguous_tax_acronym": 220,
+    "no_tax_relation": 482,
+    "non_tax_expansion": 112,
+    "tax_definition_with_context": 83,
+    "tax_negation_but_tax_review_requested": 26
+  },
+  "correctRows": 3427
+}

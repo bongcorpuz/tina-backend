@@ -1,0 +1,833 @@
+{
+  "unit": "COMMIT 5R1-C20",
+  "generatedUtc": "2026-07-27T04:36:26.429Z",
+  "method": "Shadow mode computes what each override WOULD assign without changing any output. The same pure predicate is later injected into the runtime seam.",
+  "shadows": [
+    {
+      "rules": [
+        "filipino_tax_instrument_is_subject"
+      ],
+      "conditionSupport": 10,
+      "shadowMatchedIds": [
+        "S1-IR19-0901",
+        "S1-IR19-0903",
+        "S1-IR19-0921",
+        "S1-IR19-0923",
+        "S1-IR19-0941",
+        "S1-IR19-0943",
+        "S1-IR19-0961",
+        "S1-IR19-0963",
+        "S1-IR19-0981",
+        "S1-IR19-0983"
+      ],
+      "matched": [
+        {
+          "id": "S1-IR19-0901",
+          "query": "Paano ireport sa BIR ang VAT sa online service? TG1",
+          "rule": "filipino_tax_instrument_is_subject",
+          "current": "tax_treatment_of_ordinary_object",
+          "predicted": "explicit_tax_task_relation",
+          "expected": "explicit_tax_task_relation"
+        },
+        {
+          "id": "S1-IR19-0903",
+          "query": "May withholding tax ba sa professional fee? TG3",
+          "rule": "filipino_tax_instrument_is_subject",
+          "current": "tax_treatment_of_ordinary_object",
+          "predicted": "explicit_tax_task_relation",
+          "expected": "explicit_tax_task_relation"
+        },
+        {
+          "id": "S1-IR19-0921",
+          "query": "Paano ireport sa BIR ang VAT sa online service? TG21",
+          "rule": "filipino_tax_instrument_is_subject",
+          "current": "tax_treatment_of_ordinary_object",
+          "predicted": "explicit_tax_task_relation",
+          "expected": "explicit_tax_task_relation"
+        },
+        {
+          "id": "S1-IR19-0923",
+          "query": "May withholding tax ba sa professional fee? TG23",
+          "rule": "filipino_tax_instrument_is_subject",
+          "current": "tax_treatment_of_ordinary_object",
+          "predicted": "explicit_tax_task_relation",
+          "expected": "explicit_tax_task_relation"
+        },
+        {
+          "id": "S1-IR19-0941",
+          "query": "Paano ireport sa BIR ang VAT sa online service? TG41",
+          "rule": "filipino_tax_instrument_is_subject",
+          "current": "tax_treatment_of_ordinary_object",
+          "predicted": "explicit_tax_task_relation",
+          "expected": "explicit_tax_task_relation"
+        },
+        {
+          "id": "S1-IR19-0943",
+          "query": "May withholding tax ba sa professional fee? TG43",
+          "rule": "filipino_tax_instrument_is_subject",
+          "current": "tax_treatment_of_ordinary_object",
+          "predicted": "explicit_tax_task_relation",
+          "expected": "explicit_tax_task_relation"
+        }
+      ],
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "issuance_over_filing_position_is_compliance"
+      ],
+      "conditionSupport": 10,
+      "shadowMatchedIds": [
+        "S1-IR19-0405",
+        "S1-IR19-0425",
+        "S1-IR19-0445",
+        "S1-IR19-0465",
+        "S1-IR19-0485",
+        "S1-IR19-0505",
+        "S1-IR19-0525",
+        "S1-IR19-0545",
+        "S1-IR19-0565",
+        "S1-IR19-0585"
+      ],
+      "matched": [
+        {
+          "id": "S1-IR19-0405",
+          "query": "RMC (revenue memorandum circular) applies to our Philippine filing position 5.",
+          "rule": "issuance_over_filing_position_is_compliance",
+          "current": "explicit_tax_task_relation",
+          "predicted": "tax_compliance_task",
+          "expected": "tax_compliance_task"
+        },
+        {
+          "id": "S1-IR19-0425",
+          "query": "RMC (revenue memorandum circular) applies to our Philippine filing position 25.",
+          "rule": "issuance_over_filing_position_is_compliance",
+          "current": "explicit_tax_task_relation",
+          "predicted": "tax_compliance_task",
+          "expected": "tax_compliance_task"
+        },
+        {
+          "id": "S1-IR19-0445",
+          "query": "RMC (revenue memorandum circular) applies to our Philippine filing position 45.",
+          "rule": "issuance_over_filing_position_is_compliance",
+          "current": "explicit_tax_task_relation",
+          "predicted": "tax_compliance_task",
+          "expected": "tax_compliance_task"
+        },
+        {
+          "id": "S1-IR19-0465",
+          "query": "RMC (revenue memorandum circular) applies to our Philippine filing position 65.",
+          "rule": "issuance_over_filing_position_is_compliance",
+          "current": "explicit_tax_task_relation",
+          "predicted": "tax_compliance_task",
+          "expected": "tax_compliance_task"
+        },
+        {
+          "id": "S1-IR19-0485",
+          "query": "RMC (revenue memorandum circular) applies to our Philippine filing position 85.",
+          "rule": "issuance_over_filing_position_is_compliance",
+          "current": "explicit_tax_task_relation",
+          "predicted": "tax_compliance_task",
+          "expected": "tax_compliance_task"
+        },
+        {
+          "id": "S1-IR19-0505",
+          "query": "RMC (revenue memorandum circular) applies to our Philippine filing position 105.",
+          "rule": "issuance_over_filing_position_is_compliance",
+          "current": "explicit_tax_task_relation",
+          "predicted": "tax_compliance_task",
+          "expected": "tax_compliance_task"
+        }
+      ],
+      "TP_CORRECTED": 10,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 10,
+      "forecastAcceptable": true,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "nominal_fragment_requests_no_operation"
+      ],
+      "conditionSupport": 21,
+      "shadowMatchedIds": [
+        "S1-IR19-1040",
+        "S1-IR19-1080",
+        "S1-IR19-1120",
+        "S2-IR18-DOM-113",
+        "S2-IR18-DOM-115",
+        "S2-IR18-DOM-120",
+        "S2-IR18-DOM-159",
+        "S2-IR18-DOM-160",
+        "S2-IR18-DOM-166",
+        "S2-IR18-DOM-204",
+        "S2-IR18-DOM-228",
+        "S2-IR18-DOM-229",
+        "R20N-ENT-0571",
+        "R20N-ENT-0581",
+        "R20N-ENT-0586",
+        "R20N-ENT-0596",
+        "R20N-ENT-0611",
+        "R20N-ENT-0656",
+        "R20N-ENT-0676",
+        "R20N-ENT-0701",
+        "R20N-ENT-0711"
+      ],
+      "matched": [
+        {
+          "id": "S1-IR19-1040",
+          "query": "Annual registration fee for a sports club. Group MM-20.",
+          "rule": "nominal_fragment_requests_no_operation",
+          "current": "explicit_non_tax_task",
+          "predicted": "no_tax_relation",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-1080",
+          "query": "Annual registration fee for a sports club. Group MM-40.",
+          "rule": "nominal_fragment_requests_no_operation",
+          "current": "explicit_non_tax_task",
+          "predicted": "no_tax_relation",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-1120",
+          "query": "Annual registration fee for a sports club. Group MM-60.",
+          "rule": "nominal_fragment_requests_no_operation",
+          "current": "explicit_non_tax_task",
+          "predicted": "no_tax_relation",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S2-IR18-DOM-113",
+          "query": "CSS grid layout",
+          "rule": "nominal_fragment_requests_no_operation",
+          "current": "explicit_non_tax_task",
+          "predicted": "no_tax_relation",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S2-IR18-DOM-115",
+          "query": "color palette selection",
+          "rule": "nominal_fragment_requests_no_operation",
+          "current": "explicit_non_tax_task",
+          "predicted": "no_tax_relation",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S2-IR18-DOM-120",
+          "query": "software variable naming",
+          "rule": "nominal_fragment_requests_no_operation",
+          "current": "explicit_non_tax_task",
+          "predicted": "no_tax_relation",
+          "expected": "no_tax_relation"
+        }
+      ],
+      "TP_CORRECTED": 12,
+      "FP_CORRECT_ROW_REGRESSION": 9,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 3,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "id": "R20N-ENT-0571",
+          "query": "office cabinet filing layout",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0581",
+          "query": "chess club tournament penalty",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0586",
+          "query": "gym loyalty membership perk",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0596",
+          "query": "mall parking surcharge signage",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0611",
+          "query": "library book return deadline",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0656",
+          "query": "photography portfolio layout",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0676",
+          "query": "school exam deadline",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        },
+        {
+          "id": "R20N-ENT-0701",
+          "query": "e-sports tournament bracket",
+          "from": "explicit_non_tax_task",
+          "to": "no_tax_relation"
+        }
+      ],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "nominalized_transaction_head_is_tax_task"
+      ],
+      "conditionSupport": 0,
+      "shadowMatchedIds": [],
+      "matched": [],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "external_income_item_is_ordinary_object"
+      ],
+      "conditionSupport": 0,
+      "shadowMatchedIds": [],
+      "matched": [],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "token_gloss_assigns_no_identifier"
+      ],
+      "conditionSupport": 0,
+      "shadowMatchedIds": [],
+      "matched": [],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 0,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": 0,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "operation_on_named_artefact"
+      ],
+      "conditionSupport": 27,
+      "shadowMatchedIds": [
+        "S1-IR19-0207",
+        "S1-IR19-0217",
+        "S1-IR19-0227",
+        "S1-IR19-0237",
+        "S1-IR19-0247",
+        "S1-IR19-0257",
+        "S1-IR19-0267",
+        "S1-IR19-0277",
+        "S1-IR19-0287",
+        "S1-IR19-0297",
+        "S1-IR19-0307",
+        "S1-IR19-0317",
+        "S1-IR19-0327",
+        "S1-IR19-0337",
+        "S1-IR19-0347",
+        "S1-IR19-0357",
+        "S1-IR19-0367",
+        "S1-IR19-0377",
+        "S1-IR19-0387",
+        "S1-IR19-0397",
+        "S2-IR18-DOM-487",
+        "S2-IR18-DOM-517",
+        "R20N-LBL-1246",
+        "R20N-LBL-1259",
+        "R20N-LBL-1272",
+        "R20N-LBL-1285",
+        "R20N-LBL-1298"
+      ],
+      "matched": [
+        {
+          "id": "S1-IR19-0207",
+          "query": "Is bird typo for BIR a good project name? Control 7.",
+          "rule": "operation_on_named_artefact",
+          "current": "non_tax_label_or_name",
+          "predicted": "explicit_non_tax_task",
+          "expected": "non_tax_label_or_name"
+        },
+        {
+          "id": "S1-IR19-0217",
+          "query": "Is song tempo RATE a good project name? Control 17.",
+          "rule": "operation_on_named_artefact",
+          "current": "non_tax_label_or_name",
+          "predicted": "explicit_non_tax_task",
+          "expected": "non_tax_label_or_name"
+        },
+        {
+          "id": "S1-IR19-0227",
+          "query": "Is bird typo for BIR a good project name? Control 27.",
+          "rule": "operation_on_named_artefact",
+          "current": "non_tax_label_or_name",
+          "predicted": "explicit_non_tax_task",
+          "expected": "non_tax_label_or_name"
+        },
+        {
+          "id": "S1-IR19-0237",
+          "query": "Is song tempo RATE a good project name? Control 37.",
+          "rule": "operation_on_named_artefact",
+          "current": "non_tax_label_or_name",
+          "predicted": "explicit_non_tax_task",
+          "expected": "non_tax_label_or_name"
+        },
+        {
+          "id": "S1-IR19-0247",
+          "query": "Is bird typo for BIR a good project name? Control 47.",
+          "rule": "operation_on_named_artefact",
+          "current": "non_tax_label_or_name",
+          "predicted": "explicit_non_tax_task",
+          "expected": "non_tax_label_or_name"
+        },
+        {
+          "id": "S1-IR19-0257",
+          "query": "Is song tempo RATE a good project name? Control 57.",
+          "rule": "operation_on_named_artefact",
+          "current": "non_tax_label_or_name",
+          "predicted": "explicit_non_tax_task",
+          "expected": "non_tax_label_or_name"
+        }
+      ],
+      "TP_CORRECTED": 0,
+      "FP_CORRECT_ROW_REGRESSION": 27,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 0,
+      "UNCHANGED": 0,
+      "netMismatchDelta": -27,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "id": "S1-IR19-0207",
+          "query": "Is bird typo for BIR a good project name? Control 7.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0217",
+          "query": "Is song tempo RATE a good project name? Control 17.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0227",
+          "query": "Is bird typo for BIR a good project name? Control 27.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0237",
+          "query": "Is song tempo RATE a good project name? Control 37.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0247",
+          "query": "Is bird typo for BIR a good project name? Control 47.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0257",
+          "query": "Is song tempo RATE a good project name? Control 57.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0267",
+          "query": "Is bird typo for BIR a good project name? Control 67.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0277",
+          "query": "Is song tempo RATE a good project name? Control 77.",
+          "from": "non_tax_label_or_name",
+          "to": "explicit_non_tax_task"
+        }
+      ],
+      "wrongToWrong": []
+    },
+    {
+      "rules": [
+        "finite_directive_requests_operation"
+      ],
+      "conditionSupport": 225,
+      "shadowMatchedIds": [
+        "S1-IR19-0751",
+        "S1-IR19-0752",
+        "S1-IR19-0753",
+        "S1-IR19-0754",
+        "S1-IR19-0755",
+        "S1-IR19-0756",
+        "S1-IR19-0757",
+        "S1-IR19-0758",
+        "S1-IR19-0759",
+        "S1-IR19-0760",
+        "S1-IR19-0766",
+        "S1-IR19-0767",
+        "S1-IR19-0768",
+        "S1-IR19-0769",
+        "S1-IR19-0770",
+        "S1-IR19-0771",
+        "S1-IR19-0772",
+        "S1-IR19-0773",
+        "S1-IR19-0774",
+        "S1-IR19-0775",
+        "S1-IR19-0781",
+        "S1-IR19-0782",
+        "S1-IR19-0783",
+        "S1-IR19-0784",
+        "S1-IR19-0785",
+        "S1-IR19-0786",
+        "S1-IR19-0787",
+        "S1-IR19-0788",
+        "S1-IR19-0789",
+        "S1-IR19-0790",
+        "S1-IR19-0796",
+        "S1-IR19-0797",
+        "S1-IR19-0798",
+        "S1-IR19-0799",
+        "S1-IR19-0800",
+        "S1-IR19-0801",
+        "S1-IR19-0802",
+        "S1-IR19-0803",
+        "S1-IR19-0804",
+        "S1-IR19-0805",
+        "S1-IR19-0811",
+        "S1-IR19-0812",
+        "S1-IR19-0813",
+        "S1-IR19-0814",
+        "S1-IR19-0815",
+        "S1-IR19-0816",
+        "S1-IR19-0817",
+        "S1-IR19-0818",
+        "S1-IR19-0819",
+        "S1-IR19-0820",
+        "S1-IR19-0826",
+        "S1-IR19-0827",
+        "S1-IR19-0828",
+        "S1-IR19-0829",
+        "S1-IR19-0830",
+        "S1-IR19-0831",
+        "S1-IR19-0832",
+        "S1-IR19-0833",
+        "S1-IR19-0834",
+        "S1-IR19-0835",
+        "S1-IR19-0841",
+        "S1-IR19-0842",
+        "S1-IR19-0843",
+        "S1-IR19-0844",
+        "S1-IR19-0845",
+        "S1-IR19-0846",
+        "S1-IR19-0847",
+        "S1-IR19-0848",
+        "S1-IR19-0849",
+        "S1-IR19-0850",
+        "S1-IR19-0856",
+        "S1-IR19-0857",
+        "S1-IR19-0858",
+        "S1-IR19-0859",
+        "S1-IR19-0860",
+        "S1-IR19-0861",
+        "S1-IR19-0862",
+        "S1-IR19-0863",
+        "S1-IR19-0864",
+        "S1-IR19-0865",
+        "S1-IR19-0871",
+        "S1-IR19-0872",
+        "S1-IR19-0873",
+        "S1-IR19-0874",
+        "S1-IR19-0875",
+        "S1-IR19-0876",
+        "S1-IR19-0877",
+        "S1-IR19-0878",
+        "S1-IR19-0879",
+        "S1-IR19-0880",
+        "S1-IR19-0886",
+        "S1-IR19-0887",
+        "S1-IR19-0888",
+        "S1-IR19-0889",
+        "S1-IR19-0890",
+        "S1-IR19-0891",
+        "S1-IR19-0892",
+        "S1-IR19-0893",
+        "S1-IR19-0894",
+        "S1-IR19-0895",
+        "S2-IR18-DOM-243",
+        "S2-IR18-DOM-268",
+        "S2-IR18-DOM-293",
+        "S2-IR18-DOM-318",
+        "S2-IR18-DOM-331",
+        "S2-IR18-DOM-332",
+        "S2-IR18-DOM-333",
+        "S2-IR18-DOM-334",
+        "S2-IR18-DOM-335",
+        "S2-IR18-DOM-336",
+        "S2-IR18-DOM-337",
+        "S2-IR18-DOM-340",
+        "S2-IR18-DOM-341",
+        "S2-IR18-DOM-342",
+        "S2-IR18-DOM-343",
+        "S2-IR18-DOM-344",
+        "S2-IR18-DOM-345",
+        "S2-IR18-DOM-346",
+        "S2-IR18-DOM-347",
+        "S2-IR18-DOM-349",
+        "S2-IR18-DOM-351",
+        "S2-IR18-DOM-352",
+        "S2-IR18-DOM-353",
+        "S2-IR18-DOM-354",
+        "S2-IR18-DOM-355",
+        "S2-IR18-DOM-356",
+        "S2-IR18-DOM-357",
+        "S2-IR18-DOM-360",
+        "S2-IR18-DOM-361",
+        "S2-IR18-DOM-362",
+        "S2-IR18-DOM-363",
+        "S2-IR18-DOM-364",
+        "S2-IR18-DOM-365",
+        "S2-IR18-DOM-366",
+        "S2-IR18-DOM-367",
+        "S2-IR18-DOM-369",
+        "S2-IR18-DOM-371",
+        "S2-IR18-DOM-372",
+        "S2-IR18-DOM-373",
+        "S2-IR18-DOM-374",
+        "S2-IR18-DOM-375",
+        "S2-IR18-DOM-376",
+        "S2-IR18-DOM-377",
+        "S2-IR18-DOM-380",
+        "S2-IR18-DOM-381",
+        "S2-IR18-DOM-382",
+        "S2-IR18-DOM-383",
+        "S2-IR18-DOM-384",
+        "S2-IR18-DOM-385",
+        "S2-IR18-DOM-386",
+        "S2-IR18-DOM-387",
+        "S2-IR18-DOM-389",
+        "S2-IR18-DOM-391",
+        "S2-IR18-DOM-392",
+        "S2-IR18-DOM-393",
+        "S2-IR18-DOM-394",
+        "S2-IR18-DOM-395",
+        "S2-IR18-DOM-396",
+        "S2-IR18-DOM-397",
+        "S2-IR18-DOM-400",
+        "S2-IR18-DOM-401",
+        "S2-IR18-DOM-402",
+        "S2-IR18-DOM-403",
+        "S2-IR18-DOM-404",
+        "S2-IR18-DOM-405",
+        "S2-IR18-DOM-406",
+        "S2-IR18-DOM-407",
+        "S2-IR18-DOM-409",
+        "S2-IR18-DOM-479",
+        "S2-IR18-DOM-483",
+        "S2-IR18-DOM-485",
+        "S2-IR18-DOM-497",
+        "S2-IR18-DOM-507",
+        "S2-IR18-DOM-521",
+        "S2-IR18-DOM-523",
+        "S2-IR18-DOM-551",
+        "S3-IR17-085",
+        "S3-IR17-086",
+        "S3-IR17-090",
+        "S3-IR17-093",
+        "S3-IR17-094",
+        "S3-IR17-096",
+        "S3-IR17-102",
+        "S3-IR17-103",
+        "S3-IR17-104",
+        "S3-IR17-106",
+        "S3-IR17-107",
+        "S3-IR17-110",
+        "S3-IR17-117",
+        "S3-IR17-133",
+        "S3-IR17-135",
+        "S3-IR17-141",
+        "S3-IR17-142",
+        "S3-IR17-143",
+        "S3-IR17-145",
+        "S3-IR17-146",
+        "S3-IR17-147",
+        "S3-IR17-148",
+        "S3-IR17-149",
+        "S3-IR17-150",
+        "S3-IR17-151",
+        "S3-IR17-153",
+        "S3-IR17-154",
+        "S3-IR17-155",
+        "S3-IR17-156",
+        "S3-IR17-157",
+        "S3-IR17-158",
+        "S3-IR17-159",
+        "S3-IR17-160",
+        "S3-IR17-161",
+        "S3-IR17-162",
+        "S3-IR17-163",
+        "S3-IR17-165",
+        "S3-IR17-166",
+        "S3-IR17-167",
+        "S3-IR17-168",
+        "S3-IR17-169",
+        "S3-IR17-170",
+        "S3-IR17-190",
+        "S3-IR17-195",
+        "S3-IR17-196",
+        "S3-IR17-199",
+        "S3-IR17-203",
+        "S3-IR17-206",
+        "S3-IR17-207"
+      ],
+      "matched": [
+        {
+          "id": "S1-IR19-0751",
+          "query": "What about gross receipts for scenario 1?",
+          "rule": "finite_directive_requests_operation",
+          "current": "no_tax_relation",
+          "predicted": "explicit_non_tax_task",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-0752",
+          "query": "What about professional fees for scenario 2?",
+          "rule": "finite_directive_requests_operation",
+          "current": "no_tax_relation",
+          "predicted": "explicit_non_tax_task",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-0753",
+          "query": "What about registration for scenario 3?",
+          "rule": "finite_directive_requests_operation",
+          "current": "no_tax_relation",
+          "predicted": "explicit_non_tax_task",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-0754",
+          "query": "What about penalties for scenario 4?",
+          "rule": "finite_directive_requests_operation",
+          "current": "no_tax_relation",
+          "predicted": "explicit_non_tax_task",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-0755",
+          "query": "What about return for scenario 5?",
+          "rule": "finite_directive_requests_operation",
+          "current": "no_tax_relation",
+          "predicted": "explicit_non_tax_task",
+          "expected": "no_tax_relation"
+        },
+        {
+          "id": "S1-IR19-0756",
+          "query": "What about filing deadline for scenario 6?",
+          "rule": "finite_directive_requests_operation",
+          "current": "no_tax_relation",
+          "predicted": "explicit_non_tax_task",
+          "expected": "no_tax_relation"
+        }
+      ],
+      "TP_CORRECTED": 4,
+      "FP_CORRECT_ROW_REGRESSION": 220,
+      "FP_WRONG_TO_DIFFERENT_WRONG": 1,
+      "UNCHANGED": 0,
+      "netMismatchDelta": -216,
+      "forecastAcceptable": false,
+      "correctRowRegressions": [
+        {
+          "id": "S1-IR19-0751",
+          "query": "What about gross receipts for scenario 1?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0752",
+          "query": "What about professional fees for scenario 2?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0753",
+          "query": "What about registration for scenario 3?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0754",
+          "query": "What about penalties for scenario 4?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0755",
+          "query": "What about return for scenario 5?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0756",
+          "query": "What about filing deadline for scenario 6?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0757",
+          "query": "What about assessment for scenario 7?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        },
+        {
+          "id": "S1-IR19-0758",
+          "query": "What about deduction for scenario 8?",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        }
+      ],
+      "wrongToWrong": [
+        {
+          "id": "S3-IR17-206",
+          "query": "What is a SEC in time measurement?",
+          "expected": "non_tax_expansion",
+          "from": "no_tax_relation",
+          "to": "explicit_non_tax_task"
+        }
+      ]
+    }
+  ]
+}
