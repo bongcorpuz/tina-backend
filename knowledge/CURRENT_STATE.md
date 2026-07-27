@@ -4,6 +4,184 @@
 
 Last updated:
 
+`2026-07-27T23:27:31.867Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C30
+ROADMAP V8 CONTINUITY CORRECTION, POST-C29 RESIDUAL RECONCILIATION AND REASON-LAYER CLOSURE
+DECISION: INCOMPLETE - C29 SELECTED BASE RECONSTRUCTED; POST-C29 RESIDUAL INVENTORY RECONCILED; REASON LOCK REMAINS OPEN
+```
+
+Roadmap v8 continuity correction:
+
+```text
+Roadmap v8 tracked in C30                  true
+Roadmap v8 final normalized-LF SHA-256     54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422
+Roadmap v8 source-of-truth hierarchy       PASS
+Roadmap v7 byte-for-byte preservation      true
+Immediate source hierarchy                 committed evidence/frozen artifacts -> CURRENT_STATE -> Roadmap v8 -> Roadmap v7 historical
+```
+
+Exact C29 selected base reconstruction:
+
+```text
+source attempt                             R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z
+services tree digest                       3686eb6dbf8b00bce191dee01d9391eed7f4bc02ab1c11ab3974bc5faa63cdd3
+analyzer normalized-LF SHA-256             9c7bb11c8881e0bc4cbafd167ad4d4901abafb4eecea1a1b62e70d6933005e25
+domain-boundary normalized-LF SHA-256      0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039
+patterns normalized-LF SHA-256             3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa
+R3 reason                                  3462 / 3,720
+reason suite v8                            344 / 344
+collision probes                           187 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+Post-C29 residual reconciliation:
+
+```text
+classification                             POST_C29_RESIDUAL_POPULATION_RECOMPUTED, NINE_COLLISION_FAILURES_RECONCILED_AS_CROSS_LAYER_SAFE_RELATION_DECISION_REASON, ZERO_REASON_SUITE_FAILURES_AFTER_C29
+recomputed R3 reason mismatches            258
+recomputed reason-suite failures           0
+recomputed collision-probe failures        9
+deduplicated cross-population residuals    267
+nine collision cluster reconciliation      filing-deadline request over ordinary-operation return: 8; records supporting ordinary-operation deduction: 1
+```
+
+C30 residual inventory:
+
+```text
+R3 reason mismatches                       258
+reason-suite failures                      0
+collision-probe failures                   9
+deduplicated cross-population residuals    267
+correct-row controls indexed               55
+DECISION_DEPENDENT                         0
+RELATION_DEPENDENT                         0
+REASON_ONLY                                258
+CROSS_LAYER_SAFE_DECISION_REASON           0
+CROSS_LAYER_SAFE_RELATION_DECISION_REASON  9
+ORACLE_OR_CONTRACT_AMBIGUITY               0
+UNCLASSIFIED_PENDING_EVIDENCE              0
+```
+
+C30 monotonic feature model:
+
+```text
+vectorCount                                124
+collidingRows                              27
+strict feature superset of C29             true
+validator                                  PASS
+```
+
+C30 material-attempt accounting:
+
+```text
+governed reconstruction iterations          1
+material reason-remediation iterations      3
+accepted rules                              filing_deadline_return_is_tax_compliance_task, records_supporting_deduction_are_tax_treatment_support, ordinary_translation_request_is_no_tax_relation
+rejected rules                              none
+frontier rules                              filing_deadline_return_is_tax_compliance_task, records_supporting_deduction_are_tax_treatment_support, ordinary_translation_request_is_no_tax_relation
+selected controlling attempt                R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z
+candidate exhaustion                        false
+remaining viable candidates                 true
+ambiguity or blocker status                 reason lock remains open after C30 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication
+```
+
+C30 final selected control vector:
+
+```text
+R3 reason                                  3472 / 3,720
+reason suite v8                            344 / 344
+collision probes                           196 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+Registry after C30:
+
+```text
+cumulativeThrough       commit5r1c30-incomplete
+total attempts          200
+domain_campaign         136
+focused_suite           13
+other                   9
+synthetic_validator     42
+controlling             198
+non-controlling         2
+orphan                  0
+dangling                0
+decisionLayerClosure    true
+relationLayerClosure    true
+reasonLayerClosure      false
+runtimeClosure          false
+```
+
+Finalization:
+
+```text
+candidate-delta replay                    PASS
+taint-aware anti-overfit                   PASS
+Pareto policy                              PASS
+monotonic feature validator                PASS
+derived packet validation                  PASS
+composition/order controls                 PASS
+manifest entries                           84
+manifest bad-hash count                    0
+evidence files including manifest          85
+phase directory file count                 2562
+dev-factory preserved exactly              true
+live runtime restored                      true
+protected untracked directories            .claude/, .vscode/, evaluation/factcheck/ untouched
+Roadmap v8 tracked                         true
+Roadmap v7 modified                        false
+```
+
+Reason lock remains open. The next exact task is:
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C31 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C30 BASE
+```
+
+R20 remains IN PROGRESS. Phase 10A remains OPEN. Not PASS. Not SATISFIED.
+
+## Previous Execution Unit - COMMIT 5R1-C29
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T15:15:18.680Z`
 
 Repository:

@@ -1,0 +1,721 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:32.126Z",
+  "decision": "INCOMPLETE",
+  "reasonLayerClosure": false,
+  "runtimeClosure": false,
+  "candidateSelectionReconciliation": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:08.856Z",
+    "classification": "C29_SELECTED_BASE_CONTINUITY",
+    "determinations": [
+      "C29 selected the third Pareto-positive controlling candidate over the C28 selected base.",
+      "C30 uses the C29 selected candidate runtime snapshot as its exact active base.",
+      "C29 accepted rules are inherited in the active base and are not rerun unchanged in C30.",
+      "C29 evidence is consumed as immutable input and is not modified."
+    ],
+    "selectedC29Base": {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "rule": "ordinary_translation_handbook_is_no_tax_relation",
+      "actual": {
+        "canonicalPassed": 3462,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3462,
+        "reasonMismatches": 258,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 187,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "runtimeIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 175457,
+          "normalizedLfSha256": "9c7bb11c8881e0bc4cbafd167ad4d4901abafb4eecea1a1b62e70d6933005e25"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "3686eb6dbf8b00bce191dee01d9391eed7f4bc02ab1c11ab3974bc5faa63cdd3"
+      }
+    },
+    "c29FinalReportDecision": "INCOMPLETE",
+    "c29EvidenceInvalidated": false,
+    "c29FilesModified": false,
+    "pass": true
+  },
+  "baseRuntimeIdentity": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:08.866Z",
+    "sourceAttempt": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 175457,
+        "normalizedLfSha256": "9c7bb11c8881e0bc4cbafd167ad4d4901abafb4eecea1a1b62e70d6933005e25"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "3686eb6dbf8b00bce191dee01d9391eed7f4bc02ab1c11ab3974bc5faa63cdd3"
+    },
+    "mismatches": [],
+    "pass": true
+  },
+  "reconstruction": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c30_c29_selected_base_reconstruction-commit5r1c30-reconstruction-ord01-2026-07-27T23-27-08-873Z",
+    "actual": {
+      "canonicalPassed": 3462,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3462,
+      "reasonMismatches": 258,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 187,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    },
+    "discrepancies": []
+  },
+  "monotonicFeature": {
+    "baseline": {
+      "unit": "COMMIT 5R1-C30",
+      "generatedUtc": "2026-07-27T23:27:12.237Z",
+      "inheritedControllingBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "vectorCount": 124,
+      "collidingRows": 27,
+      "strictFeatureSupersetOfC28": true,
+      "forbiddenInputsExcluded": [
+        "expected or actual reason",
+        "expected decision",
+        "oracle ID",
+        "query hash",
+        "suite/family/category",
+        "row position",
+        "fixture membership",
+        "full normalized query"
+      ],
+      "pass": true
+    },
+    "ablation": {
+      "unit": "COMMIT 5R1-C30",
+      "generatedUtc": "2026-07-27T23:27:12.237Z",
+      "vectorCount": 124,
+      "collidingRows": 27,
+      "vectorCountAtLeastC28": true,
+      "collidingRowsNoMoreThanC28": true,
+      "removedOrCollapsedC28Fields": [],
+      "stopSemanticWorkDueToMonotonicity": false,
+      "pass": true
+    },
+    "pass": true
+  },
+  "failureInventory": {
+    "DECISION_DEPENDENT": 0,
+    "RELATION_DEPENDENT": 0,
+    "REASON_ONLY": 258,
+    "CROSS_LAYER_SAFE_DECISION_REASON": 0,
+    "CROSS_LAYER_SAFE_RELATION_DECISION_REASON": 9,
+    "ORACLE_OR_CONTRACT_AMBIGUITY": 0,
+    "UNCLASSIFIED_PENDING_EVIDENCE": 0
+  },
+  "materialIterations": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-01-ord01-2026-07-27T23-27-12-685Z",
+      "candidateId": "C30-M01-filing-deadline-return-compliance",
+      "rule": "filing_deadline_return_is_tax_compliance_task",
+      "layerClassification": "CROSS_LAYER_SAFE_RELATION_DECISION_REASON",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3462,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3462,
+        "reasonMismatches": 258,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 195,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      },
+      "disposition": "accepted_pareto_positive_zero_regression_C30_candidate"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-02-ord02-2026-07-27T23-27-17-454Z",
+      "candidateId": "C30-M02-records-support-deduction-treatment",
+      "rule": "records_supporting_deduction_are_tax_treatment_support",
+      "layerClassification": "CROSS_LAYER_SAFE_RELATION_DECISION_REASON",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3462,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3462,
+        "reasonMismatches": 258,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      },
+      "disposition": "accepted_pareto_positive_zero_regression_C30_candidate"
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "candidateId": "C30-M03-ordinary-translation-no-tax-relation",
+      "rule": "ordinary_translation_request_is_no_tax_relation",
+      "layerClassification": "REASON_ONLY",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3472,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3472,
+        "reasonMismatches": 248,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      },
+      "disposition": "accepted_pareto_positive_zero_regression_C30_candidate"
+    }
+  ],
+  "candidateExhaustion": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:29.634Z",
+    "hypothesesConsidered": 16,
+    "materialIterationsUsed": 3,
+    "acceptedRules": [
+      "filing_deadline_return_is_tax_compliance_task",
+      "records_supporting_deduction_are_tax_treatment_support",
+      "ordinary_translation_request_is_no_tax_relation"
+    ],
+    "rejectedRules": [],
+    "frontierRules": [
+      "filing_deadline_return_is_tax_compliance_task",
+      "records_supporting_deduction_are_tax_treatment_support",
+      "ordinary_translation_request_is_no_tax_relation"
+    ],
+    "selectedControllingRuleSet": [
+      "filing_deadline_return_is_tax_compliance_task",
+      "records_supporting_deduction_are_tax_treatment_support",
+      "ordinary_translation_request_is_no_tax_relation"
+    ],
+    "finalSelectedControllingAttempt": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+    "reasonLockAchieved": false,
+    "FORMAL_CANDIDATE_EXHAUSTION": false,
+    "remainingViableCandidatesExist": true,
+    "blockerOrContinuationStatus": "reason lock remains open after C30 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication",
+    "nextPath": "PHASE-10A14-R20 - COMMIT 5R1-C31 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C30 BASE"
+  },
+  "compositionOrderIndependence": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:29.632Z",
+    "orderSensitiveCandidateCount": 0,
+    "candidates": [],
+    "byteEquivalent": true,
+    "metricEquivalent": true,
+    "documentedHarmlessDifference": "No C30 candidate introduced an order-sensitive composition over prior alternatives.",
+    "orderIndependencePass": true
+  },
+  "candidateDeltaReplay": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:29.627Z",
+    "entries": [
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-01-ord01-2026-07-27T23-27-12-685Z",
+        "candidateId": "C30-M01-filing-deadline-return-compliance",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-02-ord02-2026-07-27T23-27-17-454Z",
+        "candidateId": "C30-M02-records-support-deduction-treatment",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "candidateId": "C30-M03-ordinary-translation-no-tax-relation",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      }
+    ],
+    "pass": true
+  },
+  "taintAwareAntiOverfit": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:29.629Z",
+    "c27TaintAwareGovernancePreserved": true,
+    "entries": [
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-01-ord01-2026-07-27T23-27-12-685Z",
+        "candidateId": "C30-M01-filing-deadline-return-compliance",
+        "findings": [],
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-02-ord02-2026-07-27T23-27-17-454Z",
+        "candidateId": "C30-M02-records-support-deduction-treatment",
+        "findings": [],
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "candidateId": "C30-M03-ordinary-translation-no-tax-relation",
+        "findings": [],
+        "pass": true
+      }
+    ],
+    "pass": true
+  },
+  "derivedPacketValidation": true,
+  "registry": {
+    "totalAttempts": 200,
+    "total": 200,
+    "byCategory": {
+      "domain_campaign": 136,
+      "focused_suite": 13,
+      "other": 9,
+      "synthetic_validator": 42
+    },
+    "byGate": {
+      "r20_commit5_pre_remediation_standalone_baseline": 1,
+      "r20_commit5r1_development_iteration_01": 1,
+      "r20_commit5r1_pre_remediation_r2_standalone_baseline": 1,
+      "r20_commit5r1c1_development_iteration_02": 1,
+      "r20_commit5r1c1_reconstructed_2674_candidate": 1,
+      "r20_commit5r1c10_decision_layer_lock_verification": 1,
+      "r20_commit5r1c10_development_iteration_02": 1,
+      "r20_commit5r1c10_development_iteration_03": 1,
+      "r20_commit5r1c10_development_iteration_04": 1,
+      "r20_commit5r1c10_development_iteration_05": 1,
+      "r20_commit5r1c10_development_iteration_06": 1,
+      "r20_commit5r1c10_reconstructed_3706_candidate": 1,
+      "r20_commit5r1c11_counterfactual_iteration_02": 1,
+      "r20_commit5r1c11_counterfactual_iteration_03": 1,
+      "r20_commit5r1c11_counterfactual_iteration_04": 1,
+      "r20_commit5r1c11_counterfactual_iteration_05": 1,
+      "r20_commit5r1c11_counterfactual_iteration_06": 1,
+      "r20_commit5r1c11_counterfactual_iteration_07": 1,
+      "r20_commit5r1c11_decision_layer_lock_verification": 2,
+      "r20_commit5r1c11_reconstructed_3720_candidate": 1,
+      "r20_commit5r1c12_counterfactual_iteration_02": 1,
+      "r20_commit5r1c12_counterfactual_iteration_03": 1,
+      "r20_commit5r1c12_counterfactual_iteration_04": 1,
+      "r20_commit5r1c12_counterfactual_iteration_05": 1,
+      "r20_commit5r1c12_decision_layer_lock_verification": 1,
+      "r20_commit5r1c12_reconstructed_739_candidate": 1,
+      "r20_commit5r1c13_reconstruction": 1,
+      "r20_commit5r1c13_relation_iteration_02": 1,
+      "r20_commit5r1c13_relation_iteration_03": 2,
+      "r20_commit5r1c13_relation_iteration_04": 1,
+      "r20_commit5r1c13_relation_iteration_05": 1,
+      "r20_commit5r1c13_relation_iteration_06": 1,
+      "r20_commit5r1c14_clause_relation_iteration_02": 1,
+      "r20_commit5r1c14_reconstruction": 1,
+      "r20_commit5r1c15_reason_iteration_02": 1,
+      "r20_commit5r1c15_reason_iteration_03": 1,
+      "r20_commit5r1c15_reason_iteration_04": 1,
+      "r20_commit5r1c15_reason_iteration_05": 1,
+      "r20_commit5r1c15_reason_iteration_06": 1,
+      "r20_commit5r1c15_reconstruction": 1,
+      "r20_commit5r1c16_reason_iteration_02": 1,
+      "r20_commit5r1c16_reason_iteration_03": 1,
+      "r20_commit5r1c16_reason_iteration_04": 1,
+      "r20_commit5r1c16_reason_iteration_05": 1,
+      "r20_commit5r1c16_reason_iteration_06": 1,
+      "r20_commit5r1c16_reconstruction": 1,
+      "r20_commit5r1c17_reason_iteration_03": 1,
+      "r20_commit5r1c17_reason_iteration_04": 1,
+      "r20_commit5r1c17_reason_iteration_05": 1,
+      "r20_commit5r1c17_reconstruction": 1,
+      "r20_commit5r1c18_reason_iteration_02": 1,
+      "r20_commit5r1c18_reason_iteration_03": 1,
+      "r20_commit5r1c18_reason_iteration_04": 1,
+      "r20_commit5r1c18_reason_iteration_05": 1,
+      "r20_commit5r1c18_reconstruction": 1,
+      "r20_commit5r1c19_reason_iteration_02": 1,
+      "r20_commit5r1c19_reason_iteration_03": 1,
+      "r20_commit5r1c19_reason_iteration_04": 1,
+      "r20_commit5r1c19_reason_iteration_05": 1,
+      "r20_commit5r1c19_reconstruction": 1,
+      "r20_commit5r1c2_development_iteration_02": 1,
+      "r20_commit5r1c2_reconstructed_dev02_against_r3": 1,
+      "r20_commit5r1c20_reason_iteration_02": 1,
+      "r20_commit5r1c20_reason_iteration_03": 1,
+      "r20_commit5r1c20_reason_iteration_04": 1,
+      "r20_commit5r1c20_reason_iteration_05": 1,
+      "r20_commit5r1c20_reconstruction": 1,
+      "r20_commit5r1c21_reason_iteration_02": 1,
+      "r20_commit5r1c21_reason_iteration_03": 1,
+      "r20_commit5r1c21_reason_iteration_04": 1,
+      "r20_commit5r1c21_reason_iteration_05": 1,
+      "r20_commit5r1c21_reason_iteration_06": 1,
+      "r20_commit5r1c21_reconstruction": 1,
+      "r20_commit5r1c22_c21_technical_reconstruction": 1,
+      "r20_commit5r1c22_governance_compliant_baseline": 1,
+      "r20_commit5r1c23_governance_compliant_baseline_reconstruction": 1,
+      "r20_commit5r1c23_reason_iteration_02": 1,
+      "r20_commit5r1c23_reason_iteration_03": 1,
+      "r20_commit5r1c23_reason_iteration_04": 1,
+      "r20_commit5r1c23_reason_iteration_05": 1,
+      "r20_commit5r1c24_c23_governed_reconstruction": 1,
+      "r20_commit5r1c25_c24_base_reconstruction": 1,
+      "r20_commit5r1c25_structural_reason_remediation": 3,
+      "r20_commit5r1c26_c25_pareto_base_reconstruction": 1,
+      "r20_commit5r1c26_structural_reason_remediation": 1,
+      "r20_commit5r1c27_c26_pareto_base_reconstruction": 1,
+      "r20_commit5r1c27_structural_reason_remediation": 3,
+      "r20_commit5r1c28_c27_selected_base_reconstruction": 1,
+      "r20_commit5r1c28_structural_reason_remediation": 3,
+      "r20_commit5r1c29_c28_selected_base_reconstruction": 1,
+      "r20_commit5r1c29_structural_reason_remediation": 3,
+      "r20_commit5r1c3_development_iteration_02": 1,
+      "r20_commit5r1c3_reconstructed_2819_candidate": 1,
+      "r20_commit5r1c30_c29_selected_base_reconstruction": 1,
+      "r20_commit5r1c30_structural_reason_remediation": 3,
+      "r20_commit5r1c4_development_iteration_02": 1,
+      "r20_commit5r1c4_development_iteration_03": 1,
+      "r20_commit5r1c4_reconstructed_2870_candidate": 1,
+      "r20_commit5r1c5_development_iteration_02": 1,
+      "r20_commit5r1c5_development_iteration_03": 1,
+      "r20_commit5r1c5_reconstructed_2955_candidate": 1,
+      "r20_commit5r1c6_development_iteration_02": 1,
+      "r20_commit5r1c6_reconstructed_2959_candidate": 1,
+      "r20_commit5r1c7_development_iteration_02": 1,
+      "r20_commit5r1c7_development_iteration_03": 1,
+      "r20_commit5r1c7_development_iteration_04": 1,
+      "r20_commit5r1c7_development_iteration_05": 1,
+      "r20_commit5r1c7_development_iteration_06": 1,
+      "r20_commit5r1c7_reconstructed_3464_candidate": 1,
+      "r20_commit5r1c8_development_iteration_02": 1,
+      "r20_commit5r1c8_development_iteration_03": 1,
+      "r20_commit5r1c8_development_iteration_04": 1,
+      "r20_commit5r1c8_development_iteration_05": 1,
+      "r20_commit5r1c8_development_iteration_06": 1,
+      "r20_commit5r1c8_reconstructed_3623_candidate": 1,
+      "r20_commit5r1c9_development_iteration_02": 1,
+      "r20_commit5r1c9_development_iteration_03": 1,
+      "r20_commit5r1c9_development_iteration_04": 1,
+      "r20_commit5r1c9_development_iteration_05": 1,
+      "r20_commit5r1c9_development_iteration_06": 1,
+      "r20_commit5r1c9_reconstructed_3669_candidate": 2,
+      "r20_pre_fix_corrected_r18_567": 1,
+      "r20_pre_fix_ir19_1120": 1,
+      "r20_commit3_analyzer_focused_suite": 1,
+      "r20_commit5r1c10_decision_focused_regression": 1,
+      "r20_commit5r1c11_decision_focused_regression": 3,
+      "r20_commit5r1c13_relation_lock_verification": 1,
+      "r20_commit5r1c14_relation_lock_verification": 1,
+      "r20_commit5r1c5_decision_counterfactual_pairs": 1,
+      "r20_commit5r1c6_decision_counterfactual_v2": 1,
+      "r20_commit5r1c7_decision_focused_regression": 2,
+      "r20_commit5r1c8_decision_focused_regression": 1,
+      "r20_commit5r1c9_decision_focused_regression": 1,
+      "r20_commit4_development_oracle_builder": 1,
+      "r20_commit4r1_inherited_reason_adjudication": 1,
+      "r20_commit4r1s_full_independent_reason_review": 1,
+      "r20_commit4r2_correction_application_review": 1,
+      "r20_commit4r2_r2_builder": 1,
+      "r20_commit4r3_independent_template_review": 1,
+      "r20_commit4r3_template_adjudication_builder": 1,
+      "r20_commit5r1c5_substitute_architecture_challenge": 1,
+      "r20_commit5r1c6_substitute_architecture_challenge": 1,
+      "r20_attempt_wrapper_self_validation": 1,
+      "r20_commit2_evidence_completeness": 1,
+      "r20_commit3_determinism_and_serialization": 1,
+      "r20_commit3_evidence_completeness": 1,
+      "r20_commit3_static_scope_and_exports": 1,
+      "r20_commit4_duplicate_and_metamorphic": 1,
+      "r20_commit4_freeze_and_evidence_completeness": 1,
+      "r20_commit4_schema_quota_expectation": 1,
+      "r20_commit4_source_integrity_and_contamination": 1,
+      "r20_commit4r1_freeze_and_completeness": 1,
+      "r20_commit4r1_independent_reason_review": 1,
+      "r20_commit4r1_unchanged_field_and_reason_contract": 1,
+      "r20_commit4r1_v1_source_lock": 1,
+      "r20_commit4r1s_blind_packet_integrity": 1,
+      "r20_commit4r1s_challenge_resolution": 1,
+      "r20_commit4r1s_evidence_completeness": 1,
+      "r20_commit4r1s_r1_immutability_and_scope": 1,
+      "r20_commit4r2_freeze_and_evidence_completeness": 1,
+      "r20_commit4r2_r1_r1s_source_lock": 1,
+      "r20_commit4r2_unchanged_field_and_contract": 1,
+      "r20_commit4r3_freeze_current_state_and_completeness": 1,
+      "r20_commit4r3_r2_conflict_source_lock": 1,
+      "r20_commit4r3_template_equivalence": 1,
+      "r20_commit4r3_unchanged_field_and_reason_contract": 1,
+      "r20_commit5r1c10_decision_determinism_and_no_mutation": 1,
+      "r20_commit5r1c10_decision_static_and_anti_overfit": 1,
+      "r20_commit5r1c11_decision_determinism_and_no_mutation": 3,
+      "r20_commit5r1c11_decision_static_and_anti_overfit": 3,
+      "r20_commit5r1c7_decision_determinism_and_no_mutation": 2,
+      "r20_commit5r1c7_decision_static_and_anti_overfit": 2,
+      "r20_commit5r1c7p1_final_preflight_current_state_and_completeness": 1,
+      "r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation": 1,
+      "r20_commit5r1c8_decision_determinism_and_no_mutation": 1,
+      "r20_commit5r1c8_decision_static_and_anti_overfit": 1,
+      "r20_commit5r1c9_decision_determinism_and_no_mutation": 1,
+      "r20_commit5r1c9_decision_static_and_anti_overfit": 1
+    },
+    "completed": 200,
+    "failed": 0,
+    "technicalIncomplete": 0,
+    "controlling": 198,
+    "nonControlling": 2,
+    "retries": 0,
+    "transientFailures": 0,
+    "orphanResults": 0,
+    "danglingAttempts": 0
+  },
+  "manifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_EVIDENCE_MANIFEST.sha256",
+    "manifestEntryCount": 85,
+    "evidenceFileCountIncludingManifest": 86,
+    "sha256": "92a6e664caa7c214632a0b9f94d63d45fdb1d3ed2726060c9d645d7e9fb2ff99"
+  },
+  "manifestValidation": {
+    "entries": 85,
+    "badHashCount": 0,
+    "bad": []
+  },
+  "devFactoryPreservedExactly": true,
+  "liveRuntimeRestoredToCommittedBackendBaseline": true,
+  "serviceOracleRoadmapTrackedDiff": "",
+  "protectedUntrackedOnlyAtPreflight": true,
+  "unexplainedUntrackedResidueLeftUntouched": [],
+  "roadmapV8ContinuityReconciliation": {
+    "unit": "COMMIT 5R1-C30",
+    "generatedUtc": "2026-07-27T23:27:08.750Z",
+    "preUpdateFileStatus": "tracked",
+    "startingGitBlob": "f6db39fc8374fcf7c8121c539e88ef88702ab7a0",
+    "preUpdateNormalizedLfSha256": "3c3f6c137af1b90f75896c6d2a5ae6cd5a239f467591b32283a2adbebda422b9",
+    "expectedStartingGitBlob": "f6db39fc8374fcf7c8121c539e88ef88702ab7a0",
+    "staleTextClassification": [
+      "C29_ROADMAP_V8_IMMEDIATE_PRIORITY_STALE_CONTINUITY_TEXT_DEFECT",
+      "NO_C29_EXECUTION_INVALIDATION",
+      "NO_C29_EVIDENCE_INVALIDATION",
+      "NO_ROADMAP_STRATEGY_DEFECT"
+    ],
+    "semanticValidationResult": {
+      "requiredSubphasesPresent": [
+        {
+          "subphase": "10E-A Identity, account and session security V1",
+          "present": true
+        },
+        {
+          "subphase": "10E-B Application, API and abuse protection V1",
+          "present": true
+        },
+        {
+          "subphase": "10E-C Production transport, domain and secret boundary V1",
+          "present": true
+        },
+        {
+          "subphase": "10F-A Pagination, bounded reads and database scalability V1",
+          "present": true
+        },
+        {
+          "subphase": "10F-B Background tasks and request-path isolation V1",
+          "present": true
+        },
+        {
+          "subphase": "10F-C Error monitoring and release observability V1",
+          "present": true
+        },
+        {
+          "subphase": "10I-P Production billing and real-payment readiness",
+          "present": true
+        }
+      ],
+      "productionReadinessSubphaseIntegrity": true,
+      "sourceOfTruthHierarchyPresent": true,
+      "strategicSectionIntegrity": true,
+      "pass": true
+    },
+    "requiredSubphasesPresent": [
+      {
+        "subphase": "10E-A Identity, account and session security V1",
+        "present": true
+      },
+      {
+        "subphase": "10E-B Application, API and abuse protection V1",
+        "present": true
+      },
+      {
+        "subphase": "10E-C Production transport, domain and secret boundary V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-A Pagination, bounded reads and database scalability V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-B Background tasks and request-path isolation V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-C Error monitoring and release observability V1",
+        "present": true
+      },
+      {
+        "subphase": "10I-P Production billing and real-payment readiness",
+        "present": true
+      }
+    ],
+    "sourceOfTruthHierarchyPresent": true,
+    "v7Unchanged": true,
+    "initialCorrectionNormalizedLfSha256": "ac801da9f005e667acbb44ae85d4b232b5b87d0040060833e4fe701c113e5549",
+    "plannedFinalHeaderUpdate": "replace active C30 wording with actual C30 outcome after evidence execution",
+    "authorizedPathOnly": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+    "pass": true,
+    "finalUpdatedUtc": "2026-07-27T23:27:31.318Z",
+    "finalNormalizedLfSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+    "finalExecutionHeader": {
+      "currentActiveWork": "PHASE-10A14-R20",
+      "currentControllingResult": "COMMIT 5R1-C30 incomplete; COMMIT 5R1-C31 continuation is next",
+      "phase10A": "OPEN",
+      "r20": "IN PROGRESS",
+      "metrics": {
+        "canonicalPassed": 3472,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3472,
+        "reasonMismatches": 248,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C31: R3 Reason-Layer Closure Continuation Against the Governance-Compliant C30 Base"
+    },
+    "strategicSectionIntegrity": true,
+    "productionReadinessSubphaseIntegrity": true,
+    "sourceOfTruthHierarchyIntegrity": true,
+    "v7ByteForBytePreservation": true,
+    "trackedInC30Commit": true
+  },
+  "nextExactTask": "PHASE-10A14-R20 - COMMIT 5R1-C31 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C30 BASE"
+}

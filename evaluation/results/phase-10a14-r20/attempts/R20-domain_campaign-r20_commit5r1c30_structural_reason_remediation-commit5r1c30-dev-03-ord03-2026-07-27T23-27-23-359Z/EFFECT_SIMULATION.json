@@ -1,0 +1,49 @@
+{
+  "actual": {
+    "canonicalPassed": 3472,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3472,
+    "reasonMismatches": 248,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "pareto": {
+    "r3ReasonNonDecrease": true,
+    "reasonSuiteNonDecrease": true,
+    "reasonSuiteExact": true,
+    "collisionProbesNonDecrease": true,
+    "strictImprovement": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true,
+    "decisionCounterfactualExact": true,
+    "relationCounterfactualExact": true,
+    "clauseProbesExact": true,
+    "richContextGuardExact": true,
+    "reasonIntegrityPass": true,
+    "c30AddedRoiViolations": 0,
+    "correctRowRegressions": 0,
+    "wrongToDifferentWrong": 0,
+    "previousOverrideRegressions": 0,
+    "decisionDrift": 0,
+    "relationDrift": 0,
+    "branchSignatureDriftOutsideTarget": 0,
+    "pass": true
+  },
+  "safety": {
+    "targetEquivalence": "PASS",
+    "placementNonInterference": "PASS",
+    "compositionNonInterference": "PASS",
+    "orderIndependence": "NOT_APPLICABLE"
+  },
+  "accepted": true
+}

@@ -3,7 +3,7 @@
 
 **Effective date:** 27 July 2026  
 **Current active work:** PHASE-10A14-R20  
-**Current controlling result:** COMMIT 5R1-C29 incomplete; COMMIT 5R1-C30 reason-layer continuation is next  
+**Current controlling result:** COMMIT 5R1-C30 incomplete; COMMIT 5R1-C31 continuation is next  
 **Major-phase count:** 18 - unchanged  
 **Strategic change:** production identity, live payments, transport security, application protection, scalability and observability are now explicit V1 release gates. TINA’s destination is unchanged.
 
@@ -63,13 +63,13 @@ Pagination, database indexes, background processing and error monitoring are rel
 
 ### Phase 10A remains the absolute blocker
 
-Latest controlling execution result after COMMIT 5R1-C27:
+Latest controlling execution result after COMMIT 5R1-C30:
 
 - R3 decision score: **3,720 / 3,720**;
 - R3 relation score: **3,720 / 3,720**;
-- R3 reason score: **3,462 / 3,720**;
-- reason-suite score: **331 / 344**;
-- collision-probe score: **162 / 196**;
+- R3 reason score: **3,472 / 3,720**;
+- reason-suite v8 score: **344 / 344**;
+- collision-probe score: **196 / 196**;
 - decision counterfactual: **756 / 756**;
 - relation counterfactual: **282 / 282**;
 - clause probes: **68 / 68**;
@@ -77,16 +77,15 @@ Latest controlling execution result after COMMIT 5R1-C27:
 - reason integrity: **PASS**;
 - decision lock: **achieved**;
 - relation lock: **achieved**;
-- reason lock: **open**; and
+- reason suite lock: **achieved**;
+- reason layer lock: **open**; and
 - runtime closure: **not achieved**.
 
 Next exact task:
 
-**PHASE-10A14-R20 — COMMIT 5R1-C28: Reason-Layer Closure Continuation 28 Against the Governance-Compliant C27 Base**
+**PHASE-10A14-R20 - COMMIT 5R1-C31: R3 Reason-Layer Closure Continuation Against the Governance-Compliant C30 Base**
 
 No market-response implementation may bypass Phase 10A. Competitive planning, architecture, benchmark design and source inventories may proceed as documentation, but runtime integration, model migration, durable memory, source promotion, production billing, public deployment and production cutover remain blocked.
-
----
 
 ## 3. Updated Phase 10
 

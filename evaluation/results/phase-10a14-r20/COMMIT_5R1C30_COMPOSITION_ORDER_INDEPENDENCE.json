@@ -1,0 +1,10 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:29.632Z",
+  "orderSensitiveCandidateCount": 0,
+  "candidates": [],
+  "byteEquivalent": true,
+  "metricEquivalent": true,
+  "documentedHarmlessDifference": "No C30 candidate introduced an order-sensitive composition over prior alternatives.",
+  "orderIndependencePass": true
+}

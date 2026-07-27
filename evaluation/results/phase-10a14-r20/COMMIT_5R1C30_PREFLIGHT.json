@@ -1,0 +1,50 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:08.098Z",
+  "head": "5551fffa77967012c4755cce77c7ceeaba30bbdb",
+  "parent": "5a9d5be1b9efc33e594221b64190dcfe8c19ff15",
+  "branch": "feature/source-availability-engine-v1",
+  "sync": "0\t0",
+  "trackedTreeClean": true,
+  "untracked": [
+    ".claude/settings.local.json",
+    ".vscode/extensions.json",
+    "evaluation/factcheck/README.md",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "evaluation/factcheck/hardest-philippine-tax-question.md",
+    "evaluation/runner/phase-10a14-r20/commit5r1c30-execute.mjs"
+  ],
+  "permittedProtectedUntracked": [
+    ".claude/settings.local.json",
+    ".vscode/extensions.json",
+    "evaluation/factcheck/README.md",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "evaluation/factcheck/hardest-philippine-tax-question.md",
+    "evaluation/runner/phase-10a14-r20/commit5r1c30-execute.mjs"
+  ],
+  "unexplainedUntrackedResidue": [],
+  "protectedUntrackedOnly": true,
+  "unexplainedResidueLeftUntouched": [],
+  "nodeListenerAbsent": true,
+  "port5173Free": true,
+  "currentStateBlob": "807fd627e3afaff0bcd4923712a742c3e3d49510",
+  "startingRegistry": {
+    "total": 196,
+    "domain_campaign": 132,
+    "focused_suite": 13,
+    "other": 9,
+    "synthetic_validator": 42,
+    "controlling": 194,
+    "nonControlling": 2,
+    "orphan": 0,
+    "dangling": 0,
+    "cumulativeThrough": "commit5r1c29-incomplete",
+    "decisionLayerClosure": true,
+    "relationLayerClosure": true,
+    "reasonLayerClosure": false,
+    "runtimeClosure": false
+  },
+  "pass": true
+}

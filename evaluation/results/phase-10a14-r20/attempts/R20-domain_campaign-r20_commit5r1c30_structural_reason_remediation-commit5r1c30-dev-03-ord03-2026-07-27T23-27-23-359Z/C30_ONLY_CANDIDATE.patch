@@ -1,0 +1,18 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index b9433a0b..8ef2c47e 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1263,6 +1263,13 @@ function resolveGovernedReasonOverride(evidence) {
+       && !/\b(?:translate|poster|handbook|project plan|school project|non-tax project)\b/i.test(v.t))
+     return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.87 };
+ 
++  const c30OrdinaryTranslationNoRelation = v.reason === 'explicit_non_tax_task'
++      && v.rels.includes('REQUESTS_NON_TAX_ACTION_ON')
++      && /^translate\s+.+\s+into\s+plain\s+english\.?$/i.test(v.t)
++      && !/\b(?:tax|vat|bir|boc|revenue|withholding|customs|income|deduction|return|filing|invoice|receipt)\b/i.test(v.t);
++  if (c30OrdinaryTranslationNoRelation)
++    return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.86 };
++
+   return null;
+ }
+ 

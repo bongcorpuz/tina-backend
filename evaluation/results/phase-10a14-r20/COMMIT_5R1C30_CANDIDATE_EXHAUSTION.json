@@ -1,0 +1,28 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:29.634Z",
+  "hypothesesConsidered": 16,
+  "materialIterationsUsed": 3,
+  "acceptedRules": [
+    "filing_deadline_return_is_tax_compliance_task",
+    "records_supporting_deduction_are_tax_treatment_support",
+    "ordinary_translation_request_is_no_tax_relation"
+  ],
+  "rejectedRules": [],
+  "frontierRules": [
+    "filing_deadline_return_is_tax_compliance_task",
+    "records_supporting_deduction_are_tax_treatment_support",
+    "ordinary_translation_request_is_no_tax_relation"
+  ],
+  "selectedControllingRuleSet": [
+    "filing_deadline_return_is_tax_compliance_task",
+    "records_supporting_deduction_are_tax_treatment_support",
+    "ordinary_translation_request_is_no_tax_relation"
+  ],
+  "finalSelectedControllingAttempt": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+  "reasonLockAchieved": false,
+  "FORMAL_CANDIDATE_EXHAUSTION": false,
+  "remainingViableCandidatesExist": true,
+  "blockerOrContinuationStatus": "reason lock remains open after C30 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication",
+  "nextPath": "PHASE-10A14-R20 - COMMIT 5R1-C31 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C30 BASE"
+}

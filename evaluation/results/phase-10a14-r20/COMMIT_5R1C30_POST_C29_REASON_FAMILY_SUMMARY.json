@@ -1,0 +1,50 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:12.676Z",
+  "clusters": [
+    {
+      "classification": "DECISION_DEPENDENT",
+      "count": 0
+    },
+    {
+      "classification": "RELATION_DEPENDENT",
+      "count": 0
+    },
+    {
+      "classification": "REASON_ONLY",
+      "count": 258
+    },
+    {
+      "classification": "CROSS_LAYER_SAFE_DECISION_REASON",
+      "count": 0
+    },
+    {
+      "classification": "CROSS_LAYER_SAFE_RELATION_DECISION_REASON",
+      "count": 9
+    },
+    {
+      "classification": "ORACLE_OR_CONTRACT_AMBIGUITY",
+      "count": 0
+    },
+    {
+      "classification": "UNCLASSIFIED_PENDING_EVIDENCE",
+      "count": 0
+    }
+  ],
+  "reasonFamilySummary": {
+    "no_tax_relation": 143,
+    "explicit_non_tax_task": 50,
+    "explicit_tax_task_relation": 34,
+    "tax_treatment_of_ordinary_object": 27,
+    "non_tax_label_or_name": 1,
+    "tax_compliance_task": 1,
+    "non_tax_expansion": 1,
+    "quoted_tax_term_only": 1
+  },
+  "priorityClusters": [
+    "outcome evidentiary versus filing",
+    "no-tax-relation versus explicit-non-tax-task",
+    "explicit-tax-task versus treatment-of-ordinary-object"
+  ],
+  "pass": true
+}

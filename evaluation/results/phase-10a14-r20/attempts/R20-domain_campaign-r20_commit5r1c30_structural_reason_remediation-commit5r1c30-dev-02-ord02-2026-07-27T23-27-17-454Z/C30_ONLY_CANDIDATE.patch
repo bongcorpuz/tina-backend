@@ -1,0 +1,18 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index bd3c22be..b9433a0b 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1256,6 +1256,13 @@ function resolveGovernedReasonOverride(evidence) {
+       && !/\b(?:court|pleading|motion|petition|police|complaint|school|game|poster|handbook)\b/i.test(v.t))
+     return { decision: 'ALLOW', reasonCode: 'tax_compliance_task', confidence: 0.88 };
+ 
++  const c30DeductionSupportRecords = /\b(?:records?|proof|evidence|documentation|documents?)\b[^.?!]{0,80}\b(?:support|substantiate|prove)\b[^.?!]{0,80}\b(?:deduction|deductib\w*|tax\s+position|tax\s+treatment)\b/i.test(v.t)
++      || /\b(?:support|substantiate|prove)\b[^.?!]{0,80}\b(?:deduction|deductib\w*|tax\s+position|tax\s+treatment)\b[^.?!]{0,80}\b(?:records?|proof|evidence|documentation|documents?)\b/i.test(v.t);
++  if ((v.reason === 'no_tax_relation' || v.reason === 'explicit_non_tax_task')
++      && c30DeductionSupportRecords
++      && !/\b(?:translate|poster|handbook|project plan|school project|non-tax project)\b/i.test(v.t))
++    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.87 };
++
+   return null;
+ }
+ 

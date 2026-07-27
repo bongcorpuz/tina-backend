@@ -1,0 +1,42 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:12.672Z",
+  "selectedC29Base": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+  "evidencedClassifications": [
+    "POST_C29_RESIDUAL_POPULATION_RECOMPUTED",
+    "NINE_COLLISION_FAILURES_RECONCILED_AS_CROSS_LAYER_SAFE_RELATION_DECISION_REASON",
+    "ZERO_REASON_SUITE_FAILURES_AFTER_C29"
+  ],
+  "recomputedAgainstExactC29SelectedBase": true,
+  "recomputedCounts": {
+    "r3ReasonMismatches": 258,
+    "reasonSuiteFailures": 0,
+    "collisionProbeFailures": 9,
+    "deduplicatedCrossPopulationResiduals": 267
+  },
+  "nineCollisionStructuralClusters": [
+    {
+      "cluster": "filing-deadline request over ordinary-operation return",
+      "count": 8,
+      "targetDecision": "ALLOW",
+      "targetReason": "tax_compliance_task"
+    },
+    {
+      "cluster": "records supporting ordinary-operation deduction",
+      "count": 1,
+      "targetDecision": "ALLOW",
+      "forbiddenReason": "tax_compliance_task"
+    }
+  ],
+  "reasonFamilySummary": {
+    "no_tax_relation": 143,
+    "explicit_non_tax_task": 50,
+    "explicit_tax_task_relation": 34,
+    "tax_treatment_of_ordinary_object": 27,
+    "non_tax_label_or_name": 1,
+    "tax_compliance_task": 1,
+    "non_tax_expansion": 1,
+    "quoted_tax_term_only": 1
+  },
+  "pass": true
+}

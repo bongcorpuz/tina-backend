@@ -1,0 +1,18 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index e63a4f77..bd3c22be 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1249,6 +1249,13 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c29OrdinaryTranslationHandbook)
+     return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.86 };
+ 
++  const c30FilingDeadlineReturn = /\b(?:when|what)\b[^.?!]{0,80}\bdeadline\b[^.?!]{0,80}\bfil(?:e|ing|submit|submission)\b[^.?!]{0,80}\breturn\b/i.test(v.t)
++      || /\bfil(?:e|ing|submit|submission)\b[^.?!]{0,80}\breturn\b[^.?!]{0,80}\b(?:deadline|due\s+date|due)\b/i.test(v.t);
++  if ((v.reason === 'no_tax_relation' || v.reason === 'explicit_non_tax_task')
++      && c30FilingDeadlineReturn
++      && !/\b(?:court|pleading|motion|petition|police|complaint|school|game|poster|handbook)\b/i.test(v.t))
++    return { decision: 'ALLOW', reasonCode: 'tax_compliance_task', confidence: 0.88 };
++
+   return null;
+ }
+ 

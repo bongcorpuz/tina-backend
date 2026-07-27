@@ -1,0 +1,11 @@
+{
+  "forwardStatus": 0,
+  "forwardStderr": "",
+  "reverseApplyStatus": 0,
+  "reversePatchStatus": 0,
+  "reverseStderr": "",
+  "forwardReplayMatchesCandidate": true,
+  "reverseReplayRestoresBase": true,
+  "candidateOnlyPatchExcludesInheritedChanges": true,
+  "pass": true
+}

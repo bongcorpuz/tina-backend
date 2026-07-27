@@ -1,0 +1,118 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:08.750Z",
+  "preUpdateFileStatus": "tracked",
+  "startingGitBlob": "f6db39fc8374fcf7c8121c539e88ef88702ab7a0",
+  "preUpdateNormalizedLfSha256": "3c3f6c137af1b90f75896c6d2a5ae6cd5a239f467591b32283a2adbebda422b9",
+  "expectedStartingGitBlob": "f6db39fc8374fcf7c8121c539e88ef88702ab7a0",
+  "staleTextClassification": [
+    "C29_ROADMAP_V8_IMMEDIATE_PRIORITY_STALE_CONTINUITY_TEXT_DEFECT",
+    "NO_C29_EXECUTION_INVALIDATION",
+    "NO_C29_EVIDENCE_INVALIDATION",
+    "NO_ROADMAP_STRATEGY_DEFECT"
+  ],
+  "semanticValidationResult": {
+    "requiredSubphasesPresent": [
+      {
+        "subphase": "10E-A Identity, account and session security V1",
+        "present": true
+      },
+      {
+        "subphase": "10E-B Application, API and abuse protection V1",
+        "present": true
+      },
+      {
+        "subphase": "10E-C Production transport, domain and secret boundary V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-A Pagination, bounded reads and database scalability V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-B Background tasks and request-path isolation V1",
+        "present": true
+      },
+      {
+        "subphase": "10F-C Error monitoring and release observability V1",
+        "present": true
+      },
+      {
+        "subphase": "10I-P Production billing and real-payment readiness",
+        "present": true
+      }
+    ],
+    "productionReadinessSubphaseIntegrity": true,
+    "sourceOfTruthHierarchyPresent": true,
+    "strategicSectionIntegrity": true,
+    "pass": true
+  },
+  "requiredSubphasesPresent": [
+    {
+      "subphase": "10E-A Identity, account and session security V1",
+      "present": true
+    },
+    {
+      "subphase": "10E-B Application, API and abuse protection V1",
+      "present": true
+    },
+    {
+      "subphase": "10E-C Production transport, domain and secret boundary V1",
+      "present": true
+    },
+    {
+      "subphase": "10F-A Pagination, bounded reads and database scalability V1",
+      "present": true
+    },
+    {
+      "subphase": "10F-B Background tasks and request-path isolation V1",
+      "present": true
+    },
+    {
+      "subphase": "10F-C Error monitoring and release observability V1",
+      "present": true
+    },
+    {
+      "subphase": "10I-P Production billing and real-payment readiness",
+      "present": true
+    }
+  ],
+  "sourceOfTruthHierarchyPresent": true,
+  "v7Unchanged": true,
+  "initialCorrectionNormalizedLfSha256": "ac801da9f005e667acbb44ae85d4b232b5b87d0040060833e4fe701c113e5549",
+  "plannedFinalHeaderUpdate": "replace active C30 wording with actual C30 outcome after evidence execution",
+  "authorizedPathOnly": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+  "pass": true,
+  "finalUpdatedUtc": "2026-07-27T23:27:31.318Z",
+  "finalNormalizedLfSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+  "finalExecutionHeader": {
+    "currentActiveWork": "PHASE-10A14-R20",
+    "currentControllingResult": "COMMIT 5R1-C30 incomplete; COMMIT 5R1-C31 continuation is next",
+    "phase10A": "OPEN",
+    "r20": "IN PROGRESS",
+    "metrics": {
+      "canonicalPassed": 3472,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3472,
+      "reasonMismatches": 248,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    },
+    "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C31: R3 Reason-Layer Closure Continuation Against the Governance-Compliant C30 Base"
+  },
+  "strategicSectionIntegrity": true,
+  "productionReadinessSubphaseIntegrity": true,
+  "sourceOfTruthHierarchyIntegrity": true,
+  "v7ByteForBytePreservation": true,
+  "trackedInC30Commit": true
+}

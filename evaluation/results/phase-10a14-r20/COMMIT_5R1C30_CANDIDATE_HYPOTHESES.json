@@ -1,0 +1,344 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:12.677Z",
+  "hypotheses": [
+    {
+      "id": "C30-M01-filing-deadline-return-compliance",
+      "category": "filing_deadline_return",
+      "principle": "A deadline request whose primary object is filing a return is a tax-compliance task even when the return noun phrase contains an ordinary descriptor.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C30-H02-filing-deadline-return-due-date-synonym",
+      "category": "filing_deadline_return",
+      "principle": "Due-date wording over a return should behave like deadline wording when filing/submission is the requested outcome.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H03-return-object-with-subordinate-operation",
+      "category": "filing_deadline_return",
+      "principle": "An ordinary operation descriptor nested inside the return noun phrase does not make the filing-deadline request a non-tax task.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H04-filing-deadline-without-return-control",
+      "category": "filing_deadline_return",
+      "principle": "Bare ordinary deadlines without a return object must remain non-tax or clarify.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-M02-records-support-deduction-treatment",
+      "category": "evidentiary_support_deduction",
+      "principle": "Records, proof or documentation supporting a deduction or tax position are tax-treatment support, not a non-tax records task.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C30-H06-evidence-support-tax-position",
+      "category": "evidentiary_support_deduction",
+      "principle": "Evidentiary-support wording over a tax position is tax-related even when the subject matter is ordinary.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H07-documentation-support-tax-treatment",
+      "category": "evidentiary_support_deduction",
+      "principle": "Documentation supporting a tax treatment should be routed by the tax outcome rather than the document noun.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H08-filing-versus-evidence-positive-pair",
+      "category": "paired_boundary",
+      "principle": "Filing-deadline return and deduction-support records are distinct positive tax outcomes.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H09-ordinary-translation-negative-pair",
+      "category": "paired_boundary",
+      "principle": "Translation of an ordinary object remains a non-tax/no-relation task.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H10-ordinary-project-support-negative-pair",
+      "category": "paired_boundary",
+      "principle": "Records supporting an ordinary non-tax project must not be promoted by the word records alone.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-M03-ordinary-translation-no-tax-relation",
+      "category": "no_tax_relation_vs_explicit_non_tax_task",
+      "principle": "Translation of an ordinary non-tax object into plain English should explain refusal as no tax relation.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C30-H12-performable-ordinary-task-explicit-non-tax",
+      "category": "no_tax_relation_vs_explicit_non_tax_task",
+      "principle": "Performable ordinary tasks without a tax nexus remain explicit non-tax tasks unless the task is merely text conversion over an ordinary topic.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H13-explicit-tax-task-versus-treatment",
+      "category": "explicit_tax_task_vs_treatment",
+      "principle": "Direct tax tasks and ordinary-object tax-treatment questions must remain distinguishable by relation type and target.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H14-deduction-versus-filing-procedure",
+      "category": "explicit_tax_task_vs_treatment",
+      "principle": "Deduction support should not be collapsed into filing/remittance procedure.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H15-single-tax-compliance-tail",
+      "category": "low_frequency_structural_family",
+      "principle": "The single remaining tax-compliance reason mismatch should be investigated only if broad clusters preserve all locks.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C30-H16-label-quoted-expansion-tail",
+      "category": "low_frequency_structural_family",
+      "principle": "Low-frequency label, quoted-term and non-tax-expansion residuals require structural proof before runtime promotion.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c29_structural_reason_remediation-commit5r1c29-dev-03-ord03-2026-07-27T15-15-09-652Z",
+      "baseRelativePredictedDelta": "non-decrease all open gates, strict improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "4 positives, 4 substitutions, 4 near-misses, two constructions, three filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    }
+  ],
+  "count": 16,
+  "pass": true
+}

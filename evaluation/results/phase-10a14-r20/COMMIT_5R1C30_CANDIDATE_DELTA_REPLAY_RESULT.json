@@ -1,0 +1,31 @@
+{
+  "unit": "COMMIT 5R1-C30",
+  "generatedUtc": "2026-07-27T23:27:29.627Z",
+  "entries": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-01-ord01-2026-07-27T23-27-12-685Z",
+      "candidateId": "C30-M01-filing-deadline-return-compliance",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-02-ord02-2026-07-27T23-27-17-454Z",
+      "candidateId": "C30-M02-records-support-deduction-treatment",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "candidateId": "C30-M03-ordinary-translation-no-tax-relation",
+      "forwardReplayMatchesCandidate": true,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}
