@@ -1,0 +1,19 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 76defcb..724a067 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1300,6 +1300,14 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c31TimeMeasurementExpansion)
+     return { decision: 'REFUSE', reasonCode: 'non_tax_expansion', confidence: 0.84 };
+ 
++  const c33UnboundWithholdingInstrument = v.reason === 'tax_treatment_of_ordinary_object'
++      && v.rels.includes('ASKS_WITHHOLDING_ON')
++      && !v.taskObject
++      && (/^(?:(?:final|expanded|creditable|deficiency)\s+)?withholding(?:\s+tax)?(?:\s+certificate)?\.?$/i.test(v.t)
++        || /^kailan\s+due\s+ang\s+withholding\s+tax\b/i.test(v.t));
++  if (c33UnboundWithholdingInstrument)
++    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.88 };
++
+   return null;
+ }
+ 

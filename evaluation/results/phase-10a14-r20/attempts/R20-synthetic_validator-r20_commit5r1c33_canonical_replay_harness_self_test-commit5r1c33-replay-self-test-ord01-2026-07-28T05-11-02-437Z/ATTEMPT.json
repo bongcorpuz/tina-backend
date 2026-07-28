@@ -1,0 +1,46 @@
+{
+  "attemptId": "R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z",
+  "attemptCategory": "synthetic_validator",
+  "gateName": "r20_commit5r1c33_canonical_replay_harness_self_test",
+  "cycle": "commit5r1c33-replay-self-test",
+  "attemptOrdinal": 1,
+  "retryOf": null,
+  "retryReason": null,
+  "evidenceHeadAtAllocation": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "evidenceHeadAtStart": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "runtimeBaselineCommit": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "runtimeTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105",
+  "runtimeBlobs": {
+    "services/philippine-tax-intent-analyzer.js": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "environmentFingerprint": {
+    "os": "win32",
+    "nodeVersion": "v22.18.0",
+    "arch": "x64",
+    "cwd": "C:/Projects/tina-backend"
+  },
+  "command": "node",
+  "commandArgs": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c33-execute.mjs"
+  ],
+  "commandHash": "650927c402cd401b7348e6cde41252760572c00484adc01ae8d03e30c0af7c94",
+  "startedAt": "2026-07-28T05:11:02.973Z",
+  "status": "completed",
+  "controlling": false,
+  "oracleVersion": "R3",
+  "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "endedAt": "2026-07-28T05:16:50.847Z",
+  "exitCode": 0,
+  "disposition": "REPLAY_HARNESS_SELF_TEST_PASS_AFTER_INTERNAL_REMEDIATION",
+  "evidenceHeadAtEnd": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "resultPaths": [
+    "evaluation\\results\\phase-10a14-r20\\attempts\\R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z\\ITERATION_RESULT.json",
+    "evaluation\\results\\phase-10a14-r20\\attempts\\R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z\\C33_CANDIDATE_DELTA_REPLAY.json"
+  ],
+  "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z/stdout.txt",
+  "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z/stderr.txt",
+  "stdoutSha256": "5c0c4763fbeeff892842d47091803d3623978de54be580351c4766ddcb178cca",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,32 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:51.579Z",
+  "reviewer": {
+    "model": "GPT-5.6 Sol",
+    "independence": "post_commit_independent_review",
+    "role": "C32 review only"
+  },
+  "reviewedCommit": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "verdict": "APPROVED_C32_AS_VALID_INCOMPLETE_WITH_REPLAY_AND_REVIEW_DEFECTS",
+  "c32RecordedReviewClassification": [
+    "C32_EXECUTOR_SELF_CHECK",
+    "NOT_INDEPENDENT",
+    "NO_C32_METRIC_INVALIDATION",
+    "NO_C32_COMMIT_INVALIDATION",
+    "SUPERSEDED_FOR_INDEPENDENCE_BY_POST_COMMIT_SOL_REVIEW"
+  ],
+  "replayFindings": [
+    "Windows quoted and escaped patch paths were not normalized by C32 string replacement.",
+    "git apply status 0 with Skipped patch was accepted as replay success.",
+    "Forward replay was a no-op and reverse replay falsely appeared to restore the base.",
+    "Header-normalized patches replayed exactly in both directions and clean Git worktrees."
+  ],
+  "candidateFindings": {
+    "M01": "FROZEN_ROW_VALID_PROVENANCE_WITHHELD_GENERALIZATION_REQUIRED",
+    "M02": "FROZEN_ROW_VALID_PROVENANCE_WITHHELD_GENERALIZATION_REQUIRED",
+    "M03": "SEMANTICALLY_REJECTED_AS_WRITTEN_RESIDUAL_SHAPED_NOUN_WHITELIST"
+  },
+  "evidenceControlFindings": "C32 declared controls and hardcoded inherited-change exclusion without execution artifacts.",
+  "staffingRecommendation": "C33 executor remediates artifacts; Claude Code Opus 4.8 performs final read-only review.",
+  "c33Authorization": "OPTION_C_REPLAY_HARNESS_EVIDENCE_CONTROL_REMEDIATION_CANDIDATE_REVALIDATION_AND_BOUNDED_R3_CONTINUATION"
+}

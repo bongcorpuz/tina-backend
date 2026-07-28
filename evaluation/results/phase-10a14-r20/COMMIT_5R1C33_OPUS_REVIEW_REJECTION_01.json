@@ -1,0 +1,31 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "reviewSequence": 1,
+  "reviewer": {
+    "model": "Claude Code Opus 4.8",
+    "mode": "READ_ONLY_FINAL_REVIEW",
+    "independentOfC33Execution": true
+  },
+  "reviewedCommit": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "decision": "REJECTED",
+  "reviewedUncommittedState": true,
+  "blockingFindings": [
+    {
+      "id": "FALSE_COMPOSITION_PROMOTION",
+      "location": [
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_FINAL_EXECUTION_REPORT.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_ROADMAP_V9_CONTINUITY_RECONCILIATION.json",
+        "evaluation/runner/phase-10a14-r20/commit5r1c33-execute.mjs"
+      ],
+      "finding": "The structured dispositions.composition field reported ACCEPTED_PROMOTED_CONTROLLING although the authoritative M01R+M02R composition attempt was accepted=false with disposition REJECTED_COMPOSITION_INTERFERENCE.",
+      "rootCause": "roadmapsAndState emitted selected.disposition instead of composition.disposition after M01R alone became the selected runtime.",
+      "requiredRemediation": "Emit composition.disposition, regenerate the two affected top-level artifacts, and obtain a new independent Opus review."
+    }
+  ],
+  "nonblockingObservations": [
+    "C32 immutability, C32 review independence classification, C31 reconstruction, replay remediation, selected M01R evidence, registry hygiene, and v7/v8 preservation were confirmed.",
+    "M02R remained unpromoted at runtime level; the selected registry runtime was M01R only.",
+    "The post-commit Sol review record is asserted by the C33 executor artifact; the Opus review is the genuine final independent gate."
+  ],
+  "remediationStatus": "IMPLEMENTED_PENDING_REGENERATION_AND_REREVIEW"
+}

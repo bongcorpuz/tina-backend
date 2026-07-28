@@ -1,0 +1,860 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T05:11:01.712Z",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c33_exact_c31_selected_base_reconstruction-commit5r1c33-reconstruct-ord01-2026-07-28T05-10-53-162Z",
+  "selectedC31Attempt": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+  "expectedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178821,
+      "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+  },
+  "snapshotIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178821,
+      "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+  },
+  "installedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178821,
+      "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+  },
+  "writeAudit": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "afterSha256Normalized": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+      "beforeBytes": 31045,
+      "afterBytes": 178821,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "beforeBytes": 11976,
+      "afterBytes": 12192,
+      "tempFileUsed": "philippine-tax-domain-boundary.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "beforeBytes": 64424,
+      "afterBytes": 65451,
+      "tempFileUsed": "philippine-tax-boundary-patterns.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "gates": {
+    "label": "C33 exact C31 selected base",
+    "stage": "full",
+    "runtimeIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 178821,
+        "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+        "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+      },
+      "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+    },
+    "collisionProbes": {
+      "total": 196,
+      "passed": 196,
+      "failed": 0,
+      "byFamily": {},
+      "failures": [],
+      "pairs": 98
+    },
+    "reasonCounterfactual": {
+      "total": 344,
+      "passed": 344,
+      "failed": 0,
+      "byFamily": {},
+      "failures": [],
+      "pairs": 172,
+      "authoredQueries": 344,
+      "nonControllingProbes": 0,
+      "probes": []
+    },
+    "reasonIntegrity": {
+      "invalidCodeCount": 0,
+      "incompatibleCount": 0,
+      "invalidCode": [],
+      "incompatible": [],
+      "pass": true
+    },
+    "r3": {
+      "total": 3720,
+      "canonicalPassed": 3482,
+      "decisionMismatches": 0,
+      "reasonMismatches": 238,
+      "relationMismatches": 0,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "relationRowsWithExpectations": 1623,
+      "relationRowsPassed": 1623,
+      "relationPassed": 3720,
+      "decisionPassed": 3720
+    },
+    "reasonPassed": 3482,
+    "focusedReasonRegression": {
+      "perFamily": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 424
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 757
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 847
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 430
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "allBucketsPass": false
+    },
+    "decisionFailures": [],
+    "relationFailures": [],
+    "decisionCounterfactual": {
+      "total": 756,
+      "passed": 756,
+      "failed": 0,
+      "bySuite": {
+        "v3": {
+          "total": 331,
+          "passed": 331,
+          "failed": 0
+        },
+        "v4": {
+          "total": 177,
+          "passed": 177,
+          "failed": 0
+        },
+        "v5": {
+          "total": 134,
+          "passed": 134,
+          "failed": 0
+        },
+        "v6": {
+          "total": 114,
+          "passed": 114,
+          "failed": 0
+        }
+      },
+      "byFamily": {},
+      "failures": []
+    },
+    "relationCounterfactual": {
+      "total": 282,
+      "passed": 282,
+      "failed": 0,
+      "byFamily": {},
+      "failures": [],
+      "pairs": 148,
+      "authoredQueries": 296,
+      "nonControllingProbes": 14,
+      "probes": [
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the ZTX rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the QVL rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the MBK rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the JPR rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the KDN rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the WTF rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the NRB rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "declarative_expansion_forms",
+          "query": "What is the HGS rate under the Tax Code?",
+          "actualRelations": [
+            "REQUESTS_NON_TAX_ACTION_ON"
+          ],
+          "actualDecision": "REFUSE",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the guitar lesson subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the hiking trail subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the chess tournament subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the aquarium filter subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the bicycle helmet subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        },
+        {
+          "family": "nontax_action_on_tax_token",
+          "query": "Is the pottery kiln subject to percentage tax?",
+          "actualRelations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "actualDecision": "ALLOW",
+          "missing": [],
+          "forbidden": []
+        }
+      ]
+    },
+    "clauseProbes": {
+      "total": 68,
+      "passed": 68,
+      "failed": 0,
+      "byFamily": {},
+      "failures": [],
+      "pairs": 34
+    },
+    "closedControls": {
+      "controls": [
+        {
+          "control": "tax_compliance_task",
+          "passed": 108,
+          "total": 108,
+          "closed": true
+        },
+        {
+          "control": "acronym_homograph_control",
+          "passed": 200,
+          "total": 200,
+          "closed": true
+        },
+        {
+          "control": "ambiguous_clarification_control",
+          "passed": 150,
+          "total": 150,
+          "closed": true
+        },
+        {
+          "control": "internal_label_proper_name",
+          "passed": 104,
+          "total": 104,
+          "closed": true
+        },
+        {
+          "control": "quoted_term_only",
+          "passed": 110,
+          "total": 110,
+          "closed": true
+        }
+      ],
+      "allClosed": true
+    },
+    "richContextGuard": {
+      "probes": [
+        {
+          "shape": "bare_term",
+          "query": "holding period",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "recognized_polysemous_acronym",
+          "query": "RMC",
+          "expected": "CLARIFY",
+          "actual": "CLARIFY",
+          "pass": true
+        },
+        {
+          "shape": "issuance_context",
+          "query": "What did the RMC issuance say about VAT?",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "procedure_context",
+          "query": "Explain RMC for BIR issuances.",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "ordinary_homograph",
+          "query": "Can a supplier reject a return of goods?",
+          "expected": "REFUSE",
+          "actual": "REFUSE",
+          "pass": true
+        },
+        {
+          "shape": "richer_tax_sentence",
+          "query": "How is the holding period applied to a capital gains tax computation on land?",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "pass": true
+        },
+        {
+          "shape": "metadata_suffixed_contentless",
+          "query": "What is the holding period? Context 1.",
+          "expected": "REFUSE",
+          "actual": "REFUSE",
+          "pass": true
+        }
+      ],
+      "allPass": true,
+      "passed": 7,
+      "total": 7
+    },
+    "relationObjectIntegrity": {
+      "counts": {
+        "unknownType": 0,
+        "missingField": 0,
+        "placeholderTarget": 130,
+        "wholeQuerySpan": 200,
+        "duplicateTuple": 20,
+        "unstableOrder": 0
+      },
+      "violations": {
+        "unknownType": [],
+        "missingField": [],
+        "placeholderTarget": [
+          {
+            "q": "Explain on-screen display brightness for our training class. Control 3.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Sort records by culture and customs lesson. Control 8.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about medicine prescription period. Control 9.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Change the novels about accountants. Control 11.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which gross estate marketing slogan is best? Control 12.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Create a checklist for Professional Artists Network. Control 15.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Translate conference room booking into plain English. Control 16.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Sort records by school newspaper printing authority. Control 18.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 19.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 19.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Debug the Downtown Theater Association. Control 20.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Explain on-screen display brightness for our training class. Control 23.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Sort records by culture and customs lesson. Control 28.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about medicine prescription period. Control 29.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Change the novels about accountants. Control 31.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which gross estate marketing slogan is best? Control 32.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+            "target": "object",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          }
+        ],
+        "wholeQuerySpan": [
+          {
+            "q": "How do we compute income tax for a Philippine corporation in case 1?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What BIR form applies to VAT in case 2?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "When is the deadline for expanded withholding tax in case 3?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "Is the transaction subject to final withholding tax in case 4?",
+            "relation": "ASKS_WITHHOLDING_ON"
+          },
+          {
+            "q": "Can the expense be deducted for percentage tax in case 5?",
+            "relation": "ASKS_DEDUCTIBILITY_OF"
+          },
+          {
+            "q": "What records support documentary stamp tax in case 6?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "How should we disclose capital gains tax in case 7?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What penalty applies for late donor tax in case 9?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "How do we document customs duty in case 10?",
+            "relation": "ASKS_CUSTOMS_DUTY_ON"
+          },
+          {
+            "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What BIR form applies to minimum corporate income tax in case 12?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "When is the deadline for regular corporate income tax in case 13?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "Is the transaction subject to BIR registration in case 14?",
+            "relation": "ASKS_TAX_COMPLIANCE_FOR"
+          },
+          {
+            "q": "Can the expense be deducted for withholding tax return in case 15?",
+            "relation": "ASKS_DEDUCTIBILITY_OF"
+          },
+          {
+            "q": "What records support input VAT in case 16?",
+            "relation": "ASKS_VAT_TREATMENT_OF"
+          },
+          {
+            "q": "How should we disclose output VAT in case 17?",
+            "relation": "ASKS_VAT_TREATMENT_OF"
+          },
+          {
+            "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "What penalty applies for late deficiency interest in case 19?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          },
+          {
+            "q": "How do we document NOLCO in case 20?",
+            "relation": "ASKS_TAX_TREATMENT_OF"
+          }
+        ],
+        "duplicateTuple": [
+          {
+            "q": "Which cooking pan brand is best? Control 2.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 19.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 22.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 39.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 42.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 59.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 62.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 79.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 82.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 99.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 102.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 119.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 122.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 139.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 142.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 159.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 162.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 179.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Which cooking pan brand is best? Control 182.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          },
+          {
+            "q": "Make a poster about sports club registration fee. Control 199.",
+            "relation": "REQUESTS_NON_TAX_ACTION_ON"
+          }
+        ],
+        "unstableOrder": []
+      },
+      "pass": false
+    },
+    "clauseSchemaRegression": {
+      "counts": {
+        "emptyClause": 0,
+        "idNotPositional": 0,
+        "notExactlyOnePrimary": 0,
+        "unstable": 0,
+        "roleOutsideSchema": 0
+      },
+      "violations": {
+        "emptyClause": [],
+        "idNotPositional": [],
+        "notExactlyOnePrimary": [],
+        "unstable": [],
+        "roleOutsideSchema": []
+      },
+      "pass": true
+    },
+    "antiMemorization": {
+      "checks": {
+        "no_complete_counterfactual_query": true,
+        "no_complete_r3_query": true,
+        "no_query_hash_or_oracle_id": true,
+        "no_suite_or_family_feature": true,
+        "no_cluster_or_category_feature": true,
+        "no_scenario_number_branch": true,
+        "no_expected_decision_map": true,
+        "no_oracle_relation_backfill": true
+      },
+      "failed": [],
+      "pass": true,
+      "leakedCounterfactualQueries": [],
+      "leakedR3Queries": [],
+      "r3TerminologyOverlap": [
+        "expanded withholding tax",
+        "final withholding tax",
+        "tax credit certificate",
+        "documentary stamp tax",
+        "capital gains tax",
+        "optional standard deduction",
+        "books of accounts",
+        "transfer pricing documentation",
+        "registered business enterprise",
+        "tax treaty relief",
+        "local business tax",
+        "real property tax",
+        "substantiation for deductions",
+        "fringe benefit tax",
+        "de minimis benefits",
+        "gross receipts tax",
+        "minimum corporate income tax",
+        "regular corporate income tax",
+        "stock transaction tax",
+        "resident alien tax",
+        "tax on professional fees",
+        "tax accounting period",
+        "annual information return",
+        "refund claim prescription"
+      ],
+      "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+    },
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "metrics": {
+    "canonicalPassed": 3482,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3482,
+    "reasonMismatches": 238,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "pass": true
+}

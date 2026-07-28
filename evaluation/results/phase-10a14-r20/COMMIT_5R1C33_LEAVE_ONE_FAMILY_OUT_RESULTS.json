@@ -1,0 +1,135 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.597Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "withheldFamily": "unseen_community_receipts",
+      "developmentCorpusExcluded": true,
+      "records": [
+        {
+          "query": "Are museum gift-shop receipts taxable?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "pass": true
+        },
+        {
+          "query": "Is a farmers-market stall fee subject to tax?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "pass": true
+        },
+        {
+          "query": "What tax treatment applies to a cooperative rebate?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "pass": true
+        },
+        {
+          "query": "Taxable ba ang honorarium sa barangay event?",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "withheldFamily": "unseen_organizational_withholding_due_date",
+      "developmentCorpusExcluded": true,
+      "records": [
+        {
+          "query": "For a fishing cooperative, when is withholding tax due?",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "pass": true
+        },
+        {
+          "query": "For a design agency, when is withholding tax due?",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "pass": true
+        },
+        {
+          "query": "For a medical practice, when is withholding tax due?",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "pass": true
+        },
+        {
+          "query": "Kailan due ang withholding tax para sa cooperative?",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

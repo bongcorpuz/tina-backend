@@ -1,0 +1,75 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.599Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "beff00c4762ffdf130e654034baccb85278c290e7d10fba1aac7c1bd7af0c5b2",
+          "patchSha256": "1ed4506dcdba4e85b5f368dc52e5ecf9e55a251e3fd42954a9b20982741f11b5"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "beff00c4762ffdf130e654034baccb85278c290e7d10fba1aac7c1bd7af0c5b2",
+          "patchSha256": "1ed4506dcdba4e85b5f368dc52e5ecf9e55a251e3fd42954a9b20982741f11b5"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "beff00c4762ffdf130e654034baccb85278c290e7d10fba1aac7c1bd7af0c5b2",
+          "patchSha256": "1ed4506dcdba4e85b5f368dc52e5ecf9e55a251e3fd42954a9b20982741f11b5"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "beff00c4762ffdf130e654034baccb85278c290e7d10fba1aac7c1bd7af0c5b2",
+          "patchSha256": "1ed4506dcdba4e85b5f368dc52e5ecf9e55a251e3fd42954a9b20982741f11b5"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "951b9f3ddc29d93e7e2fa66a68b4126f8f49174cedab31a9e63c1181a3693d7c",
+          "patchSha256": "beb2f4cee9e429c3469b3f7856353d05a7998aae9dcc3e7f4aa28517dcdda253"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "951b9f3ddc29d93e7e2fa66a68b4126f8f49174cedab31a9e63c1181a3693d7c",
+          "patchSha256": "beb2f4cee9e429c3469b3f7856353d05a7998aae9dcc3e7f4aa28517dcdda253"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "951b9f3ddc29d93e7e2fa66a68b4126f8f49174cedab31a9e63c1181a3693d7c",
+          "patchSha256": "beb2f4cee9e429c3469b3f7856353d05a7998aae9dcc3e7f4aa28517dcdda253"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "outputsInvariant": true,
+          "runtimeSha256": "951b9f3ddc29d93e7e2fa66a68b4126f8f49174cedab31a9e63c1181a3693d7c",
+          "patchSha256": "beb2f4cee9e429c3469b3f7856353d05a7998aae9dcc3e7f4aa28517dcdda253"
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,41 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:53.507Z",
+  "roadmap": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+  "startingBlob": "9e5f6befa1b2e378997f57fac34911560cc9dccc",
+  "finalIdentity": {
+    "gitBlobBefore": "9e5f6befa1b2e378997f57fac34911560cc9dccc",
+    "normalizedLfSha256": "bdb294ea1ee28849be8c0e4afae7a97c650a70445a96eb9023e194c04be777ae",
+    "bytes": 26338
+  },
+  "metrics": {
+    "canonicalPassed": 3504,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3504,
+    "reasonMismatches": 216,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "dispositions": {
+    "M01R": "ACCEPTED_PROMOTED_CONTROLLING",
+    "M02R": "REJECTED_GENERALIZATION_FAILURE",
+    "M03": "SEMANTICALLY_REJECTED_AS_WRITTEN",
+    "composition": "REJECTED_COMPOSITION_INTERFERENCE"
+  },
+  "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C34 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C33 SELECTED RUNTIME",
+  "roadmapV8Unchanged": true,
+  "roadmapV7Unchanged": true,
+  "pass": true
+}

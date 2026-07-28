@@ -1,0 +1,51 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.589Z",
+  "environments": [
+    "non_repository",
+    "clean_git_worktree"
+  ],
+  "patches": [
+    {
+      "sha256": "a0d18656aad06fdea6cc0fda7832fce6699efc18ef81e03c2a0c994e53ec2110",
+      "headers": [
+        "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+        "--- a/services/philippine-tax-intent-analyzer.js",
+        "+++ b/services/philippine-tax-intent-analyzer.js"
+      ],
+      "headersValid": true,
+      "forbiddenPathsAbsent": true
+    },
+    {
+      "sha256": "1ed4506dcdba4e85b5f368dc52e5ecf9e55a251e3fd42954a9b20982741f11b5",
+      "headers": [
+        "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+        "--- a/services/philippine-tax-intent-analyzer.js",
+        "+++ b/services/philippine-tax-intent-analyzer.js"
+      ],
+      "headersValid": true,
+      "forbiddenPathsAbsent": true
+    },
+    {
+      "sha256": "beb2f4cee9e429c3469b3f7856353d05a7998aae9dcc3e7f4aa28517dcdda253",
+      "headers": [
+        "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+        "--- a/services/philippine-tax-intent-analyzer.js",
+        "+++ b/services/philippine-tax-intent-analyzer.js"
+      ],
+      "headersValid": true,
+      "forbiddenPathsAbsent": true
+    },
+    {
+      "sha256": "c84f624830c6e146d211644a25bf7d0f04fd970c26899ac1e0067dc7cd9e4aae",
+      "headers": [
+        "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+        "--- a/services/philippine-tax-intent-analyzer.js",
+        "+++ b/services/philippine-tax-intent-analyzer.js"
+      ],
+      "headersValid": true,
+      "forbiddenPathsAbsent": true
+    }
+  ],
+  "pass": true
+}

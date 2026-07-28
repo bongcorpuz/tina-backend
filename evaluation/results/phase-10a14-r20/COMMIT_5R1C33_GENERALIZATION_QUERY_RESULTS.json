@@ -1,0 +1,1703 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.593Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "requirements": {
+        "positiveParaphrases": 6,
+        "substitutions": 6,
+        "nearMisses": 6,
+        "constructions": 3,
+        "fillerFamilies": 4,
+        "skeletons": 4,
+        "taglishOrMixed": 2
+      },
+      "rows": [
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "positives",
+          "query": "Are receipts from a community art workshop taxable?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are receipts from a community art workshop taxable?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are receipts from a community art workshop taxable?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "positives",
+          "query": "Is freelance consulting compensation taxable in the Philippines?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is freelance consulting compensation taxable in the Philippines?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is freelance consulting compensation taxable in the Philippines?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "positives",
+          "query": "What tax treatment applies to customs demurrage?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What tax treatment applies to customs demurrage?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What tax treatment applies to customs demurrage?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "positives",
+          "query": "Is a gain from selling inherited land taxable?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is a gain from selling inherited land taxable?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is a gain from selling inherited land taxable?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "positives",
+          "query": "How is the tax base determined for capital gains tax?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How is the tax base determined for capital gains tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How is the tax base determined for capital gains tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "positives",
+          "query": "What exemption may apply to capital gains tax on a principal home?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What exemption may apply to capital gains tax on a principal home?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What exemption may apply to capital gains tax on a principal home?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "substitutions",
+          "query": "Are seminar fees subject to tax?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are seminar fees subject to tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are seminar fees subject to tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "substitutions",
+          "query": "Is a designer fee deductible for income tax?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_DEDUCTIBILITY_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_DEDUCTIBILITY_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_DEDUCTIBILITY_OF\",\"subject\",\"c01\",\"Is a designer fee deductible for income tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_DEDUCTIBILITY_OF\",\"subject\",\"c01\",\"Is a designer fee deductible for income tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "substitutions",
+          "query": "What VAT treatment applies to a training fee?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_VAT_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "vat"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_VAT_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "vat"
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_VAT_TREATMENT_OF\",\"vat\",\"c01\",\"What VAT treatment applies to a training fee?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_VAT_TREATMENT_OF\",\"vat\",\"c01\",\"What VAT treatment applies to a training fee?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "substitutions",
+          "query": "Is the proceeds amount taxable?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is the proceeds amount taxable?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is the proceeds amount taxable?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "substitutions",
+          "query": "What is the capital gains tax base?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the capital gains tax base?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the capital gains tax base?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "substitutions",
+          "query": "Are relocation benefits taxable compensation?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are relocation benefits taxable compensation?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are relocation benefits taxable compensation?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "near_miss",
+          "query": "How do I file a capital gains tax return?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"How do I file a capital gains tax return?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"How do I file a capital gains tax return?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "near_miss",
+          "query": "Which form is required to remit withholding tax?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "which",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "which",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"Which form is required to remit withholding tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"Which form is required to remit withholding tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "near_miss",
+          "query": "How is capital gains tax computed?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How is capital gains tax computed?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How is capital gains tax computed?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "near_miss",
+          "query": "How do I pay capital gains tax?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How do I pay capital gains tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How do I pay capital gains tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "near_miss",
+          "query": "What is the holding period for a capital gains tax asset?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the holding period for a capital gains tax asset?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the holding period for a capital gains tax asset?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "near_miss",
+          "query": "How does a corporation recognize capital gains tax?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How does a corporation recognize capital gains tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How does a corporation recognize capital gains tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "constructions",
+          "query": "Please explain whether the land-sale gain is taxable.",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": "sale"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": "sale"
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Please explain whether the land-sale gain is taxable.\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Please explain whether the land-sale gain is taxable.\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "constructions",
+          "query": "Could a taxpayer ask if the allowance is subject to tax?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Could a taxpayer ask if the allowance is subject to tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Could a taxpayer ask if the allowance is subject to tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "constructions",
+          "query": "Could a sales commission be subject to tax?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": "sale"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": "sale"
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Could a sales commission be subject to tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Could a sales commission be subject to tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "fillers",
+          "query": "For a small bakery, are delivery receipts taxable?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a small bakery, are delivery receipts taxable?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a small bakery, are delivery receipts taxable?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "fillers",
+          "query": "For a neighborhood clinic, is a service fee taxable?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a neighborhood clinic, is a service fee taxable?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a neighborhood clinic, is a service fee taxable?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "fillers",
+          "query": "For a charity event, are ticket receipts subject to tax?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a charity event, are ticket receipts subject to tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a charity event, are ticket receipts subject to tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "fillers",
+          "query": "For a software studio, is a project bonus taxable?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a software studio, is a project bonus taxable?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a software studio, is a project bonus taxable?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "structural_skeleton",
+          "query": "Is [ordinary receipt] taxable?",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "structural_skeleton",
+          "query": "What tax treatment applies to [ordinary transaction]?",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "structural_skeleton",
+          "query": "Is [gain from sale] subject to tax?",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "structural_skeleton",
+          "query": "What is the tax base for [capital gains tax event]?",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "taglish",
+          "query": "Taxable ba ang bayad sa freelance work?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Taxable ba ang bayad sa freelance work?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Taxable ba ang bayad sa freelance work?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+          "category": "taglish",
+          "query": "Ano ang tax treatment ng kita sa pagbenta ng lupa?",
+          "expectedStructuralBehavior": "reason=tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Ano ang tax treatment ng kita sa pagbenta ng lupa?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Ano ang tax treatment ng kita sa pagbenta ng lupa?\"]]}",
+          "pass": true
+        }
+      ],
+      "executedRows": 27,
+      "passedRows": 27,
+      "failedRows": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "requirements": {
+        "positiveParaphrases": 6,
+        "substitutions": 6,
+        "nearMisses": 6,
+        "constructions": 3,
+        "fillerFamilies": 4,
+        "skeletons": 4,
+        "taglishOrMixed": 2
+      },
+      "rows": [
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "positives",
+          "query": "Creditable withholding tax",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Creditable withholding tax\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Creditable withholding tax\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "positives",
+          "query": "Expanded withholding certificate",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Expanded withholding certificate\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Expanded withholding certificate\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "positives",
+          "query": "Final withholding certificate",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Final withholding certificate\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Final withholding certificate\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "positives",
+          "query": "When is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When is withholding tax due?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "positives",
+          "query": "Kailan due ang withholding tax ngayong buwan?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Kailan due ang withholding tax ngayong buwan?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Kailan due ang withholding tax ngayong buwan?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "positives",
+          "query": "Withholding tax certificate",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Withholding tax certificate\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Withholding tax certificate\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "substitutions",
+          "query": "Deficiency withholding certificate",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Deficiency withholding certificate\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Deficiency withholding certificate\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "substitutions",
+          "query": "Deficiency withholding tax",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Deficiency withholding tax\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Deficiency withholding tax\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "substitutions",
+          "query": "Final withholding tax",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Final withholding tax\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Final withholding tax\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "substitutions",
+          "query": "Expanded withholding tax",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Expanded withholding tax\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Expanded withholding tax\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "substitutions",
+          "query": "Kailan due ang withholding tax sa supplier?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Kailan due ang withholding tax sa supplier?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Kailan due ang withholding tax sa supplier?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "substitutions",
+          "query": "When is the withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When is the withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When is the withholding tax due?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "near_miss",
+          "query": "What is the withholding tax rate on rent?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "rent"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "rent"
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"rent\",\"c01\",\"What is the withholding tax rate on rent?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"rent\",\"c01\",\"What is the withholding tax rate on rent?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "near_miss",
+          "query": "How do I remit withholding tax on payment?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"How do I remit withholding tax on payment?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"How do I remit withholding tax on payment?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "near_miss",
+          "query": "Is withholding tax on a vendor fee deductible?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Is withholding tax on a vendor fee deductible?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Is withholding tax on a vendor fee deductible?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "near_miss",
+          "query": "Which form reports withholding tax?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "which",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "which",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"Which form reports withholding tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"Which form reports withholding tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "near_miss",
+          "query": "What withholding applies to a contractor payment?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"What withholding applies to a contractor payment?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"What withholding applies to a contractor payment?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "near_miss",
+          "query": "Can a payment be subject to withholding tax?",
+          "expectedStructuralBehavior": "preserve_base_behavior_for_procedure_or_bound_operand",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Can a payment be subject to withholding tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Can a payment be subject to withholding tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "constructions",
+          "query": "Can you explain when withholding tax is due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Can you explain when withholding tax is due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Can you explain when withholding tax is due?\"]]}",
+          "pass": false
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "constructions",
+          "query": "Please clarify when withholding tax is due.",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_definition_with_context",
+            "relations": [
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_definition_with_context",
+            "relations": [
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_definition_with_context\",\"relations\":[[\"task\",\"ASKS_DEFINITION_OF\",\"term\",\"c01\",\"Please clarify when withholding tax is due.\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_definition_with_context\",\"relations\":[[\"task\",\"ASKS_DEFINITION_OF\",\"term\",\"c01\",\"Please clarify when withholding tax is due.\"]]}",
+          "pass": false
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "constructions",
+          "query": "When, exactly, is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When, exactly, is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When, exactly, is withholding tax due?\"]]}",
+          "pass": false
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "fillers",
+          "query": "For a clinic payroll, when is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For a clinic payroll, when is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For a clinic payroll, when is withholding tax due?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "fillers",
+          "query": "For a school supplier, when is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For a school supplier, when is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For a school supplier, when is withholding tax due?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "fillers",
+          "query": "For an online shop, when is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For an online shop, when is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For an online shop, when is withholding tax due?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "fillers",
+          "query": "For a local contractor, when is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For a local contractor, when is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"For a local contractor, when is withholding tax due?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "structural_skeleton",
+          "query": "[qualifier] withholding tax",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "structural_skeleton",
+          "query": "[when phrase] withholding tax due?",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "structural_skeleton",
+          "query": "[qualifier] withholding certificate",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "structural_skeleton",
+          "query": "[Taglish due phrase] withholding tax",
+          "expectedStructuralBehavior": "schema_only_non_executable",
+          "pass": true,
+          "disposition": "STRUCTURAL_TEMPLATE_RECORDED"
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "taglish",
+          "query": "Kailan due ang withholding tax?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": true,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Kailan due ang withholding tax?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Kailan due ang withholding tax?\"]]}",
+          "pass": true
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "taglish",
+          "query": "May withholding tax ba sa bayad sa renta?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "may",
+            "requestedTarget": "rent"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "may",
+            "requestedTarget": "rent"
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"rent\",\"c01\",\"May withholding tax ba sa bayad sa renta?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"rent\",\"c01\",\"May withholding tax ba sa bayad sa renta?\"]]}",
+          "pass": true
+        }
+      ],
+      "executedRows": 27,
+      "passedRows": 24,
+      "failedRows": [
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "constructions",
+          "query": "Can you explain when withholding tax is due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Can you explain when withholding tax is due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"Can you explain when withholding tax is due?\"]]}",
+          "pass": false
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "constructions",
+          "query": "Please clarify when withholding tax is due.",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_definition_with_context",
+            "relations": [
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_definition_with_context",
+            "relations": [
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_definition_with_context\",\"relations\":[[\"task\",\"ASKS_DEFINITION_OF\",\"term\",\"c01\",\"Please clarify when withholding tax is due.\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_definition_with_context\",\"relations\":[[\"task\",\"ASKS_DEFINITION_OF\",\"term\",\"c01\",\"Please clarify when withholding tax is due.\"]]}",
+          "pass": false
+        },
+        {
+          "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+          "category": "constructions",
+          "query": "When, exactly, is withholding tax due?",
+          "expectedStructuralBehavior": "reason=explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidateFiring": false,
+          "baseBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When, exactly, is withholding tax due?\"]]}",
+          "candidateBehavior": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_WITHHOLDING_ON\",\"subject\",\"c01\",\"When, exactly, is withholding tax due?\"]]}",
+          "pass": false
+        }
+      ],
+      "pass": false
+    }
+  ]
+}

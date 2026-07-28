@@ -1,0 +1,277 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.612Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "inheritedBaseline": {
+        "vectorCount": 124,
+        "collidingRows": 27,
+        "source": "evaluation/results/phase-10a14-r20/COMMIT_5R1C31_MONOTONIC_FEATURE_BASELINE.json"
+      },
+      "executedStaticFeatureInventory": {
+        "base": {
+          "staticPredicateCount": 17,
+          "staticPredicates": [
+            "asks_customs_duty_on",
+            "asks_deductibility_of",
+            "asks_definition_of",
+            "asks_tax_compliance_for",
+            "asks_tax_treatment_of",
+            "asks_vat_treatment_of",
+            "asks_withholding_on",
+            "capital gains",
+            "compute",
+            "deductib",
+            "filing",
+            "remit",
+            "taxable",
+            "v.reason",
+            "v.rels",
+            "v.t",
+            "withholding"
+          ]
+        },
+        "candidate": {
+          "staticPredicateCount": 17,
+          "staticPredicates": [
+            "asks_customs_duty_on",
+            "asks_deductibility_of",
+            "asks_definition_of",
+            "asks_tax_compliance_for",
+            "asks_tax_treatment_of",
+            "asks_vat_treatment_of",
+            "asks_withholding_on",
+            "capital gains",
+            "compute",
+            "deductib",
+            "filing",
+            "remit",
+            "taxable",
+            "v.reason",
+            "v.rels",
+            "v.t",
+            "withholding"
+          ]
+        },
+        "candidateAddedPredicates": [],
+        "candidateAddedLines": [
+          "    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };",
+          "  const c33M01ComputationProcedure = /\\b(?:compute|computed|calculation|calculate|calculated)\\b/i.test(evidence.normalizedText || '');",
+          "  const c33DirectRequestedTaxConsequence = v.reason === 'explicit_tax_task_relation'",
+          "      && v.rels.some((r) => r === 'ASKS_TAX_TREATMENT_OF' || r === 'ASKS_VAT_TREATMENT_OF' || r === 'ASKS_DEDUCTIBILITY_OF' || r === 'ASKS_WITHHOLDING_ON')",
+          "      && !/\\b(?:file|filing|form|remit(?:tance)?|pay(?:ment)?|register(?:ed|ing|ation)?|compute|calculation|submit|submission)\\b/i.test(v.t)",
+          "      && !c33M01ComputationProcedure",
+          "      && (/\\b(?:taxable|deductib\\w*|tax\\s+treatment|tax\\s+base|subject\\s+to\\s+tax)\\b/i.test(v.t)",
+          "        || (/\\bcapital\\s+gains?\\s+tax\\b/i.test(v.t)",
+          "          && !/\\b(?:holding\\s+period|recognized|ordinary\\s+asset|corporation)\\b/i.test(v.t)));",
+          "  if (c33DirectRequestedTaxConsequence)"
+        ],
+        "inheritedRemovedLines": []
+      },
+      "variants": [
+        {
+          "name": "removed_feature",
+          "expected": "feature_removed",
+          "runtime": {
+            "services/philippine-tax-intent-analyzer.js": {
+              "bytes": 178821,
+              "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+            },
+            "services/philippine-tax-domain-boundary.js": {
+              "bytes": 12192,
+              "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+            },
+            "services/philippine-tax-boundary-patterns.js": {
+              "bytes": 65451,
+              "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+            },
+            "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+          },
+          "sourceSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+        },
+        {
+          "name": "coarsened_feature",
+          "expected": "candidate_boundary_coarsened",
+          "runtime": {
+            "services/philippine-tax-intent-analyzer.js": {
+              "bytes": 179625,
+              "normalizedLfSha256": "f2d299af5245dfd3c1181985a86732551090bb2d9f041872e716502f11ab9d62"
+            },
+            "services/philippine-tax-domain-boundary.js": {
+              "bytes": 12192,
+              "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+            },
+            "services/philippine-tax-boundary-patterns.js": {
+              "bytes": 65451,
+              "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+            },
+            "servicesTreeDigest": "edd33b6aba75e0da7423c68c0a33ea19f6ddbbcfa3d70ff0e48c8b3c71c67ec0"
+          },
+          "sourceSha256": "f2d299af5245dfd3c1181985a86732551090bb2d9f041872e716502f11ab9d62"
+        },
+        {
+          "name": "broadened_feature",
+          "expected": "candidate_scope_broadened",
+          "runtime": {
+            "services/philippine-tax-intent-analyzer.js": {
+              "bytes": 179773,
+              "normalizedLfSha256": "649eee17d16c35963b5b9ebbf37c1f132cee05b83b0940a10f98c75cb0f12983"
+            },
+            "services/philippine-tax-domain-boundary.js": {
+              "bytes": 12192,
+              "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+            },
+            "services/philippine-tax-boundary-patterns.js": {
+              "bytes": 65451,
+              "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+            },
+            "servicesTreeDigest": "817abeeaa4184771753ae13c95d1f8ca481a71c6035297b5b067d63fd36bd873"
+          },
+          "sourceSha256": "649eee17d16c35963b5b9ebbf37c1f132cee05b83b0940a10f98c75cb0f12983"
+        }
+      ],
+      "noInheritedFeatureRemoval": true,
+      "vectorCountAtLeast124": true,
+      "collidingRowsNoMoreThan27": true,
+      "ablationSupportedDistinction": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "inheritedBaseline": {
+        "vectorCount": 124,
+        "collidingRows": 27,
+        "source": "evaluation/results/phase-10a14-r20/COMMIT_5R1C31_MONOTONIC_FEATURE_BASELINE.json"
+      },
+      "executedStaticFeatureInventory": {
+        "base": {
+          "staticPredicateCount": 17,
+          "staticPredicates": [
+            "asks_customs_duty_on",
+            "asks_deductibility_of",
+            "asks_definition_of",
+            "asks_tax_compliance_for",
+            "asks_tax_treatment_of",
+            "asks_vat_treatment_of",
+            "asks_withholding_on",
+            "capital gains",
+            "compute",
+            "deductib",
+            "filing",
+            "remit",
+            "taxable",
+            "v.reason",
+            "v.rels",
+            "v.t",
+            "withholding"
+          ]
+        },
+        "candidate": {
+          "staticPredicateCount": 18,
+          "staticPredicates": [
+            "asks_customs_duty_on",
+            "asks_deductibility_of",
+            "asks_definition_of",
+            "asks_tax_compliance_for",
+            "asks_tax_treatment_of",
+            "asks_vat_treatment_of",
+            "asks_withholding_on",
+            "capital gains",
+            "compute",
+            "deductib",
+            "filing",
+            "remit",
+            "taxable",
+            "v.reason",
+            "v.rels",
+            "v.t",
+            "v.taskobject",
+            "withholding"
+          ]
+        },
+        "candidateAddedPredicates": [
+          "v.taskobject"
+        ],
+        "candidateAddedLines": [
+          "  const c33UnboundWithholdingInstrument = v.reason === 'tax_treatment_of_ordinary_object'",
+          "      && v.rels.includes('ASKS_WITHHOLDING_ON')",
+          "      && !v.taskObject",
+          "      && (/^(?:(?:final|expanded|creditable|deficiency)\\s+)?withholding(?:\\s+tax)?(?:\\s+certificate)?\\.?$/i.test(v.t)",
+          "        || /\\bwhen\\s*(?:,\\s*exactly\\s*)?(?:is\\s+)?(?:the\\s+)?withholding\\s+tax\\s+due\\b|\\bkailan\\s+due\\s+ang\\s+withholding\\s+tax\\b/i.test(v.t));",
+          "  if (c33UnboundWithholdingInstrument)",
+          "    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.88 };"
+        ],
+        "inheritedRemovedLines": []
+      },
+      "variants": [
+        {
+          "name": "removed_feature",
+          "expected": "feature_removed",
+          "runtime": {
+            "services/philippine-tax-intent-analyzer.js": {
+              "bytes": 178821,
+              "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+            },
+            "services/philippine-tax-domain-boundary.js": {
+              "bytes": 12192,
+              "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+            },
+            "services/philippine-tax-boundary-patterns.js": {
+              "bytes": 65451,
+              "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+            },
+            "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+          },
+          "sourceSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+        },
+        {
+          "name": "coarsened_feature",
+          "expected": "candidate_boundary_coarsened",
+          "runtime": {
+            "services/philippine-tax-intent-analyzer.js": {
+              "bytes": 179378,
+              "normalizedLfSha256": "d7c803a3acf6cfabb08e219f718ce778bb21345688ab00e782c7682e0cb9879a"
+            },
+            "services/philippine-tax-domain-boundary.js": {
+              "bytes": 12192,
+              "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+            },
+            "services/philippine-tax-boundary-patterns.js": {
+              "bytes": 65451,
+              "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+            },
+            "servicesTreeDigest": "45f4f50f212824ee066db916de29926a7fd3b321366bd25d9cb9d953829049d9"
+          },
+          "sourceSha256": "d7c803a3acf6cfabb08e219f718ce778bb21345688ab00e782c7682e0cb9879a"
+        },
+        {
+          "name": "broadened_feature",
+          "expected": "candidate_scope_broadened",
+          "runtime": {
+            "services/philippine-tax-intent-analyzer.js": {
+              "bytes": 179378,
+              "normalizedLfSha256": "d7c803a3acf6cfabb08e219f718ce778bb21345688ab00e782c7682e0cb9879a"
+            },
+            "services/philippine-tax-domain-boundary.js": {
+              "bytes": 12192,
+              "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+            },
+            "services/philippine-tax-boundary-patterns.js": {
+              "bytes": 65451,
+              "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+            },
+            "servicesTreeDigest": "45f4f50f212824ee066db916de29926a7fd3b321366bd25d9cb9d953829049d9"
+          },
+          "sourceSha256": "d7c803a3acf6cfabb08e219f718ce778bb21345688ab00e782c7682e0cb9879a"
+        }
+      ],
+      "noInheritedFeatureRemoval": true,
+      "vectorCountAtLeast124": true,
+      "collidingRowsNoMoreThan27": true,
+      "ablationSupportedDistinction": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

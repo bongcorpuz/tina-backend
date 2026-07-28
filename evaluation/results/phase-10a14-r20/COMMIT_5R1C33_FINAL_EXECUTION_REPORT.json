@@ -1,0 +1,165 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:53.638Z",
+  "status": "INCOMPLETE_REASON_LAYER_OPEN_WITH_ACCEPTED_C33_RUNTIME",
+  "c32ReviewContinuity": "C32 immutable incomplete history; C32 self-check superseded for independence by post-commit Sol review.",
+  "reconstructionAttempt": "R20-domain_campaign-r20_commit5r1c33_exact_c31_selected_base_reconstruction-commit5r1c33-reconstruct-ord01-2026-07-28T05-10-53-162Z",
+  "replaySelfTestAttempt": "R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z",
+  "candidates": {
+    "M01R": {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "metrics": {
+        "canonicalPassed": 3504,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3504,
+        "reasonMismatches": 216,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7,
+        "reasonIntegrityPass": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true
+      }
+    },
+    "M02R": {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m02r-v2-ord02-2026-07-28T05-27-30-024Z",
+      "disposition": "REJECTED_GENERALIZATION_FAILURE",
+      "metrics": {
+        "canonicalPassed": 3488,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3488,
+        "reasonMismatches": 232,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7,
+        "reasonIntegrityPass": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true
+      }
+    },
+    "M03": "SEMANTICALLY_REJECTED_AS_WRITTEN"
+  },
+  "selected": {
+    "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+    "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+    "accepted": true,
+    "metrics": {
+      "canonicalPassed": 3504,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3504,
+      "reasonMismatches": 216,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 179760,
+        "normalizedLfSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503"
+    }
+  },
+  "registry": {
+    "totalAttempts": 218,
+    "total": 218,
+    "byCategory": {
+      "domain_campaign": 153,
+      "focused_suite": 13,
+      "other": 9,
+      "synthetic_validator": 43
+    },
+    "controlling": 215,
+    "nonControlling": 3,
+    "orphan": 0,
+    "dangling": 0,
+    "historicalRegistryClean": true,
+    "c33OrphanAttemptIds": [],
+    "c33DanglingAttemptIds": []
+  },
+  "roadmapContinuity": {
+    "unit": "COMMIT 5R1-C33",
+    "generatedUtc": "2026-07-28T06:03:53.507Z",
+    "roadmap": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+    "startingBlob": "9e5f6befa1b2e378997f57fac34911560cc9dccc",
+    "finalIdentity": {
+      "gitBlobBefore": "9e5f6befa1b2e378997f57fac34911560cc9dccc",
+      "normalizedLfSha256": "bdb294ea1ee28849be8c0e4afae7a97c650a70445a96eb9023e194c04be777ae",
+      "bytes": 26338
+    },
+    "metrics": {
+      "canonicalPassed": 3504,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3504,
+      "reasonMismatches": 216,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "dispositions": {
+      "M01R": "ACCEPTED_PROMOTED_CONTROLLING",
+      "M02R": "REJECTED_GENERALIZATION_FAILURE",
+      "M03": "SEMANTICALLY_REJECTED_AS_WRITTEN",
+      "composition": "REJECTED_COMPOSITION_INTERFERENCE"
+    },
+    "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C34 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C33 SELECTED RUNTIME",
+    "roadmapV8Unchanged": true,
+    "roadmapV7Unchanged": true,
+    "pass": true
+  },
+  "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C34 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C33 SELECTED RUNTIME",
+  "finalIndependentReview": {
+    "requiredReviewer": "Claude Code Opus 4.8",
+    "status": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_INDEPENDENT_REVIEW.json"
+  },
+  "servicesRestoredToStartingHead": true,
+  "passBeforeIndependentReview": true
+}

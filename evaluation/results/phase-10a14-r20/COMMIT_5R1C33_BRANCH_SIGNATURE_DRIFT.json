@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.608Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "rowsOutsideCorrectionTarget": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "rowsOutsideCorrectionTarget": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M01R-plus-C33-M02R",
+      "rowsOutsideCorrectionTarget": [],
+      "pass": true
+    }
+  ]
+}

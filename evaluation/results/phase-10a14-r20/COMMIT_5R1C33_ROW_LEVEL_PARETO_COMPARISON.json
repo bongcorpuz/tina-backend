@@ -1,0 +1,1483 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.605Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "newlyCorrected": [
+        {
+          "oracleId": "S1-IR19-1017",
+          "query": "Are tuition receipts for culture classes taxable? Group MM-09.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S1-IR19-1057",
+          "query": "Are tuition receipts for culture classes taxable? Group MM-29.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S1-IR19-1097",
+          "query": "Are tuition receipts for culture classes taxable? Group MM-49.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-022",
+          "query": "capital gains tax",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-064",
+          "query": "taxable compensation",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-470",
+          "query": "Is compensation taxable in the Philippines?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-478",
+          "query": "What is capital gains tax?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-510",
+          "query": "What is taxable compensation?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-546",
+          "query": "What is taxable income?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-016",
+          "query": "What is the tax treatment of demurrage in customs valuation?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-034",
+          "query": "Is capital gain on shares of stock taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-040",
+          "query": "When is capital gains tax due after selling land?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-041",
+          "query": "Is gain from selling inherited property taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-047",
+          "query": "How does zonal value affect capital gains tax?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-053",
+          "query": "Is gain taxable if the asset was held more than one year?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-054",
+          "query": "How does BIR assess capital gains tax deficiencies?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": "bir"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": "bir"
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-055",
+          "query": "What exemptions apply to capital gains tax on principal residence?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-060",
+          "query": "What is the tax base for capital gains tax?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-144",
+          "query": "Is it taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-152",
+          "query": "Is the gain taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-172",
+          "query": "Kailan due ang capital gains tax pag nagbenta ng lupa?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-189",
+          "query": "Taxable ba ito?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        }
+      ],
+      "newlyRegressed": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "newlyCorrected": [
+        {
+          "oracleId": "S2-IR18-DOM-007",
+          "query": "final withholding tax",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-059",
+          "query": "withholding certificate",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-072",
+          "query": "deficiency withholding tax",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-412",
+          "query": "Kailan due ang withholding tax? Batch 1.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-432",
+          "query": "Kailan due ang withholding tax? Batch 2.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-452",
+          "query": "Kailan due ang withholding tax? Batch 3.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        }
+      ],
+      "newlyRegressed": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M01R-plus-C33-M02R",
+      "newlyCorrected": [
+        {
+          "oracleId": "S1-IR19-1017",
+          "query": "Are tuition receipts for culture classes taxable? Group MM-09.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S1-IR19-1057",
+          "query": "Are tuition receipts for culture classes taxable? Group MM-29.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S1-IR19-1097",
+          "query": "Are tuition receipts for culture classes taxable? Group MM-49.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-007",
+          "query": "final withholding tax",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-022",
+          "query": "capital gains tax",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-059",
+          "query": "withholding certificate",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-064",
+          "query": "taxable compensation",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-072",
+          "query": "deficiency withholding tax",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-412",
+          "query": "Kailan due ang withholding tax? Batch 1.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-432",
+          "query": "Kailan due ang withholding tax? Batch 2.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-452",
+          "query": "Kailan due ang withholding tax? Batch 3.",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-470",
+          "query": "Is compensation taxable in the Philippines?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-478",
+          "query": "What is capital gains tax?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-510",
+          "query": "What is taxable compensation?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S2-IR18-DOM-546",
+          "query": "What is taxable income?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-016",
+          "query": "What is the tax treatment of demurrage in customs valuation?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-034",
+          "query": "Is capital gain on shares of stock taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-040",
+          "query": "When is capital gains tax due after selling land?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-041",
+          "query": "Is gain from selling inherited property taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-047",
+          "query": "How does zonal value affect capital gains tax?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-053",
+          "query": "Is gain taxable if the asset was held more than one year?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-054",
+          "query": "How does BIR assess capital gains tax deficiencies?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": "bir"
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": "bir"
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-055",
+          "query": "What exemptions apply to capital gains tax on principal residence?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-060",
+          "query": "What is the tax base for capital gains tax?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-144",
+          "query": "Is it taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-152",
+          "query": "Is the gain taxable?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "is",
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-172",
+          "query": "Kailan due ang capital gains tax pag nagbenta ng lupa?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        },
+        {
+          "oracleId": "S3-IR17-189",
+          "query": "Taxable ba ito?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "base": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "candidate": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null
+          },
+          "baseCorrect": false,
+          "candidateCorrect": true
+        }
+      ],
+      "newlyRegressed": [],
+      "pass": true
+    }
+  ]
+}

@@ -2,21 +2,29 @@
 
 ## TINA Controlling Continuity Status
 
-Last updated: 28 July 2026 (COMMIT 5R1-C32)
+Last updated: 2026-07-28T06:03:53.635Z (COMMIT 5R1-C33)
 
 PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS and not SATISFIED.
 
-### COMMIT 5R1-C32 - R3 Reason-Layer Closure Continuation
+### COMMIT 5R1-C33 - Replay Remediation and Governed R3 Revalidation
 
-- Executor: Codex; required independent reviewer: Codex self-review recorded in C32 evidence; Gemini: optional, not used.
-- C31 selected base reconstructed exactly from immutable attempt R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z.
-- C31 residual inventory: 238 reason-only mismatches. C31 wording defect was recorded as non-controlling metadata only; no C31 evidence was edited.
-- C32 accepted structural rules: .
-- Final R3 reason: 3482/3,720; reason mismatches 238. Decision 3720/3,720; relation 3720/3,720; reason suite 344/344; collision 196/196.
-- Reason layer lock: open. Runtime closure: false. Registry: 210 attempts, cumulativeThrough commit5r1c32-incomplete.
+- C33 executor: Codex. C32 Codex review is classified as an executor self-check, not an independent review. The post-commit GPT-5.6 Sol review validates C32 as immutable incomplete history with replay and review defects.
+- Exact C31 selected runtime R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z was reconstructed before C33 work; repository HEAD services were never treated as the semantic candidate base.
+- Canonical candidate patches use only a/services/<file> and b/services/<file>; dual non-repository and clean-Git replay rejects skipped/no-op application and computes inherited-hunk exclusion.
+- Evidence controls were executed for query-level generalization, leave-family-out, sentinels, R3/reason/collision shuffles, row-level regressions, branch signatures, prior overrides and monotonic ablation.
+- M01R: **ACCEPTED_PROMOTED_CONTROLLING**. M02R: **REJECTED_GENERALIZATION_FAILURE**. M03 remains **SEMANTICALLY_REJECTED_AS_WRITTEN**; no unchanged M03 promotion run occurred.
+- M01R/M02R composition: **REJECTED_COMPOSITION_INTERFERENCE**, preserved as rejected evidence because M02R did not satisfy its construction generalization packet.
+- Selected runtime: **C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment** in R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z; R3 reason 3504/3,720, decision 3720/3,720, relation 3720/3,720.
+- Frozen gates: reason suite 344/344; collision 196/196; decision CF 756/756; relation CF 282/282; clause 68/68; rich guard 7/7; reason integrity PASS.
+- Reason layer lock remains open; runtime closure remains false. Registry: 218 attempts, cumulativeThrough commit5r1c33-incomplete.
 - Active model remains gpt-4o-mini. GPT-5.6 Terra remains a post-Phase-10A benchmark candidate only; no model migration was implemented.
-- Live services were restored to committed C32 starting HEAD; v8/v7, frozen oracles, C31 evidence, dev factory and protected residue remain untouched.
-- Next exact task: **PHASE-10A14-R20 - COMMIT 5R1-C33 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C32 BASE**.
+- Live services were restored to committed C32 starting HEAD. Dev factory and protected residue snapshots are recorded unchanged before final review.
+- Mandatory final reviewer: Claude Code Opus 4.8 read-only review is **APPROVED_WITH_NONBLOCKING_OBSERVATIONS** before staging.
+- Next exact task: **PHASE-10A14-R20 - COMMIT 5R1-C34 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C33 SELECTED RUNTIME**.
+
+---
+
+## Historical Continuity Record
 
 ## TINA Controlling Continuity Status
 

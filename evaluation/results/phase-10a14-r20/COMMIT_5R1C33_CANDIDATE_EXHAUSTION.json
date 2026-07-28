@@ -1,0 +1,14 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.633Z",
+  "boundedContinuationAuthorized": 3,
+  "additionalMaterialCandidatesExecuted": 0,
+  "reason": "C33 completed mandated replay remediation, evidence-control execution, M01/M02 revalidation and composition. Remaining continuation hypotheses are recorded, not fabricated as exhausted, and require a subsequent governed cycle.",
+  "m01": "ACCEPTED_PROMOTED_CONTROLLING",
+  "m02": "REJECTED_GENERALIZATION_FAILURE",
+  "m03": "SEMANTICALLY_REJECTED_AS_WRITTEN",
+  "composition": "REJECTED_COMPOSITION_INTERFERENCE",
+  "remainingViableCandidates": true,
+  "exhaustion": false,
+  "pass": true
+}

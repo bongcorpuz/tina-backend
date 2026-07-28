@@ -1,0 +1,67 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.600Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3301,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "508538940fc3e0e13f6fe57f4461a0a85341aff62592c44067622dfc1d98ce0d",
+          "shuffledOutputSha256": "508538940fc3e0e13f6fe57f4461a0a85341aff62592c44067622dfc1d98ce0d"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3302,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "3a8fb1aa1db0dad1c82f3b6675ca95002a902f790927a00d3727f50b5553de1e",
+          "shuffledOutputSha256": "3a8fb1aa1db0dad1c82f3b6675ca95002a902f790927a00d3727f50b5553de1e"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3303,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "8779f4183cf706cd7d5a367b2a7e3ae100fb30ac4cd9ada8aa8858f70a3db727",
+          "shuffledOutputSha256": "8779f4183cf706cd7d5a367b2a7e3ae100fb30ac4cd9ada8aa8858f70a3db727"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3301,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "3e868a943c8bcb7e9b1045ec97a83451c7f2a0a30a5f50a46e5503d4d3f72651",
+          "shuffledOutputSha256": "3e868a943c8bcb7e9b1045ec97a83451c7f2a0a30a5f50a46e5503d4d3f72651"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3302,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "3a8fb1aa1db0dad1c82f3b6675ca95002a902f790927a00d3727f50b5553de1e",
+          "shuffledOutputSha256": "3a8fb1aa1db0dad1c82f3b6675ca95002a902f790927a00d3727f50b5553de1e"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3303,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "8779f4183cf706cd7d5a367b2a7e3ae100fb30ac4cd9ada8aa8858f70a3db727",
+          "shuffledOutputSha256": "8779f4183cf706cd7d5a367b2a7e3ae100fb30ac4cd9ada8aa8858f70a3db727"
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,8 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.610Z",
+  "inheritedC31FeatureVectorCount": 124,
+  "inheritedC31CollidingRows": 27,
+  "source": "evaluation/results/phase-10a14-r20/COMMIT_5R1C31_MONOTONIC_FEATURE_BASELINE.json",
+  "pass": true
+}

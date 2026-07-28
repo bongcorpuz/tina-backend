@@ -1,0 +1,13 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 76defcb..5667c07 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1300,6 +1300,8 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c31TimeMeasurementExpansion)
+     return { decision: 'REFUSE', reasonCode: 'non_tax_expansion', confidence: 0.84 };
+ 
++  // C33 replay-harness self-test sentinel.
++
+   return null;
+ }
+ 

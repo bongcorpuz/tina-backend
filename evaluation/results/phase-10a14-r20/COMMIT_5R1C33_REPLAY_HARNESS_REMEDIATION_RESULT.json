@@ -1,0 +1,27 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.588Z",
+  "selfTestAttempt": "R20-synthetic_validator-r20_commit5r1c33_canonical_replay_harness_self_test-commit5r1c33-replay-self-test-ord01-2026-07-28T05-11-02-437Z",
+  "materialCandidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+      "pass": true,
+      "patchSha256": "1ed4506dcdba4e85b5f368dc52e5ecf9e55a251e3fd42954a9b20982741f11b5"
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m02r-v2-ord02-2026-07-28T05-27-30-024Z",
+      "pass": true,
+      "patchSha256": "beb2f4cee9e429c3469b3f7856353d05a7998aae9dcc3e7f4aa28517dcdda253"
+    }
+  ],
+  "composition": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c33_m01r_m02r_composition-commit5r1c33-composition-v2-ord03-2026-07-28T05-27-52-136Z",
+    "pass": true
+  },
+  "allDualReplayPass": true,
+  "skippedPatchDetection": "hard fail in both forward and reverse result evaluators",
+  "computedInheritedChangeExclusion": true,
+  "pass": true
+}

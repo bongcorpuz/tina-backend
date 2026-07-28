@@ -1,0 +1,14 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:51.580Z",
+  "sourceReview": "evaluation/results/phase-10a14-r20/COMMIT_5R1C32_POST_COMMIT_INDEPENDENT_SOL_REVIEW.json",
+  "c32EvidenceImmutable": true,
+  "c32CommitMetricValidity": "VALID_INCOMPLETE_HISTORICAL_EVIDENCE",
+  "c32ReviewValidity": "NOT_INDEPENDENT",
+  "continuityCorrectionsRequired": [
+    "separate C32 executor self-check from independent post-commit review",
+    "distinguish M01/M02 provenance withholding from M03 semantic rejection",
+    "do not treat C32 runtime as governance-compliant semantic base"
+  ],
+  "pass": true
+}

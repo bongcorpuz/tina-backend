@@ -13,31 +13,24 @@
 
 ---
 
-## C31 immediate execution status
+## C33 active execution status
 
-Latest controlling execution result after COMMIT 5R1-C31:
+Latest controlling execution result after COMMIT 5R1-C33:
 
-- R3 decision score: **3,720 / 3,720**;
-- R3 relation score: **3,720 / 3,720**;
-- R3 reason score: **3,482 / 3,720**;
-- reason-suite v8 score: **344 / 344**;
-- collision-probe score: **196 / 196**;
-- decision counterfactual: **756 / 756**;
-- relation counterfactual: **282 / 282**;
-- clause probes: **68 / 68**;
-- rich-context guard: **7 / 7**;
-- reason integrity: **PASS**;
-- decision lock: **achieved**;
-- relation lock: **achieved**;
-- reason suite lock: **achieved**;
-- reason layer lock: **open**; and
-- runtime closure: **not achieved**.
+- C32 remains valid immutable incomplete history; its recorded Codex review is an executor self-check, not an independent review.
+- Exact C31 selected runtime was reconstructed before all C33 candidate execution.
+- Canonical service-relative patches passed dual replay with explicit skipped/no-op rejection.
+- M01R: **ACCEPTED_PROMOTED_CONTROLLING**; M02R: **REJECTED_GENERALIZATION_FAILURE**; M03: **SEMANTICALLY_REJECTED_AS_WRITTEN** and not executed unchanged.
+- M01R/M02R composition: **REJECTED_COMPOSITION_INTERFERENCE**; it is retained as evidence only because M02R did not pass generalization.
+- Selected runtime: **C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment**; R3 reason **3504 / 3,720**; decision **3720 / 3,720**; relation **3720 / 3,720**.
+- reason-suite v8 **344 / 344**; collision **196 / 196**; all frozen decision/relation gates remain locked.
+- Reason layer lock: **open**; runtime closure: **not achieved**.
 
-Current controlling result: **COMMIT 5R1-C31 incomplete; COMMIT 5R1-C32 R3 reason continuation is next**
+Current controlling result: **COMMIT 5R1-C33 incomplete; replay-remediated C33 selected runtime is the next semantic base.**
 
 Next exact task:
 
-**PHASE-10A14-R20 - COMMIT 5R1-C32 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C31 BASE**
+**PHASE-10A14-R20 - COMMIT 5R1-C34 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C33 SELECTED RUNTIME**
 
 No market-response implementation may bypass Phase 10A. Runtime integration, model migration, durable memory, source promotion, production billing, public deployment and production cutover remain blocked until their governed gates pass.
 

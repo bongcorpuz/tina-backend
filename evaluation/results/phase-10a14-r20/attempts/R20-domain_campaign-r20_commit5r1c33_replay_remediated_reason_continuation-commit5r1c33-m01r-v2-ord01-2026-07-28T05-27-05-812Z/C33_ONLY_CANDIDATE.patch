@@ -1,0 +1,22 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 76defcb..a514ce1 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1300,6 +1300,17 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c31TimeMeasurementExpansion)
+     return { decision: 'REFUSE', reasonCode: 'non_tax_expansion', confidence: 0.84 };
+ 
++  const c33M01ComputationProcedure = /\b(?:compute|computed|calculation|calculate|calculated)\b/i.test(evidence.normalizedText || '');
++  const c33DirectRequestedTaxConsequence = v.reason === 'explicit_tax_task_relation'
++      && v.rels.some((r) => r === 'ASKS_TAX_TREATMENT_OF' || r === 'ASKS_VAT_TREATMENT_OF' || r === 'ASKS_DEDUCTIBILITY_OF' || r === 'ASKS_WITHHOLDING_ON')
++      && !/\b(?:file|filing|form|remit(?:tance)?|pay(?:ment)?|register(?:ed|ing|ation)?|compute|calculation|submit|submission)\b/i.test(v.t)
++      && !c33M01ComputationProcedure
++      && (/\b(?:taxable|deductib\w*|tax\s+treatment|tax\s+base|subject\s+to\s+tax)\b/i.test(v.t)
++        || (/\bcapital\s+gains?\s+tax\b/i.test(v.t)
++          && !/\b(?:holding\s+period|recognized|ordinary\s+asset|corporation)\b/i.test(v.t)));
++  if (c33DirectRequestedTaxConsequence)
++    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };
++
+   return null;
+ }
+ 

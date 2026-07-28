@@ -1,0 +1,18 @@
+{
+  "model": "Claude Code Opus 4.8",
+  "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+  "findings": [],
+  "observations": [
+    "Former false-composition-promotion defect is repaired at the root cause: roadmapsAndState emits composition.disposition rather than selected.disposition.",
+    "The authoritative M01R plus M02R composition attempt is accepted=false with disposition REJECTED_COMPOSITION_INTERFERENCE in its iteration result, attempt metadata, and canonical registry entry.",
+    "Structured and human-readable continuity artifacts now agree that the composition is REJECTED_COMPOSITION_INTERFERENCE with no residual promotion.",
+    "The composition itself has zero row regressions and zero order drift, but is conservatively non-promoted because M02R independently failed its generalization packet.",
+    "The selected M01R runtime is evidence-only and is not installed live; services were restored to committed C32 HEAD.",
+    "The sole ACCEPTED_PROMOTED_CONTROLLING registry entry is M01R v2; rejected v1 attempts remain visible as immutable evidence.",
+    "The post-commit Sol review is asserted in C33 executor evidence; this Opus read-only review is the genuine independent final gate.",
+    "Hypothesis-family labels are inventory metadata and do not promote additional runtimes.",
+    "C31 base focused-reason and relation-object supplemental checks are incomplete-base characteristics, not frozen-lock failures or C33 regressions.",
+    "Protected non-C33 untracked content remains outside C33 scope and unreferenced by C33 evidence."
+  ],
+  "summary": "Independent read-only re-review of corrected PHASE-10A14-R20 COMMIT 5R1-C33 on HEAD 17f86896. The sole blocking defect from REJECTION_01 is fully repaired: the authoritative composition is accepted=false and REJECTED_COMPOSITION_INTERFERENCE, the runner emits composition.disposition, and structured and human-readable continuity records agree. Verified C31 reconstruction, canonical dual replay with skipped/no-op hard-fail and inherited-change exclusion, selected M01R frozen gates and reason 3504/3720, M02R and composition non-promotion, registry hygiene, C32 immutability and non-independent self-review classification, live-service restoration, and Roadmap/CURRENT_STATE continuity with v7/v8 unchanged. Approved with non-blocking observations."
+}

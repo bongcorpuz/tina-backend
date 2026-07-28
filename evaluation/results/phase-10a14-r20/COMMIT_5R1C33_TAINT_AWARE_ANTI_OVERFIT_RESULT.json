@@ -1,0 +1,105 @@
+{
+  "unit": "COMMIT 5R1-C33",
+  "generatedUtc": "2026-07-28T06:03:52.603Z",
+  "candidates": [
+    {
+      "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+      "antiMemorization": {
+        "checks": {
+          "no_complete_counterfactual_query": true,
+          "no_complete_r3_query": true,
+          "no_query_hash_or_oracle_id": true,
+          "no_suite_or_family_feature": true,
+          "no_cluster_or_category_feature": true,
+          "no_scenario_number_branch": true,
+          "no_expected_decision_map": true,
+          "no_oracle_relation_backfill": true
+        },
+        "failed": [],
+        "pass": true,
+        "leakedCounterfactualQueries": [],
+        "leakedR3Queries": [],
+        "r3TerminologyOverlap": [
+          "expanded withholding tax",
+          "final withholding tax",
+          "tax credit certificate",
+          "documentary stamp tax",
+          "capital gains tax",
+          "optional standard deduction",
+          "books of accounts",
+          "transfer pricing documentation",
+          "registered business enterprise",
+          "tax treaty relief",
+          "local business tax",
+          "real property tax",
+          "substantiation for deductions",
+          "fringe benefit tax",
+          "de minimis benefits",
+          "gross receipts tax",
+          "minimum corporate income tax",
+          "regular corporate income tax",
+          "stock transaction tax",
+          "resident alien tax",
+          "tax on professional fees",
+          "tax accounting period",
+          "annual information return",
+          "refund claim prescription"
+        ],
+        "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+      },
+      "sentinelPass": true,
+      "shufflePass": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C33-M02R-unbound-withholding-instrument-or-due-date-is-explicit-task",
+      "antiMemorization": {
+        "checks": {
+          "no_complete_counterfactual_query": true,
+          "no_complete_r3_query": true,
+          "no_query_hash_or_oracle_id": true,
+          "no_suite_or_family_feature": true,
+          "no_cluster_or_category_feature": true,
+          "no_scenario_number_branch": true,
+          "no_expected_decision_map": true,
+          "no_oracle_relation_backfill": true
+        },
+        "failed": [],
+        "pass": true,
+        "leakedCounterfactualQueries": [],
+        "leakedR3Queries": [],
+        "r3TerminologyOverlap": [
+          "expanded withholding tax",
+          "final withholding tax",
+          "tax credit certificate",
+          "documentary stamp tax",
+          "capital gains tax",
+          "optional standard deduction",
+          "books of accounts",
+          "transfer pricing documentation",
+          "registered business enterprise",
+          "tax treaty relief",
+          "local business tax",
+          "real property tax",
+          "substantiation for deductions",
+          "fringe benefit tax",
+          "de minimis benefits",
+          "gross receipts tax",
+          "minimum corporate income tax",
+          "regular corporate income tax",
+          "stock transaction tax",
+          "resident alien tax",
+          "tax on professional fees",
+          "tax accounting period",
+          "annual information return",
+          "refund claim prescription"
+        ],
+        "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+      },
+      "sentinelPass": true,
+      "shufflePass": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}
