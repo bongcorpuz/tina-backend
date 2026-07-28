@@ -1,0 +1,135 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:14:58.015Z",
+  "preUpdateFileStatus": "untracked",
+  "preUpdateNormalizedLfSha256": "73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a",
+  "expectedPreUpdateNormalizedLfSha256": "b53a6cc6eabef282f6a76cd8aa32ebaddd8113812097fb6e053a83c04b779997",
+  "classifications": [
+    "RESEARCH_FIRST_V1_2026_STRATEGIC_RESEQUENCING",
+    "NO_PHASE_10A_GATE_WEAKENING",
+    "NO_C30_EXECUTION_INVALIDATION",
+    "NO_C30_EVIDENCE_INVALIDATION",
+    "NO_MAJOR_PHASE_RENUMBERING",
+    "FULL_TAX_OPERATING_SYSTEM_DESTINATION_PRESERVED",
+    "BETTER_THAN_ANYCASE_TARGET_BOUNDED_AND_NOT_CLAIMED_AS_CURRENT_STATE"
+  ],
+  "semanticValidationBefore": {
+    "requiredSignals": [
+      {
+        "signal": "Research-First Philippine Tax Intelligence V1",
+        "present": true
+      },
+      {
+        "signal": "Full Philippine Tax Operating System",
+        "present": true
+      },
+      {
+        "signal": "Phase 10A remains an absolute blocker",
+        "present": true
+      },
+      {
+        "signal": "15 December 2026",
+        "present": true
+      },
+      {
+        "signal": "15-31 December 2026",
+        "present": true
+      },
+      {
+        "signal": "Phase 13",
+        "present": true
+      },
+      {
+        "signal": "Phase 14",
+        "present": true
+      },
+      {
+        "signal": "18",
+        "present": true
+      }
+    ],
+    "productionReadinessSubphaseIntegrity": true,
+    "sourceOfTruthHierarchyPresent": true,
+    "strategicSectionIntegrity": true,
+    "pass": true
+  },
+  "semanticValidationAfter": {
+    "requiredSignals": [
+      {
+        "signal": "Research-First Philippine Tax Intelligence V1",
+        "present": true
+      },
+      {
+        "signal": "Full Philippine Tax Operating System",
+        "present": true
+      },
+      {
+        "signal": "Phase 10A remains an absolute blocker",
+        "present": true
+      },
+      {
+        "signal": "15 December 2026",
+        "present": true
+      },
+      {
+        "signal": "15-31 December 2026",
+        "present": true
+      },
+      {
+        "signal": "Phase 13",
+        "present": true
+      },
+      {
+        "signal": "Phase 14",
+        "present": true
+      },
+      {
+        "signal": "18",
+        "present": true
+      }
+    ],
+    "productionReadinessSubphaseIntegrity": true,
+    "sourceOfTruthHierarchyPresent": true,
+    "strategicSectionIntegrity": true,
+    "pass": true
+  },
+  "v8Unchanged": true,
+  "v7Unchanged": true,
+  "initialPromotionNormalizedLfSha256": "73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a",
+  "authorizedPathOnly": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+  "idempotentPromotionRerun": true,
+  "pass": true,
+  "finalUpdatedUtc": "2026-07-28T01:15:48.540Z",
+  "finalNormalizedLfSha256": "bd85643e21046ef2e4658f01bc18c2a49195a3b8bf1d5b283dc82bbb5dba3401",
+  "finalExecutionHeader": {
+    "currentActiveWork": "PHASE-10A14-R20",
+    "currentControllingResult": "COMMIT 5R1-C31 incomplete; COMMIT 5R1-C32 R3 reason continuation is next",
+    "phase10A": "OPEN",
+    "r20": "IN PROGRESS",
+    "metrics": {
+      "canonicalPassed": 3482,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3482,
+      "reasonMismatches": 238,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    },
+    "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C32 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C31 BASE"
+  },
+  "strategicSectionIntegrity": true,
+  "productionReadinessSubphaseIntegrity": true,
+  "sourceOfTruthHierarchyIntegrity": true,
+  "v8ByteForBytePreservation": true,
+  "v7ByteForBytePreservation": true,
+  "trackedInC31Commit": true
+}

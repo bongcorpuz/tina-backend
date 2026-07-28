@@ -1,0 +1,19 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:15:05.295Z",
+  "inheritedControllingBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+  "vectorCount": 124,
+  "collidingRows": 27,
+  "strictFeatureSupersetOfC28": true,
+  "forbiddenInputsExcluded": [
+    "expected or actual reason",
+    "expected decision",
+    "oracle ID",
+    "query hash",
+    "suite/family/category",
+    "row position",
+    "fixture membership",
+    "full normalized query"
+  ],
+  "pass": true
+}

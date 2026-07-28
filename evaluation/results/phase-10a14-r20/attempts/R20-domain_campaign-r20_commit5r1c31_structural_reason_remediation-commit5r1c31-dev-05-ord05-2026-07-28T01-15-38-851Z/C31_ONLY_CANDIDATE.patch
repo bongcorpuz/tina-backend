@@ -1,0 +1,18 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index ea06ddb3..76defcb8 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1293,6 +1293,13 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c31VariableNameNoTaxLabel)
+     return { decision: 'REFUSE', reasonCode: 'non_tax_label_or_name', confidence: 0.85 };
+ 
++  const c31TimeMeasurementExpansion = v.reason === 'no_tax_relation'
++      && v.rels.includes('REQUESTS_NON_TAX_ACTION_ON')
++      && /\bsec\b/i.test(v.t)
++      && /\btime\s+measurement\b/i.test(v.t);
++  if (c31TimeMeasurementExpansion)
++    return { decision: 'REFUSE', reasonCode: 'non_tax_expansion', confidence: 0.84 };
++
+   return null;
+ }
+ 

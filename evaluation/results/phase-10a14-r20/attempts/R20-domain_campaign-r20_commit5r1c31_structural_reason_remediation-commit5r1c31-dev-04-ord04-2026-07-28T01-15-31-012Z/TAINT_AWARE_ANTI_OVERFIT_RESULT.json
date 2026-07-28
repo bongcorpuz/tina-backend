@@ -1,0 +1,35 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "attemptDir": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z/",
+  "substitutions": [
+    "C30_TAINT_ORACLE_ID",
+    "C30_TAINT_QUERY_HASH",
+    "C30_TAINT_EXPECTED_LABEL",
+    "C30_TAINT_FAMILY_NAME"
+  ],
+  "runtimeBytesUnchangedAfterSentinelSubstitution": true,
+  "patchBytesUnchangedAfterSentinelSubstitution": true,
+  "runtimeBytesUnchangedAfterIndependentRowShuffle": true,
+  "patchBytesUnchangedAfterIndependentRowShuffle": true,
+  "runtimeGenerationSucceedsAfterEvaluatorLabelsRemoved": true,
+  "shuffledRuntimeIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178499,
+      "normalizedLfSha256": "c39d209a9a4d4717cd3df63da8f8b60848cd54bd36b1ea74e30bd88746b67bfd",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "0f286ccb4a7f9348c6f40cc4bc854087b10b13d2ba33ec2a428de3099e452f76"
+  },
+  "findings": [],
+  "pass": true
+}

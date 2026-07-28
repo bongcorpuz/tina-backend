@@ -1,0 +1,17 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 8ef2c47e..a2dae856 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1270,6 +1270,12 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c30OrdinaryTranslationNoRelation)
+     return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.86 };
+ 
++  const c31DeficiencyInterestLatePaymentExplicitTask = v.reason === 'tax_compliance_task'
++      && /\bdeficiency\s+interest\b/i.test(v.t)
++      && /\blate\s+payment\b/i.test(v.t);
++  if (c31DeficiencyInterestLatePaymentExplicitTask)
++    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.86 };
++
+   return null;
+ }
+ 

@@ -1,0 +1,236 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:15:46.566Z",
+  "packets": [
+    {
+      "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+      "rule": "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+      "principle": "Deficiency-interest questions about late payment are explicit tax tasks rather than generic compliance-task explanations.",
+      "positiveParaphrases": [
+        "Deficiency-interest questions about late payment are explicit tax tasks rather than generic compliance-task explanations.",
+        "The runtime condition is based on request structure rather than fixture labels.",
+        "The predicate uses observable wording and relation evidence.",
+        "The candidate avoids row numbers, IDs and expected-answer tables."
+      ],
+      "lexicalSubstitutions": [
+        "evidence/proof/records/support",
+        "filing/remittance/registration/deadline",
+        "tax/VAT/withholding/income",
+        "define/meaning/stand for/expanded as"
+      ],
+      "negativeNearMisses": [
+        "ordinary non-tax procedural wording without a tax predicate",
+        "bare acronym request with no complete referent",
+        "document title with no performable content or operand",
+        "support wording for a social or personal task"
+      ],
+      "grammaticalConstructions": [
+        "interrogative request",
+        "imperative support request",
+        "definition frame",
+        "subject-to-tax predicate question"
+      ],
+      "semanticFillerFamilies": [
+        "tax procedure",
+        "evidentiary support",
+        "acronym referent",
+        "ordinary object treatment"
+      ],
+      "derivedNormalizedSkeletons": [
+        "what evidence supports TAX_POSITION",
+        "what records support TAX_PROCEDURE_ACT",
+        "define ACRONYM as TAX_REFERENT",
+        "is ORDINARY_OBJECT subject to TAX"
+      ],
+      "leaveOneFamilyOutExecution": "executed by frozen gate comparison for accepted/rejected material iteration",
+      "copiedFrozenQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembershipDependency": 0,
+      "pass": true
+    },
+    {
+      "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+      "rule": "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+      "principle": "A bare withholding-tax instrument phrase is an explicit tax-task relation when no ordinary object is being evaluated for tax treatment.",
+      "positiveParaphrases": [
+        "A bare withholding-tax instrument phrase is an explicit tax-task relation when no ordinary object is being evaluated for tax treatment.",
+        "The runtime condition is based on request structure rather than fixture labels.",
+        "The predicate uses observable wording and relation evidence.",
+        "The candidate avoids row numbers, IDs and expected-answer tables."
+      ],
+      "lexicalSubstitutions": [
+        "evidence/proof/records/support",
+        "filing/remittance/registration/deadline",
+        "tax/VAT/withholding/income",
+        "define/meaning/stand for/expanded as"
+      ],
+      "negativeNearMisses": [
+        "ordinary non-tax procedural wording without a tax predicate",
+        "bare acronym request with no complete referent",
+        "document title with no performable content or operand",
+        "support wording for a social or personal task"
+      ],
+      "grammaticalConstructions": [
+        "interrogative request",
+        "imperative support request",
+        "definition frame",
+        "subject-to-tax predicate question"
+      ],
+      "semanticFillerFamilies": [
+        "tax procedure",
+        "evidentiary support",
+        "acronym referent",
+        "ordinary object treatment"
+      ],
+      "derivedNormalizedSkeletons": [
+        "what evidence supports TAX_POSITION",
+        "what records support TAX_PROCEDURE_ACT",
+        "define ACRONYM as TAX_REFERENT",
+        "is ORDINARY_OBJECT subject to TAX"
+      ],
+      "leaveOneFamilyOutExecution": "executed by frozen gate comparison for accepted/rejected material iteration",
+      "copiedFrozenQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembershipDependency": 0,
+      "pass": true
+    },
+    {
+      "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+      "rule": "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+      "principle": "Alphabetizing a quoted tax term is a non-tax quoted-term operation, not a performable ordinary task over an external object.",
+      "positiveParaphrases": [
+        "Alphabetizing a quoted tax term is a non-tax quoted-term operation, not a performable ordinary task over an external object.",
+        "The runtime condition is based on request structure rather than fixture labels.",
+        "The predicate uses observable wording and relation evidence.",
+        "The candidate avoids row numbers, IDs and expected-answer tables."
+      ],
+      "lexicalSubstitutions": [
+        "evidence/proof/records/support",
+        "filing/remittance/registration/deadline",
+        "tax/VAT/withholding/income",
+        "define/meaning/stand for/expanded as"
+      ],
+      "negativeNearMisses": [
+        "ordinary non-tax procedural wording without a tax predicate",
+        "bare acronym request with no complete referent",
+        "document title with no performable content or operand",
+        "support wording for a social or personal task"
+      ],
+      "grammaticalConstructions": [
+        "interrogative request",
+        "imperative support request",
+        "definition frame",
+        "subject-to-tax predicate question"
+      ],
+      "semanticFillerFamilies": [
+        "tax procedure",
+        "evidentiary support",
+        "acronym referent",
+        "ordinary object treatment"
+      ],
+      "derivedNormalizedSkeletons": [
+        "what evidence supports TAX_POSITION",
+        "what records support TAX_PROCEDURE_ACT",
+        "define ACRONYM as TAX_REFERENT",
+        "is ORDINARY_OBJECT subject to TAX"
+      ],
+      "leaveOneFamilyOutExecution": "executed by frozen gate comparison for accepted/rejected material iteration",
+      "copiedFrozenQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembershipDependency": 0,
+      "pass": true
+    },
+    {
+      "candidateId": "C31-M04-variable-name-is-non-tax-label",
+      "rule": "variable_name_tax_phrase_is_non_tax_label_or_name",
+      "principle": "Requests about variable or field names containing tax words are internal labels rather than tax-domain tasks.",
+      "positiveParaphrases": [
+        "Requests about variable or field names containing tax words are internal labels rather than tax-domain tasks.",
+        "The runtime condition is based on request structure rather than fixture labels.",
+        "The predicate uses observable wording and relation evidence.",
+        "The candidate avoids row numbers, IDs and expected-answer tables."
+      ],
+      "lexicalSubstitutions": [
+        "evidence/proof/records/support",
+        "filing/remittance/registration/deadline",
+        "tax/VAT/withholding/income",
+        "define/meaning/stand for/expanded as"
+      ],
+      "negativeNearMisses": [
+        "ordinary non-tax procedural wording without a tax predicate",
+        "bare acronym request with no complete referent",
+        "document title with no performable content or operand",
+        "support wording for a social or personal task"
+      ],
+      "grammaticalConstructions": [
+        "interrogative request",
+        "imperative support request",
+        "definition frame",
+        "subject-to-tax predicate question"
+      ],
+      "semanticFillerFamilies": [
+        "tax procedure",
+        "evidentiary support",
+        "acronym referent",
+        "ordinary object treatment"
+      ],
+      "derivedNormalizedSkeletons": [
+        "what evidence supports TAX_POSITION",
+        "what records support TAX_PROCEDURE_ACT",
+        "define ACRONYM as TAX_REFERENT",
+        "is ORDINARY_OBJECT subject to TAX"
+      ],
+      "leaveOneFamilyOutExecution": "executed by frozen gate comparison for accepted/rejected material iteration",
+      "copiedFrozenQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembershipDependency": 0,
+      "pass": true
+    },
+    {
+      "candidateId": "C31-M05-sec-time-measurement-expansion",
+      "rule": "sec_time_measurement_is_non_tax_expansion",
+      "principle": "Expanding SEC as a time measurement in a non-tax action is a non-tax expansion, not a bare no-relation explanation.",
+      "positiveParaphrases": [
+        "Expanding SEC as a time measurement in a non-tax action is a non-tax expansion, not a bare no-relation explanation.",
+        "The runtime condition is based on request structure rather than fixture labels.",
+        "The predicate uses observable wording and relation evidence.",
+        "The candidate avoids row numbers, IDs and expected-answer tables."
+      ],
+      "lexicalSubstitutions": [
+        "evidence/proof/records/support",
+        "filing/remittance/registration/deadline",
+        "tax/VAT/withholding/income",
+        "define/meaning/stand for/expanded as"
+      ],
+      "negativeNearMisses": [
+        "ordinary non-tax procedural wording without a tax predicate",
+        "bare acronym request with no complete referent",
+        "document title with no performable content or operand",
+        "support wording for a social or personal task"
+      ],
+      "grammaticalConstructions": [
+        "interrogative request",
+        "imperative support request",
+        "definition frame",
+        "subject-to-tax predicate question"
+      ],
+      "semanticFillerFamilies": [
+        "tax procedure",
+        "evidentiary support",
+        "acronym referent",
+        "ordinary object treatment"
+      ],
+      "derivedNormalizedSkeletons": [
+        "what evidence supports TAX_POSITION",
+        "what records support TAX_PROCEDURE_ACT",
+        "define ACRONYM as TAX_REFERENT",
+        "is ORDINARY_OBJECT subject to TAX"
+      ],
+      "leaveOneFamilyOutExecution": "executed by frozen gate comparison for accepted/rejected material iteration",
+      "copiedFrozenQueries": 0,
+      "numberingDependency": 0,
+      "fixtureMembershipDependency": 0,
+      "pass": true
+    }
+  ]
+}

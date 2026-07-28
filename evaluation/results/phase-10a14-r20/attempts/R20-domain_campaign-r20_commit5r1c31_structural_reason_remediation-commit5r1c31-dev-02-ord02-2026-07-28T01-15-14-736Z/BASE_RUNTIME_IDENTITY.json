@@ -1,0 +1,19 @@
+{
+  "activeBase": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+  "identity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 177563,
+      "normalizedLfSha256": "087803e38fc1b9bbb6101d37a502444885d65897bd5cf80b795cab5fda3d091d"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "49a9a6dcb37d4a9acce9ffd05ca9f8887c7ced48b061f41864a90d108c2231fe"
+  },
+  "pass": true
+}

@@ -1,0 +1,17 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 89746a76..ea06ddb3 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1287,6 +1287,12 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c31QuotedAlphabetizeTaxTerm)
+     return { decision: 'REFUSE', reasonCode: 'quoted_tax_term_only', confidence: 0.85 };
+ 
++  const c31VariableNameNoTaxLabel = v.reason === 'no_tax_relation'
++      && v.rels.includes('NAMES_AS_INTERNAL_LABEL')
++      && /\b(?:variable|field|property|flag|column)\s+name\b/i.test(v.t);
++  if (c31VariableNameNoTaxLabel)
++    return { decision: 'REFUSE', reasonCode: 'non_tax_label_or_name', confidence: 0.85 };
++
+   return null;
+ }
+ 

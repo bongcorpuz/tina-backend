@@ -4,6 +4,168 @@
 
 Last updated:
 
+`2026-07-28T01:15:49.441Z`
+
+Repository:
+
+`C:/Projects/tina-backend`
+
+Branch:
+
+`feature/source-availability-engine-v1`
+
+## Current Controlling Phase
+
+```text
+PHASE 10 - V1 RELEASE GATES
+PHASE 10A - TRUST, LIMITATION AND AUTHORITY-CONFIDENCE CLOSURE
+PHASE 10A14-R20 - ACTIVE / IN PROGRESS
+```
+
+Phase 10A is OPEN.
+
+R20 is not PASS and is not governance-satisfied.
+
+## Latest Completed Execution Unit
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C31
+ROADMAP V9 PROMOTION, EXACT C30 BASE RECONSTRUCTION AND R3 REASON-LAYER CONTINUATION
+DECISION: INCOMPLETE - C30 SELECTED BASE RECONSTRUCTED; R3 REASON IMPROVED; REASON LOCK REMAINS OPEN
+```
+
+Roadmap v9 promotion and continuity:
+
+```text
+Roadmap v9 promoted in C31                 true
+Roadmap v9 pre normalized-LF SHA-256       73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a
+Roadmap v9 final normalized-LF SHA-256     bd85643e21046ef2e4658f01bc18c2a49195a3b8bf1d5b283dc82bbb5dba3401
+Roadmap v9 source-of-truth hierarchy       PASS
+Roadmap v8 byte-for-byte preservation      true
+Roadmap v7 byte-for-byte preservation      true
+Immediate source hierarchy                 committed evidence/frozen artifacts -> CURRENT_STATE -> Roadmap v9 -> Roadmap v8 -> Roadmap v7 historical
+Research-First V1                          active controlling 2026 launch strategy; full Tax Operating System preserved
+```
+
+Exact C30 selected base reconstruction:
+
+```text
+source attempt                             R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z
+services tree digest                       31cb03cd17d851f4a08143c6c508da5d1a2108c7cfa9d810ec2d6d751188d5ce
+analyzer normalized-LF SHA-256             0937a9bf1cbcfb6c76eb0f014c05e4310d4d3495ec5f06e6f87ef51a463336e2
+domain-boundary normalized-LF SHA-256      0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039
+patterns normalized-LF SHA-256             3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa
+R3 reason                                  3472 / 3,720
+reason suite v8                            344 / 344
+collision probes                           196 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+```
+
+Final C30 residual inventory:
+
+```text
+classification                             FINAL_C30_RESIDUAL_POPULATION_RECOMPUTED, ZERO_COLLISION_FAILURES_AFTER_C30, ZERO_REASON_SUITE_FAILURES_AFTER_C30, ALL_REMAINING_R3_FAILURES_ARE_REASON_ONLY
+recomputed R3 reason mismatches            248
+recomputed reason-suite failures           0
+recomputed collision-probe failures        0
+deduplicated cross-population residuals    248
+REASON_ONLY                                248
+DECISION_DEPENDENT                         0
+RELATION_DEPENDENT                         0
+CROSS_LAYER_SAFE_DECISION_REASON           0
+CROSS_LAYER_SAFE_RELATION_DECISION_REASON  0
+ORACLE_OR_CONTRACT_AMBIGUITY               0
+UNCLASSIFIED_PENDING_EVIDENCE              0
+```
+
+C31 material-attempt accounting:
+
+```text
+governed reconstruction iterations          1
+material reason-remediation iterations      5
+accepted rules                              deficiency_interest_late_payment_is_explicit_tax_task_relation, bare_withholding_tax_instrument_is_explicit_tax_task_relation, alphabetize_quoted_tax_term_is_quoted_tax_term_only, variable_name_tax_phrase_is_non_tax_label_or_name, sec_time_measurement_is_non_tax_expansion
+rejected rules                              none
+frontier rules                              deficiency_interest_late_payment_is_explicit_tax_task_relation, bare_withholding_tax_instrument_is_explicit_tax_task_relation, alphabetize_quoted_tax_term_is_quoted_tax_term_only, variable_name_tax_phrase_is_non_tax_label_or_name, sec_time_measurement_is_non_tax_expansion
+selected controlling attempt                R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z
+candidate exhaustion                        false
+remaining viable candidates                 true
+ambiguity or blocker status                 reason lock remains open after C30 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication
+```
+
+C31 final selected control vector:
+
+```text
+R3 reason                                  3482 / 3,720
+reason-suite v8                            344 / 344
+collision probes                           196 / 196
+R3 decision                                3720 / 3,720
+R3 relation                                3720 / 3,720
+decision counterfactual                    756 / 756
+relation counterfactual                    282 / 282
+clause probes                              68 / 68
+rich-context guard                         7 / 7
+reason integrity                           PASS
+material false allows                      0
+material false refusals                    0
+clarify mismatches                         0
+decision lock                              achieved
+relation lock                              achieved
+reason-suite lock                          achieved
+reason layer lock                          open
+runtime closure                            not achieved
+```
+
+Canonical attempt registry:
+
+```text
+total attempts                             206
+domain_campaign                            142
+focused_suite                              13
+other                                      9
+synthetic_validator                        42
+controlling attempts                       204
+non-controlling attempts                   2
+orphan results                             0
+dangling attempts                          0
+cumulativeThrough                          commit5r1c31-incomplete
+decisionLayerClosure                       true
+relationLayerClosure                       true
+reasonLayerClosure                         false
+runtimeClosure                             false
+```
+
+Evidence manifest:
+
+```text
+manifest path                              evaluation/results/phase-10a14-r20/COMMIT_5R1C31_EVIDENCE_MANIFEST.sha256
+manifest entries                           115
+manifest bad-hash count                    0
+evidence files including manifest          116
+phase result file count                    2675
+```
+
+## Next Exact Task
+
+```text
+PHASE-10A14-R20 - COMMIT 5R1-C32 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C31 BASE
+```
+
+Do not start standalone runtime closure, integration/freeze, source promotion, model migration, Tax Library implementation, public deployment, billing activation or any later roadmap phase before the governed R3 reason layer is closed.
+
+---
+
+## Previous Continuity Snapshot
+
+## TINA Controlling Continuity Status
+
+Last updated:
+
 `2026-07-27T23:27:31.867Z`
 
 Repository:

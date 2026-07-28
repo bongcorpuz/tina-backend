@@ -1,0 +1,2703 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:15:49.918Z",
+  "decision": "INCOMPLETE_REASON_LAYER_OPEN",
+  "commitMessage": "PHASE-10A14-R20 COMMIT 5R1-C31 incomplete - preserve governed R3 reason evidence and promote Research-First Roadmap v9",
+  "roadmapV9PromotionAndContinuityReconciliation": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:14:58.015Z",
+    "preUpdateFileStatus": "untracked",
+    "preUpdateNormalizedLfSha256": "73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a",
+    "expectedPreUpdateNormalizedLfSha256": "b53a6cc6eabef282f6a76cd8aa32ebaddd8113812097fb6e053a83c04b779997",
+    "classifications": [
+      "RESEARCH_FIRST_V1_2026_STRATEGIC_RESEQUENCING",
+      "NO_PHASE_10A_GATE_WEAKENING",
+      "NO_C30_EXECUTION_INVALIDATION",
+      "NO_C30_EVIDENCE_INVALIDATION",
+      "NO_MAJOR_PHASE_RENUMBERING",
+      "FULL_TAX_OPERATING_SYSTEM_DESTINATION_PRESERVED",
+      "BETTER_THAN_ANYCASE_TARGET_BOUNDED_AND_NOT_CLAIMED_AS_CURRENT_STATE"
+    ],
+    "semanticValidationBefore": {
+      "requiredSignals": [
+        {
+          "signal": "Research-First Philippine Tax Intelligence V1",
+          "present": true
+        },
+        {
+          "signal": "Full Philippine Tax Operating System",
+          "present": true
+        },
+        {
+          "signal": "Phase 10A remains an absolute blocker",
+          "present": true
+        },
+        {
+          "signal": "15 December 2026",
+          "present": true
+        },
+        {
+          "signal": "15-31 December 2026",
+          "present": true
+        },
+        {
+          "signal": "Phase 13",
+          "present": true
+        },
+        {
+          "signal": "Phase 14",
+          "present": true
+        },
+        {
+          "signal": "18",
+          "present": true
+        }
+      ],
+      "productionReadinessSubphaseIntegrity": true,
+      "sourceOfTruthHierarchyPresent": true,
+      "strategicSectionIntegrity": true,
+      "pass": true
+    },
+    "semanticValidationAfter": {
+      "requiredSignals": [
+        {
+          "signal": "Research-First Philippine Tax Intelligence V1",
+          "present": true
+        },
+        {
+          "signal": "Full Philippine Tax Operating System",
+          "present": true
+        },
+        {
+          "signal": "Phase 10A remains an absolute blocker",
+          "present": true
+        },
+        {
+          "signal": "15 December 2026",
+          "present": true
+        },
+        {
+          "signal": "15-31 December 2026",
+          "present": true
+        },
+        {
+          "signal": "Phase 13",
+          "present": true
+        },
+        {
+          "signal": "Phase 14",
+          "present": true
+        },
+        {
+          "signal": "18",
+          "present": true
+        }
+      ],
+      "productionReadinessSubphaseIntegrity": true,
+      "sourceOfTruthHierarchyPresent": true,
+      "strategicSectionIntegrity": true,
+      "pass": true
+    },
+    "v8Unchanged": true,
+    "v7Unchanged": true,
+    "initialPromotionNormalizedLfSha256": "73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a",
+    "authorizedPathOnly": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+    "idempotentPromotionRerun": true,
+    "pass": true,
+    "finalUpdatedUtc": "2026-07-28T01:15:48.540Z",
+    "finalNormalizedLfSha256": "bd85643e21046ef2e4658f01bc18c2a49195a3b8bf1d5b283dc82bbb5dba3401",
+    "finalExecutionHeader": {
+      "currentActiveWork": "PHASE-10A14-R20",
+      "currentControllingResult": "COMMIT 5R1-C31 incomplete; COMMIT 5R1-C32 R3 reason continuation is next",
+      "phase10A": "OPEN",
+      "r20": "IN PROGRESS",
+      "metrics": {
+        "canonicalPassed": 3482,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3482,
+        "reasonMismatches": 238,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "nextTask": "PHASE-10A14-R20 - COMMIT 5R1-C32 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C31 BASE"
+    },
+    "strategicSectionIntegrity": true,
+    "productionReadinessSubphaseIntegrity": true,
+    "sourceOfTruthHierarchyIntegrity": true,
+    "v8ByteForBytePreservation": true,
+    "v7ByteForBytePreservation": true,
+    "trackedInC31Commit": true
+  },
+  "preflight": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:14:57.130Z",
+    "head": "29e019d2148e709f1688f7139d4ba18d0ac84301",
+    "parent": "5551fffa77967012c4755cce77c7ceeaba30bbdb",
+    "branch": "feature/source-availability-engine-v1",
+    "sync": "0\t0",
+    "trackedTreeClean": true,
+    "untracked": [
+      ".claude/settings.local.json",
+      ".vscode/extensions.json",
+      "evaluation/factcheck/README.md",
+      "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "evaluation/factcheck/hardest-philippine-tax-question.md",
+      "evaluation/runner/phase-10a14-r20/commit5r1c31-execute.mjs",
+      "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md"
+    ],
+    "permittedProtectedUntracked": [
+      ".claude/settings.local.json",
+      ".vscode/extensions.json",
+      "evaluation/factcheck/README.md",
+      "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "evaluation/factcheck/hardest-philippine-tax-question.md",
+      "evaluation/runner/phase-10a14-r20/commit5r1c31-execute.mjs",
+      "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md"
+    ],
+    "unexplainedUntrackedResidue": [],
+    "protectedUntrackedOnly": true,
+    "unexplainedResidueLeftUntouched": [],
+    "nodeListenerAbsent": true,
+    "port5173Free": true,
+    "currentStateBlob": "0af260b56acc18525ccdfd309033f72e23ae5821",
+    "startingRegistry": {
+      "total": 200,
+      "domain_campaign": 136,
+      "focused_suite": 13,
+      "other": 9,
+      "synthetic_validator": 42,
+      "controlling": 198,
+      "nonControlling": 2,
+      "orphan": 0,
+      "dangling": 0,
+      "cumulativeThrough": "commit5r1c30-incomplete",
+      "decisionLayerClosure": true,
+      "relationLayerClosure": true,
+      "reasonLayerClosure": false,
+      "runtimeClosure": false
+    },
+    "pass": true
+  },
+  "mandatoryFirstRead": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:14:57.972Z",
+    "files": [
+      {
+        "path": "knowledge/CURRENT_STATE.md",
+        "bytes": 104444,
+        "sha256": "846a5a820191dbc813d4d34e25b1ff3f3d3192f052d6f2799e858931c98a2218",
+        "readComplete": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+        "bytes": 29298,
+        "sha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+        "readComplete": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+        "bytes": 14842,
+        "sha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+        "readComplete": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+        "bytes": 25183,
+        "sha256": "73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+        "bytes": 611620,
+        "sha256": "6faf669f07853e2cd4017d7f47ab4e6a5f6ab345d03887c5366731ad94741812",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_ROADMAP_V8_CONTINUITY_RECONCILIATION.json",
+        "bytes": 4045,
+        "sha256": "669c95f4cc1d2ad7ea8347922159793f1a115684895fcb71d373d79ba11d88ca",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_BASE_RUNTIME_IDENTITY.json",
+        "bytes": 898,
+        "sha256": "dd48c3e71fec881732b7b200f5f993d990656ce5d728cc9432215bfeebc17f0b",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_C29_BASE_RECONSTRUCTION.json",
+        "bytes": 31646,
+        "sha256": "04380d9f1db930897fc087757da0381ed7b27159ac9a5f341b4d436f2094eb87",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_POST_C29_RESIDUAL_INVENTORY.json",
+        "bytes": 610683,
+        "sha256": "8d94fe1e6b41e86acba0c43f65da69e8a62c6062433231932b23603293f9c692",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_POST_C29_RESIDUAL_OVERLAP_MAP.json",
+        "bytes": 49939,
+        "sha256": "8233fa819ae6754f26f06b47cb3d522f2f608f4c370495e496b639424e18f4de",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_POST_C29_REASON_FAMILY_SUMMARY.json",
+        "bytes": 1175,
+        "sha256": "f299f760e960c0b28b9d97e828610705dbe08f590b89cd5a2e84f23135e9f630",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_MONOTONIC_FEATURE_BASELINE.json",
+        "bytes": 559,
+        "sha256": "76d2e6229afe1625f0884b55953b54f8868d93cd66fc410a5be3b2eed082bcb5",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_MONOTONIC_FEATURE_ABLATION.json",
+        "bytes": 292,
+        "sha256": "643957ef4dab22be49139680f399a3e0c788d5644d762c85edad29c640a7e9dd",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_CANDIDATE_HYPOTHESES.json",
+        "bytes": 20188,
+        "sha256": "beb6bf2e70a3a4fc2b81e0e9c21390a807307caaa779c3b1bbd8c1be7df9a44e",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_CANDIDATE_EXHAUSTION.json",
+        "bytes": 1347,
+        "sha256": "c8a57514fc7e0f7f561139504ebda7b97cdbbaa442cc9dfdd1fae713be114b8c",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_RULE_GENERALIZATION_PACKETS.json",
+        "bytes": 6357,
+        "sha256": "0bb0ecffdfd7d6f29501452388c47c53ca416456744851811d4656affbce5952",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_DERIVED_PACKET_VALIDATION.json",
+        "bytes": 1126,
+        "sha256": "8bb14d0768dd04cbab6503e5a422059d4609b0e9bb1ac8625122e251fb333f91",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_COMPOSITION_ORDER_INDEPENDENCE.json",
+        "bytes": 342,
+        "sha256": "3038566f5fa52944c5653f23b7168bdcd1457e195c235a0fa0e5bb077fe36635",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_CANDIDATE_DELTA_REPLAY_RESULT.json",
+        "bytes": 1263,
+        "sha256": "c59d5cc5d2c8b7f4b4d5af686b3f56fdd0a754fdb2e7619eb0cad7790180494e",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_TAINT_SOURCE_TO_RUNTIME_SINK_MAP.json",
+        "bytes": 924,
+        "sha256": "d08f12c678c798d83d5f6afd52aa7110377063ca5e4e8b11cf67eef3ce3fa080",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_TAINT_AWARE_ANTI_OVERFIT_RESULT.json",
+        "bytes": 941,
+        "sha256": "89ccc30ddb83386012fb29c02d83b3260953ff339b4b65a0c76ebd1043dcfbd3",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_FINAL_EXECUTION_REPORT.json",
+        "bytes": 30246,
+        "sha256": "d03c0da1858381055277079d832442f41fc402feeb6e8c283e21ce6db72eef3a",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_EVIDENCE_MANIFEST.sha256",
+        "bytes": 18460,
+        "sha256": "fff8329c2149538f22739e127f3db17a5dafb76d764a04a6fe4553545e6a12fa",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z/ITERATION_RESULT.json",
+        "bytes": 34635,
+        "sha256": "dae7e482d1bc78f1a8684cc4ce4c627ca5daf020a6f25f905a52ed5a777674d3",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-01-ord01-2026-07-27T23-27-12-685Z/ITERATION_RESULT.json",
+        "bytes": 35070,
+        "sha256": "3aa2d4d8ddd341b7062cf0c8fb8334c13e4ea958687b4da4f88f6ef7885749e0",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-02-ord02-2026-07-27T23-27-17-454Z/ITERATION_RESULT.json",
+        "bytes": 34724,
+        "sha256": "126c1c07c7307258f4c2de7edd4c513b886a550ffdb10020992ce8d6900aeaf3",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z/C30_ONLY_CANDIDATE.patch",
+        "bytes": 989,
+        "sha256": "2b78ce976468c9d3e225c64817c1143eee585d711dd7272bc714d8c0798e9d15",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/CLAUSE_LEVEL_INTENT_SCHEMA.md",
+        "bytes": 2929,
+        "sha256": "10dd95cfc409fcebbfa623b46c9ac3c5aa0bf443fca0b7a97df75e71c3f88a07",
+        "readComplete": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/RELATION_AND_PRECEDENCE_SPEC.md",
+        "bytes": 3010,
+        "sha256": "83089bbd12c27e9ccf8a322dfe04293d3bf2083f71cc4df907d4204befc79432",
+        "readComplete": true
+      }
+    ]
+  },
+  "selectedC30Base": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+  "baseRuntimeIdentity": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:14:58.040Z",
+    "sourceAttempt": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 177236,
+        "normalizedLfSha256": "0937a9bf1cbcfb6c76eb0f014c05e4310d4d3495ec5f06e6f87ef51a463336e2"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "31cb03cd17d851f4a08143c6c508da5d1a2108c7cfa9d810ec2d6d751188d5ce"
+    },
+    "mismatches": [],
+    "pass": true
+  },
+  "reconstruction": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:05.154Z",
+    "attemptId": "R20-domain_campaign-r20_commit5r1c31_c30_selected_base_reconstruction-commit5r1c31-reconstruction-ord01-2026-07-28T01-14-58-052Z",
+    "sourceAttempt": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+    "installedIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 177236,
+        "normalizedLfSha256": "0937a9bf1cbcfb6c76eb0f014c05e4310d4d3495ec5f06e6f87ef51a463336e2",
+        "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+      },
+      "servicesTreeDigest": "31cb03cd17d851f4a08143c6c508da5d1a2108c7cfa9d810ec2d6d751188d5ce"
+    },
+    "writeAudit": [
+      {
+        "path": "services/philippine-tax-intent-analyzer.js",
+        "beforeSha256Normalized": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+        "afterSha256Normalized": "0937a9bf1cbcfb6c76eb0f014c05e4310d4d3495ec5f06e6f87ef51a463336e2",
+        "beforeBytes": 31045,
+        "afterBytes": 177236,
+        "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": true,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      },
+      {
+        "path": "services/philippine-tax-domain-boundary.js",
+        "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "beforeBytes": 11976,
+        "afterBytes": 12192,
+        "tempFileUsed": "philippine-tax-domain-boundary.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": false,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      },
+      {
+        "path": "services/philippine-tax-boundary-patterns.js",
+        "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "beforeBytes": 64424,
+        "afterBytes": 65451,
+        "tempFileUsed": "philippine-tax-boundary-patterns.c20tmp.js",
+        "tempInsideRepository": true,
+        "tempEndsWithJs": true,
+        "verifiedNonZero": true,
+        "parseAndExportsVerified": false,
+        "atomicRename": true,
+        "postReplaceHashVerified": true,
+        "zeroByteIncident": false
+      }
+    ],
+    "expected": {
+      "reasonPassed": 3472,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "richContextGuardPassed": 7,
+      "reasonIntegrityPass": true
+    },
+    "actual": {
+      "canonicalPassed": 3472,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3472,
+      "reasonMismatches": 248,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    },
+    "discrepancies": [],
+    "gates": {
+      "label": "C31-c30-selected-base-reconstruction",
+      "stage": "full",
+      "runtimeIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 177236,
+          "normalizedLfSha256": "0937a9bf1cbcfb6c76eb0f014c05e4310d4d3495ec5f06e6f87ef51a463336e2",
+          "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+          "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+          "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+        },
+        "servicesTreeDigest": "31cb03cd17d851f4a08143c6c508da5d1a2108c7cfa9d810ec2d6d751188d5ce"
+      },
+      "collisionProbes": {
+        "total": 196,
+        "passed": 196,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 98
+      },
+      "reasonCounterfactual": {
+        "total": 344,
+        "passed": 344,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 172,
+        "authoredQueries": 344,
+        "nonControllingProbes": 0,
+        "probes": []
+      },
+      "reasonIntegrity": {
+        "invalidCodeCount": 0,
+        "incompatibleCount": 0,
+        "invalidCode": [],
+        "incompatible": [],
+        "pass": true
+      },
+      "r3": {
+        "total": 3720,
+        "canonicalPassed": 3472,
+        "decisionMismatches": 0,
+        "reasonMismatches": 248,
+        "relationMismatches": 0,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "relationRowsWithExpectations": 1623,
+        "relationRowsPassed": 1623,
+        "relationPassed": 3720,
+        "decisionPassed": 3720
+      },
+      "reasonPassed": 3472,
+      "focusedReasonRegression": {
+        "perFamily": {
+          "explicit_tax_task_relation": {
+            "required": 451,
+            "satisfied": 417
+          },
+          "tax_compliance_task": {
+            "required": 291,
+            "satisfied": 290
+          },
+          "tax_treatment_of_ordinary_object": {
+            "required": 784,
+            "satisfied": 757
+          },
+          "explicit_non_tax_task": {
+            "required": 897,
+            "satisfied": 847
+          },
+          "non_tax_label_or_name": {
+            "required": 201,
+            "satisfied": 200
+          },
+          "quoted_tax_term_only": {
+            "required": 120,
+            "satisfied": 119
+          },
+          "no_tax_relation": {
+            "required": 563,
+            "satisfied": 430
+          },
+          "ambiguous_tax_acronym": {
+            "required": 220,
+            "satisfied": 220
+          },
+          "non_tax_expansion": {
+            "required": 88,
+            "satisfied": 87
+          },
+          "tax_definition_with_context": {
+            "required": 79,
+            "satisfied": 79
+          },
+          "tax_negation_but_tax_review_requested": {
+            "required": 26,
+            "satisfied": 26
+          }
+        },
+        "allBucketsPass": false
+      },
+      "decisionFailures": [],
+      "relationFailures": [],
+      "decisionCounterfactual": {
+        "total": 756,
+        "passed": 756,
+        "failed": 0,
+        "bySuite": {
+          "v3": {
+            "total": 331,
+            "passed": 331,
+            "failed": 0
+          },
+          "v4": {
+            "total": 177,
+            "passed": 177,
+            "failed": 0
+          },
+          "v5": {
+            "total": 134,
+            "passed": 134,
+            "failed": 0
+          },
+          "v6": {
+            "total": 114,
+            "passed": 114,
+            "failed": 0
+          }
+        },
+        "byFamily": {},
+        "failures": []
+      },
+      "relationCounterfactual": {
+        "total": 282,
+        "passed": 282,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 148,
+        "authoredQueries": 296,
+        "nonControllingProbes": 14,
+        "probes": [
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the ZTX rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the QVL rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the MBK rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the JPR rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the KDN rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the WTF rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the NRB rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the HGS rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the guitar lesson subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the hiking trail subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the chess tournament subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the aquarium filter subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the bicycle helmet subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the pottery kiln subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          }
+        ]
+      },
+      "clauseProbes": {
+        "total": 68,
+        "passed": 68,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 34
+      },
+      "closedControls": {
+        "controls": [
+          {
+            "control": "tax_compliance_task",
+            "passed": 108,
+            "total": 108,
+            "closed": true
+          },
+          {
+            "control": "acronym_homograph_control",
+            "passed": 200,
+            "total": 200,
+            "closed": true
+          },
+          {
+            "control": "ambiguous_clarification_control",
+            "passed": 150,
+            "total": 150,
+            "closed": true
+          },
+          {
+            "control": "internal_label_proper_name",
+            "passed": 104,
+            "total": 104,
+            "closed": true
+          },
+          {
+            "control": "quoted_term_only",
+            "passed": 110,
+            "total": 110,
+            "closed": true
+          }
+        ],
+        "allClosed": true
+      },
+      "richContextGuard": {
+        "probes": [
+          {
+            "shape": "bare_term",
+            "query": "holding period",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "recognized_polysemous_acronym",
+            "query": "RMC",
+            "expected": "CLARIFY",
+            "actual": "CLARIFY",
+            "pass": true
+          },
+          {
+            "shape": "issuance_context",
+            "query": "What did the RMC issuance say about VAT?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "procedure_context",
+            "query": "Explain RMC for BIR issuances.",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "ordinary_homograph",
+            "query": "Can a supplier reject a return of goods?",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          },
+          {
+            "shape": "richer_tax_sentence",
+            "query": "How is the holding period applied to a capital gains tax computation on land?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "metadata_suffixed_contentless",
+            "query": "What is the holding period? Context 1.",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          }
+        ],
+        "allPass": true,
+        "passed": 7,
+        "total": 7
+      },
+      "relationObjectIntegrity": {
+        "counts": {
+          "unknownType": 0,
+          "missingField": 0,
+          "placeholderTarget": 130,
+          "wholeQuerySpan": 200,
+          "duplicateTuple": 20,
+          "unstableOrder": 0
+        },
+        "violations": {
+          "unknownType": [],
+          "missingField": [],
+          "placeholderTarget": [
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 3.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 8.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 9.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 11.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 12.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Create a checklist for Professional Artists Network. Control 15.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Translate conference room booking into plain English. Control 16.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by school newspaper printing authority. Control 18.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the Downtown Theater Association. Control 20.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 23.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 28.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 29.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 31.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 32.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "wholeQuerySpan": [
+            {
+              "q": "How do we compute income tax for a Philippine corporation in case 1?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to VAT in case 2?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "When is the deadline for expanded withholding tax in case 3?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to final withholding tax in case 4?",
+              "relation": "ASKS_WITHHOLDING_ON"
+            },
+            {
+              "q": "Can the expense be deducted for percentage tax in case 5?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support documentary stamp tax in case 6?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How should we disclose capital gains tax in case 7?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late donor tax in case 9?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How do we document customs duty in case 10?",
+              "relation": "ASKS_CUSTOMS_DUTY_ON"
+            },
+            {
+              "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to minimum corporate income tax in case 12?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "When is the deadline for regular corporate income tax in case 13?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to BIR registration in case 14?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Can the expense be deducted for withholding tax return in case 15?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support input VAT in case 16?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "How should we disclose output VAT in case 17?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late deficiency interest in case 19?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "How do we document NOLCO in case 20?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            }
+          ],
+          "duplicateTuple": [
+            {
+              "q": "Which cooking pan brand is best? Control 2.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 22.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 39.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 42.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 59.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 62.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 79.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 82.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 99.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 102.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 119.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 122.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 139.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 142.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 159.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 162.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 179.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 182.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 199.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "unstableOrder": []
+        },
+        "pass": false
+      },
+      "clauseSchemaRegression": {
+        "counts": {
+          "emptyClause": 0,
+          "idNotPositional": 0,
+          "notExactlyOnePrimary": 0,
+          "unstable": 0,
+          "roleOutsideSchema": 0
+        },
+        "violations": {
+          "emptyClause": [],
+          "idNotPositional": [],
+          "notExactlyOnePrimary": [],
+          "unstable": [],
+          "roleOutsideSchema": []
+        },
+        "pass": true
+      },
+      "antiMemorization": {
+        "checks": {
+          "no_complete_counterfactual_query": true,
+          "no_complete_r3_query": true,
+          "no_query_hash_or_oracle_id": true,
+          "no_suite_or_family_feature": true,
+          "no_cluster_or_category_feature": true,
+          "no_scenario_number_branch": true,
+          "no_expected_decision_map": true,
+          "no_oracle_relation_backfill": true
+        },
+        "failed": [],
+        "pass": true,
+        "leakedCounterfactualQueries": [],
+        "leakedR3Queries": [],
+        "r3TerminologyOverlap": [
+          "expanded withholding tax",
+          "final withholding tax",
+          "tax credit certificate",
+          "documentary stamp tax",
+          "capital gains tax",
+          "optional standard deduction",
+          "books of accounts",
+          "transfer pricing documentation",
+          "registered business enterprise",
+          "tax treaty relief",
+          "local business tax",
+          "real property tax",
+          "substantiation for deductions",
+          "fringe benefit tax",
+          "de minimis benefits",
+          "gross receipts tax",
+          "minimum corporate income tax",
+          "regular corporate income tax",
+          "stock transaction tax",
+          "resident alien tax",
+          "tax on professional fees",
+          "tax accounting period",
+          "annual information return",
+          "refund claim prescription"
+        ],
+        "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+      },
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "disposition": "accepted_c30_selected_controlling_base_reconstruction"
+  },
+  "finalC30ResidualReconciliation": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:06.548Z",
+    "selectedC30Base": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+    "evidencedClassifications": [
+      "FINAL_C30_RESIDUAL_POPULATION_RECOMPUTED",
+      "ZERO_COLLISION_FAILURES_AFTER_C30",
+      "ZERO_REASON_SUITE_FAILURES_AFTER_C30",
+      "ALL_REMAINING_R3_FAILURES_ARE_REASON_ONLY"
+    ],
+    "recomputedAgainstExactC30SelectedBase": true,
+    "recomputedCounts": {
+      "r3ReasonMismatches": 248,
+      "reasonSuiteFailures": 0,
+      "collisionProbeFailures": 0,
+      "deduplicatedCrossPopulationResiduals": 248
+    },
+    "zeroCollisionFailures": true,
+    "zeroReasonSuiteFailures": true,
+    "reasonFamilySummary": {
+      "explicit_non_tax_task": 50,
+      "explicit_tax_task_relation": 34,
+      "no_tax_relation": 133,
+      "tax_treatment_of_ordinary_object": 27,
+      "non_tax_label_or_name": 1,
+      "tax_compliance_task": 1,
+      "non_tax_expansion": 1,
+      "quoted_tax_term_only": 1
+    },
+    "pass": true
+  },
+  "finalC30ResidualInventory": {
+    "populations": {
+      "r3ReasonMismatches": 248,
+      "reasonSuiteFailures": 0,
+      "collisionProbeFailures": 0,
+      "deduplicatedCrossPopulationResiduals": 248,
+      "correctRowControlsIndexed": 55
+    },
+    "summary": {
+      "DECISION_DEPENDENT": 0,
+      "RELATION_DEPENDENT": 0,
+      "REASON_ONLY": 248,
+      "CROSS_LAYER_SAFE_DECISION_REASON": 0,
+      "CROSS_LAYER_SAFE_RELATION_DECISION_REASON": 0,
+      "ORACLE_OR_CONTRACT_AMBIGUITY": 0,
+      "UNCLASSIFIED_PENDING_EVIDENCE": 0
+    }
+  },
+  "monotonicFeatureBaseline": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:05.295Z",
+    "inheritedControllingBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+    "vectorCount": 124,
+    "collidingRows": 27,
+    "strictFeatureSupersetOfC28": true,
+    "forbiddenInputsExcluded": [
+      "expected or actual reason",
+      "expected decision",
+      "oracle ID",
+      "query hash",
+      "suite/family/category",
+      "row position",
+      "fixture membership",
+      "full normalized query"
+    ],
+    "pass": true
+  },
+  "monotonicFeatureAblation": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:05.295Z",
+    "vectorCount": 124,
+    "collidingRows": 27,
+    "vectorCountAtLeastC28": true,
+    "collidingRowsNoMoreThanC28": true,
+    "removedOrCollapsedC28Fields": [],
+    "stopSemanticWorkDueToMonotonicity": false,
+    "pass": true
+  },
+  "hypotheses": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:06.560Z",
+    "hypotheses": [
+      {
+        "id": "C31-M01-deficiency-interest-late-payment-explicit-task",
+        "category": "explicit-tax-task-tail",
+        "principle": "Deficiency-interest late-payment questions should explain as explicit tax task relation.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_EXPLICIT_TAX_TASK",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "material_iteration_allocated"
+      },
+      {
+        "id": "C31-M02-bare-withholding-instrument-explicit-task",
+        "category": "explicit-tax-task-tail",
+        "principle": "A bare withholding-tax instrument phrase should not be demoted to ordinary-object treatment.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_EXPLICIT_TAX_TASK",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "material_iteration_allocated"
+      },
+      {
+        "id": "C31-M03-quoted-alphabetize-tax-term",
+        "category": "quoted-term-tail",
+        "principle": "Alphabetizing quoted tax text is a quoted-term-only non-tax operation.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "material_iteration_allocated"
+      },
+      {
+        "id": "C31-M04-variable-name-is-non-tax-label",
+        "category": "non-tax-label-tail",
+        "principle": "Variable, field, flag or column names containing tax terms are label/name requests.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "material_iteration_allocated"
+      },
+      {
+        "id": "C31-M05-sec-time-measurement-expansion",
+        "category": "non-tax-expansion-tail",
+        "principle": "SEC as a time measurement in a non-tax action should explain as non-tax expansion.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "material_iteration_allocated"
+      },
+      {
+        "id": "C31-H06-broad-noun-phrase-no-relation",
+        "category": "rejected-overbroad-tail",
+        "principle": "Broad noun-phrase no-relation routing was rejected because it trades off against explicit non-tax-task families.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "rejected_after_ad_hoc_probe_overbroad_tradeoff"
+      },
+      {
+        "id": "C31-H07-declarative-non-tax-expansion",
+        "category": "rejected-overbroad-tail",
+        "principle": "Declarative non-tax expansion routing was rejected because it regressed the active base.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "requires narrow predicate",
+        "disposition": "rejected_after_ad_hoc_probe_regression"
+      },
+      {
+        "id": "C31-H08-no-tax-vs-explicit-non-tax-task",
+        "category": "frontier-family",
+        "principle": "No-tax relation and explicit non-tax task residuals remain the dominant reason-only frontier.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H09-explicit-tax-task-vs-ordinary-object-treatment",
+        "category": "frontier-family",
+        "principle": "Explicit tax task and ordinary-object tax-treatment residuals require narrow tax-outcome predicates.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H10-tax-compliance-single-tail",
+        "category": "frontier-family",
+        "principle": "The single tax-compliance residual should be handled only with exact structural evidence.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H11-acronym-label-expansion-tail",
+        "category": "frontier-family",
+        "principle": "Acronym, label and expansion tails must preserve relation/decision exact locks.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H12-definition-with-context-tail",
+        "category": "frontier-family",
+        "principle": "Definition-with-context residuals require clear complete-referent predicates.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H13-quoted-tax-term-tail",
+        "category": "frontier-family",
+        "principle": "Quoted-term-only residuals require a delimited-content operation rather than tax advice.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H14-non-tax-label-tail",
+        "category": "frontier-family",
+        "principle": "Internal labels and variable names require explicit naming frames.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H15-non-tax-expansion-tail",
+        "category": "frontier-family",
+        "principle": "Non-tax expansion residuals require expansion semantics and a non-tax target.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H16-composition-order-safety",
+        "category": "composition-control",
+        "principle": "C31 candidates should remain order independent because predicates are mutually narrow.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H17-taint-aware-anti-overfit",
+        "category": "governance-control",
+        "principle": "No runtime predicate may depend on oracle IDs, expected labels, row positions or fixture membership.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      },
+      {
+        "id": "C31-H18-c32-continuation-frontier",
+        "category": "continuation-control",
+        "principle": "Remaining viable candidates after C31 must be deferred to C32 rather than broad-promoted.",
+        "runtimePredicate": "observable lexical/structural predicate only",
+        "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+        "targetSets": [
+          "R3 reason residuals",
+          "reason suite v8",
+          "collision probes"
+        ],
+        "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+        "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+        "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+        "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+        "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+        "taintRisk": "low; generator uses structural packet only",
+        "compositionRisk": "low; candidate inserted into governed reason override before final null",
+        "ambiguityRisk": "tracked",
+        "disposition": "reserved_or_rejected_before_runtime"
+      }
+    ],
+    "count": 18,
+    "pass": true
+  },
+  "materialIterations": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+      "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+      "rule": "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3477,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3477,
+        "reasonMismatches": 243,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-02-ord02-2026-07-28T01-15-14-736Z",
+      "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+      "rule": "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3479,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3479,
+        "reasonMismatches": 241,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-03-ord03-2026-07-28T01-15-22-660Z",
+      "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+      "rule": "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3480,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3480,
+        "reasonMismatches": 240,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z",
+      "candidateId": "C31-M04-variable-name-is-non-tax-label",
+      "rule": "variable_name_tax_phrase_is_non_tax_label_or_name",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3481,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3481,
+        "reasonMismatches": 239,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+      "candidateId": "C31-M05-sec-time-measurement-expansion",
+      "rule": "sec_time_measurement_is_non_tax_expansion",
+      "accepted": true,
+      "actual": {
+        "canonicalPassed": 3482,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3482,
+        "reasonMismatches": 238,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "r3ReasonNonDecrease": true,
+        "reasonSuiteNonDecrease": true,
+        "reasonSuiteExact": true,
+        "collisionProbesNonDecrease": true,
+        "strictImprovement": true,
+        "decisionLockHeld": true,
+        "relationLockHeld": true,
+        "decisionCounterfactualExact": true,
+        "relationCounterfactualExact": true,
+        "clauseProbesExact": true,
+        "richContextGuardExact": true,
+        "reasonIntegrityPass": true,
+        "c30AddedRoiViolations": 0,
+        "correctRowRegressions": 0,
+        "wrongToDifferentWrong": 0,
+        "previousOverrideRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "branchSignatureDriftOutsideTarget": 0,
+        "pass": true
+      }
+    }
+  ],
+  "acceptedRules": [
+    "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+    "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+    "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+    "variable_name_tax_phrase_is_non_tax_label_or_name",
+    "sec_time_measurement_is_non_tax_expansion"
+  ],
+  "rejectedRules": [],
+  "finalSelectedControllingAttempt": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+  "finalActual": {
+    "canonicalPassed": 3482,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3482,
+    "reasonMismatches": 238,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "locks": {
+    "decisionLayerClosure": true,
+    "relationLayerClosure": true,
+    "reasonSuiteLock": true,
+    "collisionProbeLock": true,
+    "reasonLayerClosure": false,
+    "runtimeClosure": false
+  },
+  "derivedPacketValidation": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:46.566Z",
+    "packetCount": 5,
+    "results": [
+      {
+        "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+        "accepted": true,
+        "packetPass": true
+      },
+      {
+        "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-02-ord02-2026-07-28T01-15-14-736Z",
+        "accepted": true,
+        "packetPass": true
+      },
+      {
+        "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-03-ord03-2026-07-28T01-15-22-660Z",
+        "accepted": true,
+        "packetPass": true
+      },
+      {
+        "candidateId": "C31-M04-variable-name-is-non-tax-label",
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z",
+        "accepted": true,
+        "packetPass": true
+      },
+      {
+        "candidateId": "C31-M05-sec-time-measurement-expansion",
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+        "accepted": true,
+        "packetPass": true
+      }
+    ],
+    "leaveOneFamilyOutExecution": true,
+    "copiedR3Queries": 0,
+    "copiedReasonSuiteQueries": 0,
+    "copiedCollisionProbeQueries": 0,
+    "numberingDependency": 0,
+    "fixtureMembership": 0,
+    "pass": true
+  },
+  "deltaReplay": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:46.568Z",
+    "entries": [
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+        "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-02-ord02-2026-07-28T01-15-14-736Z",
+        "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-03-ord03-2026-07-28T01-15-22-660Z",
+        "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z",
+        "candidateId": "C31-M04-variable-name-is-non-tax-label",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+        "candidateId": "C31-M05-sec-time-measurement-expansion",
+        "forwardReplayMatchesCandidate": true,
+        "reverseReplayRestoresBase": true,
+        "candidateOnlyPatchExcludesInheritedChanges": true,
+        "pass": true
+      }
+    ],
+    "pass": true
+  },
+  "taintAwareAntiOverfit": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:46.569Z",
+    "c27TaintAwareGovernancePreserved": true,
+    "entries": [
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+        "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+        "findings": [],
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-02-ord02-2026-07-28T01-15-14-736Z",
+        "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+        "findings": [],
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-03-ord03-2026-07-28T01-15-22-660Z",
+        "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+        "findings": [],
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z",
+        "candidateId": "C31-M04-variable-name-is-non-tax-label",
+        "findings": [],
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+        "candidateId": "C31-M05-sec-time-measurement-expansion",
+        "findings": [],
+        "pass": true
+      }
+    ],
+    "pass": true
+  },
+  "compositionOrderIndependence": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:46.573Z",
+    "orderSensitiveCandidateCount": 0,
+    "candidates": [],
+    "byteEquivalent": true,
+    "metricEquivalent": true,
+    "documentedHarmlessDifference": "No C30 candidate introduced an order-sensitive composition over prior alternatives.",
+    "orderIndependencePass": true
+  },
+  "candidateExhaustion": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:46.574Z",
+    "hypothesesConsidered": 18,
+    "materialIterationsUsed": 5,
+    "acceptedRules": [
+      "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+      "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+      "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+      "variable_name_tax_phrase_is_non_tax_label_or_name",
+      "sec_time_measurement_is_non_tax_expansion"
+    ],
+    "rejectedRules": [],
+    "frontierRules": [
+      "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+      "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+      "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+      "variable_name_tax_phrase_is_non_tax_label_or_name",
+      "sec_time_measurement_is_non_tax_expansion"
+    ],
+    "selectedControllingRuleSet": [
+      "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+      "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+      "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+      "variable_name_tax_phrase_is_non_tax_label_or_name",
+      "sec_time_measurement_is_non_tax_expansion"
+    ],
+    "finalSelectedControllingAttempt": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+    "reasonLockAchieved": false,
+    "FORMAL_CANDIDATE_EXHAUSTION": false,
+    "remainingViableCandidatesExist": true,
+    "blockerOrContinuationStatus": "reason lock remains open after C30 governed attempts; residual acronym/topic and no-tax/refuse-vs-clarify failures require continuation or adjudication",
+    "nextPath": "PHASE-10A14-R20 - COMMIT 5R1-C31 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C30 BASE"
+  },
+  "registry": {
+    "totalAttempts": 206,
+    "total": 206,
+    "byCategory": {
+      "domain_campaign": 142,
+      "focused_suite": 13,
+      "other": 9,
+      "synthetic_validator": 42
+    },
+    "byGate": {
+      "r20_commit5_pre_remediation_standalone_baseline": 1,
+      "r20_commit5r1_development_iteration_01": 1,
+      "r20_commit5r1_pre_remediation_r2_standalone_baseline": 1,
+      "r20_commit5r1c1_development_iteration_02": 1,
+      "r20_commit5r1c1_reconstructed_2674_candidate": 1,
+      "r20_commit5r1c10_decision_layer_lock_verification": 1,
+      "r20_commit5r1c10_development_iteration_02": 1,
+      "r20_commit5r1c10_development_iteration_03": 1,
+      "r20_commit5r1c10_development_iteration_04": 1,
+      "r20_commit5r1c10_development_iteration_05": 1,
+      "r20_commit5r1c10_development_iteration_06": 1,
+      "r20_commit5r1c10_reconstructed_3706_candidate": 1,
+      "r20_commit5r1c11_counterfactual_iteration_02": 1,
+      "r20_commit5r1c11_counterfactual_iteration_03": 1,
+      "r20_commit5r1c11_counterfactual_iteration_04": 1,
+      "r20_commit5r1c11_counterfactual_iteration_05": 1,
+      "r20_commit5r1c11_counterfactual_iteration_06": 1,
+      "r20_commit5r1c11_counterfactual_iteration_07": 1,
+      "r20_commit5r1c11_decision_layer_lock_verification": 2,
+      "r20_commit5r1c11_reconstructed_3720_candidate": 1,
+      "r20_commit5r1c12_counterfactual_iteration_02": 1,
+      "r20_commit5r1c12_counterfactual_iteration_03": 1,
+      "r20_commit5r1c12_counterfactual_iteration_04": 1,
+      "r20_commit5r1c12_counterfactual_iteration_05": 1,
+      "r20_commit5r1c12_decision_layer_lock_verification": 1,
+      "r20_commit5r1c12_reconstructed_739_candidate": 1,
+      "r20_commit5r1c13_reconstruction": 1,
+      "r20_commit5r1c13_relation_iteration_02": 1,
+      "r20_commit5r1c13_relation_iteration_03": 2,
+      "r20_commit5r1c13_relation_iteration_04": 1,
+      "r20_commit5r1c13_relation_iteration_05": 1,
+      "r20_commit5r1c13_relation_iteration_06": 1,
+      "r20_commit5r1c14_clause_relation_iteration_02": 1,
+      "r20_commit5r1c14_reconstruction": 1,
+      "r20_commit5r1c15_reason_iteration_02": 1,
+      "r20_commit5r1c15_reason_iteration_03": 1,
+      "r20_commit5r1c15_reason_iteration_04": 1,
+      "r20_commit5r1c15_reason_iteration_05": 1,
+      "r20_commit5r1c15_reason_iteration_06": 1,
+      "r20_commit5r1c15_reconstruction": 1,
+      "r20_commit5r1c16_reason_iteration_02": 1,
+      "r20_commit5r1c16_reason_iteration_03": 1,
+      "r20_commit5r1c16_reason_iteration_04": 1,
+      "r20_commit5r1c16_reason_iteration_05": 1,
+      "r20_commit5r1c16_reason_iteration_06": 1,
+      "r20_commit5r1c16_reconstruction": 1,
+      "r20_commit5r1c17_reason_iteration_03": 1,
+      "r20_commit5r1c17_reason_iteration_04": 1,
+      "r20_commit5r1c17_reason_iteration_05": 1,
+      "r20_commit5r1c17_reconstruction": 1,
+      "r20_commit5r1c18_reason_iteration_02": 1,
+      "r20_commit5r1c18_reason_iteration_03": 1,
+      "r20_commit5r1c18_reason_iteration_04": 1,
+      "r20_commit5r1c18_reason_iteration_05": 1,
+      "r20_commit5r1c18_reconstruction": 1,
+      "r20_commit5r1c19_reason_iteration_02": 1,
+      "r20_commit5r1c19_reason_iteration_03": 1,
+      "r20_commit5r1c19_reason_iteration_04": 1,
+      "r20_commit5r1c19_reason_iteration_05": 1,
+      "r20_commit5r1c19_reconstruction": 1,
+      "r20_commit5r1c2_development_iteration_02": 1,
+      "r20_commit5r1c2_reconstructed_dev02_against_r3": 1,
+      "r20_commit5r1c20_reason_iteration_02": 1,
+      "r20_commit5r1c20_reason_iteration_03": 1,
+      "r20_commit5r1c20_reason_iteration_04": 1,
+      "r20_commit5r1c20_reason_iteration_05": 1,
+      "r20_commit5r1c20_reconstruction": 1,
+      "r20_commit5r1c21_reason_iteration_02": 1,
+      "r20_commit5r1c21_reason_iteration_03": 1,
+      "r20_commit5r1c21_reason_iteration_04": 1,
+      "r20_commit5r1c21_reason_iteration_05": 1,
+      "r20_commit5r1c21_reason_iteration_06": 1,
+      "r20_commit5r1c21_reconstruction": 1,
+      "r20_commit5r1c22_c21_technical_reconstruction": 1,
+      "r20_commit5r1c22_governance_compliant_baseline": 1,
+      "r20_commit5r1c23_governance_compliant_baseline_reconstruction": 1,
+      "r20_commit5r1c23_reason_iteration_02": 1,
+      "r20_commit5r1c23_reason_iteration_03": 1,
+      "r20_commit5r1c23_reason_iteration_04": 1,
+      "r20_commit5r1c23_reason_iteration_05": 1,
+      "r20_commit5r1c24_c23_governed_reconstruction": 1,
+      "r20_commit5r1c25_c24_base_reconstruction": 1,
+      "r20_commit5r1c25_structural_reason_remediation": 3,
+      "r20_commit5r1c26_c25_pareto_base_reconstruction": 1,
+      "r20_commit5r1c26_structural_reason_remediation": 1,
+      "r20_commit5r1c27_c26_pareto_base_reconstruction": 1,
+      "r20_commit5r1c27_structural_reason_remediation": 3,
+      "r20_commit5r1c28_c27_selected_base_reconstruction": 1,
+      "r20_commit5r1c28_structural_reason_remediation": 3,
+      "r20_commit5r1c29_c28_selected_base_reconstruction": 1,
+      "r20_commit5r1c29_structural_reason_remediation": 3,
+      "r20_commit5r1c3_development_iteration_02": 1,
+      "r20_commit5r1c3_reconstructed_2819_candidate": 1,
+      "r20_commit5r1c30_c29_selected_base_reconstruction": 1,
+      "r20_commit5r1c30_structural_reason_remediation": 3,
+      "r20_commit5r1c31_c30_selected_base_reconstruction": 1,
+      "r20_commit5r1c31_structural_reason_remediation": 5,
+      "r20_commit5r1c4_development_iteration_02": 1,
+      "r20_commit5r1c4_development_iteration_03": 1,
+      "r20_commit5r1c4_reconstructed_2870_candidate": 1,
+      "r20_commit5r1c5_development_iteration_02": 1,
+      "r20_commit5r1c5_development_iteration_03": 1,
+      "r20_commit5r1c5_reconstructed_2955_candidate": 1,
+      "r20_commit5r1c6_development_iteration_02": 1,
+      "r20_commit5r1c6_reconstructed_2959_candidate": 1,
+      "r20_commit5r1c7_development_iteration_02": 1,
+      "r20_commit5r1c7_development_iteration_03": 1,
+      "r20_commit5r1c7_development_iteration_04": 1,
+      "r20_commit5r1c7_development_iteration_05": 1,
+      "r20_commit5r1c7_development_iteration_06": 1,
+      "r20_commit5r1c7_reconstructed_3464_candidate": 1,
+      "r20_commit5r1c8_development_iteration_02": 1,
+      "r20_commit5r1c8_development_iteration_03": 1,
+      "r20_commit5r1c8_development_iteration_04": 1,
+      "r20_commit5r1c8_development_iteration_05": 1,
+      "r20_commit5r1c8_development_iteration_06": 1,
+      "r20_commit5r1c8_reconstructed_3623_candidate": 1,
+      "r20_commit5r1c9_development_iteration_02": 1,
+      "r20_commit5r1c9_development_iteration_03": 1,
+      "r20_commit5r1c9_development_iteration_04": 1,
+      "r20_commit5r1c9_development_iteration_05": 1,
+      "r20_commit5r1c9_development_iteration_06": 1,
+      "r20_commit5r1c9_reconstructed_3669_candidate": 2,
+      "r20_pre_fix_corrected_r18_567": 1,
+      "r20_pre_fix_ir19_1120": 1,
+      "r20_commit3_analyzer_focused_suite": 1,
+      "r20_commit5r1c10_decision_focused_regression": 1,
+      "r20_commit5r1c11_decision_focused_regression": 3,
+      "r20_commit5r1c13_relation_lock_verification": 1,
+      "r20_commit5r1c14_relation_lock_verification": 1,
+      "r20_commit5r1c5_decision_counterfactual_pairs": 1,
+      "r20_commit5r1c6_decision_counterfactual_v2": 1,
+      "r20_commit5r1c7_decision_focused_regression": 2,
+      "r20_commit5r1c8_decision_focused_regression": 1,
+      "r20_commit5r1c9_decision_focused_regression": 1,
+      "r20_commit4_development_oracle_builder": 1,
+      "r20_commit4r1_inherited_reason_adjudication": 1,
+      "r20_commit4r1s_full_independent_reason_review": 1,
+      "r20_commit4r2_correction_application_review": 1,
+      "r20_commit4r2_r2_builder": 1,
+      "r20_commit4r3_independent_template_review": 1,
+      "r20_commit4r3_template_adjudication_builder": 1,
+      "r20_commit5r1c5_substitute_architecture_challenge": 1,
+      "r20_commit5r1c6_substitute_architecture_challenge": 1,
+      "r20_attempt_wrapper_self_validation": 1,
+      "r20_commit2_evidence_completeness": 1,
+      "r20_commit3_determinism_and_serialization": 1,
+      "r20_commit3_evidence_completeness": 1,
+      "r20_commit3_static_scope_and_exports": 1,
+      "r20_commit4_duplicate_and_metamorphic": 1,
+      "r20_commit4_freeze_and_evidence_completeness": 1,
+      "r20_commit4_schema_quota_expectation": 1,
+      "r20_commit4_source_integrity_and_contamination": 1,
+      "r20_commit4r1_freeze_and_completeness": 1,
+      "r20_commit4r1_independent_reason_review": 1,
+      "r20_commit4r1_unchanged_field_and_reason_contract": 1,
+      "r20_commit4r1_v1_source_lock": 1,
+      "r20_commit4r1s_blind_packet_integrity": 1,
+      "r20_commit4r1s_challenge_resolution": 1,
+      "r20_commit4r1s_evidence_completeness": 1,
+      "r20_commit4r1s_r1_immutability_and_scope": 1,
+      "r20_commit4r2_freeze_and_evidence_completeness": 1,
+      "r20_commit4r2_r1_r1s_source_lock": 1,
+      "r20_commit4r2_unchanged_field_and_contract": 1,
+      "r20_commit4r3_freeze_current_state_and_completeness": 1,
+      "r20_commit4r3_r2_conflict_source_lock": 1,
+      "r20_commit4r3_template_equivalence": 1,
+      "r20_commit4r3_unchanged_field_and_reason_contract": 1,
+      "r20_commit5r1c10_decision_determinism_and_no_mutation": 1,
+      "r20_commit5r1c10_decision_static_and_anti_overfit": 1,
+      "r20_commit5r1c11_decision_determinism_and_no_mutation": 3,
+      "r20_commit5r1c11_decision_static_and_anti_overfit": 3,
+      "r20_commit5r1c7_decision_determinism_and_no_mutation": 2,
+      "r20_commit5r1c7_decision_static_and_anti_overfit": 2,
+      "r20_commit5r1c7p1_final_preflight_current_state_and_completeness": 1,
+      "r20_commit5r1c7p1_identity_residue_and_roadmap_reconciliation": 1,
+      "r20_commit5r1c8_decision_determinism_and_no_mutation": 1,
+      "r20_commit5r1c8_decision_static_and_anti_overfit": 1,
+      "r20_commit5r1c9_decision_determinism_and_no_mutation": 1,
+      "r20_commit5r1c9_decision_static_and_anti_overfit": 1
+    },
+    "completed": 206,
+    "failed": 0,
+    "technicalIncomplete": 0,
+    "controlling": 204,
+    "nonControlling": 2,
+    "retries": 0,
+    "transientFailures": 0,
+    "orphanResults": 0,
+    "danglingAttempts": 0
+  },
+  "manifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C31_EVIDENCE_MANIFEST.sha256",
+    "manifestEntryCount": 116,
+    "evidenceFileCountIncludingManifest": 117,
+    "sha256": "f774e981a35f84961abc6dac045762e6c2b816750edee11be67ad92bc8618c86"
+  },
+  "manifestValidation": {
+    "entries": 116,
+    "badHashCount": 0,
+    "bad": []
+  },
+  "devFactoryPostcheck": {
+    "unit": "COMMIT 5R1-C31",
+    "generatedUtc": "2026-07-28T01:15:48.052Z",
+    "before": {
+      "artifact": "COMMIT_5R1C31_DEV_FACTORY_PREEXISTING_STATE",
+      "capturedAtUtc": "2026-07-28T01:14:57.772Z",
+      "repository": "C:/Projects/tina-dev-factory",
+      "head": "91670029ccae10a76385533a283f3c96c7411577",
+      "branch": "feature/source-availability-engine-v1",
+      "porcelainV2Status": "# branch.oid 91670029ccae10a76385533a283f3c96c7411577\n# branch.head feature/source-availability-engine-v1\n# branch.upstream origin/feature/source-availability-engine-v1\n# branch.ab +0 -0\n1 .M N... 100644 100644 100644 814993eaa82cc0b51da3dae506238b3dbf87945b 814993eaa82cc0b51da3dae506238b3dbf87945b README.md\n1 .M N... 100644 100644 100644 b10035ea0a2c2451b1e94ff97baaa86c74a23d09 b10035ea0a2c2451b1e94ff97baaa86c74a23d09 knowledge/CURRENT_STATE.md\n? .claude/CLAUDE.md\n? .codex/AGENT.md\n? .gemini/GEMINI.md\n? CURRENT_STRATEGIC_PRIORITY.md\n? PATCH-08J-MEMORY-GOVERNANCE-GATE-1_MEMORY_GOVERNANCE_GATE_REPORT.md\n? TINA_Tax_FactCheck_Evaluation_Report_Template_v2.md\n? TINA_Tax_FactCheck_Run_Log_Template_v2.md\n? TINA_Tax_FactCheck_Scoring_Rubric_v2.md\n? TINA_Tax_FactCheck_Test_Cases_v2.md\n? TINA_Tax_FactCheck_Test_Plan_v2.md\n? audit_final.mjs\n? audit_inventory.mjs\n? audit_run.mjs\n? audit_run2.mjs\n? audit_run3.mjs\n? audit_run4.mjs\n? audit_run5.mjs\n? authority-schema-engine.js\n? backup-022e-estate-nullref-pre-repair.json\n? brand.ts\n? docs/AUTHORITY_LOCK.md\n? governance/AGENT_RULES.md\n? governance/RELEASE_GATES.md\n? governance/TINA_MANIFESTO.md\n? governance/TINA_NORTSTAR.md\n? governance/adr/ADR-001-Authority-Governance.md\n? governance/adr/ADR-002-Retrieval-First.md\n? governance/adr/ADR-003-Metadata-Validation.md\n? governance/adr/ADR-004-Authority-Catalog.md\n? governance/adr/ADR-005-Trust-Layer.md\n? package-lock.json\n? package.json\n? patch-035a-train-ra10963-diagnostics.json\n? patch-08j-memory-governance-gate-1.test.mjs\n? patch027b_scope.mjs\n? patches/analysis/PATCH-017A-ROOT-CAUSE-ANALYSIS.md\n? patches/analysis/PATCH-017B-RETRIEVAL-TIMEOUT-ANALYSIS.md\n? patches/implemented/PATCH-012-RETRIEVAL-REPAIR.md\n? patches/implemented/PATCH-012-TARGETING-FIX.md\n? patches/implemented/PATCH-017-Source-Availability-Foundation.md\n? patches/implemented/PATCH-017A-Foundation.md\n? patches/implemented/PATCH-017A-Semantic-Source-Selection-Patch.md\n? patches/implemented/PATCH-017C-GENERATION-GATE-HARDENING.md\n? patches/implemented/PATCH-017D-Fast EWT-Generation-Cap .md\n? patches/implemented/PATCH-017E-Compact EWT-Retrieval-Before-Generation-Gate .md\n? patches/implemented/PATCH-017F-Pre-Retrieval-EWT-Authority-Short-Circuit .md\n? patches/implemented/PATCH-017G-SOURCE-STATE-SYNCHRONIZATION.md\n? patches/implemented/PATCH-017H-VAT-DEFINITION-BRIDGE.md\n? patches/implemented/PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION.md\n? patches/implemented/PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup.md\n? patches/implemented/PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION.md\n? patches/implemented/PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING.md\n? patches/implemented/PATCH-024A-CRASH-AND-502-HARDENING.md\n? patches/implemented/PATCH-024B-VAT-SPECIALIZED-ROUTING-GUARD.md\n? patches/implemented/PATCH-028A-STAGING-UI-VALIDATION-REPORT.md\n? patches/implemented/PATCH_HISTORY.md\n? patches/proposed/PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION.md\n? patches/proposed/PATCH-019A-REV2-SUPPLEMENT.md\n? patches/proposed/PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE.md\n? patches/proposed/PATCH-01A -Source-Availability-Engine-Foundation.md\n? patches/proposed/PATCH-01B -Source-Availability-State-Propagation.md\n? patches/proposed/PATCH-01C-Source-Availability-Diagnostics-and-Audit.md\n? patches/proposed/PATCH-029-INVESTIGATION-REPORT.md\n? patches/records/DIAGNOSTIC-022C-backup-2026-06-13T13-15-56-716Z.json\n? phase-6b-staging-matrix-results.json\n? reviews/records/CODEX_PATCH_019A_FULL_AUDIT_INPUT.md\n? reviews/records/PATCH-019A_IMPLEMENTATION_DIFF.md\n? roadmaps/TINA_1_YEAR_PLAN.md\n? roadmaps/TINA_20_YEAR_VISION.md\n? roadmaps/TINA_60_DAY_PLAN.md\n? run-023a-audit.mjs\n? run-023b-audit.mjs\n? run-vat-hallucination-audit.mjs\n? standards/AUTHORITY_HIERARCHY_STANDARD.md\n? standards/INDEXING_STANDARD.md\n? standards/METADATA_STANDARD.md\n? standards/SOURCE_AVAILABILITY_STANDARD.md\n? tina_harness/nemotron-generated/NEMOTRON_PATCH-018A_RETRIEVAL.md\n? tina_harness/nemotron-generated/NEMOTRON_PATCH_017H_HARNESS_2026-06-09T03-43-44-484Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-27-23-428Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-36-29-628Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup_2026-06-09T11-59-01-423Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION_2026-06-09T12-49-25-941Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING_2026-06-09T13-50-40-211Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017L_FAST_EWT_ANSWER_SECTION_COMPLETION_2026-06-09T14-14-39-243Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T04-26-37-864Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T13-35-02-909Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T02-58-21-812Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T03-54-00-990Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-10-14-411Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-17-36-332Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T10-01-39-562Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T12-48-31-367Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T13-07-21-310Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T08-57-43-271Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T09-28-34-021Z.md\n? tina_harness/prompts/AUTHORITY_LOCK.md\n? tina_harness/prompts/NEMOTRON_PATCH_019A_TARGETED_POST_IMPLEMENTATION_AUDIT.md\n? tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A.md\n? tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A_REV2_SUPPLEMENT.md\n? tina_harness/tools/nemotron-client.js\n? tina_harness/tools/nemotron-generate-harness.mjs\n? tina_harness/tools/nemotron-regression-review.mjs\n? tina_harness/tools/nemotron-review-patch.mjs\n? tina_harness/tools/nemotron-test.mjs\n? tmp-022f-backward-p1.json\n? tmp-022f-backward-p2.json\n? tmp-022f-logs-combined.json\n? tmp-022f-resp-q1.json\n? tmp-022f-resp-q2.json\n? tmp-022f-tail-logs.json\n? tmp-022f-token-q1.txt\n? tmp-022f-token-q2.txt\n? tmp-022f-ts-q1.json\n? tmp-022f-ts-q2.json\n? tmp-022f2-backward-p1.json\n? tmp-022f2-fwd-logs.json\n? tmp-022f2-raw.json\n? tmp-022f2-response.json\n? tmp-022f2-timestamp.json\n? tmp-023a-results.json\n? tmp-023b-results.json\n? tmp-estate-logs.json\n? tmp-estate-response.json\n? tmp-estate-timestamp.json\n? tmp-p022-response.json\n? tmp-p022a-response.json\n? tmp-post022e-logs-tail.json\n? tmp-post022e-logs.json\n? tmp-post022e-response.json\n? tmp-post022e-timestamp.json\n? tmp-post022e-token.txt\n? tmp-q1q2-logs.json\n? tmp-q3-logs.json\n? tmp-q3-response.json\n? tmp-q3-timestamp.json\n? tmp-query-timestamps.json\n? tmp-staging-token-022d.txt\n? tmp-staging-token-022e.txt\n? tmp-staging-token.txt\n? tmp-tina-brand-visual/auth-1024.png\n? tmp-tina-brand-visual/auth-1280.png\n? tmp-tina-brand-visual/auth-1440.png\n? tmp-tina-brand-visual/auth-320.png\n? tmp-tina-brand-visual/auth-375.png\n? tmp-tina-brand-visual/auth-390.png\n? tmp-tina-brand-visual/auth-768.png\n? tmp-tina-brand-visual/summary.json\n? tmp-tina-brand-visual/workspace-1024.png\n? tmp-tina-brand-visual/workspace-1280.png\n? tmp-tina-brand-visual/workspace-1440.png\n? tmp-tina-brand-visual/workspace-320.png\n? tmp-tina-brand-visual/workspace-375.png\n? tmp-tina-brand-visual/workspace-390.png\n? tmp-tina-brand-visual/workspace-768.png\n? tmp-vat-hallucination-audit.json\n",
+      "statusSha256": "14aaf5d017dc8523414db89ea7407c2a628bead3828e6bd658fcc77912a4d57f",
+      "trackedDiffSha256": "4e706ac26bb830564015e1b5faf1d408da9af373afe691f7b0d984ca6d5257a8",
+      "untrackedPaths": [
+        ".claude/CLAUDE.md",
+        ".codex/AGENT.md",
+        ".gemini/GEMINI.md",
+        "CURRENT_STRATEGIC_PRIORITY.md",
+        "PATCH-08J-MEMORY-GOVERNANCE-GATE-1_MEMORY_GOVERNANCE_GATE_REPORT.md",
+        "TINA_Tax_FactCheck_Evaluation_Report_Template_v2.md",
+        "TINA_Tax_FactCheck_Run_Log_Template_v2.md",
+        "TINA_Tax_FactCheck_Scoring_Rubric_v2.md",
+        "TINA_Tax_FactCheck_Test_Cases_v2.md",
+        "TINA_Tax_FactCheck_Test_Plan_v2.md",
+        "audit_final.mjs",
+        "audit_inventory.mjs",
+        "audit_run.mjs",
+        "audit_run2.mjs",
+        "audit_run3.mjs",
+        "audit_run4.mjs",
+        "audit_run5.mjs",
+        "authority-schema-engine.js",
+        "backup-022e-estate-nullref-pre-repair.json",
+        "brand.ts",
+        "docs/AUTHORITY_LOCK.md",
+        "governance/AGENT_RULES.md",
+        "governance/RELEASE_GATES.md",
+        "governance/TINA_MANIFESTO.md",
+        "governance/TINA_NORTSTAR.md",
+        "governance/adr/ADR-001-Authority-Governance.md",
+        "governance/adr/ADR-002-Retrieval-First.md",
+        "governance/adr/ADR-003-Metadata-Validation.md",
+        "governance/adr/ADR-004-Authority-Catalog.md",
+        "governance/adr/ADR-005-Trust-Layer.md",
+        "package-lock.json",
+        "package.json",
+        "patch-035a-train-ra10963-diagnostics.json",
+        "patch-08j-memory-governance-gate-1.test.mjs",
+        "patch027b_scope.mjs",
+        "patches/analysis/PATCH-017A-ROOT-CAUSE-ANALYSIS.md",
+        "patches/analysis/PATCH-017B-RETRIEVAL-TIMEOUT-ANALYSIS.md",
+        "patches/implemented/PATCH-012-RETRIEVAL-REPAIR.md",
+        "patches/implemented/PATCH-012-TARGETING-FIX.md",
+        "patches/implemented/PATCH-017-Source-Availability-Foundation.md",
+        "patches/implemented/PATCH-017A-Foundation.md",
+        "patches/implemented/PATCH-017A-Semantic-Source-Selection-Patch.md",
+        "patches/implemented/PATCH-017C-GENERATION-GATE-HARDENING.md",
+        "patches/implemented/PATCH-017D-Fast EWT-Generation-Cap .md",
+        "patches/implemented/PATCH-017E-Compact EWT-Retrieval-Before-Generation-Gate .md",
+        "patches/implemented/PATCH-017F-Pre-Retrieval-EWT-Authority-Short-Circuit .md",
+        "patches/implemented/PATCH-017G-SOURCE-STATE-SYNCHRONIZATION.md",
+        "patches/implemented/PATCH-017H-VAT-DEFINITION-BRIDGE.md",
+        "patches/implemented/PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION.md",
+        "patches/implemented/PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup.md",
+        "patches/implemented/PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION.md",
+        "patches/implemented/PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING.md",
+        "patches/implemented/PATCH-024A-CRASH-AND-502-HARDENING.md",
+        "patches/implemented/PATCH-024B-VAT-SPECIALIZED-ROUTING-GUARD.md",
+        "patches/implemented/PATCH-028A-STAGING-UI-VALIDATION-REPORT.md",
+        "patches/implemented/PATCH_HISTORY.md",
+        "patches/proposed/PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION.md",
+        "patches/proposed/PATCH-019A-REV2-SUPPLEMENT.md",
+        "patches/proposed/PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE.md",
+        "patches/proposed/PATCH-01A -Source-Availability-Engine-Foundation.md",
+        "patches/proposed/PATCH-01B -Source-Availability-State-Propagation.md",
+        "patches/proposed/PATCH-01C-Source-Availability-Diagnostics-and-Audit.md",
+        "patches/proposed/PATCH-029-INVESTIGATION-REPORT.md",
+        "patches/records/DIAGNOSTIC-022C-backup-2026-06-13T13-15-56-716Z.json",
+        "phase-6b-staging-matrix-results.json",
+        "reviews/records/CODEX_PATCH_019A_FULL_AUDIT_INPUT.md",
+        "reviews/records/PATCH-019A_IMPLEMENTATION_DIFF.md",
+        "roadmaps/TINA_1_YEAR_PLAN.md",
+        "roadmaps/TINA_20_YEAR_VISION.md",
+        "roadmaps/TINA_60_DAY_PLAN.md",
+        "run-023a-audit.mjs",
+        "run-023b-audit.mjs",
+        "run-vat-hallucination-audit.mjs",
+        "standards/AUTHORITY_HIERARCHY_STANDARD.md",
+        "standards/INDEXING_STANDARD.md",
+        "standards/METADATA_STANDARD.md",
+        "standards/SOURCE_AVAILABILITY_STANDARD.md",
+        "tina_harness/nemotron-generated/NEMOTRON_PATCH-018A_RETRIEVAL.md",
+        "tina_harness/nemotron-generated/NEMOTRON_PATCH_017H_HARNESS_2026-06-09T03-43-44-484Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-27-23-428Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-36-29-628Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup_2026-06-09T11-59-01-423Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION_2026-06-09T12-49-25-941Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING_2026-06-09T13-50-40-211Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017L_FAST_EWT_ANSWER_SECTION_COMPLETION_2026-06-09T14-14-39-243Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T04-26-37-864Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T13-35-02-909Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T02-58-21-812Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T03-54-00-990Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-10-14-411Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-17-36-332Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T10-01-39-562Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T12-48-31-367Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T13-07-21-310Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T08-57-43-271Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T09-28-34-021Z.md",
+        "tina_harness/prompts/AUTHORITY_LOCK.md",
+        "tina_harness/prompts/NEMOTRON_PATCH_019A_TARGETED_POST_IMPLEMENTATION_AUDIT.md",
+        "tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A.md",
+        "tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A_REV2_SUPPLEMENT.md",
+        "tina_harness/tools/nemotron-client.js",
+        "tina_harness/tools/nemotron-generate-harness.mjs",
+        "tina_harness/tools/nemotron-regression-review.mjs",
+        "tina_harness/tools/nemotron-review-patch.mjs",
+        "tina_harness/tools/nemotron-test.mjs",
+        "tmp-022f-backward-p1.json",
+        "tmp-022f-backward-p2.json",
+        "tmp-022f-logs-combined.json",
+        "tmp-022f-resp-q1.json",
+        "tmp-022f-resp-q2.json",
+        "tmp-022f-tail-logs.json",
+        "tmp-022f-token-q1.txt",
+        "tmp-022f-token-q2.txt",
+        "tmp-022f-ts-q1.json",
+        "tmp-022f-ts-q2.json",
+        "tmp-022f2-backward-p1.json",
+        "tmp-022f2-fwd-logs.json",
+        "tmp-022f2-raw.json",
+        "tmp-022f2-response.json",
+        "tmp-022f2-timestamp.json",
+        "tmp-023a-results.json",
+        "tmp-023b-results.json",
+        "tmp-estate-logs.json",
+        "tmp-estate-response.json",
+        "tmp-estate-timestamp.json",
+        "tmp-p022-response.json",
+        "tmp-p022a-response.json",
+        "tmp-post022e-logs-tail.json",
+        "tmp-post022e-logs.json",
+        "tmp-post022e-response.json",
+        "tmp-post022e-timestamp.json",
+        "tmp-post022e-token.txt",
+        "tmp-q1q2-logs.json",
+        "tmp-q3-logs.json",
+        "tmp-q3-response.json",
+        "tmp-q3-timestamp.json",
+        "tmp-query-timestamps.json",
+        "tmp-staging-token-022d.txt",
+        "tmp-staging-token-022e.txt",
+        "tmp-staging-token.txt",
+        "tmp-tina-brand-visual/auth-1024.png",
+        "tmp-tina-brand-visual/auth-1280.png",
+        "tmp-tina-brand-visual/auth-1440.png",
+        "tmp-tina-brand-visual/auth-320.png",
+        "tmp-tina-brand-visual/auth-375.png",
+        "tmp-tina-brand-visual/auth-390.png",
+        "tmp-tina-brand-visual/auth-768.png",
+        "tmp-tina-brand-visual/summary.json",
+        "tmp-tina-brand-visual/workspace-1024.png",
+        "tmp-tina-brand-visual/workspace-1280.png",
+        "tmp-tina-brand-visual/workspace-1440.png",
+        "tmp-tina-brand-visual/workspace-320.png",
+        "tmp-tina-brand-visual/workspace-375.png",
+        "tmp-tina-brand-visual/workspace-390.png",
+        "tmp-tina-brand-visual/workspace-768.png",
+        "tmp-vat-hallucination-audit.json"
+      ]
+    },
+    "after": {
+      "artifact": "COMMIT_5R1C31_DEV_FACTORY_POSTCHECK",
+      "capturedAtUtc": "2026-07-28T01:15:47.892Z",
+      "repository": "C:/Projects/tina-dev-factory",
+      "head": "91670029ccae10a76385533a283f3c96c7411577",
+      "branch": "feature/source-availability-engine-v1",
+      "porcelainV2Status": "# branch.oid 91670029ccae10a76385533a283f3c96c7411577\n# branch.head feature/source-availability-engine-v1\n# branch.upstream origin/feature/source-availability-engine-v1\n# branch.ab +0 -0\n1 .M N... 100644 100644 100644 814993eaa82cc0b51da3dae506238b3dbf87945b 814993eaa82cc0b51da3dae506238b3dbf87945b README.md\n1 .M N... 100644 100644 100644 b10035ea0a2c2451b1e94ff97baaa86c74a23d09 b10035ea0a2c2451b1e94ff97baaa86c74a23d09 knowledge/CURRENT_STATE.md\n? .claude/CLAUDE.md\n? .codex/AGENT.md\n? .gemini/GEMINI.md\n? CURRENT_STRATEGIC_PRIORITY.md\n? PATCH-08J-MEMORY-GOVERNANCE-GATE-1_MEMORY_GOVERNANCE_GATE_REPORT.md\n? TINA_Tax_FactCheck_Evaluation_Report_Template_v2.md\n? TINA_Tax_FactCheck_Run_Log_Template_v2.md\n? TINA_Tax_FactCheck_Scoring_Rubric_v2.md\n? TINA_Tax_FactCheck_Test_Cases_v2.md\n? TINA_Tax_FactCheck_Test_Plan_v2.md\n? audit_final.mjs\n? audit_inventory.mjs\n? audit_run.mjs\n? audit_run2.mjs\n? audit_run3.mjs\n? audit_run4.mjs\n? audit_run5.mjs\n? authority-schema-engine.js\n? backup-022e-estate-nullref-pre-repair.json\n? brand.ts\n? docs/AUTHORITY_LOCK.md\n? governance/AGENT_RULES.md\n? governance/RELEASE_GATES.md\n? governance/TINA_MANIFESTO.md\n? governance/TINA_NORTSTAR.md\n? governance/adr/ADR-001-Authority-Governance.md\n? governance/adr/ADR-002-Retrieval-First.md\n? governance/adr/ADR-003-Metadata-Validation.md\n? governance/adr/ADR-004-Authority-Catalog.md\n? governance/adr/ADR-005-Trust-Layer.md\n? package-lock.json\n? package.json\n? patch-035a-train-ra10963-diagnostics.json\n? patch-08j-memory-governance-gate-1.test.mjs\n? patch027b_scope.mjs\n? patches/analysis/PATCH-017A-ROOT-CAUSE-ANALYSIS.md\n? patches/analysis/PATCH-017B-RETRIEVAL-TIMEOUT-ANALYSIS.md\n? patches/implemented/PATCH-012-RETRIEVAL-REPAIR.md\n? patches/implemented/PATCH-012-TARGETING-FIX.md\n? patches/implemented/PATCH-017-Source-Availability-Foundation.md\n? patches/implemented/PATCH-017A-Foundation.md\n? patches/implemented/PATCH-017A-Semantic-Source-Selection-Patch.md\n? patches/implemented/PATCH-017C-GENERATION-GATE-HARDENING.md\n? patches/implemented/PATCH-017D-Fast EWT-Generation-Cap .md\n? patches/implemented/PATCH-017E-Compact EWT-Retrieval-Before-Generation-Gate .md\n? patches/implemented/PATCH-017F-Pre-Retrieval-EWT-Authority-Short-Circuit .md\n? patches/implemented/PATCH-017G-SOURCE-STATE-SYNCHRONIZATION.md\n? patches/implemented/PATCH-017H-VAT-DEFINITION-BRIDGE.md\n? patches/implemented/PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION.md\n? patches/implemented/PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup.md\n? patches/implemented/PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION.md\n? patches/implemented/PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING.md\n? patches/implemented/PATCH-024A-CRASH-AND-502-HARDENING.md\n? patches/implemented/PATCH-024B-VAT-SPECIALIZED-ROUTING-GUARD.md\n? patches/implemented/PATCH-028A-STAGING-UI-VALIDATION-REPORT.md\n? patches/implemented/PATCH_HISTORY.md\n? patches/proposed/PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION.md\n? patches/proposed/PATCH-019A-REV2-SUPPLEMENT.md\n? patches/proposed/PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE.md\n? patches/proposed/PATCH-01A -Source-Availability-Engine-Foundation.md\n? patches/proposed/PATCH-01B -Source-Availability-State-Propagation.md\n? patches/proposed/PATCH-01C-Source-Availability-Diagnostics-and-Audit.md\n? patches/proposed/PATCH-029-INVESTIGATION-REPORT.md\n? patches/records/DIAGNOSTIC-022C-backup-2026-06-13T13-15-56-716Z.json\n? phase-6b-staging-matrix-results.json\n? reviews/records/CODEX_PATCH_019A_FULL_AUDIT_INPUT.md\n? reviews/records/PATCH-019A_IMPLEMENTATION_DIFF.md\n? roadmaps/TINA_1_YEAR_PLAN.md\n? roadmaps/TINA_20_YEAR_VISION.md\n? roadmaps/TINA_60_DAY_PLAN.md\n? run-023a-audit.mjs\n? run-023b-audit.mjs\n? run-vat-hallucination-audit.mjs\n? standards/AUTHORITY_HIERARCHY_STANDARD.md\n? standards/INDEXING_STANDARD.md\n? standards/METADATA_STANDARD.md\n? standards/SOURCE_AVAILABILITY_STANDARD.md\n? tina_harness/nemotron-generated/NEMOTRON_PATCH-018A_RETRIEVAL.md\n? tina_harness/nemotron-generated/NEMOTRON_PATCH_017H_HARNESS_2026-06-09T03-43-44-484Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-27-23-428Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-36-29-628Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup_2026-06-09T11-59-01-423Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION_2026-06-09T12-49-25-941Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING_2026-06-09T13-50-40-211Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017L_FAST_EWT_ANSWER_SECTION_COMPLETION_2026-06-09T14-14-39-243Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T04-26-37-864Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T13-35-02-909Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T02-58-21-812Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T03-54-00-990Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-10-14-411Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-17-36-332Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T10-01-39-562Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T12-48-31-367Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T13-07-21-310Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T08-57-43-271Z.md\n? tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T09-28-34-021Z.md\n? tina_harness/prompts/AUTHORITY_LOCK.md\n? tina_harness/prompts/NEMOTRON_PATCH_019A_TARGETED_POST_IMPLEMENTATION_AUDIT.md\n? tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A.md\n? tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A_REV2_SUPPLEMENT.md\n? tina_harness/tools/nemotron-client.js\n? tina_harness/tools/nemotron-generate-harness.mjs\n? tina_harness/tools/nemotron-regression-review.mjs\n? tina_harness/tools/nemotron-review-patch.mjs\n? tina_harness/tools/nemotron-test.mjs\n? tmp-022f-backward-p1.json\n? tmp-022f-backward-p2.json\n? tmp-022f-logs-combined.json\n? tmp-022f-resp-q1.json\n? tmp-022f-resp-q2.json\n? tmp-022f-tail-logs.json\n? tmp-022f-token-q1.txt\n? tmp-022f-token-q2.txt\n? tmp-022f-ts-q1.json\n? tmp-022f-ts-q2.json\n? tmp-022f2-backward-p1.json\n? tmp-022f2-fwd-logs.json\n? tmp-022f2-raw.json\n? tmp-022f2-response.json\n? tmp-022f2-timestamp.json\n? tmp-023a-results.json\n? tmp-023b-results.json\n? tmp-estate-logs.json\n? tmp-estate-response.json\n? tmp-estate-timestamp.json\n? tmp-p022-response.json\n? tmp-p022a-response.json\n? tmp-post022e-logs-tail.json\n? tmp-post022e-logs.json\n? tmp-post022e-response.json\n? tmp-post022e-timestamp.json\n? tmp-post022e-token.txt\n? tmp-q1q2-logs.json\n? tmp-q3-logs.json\n? tmp-q3-response.json\n? tmp-q3-timestamp.json\n? tmp-query-timestamps.json\n? tmp-staging-token-022d.txt\n? tmp-staging-token-022e.txt\n? tmp-staging-token.txt\n? tmp-tina-brand-visual/auth-1024.png\n? tmp-tina-brand-visual/auth-1280.png\n? tmp-tina-brand-visual/auth-1440.png\n? tmp-tina-brand-visual/auth-320.png\n? tmp-tina-brand-visual/auth-375.png\n? tmp-tina-brand-visual/auth-390.png\n? tmp-tina-brand-visual/auth-768.png\n? tmp-tina-brand-visual/summary.json\n? tmp-tina-brand-visual/workspace-1024.png\n? tmp-tina-brand-visual/workspace-1280.png\n? tmp-tina-brand-visual/workspace-1440.png\n? tmp-tina-brand-visual/workspace-320.png\n? tmp-tina-brand-visual/workspace-375.png\n? tmp-tina-brand-visual/workspace-390.png\n? tmp-tina-brand-visual/workspace-768.png\n? tmp-vat-hallucination-audit.json\n",
+      "statusSha256": "14aaf5d017dc8523414db89ea7407c2a628bead3828e6bd658fcc77912a4d57f",
+      "trackedDiffSha256": "4e706ac26bb830564015e1b5faf1d408da9af373afe691f7b0d984ca6d5257a8",
+      "untrackedPaths": [
+        ".claude/CLAUDE.md",
+        ".codex/AGENT.md",
+        ".gemini/GEMINI.md",
+        "CURRENT_STRATEGIC_PRIORITY.md",
+        "PATCH-08J-MEMORY-GOVERNANCE-GATE-1_MEMORY_GOVERNANCE_GATE_REPORT.md",
+        "TINA_Tax_FactCheck_Evaluation_Report_Template_v2.md",
+        "TINA_Tax_FactCheck_Run_Log_Template_v2.md",
+        "TINA_Tax_FactCheck_Scoring_Rubric_v2.md",
+        "TINA_Tax_FactCheck_Test_Cases_v2.md",
+        "TINA_Tax_FactCheck_Test_Plan_v2.md",
+        "audit_final.mjs",
+        "audit_inventory.mjs",
+        "audit_run.mjs",
+        "audit_run2.mjs",
+        "audit_run3.mjs",
+        "audit_run4.mjs",
+        "audit_run5.mjs",
+        "authority-schema-engine.js",
+        "backup-022e-estate-nullref-pre-repair.json",
+        "brand.ts",
+        "docs/AUTHORITY_LOCK.md",
+        "governance/AGENT_RULES.md",
+        "governance/RELEASE_GATES.md",
+        "governance/TINA_MANIFESTO.md",
+        "governance/TINA_NORTSTAR.md",
+        "governance/adr/ADR-001-Authority-Governance.md",
+        "governance/adr/ADR-002-Retrieval-First.md",
+        "governance/adr/ADR-003-Metadata-Validation.md",
+        "governance/adr/ADR-004-Authority-Catalog.md",
+        "governance/adr/ADR-005-Trust-Layer.md",
+        "package-lock.json",
+        "package.json",
+        "patch-035a-train-ra10963-diagnostics.json",
+        "patch-08j-memory-governance-gate-1.test.mjs",
+        "patch027b_scope.mjs",
+        "patches/analysis/PATCH-017A-ROOT-CAUSE-ANALYSIS.md",
+        "patches/analysis/PATCH-017B-RETRIEVAL-TIMEOUT-ANALYSIS.md",
+        "patches/implemented/PATCH-012-RETRIEVAL-REPAIR.md",
+        "patches/implemented/PATCH-012-TARGETING-FIX.md",
+        "patches/implemented/PATCH-017-Source-Availability-Foundation.md",
+        "patches/implemented/PATCH-017A-Foundation.md",
+        "patches/implemented/PATCH-017A-Semantic-Source-Selection-Patch.md",
+        "patches/implemented/PATCH-017C-GENERATION-GATE-HARDENING.md",
+        "patches/implemented/PATCH-017D-Fast EWT-Generation-Cap .md",
+        "patches/implemented/PATCH-017E-Compact EWT-Retrieval-Before-Generation-Gate .md",
+        "patches/implemented/PATCH-017F-Pre-Retrieval-EWT-Authority-Short-Circuit .md",
+        "patches/implemented/PATCH-017G-SOURCE-STATE-SYNCHRONIZATION.md",
+        "patches/implemented/PATCH-017H-VAT-DEFINITION-BRIDGE.md",
+        "patches/implemented/PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION.md",
+        "patches/implemented/PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup.md",
+        "patches/implemented/PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION.md",
+        "patches/implemented/PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING.md",
+        "patches/implemented/PATCH-024A-CRASH-AND-502-HARDENING.md",
+        "patches/implemented/PATCH-024B-VAT-SPECIALIZED-ROUTING-GUARD.md",
+        "patches/implemented/PATCH-028A-STAGING-UI-VALIDATION-REPORT.md",
+        "patches/implemented/PATCH_HISTORY.md",
+        "patches/proposed/PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION.md",
+        "patches/proposed/PATCH-019A-REV2-SUPPLEMENT.md",
+        "patches/proposed/PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE.md",
+        "patches/proposed/PATCH-01A -Source-Availability-Engine-Foundation.md",
+        "patches/proposed/PATCH-01B -Source-Availability-State-Propagation.md",
+        "patches/proposed/PATCH-01C-Source-Availability-Diagnostics-and-Audit.md",
+        "patches/proposed/PATCH-029-INVESTIGATION-REPORT.md",
+        "patches/records/DIAGNOSTIC-022C-backup-2026-06-13T13-15-56-716Z.json",
+        "phase-6b-staging-matrix-results.json",
+        "reviews/records/CODEX_PATCH_019A_FULL_AUDIT_INPUT.md",
+        "reviews/records/PATCH-019A_IMPLEMENTATION_DIFF.md",
+        "roadmaps/TINA_1_YEAR_PLAN.md",
+        "roadmaps/TINA_20_YEAR_VISION.md",
+        "roadmaps/TINA_60_DAY_PLAN.md",
+        "run-023a-audit.mjs",
+        "run-023b-audit.mjs",
+        "run-vat-hallucination-audit.mjs",
+        "standards/AUTHORITY_HIERARCHY_STANDARD.md",
+        "standards/INDEXING_STANDARD.md",
+        "standards/METADATA_STANDARD.md",
+        "standards/SOURCE_AVAILABILITY_STANDARD.md",
+        "tina_harness/nemotron-generated/NEMOTRON_PATCH-018A_RETRIEVAL.md",
+        "tina_harness/nemotron-generated/NEMOTRON_PATCH_017H_HARNESS_2026-06-09T03-43-44-484Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-27-23-428Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017H_REV2_DIRECT_VAT_AUTHORITY_PRESERVATION_2026-06-09T06-36-29-628Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017I-FAST_DEFINITION_Renderer_Source-State_Cleanup_2026-06-09T11-59-01-423Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017J_AUTHORITY_FOUND_BODY_AND_SOURCE_CARD_COMPLETION_2026-06-09T12-49-25-941Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017K_INDEXED_SUPPORTING_AUTHORITY_AVAILABILITY_MAPPING_2026-06-09T13-50-40-211Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-017L_FAST_EWT_ANSWER_SECTION_COMPLETION_2026-06-09T14-14-39-243Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T04-26-37-864Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018A_RETRIEVAL_RESULT_PROPAGATION_AND_SAE_RECONCILIATION_2026-06-10T13-35-02-909Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T02-58-21-812Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018B_SAFE_EWT_FALLBACK_2026-06-11T03-54-00-990Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-10-14-411Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-018C_SAE_ERROR_CLASSIFICATION_INTEGRITY_2026-06-11T03-17-36-332Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T10-01-39-562Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T12-48-31-367Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A-REV2-SUPPLEMENT_2026-06-11T13-07-21-310Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T08-57-43-271Z.md",
+        "tina_harness/nemotron-results/NEMOTRON_REVIEW_PATCH-019A_VERIFIED_AUTHORITY_ONLY_GENERATION_GATE_2026-06-11T09-28-34-021Z.md",
+        "tina_harness/prompts/AUTHORITY_LOCK.md",
+        "tina_harness/prompts/NEMOTRON_PATCH_019A_TARGETED_POST_IMPLEMENTATION_AUDIT.md",
+        "tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A.md",
+        "tina_harness/prompts/NEMOTRON_REVIEW_PATCH-019A_REV2_SUPPLEMENT.md",
+        "tina_harness/tools/nemotron-client.js",
+        "tina_harness/tools/nemotron-generate-harness.mjs",
+        "tina_harness/tools/nemotron-regression-review.mjs",
+        "tina_harness/tools/nemotron-review-patch.mjs",
+        "tina_harness/tools/nemotron-test.mjs",
+        "tmp-022f-backward-p1.json",
+        "tmp-022f-backward-p2.json",
+        "tmp-022f-logs-combined.json",
+        "tmp-022f-resp-q1.json",
+        "tmp-022f-resp-q2.json",
+        "tmp-022f-tail-logs.json",
+        "tmp-022f-token-q1.txt",
+        "tmp-022f-token-q2.txt",
+        "tmp-022f-ts-q1.json",
+        "tmp-022f-ts-q2.json",
+        "tmp-022f2-backward-p1.json",
+        "tmp-022f2-fwd-logs.json",
+        "tmp-022f2-raw.json",
+        "tmp-022f2-response.json",
+        "tmp-022f2-timestamp.json",
+        "tmp-023a-results.json",
+        "tmp-023b-results.json",
+        "tmp-estate-logs.json",
+        "tmp-estate-response.json",
+        "tmp-estate-timestamp.json",
+        "tmp-p022-response.json",
+        "tmp-p022a-response.json",
+        "tmp-post022e-logs-tail.json",
+        "tmp-post022e-logs.json",
+        "tmp-post022e-response.json",
+        "tmp-post022e-timestamp.json",
+        "tmp-post022e-token.txt",
+        "tmp-q1q2-logs.json",
+        "tmp-q3-logs.json",
+        "tmp-q3-response.json",
+        "tmp-q3-timestamp.json",
+        "tmp-query-timestamps.json",
+        "tmp-staging-token-022d.txt",
+        "tmp-staging-token-022e.txt",
+        "tmp-staging-token.txt",
+        "tmp-tina-brand-visual/auth-1024.png",
+        "tmp-tina-brand-visual/auth-1280.png",
+        "tmp-tina-brand-visual/auth-1440.png",
+        "tmp-tina-brand-visual/auth-320.png",
+        "tmp-tina-brand-visual/auth-375.png",
+        "tmp-tina-brand-visual/auth-390.png",
+        "tmp-tina-brand-visual/auth-768.png",
+        "tmp-tina-brand-visual/summary.json",
+        "tmp-tina-brand-visual/workspace-1024.png",
+        "tmp-tina-brand-visual/workspace-1280.png",
+        "tmp-tina-brand-visual/workspace-1440.png",
+        "tmp-tina-brand-visual/workspace-320.png",
+        "tmp-tina-brand-visual/workspace-375.png",
+        "tmp-tina-brand-visual/workspace-390.png",
+        "tmp-tina-brand-visual/workspace-768.png",
+        "tmp-vat-hallucination-audit.json"
+      ]
+    },
+    "statusSha256Unchanged": true,
+    "trackedDiffSha256Unchanged": true,
+    "headUnchanged": true,
+    "branchUnchanged": true,
+    "pass": true
+  },
+  "protectedPriorEvidenceMutation": false,
+  "roadmapV8Mutation": false,
+  "roadmapV7Mutation": false,
+  "nextExactTask": "PHASE-10A14-R20 - COMMIT 5R1-C32 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C31 BASE"
+}

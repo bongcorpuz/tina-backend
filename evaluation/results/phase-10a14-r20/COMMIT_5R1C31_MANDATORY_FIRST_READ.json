@@ -1,0 +1,180 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:14:57.972Z",
+  "files": [
+    {
+      "path": "knowledge/CURRENT_STATE.md",
+      "bytes": 104444,
+      "sha256": "846a5a820191dbc813d4d34e25b1ff3f3d3192f052d6f2799e858931c98a2218",
+      "readComplete": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+      "bytes": 29298,
+      "sha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+      "readComplete": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+      "bytes": 14842,
+      "sha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+      "readComplete": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+      "bytes": 25183,
+      "sha256": "73c8b09220b727d1c35c304054a319f8bb665edf1ba347a54723cbc7e875cd8a",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 611620,
+      "sha256": "6faf669f07853e2cd4017d7f47ab4e6a5f6ab345d03887c5366731ad94741812",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_ROADMAP_V8_CONTINUITY_RECONCILIATION.json",
+      "bytes": 4045,
+      "sha256": "669c95f4cc1d2ad7ea8347922159793f1a115684895fcb71d373d79ba11d88ca",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_BASE_RUNTIME_IDENTITY.json",
+      "bytes": 898,
+      "sha256": "dd48c3e71fec881732b7b200f5f993d990656ce5d728cc9432215bfeebc17f0b",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_C29_BASE_RECONSTRUCTION.json",
+      "bytes": 31646,
+      "sha256": "04380d9f1db930897fc087757da0381ed7b27159ac9a5f341b4d436f2094eb87",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_POST_C29_RESIDUAL_INVENTORY.json",
+      "bytes": 610683,
+      "sha256": "8d94fe1e6b41e86acba0c43f65da69e8a62c6062433231932b23603293f9c692",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_POST_C29_RESIDUAL_OVERLAP_MAP.json",
+      "bytes": 49939,
+      "sha256": "8233fa819ae6754f26f06b47cb3d522f2f608f4c370495e496b639424e18f4de",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_POST_C29_REASON_FAMILY_SUMMARY.json",
+      "bytes": 1175,
+      "sha256": "f299f760e960c0b28b9d97e828610705dbe08f590b89cd5a2e84f23135e9f630",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_MONOTONIC_FEATURE_BASELINE.json",
+      "bytes": 559,
+      "sha256": "76d2e6229afe1625f0884b55953b54f8868d93cd66fc410a5be3b2eed082bcb5",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_MONOTONIC_FEATURE_ABLATION.json",
+      "bytes": 292,
+      "sha256": "643957ef4dab22be49139680f399a3e0c788d5644d762c85edad29c640a7e9dd",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_CANDIDATE_HYPOTHESES.json",
+      "bytes": 20188,
+      "sha256": "beb6bf2e70a3a4fc2b81e0e9c21390a807307caaa779c3b1bbd8c1be7df9a44e",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_CANDIDATE_EXHAUSTION.json",
+      "bytes": 1347,
+      "sha256": "c8a57514fc7e0f7f561139504ebda7b97cdbbaa442cc9dfdd1fae713be114b8c",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_RULE_GENERALIZATION_PACKETS.json",
+      "bytes": 6357,
+      "sha256": "0bb0ecffdfd7d6f29501452388c47c53ca416456744851811d4656affbce5952",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_DERIVED_PACKET_VALIDATION.json",
+      "bytes": 1126,
+      "sha256": "8bb14d0768dd04cbab6503e5a422059d4609b0e9bb1ac8625122e251fb333f91",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_COMPOSITION_ORDER_INDEPENDENCE.json",
+      "bytes": 342,
+      "sha256": "3038566f5fa52944c5653f23b7168bdcd1457e195c235a0fa0e5bb077fe36635",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_CANDIDATE_DELTA_REPLAY_RESULT.json",
+      "bytes": 1263,
+      "sha256": "c59d5cc5d2c8b7f4b4d5af686b3f56fdd0a754fdb2e7619eb0cad7790180494e",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_TAINT_SOURCE_TO_RUNTIME_SINK_MAP.json",
+      "bytes": 924,
+      "sha256": "d08f12c678c798d83d5f6afd52aa7110377063ca5e4e8b11cf67eef3ce3fa080",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_TAINT_AWARE_ANTI_OVERFIT_RESULT.json",
+      "bytes": 941,
+      "sha256": "89ccc30ddb83386012fb29c02d83b3260953ff339b4b65a0c76ebd1043dcfbd3",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_FINAL_EXECUTION_REPORT.json",
+      "bytes": 30246,
+      "sha256": "d03c0da1858381055277079d832442f41fc402feeb6e8c283e21ce6db72eef3a",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C30_EVIDENCE_MANIFEST.sha256",
+      "bytes": 18460,
+      "sha256": "fff8329c2149538f22739e127f3db17a5dafb76d764a04a6fe4553545e6a12fa",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z/ITERATION_RESULT.json",
+      "bytes": 34635,
+      "sha256": "dae7e482d1bc78f1a8684cc4ce4c627ca5daf020a6f25f905a52ed5a777674d3",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-01-ord01-2026-07-27T23-27-12-685Z/ITERATION_RESULT.json",
+      "bytes": 35070,
+      "sha256": "3aa2d4d8ddd341b7062cf0c8fb8334c13e4ea958687b4da4f88f6ef7885749e0",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-02-ord02-2026-07-27T23-27-17-454Z/ITERATION_RESULT.json",
+      "bytes": 34724,
+      "sha256": "126c1c07c7307258f4c2de7edd4c513b886a550ffdb10020992ce8d6900aeaf3",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z/C30_ONLY_CANDIDATE.patch",
+      "bytes": 989,
+      "sha256": "2b78ce976468c9d3e225c64817c1143eee585d711dd7272bc714d8c0798e9d15",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CLAUSE_LEVEL_INTENT_SCHEMA.md",
+      "bytes": 2929,
+      "sha256": "10dd95cfc409fcebbfa623b46c9ac3c5aa0bf443fca0b7a97df75e71c3f88a07",
+      "readComplete": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/RELATION_AND_PRECEDENCE_SPEC.md",
+      "bytes": 3010,
+      "sha256": "83089bbd12c27e9ccf8a322dfe04293d3bf2083f71cc4df907d4204befc79432",
+      "readComplete": true
+    }
+  ]
+}

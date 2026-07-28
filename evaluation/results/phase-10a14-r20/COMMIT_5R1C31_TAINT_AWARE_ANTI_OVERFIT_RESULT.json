@@ -1,0 +1,38 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:15:46.569Z",
+  "c27TaintAwareGovernancePreserved": true,
+  "entries": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+      "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-02-ord02-2026-07-28T01-15-14-736Z",
+      "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-03-ord03-2026-07-28T01-15-22-660Z",
+      "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z",
+      "candidateId": "C31-M04-variable-name-is-non-tax-label",
+      "findings": [],
+      "pass": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+      "candidateId": "C31-M05-sec-time-measurement-expansion",
+      "findings": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

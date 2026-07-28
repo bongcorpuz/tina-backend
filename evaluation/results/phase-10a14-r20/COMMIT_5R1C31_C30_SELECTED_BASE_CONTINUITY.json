@@ -1,0 +1,52 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:14:58.020Z",
+  "classification": "C30_SELECTED_BASE_CONTINUITY",
+  "determinations": [
+    "C30 selected the third Pareto-positive controlling candidate over the C29 selected base.",
+    "C31 uses the C30 selected candidate runtime snapshot as its exact active base.",
+    "C30 accepted rules are inherited in the active base and are not rerun unchanged in C31.",
+    "C30 evidence is consumed as immutable input and is not modified."
+  ],
+  "selectedC30Base": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+    "rule": "ordinary_translation_request_is_no_tax_relation",
+    "actual": {
+      "canonicalPassed": 3472,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3472,
+      "reasonMismatches": 248,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    },
+    "runtimeIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 177236,
+        "normalizedLfSha256": "0937a9bf1cbcfb6c76eb0f014c05e4310d4d3495ec5f06e6f87ef51a463336e2"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "31cb03cd17d851f4a08143c6c508da5d1a2108c7cfa9d810ec2d6d751188d5ce"
+    }
+  },
+  "c30FinalReportDecision": "INCOMPLETE",
+  "c30EvidenceInvalidated": false,
+  "c30FilesModified": false,
+  "pass": true
+}

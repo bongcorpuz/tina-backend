@@ -1,0 +1,44 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:15:46.566Z",
+  "packetCount": 5,
+  "results": [
+    {
+      "candidateId": "C31-M01-deficiency-interest-late-payment-explicit-task",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-01-ord01-2026-07-28T01-15-06-581Z",
+      "accepted": true,
+      "packetPass": true
+    },
+    {
+      "candidateId": "C31-M02-bare-withholding-instrument-explicit-task",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-02-ord02-2026-07-28T01-15-14-736Z",
+      "accepted": true,
+      "packetPass": true
+    },
+    {
+      "candidateId": "C31-M03-quoted-alphabetize-tax-term",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-03-ord03-2026-07-28T01-15-22-660Z",
+      "accepted": true,
+      "packetPass": true
+    },
+    {
+      "candidateId": "C31-M04-variable-name-is-non-tax-label",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-04-ord04-2026-07-28T01-15-31-012Z",
+      "accepted": true,
+      "packetPass": true
+    },
+    {
+      "candidateId": "C31-M05-sec-time-measurement-expansion",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+      "accepted": true,
+      "packetPass": true
+    }
+  ],
+  "leaveOneFamilyOutExecution": true,
+  "copiedR3Queries": 0,
+  "copiedReasonSuiteQueries": 0,
+  "copiedCollisionProbeQueries": 0,
+  "numberingDependency": 0,
+  "fixtureMembership": 0,
+  "pass": true
+}

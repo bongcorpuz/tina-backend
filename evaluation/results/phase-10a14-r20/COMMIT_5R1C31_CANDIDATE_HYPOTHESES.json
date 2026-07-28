@@ -1,0 +1,386 @@
+{
+  "unit": "COMMIT 5R1-C31",
+  "generatedUtc": "2026-07-28T01:15:06.560Z",
+  "hypotheses": [
+    {
+      "id": "C31-M01-deficiency-interest-late-payment-explicit-task",
+      "category": "explicit-tax-task-tail",
+      "principle": "Deficiency-interest late-payment questions should explain as explicit tax task relation.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_EXPLICIT_TAX_TASK",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C31-M02-bare-withholding-instrument-explicit-task",
+      "category": "explicit-tax-task-tail",
+      "principle": "A bare withholding-tax instrument phrase should not be demoted to ordinary-object treatment.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_EXPLICIT_TAX_TASK",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C31-M03-quoted-alphabetize-tax-term",
+      "category": "quoted-term-tail",
+      "principle": "Alphabetizing quoted tax text is a quoted-term-only non-tax operation.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C31-M04-variable-name-is-non-tax-label",
+      "category": "non-tax-label-tail",
+      "principle": "Variable, field, flag or column names containing tax terms are label/name requests.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C31-M05-sec-time-measurement-expansion",
+      "category": "non-tax-expansion-tail",
+      "principle": "SEC as a time measurement in a non-tax action should explain as non-tax expansion.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C31-H06-broad-noun-phrase-no-relation",
+      "category": "rejected-overbroad-tail",
+      "principle": "Broad noun-phrase no-relation routing was rejected because it trades off against explicit non-tax-task families.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "rejected_after_ad_hoc_probe_overbroad_tradeoff"
+    },
+    {
+      "id": "C31-H07-declarative-non-tax-expansion",
+      "category": "rejected-overbroad-tail",
+      "principle": "Declarative non-tax expansion routing was rejected because it regressed the active base.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "requires narrow predicate",
+      "disposition": "rejected_after_ad_hoc_probe_regression"
+    },
+    {
+      "id": "C31-H08-no-tax-vs-explicit-non-tax-task",
+      "category": "frontier-family",
+      "principle": "No-tax relation and explicit non-tax task residuals remain the dominant reason-only frontier.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H09-explicit-tax-task-vs-ordinary-object-treatment",
+      "category": "frontier-family",
+      "principle": "Explicit tax task and ordinary-object tax-treatment residuals require narrow tax-outcome predicates.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H10-tax-compliance-single-tail",
+      "category": "frontier-family",
+      "principle": "The single tax-compliance residual should be handled only with exact structural evidence.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H11-acronym-label-expansion-tail",
+      "category": "frontier-family",
+      "principle": "Acronym, label and expansion tails must preserve relation/decision exact locks.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H12-definition-with-context-tail",
+      "category": "frontier-family",
+      "principle": "Definition-with-context residuals require clear complete-referent predicates.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H13-quoted-tax-term-tail",
+      "category": "frontier-family",
+      "principle": "Quoted-term-only residuals require a delimited-content operation rather than tax advice.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H14-non-tax-label-tail",
+      "category": "frontier-family",
+      "principle": "Internal labels and variable names require explicit naming frames.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H15-non-tax-expansion-tail",
+      "category": "frontier-family",
+      "principle": "Non-tax expansion residuals require expansion semantics and a non-tax target.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H16-composition-order-safety",
+      "category": "composition-control",
+      "principle": "C31 candidates should remain order independent because predicates are mutually narrow.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H17-taint-aware-anti-overfit",
+      "category": "governance-control",
+      "principle": "No runtime predicate may depend on oracle IDs, expected labels, row positions or fixture membership.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    },
+    {
+      "id": "C31-H18-c32-continuation-frontier",
+      "category": "continuation-control",
+      "principle": "Remaining viable candidates after C31 must be deferred to C32 rather than broad-promoted.",
+      "runtimePredicate": "observable lexical/structural predicate only",
+      "layerClassification": "REASON_ONLY_NON_TAX_BOUNDARY",
+      "targetSets": [
+        "R3 reason residuals",
+        "reason suite v8",
+        "collision probes"
+      ],
+      "declaredActiveBase": "R20-domain_campaign-r20_commit5r1c30_structural_reason_remediation-commit5r1c30-dev-03-ord03-2026-07-27T23-27-23-359Z",
+      "baseRelativePredictedDelta": "non-decrease all locked gates, strict R3 reason improvement if target separability holds",
+      "simulationPlan": "run full frozen gates against exact active base and candidate snapshot",
+      "nearestCorrectRowControls": "measured by correct-row regression and frozen decision/relation locks",
+      "packetPlan": "positive paraphrases, lexical substitutions, near-misses, constructions and filler families",
+      "taintRisk": "low; generator uses structural packet only",
+      "compositionRisk": "low; candidate inserted into governed reason override before final null",
+      "ambiguityRisk": "tracked",
+      "disposition": "reserved_or_rejected_before_runtime"
+    }
+  ],
+  "count": 18,
+  "pass": true
+}

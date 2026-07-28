@@ -1,0 +1,17 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index bb93a16a..89746a76 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1281,6 +1281,12 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c31BareWithholdingInstrumentExplicitTask)
+     return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.84 };
+ 
++  const c31QuotedAlphabetizeTaxTerm = v.reason === 'explicit_non_tax_task'
++      && v.rels.includes('QUOTES_TERM')
++      && /^alphabeti[sz]e\s+the\s+words?\s+["'][^"']+["']\.?$/i.test(v.t);
++  if (c31QuotedAlphabetizeTaxTerm)
++    return { decision: 'REFUSE', reasonCode: 'quoted_tax_term_only', confidence: 0.85 };
++
+   return null;
+ }
+ 
