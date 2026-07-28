@@ -1,0 +1,28 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.623Z",
+  "finalNormalizedLfSha256": "cdbe31887eb58743cbad5fe76aa862633f6351918bd7f5e9afcd298f952456dc",
+  "finalMetrics": {
+    "canonicalPassed": 3482,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3482,
+    "reasonMismatches": 238,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "registryCumulativeThrough": "commit5r1c32-incomplete",
+  "v8Unchanged": true,
+  "v7Unchanged": true,
+  "requiredResearchFirstSignalsPreserved": true,
+  "pass": true
+}

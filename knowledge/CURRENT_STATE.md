@@ -2,6 +2,24 @@
 
 ## TINA Controlling Continuity Status
 
+Last updated: 28 July 2026 (COMMIT 5R1-C32)
+
+PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS and not SATISFIED.
+
+### COMMIT 5R1-C32 - R3 Reason-Layer Closure Continuation
+
+- Executor: Codex; required independent reviewer: Codex self-review recorded in C32 evidence; Gemini: optional, not used.
+- C31 selected base reconstructed exactly from immutable attempt R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z.
+- C31 residual inventory: 238 reason-only mismatches. C31 wording defect was recorded as non-controlling metadata only; no C31 evidence was edited.
+- C32 accepted structural rules: .
+- Final R3 reason: 3482/3,720; reason mismatches 238. Decision 3720/3,720; relation 3720/3,720; reason suite 344/344; collision 196/196.
+- Reason layer lock: open. Runtime closure: false. Registry: 210 attempts, cumulativeThrough commit5r1c32-incomplete.
+- Active model remains gpt-4o-mini. GPT-5.6 Terra remains a post-Phase-10A benchmark candidate only; no model migration was implemented.
+- Live services were restored to committed C32 starting HEAD; v8/v7, frozen oracles, C31 evidence, dev factory and protected residue remain untouched.
+- Next exact task: **PHASE-10A14-R20 - COMMIT 5R1-C33 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C32 BASE**.
+
+## TINA Controlling Continuity Status
+
 Last updated:
 
 `2026-07-28T01:15:49.441Z`

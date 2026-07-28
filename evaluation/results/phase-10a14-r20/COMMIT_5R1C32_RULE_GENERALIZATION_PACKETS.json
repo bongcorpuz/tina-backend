@@ -1,0 +1,42 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.164Z",
+  "packets": [
+    {
+      "candidateId": "C32-M01-direct-tax-treatment-outcome",
+      "rule": "direct_tax_consequence_outcome_is_tax_treatment",
+      "positiveParaphrases": 6,
+      "lexicalSubstitutions": 6,
+      "negativeNearMisses": 6,
+      "grammaticalConstructions": 3,
+      "semanticFillerFamilies": 4,
+      "normalizedStructuralSkeletons": 4,
+      "copiedFrozenQueries": 0,
+      "pass": true
+    },
+    {
+      "candidateId": "C32-M02-bare-withholding-instrument-task",
+      "rule": "bare_withholding_instrument_without_ordinary_operand_is_explicit_tax_task",
+      "positiveParaphrases": 6,
+      "lexicalSubstitutions": 6,
+      "negativeNearMisses": 6,
+      "grammaticalConstructions": 3,
+      "semanticFillerFamilies": 4,
+      "normalizedStructuralSkeletons": 4,
+      "copiedFrozenQueries": 0,
+      "pass": true
+    },
+    {
+      "candidateId": "C32-M03-bare-tax-subject-treatment",
+      "rule": "bare_tax_subject_nominal_is_tax_treatment",
+      "positiveParaphrases": 6,
+      "lexicalSubstitutions": 6,
+      "negativeNearMisses": 6,
+      "grammaticalConstructions": 3,
+      "semanticFillerFamilies": 4,
+      "normalizedStructuralSkeletons": 4,
+      "copiedFrozenQueries": 0,
+      "pass": true
+    }
+  ]
+}

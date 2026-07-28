@@ -1,0 +1,15 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:05.396Z",
+  "dimensions": [
+    "speech act",
+    "performability",
+    "direct object completeness",
+    "tax nexus",
+    "procedure predicate",
+    "treatment predicate",
+    "ordinary-object frame"
+  ],
+  "residualCount": 238,
+  "pass": true
+}

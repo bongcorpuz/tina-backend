@@ -4,7 +4,7 @@
 
 **Effective date:** 28 July 2026  
 **Current active work:** PHASE-10A14-R20  
-**Current controlling result:** COMMIT 5R1-C31 incomplete; COMMIT 5R1-C32 R3 reason continuation is next  
+**Current controlling result:** COMMIT 5R1-C32 incomplete; R3 reason continuation against the C32 base is next (3482/3,720 reason, decision/relation locked)
 **Research V1 target:** Controlled invitation-only operating release by 15 December 2026, subject to every trust, citation, security, performance and owner gate  
 **Possible public paid release:** 15-31 December 2026 only if the live-payment gate and all operating gates pass  
 **Fallback:** Invitation-only or free Research V1 in December 2026; paid activation in Q1 2027  
@@ -910,3 +910,11 @@ Philippine Tax Ask
 ```
 
 The deeper Tax Operating System continues after launch instead of blocking the first usable commercial product.
+
+### C32 governed reason-continuation result (28 July 2026)
+
+- C31 base reconstructed exactly; stale C31 continuation wording was recorded without changing immutable evidence.
+- R3 reason: **3,482 / 3,720**; remaining reason mismatches: **238**.
+- Locked gates remain exact: decision 3,720/3,720; relation 3,720/3,720; reason suite 344/344; collision probes 196/196.
+- Model continuity: gpt-4o-mini remains active through Phase 10A; GPT-5.6 Terra remains a post-Phase-10A benchmark candidate only.
+- Result: **INCOMPLETE_REASON_LAYER_OPEN**. Next exact task: **PHASE-10A14-R20 - COMMIT 5R1-C33 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C32 BASE**.

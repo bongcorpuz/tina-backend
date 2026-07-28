@@ -1,0 +1,174 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:15.834Z",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-01-ord01-2026-07-28T03-22-05-408Z",
+  "candidateId": "C32-M01-direct-tax-treatment-outcome",
+  "rule": "direct_tax_consequence_outcome_is_tax_treatment",
+  "principle": "A direct treatment outcome remains treatment where it asks taxable, deductible, subject-to-tax, tax-treatment or tax-base status; capital-gains treatment excludes procedural holding-period and recognition frames.",
+  "declaredActiveBase": {
+    "attemptId": "R20-domain_campaign-r20_commit5r1c32_c31_selected_base_reconstruction-commit5r1c32-reconstruction-ord01-2026-07-28T03-22-01-550Z",
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 178821,
+        "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+    },
+    "actual": {
+      "canonicalPassed": 3482,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3482,
+      "reasonMismatches": 238,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "decisionCounterfactualPassed": 756,
+      "relationCounterfactualPassed": 282,
+      "clauseProbesPassed": 68,
+      "reasonCounterfactualPassed": 344,
+      "collisionProbesPassed": 196,
+      "reasonIntegrityPass": true,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7
+    }
+  },
+  "writeAudit": [
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+      "afterSha256Normalized": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+      "beforeBytes": 178821,
+      "afterBytes": 178821,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "beforeSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "afterSha256Normalized": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "beforeBytes": 12192,
+      "afterBytes": 12192,
+      "tempFileUsed": "philippine-tax-domain-boundary.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "beforeSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "afterSha256Normalized": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "beforeBytes": 65451,
+      "afterBytes": 65451,
+      "tempFileUsed": "philippine-tax-boundary-patterns.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": false,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    },
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "beforeSha256Normalized": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+      "afterSha256Normalized": "065ca0df736260e19b8f0e15f98b0e50329fad78ca55b8f0ce720086afcaf7a0",
+      "beforeBytes": 178821,
+      "afterBytes": 179423,
+      "tempFileUsed": "philippine-tax-intent-analyzer.c20tmp.js",
+      "tempInsideRepository": true,
+      "tempEndsWithJs": true,
+      "verifiedNonZero": true,
+      "parseAndExportsVerified": true,
+      "atomicRename": true,
+      "postReplaceHashVerified": true,
+      "zeroByteIncident": false
+    }
+  ],
+  "actual": {
+    "canonicalPassed": 3504,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3504,
+    "reasonMismatches": 216,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "pareto": {
+    "strictImprovement": true,
+    "correctRowRegressions": 0,
+    "decisionDrift": 0,
+    "relationDrift": 0,
+    "frozenLocksHeld": true,
+    "c32AddedRoiViolations": 0,
+    "pass": true
+  },
+  "deltaReplay": {
+    "forwardReplayMatchesCandidate": false,
+    "reverseReplayRestoresBase": true,
+    "candidateOnlyPatchExcludesInheritedChanges": true,
+    "pass": false
+  },
+  "taint": {
+    "substitutions": [
+      "oracle ID",
+      "query hash",
+      "expected label",
+      "family name"
+    ],
+    "independentShuffles": [
+      "R3",
+      "reason suite",
+      "collision probes"
+    ],
+    "unseenVerbExecution": true,
+    "unseenObjectExecution": true,
+    "copiedFrozenQueries": 0,
+    "fixtureDependency": 0,
+    "runtimeBytesUnchangedAfterSentinelSubstitution": true,
+    "patchBytesUnchangedAfterShuffle": true,
+    "pass": true
+  },
+  "generalization": {
+    "positiveParaphrases": 6,
+    "lexicalSubstitutions": 6,
+    "negativeNearMisses": 6,
+    "grammaticalConstructions": 3,
+    "semanticFillerFamilies": 4,
+    "normalizedStructuralSkeletons": 4,
+    "leaveOneFamilyOutExecution": true,
+    "unseenVerbExecution": true,
+    "unseenObjectExecution": true,
+    "copiedFrozenQueries": 0,
+    "pass": true
+  },
+  "accepted": false,
+  "disposition": "rejected_due_to_gate_or_pareto_failure"
+}

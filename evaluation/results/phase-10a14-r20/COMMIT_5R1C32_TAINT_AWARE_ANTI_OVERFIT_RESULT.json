@@ -1,0 +1,21 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.169Z",
+  "candidateResults": [
+    {
+      "candidateId": "C32-M01-direct-tax-treatment-outcome",
+      "pass": true
+    },
+    {
+      "candidateId": "C32-M02-bare-withholding-instrument-task",
+      "pass": true
+    },
+    {
+      "candidateId": "C32-M03-bare-tax-subject-treatment",
+      "pass": true
+    }
+  ],
+  "sentinelsExcluded": true,
+  "independentShufflesExecuted": true,
+  "pass": true
+}

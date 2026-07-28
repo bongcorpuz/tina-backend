@@ -1,0 +1,19 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:05.395Z",
+  "reasonFamilySummary": {
+    "explicit_non_tax_task": 50,
+    "explicit_tax_task_relation": 27,
+    "no_tax_relation": 133,
+    "tax_treatment_of_ordinary_object": 27,
+    "tax_compliance_task": 1
+  },
+  "requiredExpectedFamilies": {
+    "no_tax_relation": 133,
+    "explicit_non_tax_task": 50,
+    "explicit_tax_task_relation": 27,
+    "tax_treatment_of_ordinary_object": 27,
+    "tax_compliance_task": 1
+  },
+  "pass": true
+}

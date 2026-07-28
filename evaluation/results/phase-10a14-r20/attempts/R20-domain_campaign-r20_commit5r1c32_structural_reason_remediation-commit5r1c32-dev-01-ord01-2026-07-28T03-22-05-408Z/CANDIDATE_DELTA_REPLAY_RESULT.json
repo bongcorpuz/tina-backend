@@ -1,0 +1,6 @@
+{
+  "forwardReplayMatchesCandidate": false,
+  "reverseReplayRestoresBase": true,
+  "candidateOnlyPatchExcludesInheritedChanges": true,
+  "pass": false
+}

@@ -1,0 +1,6 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:05.396Z",
+  "trace": "C31 baseline selector -> C20 governed override seam -> C31 accepted rules -> C32 candidate block -> unchanged baseline fallback",
+  "pass": true
+}

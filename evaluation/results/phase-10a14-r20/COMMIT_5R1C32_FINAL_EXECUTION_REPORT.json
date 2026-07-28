@@ -1,0 +1,155 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:37.102Z",
+  "decision": "INCOMPLETE_REASON_LAYER_OPEN",
+  "finalMetrics": {
+    "canonicalPassed": 3482,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3482,
+    "reasonMismatches": 238,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "acceptedRules": [],
+  "rejectedRules": [
+    "direct_tax_consequence_outcome_is_tax_treatment",
+    "bare_withholding_instrument_without_ordinary_operand_is_explicit_tax_task",
+    "bare_tax_subject_nominal_is_tax_treatment"
+  ],
+  "materialAttempts": [
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-01-ord01-2026-07-28T03-22-05-408Z",
+      "candidateId": "C32-M01-direct-tax-treatment-outcome",
+      "accepted": false,
+      "actual": {
+        "canonicalPassed": 3504,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3504,
+        "reasonMismatches": 216,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "strictImprovement": true,
+        "correctRowRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "frozenLocksHeld": true,
+        "c32AddedRoiViolations": 0,
+        "pass": true
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-02-ord02-2026-07-28T03-22-16-094Z",
+      "candidateId": "C32-M02-bare-withholding-instrument-task",
+      "accepted": false,
+      "actual": {
+        "canonicalPassed": 3488,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3488,
+        "reasonMismatches": 232,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "strictImprovement": true,
+        "correctRowRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "frozenLocksHeld": true,
+        "c32AddedRoiViolations": 0,
+        "pass": true
+      }
+    },
+    {
+      "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-03-ord03-2026-07-28T03-22-25-861Z",
+      "candidateId": "C32-M03-bare-tax-subject-treatment",
+      "accepted": false,
+      "actual": {
+        "canonicalPassed": 3485,
+        "decisionPassed": 3720,
+        "relationPassed": 3720,
+        "reasonPassed": 3485,
+        "reasonMismatches": 235,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "decisionCounterfactualPassed": 756,
+        "relationCounterfactualPassed": 282,
+        "clauseProbesPassed": 68,
+        "reasonCounterfactualPassed": 344,
+        "collisionProbesPassed": 196,
+        "reasonIntegrityPass": true,
+        "richContextGuardPassed": 7,
+        "richContextGuardTotal": 7
+      },
+      "pareto": {
+        "strictImprovement": true,
+        "correctRowRegressions": 0,
+        "decisionDrift": 0,
+        "relationDrift": 0,
+        "frozenLocksHeld": true,
+        "c32AddedRoiViolations": 0,
+        "pass": true
+      }
+    }
+  ],
+  "nextExactTask": "PHASE-10A14-R20 - COMMIT 5R1-C33 R3 REASON-LAYER CLOSURE CONTINUATION AGAINST THE GOVERNANCE-COMPLIANT C32 BASE",
+  "independentReview": {
+    "unit": "COMMIT 5R1-C32",
+    "reviewer": "CODEX 5.5 HIGH REASONING",
+    "generatedUtc": "2026-07-28T03:22:36.855Z",
+    "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "checks": {
+      "baseReconstruction": true,
+      "residualReconciliation": true,
+      "candidateSeparabilityAndGeneralization": true,
+      "noFrozenFixtureDependence": true,
+      "exactLocks": true,
+      "roadmapV9Continuity": true,
+      "modelUnchanged": true,
+      "terraNotImplemented": true,
+      "scopeRegistryManifest": true
+    },
+    "observations": [
+      "Reason layer remains open; C33 is required before standalone runtime closure."
+    ],
+    "pass": true
+  },
+  "manifest": {
+    "entries": 72,
+    "badHashCount": 0,
+    "pass": true
+  },
+  "pass": true
+}

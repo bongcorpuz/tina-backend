@@ -1,0 +1,13 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:05.395Z",
+  "recordCount": 238,
+  "priorAcceptedRuleOverlap": [
+    "deficiency_interest_late_payment_is_explicit_tax_task_relation",
+    "bare_withholding_tax_instrument_is_explicit_tax_task_relation",
+    "alphabetize_quoted_tax_term_is_quoted_tax_term_only",
+    "variable_name_tax_phrase_is_non_tax_label_or_name",
+    "sec_time_measurement_is_non_tax_expansion"
+  ],
+  "pass": true
+}

@@ -1,0 +1,16 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.167Z",
+  "runtimeBearingFiles": [
+    "services/philippine-tax-intent-analyzer.js"
+  ],
+  "excludedInputs": [
+    "oracle IDs",
+    "query hashes",
+    "expected labels",
+    "families",
+    "row positions",
+    "fixture membership"
+  ],
+  "pass": true
+}

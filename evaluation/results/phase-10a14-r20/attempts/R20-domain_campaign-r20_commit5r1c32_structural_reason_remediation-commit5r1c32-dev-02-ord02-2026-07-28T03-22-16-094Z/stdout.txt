@@ -1,0 +1,13 @@
+collision probes = 196 / 196  (failed 0)
+reason suite     = 344 / 344  (failed 0)
+reason integrity = true  (invalid 0, incompatible 0)
+R3 reason        = 3488 / 3720   mismatches=232
+R3 decision      = 3720 / 3720   FA=0 FR=0 CL=0
+R3 relation      = 3720 / 3720   mismatches=0
+canonical overall= 3488 / 3720
+focused reason   = false
+decision suite   = 756 / 756
+relation suite   = 282 / 282
+clause probes    = 68 / 68
+controls=true guard=7/7 antiMem=true
+DECISION LOCK = true   RELATION LOCK = true

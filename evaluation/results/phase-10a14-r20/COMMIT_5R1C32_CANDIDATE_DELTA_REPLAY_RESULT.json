@@ -1,0 +1,31 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.174Z",
+  "candidates": [
+    {
+      "candidateId": "C32-M01-direct-tax-treatment-outcome",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-01-ord01-2026-07-28T03-22-05-408Z",
+      "forwardReplayMatchesCandidate": false,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": false
+    },
+    {
+      "candidateId": "C32-M02-bare-withholding-instrument-task",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-02-ord02-2026-07-28T03-22-16-094Z",
+      "forwardReplayMatchesCandidate": false,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": false
+    },
+    {
+      "candidateId": "C32-M03-bare-tax-subject-treatment",
+      "attemptId": "R20-domain_campaign-r20_commit5r1c32_structural_reason_remediation-commit5r1c32-dev-03-ord03-2026-07-28T03-22-25-861Z",
+      "forwardReplayMatchesCandidate": false,
+      "reverseReplayRestoresBase": true,
+      "candidateOnlyPatchExcludesInheritedChanges": true,
+      "pass": false
+    }
+  ],
+  "pass": false
+}

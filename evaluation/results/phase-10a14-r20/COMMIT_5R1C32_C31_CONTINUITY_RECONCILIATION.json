@@ -1,0 +1,15 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.177Z",
+  "classification": [
+    "PRIOR_C31_METADATA_WORDING_DEFECT",
+    "NO_RUNTIME_INVALIDATION",
+    "NO_ATTEMPT_INVALIDATION",
+    "NO_METRIC_INVALIDATION",
+    "NO_ROADMAP_INVALIDATION",
+    "NO_REGISTRY_INVALIDATION",
+    "CONTROLLING_NEXT_PATH_UNAMBIGUOUS"
+  ],
+  "staleWordingRecordedNotModified": true,
+  "pass": true
+}

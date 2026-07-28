@@ -1,0 +1,8 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.173Z",
+  "featureRemovalOrCoarsening": [],
+  "vectorCountAtLeast124": true,
+  "collidingRowsNoMoreThan27": true,
+  "pass": true
+}

@@ -1,0 +1,41 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.162Z",
+  "count": 20,
+  "categories": {
+    "actionabilityNoTaxVsExplicitNonTax": 8,
+    "explicitTaxTaskVsTreatment": 6,
+    "taxCompliance": 2,
+    "precedenceFallbackComposition": 4
+  },
+  "materialCandidates": [
+    {
+      "id": "C32-M01-direct-tax-treatment-outcome",
+      "rule": "direct_tax_consequence_outcome_is_tax_treatment",
+      "principle": "A direct treatment outcome remains treatment where it asks taxable, deductible, subject-to-tax, tax-treatment or tax-base status; capital-gains treatment excludes procedural holding-period and recognition frames.",
+      "observablePredicate": "runtime evidence fields only",
+      "activeBase": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+      "taintRisk": "none",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C32-M02-bare-withholding-instrument-task",
+      "rule": "bare_withholding_instrument_without_ordinary_operand_is_explicit_tax_task",
+      "principle": "A withholding instrument without a requested ordinary-object treatment operand is an explicit tax task, not a treatment classification.",
+      "observablePredicate": "runtime evidence fields only",
+      "activeBase": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+      "taintRisk": "none",
+      "disposition": "material_iteration_allocated"
+    },
+    {
+      "id": "C32-M03-bare-tax-subject-treatment",
+      "rule": "bare_tax_subject_nominal_is_tax_treatment",
+      "principle": "A bare tax-subject nominal that names an excise, fringe-benefit or capital-gains treatment object is treatment rather than an operational tax procedure.",
+      "observablePredicate": "runtime evidence fields only",
+      "activeBase": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+      "taintRisk": "none",
+      "disposition": "material_iteration_allocated"
+    }
+  ],
+  "pass": true
+}

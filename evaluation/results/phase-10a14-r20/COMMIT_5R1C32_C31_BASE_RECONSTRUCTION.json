@@ -1,0 +1,48 @@
+{
+  "unit": "COMMIT 5R1-C32",
+  "generatedUtc": "2026-07-28T03:22:35.179Z",
+  "sourceAttempt": "R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z",
+  "expectedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+    "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+  },
+  "expectedTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105",
+  "installedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 178821,
+      "normalizedLfSha256": "46514ab8c218b217ba0a8bcb002f6afb55db904f20f17678606f158fcd4f4799",
+      "gitBlobAtHead": "a23364bc6a31196d2fb5d9f1299ab069d84b5ca1"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "gitBlobAtHead": "97986ed7c9a05f74db44b60c8766f9ab45b96a7d"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "gitBlobAtHead": "d98e63992bfa7d4b21acea7bb03fa62ffbf9827a"
+    },
+    "servicesTreeDigest": "7615a21fb5fb7d33d32babbe8975049bea0972fd5e03f089c05c01fe5281e105"
+  },
+  "metrics": {
+    "canonicalPassed": 3482,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3482,
+    "reasonMismatches": 238,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "decisionCounterfactualPassed": 756,
+    "relationCounterfactualPassed": 282,
+    "clauseProbesPassed": 68,
+    "reasonCounterfactualPassed": 344,
+    "collisionProbesPassed": 196,
+    "reasonIntegrityPass": true,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7
+  },
+  "pass": true
+}
