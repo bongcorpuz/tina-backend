@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:55.280Z",
+  "scope": "REPLAY_INFRASTRUCTURE_ONLY",
+  "changes": [
+    "Persist C34_CANDIDATE_ONLY_DUAL_REPLAY.json before enforcing aggregate pass.",
+    "Allow only C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED as an additional governed linked-retry reason.",
+    "Allow the precise TECHNICAL_INCOMPLETE_DUAL_REPLAY_FAILURE adjudication subtype."
+  ],
+  "semanticCandidateChanged": false,
+  "originalCandidateSnapshotChanged": false,
+  "originalAttemptChanged": false,
+  "librarySha256Before": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298",
+  "librarySha256After": "6a958b709cfb639697186d0878ab3dcf9f4dafe03e0bfdb7c5e141a38e8708d5",
+  "decision": "PASS_READY_FOR_CANDIDATE_5_LINKED_RETRY",
+  "pass": true
+}

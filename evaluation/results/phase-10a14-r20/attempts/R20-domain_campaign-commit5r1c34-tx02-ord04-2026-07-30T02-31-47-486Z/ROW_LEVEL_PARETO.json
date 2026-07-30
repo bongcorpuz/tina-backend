@@ -1,0 +1,420 @@
+{
+  "totalRows": 3720,
+  "baseCorrect": 3565,
+  "candidateCorrect": 3572,
+  "newlyCorrected": [
+    {
+      "oracleId": "S2-IR18-DOM-024",
+      "query": "import duty",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-003",
+      "query": "Is import duty payable on goods released by the BOC?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-014",
+      "query": "What happens if the BOC finds undervaluation for import duty?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-021",
+      "query": "What records support an import duty protest?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-024",
+      "query": "How is import duty assessed for e-commerce shipments?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-030",
+      "query": "Are import duties taxes under Philippine law?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-179",
+      "query": "May import duty ba sa parcel from abroad?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "newlyRegressed": [],
+  "wrongToDifferentWrong": [],
+  "priorOverrideChanges": [],
+  "changedSignatures": [
+    {
+      "oracleId": "S2-IR18-DOM-024",
+      "query": "import duty",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-003",
+      "query": "Is import duty payable on goods released by the BOC?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-014",
+      "query": "What happens if the BOC finds undervaluation for import duty?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-021",
+      "query": "What records support an import duty protest?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-024",
+      "query": "How is import duty assessed for e-commerce shipments?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-030",
+      "query": "Are import duties taxes under Philippine law?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-179",
+      "query": "May import duty ba sa parcel from abroad?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "outsideTarget": [],
+  "pass": true
+}

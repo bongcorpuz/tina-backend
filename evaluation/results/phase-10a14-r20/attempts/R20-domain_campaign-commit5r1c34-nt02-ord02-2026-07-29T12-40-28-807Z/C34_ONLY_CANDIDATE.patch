@@ -1,0 +1,22 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 89774b1..d0b447c 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1331,6 +1331,17 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c34OrdinaryDomainInquiryHasNoTaxRelation)
+     return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.87 };
+ 
++  const c34IdentifierRole = /\b(?:(?:project|product|internal|team|channel)\s+)?(?:code|label|name|identifier|codename)\b/i.test(v.t);
++  const c34LocalIdentifierRedefinition = v.reason === 'no_tax_relation'
++      && evidence.reasonLocalRedefinitionAct
++      && (evidence.namingActControlsRequest || c34IdentifierRole)
++      && !evidence.governedTaxPredicateAnywhere
++      && !v.rels.some((r) => r === 'ASKS_TAX_TREATMENT_OF' || r === 'ASKS_VAT_TREATMENT_OF'
++        || r === 'ASKS_DEDUCTIBILITY_OF' || r === 'ASKS_WITHHOLDING_ON'
++        || r === 'ASKS_CUSTOMS_DUTY_ON' || r === 'ASKS_TAX_COMPLIANCE_FOR');
++  if (c34LocalIdentifierRedefinition)
++    return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };
++
+   return null;
+ }
+ 

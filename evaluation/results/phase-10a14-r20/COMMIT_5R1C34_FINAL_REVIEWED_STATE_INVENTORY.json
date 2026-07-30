@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:59:09.532Z",
+  "reviewedCommit": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "reviewedStateDigestDefinition": "lowercase SHA-256 of the exact final pre-review evidence manifest bytes",
+  "preReviewManifestPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_PRE_REVIEW_EVIDENCE.sha256",
+  "startingCheckpoint46": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_46_candidate_5_linked_retry_recovery_safe_pause.json",
+    "bytes": 4667,
+    "sha256": "a514eb815fbb5349970a0c948f70d7a94bfe380d364883fed702238cf55d19c2"
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_46_CONTINUATION_AUTHORIZATION.json",
+    "bytes": 4901,
+    "sha256": "e14cae30f2d7391353f0d437bf754bd17a2615ce978d03f9485db2ed70069c00"
+  },
+  "candidate6Result": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_CONTINUATION_RESULT.json",
+    "bytes": 8257,
+    "sha256": "a749e62d3d11cd589450b6deadb6ebb61c5fd1b903589d16830ce52381a1c56d"
+  },
+  "finalClosureDraft": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CLOSURE_DECISION_DRAFT.json",
+    "bytes": 10912,
+    "sha256": "8ef654ca38d370fe68844afb4db3e6097c032f71c1f18b1b8c279b182c33ab5d"
+  },
+  "roadmapVariants": {
+    "APPROVED": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_DRAFT.md",
+      "bytes": 29163,
+      "sha256": "1015bd134cf322582ec809ca27d7a908f3d6b22aa812e9c92fcc23a5cedef59a"
+    },
+    "APPROVED_WITH_NONBLOCKING_OBSERVATIONS": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_DRAFT_APPROVED_WITH_NONBLOCKING_OBSERVATIONS.md",
+      "bytes": 29193,
+      "sha256": "7d26ca05d5deedc2643f9faa7fab3600af81c507cb6263c1ea114b805abc5e90"
+    }
+  },
+  "currentStateVariants": {
+    "APPROVED": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_DRAFT.md",
+      "bytes": 119451,
+      "sha256": "0de3e1022a949e1d197e0330f4d71056e70c1781269fc57b838eca0ef7871d85"
+    },
+    "APPROVED_WITH_NONBLOCKING_OBSERVATIONS": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_DRAFT_APPROVED_WITH_NONBLOCKING_OBSERVATIONS.md",
+      "bytes": 119481,
+      "sha256": "214d6e0f726974562b914e46bba4c29d1b26a1d6629c3990f1cc845951254251"
+    }
+  },
+  "startingDocumentationSnapshots": {
+    "roadmapV9": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_STARTING_SNAPSHOT.md",
+      "bytes": 26338,
+      "sha256": "bdb294ea1ee28849be8c0e4afae7a97c650a70445a96eb9023e194c04be777ae"
+    },
+    "currentState": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_STARTING_SNAPSHOT.md",
+      "bytes": 114167,
+      "sha256": "cfe3587614be06d56eb036fbad58a762b066a0b602f20a0af5936e6d202fceed"
+    }
+  },
+  "stagingDraft": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_STAGING_SET_DRAFT.json",
+    "bytes": 421627,
+    "sha256": "cc82d5893ac9fa8fead6cd83a891fe08a94fcca7de7af0b0ad46c7b472ff3578"
+  },
+  "reviewRequest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_REQUEST.md",
+    "bytes": 4111,
+    "sha256": "ecba028719dbfd176eca98779810b63f49798a486cb62d9d0968420d696618bb"
+  },
+  "proposedCommitMessage": "PHASE-10A14-R20 COMMIT 5R1-C34 terminal incomplete - preserve governed cumulative reason-layer evidence",
+  "finalManifestDraftDefinition": "the immutable pre-review manifest binds all semantic/runtime inputs, shared runners, packages, live services, starting-document snapshots, both documentation variants, the pre-review checkpoint-log snapshot, external recovery prompt, and proposed staging/index-blob contract; the final self-excluding manifest retains that manifest as the reviewed-state binding, directly includes the selected live documentation and later exactly-once invocation/capture/decision/finalization evidence, includes the final checkpoint-log snapshot, omits mutable live checkpoint/log aliases, and does not repeat the external prompt as a separately staged file",
+  "pass": true
+}

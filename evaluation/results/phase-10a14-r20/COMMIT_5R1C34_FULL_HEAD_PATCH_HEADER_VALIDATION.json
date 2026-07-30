@@ -1,0 +1,159 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T00:54:14.358Z",
+  "scope": "structural patch headers only; patch body is excluded from path validation",
+  "canonicalFullHead": {
+    "canonicalHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 1,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [],
+    "forbiddenPathHeaders": [],
+    "hasForbiddenPath": false,
+    "headersValid": true,
+    "pass": true
+  },
+  "canonicalCandidateOnly": {
+    "canonicalHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 1,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [],
+    "forbiddenPathHeaders": [],
+    "hasForbiddenPath": false,
+    "headersValid": true,
+    "pass": true
+  },
+  "benignForbiddenLookingBodyLiterals": [
+    {
+      "lineNumber": 30,
+      "text": " //   evaluation/results/phase-10a14-r20/CLAUSE_LEVEL_INTENT_SCHEMA.md"
+    },
+    {
+      "lineNumber": 31,
+      "text": " //   evaluation/results/phase-10a14-r20/RELATION_AND_PRECEDENCE_SPEC.md"
+    },
+    {
+      "lineNumber": 401,
+      "text": "+    if (t.includes('.*')) { if (new RegExp('\\\\b' + t + '\\\\b').test(loText)) return true; }"
+    },
+    {
+      "lineNumber": 683,
+      "text": "+  const hasHomographTaxToken = HOMOGRAPH_TAX_TOKENS.some((t) => new RegExp('\\\\b' + t.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&') + '\\\\b').test(fullLo));"
+    },
+    {
+      "lineNumber": 1224,
+      "text": "+  NON_TAX_DOMAIN_NOUNS.map((n) => new RegExp('\\\\b' + n.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&') + '\\\\b'))"
+    },
+    {
+      "lineNumber": 1321,
+      "text": "+const TAX_DOMAIN_OBJECT_RE = /\\b(?:bir|bureau of internal revenue|revenue district|rdo\\b|revenue regulation|revenue memorandum|nirc|national internal revenue|bureau of customs|court of tax appeals|taxpayer|tax|taxes|taxable|taxation|vat|value[- ]added|withholding|percentage tax|excise|documentary stamp|capital gains|estate tax|donor|customs dut|tariff|import dut|deficiency|assessment notice|letter of authority|alphalist|slsp|books of accounts|official receipt|sales invoice|certificate of registration|authority to print|income tax|final tax|fringe benefit|creditable|input tax|output tax|refund of|tax refund|tax credit|amnesty|prescriptive period|deficiency interest|compromise penalty|payee|remittance|remit|surcharge|efps|ebirforms|ebir|annual information return|information return|registered business enterprise|rbe\\b|late filing|compromise|installment payment|quarterly return|monthly return|withholding agent|revenue officer|zonal value|fair market value|gross receipts|gross sales|net taxable|annual return|quarterly return|monthly return|final tax|deductib\\\\w*|taxab\\\\w*|vatable|registration fee|grace period|refund claim|input vat|output vat|gross income|capital asset|ordinary asset|domestic corporation|domestic company|resident individual|non[- ]resident|time deposit|royalty income|interest income|dividend|imported|importation|dutiable|duty on|re[- ]imported|licensed typeface|equipment transfer|insurance premium)\\b/i;"
+    }
+  ],
+  "benignForbiddenLookingBodyLiteralsAccepted": true,
+  "hostileAbsoluteHeader": {
+    "canonicalHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- C:/Projects/tina-backend/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 1,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [],
+    "forbiddenPathHeaders": [
+      "--- C:/Projects/tina-backend/services/philippine-tax-intent-analyzer.js"
+    ],
+    "hasForbiddenPath": true,
+    "headersValid": false,
+    "pass": false
+  },
+  "missingHeader": {
+    "canonicalHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 1,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [
+      "BLOCK_1_FILE_HEADER_COUNTS_0_1"
+    ],
+    "forbiddenPathHeaders": [],
+    "hasForbiddenPath": false,
+    "headersValid": false,
+    "pass": false
+  },
+  "malformedTraversalHeader": {
+    "canonicalHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/../philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 1,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [],
+    "forbiddenPathHeaders": [],
+    "hasForbiddenPath": false,
+    "headersValid": false,
+    "pass": false
+  },
+  "extraDiffBlock": {
+    "canonicalHeaders": [
+      "diff --git a/services/unexpected.js b/services/unexpected.js",
+      "--- a/services/unexpected.js",
+      "+++ b/services/unexpected.js",
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 2,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [],
+    "forbiddenPathHeaders": [],
+    "hasForbiddenPath": false,
+    "headersValid": false,
+    "pass": false
+  },
+  "emptyPatchRejected": true,
+  "pass": true
+}

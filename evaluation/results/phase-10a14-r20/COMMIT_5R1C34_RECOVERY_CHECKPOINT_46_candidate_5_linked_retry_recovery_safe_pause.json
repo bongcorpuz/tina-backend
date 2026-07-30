@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 46,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T03:27:48.237Z",
+  "stage": "candidate 5 linked retry recovery safe pause",
+  "status": "TWO_HOUR_SAFE_PAUSE_AFTER_CANDIDATE_5_LINKED_RETRY",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": null,
+  "activeAttemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_TECHNICAL_ROOT_CAUSE.json",
+      "bytes": 5224,
+      "sha256": "78574d7b95671343b4b641e1d852b9baff6aa5890597b9216bea46469a564cd9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_TECHNICAL_ROOT_CAUSE.md",
+      "bytes": 657,
+      "sha256": "d0e0c7b0629124961ee574882d2a0afa0683165b0379de0c8612bfeade86ea77"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_ORIGINAL_ATTEMPT_ADJUDICATION.json",
+      "bytes": 833,
+      "sha256": "9fd6dd120356ae3848602f6cb52193d28827f5ea9d280d41837b6ff74b4c0d84"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_REPLAY_REMEDIATION_RESULT.json",
+      "bytes": 825,
+      "sha256": "327f48b237b0cf3051c3a8cc9ffdd3896968e3bc612765e9966a1339bae30457"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_REPLAY_HEADER_VALIDATION.json",
+      "bytes": 997,
+      "sha256": "722889791beadfbac7d5dc3e7feec5932b7277102b1d53cdf3c772e1410a5ec9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_DUAL_REPLAY_SELF_TEST.json",
+      "bytes": 467081,
+      "sha256": "4cb96e354faa69e1de485d4747c7df603bb70bd77e1596b8c1a19fc4d903d854"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_REPLAY_COMPATIBILITY_VALIDATION.json",
+      "bytes": 2538,
+      "sha256": "c987b4a4069c49c7643a41069faa13426582e3acd4c8b53ad0b59dd95f615b44"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_LINKED_RETRY_AUTHORIZATION.json",
+      "bytes": 1384,
+      "sha256": "a23949b95c965eddb6929db7508db13224d4d8fcfd2e2540b153804b26ada7aa"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_LINKED_RETRY_NON_DUPLICATION_PREFLIGHT.json",
+      "bytes": 607,
+      "sha256": "d5d51dce388cfea55b0adb402215c09f9d641fb35b5abd99d6596aff48c89568"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_LINKED_RETRY_RESULT.json",
+      "bytes": 3557,
+      "sha256": "220f48944ed4c0ee9c54926ec0ef0ec4542bf996f59d97522a9614fc0a6da266"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_5_LINKED_RETRY.json",
+      "bytes": 8814,
+      "sha256": "1b73c282ae6fb1c201f4636432d661ab0b49b8d4efd70abd368f0e4c420b2af9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_RECOVERY_SAFE_PAUSE.json",
+      "bytes": 5595,
+      "sha256": "92cf5cd4e7871a45f01d27a8995fc68b909509709ada371fd799ff3a6a205a15"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z/EXECUTOR_TECHNICAL_REPLAY_RECOVERY.json",
+      "bytes": 729,
+      "sha256": "14b334256c5558b19cd9beabac9f63476241f40ef4c7ecfa672f1c7cdd722677"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ATTEMPT.json",
+      "bytes": 5806,
+      "sha256": "05db330640b897d736228ee5c481d230d6af4808d84017a7337b4f19c232043f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ITERATION_RESULT.json",
+      "bytes": 657407,
+      "sha256": "60e5e6dea588c95e13c2c38c0cca0d8ffe11ec96e315e5a69dfab92c5921253d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_RECOVERY_EVIDENCE.sha256",
+      "bytes": 2527,
+      "sha256": "7f8093b3a87e93e027ba3e73824ded8d14ec8e9d1dc24292772ed1fa9e861038"
+    }
+  ],
+  "previousLogSha256": "a6b28b1a146b70ad4f2853ec120f36f1b707a45ec7beaa1e832103200bdd698d",
+  "nextExactOperation": "Resume from this safe checkpoint. Candidate 5 is terminal. Candidate 6 remains unauthorized in this session; obtain a new governed continuation before any Candidate 6 decision.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "198842da0ca9a571f491c0f65e58ec0ee2b7ea0f18e01c0dc500efcb1d9ed1b8"
+}

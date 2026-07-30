@@ -1,0 +1,11 @@
+{
+  "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+  "insertionSite": "governed override after all inherited accepted rules and before return null",
+  "activeBaseDigest": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+  "candidateDigest": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "changedRows": 7,
+  "newlyCorrectedRows": 7,
+  "outsideCorrectionTarget": [],
+  "inheritedRulesPreserved": true,
+  "pass": true
+}

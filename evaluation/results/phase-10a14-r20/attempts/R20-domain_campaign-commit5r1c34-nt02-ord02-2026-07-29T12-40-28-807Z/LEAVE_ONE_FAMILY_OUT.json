@@ -1,0 +1,156 @@
+{
+  "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+  "withheldFamily": "unseen_identifier_roles_and_short_tokens",
+  "developmentCorpusExcluded": true,
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "records": [
+    {
+      "query": "Inventory code lang ang AMR?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Festival playlist code lang ang BNS?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Research prototype label lang ang CTO?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Volunteer workshop codename lang ang DUP?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Sports-team identifier lang ang EVQ?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T12:41:06.308Z",
+  "candidate2AttemptId": "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+  "acceptedRetryAttemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+  "acceptedRetryResultSha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054",
+  "protectedRows": {
+    "total": 98,
+    "r3Corrections": 52,
+    "packet": 41,
+    "leaveFamilyOut": 5
+  },
+  "regressions": [],
+  "pass": true
+}

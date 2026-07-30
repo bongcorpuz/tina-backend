@@ -1,0 +1,583 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.728Z",
+  "candidates": [
+    {
+      "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "expectedReason",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "expectedDecision",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "sourceSet",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "primaryCategory",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "rowPosition",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        },
+        {
+          "kind": "fixture",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "expectedReason",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "expectedDecision",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "sourceSet",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "primaryCategory",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "rowPosition",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        },
+        {
+          "kind": "fixture",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "expectedReason",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "expectedDecision",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "sourceSet",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "primaryCategory",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "rowPosition",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        },
+        {
+          "kind": "fixture",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "cba51c715392decec26aa5babdec60850c77a91dbc622b9ea6dc40da4dcba468"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "expectedReason",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "expectedDecision",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "sourceSet",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "primaryCategory",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "rowPosition",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        },
+        {
+          "kind": "fixture",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "expectedReason",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "expectedDecision",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "sourceSet",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "primaryCategory",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "rowPosition",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        },
+        {
+          "kind": "fixture",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "records": [
+        {
+          "kind": "oracleId",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "queryHash",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "expectedLabel",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "expectedReason",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "expectedDecision",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "familyName",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "sourceSet",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "primaryCategory",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "rowPosition",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        },
+        {
+          "kind": "fixture",
+          "records": 3720,
+          "primitiveToFirstInvariant": true,
+          "primitiveToSecondInvariant": true,
+          "sentinelToSentinelInvariant": true,
+          "outputsInvariant": true,
+          "patchSha256": "7db3c56f1cf59f6e35690ac49dde9dd0079407883d4662e0447f26d19056e723"
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

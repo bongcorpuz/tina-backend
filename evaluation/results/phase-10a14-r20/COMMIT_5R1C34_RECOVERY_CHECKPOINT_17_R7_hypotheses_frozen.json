@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 17,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-28T13:34:41.854Z",
+  "stage": "R7 hypotheses frozen",
+  "status": "COMPLETED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_HYPOTHESES.json",
+      "bytes": 34821,
+      "sha256": "c71153db4148d8bad3ab0f772aa55e130e00e201b61c78ff5d21573c04595009"
+    }
+  ],
+  "previousLogSha256": "43ef55b189a728fcd36dc0717842cde65f022f9b3a6df4bf078b62f527afb726",
+  "nextExactOperation": "Execute material candidate 1 of 6 against the exact cumulative active base.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "4e5cd5366102c124a9af7c7d84fbc4cf65986759059e8f807ebd4cf08118907e"
+}

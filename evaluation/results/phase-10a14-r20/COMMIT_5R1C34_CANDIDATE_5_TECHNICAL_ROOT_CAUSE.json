@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:48.212Z",
+  "classification": "TECHNICAL_INCOMPLETE_DUAL_REPLAY_FAILURE",
+  "originalAttemptId": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "failure": "C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED",
+  "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+  "semanticEvaluationCompleted": false,
+  "exactFailingCommand": {
+    "command": "requirePass(result.pass, \"C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED\")",
+    "source": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:976",
+    "cwd": "C:/Projects/tina-backend",
+    "executor": "C:\\Program Files\\nodejs\\node.exe",
+    "executorArgs": [
+      "C:\\Projects\\tina-backend\\evaluation\\runner\\phase-10a14-r20\\commit5r1c34-checkpoint39-continue.mjs",
+      "--candidate5"
+    ],
+    "exitCode": 1,
+    "stdout": "Allocated C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment against cumulative base 82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e.\n",
+    "stderr": "Error: C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED\n    at requirePass (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:79:25)\n    at dualEnvironmentReplay (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:976:5)\n    at Module.replayAndInheritance (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:1009:22)\n    at Module.runMaterialCandidate (file:///C:/Users/USER/AppData/Local/Temp/tina-c34-checkpoint39-adapter-27188-b4ec52daadbc.mjs?sha=d672a9b38e26ab366ee25155eb38a821517adb14b5f1ca3bcfb0dd173bea1fd6:4487:22)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2243:16\n    at async withAllocationLock (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:1316:12)\n    at async main (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2842:20)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2867:3\n"
+  },
+  "identities": {
+    "expectedBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+    "actualBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+    "expectedCandidateHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "actualCandidateHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "expectedChangedPaths": [
+      "services/philippine-tax-intent-analyzer.js"
+    ],
+    "actualPatchChangedPaths": [
+      "services/philippine-tax-intent-analyzer.js"
+    ],
+    "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+  },
+  "firstFailingPatchSection": null,
+  "failedReplayEnvironment": null,
+  "forensicLimitation": {
+    "originalDetailedReplayEvidencePresent": false,
+    "exactSubprocessAndEnvironmentRecoverable": false,
+    "reason": "The helper threw the aggregate failure before writing its dual-environment result. The terminal evidence retained no per-environment command result, so inventing a specific failed git subprocess or patch section would be unsupported."
+  },
+  "provenRootCause": "Replay observability and durability defect: candidate-only dual replay used throwOnFailure=true before C34_CANDIDATE_DELTA_REPLAY.json was written, losing the failing environment/subgate. The failure is technical and non-semantic.",
+  "excludedCauses": {
+    "malformedPatchHeaders": true,
+    "absoluteOrQuotedWindowsPaths": true,
+    "wrongBaseIdentity": true,
+    "wrongCandidateIdentity": true,
+    "inheritedCandidateContent": true,
+    "semanticRejection": true
+  },
+  "sourceFailure": "Error: C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED\n    at requirePass (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:79:25)\n    at dualEnvironmentReplay (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:976:5)\n    at Module.replayAndInheritance (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:1009:22)\n    at Module.runMaterialCandidate (file:///C:/Users/USER/AppData/Local/Temp/tina-c34-checkpoint39-adapter-27188-b4ec52daadbc.mjs?sha=d672a9b38e26ab366ee25155eb38a821517adb14b5f1ca3bcfb0dd173bea1fd6:4487:22)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2243:16\n    at async withAllocationLock (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:1316:12)\n    at async main (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2842:20)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2867:3",
+  "continuity": {
+    "checkpoint42Sha256": "6c891dc0aa5f2a88ec7cb522a1b5f738e606e229a3aa55135ebd94cc992ff4b8",
+    "manifestValid": 81
+  },
+  "pass": true
+}

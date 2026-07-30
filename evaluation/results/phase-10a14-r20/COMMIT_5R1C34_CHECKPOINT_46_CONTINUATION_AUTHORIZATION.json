@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:56:19.837Z",
+  "sessionStartedUtc": "2026-07-30T04:20:10.8872565Z",
+  "sessionHardStopUtc": "2026-07-30T08:20:10.8872565Z",
+  "startingCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_46_candidate_5_linked_retry_recovery_safe_pause.json",
+    "sha256": "a514eb815fbb5349970a0c948f70d7a94bfe380d364883fed702238cf55d19c2",
+    "eventSha256": "198842da0ca9a571f491c0f65e58ec0ee2b7ea0f18e01c0dc500efcb1d9ed1b8",
+    "ordinal": 46
+  },
+  "interveningDiagnosticReconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_47_DIAGNOSTIC_CLI_MISUSE_ADJUDICATION.json",
+    "bytes": 2753,
+    "sha256": "772bec2c433abfc1b26c54d8a21bf716c973c30d61bf298aa0a229f4726a40d4"
+  },
+  "preallocationSandboxDiagnosticReconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREALLOCATION_SANDBOX_DIAGNOSTIC_ADJUDICATION.json",
+    "bytes": 1694,
+    "sha256": "0723efe9d64c8e9e410106c0cff6b892ca3e6754a63ca5f815eb01cba4e050f8"
+  },
+  "preallocationStartingLedgerGuardDiagnosticReconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREALLOCATION_STARTING_LEDGER_GUARD_ADJUDICATION.json",
+    "bytes": 1992,
+    "sha256": "537cd6a97f35fac19c0b95dcedc3a0c83061f783984b7bbca3d9161d97811945"
+  },
+  "candidate5RecoveryManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_RECOVERY_EVIDENCE.sha256",
+    "bytes": 2527,
+    "sha256": "7f8093b3a87e93e027ba3e73824ded8d14ec8e9d1dc24292772ed1fa9e861038"
+  },
+  "acceptedCandidateResultHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+      "bytes": 780890,
+      "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z/ITERATION_RESULT.json",
+      "bytes": 653982,
+      "sha256": "22a6606b4daf3a02d26137ffd0d3f9d4be63795c6fa12700de849e02ffb3b065"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z/ITERATION_RESULT.json",
+      "bytes": 659280,
+      "sha256": "565f0498e4b6832872cc75cf80dd3fa361345de022930319f7f1f598610e567b"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/ITERATION_RESULT.json",
+      "bytes": 667424,
+      "sha256": "0aeb88e61c1423246f033482235b593349bf4f231c031ffe840b36d31908e964"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ITERATION_RESULT.json",
+      "bytes": 657407,
+      "sha256": "60e5e6dea588c95e13c2c38c0cca0d8ffe11ec96e315e5a69dfab92c5921253d"
+    }
+  ],
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "runnerHashes": {
+    "frozenExecutor": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 348007,
+      "sha256": "a38759fbde67e67b06e0165fcbb8ef97f5163e4f6c8aa08e951ab05dec3b4b5e"
+    },
+    "frozenLibrary": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 87908,
+      "sha256": "6a958b709cfb639697186d0878ab3dcf9f4dafe03e0bfdb7c5e141a38e8708d5"
+    },
+    "continuationRunnerAtAuthorization": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint46-continue.mjs",
+      "bytes": 184856,
+      "sha256": "6686ad88b50d9719889cc4144d83434f3f2d865f35d05402e6f4ecbed6cf5844"
+    }
+  },
+  "startingRegistry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 697791,
+    "sha256": "ac198cb30d5f41dc2161bc3f1079e259f8c8dee49dc649242c30138c85ae5a8a"
+  },
+  "startingWal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 9787,
+    "sha256": "9e499593785a23515ff1986057dd786797df9007ab5c38b26a96840901281363"
+  },
+  "hypotheses": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_HYPOTHESES.json",
+    "bytes": 34821,
+    "sha256": "c71153db4148d8bad3ab0f772aa55e130e00e201b61c78ff5d21573c04595009"
+  },
+  "scope": {
+    "candidate": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+    "executeExactlyOnce": true,
+    "allocationCycle": "cp01",
+    "governedCandidateOrdinal": 6,
+    "nextGovernedAllocationOrdinal": 7,
+    "preserveCandidates1Through5": true,
+    "candidate7Authorized": false,
+    "c35Authorized": false
+  },
+  "decision": "AUTHORIZED_EXACTLY_ONE_FROZEN_CANDIDATE_6_ATTEMPT",
+  "pass": true
+}

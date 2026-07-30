@@ -1,0 +1,1223 @@
+{
+  "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+  "requirements": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3,
+    "copiedFrozenQueries": 0,
+    "fixtureDependency": 0
+  },
+  "counts": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3
+  },
+  "rows": [
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "Does the NIRC govern the VAT treatment of donated inventory?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "Can the TRAIN law affect the tax treatment of a housing allowance?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "Does the CREATE law cover the income-tax treatment of a startup grant?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "How does the CMTA affect customs treatment of museum equipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "cmta",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "cmta",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "Does a holding period rule apply to gains from a used vehicle?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "Can a private service agreement include a withholding-allocation clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "May a lease contain a taxable costs clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "positives",
+      "query": "Does a deed include a documentary-stamp-tax allocation clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "Does the Tariff and Customs Code govern duty treatment of donated tools?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "Can the NIRC affect tax treatment of a cooperative rebate?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "Does the TRAIN law cover tax treatment of a transport allowance?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "How does the CREATE law affect income-tax treatment of a research grant?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "May a holding period rule apply to capital gains from artwork?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "Can a contract include a taxable costs clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "Does an agreement include a withholding-liability provision?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "substitutions",
+      "query": "May a deed carry a capital-gains-tax allocation clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "Which BIR form does the TRAIN law require?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "How is tax computed under the NIRC?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "When must a return be filed under the CREATE law?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "Rename the TRAIN-law document.",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "rename",
+        "requestedTarget": null,
+        "speechAct": "request"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "rename",
+        "requestedTarget": null,
+        "speechAct": "request"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "Can tariff classification change the customs duty rate?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "Is office rent subject to VAT?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "Can a private lease allocate cleaning costs?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "nearMisses",
+      "query": "What does NIRC mean in Philippine tax?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "constructions",
+      "query": "Does the NIRC govern tax treatment of a donated generator?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "constructions",
+      "query": "How does the CMTA affect customs treatment of borrowed equipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "cmta",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "cmta",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "constructions",
+      "query": "Can a holding period rule apply to gains from antique furniture?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "constructions",
+      "query": "May a warehouse lease include a taxable costs clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "fillers",
+      "query": "Can the TRAIN law affect tax treatment of a meal allowance?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "fillers",
+      "query": "Does the NIRC govern VAT treatment of donated books?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "fillers",
+      "query": "How does the CMTA affect customs treatment of exhibit lights?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "cmta",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "cmta",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "fillers",
+      "query": "Can a service agreement include a withholding-cost clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "fillers",
+      "query": "May a property deed contain a documentary-stamp-tax liability provision?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "skeletons",
+      "query": "Does the CREATE law govern tax treatment of a community grant?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "skeletons",
+      "query": "How does the Tariff and Customs Code affect Philippine import duty?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "skeletons",
+      "query": "Does a holding period rule apply to gains from a musical instrument?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "skeletons",
+      "query": "Can a consulting contract include an income-tax allocation clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "skeletons",
+      "query": "Can a farm lease contain a taxable costs clause?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "taglish",
+      "query": "Sakop ba ng TRAIN law ang tax treatment ng housing benefit?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "taglish",
+      "query": "Pwede bang may taxable costs clause ang private office lease?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "category": "taglish",
+      "query": "Paano affect ng Tariff and Customs Code ang Philippine import duty sa donated equipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_treatment_of_ordinary_object",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    }
+  ],
+  "executedRows": 41,
+  "passedRows": 41,
+  "failedRows": [],
+  "positiveCandidateFirings": 21,
+  "copiedFrozenQueries": [],
+  "duplicatedQueries": [],
+  "noCopiedFrozenQueries": true,
+  "protectedQuerySources": [
+    "R3",
+    "reason_counterfactual",
+    "collision_probes",
+    "decision_counterfactual_v3",
+    "decision_counterfactual_v4",
+    "decision_counterfactual_v5",
+    "decision_counterfactual_v6",
+    "relation_counterfactual",
+    "clause_probes",
+    "rich_context_guard"
+  ],
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "noFixtureDependency": true,
+  "pass": true
+}

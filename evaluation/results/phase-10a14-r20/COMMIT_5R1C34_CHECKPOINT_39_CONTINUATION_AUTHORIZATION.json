@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:08:19.1458210Z",
+  "classification": "CHECKPOINT_39_CONTINUATION_AUTHORIZED",
+  "controllingState": {
+    "checkpoint": 39,
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "activeBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+    "acceptedCandidateAttemptIds": [
+      "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+      "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z"
+    ],
+    "metrics": {
+      "reasonPassed": 3565,
+      "reasonTotal": 3720,
+      "remainingReasonMismatches": 155,
+      "decisionPassed": 3720,
+      "decisionTotal": 3720,
+      "relationPassed": 3720,
+      "relationTotal": 3720
+    }
+  },
+  "timebox": {
+    "startedUtc": "2026-07-30T02:08:19.1458210Z",
+    "hardStopUtc": "2026-07-30T04:08:19.1458210Z",
+    "maximumMinutes": 120,
+    "candidate4AuthorizedExactlyOnce": true,
+    "candidate5Conditional": true,
+    "candidate6Prohibited": true,
+    "stageCommitPushC35Prohibited": true
+  },
+  "bindings": {
+    "checkpoint39": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_39_checkpoint_37_continuation_one_hour_safe_pause.json",
+      "bytes": 13906,
+      "sha256": "a33f63930074a0f816a98ea490b061b84c334ac2271ba0324cdf2cca37f0b277"
+    },
+    "checkpoint39EventSha256": "d5b19d38379f98d478b4cf9b71e74de6e787cf2cbc407291574b087da5663bbb",
+    "checkpoint39SafePause": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_SAFE_PAUSE.json",
+      "bytes": 12941,
+      "sha256": "6885447b95b54923a39920b372c023c5710e11366f58fda10c0fa36559169559"
+    },
+    "checkpoint39Manifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 10090,
+      "sha256": "34bd79c7b658661b44b91e2a3b88a736e196ff32df7ad10a60f18aace7da0d97"
+    },
+    "checkpoint39RegistrySnapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_39_CANONICAL_ATTEMPT_REGISTRY_SNAPSHOT.json",
+      "bytes": 680951,
+      "sha256": "3405656ab1382014017bf3b904665425b498ed5089f83b9334bc620380bff1c4"
+    },
+    "checkpoint39AllocationWalSnapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_39_ATTEMPT_ALLOCATION_WAL_SNAPSHOT.ndjson",
+      "bytes": 5880,
+      "sha256": "8f61c4bb9e2d0a3ea06b9c5429feaa57c4db41ea007f702119504ba5a1164f75"
+    },
+    "checkpoint39LogSnapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_39_RECOVERY_CHECKPOINT_LOG_SNAPSHOT.ndjson",
+      "bytes": 324145,
+      "sha256": "41baedd0d3bd189f3c613fa7436387d93bb6988d16c7ce62d134cec7ed883750"
+    },
+    "acceptedCandidateResults": [
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+        "bytes": 780890,
+        "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z/ITERATION_RESULT.json",
+        "bytes": 653982,
+        "sha256": "22a6606b4daf3a02d26137ffd0d3f9d4be63795c6fa12700de849e02ffb3b065"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z/ITERATION_RESULT.json",
+        "bytes": 659280,
+        "sha256": "565f0498e4b6832872cc75cf80dd3fa361345de022930319f7f1f598610e567b"
+      }
+    ],
+    "hypotheses": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_HYPOTHESES.json",
+      "bytes": 34821,
+      "sha256": "c71153db4148d8bad3ab0f772aa55e130e00e201b61c78ff5d21573c04595009"
+    },
+    "originalRunner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 348007,
+      "sha256": "a38759fbde67e67b06e0165fcbb8ef97f5163e4f6c8aa08e951ab05dec3b4b5e"
+    },
+    "checkpoint35Runner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint35-continue.mjs",
+      "bytes": 68728,
+      "sha256": "26305e423710262a890c3bd5434fc6b57784c792be4b375ae8335f71a8f290c5"
+    },
+    "checkpoint37Runner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint37-continue.mjs",
+      "bytes": 54159,
+      "sha256": "9f2137cfe3f580ba971420092f5b5c03d6c510dd9c9bf57a0aa4c4ec157ad1bc"
+    },
+    "continuationRunner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs",
+      "bytes": 102647,
+      "sha256": "03f187d8c89f4fbc984f2b5ede53bc87c2fe8a811f0684c7646be4329f5f3819"
+    },
+    "library": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 87485,
+      "sha256": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298"
+    },
+    "prompt": {
+      "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C34-TWO-HOUR-CONTINUATION-FROM-CHECKPOINT-39.md",
+      "bytes": 10626,
+      "sha256": "3833c73cade381846baf92efea2165db591f098884e5acc1279e1976692147e5"
+    },
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 680951,
+      "sha256": "3405656ab1382014017bf3b904665425b498ed5089f83b9334bc620380bff1c4"
+    },
+    "allocationWal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 5880,
+      "sha256": "8f61c4bb9e2d0a3ea06b9c5429feaa57c4db41ea007f702119504ba5a1164f75"
+    }
+  },
+  "pass": true
+}

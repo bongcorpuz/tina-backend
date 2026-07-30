@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.708Z",
+  "executionMode": "isolated immutable attempt snapshots",
+  "liveServicesWereSemanticBase": false,
+  "liveStartingHeadIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 31045,
+      "rawSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 11976,
+      "rawSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 64424,
+      "rawSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+  },
+  "selectedSemanticRuntimeIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 183191,
+      "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+      "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+  },
+  "liveServicesTrackedDiffEmpty": true,
+  "restorePerformed": false,
+  "overwriteAttempted": false,
+  "pass": true
+}

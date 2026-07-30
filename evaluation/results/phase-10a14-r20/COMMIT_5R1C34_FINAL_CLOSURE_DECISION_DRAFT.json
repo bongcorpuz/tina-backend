@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.708Z",
+  "classification": "C34_TERMINAL_BOUNDED_CANDIDATE_SET_PHASE_10A_OPEN",
+  "startingCheckpoint": 46,
+  "candidate6": {
+    "attemptId": "R20-domain_campaign-commit5r1c34-cp01-ord07-2026-07-30T05-56-19-881Z",
+    "disposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+    "accepted": false,
+    "metrics": {
+      "canonicalPassed": 3576,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3576,
+      "reasonMismatches": 144,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 435
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 291
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 782
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 852
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 482
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "result": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-cp01-ord07-2026-07-30T05-56-19-881Z/ITERATION_RESULT.json",
+      "bytes": 654655,
+      "sha256": "b828ab05821b74b2c83721ad69b6d976795a61913d3b54b1fb337aa29eec58ce"
+    }
+  },
+  "composition": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CUMULATIVE_COMPOSITION.json",
+    "bytes": 7490,
+    "sha256": "4b31eee57e85818c786451c8c7fac13840e0fcedfe4878296fcb0294298e4327"
+  },
+  "acceptedRuleChain": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACCEPTED_RULE_CHAIN.json",
+    "bytes": 29159,
+    "sha256": "38696058ff96c452913756e00629e2471999ba1fd1d6b78eed84056790314605"
+  },
+  "finalActiveBase": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACTIVE_BASE_IDENTITY.json",
+    "bytes": 4570,
+    "sha256": "30eae37b9f9257048ff129ff18d94addfde9f8c6ffa37b252c18b65bc34d9232"
+  },
+  "finalResidualInventory": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_RESIDUAL_INVENTORY.json",
+    "bytes": 88930,
+    "sha256": "b3f908c308bbe9124dc993e01512c12c0067b339ee73e01e0ac77afa0bcabd5c"
+  },
+  "finalResidualFamilySummary": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_RESIDUAL_FAMILY_SUMMARY.json",
+    "bytes": 1688,
+    "sha256": "72e96bb8e526dd283b19b068292cb50cec731d20a24479ea8b0c2dabc6cada49"
+  },
+  "frozenGateResult": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_FROZEN_GATE_RESULT.json",
+    "bytes": 29900,
+    "sha256": "027f4f7fb0881d3caf3a20fc4c54e296647ed6f8222b3ed4bc2dd7a2fe421444"
+  },
+  "dualReplayResult": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_DUAL_REPLAY_RESULT.json",
+    "bytes": 26403,
+    "sha256": "c5e8a7c18ac2f99d8d0a501001d1f393958fdc1c476b1500dd7f94fb901a2df1"
+  },
+  "generalizationResult": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GENERALIZATION_RESULT.json",
+    "bytes": 3976,
+    "sha256": "a813c423c6d4baccd95b769788da6c8bb14d6f820199a2fac4fb158ddb528778"
+  },
+  "preservationResult": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_PRESERVATION_RESULT.json",
+    "bytes": 245792,
+    "sha256": "097fe73a511a8fa6471aecbc50afdb5896c055236ed39ba03e983baee9455f6f"
+  },
+  "attemptLedger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ATTEMPT_LEDGER.json",
+    "bytes": 10190,
+    "sha256": "3c4ecec8cf659e89578852965c3a4695b277114cbe2080eda4997ba07c6129a5"
+  },
+  "registryWalReconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REGISTRY_WAL_RECONCILIATION.json",
+    "bytes": 5213,
+    "sha256": "a83f4efabd24322d1a74a5b1296801a52ffba0657e385d0579eb18a5640512ad"
+  },
+  "aggregateFiles": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RULE_GENERALIZATION_PACKETS.json",
+      "bytes": 4629,
+      "sha256": "777b276a26470cd043e9fd6a1d4e6d607d8278ad08e2c4d1079370b80ebb629e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_GENERALIZATION_QUERY_RESULTS.json",
+      "bytes": 262998,
+      "sha256": "d99e5dfef9903e71b1a5022d8fc91bff7abbcad60d07f560c2e1be8b9b1da81e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LEAVE_ONE_FAMILY_OUT_RESULTS.json",
+      "bytes": 31014,
+      "sha256": "d403e64249c1cedc8c2a925ddc572685c50f783153b826053879a5eefbf3d35a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_SENTINEL_SUBSTITUTION_RESULT.json",
+      "bytes": 21857,
+      "sha256": "01aeeaf790fec8b03987b9446cca3260751eb5cc248016d3db0d867f6391017c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_INDEPENDENT_ROW_SHUFFLE_RESULT.json",
+      "bytes": 7235,
+      "sha256": "5034211a406de283a095aa23e3bcb855b78b2ad990bcbc5b14352177eb361c60"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TAINT_SOURCE_TO_RUNTIME_SINK_MAP.json",
+      "bytes": 11871,
+      "sha256": "90252ba389ef48c897e2a9199e6745697f44ffc093d186f5151eff7d3924b491"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TAINT_AWARE_ANTI_OVERFIT_RESULT.json",
+      "bytes": 11634,
+      "sha256": "bd100172bd5dc0c57473d2ed341389323b8bd47d8846198160c6b43fcb1dc516"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ROW_LEVEL_PARETO_COMPARISON.json",
+      "bytes": 190466,
+      "sha256": "413410e889b327f8a7c7891335095f3185dec72f80bff833d9d60014e5bc835c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_WRONG_TO_DIFFERENT_WRONG.json",
+      "bytes": 996,
+      "sha256": "fb17494e05ca2970faeefa27cc060e110f8972ae61b7d2a6613c3e8090af5fd7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PRIOR_OVERRIDE_REGRESSION.json",
+      "bytes": 971,
+      "sha256": "3491b0cd4986f3dec9a0eb64d69ffd13374fbfc5b9eb4b2ea8e83a63e98b2e29"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_M01R_REGRESSION.json",
+      "bytes": 2414,
+      "sha256": "2ec92c0fb91cb9560ae19f471e05ab1123ade053e4fbf5f3500c5ac53ed2246d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_BRANCH_SIGNATURE_DRIFT.json",
+      "bytes": 67380,
+      "sha256": "ef9c26541f482012d29a9705b3079326115052e64bdc797fd1acc187e0f1563d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_MONOTONIC_FEATURE_BASELINE.json",
+      "bytes": 1291,
+      "sha256": "604b372a216a8caa64f75d947f643e6e6f66a7f2dfb99efac42e0ca8e36f7f12"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_MONOTONIC_FEATURE_ABLATION.json",
+      "bytes": 585068,
+      "sha256": "7bae226ebf7fdbb6c5c22870b57a048c257f495ce44c288cfd25d325e87474b3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_COMPOSITION_ORDER_INDEPENDENCE.json",
+      "bytes": 2469,
+      "sha256": "988059b0554b44c5eacc274dcf8440dbb5fcb365f4db19dd9b32a7e493b88f7b"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_COMPOSITION_ROW_DELTA.json",
+      "bytes": 122442,
+      "sha256": "546bcdf1c378f712f7a0944746c8569b5b0524799a216f6ef2efba8865d08b65"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_DELTA_REPLAY_RESULT.json",
+      "bytes": 3247791,
+      "sha256": "4b25e76c58238236f254668ed9989b1ba3fe8d9b27c84d9ceaffa13d0871ce3c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_REPLAY_RESULT.json",
+      "bytes": 196151,
+      "sha256": "9884004a825cde2a86f8af49c58d060d7c4d34859c1daa7aee1c38b6237a719d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PATCH_PATH_CANONICALIZATION_SPEC.md",
+      "bytes": 1017,
+      "sha256": "002b623a71b1cd33f6947062ee62a5bff60644d8e8fc20e4362df22c08c3afd4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_EXHAUSTION.json",
+      "bytes": 1170,
+      "sha256": "00fc323f92d6c4908cb8dc1eb05b41fcb3feb3e184af2e5b2b24a2288d80b350"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_REASON_LOCK_VERIFICATION_DISPOSITION.json",
+      "bytes": 272,
+      "sha256": "f978835ec491a5ea25a8fcdbb821082f4da2c271231e4ac1f7c282a9cf5eb0f8"
+    }
+  ],
+  "phase10AStatus": "OPEN",
+  "r20Status": "IN_PROGRESS",
+  "c34Status": "TERMINAL_PENDING_INDEPENDENT_OPUS_REVIEW",
+  "reasonLayerClosure": false,
+  "runtimeClosure": false,
+  "candidateExhaustion": true,
+  "candidate7Authorized": false,
+  "c35Authorized": false,
+  "environment": {
+    "processState": {
+      "inspectionSucceeded": true,
+      "activeC34": [],
+      "unreadable": [],
+      "listeners5173": []
+    },
+    "temporaryRuntimeDirectories": [],
+    "allocationLocks": [],
+    "gitState": {
+      "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "sync": "0\t0",
+      "serviceDiff": "",
+      "staged": "",
+      "roadmapV7V8Diff": "",
+      "oracleDiff": "",
+      "indexLock": false,
+      "c35Items": []
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T05:00:15.688Z",
+  "decision": "PASS_ALLOCATE_EXACTLY_ONE_LINKED_RETRY",
+  "timebox": {
+    "startedUtc": "2026-07-29T04:33:26.069Z",
+    "hardStopUtc": "2026-07-29T05:33:26.069Z",
+    "retryLatestStartUtc": "2026-07-29T05:13:26.069Z",
+    "remainingMs": 1990381,
+    "requiredRemainingMs": 1200000
+  },
+  "processState": {
+    "inspectionMethod": "Windows Script Host WMI node.exe inventory with strict sentinels, current-PID completeness proof, command-line classification, and independent netstat ownership",
+    "currentExecutorPid": 28048,
+    "processInspectionStatus": 0,
+    "processInspectionSignal": null,
+    "processInspectionSucceeded": true,
+    "processInspectionError": null,
+    "processInspectionStderr": "",
+    "currentExecutorPresent": true,
+    "currentExecutorCommandLineReadable": true,
+    "cleanupSucceeded": true,
+    "inspectionClassification": "NO_ACTIVE_C34_PROCESS",
+    "otherNodeProcesses": [],
+    "unreadableNodeProcesses": [],
+    "allNodeCommandLinesReadable": true,
+    "activeC34Runners": [],
+    "activeC34RunnerCount": 0,
+    "uiOrToolingNodeProcesses": [],
+    "unrelatedNodeProcesses": [],
+    "uiStateInterpretation": "ANY_VS_CODE_OR_CODEX_RUNNING_C34_INDICATOR_IS_STALE_OR_NON_AUTHORITATIVE",
+    "netstatInspectionStatus": 0,
+    "netstatInspectionSignal": null,
+    "netstatInspectionStderr": "",
+    "listeners5173": [],
+    "port5173Free": true
+  },
+  "zeroAllocation": {
+    "registryAttempts": 220,
+    "c34AttemptIds": [
+      "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z"
+    ],
+    "linkedRetryIds": [],
+    "linkedRetryWalPlanLines": [],
+    "attemptDirectories": [
+      "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z"
+    ],
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 663111,
+      "sha256": "8121185cc23706466003f0b5077e1419c65e680ca84e8d93c407af8d3384388a"
+    },
+    "wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2900,
+      "sha256": "59c887eb2283ab14ae01932453ce7d1609600c50be6282fd76708285cfd0fb0c"
+    },
+    "pass": true
+  },
+  "governedPermit": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_NO_ALLOCATION_PREFLIGHT.json",
+    "bytes": 1107925,
+    "sha256": "b52e8c7c1a03d1c04296a9e1d3447023c31b58870d65c518487b72d90693b57c"
+  },
+  "retryContract": {
+    "candidate": "nt01-retry01",
+    "semanticCandidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+    "ordinal": 2,
+    "retryOf": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+    "retryReason": "C34_FULL_HEAD_PATCH_INVALID",
+    "retryType": "TECHNICAL_LINKED_RETRY",
+    "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503"
+  },
+  "pass": true
+}

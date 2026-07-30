@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:55.220Z",
+  "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af",
+  "expectedPatchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af",
+  "changedFiles": [
+    "services/philippine-tax-intent-analyzer.js"
+  ],
+  "canonicalHeaders": [
+    "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+    "--- a/services/philippine-tax-intent-analyzer.js",
+    "+++ b/services/philippine-tax-intent-analyzer.js"
+  ],
+  "expectedHeaders": [
+    "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+    "--- a/services/philippine-tax-intent-analyzer.js",
+    "+++ b/services/philippine-tax-intent-analyzer.js"
+  ],
+  "headerParseErrors": [],
+  "forbiddenPathHeaders": [],
+  "hasForbiddenPath": false,
+  "pathLengthIndependent": true,
+  "pass": true
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 22,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T00:54:14.589Z",
+  "stage": "nt01 technical disposition",
+  "status": "TECHNICAL_INCOMPLETE_EXECUTOR_STOP_RECORDED_APPEND_ONLY",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z/EXECUTOR_TECHNICAL_STOP_RECOVERY.json",
+      "bytes": 1180,
+      "sha256": "be426e957d1e7f95f877c9eaf7337815ff1a24b23ba73908e6813bf25074ad35"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TECHNICAL_RECOVERY_FORENSIC_ADJUDICATION.json",
+      "bytes": 4150,
+      "sha256": "8ce83722e867e39a39ca4e4b5551f882851b906b785c02f5bfa0bd7b67de8944"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 663111,
+      "sha256": "8121185cc23706466003f0b5077e1419c65e680ca84e8d93c407af8d3384388a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2900,
+      "sha256": "59c887eb2283ab14ae01932453ce7d1609600c50be6282fd76708285cfd0fb0c"
+    }
+  ],
+  "previousLogSha256": "e150497bf75e52b7ad89d2c0321b5a9fde8c277cde322ce64f6a3d64beced111",
+  "nextExactOperation": "Record the narrow header-validator remediation.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "6ef1c3d4c0c23ad42bb74c5ba016288d22d571fdf7e79709486fb305777fd9e9"
+}

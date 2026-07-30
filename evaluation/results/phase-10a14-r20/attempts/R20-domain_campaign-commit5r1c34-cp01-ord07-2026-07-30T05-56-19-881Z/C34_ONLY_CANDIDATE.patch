@@ -1,0 +1,22 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 244fa50..b35c422 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1367,6 +1367,17 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c34LegalRuleBearsTaxTreatment)
+     return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.87 };
+ 
++  const c34AdministrativeRemedyTime = /\b(?:deadline|due\s+date|prescriptive\s+period)\b/i.test(v.t);
++  const c34AdministrativeRemedyAct = /\b(?:protest(?:s|ed|ing)?|appeal(?:s|ed|ing)?|object(?:s|ed|ing|ion)?|contest(?:s|ed|ing)?|respond(?:s|ed|ing)?|repl(?:y|ies|ied|ying))\b/i.test(v.t);
++  const c34TaxAdministrationAnchor = /\b(?:bir|bureau of internal revenue|assessment|deficiency|tax|revenue|notice)\b/i.test(v.t);
++  const c34TaxRemedyDeadlineIsCompliance = v.reason === 'explicit_tax_task_relation'
++      && evidence.primaryIsInterrogative
++      && c34AdministrativeRemedyTime && c34AdministrativeRemedyAct && c34TaxAdministrationAnchor
++      && !evidence.nonTaxControllingDomain && !evidence.ordinaryProceduralSense
++      && !/\b(?:civil|labor|school|private|court)\b/i.test(v.t);
++  if (c34TaxRemedyDeadlineIsCompliance)
++    return { decision: 'ALLOW', reasonCode: 'tax_compliance_task', confidence: 0.88 };
++
+   return null;
+ }
+ 

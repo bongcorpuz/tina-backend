@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:33:51.133Z",
+  "decision": "PASS_READY_FOR_MATERIAL_CANDIDATE_5",
+  "eligibility": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_ELIGIBILITY_AND_NON_DUPLICATION_PREFLIGHT.json",
+    "bytes": 13450,
+    "sha256": "97e37daaf6be40829fcfce3b08249047f31e1ad7b3ef5718ed11b6c246ccd074"
+  },
+  "candidate4Manifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_TERMINAL_EVIDENCE.sha256",
+    "bytes": 10005,
+    "sha256": "b9a6387bd25afc212973a32031264075ec3aaccc9f7878fc49a877b7061a88b1"
+  },
+  "exactActiveBase": {
+    "attemptId": "R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z",
+    "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 182494,
+        "rawSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf",
+        "normalizedLfSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e"
+    },
+    "metrics": {
+      "canonicalPassed": 3572,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3572,
+      "reasonMismatches": 148,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 435
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 779
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 852
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 482
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    }
+  },
+  "frozenHypothesis": {
+    "artifact": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_HYPOTHESES.json",
+      "bytes": 34821,
+      "sha256": "c71153db4148d8bad3ab0f772aa55e130e00e201b61c78ff5d21573c04595009"
+    },
+    "record": {
+      "ordinal": 5,
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "principle": "A tax statute or holding-period rule affecting a tax consequence, and a private contract question about a tax-allocation clause, asks treatment rather than an operational procedure.",
+      "forecastCorrections": 3,
+      "activeBasePolicy": "exact cumulative accepted base at allocation"
+    }
+  },
+  "candidate5Preview": {
+    "candidate": {
+      "id": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "cycle": "tr01",
+      "frontier": "tax_treatment_of_ordinary_object",
+      "principle": "A tax statute or holding-period rule affecting a tax consequence, and a private contract question about a tax-allocation clause, asks treatment rather than an operational procedure.",
+      "observablePredicate": "baseline explicit tax task + no procedure + contract tax-clause or statute/rule effect frame",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedDecision": "ALLOW",
+      "forecastCorrections": 3,
+      "leaveFamilyName": "unseen_statutes_rules_contracts_and_ordinary_bearers"
+    },
+    "exactActiveBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+    "sourceMarkersBefore": {
+      "candidate1": 1,
+      "candidate2": 1,
+      "candidate3": 1,
+      "candidate4": 1,
+      "candidate5": 0,
+      "candidate6": 0
+    },
+    "sourceMarkersAfter": {
+      "candidate1": 1,
+      "candidate2": 1,
+      "candidate3": 1,
+      "candidate4": 1,
+      "candidate5": 1,
+      "candidate6": 0
+    },
+    "materializedIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 183191,
+        "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+        "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+    },
+    "candidatePatch": {
+      "sha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af",
+      "bytes": 1165,
+      "changedFiles": [
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "headersValid": true,
+      "hasForbiddenPath": false,
+      "pass": true
+    },
+    "allocationPerformed": false,
+    "semanticGatesExecuted": false,
+    "temporaryRuntimeRemoved": true,
+    "pass": true
+  },
+  "pass": true
+}

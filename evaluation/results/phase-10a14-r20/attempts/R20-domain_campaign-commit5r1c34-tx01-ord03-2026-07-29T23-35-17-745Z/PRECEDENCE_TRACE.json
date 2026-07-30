@@ -1,0 +1,11 @@
+{
+  "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+  "insertionSite": "governed override after all inherited accepted rules and before return null",
+  "activeBaseDigest": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a",
+  "candidateDigest": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+  "changedRows": 4,
+  "newlyCorrectedRows": 4,
+  "outsideCorrectionTarget": [],
+  "inheritedRulesPreserved": true,
+  "pass": true
+}

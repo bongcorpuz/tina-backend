@@ -1,0 +1,38 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.733Z",
+  "candidates": [
+    {
+      "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+      "rows": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "rows": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "rows": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "rows": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "rows": [],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "rows": [],
+      "pass": true
+    }
+  ],
+  "compositionRows": [],
+  "pass": true
+}

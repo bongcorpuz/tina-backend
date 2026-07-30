@@ -1,0 +1,387 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T00:54:14.358Z",
+  "decision": "PASS_READY_FOR_LINKED_NT01_RETRY",
+  "lineage": {
+    "reconstructionAttemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+    "technicalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z"
+  },
+  "runnerHashes": {
+    "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs": "cb22cadc8183a3fe7d7b1f74f8fad5b327d40e2d524c709c1a0b9ce1c8f9c699",
+    "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298"
+  },
+  "forensicAdjudicationSha256": "8ce83722e867e39a39ca4e4b5551f882851b906b785c02f5bfa0bd7b67de8944",
+  "rootCauseSha256": "7994ac12f31257230b54b632094c96d5ed1e00d23eb13effa02627cf23c3b3ea",
+  "remediationSha256": "4be1ad000366005853cdb61267f71e0bd42c92d7019a20595f02c2250ef3dec3",
+  "headerValidationSha256": "24202bbcefab302d1127a8794422411e793199e1a2e77ad5d5e35a2db9f8a0ce",
+  "replaySelfTestSha256": "611921d64a414206590b546f89fec9177ff21e1e064c15796eeb256e3b858b0c",
+  "linkedRetryAuthorizationSha256": "d4bcf437429079bddbedda8a46b5cf21dc77f02043c67955debad497478d7422",
+  "externalTechnicalFreeze": {
+    "snapshot": "C:/Temp/tina-c34-technical-recovery-20260728T134942137Z",
+    "classification": "IMMUTABLE_POST_TECHNICAL_FAILURE_PRE_LINKED_RETRY_FREEZE",
+    "inventorySha256": "9db310a147562cbae7e60c5d03fbbc661c43c81f590cf1f1fc274729283085de",
+    "expectedInventorySha256": "9db310a147562cbae7e60c5d03fbbc661c43c81f590cf1f1fc274729283085de",
+    "metadataSha256": "896d1a4f62e6f8a7494aa7e4162f9d3d64024472955c5486f3296f73c87d3441",
+    "expectedMetadataSha256": "896d1a4f62e6f8a7494aa7e4162f9d3d64024472955c5486f3296f73c87d3441",
+    "inventoryFileCount": 69,
+    "verifiedFileCount": 69,
+    "inventoryTotalBytes": 4854522,
+    "verifiedTotalBytes": 4854522,
+    "failedRunRunnerRecovery": {
+      "method": "reversed only the known post-failure header-validator and linked-retry scaffolding edits from preserved partial working copies",
+      "executeSha256": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+      "executeMatchesImmutablePreallocationHash": true,
+      "libSha256": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6",
+      "libMatchesImmutablePreallocationHash": true
+    },
+    "failedExecuteSha256": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+    "expectedFailedExecuteSha256": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+    "failedLibSha256": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6",
+    "expectedFailedLibSha256": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6",
+    "failedRunnerProvenance": "Reconstructed by reversing only known post-failure edits; accepted because both exact byte hashes equal immutable preallocation hashes.",
+    "expectedSnapshotFiles": 70,
+    "actualSnapshotFiles": 70,
+    "unlistedSnapshotFiles": [],
+    "missingSnapshotFiles": [],
+    "failedRecords": [],
+    "pass": true
+  },
+  "blockerFreeze": {
+    "path": "C:/Temp/tina-c34-full-head-patch-blocker-20260728T234300515Z",
+    "nt01FrozenIntegrity": {
+      "freeze": "C:/Temp/tina-c34-full-head-patch-blocker-20260728T234300515Z",
+      "frozenInventoryPath": "C:/Temp/tina-c34-full-head-patch-blocker-20260728T234300515Z/NT01_COMPLETE_ATTEMPT_INVENTORY.json",
+      "frozenFileCount": 16,
+      "currentFileCount": 17,
+      "preserved": [
+        {
+          "relativePath": "ATTEMPT.json",
+          "length": 3605,
+          "sha256": "8a89f6f8d483fa278f9a102479882a2720709142c926b46453bf2e19486dcb81",
+          "actual": {
+            "relativePath": "ATTEMPT.json",
+            "length": 3605,
+            "sha256": "8a89f6f8d483fa278f9a102479882a2720709142c926b46453bf2e19486dcb81"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "C34_CANDIDATE_DELTA_REPLAY.json",
+          "length": 427793,
+          "sha256": "75c4c22e8b22ff54192077ebbc2d457c61984cc29868645872be940211f511a2",
+          "actual": {
+            "relativePath": "C34_CANDIDATE_DELTA_REPLAY.json",
+            "length": 427793,
+            "sha256": "75c4c22e8b22ff54192077ebbc2d457c61984cc29868645872be940211f511a2"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "C34_ONLY_CANDIDATE.patch",
+          "length": 1540,
+          "sha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696",
+          "actual": {
+            "relativePath": "C34_ONLY_CANDIDATE.patch",
+            "length": 1540,
+            "sha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "runtime-snapshot/philippine-tax-boundary-patterns.js",
+          "length": 65451,
+          "sha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "actual": {
+            "relativePath": "runtime-snapshot/philippine-tax-boundary-patterns.js",
+            "length": 65451,
+            "sha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "runtime-snapshot/philippine-tax-domain-boundary.js",
+          "length": 12192,
+          "sha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "actual": {
+            "relativePath": "runtime-snapshot/philippine-tax-domain-boundary.js",
+            "length": 12192,
+            "sha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "runtime-snapshot/philippine-tax-intent-analyzer.js",
+          "length": 180812,
+          "sha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b",
+          "actual": {
+            "relativePath": "runtime-snapshot/philippine-tax-intent-analyzer.js",
+            "length": 180812,
+            "sha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "runtime-snapshot/RUNTIME_IDENTITY.json",
+          "length": 857,
+          "sha256": "10e9ca8bc5d9f8a11e8059919a5b905d0a6b087d5758635961176f0ef23af70f",
+          "actual": {
+            "relativePath": "runtime-snapshot/RUNTIME_IDENTITY.json",
+            "length": 857,
+            "sha256": "10e9ca8bc5d9f8a11e8059919a5b905d0a6b087d5758635961176f0ef23af70f"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "starting-head-runtime/philippine-tax-boundary-patterns.js",
+          "length": 64424,
+          "sha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+          "actual": {
+            "relativePath": "starting-head-runtime/philippine-tax-boundary-patterns.js",
+            "length": 64424,
+            "sha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "starting-head-runtime/philippine-tax-domain-boundary.js",
+          "length": 11976,
+          "sha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+          "actual": {
+            "relativePath": "starting-head-runtime/philippine-tax-domain-boundary.js",
+            "length": 11976,
+            "sha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "starting-head-runtime/philippine-tax-intent-analyzer.js",
+          "length": 31045,
+          "sha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+          "actual": {
+            "relativePath": "starting-head-runtime/philippine-tax-intent-analyzer.js",
+            "length": 31045,
+            "sha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "starting-head-services/philippine-tax-boundary-patterns.js",
+          "length": 64424,
+          "sha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+          "actual": {
+            "relativePath": "starting-head-services/philippine-tax-boundary-patterns.js",
+            "length": 64424,
+            "sha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "starting-head-services/philippine-tax-domain-boundary.js",
+          "length": 11976,
+          "sha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+          "actual": {
+            "relativePath": "starting-head-services/philippine-tax-domain-boundary.js",
+            "length": 11976,
+            "sha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "starting-head-services/philippine-tax-intent-analyzer.js",
+          "length": 31045,
+          "sha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+          "actual": {
+            "relativePath": "starting-head-services/philippine-tax-intent-analyzer.js",
+            "length": 31045,
+            "sha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "stderr.txt",
+          "length": 763,
+          "sha256": "dcd20a675f50256b6ad541b62a59819eba060c1a95a8fc034d82b7ca29677aaa",
+          "actual": {
+            "relativePath": "stderr.txt",
+            "length": 763,
+            "sha256": "dcd20a675f50256b6ad541b62a59819eba060c1a95a8fc034d82b7ca29677aaa"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "stdout.txt",
+          "length": 176,
+          "sha256": "69fe7cd8451cd3cd635bf5bd3938d10c083406ed95eef1897458c2a35880d523",
+          "actual": {
+            "relativePath": "stdout.txt",
+            "length": 176,
+            "sha256": "69fe7cd8451cd3cd635bf5bd3938d10c083406ed95eef1897458c2a35880d523"
+          },
+          "pass": true
+        },
+        {
+          "relativePath": "TECHNICAL_FAILURE.json",
+          "length": 1212,
+          "sha256": "f3b77060f606814488643ba1dbc461fbfd3959620ff7fdecb2d67a88cf6dbb53",
+          "actual": {
+            "relativePath": "TECHNICAL_FAILURE.json",
+            "length": 1212,
+            "sha256": "f3b77060f606814488643ba1dbc461fbfd3959620ff7fdecb2d67a88cf6dbb53"
+          },
+          "pass": true
+        }
+      ],
+      "additions": [
+        {
+          "relativePath": "EXECUTOR_TECHNICAL_STOP_RECOVERY.json",
+          "length": 1180,
+          "sha256": "be426e957d1e7f95f877c9eaf7337815ff1a24b23ba73908e6813bf25074ad35"
+        }
+      ],
+      "allowedAdditions": [
+        "EXECUTOR_TECHNICAL_STOP_RECOVERY.json"
+      ],
+      "pass": true
+    }
+  },
+  "protectedResidueContinuity": {
+    "classification": "APPEND_ONLY_TECHNICAL_RECOVERY_PROTECTED_RESIDUE_BASELINE",
+    "recoveryBaseline": {
+      "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+      "label": "full-head-patch-recovery-preallocation",
+      "capturedUtc": "2026-07-29T00:54:15.341Z",
+      "enumerationMethod": "direct recursive filesystem inventory independent of Git global-ignore and privilege state",
+      "protectedPrefixes": [
+        ".claude/",
+        ".vscode/",
+        "evaluation/factcheck/"
+      ],
+      "statusSha256": "d8580d007dc39ff5a9e79ce1d2087ab9f8fd4e2fb2a10da34c6b9225197d6865",
+      "protectedItems": [
+        ".claude/settings.local.json",
+        ".vscode/extensions.json",
+        "evaluation/factcheck/hardest-philippine-tax-question.md",
+        "evaluation/factcheck/README.md",
+        "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+        "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md"
+      ],
+      "fileRecords": [
+        {
+          "path": ".claude/settings.local.json",
+          "bytes": 4466,
+          "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"
+        },
+        {
+          "path": ".vscode/extensions.json",
+          "bytes": 70,
+          "sha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09"
+        },
+        {
+          "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+          "bytes": 8064,
+          "sha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7"
+        },
+        {
+          "path": "evaluation/factcheck/README.md",
+          "bytes": 1890,
+          "sha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a"
+        },
+        {
+          "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+          "bytes": 35275,
+          "sha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08"
+        },
+        {
+          "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+          "bytes": 87771,
+          "sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed"
+        }
+      ]
+    },
+    "additionalProtectedFiles": [
+      {
+        "path": ".claude/settings.local.json",
+        "bytes": 4466,
+        "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"
+      }
+    ]
+  },
+  "integrity": {
+    "registryPrefix218Sha256": "8ffeba5e2f32b3399327afa4300f736f672125d86cd689f36acd1006a6c5947f",
+    "registryC34Sha256": "941316f8ef353d7162f1f24e628ab62c2494bb4067468d04cc3b1a61e29bc783",
+    "registrySha256": "8121185cc23706466003f0b5077e1419c65e680ca84e8d93c407af8d3384388a",
+    "walSha256": "59c887eb2283ab14ae01932453ce7d1609600c50be6282fd76708285cfd0fb0c",
+    "checkpointSha256": "71e17f763842dbaf804acc00ed365cb89fae0c2e658ede8a9d6ead392c2a8688",
+    "checkpointLogSha256": "2bf830c52c17639b69c0c0c36675fb0cc540612d9899c943b58f41fa71126bbc",
+    "technicalBlockerSha256": "1848309118b6dca31a7fc928a9458daa8e16d226393c4746f72aea6c747a5458",
+    "reconstructionAttemptInventorySha256": "d926257c493df94e5a1ce53a1017ff63407fbd7615aa814594de3b55cd62510d",
+    "technicalAttemptInventorySha256": "8a6a22f27a6c349641c6095af4471d463c505bc178846f5847b3b1b974a5a14d",
+    "technicalCandidatePatchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696",
+    "technicalCandidateRuntimeTreeDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+    "prerequisiteArtifactSha256": {
+      "PREFLIGHT.json": "77a5f024c3f3eeb92a587f6c8059308c8941bd72a24f514978a22bcb6c009bdd",
+      "MANDATORY_FIRST_READ.json": "e1083a62b21d6cb1cd4810bc62b2770f6bbe6ecc850fc02515dcd479656f6339",
+      "DEV_FACTORY_PREEXISTING_STATE.json": "72ffd0c006e0275e4ed8a765d2cb63be3c2740e0f37f92dfbb84fdb22ca08915",
+      "PROTECTED_RESIDUE_BASELINE.json": "fa87f67da77c077ca28ea361f19dd9144cdbc98ee566b15f1c9ac5a74f0f03d9",
+      "C33_MANIFEST_VALIDATION.json": "0655e8f25a24d326c1f70b2eed2a450e36a0b8f4565a545afa631c0f7a83c060",
+      "FROZEN_SUITE_IDENTITY.json": "3e7f547e37bcd3ab2731e8f3b5944ece43a98af61fa139f28f0963beb1158c93",
+      "BASE_RUNTIME_IDENTITY.json": "f088e0e8467f010953f8e944842f037dbee40c9ea4efc2bcaa0b6a7c2094829f",
+      "C33_SELECTED_RUNTIME_RECONSTRUCTION.json": "c3ecf15304e5cd16f1cdf91ce945a3f1908f00a4bb6b6f6ec83d68104e362551",
+      "M01R_PRESERVATION_BASELINE.json": "cf5fa9f4e03a5e94dcacfa46bb4233982670fcc91bdc1853b66d1b2f03bc4851",
+      "PRIOR_ACCEPTED_RULE_PRESERVATION.json": "d7e0ec5fea9c70b4ca094b1a5583dc058ceab9e9473f915e82626a9ca761467a",
+      "POST_M01R_REASON_FAMILY_SUMMARY.json": "e2481cafd4c24e96323a89614bef2ce377bb8dcf01c98d03e9e26226eab4ea2f",
+      "POST_M01R_RESIDUAL_INVENTORY.json": "bf15319ccabe33f248f3da67c48be15e6e85f6676a8e41578508d96d1a75229e",
+      "POST_M01R_RESIDUAL_OVERLAP_MAP.json": "d96663ea36d53da12a7773c738b235a15abb318c385225c280f90e9cc169ddaf",
+      "REASON_ASSIGNMENT_PRECEDENCE_TRACE.json": "6b4b73b8dbe52ae80af477cd88db8032550a9bee28c4c7d31aaf46b6204d5a57",
+      "ACTIONABILITY_COMPLETENESS_AND_TAX_NEXUS_MATRIX.json": "eda34843109931281fb83cdf165aa940f9341b8ecf95680ffad99851318e46ac",
+      "CANDIDATE_HYPOTHESES.json": "c71153db4148d8bad3ab0f772aa55e130e00e201b61c78ff5d21573c04595009",
+      "RECOVERY_CHECKPOINT_15_R5_exact_M01R_reconstruction.json": "c644d7199ac42a90967d4e79054159dba579d3764f768bea5ce81ca350ff84cf",
+      "RECOVERY_CHECKPOINT_16_R6_216_row_residual_reconciliation.json": "d2b134b1a76aa84ee42c0dcd470f986b0f0f665e96138be38441644040b1683c",
+      "RECOVERY_CHECKPOINT_17_R7_hypotheses_frozen.json": "1f08520542234b4e937350971fe240844ea8e5bbfc1ad49c2f847a667f08751f"
+    },
+    "originalPreflightSha256": "77a5f024c3f3eeb92a587f6c8059308c8941bd72a24f514978a22bcb6c009bdd",
+    "originalAccountTransferPreallocationSha256": "8ec6315fa1a3d1ef18e0e0d32110c6285a5d138965e6cde1841851daae6e0794"
+  },
+  "fullHeadPatchRegression": {
+    "candidateOnlyPatchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696",
+    "fullHeadPatchSha256": "b41b2b0f69d9d73bbb0a5d3397378109862d97157cb3bac0cfcbe7721f3a1b4f",
+    "benignForbiddenBodyLiteralsAccepted": true,
+    "hostileForbiddenHeaderRejected": true,
+    "candidateOnlyDualReplayPass": true,
+    "fullHeadDualReplayPass": true,
+    "pass": true
+  },
+  "linkedRetryPathAudit": {
+    "retryOf": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+    "retryReason": "C34_FULL_HEAD_PATCH_INVALID",
+    "retryType": "TECHNICAL_LINKED_RETRY",
+    "cycle": "nt01-retry01",
+    "semanticCandidateOrdinal": 1,
+    "attemptOrdinal": 2,
+    "componentSafe": true,
+    "singleRetryOnly": true,
+    "pass": true
+  },
+  "nt01Identity": {
+    "servicesTreeDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+    "candidatePatchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696",
+    "analyzerRawSha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b",
+    "analyzerBytes": 180812,
+    "pass": true
+  },
+  "noAllocationNoMutationAudit": {
+    "registryTotalAttempts": 220,
+    "c34RegistryRecords": 2,
+    "c34AttemptDirectories": 2,
+    "serviceDiffEmpty": true,
+    "stagingEmpty": true,
+    "pass": true
+  },
+  "changeScopeAudit": {
+    "candidateDefinitionsChanged": false,
+    "serviceFilesChanged": false,
+    "headerValidatorReplayAndRecoveryOnly": true,
+    "pass": true
+  },
+  "pass": true
+}

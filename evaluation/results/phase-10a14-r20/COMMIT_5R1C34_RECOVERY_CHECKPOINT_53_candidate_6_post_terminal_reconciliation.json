@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 53,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T05:57:05.316Z",
+  "stage": "candidate 6 post-terminal reconciliation",
+  "status": "CANDIDATE_6_TERMINAL_RECONCILED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": null,
+  "activeAttemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_46_CONTINUATION_AUTHORIZATION.json",
+      "bytes": 4901,
+      "sha256": "e14cae30f2d7391353f0d437bf754bd17a2615ce978d03f9485db2ed70069c00"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_NON_DUPLICATION_PREFLIGHT.json",
+      "bytes": 6925,
+      "sha256": "f63d872a56633435a13056680e7cde4ed2b653a50585a2c50bc475fb33ab1150"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_RESUME_COMPATIBILITY_VALIDATION.json",
+      "bytes": 5354,
+      "sha256": "766f2a2574bf7abc32df06313b672b7c623dbc1872a4687b50de3db2404eb8a5"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_CONTINUATION_RESULT.json",
+      "bytes": 8257,
+      "sha256": "a749e62d3d11cd589450b6deadb6ebb61c5fd1b903589d16830ce52381a1c56d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_ACCEPTED_CANDIDATES_1_TO_5_REGRESSION_VALIDATION.json",
+      "bytes": 305622,
+      "sha256": "09c3b80b1805230983d2708d54fbe32644df5e213f19023b9bf58a800a6ab50f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_6.json",
+      "bytes": 9496,
+      "sha256": "1a5d70f5a29bea3ddeef68c53230e2e79e0184d64943a2d1fee68cff1846b7b5"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-cp01-ord07-2026-07-30T05-56-19-881Z/ATTEMPT.json",
+      "bytes": 5551,
+      "sha256": "7677d8050fb0b400faca1bd756481e39670949f9de4aba6badb3e063aa1f8b74"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-cp01-ord07-2026-07-30T05-56-19-881Z/ITERATION_RESULT.json",
+      "bytes": 654655,
+      "sha256": "b828ab05821b74b2c83721ad69b6d976795a61913d3b54b1fb337aa29eec58ce"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 703671,
+      "sha256": "8b0e343c374e0371583be86e5cadbfd2faee89f7a7a392c4f9806cb1d8abf5c8"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 10743,
+      "sha256": "1bd676d795805d5a377b1a39180370d824ba09731ab57030a709edc147fe481d"
+    }
+  ],
+  "previousLogSha256": "d5c70fe07f1b2875ffd74410a42a1371a777ded525a542b81dbb732e04c27ba8",
+  "nextExactOperation": "Allocate exactly one cumulative composition attempt over the terminal Candidate-1-to-6 semantic result set.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "aef3188ebaa905abf6dcab87aa35b60a4f1ed806350fee8a5b53f299e60c3c46"
+}

@@ -1,0 +1,70 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T00:54:14.358Z",
+  "classification": "TECHNICAL_INCOMPLETE_EXECUTOR_STOP",
+  "subcause": "FULL_HEAD_PATCH_VALIDATION_FALSE_POSITIVE",
+  "technicalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "reconstructionAttemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+  "historicAttemptEvidencePreserved": true,
+  "semanticGatesReached": false,
+  "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+  "failurePoint": "AFTER_CANDIDATE_ONLY_REPLAY_BEFORE_DIRECT_R3_FROZEN_QUERY_LEVEL_SEMANTIC_GATES",
+  "linkedRetryAuthorized": true,
+  "registryAndWalUpdate": {
+    "overlay": {
+      "originalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "historicDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+      "effectiveDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_STOP",
+      "blocker": "C34_FULL_HEAD_PATCH_INVALID",
+      "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+      "allocationConsumed": true,
+      "semanticResultConsumed": false,
+      "originalAttemptRecordPreserved": true,
+      "originalTerminalWalEventPreserved": true,
+      "recoveryArtifact": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z/EXECUTOR_TECHNICAL_STOP_RECOVERY.json",
+      "recoveryArtifactSha256": "be426e957d1e7f95f877c9eaf7337815ff1a24b23ba73908e6813bf25074ad35",
+      "adjudicatedAt": "2026-07-29T00:54:14.358Z"
+    },
+    "registrySha256": "8121185cc23706466003f0b5077e1419c65e680ca84e8d93c407af8d3384388a",
+    "walSha256": "59c887eb2283ab14ae01932453ce7d1609600c50be6282fd76708285cfd0fb0c",
+    "registryOverlayPresent": true,
+    "walAdjudicationPresent": true,
+    "pass": true
+  },
+  "recoveryArtifact": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z/EXECUTOR_TECHNICAL_STOP_RECOVERY.json",
+  "rootCauseArtifacts": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_BLOCKER_ROOT_CAUSE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_BLOCKER_ROOT_CAUSE.md"
+  ],
+  "externalTechnicalFreeze": {
+    "snapshot": "C:/Temp/tina-c34-technical-recovery-20260728T134942137Z",
+    "classification": "IMMUTABLE_POST_TECHNICAL_FAILURE_PRE_LINKED_RETRY_FREEZE",
+    "inventorySha256": "9db310a147562cbae7e60c5d03fbbc661c43c81f590cf1f1fc274729283085de",
+    "expectedInventorySha256": "9db310a147562cbae7e60c5d03fbbc661c43c81f590cf1f1fc274729283085de",
+    "metadataSha256": "896d1a4f62e6f8a7494aa7e4162f9d3d64024472955c5486f3296f73c87d3441",
+    "expectedMetadataSha256": "896d1a4f62e6f8a7494aa7e4162f9d3d64024472955c5486f3296f73c87d3441",
+    "inventoryFileCount": 69,
+    "verifiedFileCount": 69,
+    "inventoryTotalBytes": 4854522,
+    "verifiedTotalBytes": 4854522,
+    "failedRunRunnerRecovery": {
+      "method": "reversed only the known post-failure header-validator and linked-retry scaffolding edits from preserved partial working copies",
+      "executeSha256": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+      "executeMatchesImmutablePreallocationHash": true,
+      "libSha256": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6",
+      "libMatchesImmutablePreallocationHash": true
+    },
+    "failedExecuteSha256": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+    "expectedFailedExecuteSha256": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+    "failedLibSha256": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6",
+    "expectedFailedLibSha256": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6",
+    "failedRunnerProvenance": "Reconstructed by reversing only known post-failure edits; accepted because both exact byte hashes equal immutable preallocation hashes.",
+    "expectedSnapshotFiles": 70,
+    "actualSnapshotFiles": 70,
+    "unlistedSnapshotFiles": [],
+    "missingSnapshotFiles": [],
+    "failedRecords": [],
+    "pass": true
+  },
+  "pass": true
+}

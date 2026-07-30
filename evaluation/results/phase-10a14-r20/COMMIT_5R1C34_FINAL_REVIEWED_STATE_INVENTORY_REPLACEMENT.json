@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:07:29.975Z",
+  "reviewedCommit": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "replacementReviewedStateDigestDefinition": "lowercase SHA-256 of the exact checkpoint-57 replacement pre-review manifest bytes",
+  "semanticBaseManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_PRE_REVIEW_EVIDENCE.sha256",
+    "bytes": 89692,
+    "sha256": "06e6466a781a3906307bf57b05e87619ef1adc59dd38fa34ce52cc24426529be"
+  },
+  "checkpoint57": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_57_four_hour_terminal_reconciliation.json",
+    "bytes": 2189,
+    "sha256": "73f4484700c9985606849040e776afd968350a5cdff423f94cef3de62d874574"
+  },
+  "oldTerminal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FOUR_HOUR_TERMINAL_STATE_FINAL.json",
+    "bytes": 6560,
+    "sha256": "b659fcba624ad3103654096721469a9079d1bd8e37b272ebace8450128d07326"
+  },
+  "priorInvocation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_INVOCATION.json",
+    "bytes": 8172,
+    "sha256": "0248fc7b51a71b67159d5140663d2d7d7cbebe734d1f64b2d562369b147565ab"
+  },
+  "priorCapture": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+    "bytes": 7899,
+    "sha256": "675a282c92738b589b0bb7e4d181e0d1b5f42d184ca12b43fffea314a553ad9a"
+  },
+  "continuity": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_57_CONTINUITY_VALIDATION.json",
+    "bytes": 3625,
+    "sha256": "a3734390217a74e75f1721fc73b3471e3fc3448002f4b40d0eea57aa57cef195"
+  },
+  "cliRootCause": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_DEFECT_ROOT_CAUSE.json",
+    "bytes": 3445,
+    "sha256": "0ec9ea62078db6c6e613bd0d0562aad1655b9196aa8f0494326f8e35db1ad763"
+  },
+  "priorAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PRIOR_OPUS_INVOCATION_ADJUDICATION.json",
+    "bytes": 1055,
+    "sha256": "0bea499c7f0faa698839f9985bc8344442f0d45af85b53b1038534e306dc02a7"
+  },
+  "remediation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_REMEDIATION_RESULT.json",
+    "bytes": 1776,
+    "sha256": "42326bd05ebed99ae662a4f55ba03e4c2dce99f40a15edcc62478fa73037c939"
+  },
+  "preflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_INVOCATION_PREFLIGHT.json",
+    "bytes": 13076,
+    "sha256": "5a21942cda8148f8714d8029b28d111a56cfadca041020991de2b7aa83be5860"
+  },
+  "outputContract": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_OUTPUT_CONTRACT_VALIDATION.json",
+    "bytes": 4286,
+    "sha256": "70b66f8eee332c9dc53e0298a025b8950762075432f1e6583f3e0275581b181d"
+  },
+  "candidate6": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_CONTINUATION_RESULT.json",
+    "bytes": 8257,
+    "sha256": "a749e62d3d11cd589450b6deadb6ebb61c5fd1b903589d16830ce52381a1c56d"
+  },
+  "composition": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CUMULATIVE_COMPOSITION.json",
+    "bytes": 7490,
+    "sha256": "4b31eee57e85818c786451c8c7fac13840e0fcedfe4878296fcb0294298e4327"
+  },
+  "frozen": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_FROZEN_GATE_RESULT.json",
+    "bytes": 29900,
+    "sha256": "027f4f7fb0881d3caf3a20fc4c54e296647ed6f8222b3ed4bc2dd7a2fe421444"
+  },
+  "closure": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CLOSURE_DECISION_DRAFT.json",
+    "bytes": 10912,
+    "sha256": "8ef654ca38d370fe68844afb4db3e6097c032f71c1f18b1b8c279b182c33ab5d"
+  },
+  "activeBase": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACTIVE_BASE_IDENTITY.json",
+    "bytes": 4570,
+    "sha256": "30eae37b9f9257048ff129ff18d94addfde9f8c6ffa37b252c18b65bc34d9232"
+  },
+  "documentVariants": {
+    "APPROVED": {
+      "roadmap": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_CHECKPOINT_57_DRAFT.md",
+        "bytes": 29796,
+        "sha256": "afe23d465a6943e6d557af5a44ed532e97fd635b3f65fb8241cbc128f78623ad"
+      },
+      "currentState": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_CHECKPOINT_57_DRAFT.md",
+        "bytes": 120154,
+        "sha256": "44a51776bc20315033a7f3f103509069ed89b5d6adaae8fe3c86cb73602a7a0f"
+      }
+    },
+    "APPROVED_WITH_NONBLOCKING_OBSERVATIONS": {
+      "roadmap": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_CHECKPOINT_57_DRAFT_APPROVED_WITH_NONBLOCKING_OBSERVATIONS.md",
+        "bytes": 29826,
+        "sha256": "1ff4772a3c082f8072997e8c86f291a322ec7d1986b866325a7895594fcbf280"
+      },
+      "currentState": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_CHECKPOINT_57_DRAFT_APPROVED_WITH_NONBLOCKING_OBSERVATIONS.md",
+        "bytes": 120184,
+        "sha256": "e17a7a73b9966458e1410690d2ad2f2c82d75e8808cc78de60f8ee10c3ca1a2c"
+      }
+    }
+  },
+  "stagingDraft": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_STAGING_SET_CHECKPOINT_57_DRAFT.json",
+    "bytes": 441719,
+    "sha256": "e120e4d75a34b287eb0f6727b6aa820a7162c0a863e7b0483401c73ddfa177bb"
+  },
+  "reviewRequest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_REQUEST_REPLACEMENT.md",
+    "bytes": 3941,
+    "sha256": "5c610ce34b887bc7eca45a3ab6f908960255bbb517ac253a68729b3fd406d2dd"
+  },
+  "proposedCommitMessage": "PHASE-10A14-R20 COMMIT 5R1-C34 complete - preserve governed cumulative reason-layer evidence",
+  "finalManifestDefinition": "self-excluding exact commit evidence manifest generated only after decision-matching reviewed documentation installation; validation and commit-contents are separately staged; live checkpoint/log, terminal, and post-commit Git/remote attestations are external",
+  "pass": true
+}

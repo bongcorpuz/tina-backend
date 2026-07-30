@@ -1,0 +1,2 @@
+Allocated C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment against cumulative base 82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e. Linked technical retry of R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z: C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED.
+ACCEPTED_PROMOTED_CONTROLLING; reason 3572 -> 3575; corrected=3; regressions=0.

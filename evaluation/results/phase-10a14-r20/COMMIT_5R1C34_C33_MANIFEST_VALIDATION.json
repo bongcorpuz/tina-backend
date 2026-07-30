@@ -1,0 +1,9 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:33.353Z",
+  "manifest": "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_EVIDENCE_MANIFEST.sha256",
+  "expectedEntries": 190,
+  "entries": 190,
+  "badHashes": [],
+  "pass": true
+}

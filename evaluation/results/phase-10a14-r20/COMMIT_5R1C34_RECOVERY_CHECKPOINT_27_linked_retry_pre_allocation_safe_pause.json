@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 27,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T01:25:30.780Z",
+  "stage": "linked retry pre-allocation safe pause",
+  "status": "PAUSED_SAFE_TO_RESUME",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_PREALLOCATION_SAFE_PAUSE.json",
+      "bytes": 35376,
+      "sha256": "afe9b0176076174eb701d6dc19204001550184743a3cf177007192ff39fef9a3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_PREALLOCATION_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 13779,
+      "sha256": "cf1e30b35d4c9fff23d335f6d77c55e9dcccdde8bab2950f95649e2e41346f1e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG_THROUGH_26.ndjson",
+      "bytes": 277124,
+      "sha256": "9203f774cdbbdf3d7eb0a0bd7895cde4958e7903f7c33cd7b01a376f99b5e48a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 663111,
+      "sha256": "8121185cc23706466003f0b5077e1419c65e680ca84e8d93c407af8d3384388a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2900,
+      "sha256": "59c887eb2283ab14ae01932453ce7d1609600c50be6282fd76708285cfd0fb0c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_NT01_LINKED_RETRY_AUTHORIZATION.json",
+      "bytes": 1424,
+      "sha256": "d4bcf437429079bddbedda8a46b5cf21dc77f02043c67955debad497478d7422"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TECHNICAL_RECOVERY_PREALLOCATION_VALIDATION.json",
+      "bytes": 18698,
+      "sha256": "aeaf00708a4a94d068f65850e333c615fde97377536cf258fb0005fc31187ede"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TECHNICAL_RECOVERY_BLOCKER_01.json",
+      "bytes": 255610,
+      "sha256": "dde4a88c0b00cf11823c9aab5861ccff3aac9190a96b3a5bf224cfa21f8ee169"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 295401,
+      "sha256": "cb22cadc8183a3fe7d7b1f74f8fad5b327d40e2d524c709c1a0b9ce1c8f9c699"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 87485,
+      "sha256": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298"
+    }
+  ],
+  "previousLogSha256": "9203f774cdbbdf3d7eb0a0bd7895cde4958e7903f7c33cd7b01a376f99b5e48a",
+  "nextExactOperation": "Do not invoke --resume-linked-retry yet. Additively amend the linked-retry recovery preflight to validate preserved checkpoint rows 25-27, repair the process-inspection path, and create a superseding compatibility validation binding the amended runner hash without rewriting prior authorization evidence. Rerun the no-allocation preflight; only after PASS allocate exactly one nt01-retry01 ordinal-2 attempt linked to the original NT01.",
+  "safeToResume": true,
+  "blocker": "C34_TECHNICAL_RECOVERY_PREFLIGHT_PROCESS_INSPECTION_ACCESS_VIOLATION",
+  "eventSha256": "2c6a5062017c53a6b68b76d020cafbb63c6640d22f81a9f057dcd8a4655ce93d"
+}

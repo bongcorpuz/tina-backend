@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T23:35:56.049Z",
+  "candidate3AttemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+  "acceptedCandidate1AttemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+  "acceptedCandidate2AttemptId": "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+  "selectedRuntime": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z/runtime-snapshot",
+  "selectedActiveBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+  "protectedRows": {
+    "total": 149,
+    "candidate1": 98,
+    "candidate2": 51,
+    "r3Corrections": 57,
+    "packet": 82,
+    "leaveFamilyOut": 10
+  },
+  "regressions": [],
+  "pass": true
+}

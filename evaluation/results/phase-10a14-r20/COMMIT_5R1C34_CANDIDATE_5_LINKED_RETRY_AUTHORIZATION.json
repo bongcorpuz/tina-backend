@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:56.318Z",
+  "decision": "AUTHORIZED_EXACTLY_ONE_LINKED_RETRY",
+  "retryOf": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "retryReason": "C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED",
+  "retryType": "TECHNICAL_LINKED_RETRY",
+  "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+  "sameFrozenSemanticCandidate": true,
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "allocationCycle": "tr01-retry01",
+  "allocationOrdinal": 6,
+  "remediation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_REPLAY_REMEDIATION_RESULT.json",
+    "bytes": 825,
+    "sha256": "327f48b237b0cf3051c3a8cc9ffdd3896968e3bc612765e9966a1339bae30457"
+  },
+  "compatibility": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_REPLAY_COMPATIBILITY_VALIDATION.json",
+    "bytes": 2538,
+    "sha256": "c987b4a4069c49c7643a41069faa13426582e3acd4c8b53ad0b59dd95f615b44"
+  },
+  "preflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_LINKED_RETRY_NON_DUPLICATION_PREFLIGHT.json",
+    "bytes": 607,
+    "sha256": "d5d51dce388cfea55b0adb402215c09f9d641fb35b5abd99d6596aff48c89568"
+  },
+  "candidate6Authorized": false,
+  "pass": true
+}

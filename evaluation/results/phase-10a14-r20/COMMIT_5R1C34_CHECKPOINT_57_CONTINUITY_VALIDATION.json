@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:04:12.566Z",
+  "classification": "CHECKPOINT_57_CONTINUITY_PASS",
+  "checkpoint57": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_57_four_hour_terminal_reconciliation.json",
+    "bytes": 2189,
+    "sha256": "73f4484700c9985606849040e776afd968350a5cdff423f94cef3de62d874574"
+  },
+  "checkpoint57EventSha256": "a283de89e1f9911e9a71dcc1f2c77bcfb11252a03d8a44739d67bea95683694d",
+  "checkpointLogThrough57Sha256": "c9caa644fd18fb7d005d9aabaf03fcbb78f5198616231808cdd53751aff01052",
+  "oldTerminal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FOUR_HOUR_TERMINAL_STATE_FINAL.json",
+    "bytes": 6560,
+    "sha256": "b659fcba624ad3103654096721469a9079d1bd8e37b272ebace8450128d07326"
+  },
+  "oldPreReviewManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_PRE_REVIEW_EVIDENCE.sha256",
+    "bytes": 89692,
+    "sha256": "06e6466a781a3906307bf57b05e87619ef1adc59dd38fa34ce52cc24426529be"
+  },
+  "oldPreReviewEntries": 476,
+  "candidate6": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_CONTINUATION_RESULT.json",
+    "bytes": 8257,
+    "sha256": "a749e62d3d11cd589450b6deadb6ebb61c5fd1b903589d16830ce52381a1c56d"
+  },
+  "candidate6ExactOnce": {
+    "registryRecords": 1,
+    "directories": 1,
+    "walRows": 3
+  },
+  "candidate6Disposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+  "candidate6MetricDelta": {
+    "reasonPassed": 0,
+    "reasonMismatches": 0,
+    "decisionPassed": 0,
+    "relationPassed": 0
+  },
+  "composition": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CUMULATIVE_COMPOSITION.json",
+    "bytes": 7490,
+    "sha256": "4b31eee57e85818c786451c8c7fac13840e0fcedfe4878296fcb0294298e4327"
+  },
+  "compositionExactOnce": {
+    "registryRecords": 1,
+    "directories": 1,
+    "walRows": 3
+  },
+  "compositionDisposition": "ACCEPTED_CUMULATIVE_ORDER_INDEPENDENT",
+  "frozen": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_FROZEN_GATE_RESULT.json",
+    "bytes": 29900,
+    "sha256": "027f4f7fb0881d3caf3a20fc4c54e296647ed6f8222b3ed4bc2dd7a2fe421444"
+  },
+  "closure": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CLOSURE_DECISION_DRAFT.json",
+    "bytes": 10912,
+    "sha256": "8ef654ca38d370fe68844afb4db3e6097c032f71c1f18b1b8c279b182c33ab5d"
+  },
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "metrics": {
+    "reasonPassed": 3575,
+    "reasonTotal": 3720,
+    "reasonMismatches": 145,
+    "decisionPassed": 3720,
+    "relationPassed": 3720
+  },
+  "ledger": {
+    "registryAttempts": 228,
+    "c34Attempts": 10,
+    "walRows": 32,
+    "c34Directories": 10,
+    "orphan": 0,
+    "dangling": 0,
+    "running": []
+  },
+  "environment": {
+    "processes": {
+      "inspectionSucceeded": true,
+      "activeC34": [],
+      "unreadable": [],
+      "listeners5173": []
+    },
+    "temporary": [],
+    "locks": [],
+    "status": {
+      "branch": "feature/source-availability-engine-v1",
+      "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "sync": "0\t0",
+      "serviceDiff": "",
+      "staged": "",
+      "trackedDiff": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "roadmapV7V8Diff": "",
+      "oracleDiff": "",
+      "indexLock": false,
+      "c35Items": [],
+      "porcelainEntries": 481
+    }
+  },
+  "candidate7Authorized": false,
+  "c35Authorized": false,
+  "pass": true
+}

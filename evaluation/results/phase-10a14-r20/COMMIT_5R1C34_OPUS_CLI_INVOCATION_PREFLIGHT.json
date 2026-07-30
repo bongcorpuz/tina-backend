@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:05:16.309Z",
+  "status": "PASS_READY_FOR_REPLACEMENT_OPUS_REVIEW",
+  "continuity": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_57_CONTINUITY_VALIDATION.json",
+    "bytes": 3625,
+    "sha256": "a3734390217a74e75f1721fc73b3471e3fc3448002f4b40d0eea57aa57cef195"
+  },
+  "priorAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PRIOR_OPUS_INVOCATION_ADJUDICATION.json",
+    "bytes": 1055,
+    "sha256": "0bea499c7f0faa698839f9985bc8344442f0d45af85b53b1038534e306dc02a7"
+  },
+  "rootCause": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_DEFECT_ROOT_CAUSE.json",
+    "bytes": 3445,
+    "sha256": "0ec9ea62078db6c6e613bd0d0562aad1655b9196aa8f0494326f8e35db1ad763"
+  },
+  "remediation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_REMEDIATION_RESULT.json",
+    "bytes": 1776,
+    "sha256": "42326bd05ebed99ae662a4f55ba03e4c2dce99f40a15edcc62478fa73037c939"
+  },
+  "outputContract": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_OUTPUT_CONTRACT_VALIDATION.json",
+    "bytes": 4286,
+    "sha256": "70b66f8eee332c9dc53e0298a025b8950762075432f1e6583f3e0275581b181d"
+  },
+  "nativeExecutable": {
+    "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa"
+  },
+  "claudeVersion": "2.1.212 (Claude Code)",
+  "directArgvRoundTrip": {
+    "expectedArgc": 18,
+    "actualArgc": 18,
+    "exactArgvRoundTrip": true
+  },
+  "parserNegativeControl": {
+    "exitCode": 1,
+    "signal": null,
+    "stderr": "error: option '--permission-mode <mode>' argument '__C34_INTENTIONAL_INVALID_PROBE__' is invalid. Allowed choices are acceptEdits, auto, bypassPermissions, manual, dontAsk, plan.\n",
+    "schemaRejected": false,
+    "intentionalLaterOptionGateReached": true
+  },
+  "proposedArgv": [
+    "-p",
+    "# PHASE-10A14-R20 COMMIT 5R1-C34 replacement independent review\n\nThis is the exactly-one governed replacement review authorized from checkpoint\n57. The prior Claude Code invocation was TECHNICAL_INCOMPLETE_REVIEW_INVOCATION:\nPowerShell 5.1 stripped JSON-schema quotes before the native CLI parsed them.\nNo prior evidence review or decision occurred. It was not a rejection.\n\nOperate read-only. Do not edit, create, delete, stage, commit, push, start a\nservice, or change runtime state. Review the exact replacement pre-review\nmanifest and the immutable 476-entry original pre-review manifest it binds.\n\nVerify checkpoint-57 continuity; Candidates 1-5 and both technical originals;\nCandidate 6 exact-once semantic rejection with zero controlling metric delta;\nthe accepted chain; cumulative composition; all frozen gates; active-base\nidentity; residuals; registry/WAL/ledger; the CLI adjudication and direct-native\nrepair; both new decision-matching document drafts; final-manifest definition;\nthe exact proposed staging set and commit message; absence of Candidate 7/C35;\nand Phase 10A OPEN / R20 IN PROGRESS wording.\n\nRequired recovery entry points:\n\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_57_four_hour_terminal_reconciliation.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FOUR_HOUR_TERMINAL_STATE_FINAL.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_INVOCATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_PRE_REVIEW_EVIDENCE.sha256\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_57_CONTINUITY_VALIDATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_DEFECT_ROOT_CAUSE.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PRIOR_OPUS_INVOCATION_ADJUDICATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_REMEDIATION_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_INVOCATION_PREFLIGHT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_OUTPUT_CONTRACT_VALIDATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_CONTINUATION_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CUMULATIVE_COMPOSITION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_FROZEN_GATE_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CLOSURE_DECISION_DRAFT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACTIVE_BASE_IDENTITY.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_RESIDUAL_INVENTORY.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ATTEMPT_LEDGER.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REGISTRY_WAL_RECONCILIATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_CHECKPOINT_57_DRAFT.md\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ROADMAP_V9_CHECKPOINT_57_DRAFT_APPROVED_WITH_NONBLOCKING_OBSERVATIONS.md\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_CHECKPOINT_57_DRAFT.md\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CURRENT_STATE_CHECKPOINT_57_DRAFT_APPROVED_WITH_NONBLOCKING_OBSERVATIONS.md\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_STAGING_SET_CHECKPOINT_57_DRAFT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REVIEWED_STATE_INVENTORY_REPLACEMENT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_57_OPUS_REPLACEMENT_PRE_REVIEW_CHECKPOINT_LOG_SNAPSHOT.ndjson\n\nReturn only the JSON object required by the supplied schema. APPROVED or\nAPPROVED_WITH_NONBLOCKING_OBSERVATIONS is valid only when every verification\nfield is true, blockingFindings is empty, and commitSafe is true. Use REJECTED\nfor a proven blocking defect and INCOMPLETE_REVIEW if evidence/tooling is\ninsufficient. Do not infer Phase 10A closure from C34 terminality.\n\n\n## Exact reviewed-state binding\n\nThe lowercase SHA-256 of the exact replacement pre-review evidence manifest\nbytes is:\n\n`0000000000000000000000000000000000000000000000000000000000000000`\n\nBind the decision to that exact digest. The replacement invocation marker is\nevaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_INVOCATION_REPLACEMENT.json. Return only schema-conforming structured\noutput with one exact decision token.\n",
+    "--model",
+    "claude-opus-4-8",
+    "--effort",
+    "max",
+    "--permission-mode",
+    "plan",
+    "--tools",
+    "Read,Glob,Grep,Bash",
+    "--allowedTools",
+    "Read,Glob,Grep,Bash(sha256sum *)",
+    "--safe-mode",
+    "--no-session-persistence",
+    "--output-format",
+    "json",
+    "--json-schema",
+    "{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"decision\",\"reviewedStateDigest\",\"reviewerTool\",\"reviewerModel\",\"independenceConfirmed\",\"readOnlyConfirmed\",\"summary\",\"verification\",\"blockingFindings\",\"nonblockingObservations\",\"commitSafe\"],\"properties\":{\"decision\":{\"type\":\"string\",\"enum\":[\"APPROVED\",\"APPROVED_WITH_NONBLOCKING_OBSERVATIONS\",\"REJECTED\",\"INCOMPLETE_REVIEW\"]},\"reviewedStateDigest\":{\"type\":\"string\",\"pattern\":\"^[0-9a-f]{64}$\"},\"reviewerTool\":{\"type\":\"string\",\"const\":\"Claude Code\"},\"reviewerModel\":{\"type\":\"string\",\"const\":\"claude-opus-4-8\"},\"independenceConfirmed\":{\"type\":\"boolean\"},\"readOnlyConfirmed\":{\"type\":\"boolean\"},\"summary\":{\"type\":\"string\"},\"verification\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"checkpoint57Continuity\",\"priorInvocationTechnicalIncomplete\",\"cliRemediationPass\",\"candidate6ExactOnce\",\"candidates1Through5Preserved\",\"technicalRetryLinksPreserved\",\"compositionPass\",\"frozenGatesPass\",\"residualReconciled\",\"registryWalLedgerReconciled\",\"serviceAndGitHygiene\",\"manifestDraftValid\",\"roadmapDraftAccurate\",\"currentStateDraftAccurate\",\"stagingSetExplicit\",\"noCandidate7OrC35\"],\"properties\":{\"checkpoint57Continuity\":{\"type\":\"boolean\"},\"priorInvocationTechnicalIncomplete\":{\"type\":\"boolean\"},\"cliRemediationPass\":{\"type\":\"boolean\"},\"candidate6ExactOnce\":{\"type\":\"boolean\"},\"candidates1Through5Preserved\":{\"type\":\"boolean\"},\"technicalRetryLinksPreserved\":{\"type\":\"boolean\"},\"compositionPass\":{\"type\":\"boolean\"},\"frozenGatesPass\":{\"type\":\"boolean\"},\"residualReconciled\":{\"type\":\"boolean\"},\"registryWalLedgerReconciled\":{\"type\":\"boolean\"},\"serviceAndGitHygiene\":{\"type\":\"boolean\"},\"manifestDraftValid\":{\"type\":\"boolean\"},\"roadmapDraftAccurate\":{\"type\":\"boolean\"},\"currentStateDraftAccurate\":{\"type\":\"boolean\"},\"stagingSetExplicit\":{\"type\":\"boolean\"},\"noCandidate7OrC35\":{\"type\":\"boolean\"}}},\"blockingFindings\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"nonblockingObservations\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"commitSafe\":{\"type\":\"boolean\"}}}"
+  ],
+  "proposedArgvBindings": [
+    {
+      "index": 0,
+      "characters": 2,
+      "bytes": 2,
+      "sha256": "567479c447e472328522a1d759aabb9b579e4522a6da547c983d29e94c1604c2"
+    },
+    {
+      "index": 1,
+      "characters": 4383,
+      "bytes": 4383,
+      "sha256": "12ac114a4627d39ed0f1ef9617be8ecfa2c74d135917e60230af793d08f75083"
+    },
+    {
+      "index": 2,
+      "characters": 7,
+      "bytes": 7,
+      "sha256": "3314578423aba83b737246a3e54f0441fafd70f61f542a73bd1061d367621b87"
+    },
+    {
+      "index": 3,
+      "characters": 15,
+      "bytes": 15,
+      "sha256": "47a46a22f0c9fb105db3f0d8bda83ad51bd59369ab8c8c30cc32ba6356ac5a4a"
+    },
+    {
+      "index": 4,
+      "characters": 8,
+      "bytes": 8,
+      "sha256": "a1da2fd39683cbab36c6284a0b7099e3a80d1dd965a990e6b308b5157056610a"
+    },
+    {
+      "index": 5,
+      "characters": 3,
+      "bytes": 3,
+      "sha256": "9baf3a40312f39849f46dad1040f2f039f1cffa1238c41e9db675315cfad39b6"
+    },
+    {
+      "index": 6,
+      "characters": 17,
+      "bytes": 17,
+      "sha256": "280ea966d5a3aa05222ac2c05add5d03a537430c1bccfd741f8c0d1dd1fe8048"
+    },
+    {
+      "index": 7,
+      "characters": 4,
+      "bytes": 4,
+      "sha256": "64879f7d6b960a01909762d911a32d4582c20010c5641ee90278b644a9e3b525"
+    },
+    {
+      "index": 8,
+      "characters": 7,
+      "bytes": 7,
+      "sha256": "eceaafd22c6e5825bd5cc439be5f871f7111609c388dd08da3f3575bd9b6939b"
+    },
+    {
+      "index": 9,
+      "characters": 19,
+      "bytes": 19,
+      "sha256": "28d13e4a249860df6430cc0562b7864527611b5ba60f9aeee6f1b7afdf613101"
+    },
+    {
+      "index": 10,
+      "characters": 14,
+      "bytes": 14,
+      "sha256": "4cdb267e8f7592995a8907313845fd1628ebd5df07277a4df4188d7f13fa689e"
+    },
+    {
+      "index": 11,
+      "characters": 32,
+      "bytes": 32,
+      "sha256": "c1ebb8a0e46d28f6ac533a8d7ded63167c7b45b6a889f48f32cc582f92071df4"
+    },
+    {
+      "index": 12,
+      "characters": 11,
+      "bytes": 11,
+      "sha256": "fca3c7db9add185b1e8c5a2d34cf8a9b35cb5f7f1785bbf8215bfc633445268f"
+    },
+    {
+      "index": 13,
+      "characters": 24,
+      "bytes": 24,
+      "sha256": "98c78a4fb072cbdbfd16c4fd8d76cc16571838b08205fd80b9d168a28383b775"
+    },
+    {
+      "index": 14,
+      "characters": 15,
+      "bytes": 15,
+      "sha256": "eeaf0d76fa8ded547f0fb280109bc95db80940cff241a5b2a9a235927fa2b743"
+    },
+    {
+      "index": 15,
+      "characters": 4,
+      "bytes": 4,
+      "sha256": "02bd175f329720378ce83dd56a1b6b1f5291a60182d6c54b5e0d1e8d248a267a"
+    },
+    {
+      "index": 16,
+      "characters": 13,
+      "bytes": 13,
+      "sha256": "58c0b9825456c1692917376a0483d92519c08c402b695d24d19b122c33594a01"
+    },
+    {
+      "index": 17,
+      "characters": 2015,
+      "bytes": 2015,
+      "sha256": "ec8e78af1f35d9d010a397639a75d70d74818fffd13b061cfa4a8822317008d1"
+    }
+  ],
+  "commandCharacters": 6734,
+  "commandLengthBelowWindowsLimit": true,
+  "utf8": true,
+  "directNativeNoShell": true,
+  "readOnlyMode": "plan",
+  "safeMode": true,
+  "noSessionPersistence": true,
+  "timeoutCapture": true,
+  "stdoutStderrExitCapture": true,
+  "explicitDecisionCapture": true,
+  "repositoryMutationSnapshotRequired": true,
+  "replacementInvocationArtifactsAbsent": true,
+  "environment": {
+    "processes": {
+      "inspectionSucceeded": true,
+      "activeC34": [],
+      "unreadable": [],
+      "listeners5173": []
+    },
+    "temporary": [],
+    "locks": [],
+    "status": {
+      "branch": "feature/source-availability-engine-v1",
+      "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "sync": "0\t0",
+      "serviceDiff": "",
+      "staged": "",
+      "trackedDiff": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "roadmapV7V8Diff": "",
+      "oracleDiff": "",
+      "indexLock": false,
+      "c35Items": [],
+      "porcelainEntries": 482
+    }
+  },
+  "pass": true
+}

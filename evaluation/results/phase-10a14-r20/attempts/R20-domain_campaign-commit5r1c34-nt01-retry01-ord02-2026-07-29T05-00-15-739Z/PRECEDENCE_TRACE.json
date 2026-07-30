@@ -1,0 +1,11 @@
+{
+  "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+  "insertionSite": "governed override after all inherited accepted rules and before return null",
+  "activeBaseDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "candidateDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+  "changedRows": 52,
+  "newlyCorrectedRows": 52,
+  "outsideCorrectionTarget": [],
+  "inheritedRulesPreserved": true,
+  "pass": true
+}

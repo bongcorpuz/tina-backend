@@ -1,0 +1,191 @@
+{
+  "sentinel": {
+    "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+    "records": [
+      {
+        "kind": "oracleId",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "queryHash",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "expectedLabel",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "expectedReason",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "expectedDecision",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "familyName",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "sourceSet",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "primaryCategory",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "rowPosition",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      },
+      {
+        "kind": "fixture",
+        "records": 3720,
+        "primitiveToFirstInvariant": true,
+        "primitiveToSecondInvariant": true,
+        "sentinelToSentinelInvariant": true,
+        "outputsInvariant": true,
+        "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af"
+      }
+    ],
+    "pass": true
+  },
+  "shuffle": {
+    "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+    "records": [
+      {
+        "name": "R3",
+        "seed": 3401,
+        "records": 3720,
+        "outputsInvariant": true,
+        "baselineOutputSha256": "4e74fe3843b2574e0c71b4879a8058f2e27678877836dfaed6d9690be1e16638",
+        "shuffledOutputSha256": "4e74fe3843b2574e0c71b4879a8058f2e27678877836dfaed6d9690be1e16638"
+      },
+      {
+        "name": "reason_suite_344",
+        "seed": 3402,
+        "records": 344,
+        "outputsInvariant": true,
+        "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+        "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+      },
+      {
+        "name": "collision_probes_196",
+        "seed": 3403,
+        "records": 196,
+        "outputsInvariant": true,
+        "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+        "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+      }
+    ],
+    "pass": true
+  },
+  "taint": {
+    "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noFixtureDependency": true,
+    "pass": true
+  }
+}

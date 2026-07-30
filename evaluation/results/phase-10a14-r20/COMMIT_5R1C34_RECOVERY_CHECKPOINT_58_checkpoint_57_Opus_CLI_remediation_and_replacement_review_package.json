@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 58,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "updatedAtUtc": "2026-07-30T13:05:16.309Z",
+  "stage": "checkpoint 57 Opus CLI remediation and replacement review package",
+  "status": "PASS_READY_FOR_REPLACEMENT_OPUS_REVIEW",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": null,
+  "activeAttemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_57_CONTINUATION_AUTHORIZATION.json",
+      "bytes": 1425,
+      "sha256": "85b4abbbebd3b0d0ef5794240129b2476a8b66b0d9fcd12a1f2a49dc59a32b42"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_57_CONTINUITY_VALIDATION.json",
+      "bytes": 3625,
+      "sha256": "a3734390217a74e75f1721fc73b3471e3fc3448002f4b40d0eea57aa57cef195"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_DEFECT_ROOT_CAUSE.json",
+      "bytes": 3445,
+      "sha256": "0ec9ea62078db6c6e613bd0d0562aad1655b9196aa8f0494326f8e35db1ad763"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_DEFECT_ROOT_CAUSE.md",
+      "bytes": 629,
+      "sha256": "76c0a8b778e886c82e3409c2b3447e7697878ee00780cd37f2f7bed03c620035"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PRIOR_OPUS_INVOCATION_ADJUDICATION.json",
+      "bytes": 1055,
+      "sha256": "0bea499c7f0faa698839f9985bc8344442f0d45af85b53b1038534e306dc02a7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_REMEDIATION_RESULT.json",
+      "bytes": 1776,
+      "sha256": "42326bd05ebed99ae662a4f55ba03e4c2dce99f40a15edcc62478fa73037c939"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_INVOCATION_PREFLIGHT.json",
+      "bytes": 13076,
+      "sha256": "5a21942cda8148f8714d8029b28d111a56cfadca041020991de2b7aa83be5860"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_OUTPUT_CONTRACT_VALIDATION.json",
+      "bytes": 4286,
+      "sha256": "70b66f8eee332c9dc53e0298a025b8950762075432f1e6583f3e0275581b181d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_STAGING_SET_CHECKPOINT_57_DRAFT.json",
+      "bytes": 441719,
+      "sha256": "e120e4d75a34b287eb0f6727b6aa820a7162c0a863e7b0483401c73ddfa177bb"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_REQUEST_REPLACEMENT.md",
+      "bytes": 3941,
+      "sha256": "5c610ce34b887bc7eca45a3ab6f908960255bbb517ac253a68729b3fd406d2dd"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REVIEWED_STATE_INVENTORY_REPLACEMENT.json",
+      "bytes": 6001,
+      "sha256": "772ef97d9ab8b201e6f72d438f9530c9fee112cd522eeaf34713d8fc5eab69d7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_INVOCATION.json",
+      "bytes": 8172,
+      "sha256": "0248fc7b51a71b67159d5140663d2d7d7cbebe734d1f64b2d562369b147565ab"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+      "bytes": 7899,
+      "sha256": "675a282c92738b589b0bb7e4d181e0d1b5f42d184ca12b43fffea314a553ad9a"
+    }
+  ],
+  "previousLogSha256": "c9caa644fd18fb7d005d9aabaf03fcbb78f5198616231808cdd53751aff01052",
+  "nextExactOperation": "Invoke exactly one replacement Claude Code Opus 4.8 read-only review through the validated direct-native argv path.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "a8f2d813d935f1177c6ed04750226e5ab27080e3162e1664f9db54faa95280ff"
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T12:41:06.311Z",
+  "classification": "CANDIDATE_2_ACCEPTED_PROMOTED",
+  "preflight": {
+    "authorization": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_35_CONTINUATION_AUTHORIZATION.json",
+      "bytes": 5225,
+      "sha256": "ca027190ef863f0e37984fb35b602fe39496e67b7dec3d8ded34b2098a1736d3"
+    },
+    "nonDuplication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_2_NON_DUPLICATION_PREFLIGHT.json",
+      "bytes": 6435,
+      "sha256": "5ceb2010b457db8dd364a217c6be66ff7900d711da71c03a6f9521909855d6f3"
+    },
+    "originalCompatibility": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_2_RESUME_COMPATIBILITY_VALIDATION.json",
+      "bytes": 10607,
+      "sha256": "3ad423da54749cbbfa010e2392b85b322b4c2ca606ff860f53425fc005a94e55"
+    },
+    "compatibility": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_2_RESUME_COMPATIBILITY_VALIDATION_SUPERSEDING.json",
+      "bytes": 10701,
+      "sha256": "efb3aed09b4cc21068ce6a57d7b872794328c281e32f81901e4ddaace947647f"
+    },
+    "decision": "PASS_READY_FOR_MATERIAL_CANDIDATE_2"
+  },
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+  "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+  "candidateOrdinal": 2,
+  "status": "completed",
+  "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "accepted": true,
+  "metricDelta": {
+    "reasonPassedBefore": 3556,
+    "reasonPassedAfter": 3561,
+    "reasonDelta": 5,
+    "remainingBefore": 164,
+    "remainingAfter": 159,
+    "decisionPassed": 3720,
+    "relationPassed": 3720
+  },
+  "endingActiveBaseHash": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a",
+  "iterationResult": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z/ITERATION_RESULT.json",
+    "bytes": 653982,
+    "sha256": "22a6606b4daf3a02d26137ffd0d3f9d4be63795c6fa12700de849e02ffb3b065"
+  },
+  "acceptedRetryRegression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_2_ACCEPTED_RETRY_REGRESSION_VALIDATION.json",
+    "bytes": 566,
+    "sha256": "8a1b42ce38f90249e77afff3f2fd8a89285d05c58a6e94adb4fa91d585b01914"
+  },
+  "ledger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_2.json",
+    "bytes": 4648,
+    "sha256": "bdaa18c40b62ee8d30846fa40a0a707d2212dd8b5103a2fddd9dff00cb5c7052"
+  },
+  "registry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 675102,
+    "sha256": "1c917a8790bde86bf27ddd3ad64a5cedfb55b784e636c09be415c8cd33af5ae8"
+  },
+  "allocationWal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 4945,
+    "sha256": "c2196d52a41df1244cadbb5efa53def75a0bba6973bc3fcf00196b66b887a68c"
+  },
+  "pass": true
+}

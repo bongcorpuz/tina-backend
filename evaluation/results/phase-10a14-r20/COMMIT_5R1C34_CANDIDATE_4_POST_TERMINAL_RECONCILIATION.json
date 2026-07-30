@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:33:05.949Z",
+  "classification": "CANDIDATE_4_SEMANTIC_TERMINAL_RECONCILED",
+  "candidate4AttemptId": "R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z",
+  "candidate4Status": "completed",
+  "candidate4Disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "activeAttemptId": null,
+  "checkpointOrdinal": 41,
+  "registry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 686793,
+    "sha256": "8cd546fe7ffdec7000a59a625036167e39332b0fd392a8102d83e98197fbbf15"
+  },
+  "allocationWal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 6808,
+    "sha256": "4066015b9baaf15ae9f8b0340a37934273120e4972e3cd77d8154e1ceb879767"
+  },
+  "ledger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_4.json",
+    "bytes": 6012,
+    "sha256": "ee38f673ed9436d0e892cd7ca2044a3ea551946ee07297ead39276ebcc0d1cd1"
+  },
+  "regression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_ACCEPTED_CANDIDATES_1_TO_3_REGRESSION_VALIDATION.json",
+    "bytes": 832,
+    "sha256": "46ec1898f136490b791cc12fe3be3b609afab0c3b1eea69d2df72ad91957ccdf"
+  },
+  "outcome": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_CONTINUATION_RESULT.json",
+    "bytes": 3977,
+    "sha256": "245770d72a04080f1f450f1663d7da0553fb329398749dcea2483d5bb4ebd129"
+  },
+  "safeToResume": true,
+  "blocker": null,
+  "pass": true
+}

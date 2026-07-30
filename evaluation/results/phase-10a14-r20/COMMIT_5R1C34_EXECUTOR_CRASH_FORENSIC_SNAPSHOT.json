@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "createdAtUtc": "2026-07-28T08:03:20.7818549Z",
+  "recoveryExecutor": "Codex",
+  "authorizationNote": "The user explicitly instructed this Codex session to work in C:\\Projects\\tina-backend and execute the recovery prompt properly.",
+  "externalSnapshot": {
+    "path": "C:\\Temp\\tina-c34-crash-recovery-20260728T075732836Z",
+    "startedAtUtc": "2026-07-28T07:57:32.836Z",
+    "gitAndProcessCaptureAtUtc": "2026-07-28T07:59:13.3296830Z",
+    "inventoryCompletionAtUtc": "2026-07-28T08:00:25.8591284Z",
+    "artifacts": {
+      "R0_C34_ATTEMPT_INVENTORY.json": {
+        "sha256": "ff80abc0706e9bf8809221b5ec1d96221a8d5cc3fbfbe272c64f7fdb4ec394c2",
+        "bytes": 119
+      },
+      "R0_C34_FILE_INVENTORY.json": {
+        "sha256": "dc0872828e933fe5b7d1124edd10ba40dca4022947cf8fcd121a4fb941ada45d",
+        "bytes": 733
+      },
+      "R0_GIT_STATUS.txt": {
+        "sha256": "55d60a11bdffba1a4c7e77967d238889885c0610c0b5b006f1431c07ada00715",
+        "bytes": 2278
+      },
+      "R0_HASH_INVENTORY.json": {
+        "sha256": "9d9688d355652a1509353090a6077bd6bd94ffe8d83b3fe090fafc29f18a2c0f",
+        "bytes": 3924
+      },
+      "R0_PROCESS_SNAPSHOT.json": {
+        "sha256": "bfab270c8d7d4683c0c9fd6b6e860821ddd3b2e1cbaa16078812ae5cb90294ef",
+        "bytes": 41680
+      },
+      "R0_REFLOG.txt": {
+        "sha256": "3d4398aa8ef7204cc969e71b0a34956914848f0d88fcf070170f786ebcc8afec",
+        "bytes": 2945
+      },
+      "R0_STAGED_DIFF.patch": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "R0_UNSTAGED_DIFF.patch": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "R0_WORKTREE_AND_STASH.txt": {
+        "sha256": "6cde97bcbb29ca22dec3a159097c188db71101dcce22bf50e454220d7bc14398",
+        "bytes": 208
+      }
+    }
+  },
+  "repository": {
+    "realPath": "C:\\Projects\\tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "upstreamRef": "origin/feature/source-availability-engine-v1",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "leftRightCount": {
+      "ahead": 0,
+      "behind": 0
+    },
+    "fetchPruneCompletedAtUtc": "2026-07-28T08:01:28Z",
+    "trackedUnstagedDiffBytes": 0,
+    "stagedDiffBytes": 0,
+    "indexLock": "ABSENT"
+  },
+  "processState": {
+    "classification": "NO_ACTIVE_C34_PROCESS",
+    "exactC34RunnerCount": 0,
+    "secondCheckAtUtc": "2026-07-28T08:01:19.7377265Z",
+    "port5173Owners": [],
+    "terminationPerformed": false
+  },
+  "workingState": {
+    "classification": "CLEAN_NOT_STARTED",
+    "trackedOrStagedC34Changes": [],
+    "c34RunnerFiles": [],
+    "c34ResultFiles": [],
+    "c34AttemptDirectories": [],
+    "c34RegistryAllocations": [],
+    "falsePositiveInventoryMatches": [
+      {
+        "path": "evaluation/runner/phase-10a14-r20/commit5r1c33-execute.mjs",
+        "reason": "The C33 runner contains a textual C34 next-step reference; it is not C34 partial work."
+      }
+    ],
+    "untrackedProtectedPathsAtR0": [
+      ".vscode/extensions.json",
+      "evaluation/factcheck/README.md",
+      "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "evaluation/factcheck/hardest-philippine-tax-question.md"
+    ],
+    "postR0UntrackedObservation": [
+      {
+        "path": ".claude/settings.local.json",
+        "firstObserved": "after fetch during R2",
+        "treatment": "protected unrelated untracked residue; do not modify or stage"
+      }
+    ]
+  },
+  "currentHashes": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+      "trackedDiffFromHead": false
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+      "trackedDiffFromHead": false
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+      "trackedDiffFromHead": false
+    },
+    "knowledge/CURRENT_STATE.md": {
+      "normalizedLfSha256": "cfe3587614be06d56eb036fbad58a762b066a0b602f20a0af5936e6d202fceed"
+    },
+    "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md": {
+      "normalizedLfSha256": "bdb294ea1ee28849be8c0e4afae7a97c650a70445a96eb9023e194c04be777ae"
+    },
+    "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json": {
+      "normalizedLfSha256": "d2b32e41eedbb1b55c3a9e1c2c799e364d70b2e9b6446e750d5f3cee3bb3920f"
+    }
+  },
+  "knownC33SelectedActiveBase": {
+    "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+    "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+    "analyzerNormalizedLfSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55",
+    "domainBoundaryNormalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "boundaryPatternsNormalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+    "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503"
+  }
+}

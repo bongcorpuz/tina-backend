@@ -1,0 +1,12 @@
+{
+  "m01rRequired": 22,
+  "m01rChanges": [],
+  "generalizationRequired": 195,
+  "generalizationChanges": [],
+  "leaveOneFamilyOutRequired": 24,
+  "leaveOneFamilyOutChanges": [],
+  "procedureAndComputationChanges": [],
+  "priorCorrectRequired": 3572,
+  "priorCorrectChanges": [],
+  "pass": true
+}

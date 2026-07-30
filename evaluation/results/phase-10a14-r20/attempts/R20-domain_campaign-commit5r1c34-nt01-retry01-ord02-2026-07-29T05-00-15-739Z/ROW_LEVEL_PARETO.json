@@ -1,0 +1,2958 @@
+{
+  "totalRows": 3720,
+  "baseCorrect": 3504,
+  "candidateCorrect": 3556,
+  "newlyCorrected": [
+    {
+      "oracleId": "S2-IR18-DOM-491",
+      "query": "What does SLSP mean in my software project?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "slsp",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "slsp",
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-531",
+      "query": "In music software, MCIT is my plugin code; what could it stand for?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-082",
+      "query": "Can my landlord terminate the lease for late payment?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-083",
+      "query": "What notice is required to end a private lease?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-084",
+      "query": "How do I enforce a private supply agreement?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-087",
+      "query": "Does a private lease require notarization?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-088",
+      "query": "Can I assign my lease to another tenant?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-089",
+      "query": "What happens if a contractor misses a due date?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-091",
+      "query": "Can a tenant withhold rent for repairs?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-092",
+      "query": "What court handles a private collection case?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-097",
+      "query": "What is the deadline to return a security deposit?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-098",
+      "query": "Can a school filing deadline be moved by contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-100",
+      "query": "Can a private contract require passport submission?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-101",
+      "query": "What happens if a computer file is delivered late?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-108",
+      "query": "Can an employer recover training costs by contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-109",
+      "query": "How do I terminate a gym membership contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-111",
+      "query": "What is the civil court deadline to file an answer?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-112",
+      "query": "How many days to appeal a civil court judgment?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-113",
+      "query": "What is the labor filing deadline for illegal dismissal?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-114",
+      "query": "Can an employee file a labor case after resignation?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-115",
+      "query": "What is the SEC report deadline for a corporation?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-116",
+      "query": "How do I file a GIS report with the SEC?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-118",
+      "query": "Can a civil court issue a temporary restraining order?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-119",
+      "query": "What is the deadline to file a motion for reconsideration?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-120",
+      "query": "How does DOLE handle a labor standards complaint?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-121",
+      "query": "What happens if an SEC report is late?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-122",
+      "query": "Can a corporation amend its articles with the SEC?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-123",
+      "query": "What filing is required for a civil complaint?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-124",
+      "query": "Can a labor arbiter order reinstatement?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-125",
+      "query": "What is the venue for a civil court case?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-126",
+      "query": "How do I respond to an SEC show cause order?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-128",
+      "query": "Can a school filing be challenged in court?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-129",
+      "query": "What notice starts the civil court deadline?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-130",
+      "query": "Is a passport needed for court notarization?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-131",
+      "query": "How do I file an insurance claim lawsuit?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-137",
+      "query": "How do subpoenas work in civil court?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-138",
+      "query": "Can the SEC revoke a corporation?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-140",
+      "query": "How does small claims court handle contracts?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-182",
+      "query": "Paano mag-file ng labor complaint?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-183",
+      "query": "Ano deadline sa civil court answer?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-184",
+      "query": "Kailangan ba passport sa school filing?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-185",
+      "query": "Paano mag-submit ng SEC report?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-191",
+      "query": "How do I file a computer taxonomies document?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-192",
+      "query": "Can I return a defective taxicab part?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-193",
+      "query": "What is the deadline for a syntax assessment?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-194",
+      "query": "Does a taxidermy shop need a school permit?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-198",
+      "query": "How do I import a computer file into Excel?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-200",
+      "query": "What is a notice in a private messaging app?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-201",
+      "query": "How do I return to the assessment page?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-205",
+      "query": "Can labor day filing be rescheduled by school?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-209",
+      "query": "What is a due date in project management?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-210",
+      "query": "Can insurance claim files be uploaded?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "newlyRegressed": [],
+  "wrongToDifferentWrong": [],
+  "priorOverrideChanges": [],
+  "changedSignatures": [
+    {
+      "oracleId": "S2-IR18-DOM-491",
+      "query": "What does SLSP mean in my software project?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "slsp",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "slsp",
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-531",
+      "query": "In music software, MCIT is my plugin code; what could it stand for?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-082",
+      "query": "Can my landlord terminate the lease for late payment?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-083",
+      "query": "What notice is required to end a private lease?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-084",
+      "query": "How do I enforce a private supply agreement?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-087",
+      "query": "Does a private lease require notarization?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-088",
+      "query": "Can I assign my lease to another tenant?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-089",
+      "query": "What happens if a contractor misses a due date?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-091",
+      "query": "Can a tenant withhold rent for repairs?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-092",
+      "query": "What court handles a private collection case?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-097",
+      "query": "What is the deadline to return a security deposit?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-098",
+      "query": "Can a school filing deadline be moved by contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-100",
+      "query": "Can a private contract require passport submission?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-101",
+      "query": "What happens if a computer file is delivered late?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-108",
+      "query": "Can an employer recover training costs by contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-109",
+      "query": "How do I terminate a gym membership contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-111",
+      "query": "What is the civil court deadline to file an answer?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-112",
+      "query": "How many days to appeal a civil court judgment?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-113",
+      "query": "What is the labor filing deadline for illegal dismissal?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-114",
+      "query": "Can an employee file a labor case after resignation?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-115",
+      "query": "What is the SEC report deadline for a corporation?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-116",
+      "query": "How do I file a GIS report with the SEC?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-118",
+      "query": "Can a civil court issue a temporary restraining order?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-119",
+      "query": "What is the deadline to file a motion for reconsideration?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-120",
+      "query": "How does DOLE handle a labor standards complaint?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-121",
+      "query": "What happens if an SEC report is late?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "what",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-122",
+      "query": "Can a corporation amend its articles with the SEC?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-123",
+      "query": "What filing is required for a civil complaint?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-124",
+      "query": "Can a labor arbiter order reinstatement?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-125",
+      "query": "What is the venue for a civil court case?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-126",
+      "query": "How do I respond to an SEC show cause order?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-128",
+      "query": "Can a school filing be challenged in court?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-129",
+      "query": "What notice starts the civil court deadline?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-130",
+      "query": "Is a passport needed for court notarization?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-131",
+      "query": "How do I file an insurance claim lawsuit?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-137",
+      "query": "How do subpoenas work in civil court?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-138",
+      "query": "Can the SEC revoke a corporation?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-140",
+      "query": "How does small claims court handle contracts?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-182",
+      "query": "Paano mag-file ng labor complaint?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-183",
+      "query": "Ano deadline sa civil court answer?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-184",
+      "query": "Kailangan ba passport sa school filing?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-185",
+      "query": "Paano mag-submit ng SEC report?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "sec",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-191",
+      "query": "How do I file a computer taxonomies document?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-192",
+      "query": "Can I return a defective taxicab part?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-193",
+      "query": "What is the deadline for a syntax assessment?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-194",
+      "query": "Does a taxidermy shop need a school permit?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-198",
+      "query": "How do I import a computer file into Excel?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-200",
+      "query": "What is a notice in a private messaging app?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-201",
+      "query": "How do I return to the assessment page?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-205",
+      "query": "Can labor day filing be rescheduled by school?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-209",
+      "query": "What is a due date in project management?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-210",
+      "query": "Can insurance claim files be uploaded?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "outsideTarget": [],
+  "pass": true
+}

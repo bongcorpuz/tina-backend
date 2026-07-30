@@ -1,0 +1,9 @@
+Error: C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED
+    at requirePass (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:79:25)
+    at dualEnvironmentReplay (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:976:5)
+    at Module.replayAndInheritance (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:1009:22)
+    at Module.runMaterialCandidate (file:///C:/Users/USER/AppData/Local/Temp/tina-c34-checkpoint39-adapter-27188-b4ec52daadbc.mjs?sha=d672a9b38e26ab366ee25155eb38a821517adb14b5f1ca3bcfb0dd173bea1fd6:4487:22)
+    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2243:16
+    at async withAllocationLock (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:1316:12)
+    at async main (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2842:20)
+    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2867:3

@@ -1,0 +1,9 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.762Z",
+  "reasonPassed": 3575,
+  "requiredForAllocation": 3720,
+  "allocated": false,
+  "reason": "Not authorized because cumulative R3 reason closure was not reached.",
+  "pass": true
+}

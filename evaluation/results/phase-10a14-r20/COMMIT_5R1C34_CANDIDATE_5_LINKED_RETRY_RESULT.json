@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:27:46.364Z",
+  "classification": "CANDIDATE_5_LINKED_RETRY_SEMANTIC_TERMINAL",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "retryOf": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "retryReason": "C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED",
+  "retryType": "TECHNICAL_LINKED_RETRY",
+  "status": "completed",
+  "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "accepted": true,
+  "semanticDisposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "startingActiveBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "endingActiveBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "startingMetrics": {
+    "reasonPassed": 3572,
+    "reasonMismatches": 148,
+    "decisionPassed": 3720,
+    "relationPassed": 3720
+  },
+  "endingMetrics": {
+    "canonicalPassed": 3575,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3575,
+    "reasonMismatches": 145,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "reasonCounterfactualTotal": 344,
+    "reasonCounterfactualFailed": 0,
+    "collisionProbesPassed": 196,
+    "collisionProbesTotal": 196,
+    "collisionProbesFailed": 0,
+    "decisionCounterfactualPassed": 756,
+    "decisionCounterfactualTotal": 756,
+    "decisionCounterfactualFailed": 0,
+    "relationCounterfactualPassed": 282,
+    "relationCounterfactualTotal": 282,
+    "relationCounterfactualFailed": 0,
+    "clauseProbesPassed": 68,
+    "clauseProbesTotal": 68,
+    "clauseProbesFailed": 0,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "focusedReasonFamilies": {
+      "explicit_tax_task_relation": {
+        "required": 451,
+        "satisfied": 435
+      },
+      "tax_compliance_task": {
+        "required": 291,
+        "satisfied": 290
+      },
+      "tax_treatment_of_ordinary_object": {
+        "required": 784,
+        "satisfied": 782
+      },
+      "explicit_non_tax_task": {
+        "required": 897,
+        "satisfied": 852
+      },
+      "non_tax_label_or_name": {
+        "required": 201,
+        "satisfied": 201
+      },
+      "quoted_tax_term_only": {
+        "required": 120,
+        "satisfied": 120
+      },
+      "no_tax_relation": {
+        "required": 563,
+        "satisfied": 482
+      },
+      "ambiguous_tax_acronym": {
+        "required": 220,
+        "satisfied": 220
+      },
+      "non_tax_expansion": {
+        "required": 88,
+        "satisfied": 88
+      },
+      "tax_definition_with_context": {
+        "required": 79,
+        "satisfied": 79
+      },
+      "tax_negation_but_tax_review_requested": {
+        "required": 26,
+        "satisfied": 26
+      }
+    },
+    "closedControlsPass": true,
+    "relationObjectIntegrityPass": false,
+    "clauseSchemaRegressionPass": true,
+    "antiMemorizationPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "metricDelta": {
+    "reasonPassed": 3,
+    "remainingReasonMismatches": -3
+  },
+  "iterationResult": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ITERATION_RESULT.json",
+    "bytes": 657407,
+    "sha256": "60e5e6dea588c95e13c2c38c0cca0d8ffe11ec96e315e5a69dfab92c5921253d"
+  },
+  "technicalError": null,
+  "candidate6Authorized": false,
+  "pass": true
+}

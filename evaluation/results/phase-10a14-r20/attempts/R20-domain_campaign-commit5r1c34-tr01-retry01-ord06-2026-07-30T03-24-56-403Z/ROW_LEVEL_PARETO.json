@@ -1,0 +1,180 @@
+{
+  "totalRows": 3720,
+  "baseCorrect": 3572,
+  "candidateCorrect": 3575,
+  "newlyCorrected": [
+    {
+      "oracleId": "S3-IR17-010",
+      "query": "Does the Tariff and Customs Code affect Philippine import duty?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-050",
+      "query": "Does a holding period rule apply to capital gains on personal property?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-105",
+      "query": "Can a private lease include a taxable costs clause?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "newlyRegressed": [],
+  "wrongToDifferentWrong": [],
+  "priorOverrideChanges": [],
+  "changedSignatures": [
+    {
+      "oracleId": "S3-IR17-010",
+      "query": "Does the Tariff and Customs Code affect Philippine import duty?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-050",
+      "query": "Does a holding period rule apply to capital gains on personal property?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S3-IR17-105",
+      "query": "Can a private lease include a taxable costs clause?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "outsideTarget": [],
+  "pass": true
+}

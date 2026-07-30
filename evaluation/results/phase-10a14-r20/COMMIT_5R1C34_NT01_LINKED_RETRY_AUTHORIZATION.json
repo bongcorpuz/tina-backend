@@ -1,0 +1,34 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T00:54:14.358Z",
+  "authorized": true,
+  "authorizationScope": "exactly one linked retry of the original NT01 candidate rule",
+  "retryOf": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "retryReason": "C34_FULL_HEAD_PATCH_INVALID",
+  "retryType": "TECHNICAL_LINKED_RETRY",
+  "cycle": "nt01-retry01",
+  "semanticCandidateOrdinal": 1,
+  "newAttemptOrdinal": 2,
+  "originalAttemptIdReuseForbidden": true,
+  "exactSemanticBase": {
+    "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+    "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+    "reasonPassed": 3504
+  },
+  "exactCandidate": {
+    "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+    "servicesTreeDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+    "candidateOnlyPatchSha256": "5a0d260cee26a4e5da344fad5ab4044d8d59b1912ab90d79f625c7937cb29696",
+    "fullHeadPatchSha256": "b41b2b0f69d9d73bbb0a5d3397378109862d97157cb3bac0cfcbe7721f3a1b4f"
+  },
+  "prerequisites": {
+    "rootCausePass": true,
+    "dispositionPass": true,
+    "remediationPass": true,
+    "headerValidationPass": true,
+    "selfTestsPass": true,
+    "registryAndWalAdjudicationPass": true,
+    "noExistingRetry": true
+  },
+  "pass": true
+}

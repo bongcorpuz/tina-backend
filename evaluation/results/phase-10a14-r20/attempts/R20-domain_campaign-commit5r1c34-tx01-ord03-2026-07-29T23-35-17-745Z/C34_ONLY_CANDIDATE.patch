@@ -1,0 +1,19 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index d0b447c..3691824 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1342,6 +1342,14 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c34LocalIdentifierRedefinition)
+     return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };
+ 
++  const c34CopularShortTaxTopic = v.reason === 'tax_definition_with_context'
++      && v.rels.includes('ASKS_DEFINITION_OF')
++      && !evidence.reasonDefinitionOutcomeUnderTaxContext
++      && /^(?:what\s+is|ano\s+ang)\s+[a-z]{3,5}(?:\s+(?:in|sa)\s+(?:an?\s+)?(?:bir|philippine tax|tax|revenue)[^?]*)?\?$/i.test(v.t)
++      && !/\b(?:mean|meaning|define|definition|refer(?:s)?\s+to|stand(?:s)?\s+for)\b/i.test(v.t);
++  if (c34CopularShortTaxTopic)
++    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.87 };
++
+   return null;
+ }
+ 

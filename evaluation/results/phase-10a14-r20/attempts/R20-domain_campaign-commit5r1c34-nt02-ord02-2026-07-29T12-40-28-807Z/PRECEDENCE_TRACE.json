@@ -1,0 +1,11 @@
+{
+  "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+  "insertionSite": "governed override after all inherited accepted rules and before return null",
+  "activeBaseDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+  "candidateDigest": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a",
+  "changedRows": 5,
+  "newlyCorrectedRows": 5,
+  "outsideCorrectionTarget": [],
+  "inheritedRulesPreserved": true,
+  "pass": true
+}

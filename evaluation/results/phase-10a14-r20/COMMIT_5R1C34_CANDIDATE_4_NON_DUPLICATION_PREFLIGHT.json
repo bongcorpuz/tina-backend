@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:08:19.1458210Z",
+  "decision": "PASS_NO_DUPLICATE_CANDIDATE_4_WORK",
+  "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+  "cycle": "tx02",
+  "allocationOrdinal": 4,
+  "registryRecords": [],
+  "allocationWalRecords": [],
+  "attemptDirectoryRecords": [],
+  "checkpointRecords": [],
+  "allocationLockPresent": false,
+  "frozenOrder": {
+    "ordinal": 4,
+    "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+    "principle": "An import-duty instrument or regime question is an explicit tax task when it does not ask for rate, tariff classification, schedule, or computation treatment.",
+    "forecastCorrections": 7,
+    "activeBasePolicy": "exact cumulative accepted base at allocation"
+  },
+  "acceptedCandidateLinkage": [
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+      "activeBaseHash": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+      "accepted": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "activeBaseHash": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a",
+      "accepted": true
+    },
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "activeBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+      "accepted": true
+    }
+  ],
+  "candidate4Allocated": false,
+  "pass": true
+}

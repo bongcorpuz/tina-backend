@@ -1,0 +1,395 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.730Z",
+  "sourceTaints": [
+    "oracle ID",
+    "query hash",
+    "expected decision/reason/relation",
+    "source set",
+    "family",
+    "row order",
+    "fixture membership"
+  ],
+  "runtimeSink": "pure governed reason override in philippine-tax-intent-analyzer.js",
+  "candidates": [
+    {
+      "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+      "forbiddenTerms": [
+        {
+          "term": "oracleId",
+          "pattern": "\\boracle[\\s_-]*id\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "queryHash",
+          "pattern": "\\bquery[\\s_-]*hash\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedLabel",
+          "pattern": "\\bexpected[\\s_-]*label\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedReason",
+          "pattern": "\\bexpected[\\s_-]*reason\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedDecision",
+          "pattern": "\\bexpected[\\s_-]*decision\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "familyName",
+          "pattern": "\\bfamily[\\s_-]*name\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "sourceSet",
+          "pattern": "\\bsource[\\s_-]*set\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "primaryCategory",
+          "pattern": "\\bprimary[\\s_-]*category\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "rowPosition",
+          "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "fixture",
+          "pattern": "\\bfixture\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "governedEvidencePath",
+          "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+          "presentInCandidateBlock": false
+        }
+      ],
+      "fixtureDependencyFindings": [],
+      "noFixtureDependency": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "forbiddenTerms": [
+        {
+          "term": "oracleId",
+          "pattern": "\\boracle[\\s_-]*id\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "queryHash",
+          "pattern": "\\bquery[\\s_-]*hash\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedLabel",
+          "pattern": "\\bexpected[\\s_-]*label\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedReason",
+          "pattern": "\\bexpected[\\s_-]*reason\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedDecision",
+          "pattern": "\\bexpected[\\s_-]*decision\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "familyName",
+          "pattern": "\\bfamily[\\s_-]*name\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "sourceSet",
+          "pattern": "\\bsource[\\s_-]*set\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "primaryCategory",
+          "pattern": "\\bprimary[\\s_-]*category\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "rowPosition",
+          "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "fixture",
+          "pattern": "\\bfixture\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "governedEvidencePath",
+          "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+          "presentInCandidateBlock": false
+        }
+      ],
+      "fixtureDependencyFindings": [],
+      "noFixtureDependency": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "forbiddenTerms": [
+        {
+          "term": "oracleId",
+          "pattern": "\\boracle[\\s_-]*id\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "queryHash",
+          "pattern": "\\bquery[\\s_-]*hash\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedLabel",
+          "pattern": "\\bexpected[\\s_-]*label\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedReason",
+          "pattern": "\\bexpected[\\s_-]*reason\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedDecision",
+          "pattern": "\\bexpected[\\s_-]*decision\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "familyName",
+          "pattern": "\\bfamily[\\s_-]*name\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "sourceSet",
+          "pattern": "\\bsource[\\s_-]*set\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "primaryCategory",
+          "pattern": "\\bprimary[\\s_-]*category\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "rowPosition",
+          "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "fixture",
+          "pattern": "\\bfixture\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "governedEvidencePath",
+          "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+          "presentInCandidateBlock": false
+        }
+      ],
+      "fixtureDependencyFindings": [],
+      "noFixtureDependency": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "forbiddenTerms": [
+        {
+          "term": "oracleId",
+          "pattern": "\\boracle[\\s_-]*id\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "queryHash",
+          "pattern": "\\bquery[\\s_-]*hash\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedLabel",
+          "pattern": "\\bexpected[\\s_-]*label\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedReason",
+          "pattern": "\\bexpected[\\s_-]*reason\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedDecision",
+          "pattern": "\\bexpected[\\s_-]*decision\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "familyName",
+          "pattern": "\\bfamily[\\s_-]*name\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "sourceSet",
+          "pattern": "\\bsource[\\s_-]*set\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "primaryCategory",
+          "pattern": "\\bprimary[\\s_-]*category\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "rowPosition",
+          "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "fixture",
+          "pattern": "\\bfixture\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "governedEvidencePath",
+          "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+          "presentInCandidateBlock": false
+        }
+      ],
+      "fixtureDependencyFindings": [],
+      "noFixtureDependency": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "forbiddenTerms": [
+        {
+          "term": "oracleId",
+          "pattern": "\\boracle[\\s_-]*id\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "queryHash",
+          "pattern": "\\bquery[\\s_-]*hash\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedLabel",
+          "pattern": "\\bexpected[\\s_-]*label\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedReason",
+          "pattern": "\\bexpected[\\s_-]*reason\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedDecision",
+          "pattern": "\\bexpected[\\s_-]*decision\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "familyName",
+          "pattern": "\\bfamily[\\s_-]*name\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "sourceSet",
+          "pattern": "\\bsource[\\s_-]*set\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "primaryCategory",
+          "pattern": "\\bprimary[\\s_-]*category\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "rowPosition",
+          "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "fixture",
+          "pattern": "\\bfixture\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "governedEvidencePath",
+          "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+          "presentInCandidateBlock": false
+        }
+      ],
+      "fixtureDependencyFindings": [],
+      "noFixtureDependency": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "forbiddenTerms": [
+        {
+          "term": "oracleId",
+          "pattern": "\\boracle[\\s_-]*id\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "queryHash",
+          "pattern": "\\bquery[\\s_-]*hash\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedLabel",
+          "pattern": "\\bexpected[\\s_-]*label\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedReason",
+          "pattern": "\\bexpected[\\s_-]*reason\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "expectedDecision",
+          "pattern": "\\bexpected[\\s_-]*decision\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "familyName",
+          "pattern": "\\bfamily[\\s_-]*name\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "sourceSet",
+          "pattern": "\\bsource[\\s_-]*set\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "primaryCategory",
+          "pattern": "\\bprimary[\\s_-]*category\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "rowPosition",
+          "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "fixture",
+          "pattern": "\\bfixture\\b",
+          "presentInCandidateBlock": false
+        },
+        {
+          "term": "governedEvidencePath",
+          "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+          "presentInCandidateBlock": false
+        }
+      ],
+      "fixtureDependencyFindings": [],
+      "noFixtureDependency": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

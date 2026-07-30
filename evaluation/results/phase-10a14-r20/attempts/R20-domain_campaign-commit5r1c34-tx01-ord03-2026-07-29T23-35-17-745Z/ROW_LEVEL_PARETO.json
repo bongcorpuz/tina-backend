@@ -1,0 +1,254 @@
+{
+  "totalRows": 3720,
+  "baseCorrect": 3561,
+  "candidateCorrect": 3565,
+  "newlyCorrected": [
+    {
+      "oracleId": "S2-IR18-DOM-514",
+      "query": "What is MCIT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-516",
+      "query": "What is RCIT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-534",
+      "query": "What is FLD in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fld",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fld",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-556",
+      "query": "What is PAN in BIR assessment process?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "pan",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "pan",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "newlyRegressed": [],
+  "wrongToDifferentWrong": [],
+  "priorOverrideChanges": [],
+  "changedSignatures": [
+    {
+      "oracleId": "S2-IR18-DOM-514",
+      "query": "What is MCIT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-516",
+      "query": "What is RCIT?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "define"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-534",
+      "query": "What is FLD in a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fld",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fld",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-556",
+      "query": "What is PAN in BIR assessment process?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "pan",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "pan",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "outsideTarget": [],
+  "pass": true
+}

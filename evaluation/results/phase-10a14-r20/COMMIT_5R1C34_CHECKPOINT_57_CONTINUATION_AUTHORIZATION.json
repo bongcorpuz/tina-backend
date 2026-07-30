@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:05:17.294Z",
+  "sessionStartedUtc": "2026-07-30T12:25:15.9159860Z",
+  "sessionHardStopUtc": "2026-07-30T14:25:15.9159860Z",
+  "sourcePrompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C34-TWO-HOUR-OPUS-RECOVERY-AND-FINALIZATION-FROM-CHECKPOINT-57.md",
+    "bytes": 15394,
+    "sha256": "595496d20c10bc38fd33eaf727e86645b6ed2792642cb790c018936f9141df26"
+  },
+  "startingCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_57_four_hour_terminal_reconciliation.json",
+    "bytes": 2189,
+    "sha256": "73f4484700c9985606849040e776afd968350a5cdff423f94cef3de62d874574"
+  },
+  "priorInvocationAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PRIOR_OPUS_INVOCATION_ADJUDICATION.json",
+    "bytes": 1055,
+    "sha256": "0bea499c7f0faa698839f9985bc8344442f0d45af85b53b1038534e306dc02a7"
+  },
+  "exactlyOneReplacementOpusReviewAuthorized": true,
+  "candidateExecutionAuthorized": false,
+  "compositionExecutionAuthorized": false,
+  "frozenGateExecutionAuthorized": false,
+  "candidate7Authorized": false,
+  "c35Authorized": false,
+  "stagingAuthorizedBeforeApproval": false,
+  "commitAuthorizedBeforeApproval": false,
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "pass": true
+}

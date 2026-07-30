@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:56.165Z",
+  "originalAttemptId": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "registryRetryRecords": 0,
+  "walRetryPlans": 0,
+  "attemptRetryDirectories": 0,
+  "originalAttemptRecords": 1,
+  "originalAttemptPreserved": true,
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "protectedRows": 252,
+  "allocationLockPresent": false,
+  "candidate6Evidence": {
+    "registry": 0,
+    "wal": 0,
+    "directories": 0
+  },
+  "pass": true
+}

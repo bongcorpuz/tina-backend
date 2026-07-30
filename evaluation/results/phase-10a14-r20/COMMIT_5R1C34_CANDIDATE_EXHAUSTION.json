@@ -1,0 +1,32 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.761Z",
+  "reconstructionAttempts": 1,
+  "materialBudget": 6,
+  "materialCandidatesExecuted": 6,
+  "acceptedCandidates": [
+    "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+    "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+    "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+    "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+    "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment"
+  ],
+  "rejectedCandidates": [
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "disposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+      "failedChecks": [
+        "featureAblationPass",
+        "precedencePass"
+      ]
+    }
+  ],
+  "compositionAttempts": 1,
+  "reasonLockVerificationAllocated": false,
+  "remainingReasonMismatches": 145,
+  "remainingViableCandidates": true,
+  "formalExhaustion": false,
+  "confirmedAmbiguity": false,
+  "nextPath": "C35 R3 reason-layer continuation against the C34 selected runtime",
+  "pass": true
+}

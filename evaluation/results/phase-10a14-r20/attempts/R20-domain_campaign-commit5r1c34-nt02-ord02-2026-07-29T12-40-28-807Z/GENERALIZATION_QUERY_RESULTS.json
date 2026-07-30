@@ -1,0 +1,1217 @@
+{
+  "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+  "requirements": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3,
+    "copiedFrozenQueries": 0,
+    "fixtureDependency": 0
+  },
+  "counts": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3
+  },
+  "rows": [
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "Project code lang ang SLSP? For our rollout.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "Internal code lang ang SLSP? This is our internal shorthand.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "SLSP ibig kong sabihin na project code namin? That is for the mobile-app launch.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "Project code lang ang SLSP? For sprint 13.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "Internal code lang ang SLSP? Tracker 19.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "Project code lang ang VAT? For our rollout.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "Internal code lang ang VAT? For launch 17.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "positives",
+      "query": "VAT ibig kong sabihin na project code namin? This is our internal shorthand.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "Project identifier lang ang AXM?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "Internal identifier lang ang BQN?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "Product label lang ang CRV?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "Team codename lang ang DSW?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "ETK ibig kong sabihin na project identifier namin?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "FUP ibig kong sabihin na channel code namin?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "Project code lang ang VAT? Version 18.",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "substitutions",
+      "query": "HXY ibig kong sabihin na product code namin?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "What is QRS?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "RMC is our internal project label.",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "rmc",
+        "speechAct": "other"
+      },
+      "candidate": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "rmc",
+        "speechAct": "other"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "Rename the RMC project folder.",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "rename",
+        "requestedTarget": "rmc",
+        "speechAct": "request"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "rename",
+        "requestedTarget": "rmc",
+        "speechAct": "request"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "Does RMC mean Revenue Memorandum Circular in BIR rules?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "rmc",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "rmc",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "Project code lang ang VAT, pero taxable ba ang sale?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "Is SLSP required for BIR filing?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "Define PAN in a BIR assessment.",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "pan",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "pan",
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "nearMisses",
+      "query": "Aling laptop ang bibilhin?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "constructions",
+      "query": "Workshop code lang ang JAZ?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "constructions",
+      "query": "Prototype label lang ba ang KBY?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "constructions",
+      "query": "LCX ibig kong sabihin na internal identifier namin?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "constructions",
+      "query": "Game code lang ang tawag namin sa MDY?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "fillers",
+      "query": "Software project code lang ang NEZ?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "fillers",
+      "query": "Music channel code lang ang OFA?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "music channel",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "music channel",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "fillers",
+      "query": "Product launch code lang ang PGB?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "fillers",
+      "query": "Team exercise code lang ang QHC?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "fillers",
+      "query": "Internal workflow identifier lang ang RID?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "skeletons",
+      "query": "Warehouse code lang ang SJE?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "skeletons",
+      "query": "Playlist identifier lang ba ang TKF?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "skeletons",
+      "query": "ULG ibig kong sabihin na prototype label namin?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "skeletons",
+      "query": "Workshop codename lang ang VMH?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "skeletons",
+      "query": "Game-team identifier lang ang WNI?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "taglish",
+      "query": "Project label lang ang XOJ?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "taglish",
+      "query": "YPK ibig kong sabihin na team codename namin?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "category": "taglish",
+      "query": "Internal name lang ba ang ZQL?",
+      "expectedStructuralBehavior": "decision=REFUSE; reason=explicit_non_tax_task",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    }
+  ],
+  "executedRows": 41,
+  "passedRows": 41,
+  "failedRows": [],
+  "positiveCandidateFirings": 9,
+  "copiedFrozenQueries": [],
+  "duplicatedQueries": [],
+  "noCopiedFrozenQueries": true,
+  "protectedQuerySources": [
+    "R3",
+    "reason_counterfactual",
+    "collision_probes",
+    "decision_counterfactual_v3",
+    "decision_counterfactual_v4",
+    "decision_counterfactual_v5",
+    "decision_counterfactual_v6",
+    "relation_counterfactual",
+    "clause_probes",
+    "rich_context_guard"
+  ],
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "noFixtureDependency": true,
+  "pass": true
+}

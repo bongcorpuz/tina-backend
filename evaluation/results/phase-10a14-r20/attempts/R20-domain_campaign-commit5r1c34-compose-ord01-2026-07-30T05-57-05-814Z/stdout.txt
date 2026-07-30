@@ -1,0 +1,2 @@
+Composition attempt for 5 accepted C34 rules.
+ACCEPTED_CUMULATIVE_ORDER_INDEPENDENT; accepted rules=5; order drift=0; shadowing=0.

@@ -1,0 +1,54 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:33.361Z",
+  "records": [
+    {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "bytes": 6737848,
+      "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C10_DECISION_COUNTERFACTUAL_V6_SUITE.json",
+      "bytes": 54453,
+      "sha256": "6186255de327e359c7352c0960cb8196aeb193d1a195477c4c3509f37bd5cde3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C13_RELATION_COUNTERFACTUAL_V7_SUITE.json",
+      "bytes": 94215,
+      "sha256": "520857e32d9d70fe9ee75eb38eafbce4821cba2cf65d526041fbfb9aaee9775e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C14_CLAUSE_PROBE_SUITE.json",
+      "bytes": 27145,
+      "sha256": "d3271a5efe30e3a62e6eaf44493a9df25eae4ec0983a286ff892346c631973fd"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C15_REASON_COUNTERFACTUAL_V8_SUITE.json",
+      "bytes": 109370,
+      "sha256": "852c31d8b04acc2eecd48b1cc9afac0fc0aade874fd5d810da7206b5433e9c92"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C17_COLLISION_PROBE_SUITE.json",
+      "bytes": 62476,
+      "sha256": "77bd2adcade16d40e2fa2e7195b23e4b1e6a855c79e66652b9bc63f93015f18a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C7_DECISION_COUNTERFACTUAL_V3_SUITE.json",
+      "bytes": 153093,
+      "sha256": "16e775ac6eeb6eac685d858404329ae43ea1ee2debbccc8689151cf245a9f2a4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C8_DECISION_COUNTERFACTUAL_V4_SUITE.json",
+      "bytes": 81420,
+      "sha256": "02895dce8577286bee8ca695f52e425f8f00ecfda8358e2f93bb20cabf04c3c4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C9_DECISION_COUNTERFACTUAL_V5_SUITE.json",
+      "bytes": 59890,
+      "sha256": "038f574df6fc51dbc3f0c66442248c475a83c0e99bc525d56d3dc49ca02977aa"
+    }
+  ],
+  "r3ExpectedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r3ActualSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "pass": true
+}

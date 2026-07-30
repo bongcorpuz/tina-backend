@@ -1,0 +1,21 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 08cc490..244fa50 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1357,6 +1357,16 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c34ImportDutyInstrumentTopic)
+     return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.86 };
+ 
++  const c34TaxRuleEffectVerb = /\b(?:affect\w*|apply|applies|govern\w*|treat\w*|cover\w*)\b/i.test(v.t);
++  const c34HoldingPeriodRule = /\bholding\s+period\s+rule\b/i.test(v.t);
++  const c34LegalRuleBearsTaxTreatment = v.reason === 'explicit_tax_task_relation'
++      && !evidence.proceduralComplianceFrame
++      && !/\b(?:file|filing|form|remit\w*|payment|register\w*|submit\w*|comput\w*|calculat\w*)\b/i.test(v.t)
++      && (evidence.contractQuestionAboutTaxClause
++        || ((evidence.statuteInEffectFrame || c34HoldingPeriodRule) && c34TaxRuleEffectVerb));
++  if (c34LegalRuleBearsTaxTreatment)
++    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.87 };
++
+   return null;
+ }
+ 

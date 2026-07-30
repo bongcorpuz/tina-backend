@@ -1,0 +1,6 @@
+{"utc":"2026-07-28T07:57:32.836Z","stage":"R0","event":"external_forensic_snapshot_started","path":"C:\\Temp\\tina-c34-crash-recovery-20260728T075732836Z","repositoryWritesBeforeCapture":false}
+{"utc":"2026-07-28T08:00:25.8591284Z","stage":"R0","event":"external_forensic_snapshot_completed","artifactCount":9,"unstagedDiffBytes":0,"stagedDiffBytes":0,"c34AttemptCount":0}
+{"utc":"2026-07-28T08:01:19.7377265Z","stage":"R1","event":"process_adjudicated","classification":"NO_ACTIVE_C34_PROCESS","exactC34RunnerCount":0,"indexLock":"ABSENT","port5173Owners":[]}
+{"utc":"2026-07-28T08:01:28Z","stage":"R2","event":"commit_state_determined","case":"A","head":"7c95019622d7174c8b1fd258b9a10137e59feb57","upstream":"7c95019622d7174c8b1fd258b9a10137e59feb57","leftRight":"0 0"}
+{"utc":"2026-07-28T08:03:20.7818549Z","stage":"R3","event":"working_state_classified","classification":"CLEAN_NOT_STARTED","preexistingC34PartialWork":false}
+{"utc":"2026-07-28T08:03:20.7818549Z","stage":"R4","event":"governed_crash_evidence_created","nextSafeStage":"R5 exact M01R reconstruction","safeToResume":true}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 18,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-28T13:34:45.943Z",
+  "stage": "executor technical stop",
+  "status": "BLOCKED_TECHNICAL_INCOMPLETE",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TECHNICAL_BLOCKER.json",
+      "bytes": 1013,
+      "sha256": "1848309118b6dca31a7fc928a9458daa8e16d226393c4746f72aea6c747a5458"
+    }
+  ],
+  "previousLogSha256": "36a931ab726003d09dc2ed9862b802ffc7705e6d9298124b23a969ac2c8aa4b8",
+  "nextExactOperation": "Forensically inspect the technical blocker and any running C34 attempt before a linked retry.",
+  "safeToResume": false,
+  "blocker": "C34_FULL_HEAD_PATCH_INVALID",
+  "eventSha256": "3eeb0fd737c80cb72a5a43754faaf2366c54c3a06f31fd02626578e15fddda63"
+}

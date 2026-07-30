@@ -1,0 +1,17 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:41.770Z",
+  "actualToExpected": {
+    "no_tax_relation -> explicit_non_tax_task": 47,
+    "tax_treatment_of_ordinary_object -> explicit_tax_task_relation": 23,
+    "explicit_non_tax_task -> no_tax_relation": 106,
+    "non_tax_expansion -> explicit_non_tax_task": 3,
+    "non_tax_expansion -> no_tax_relation": 22,
+    "explicit_tax_task_relation -> tax_treatment_of_ordinary_object": 5,
+    "non_tax_label_or_name -> no_tax_relation": 5,
+    "tax_definition_with_context -> explicit_tax_task_relation": 4,
+    "explicit_tax_task_relation -> tax_compliance_task": 1
+  },
+  "total": 216,
+  "pass": true
+}

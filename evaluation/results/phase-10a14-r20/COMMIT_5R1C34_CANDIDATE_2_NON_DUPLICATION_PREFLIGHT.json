@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T12:34:16.941Z",
+  "decision": "PASS_NO_DUPLICATE_CANDIDATE_2_WORK",
+  "checkpoint35": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_35_checkpoint_34_continuity_mismatch_safe_pause.json",
+    "bytes": 4176,
+    "sha256": "736b6af4c07d53419c14ef90d20159dece76dcafbd464203af7fd8df2360d5a2"
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_35_CONTINUATION_AUTHORIZATION.json",
+    "bytes": 5225,
+    "sha256": "ca027190ef863f0e37984fb35b602fe39496e67b7dec3d8ded34b2098a1736d3"
+  },
+  "candidate": {
+    "ordinal": 2,
+    "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+    "principle": "A local redefinition that assigns a short token to an identified project, product, team, channel, or internal identifier role is a complete non-tax naming operation.",
+    "forecastCorrections": 5,
+    "activeBasePolicy": "exact cumulative accepted base at allocation"
+  },
+  "duplicateChecks": {
+    "canonicalRegistry": [],
+    "allocationWal": [],
+    "attemptDirectories": [],
+    "checkpointLog": [],
+    "hypothesisOrderMatchesExactlyOnce": true,
+    "acceptedRetryLinkage": {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "registryCount": 1,
+      "plannedWalCount": 1,
+      "terminalAndNotRunning": true
+    }
+  },
+  "before": {
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 669233,
+      "sha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5"
+    },
+    "allocationWal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 3990,
+      "sha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9"
+    },
+    "attemptDirectoryCount": 3,
+    "checkpointLog": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 296236,
+      "sha256": "a9b3dd80426fe3fcfed8a91fb9b843f03636905c40f49a4216e4f9157ab5f36f"
+    }
+  },
+  "bindings": {
+    "checkpoint35": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_35_checkpoint_34_continuity_mismatch_safe_pause.json",
+      "bytes": 4176,
+      "sha256": "736b6af4c07d53419c14ef90d20159dece76dcafbd464203af7fd8df2360d5a2"
+    },
+    "checkpoint35EventSha256": "9c9380877fe4074e0661d207feaf50cdf2f814e0d69dd1b2a9dfb8aba2f516b5",
+    "checkpoint34Preserved": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_34_one_hour_terminal_safe_pause.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    "checkpoint34Snapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_34_CURRENT_SNAPSHOT.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    "checkpoint34Mismatch": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_34_CONTINUITY_MISMATCH.json",
+      "bytes": 47065,
+      "sha256": "3bb13e90a7a4adcf04fe8bba8018e59479c38bb812311b6d6aa2b2b505f14365"
+    },
+    "checkpoint34MismatchManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_34_CONTINUITY_MISMATCH_EVIDENCE.sha256",
+      "bytes": 2610,
+      "sha256": "8b00ec97621131a524000fa8920f2a7b83f3bd217ae1313bf64136fa7106b482"
+    },
+    "acceptedRetryResult": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+      "bytes": 780890,
+      "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+    },
+    "originalRunner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 348007,
+      "sha256": "a38759fbde67e67b06e0165fcbb8ef97f5163e4f6c8aa08e951ab05dec3b4b5e"
+    },
+    "continuationRunner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint35-continue.mjs",
+      "bytes": 57533,
+      "sha256": "567915394955ee06bfe521ba9a8986e5459cab3b17225d113c06886bd765064a"
+    },
+    "library": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 87485,
+      "sha256": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298"
+    },
+    "activeBaseHash": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 669233,
+      "sha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5"
+    },
+    "allocationWal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 3990,
+      "sha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9"
+    },
+    "checkpoint35RegistrySnapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_35_CANONICAL_ATTEMPT_REGISTRY_SNAPSHOT.json",
+      "bytes": 669233,
+      "sha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5"
+    },
+    "checkpoint35AllocationWalSnapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_35_ATTEMPT_ALLOCATION_WAL_SNAPSHOT.ndjson",
+      "bytes": 3990,
+      "sha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9"
+    },
+    "checkpoint35LogSnapshot": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_35_RECOVERY_CHECKPOINT_LOG_SNAPSHOT.ndjson",
+      "bytes": 296236,
+      "sha256": "a9b3dd80426fe3fcfed8a91fb9b843f03636905c40f49a4216e4f9157ab5f36f"
+    },
+    "candidateHypotheses": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_HYPOTHESES.json",
+      "bytes": 34821,
+      "sha256": "c71153db4148d8bad3ab0f772aa55e130e00e201b61c78ff5d21573c04595009"
+    },
+    "authorizationPrompt": {
+      "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C34-ONE-HOUR-CONTINUATION-FROM-CHECKPOINT-35.md",
+      "bytes": 10697,
+      "sha256": "be381f7d3d361ab24d1b9cd004349e0b5d32625d4a07bb1253501073dce8fd2e"
+    }
+  },
+  "pass": true
+}

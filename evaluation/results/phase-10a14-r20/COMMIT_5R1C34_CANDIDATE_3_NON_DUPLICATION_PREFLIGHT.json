@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T23:21:46.2671751Z",
+  "decision": "PASS_NO_DUPLICATE_CANDIDATE_3_WORK",
+  "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+  "cycle": "tx01",
+  "allocationOrdinal": 3,
+  "registryRecords": [],
+  "allocationWalRecords": [],
+  "attemptDirectoryRecords": [],
+  "checkpointRecords": [],
+  "c34AttemptDirectoryCount": 4,
+  "canonicalRegistryAttemptCount": 222,
+  "allocationWalRowCount": 13,
+  "candidate3Allocated": false,
+  "pass": true
+}

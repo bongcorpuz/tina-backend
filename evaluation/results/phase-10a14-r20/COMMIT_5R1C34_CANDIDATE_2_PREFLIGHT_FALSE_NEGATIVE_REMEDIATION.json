@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T12:34:16.941Z",
+  "classification": "CANDIDATE_2_PREFLIGHT_ORCHESTRATOR_FALSE_NEGATIVE",
+  "originalCompatibility": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_2_RESUME_COMPATIBILITY_VALIDATION.json",
+    "bytes": 10607,
+    "sha256": "3ad423da54749cbbfa010e2392b85b322b4c2ca606ff860f53425fc005a94e55"
+  },
+  "originalDecisionPreserved": "FAIL_NOT_READY_FOR_MATERIAL_CANDIDATE_2",
+  "cause": "A non-authoritative advisory runtime identity supplied during independent review was asserted in the additive orchestrator. The authoritative frozen candidate patch, full semantic gates, accepted-retry preservation, and dual replays all passed.",
+  "incorrectAdvisoryIdentity": {
+    "servicesTreeDigest": "ae50d4e1b1875320b4ca03c1162f5970931b5f9b71b4511f8966488cd24ccaa5",
+    "analyzerRawSha256": "ff89e030f2e38ad752a79da59f984e68bdd1d4e20a98737e684328bd84f233de",
+    "analyzerBytes": 181550
+  },
+  "authoritativeIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 181548,
+      "rawSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971",
+      "normalizedLfSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a"
+  },
+  "immutablePreallocationCandidatePatch": {
+    "artifact": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ACCOUNT_TRANSFER_PREALLOCATION_VALIDATION.json",
+      "bytes": 14360,
+      "sha256": "8ec6315fa1a3d1ef18e0e0d32110c6285a5d138965e6cde1841851daae6e0794"
+    },
+    "expectedNt02Sha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45",
+    "observedSha256": "fe5c97fbe1074f24ef3ec4e5cf37ce55ad65497750161c49500a852579ae6c45",
+    "exactMatch": true
+  },
+  "semanticAndReplayEvidencePassed": true,
+  "candidate2Allocated": false,
+  "currentContinuationRunner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint35-continue.mjs",
+    "bytes": 68728,
+    "sha256": "26305e423710262a890c3bd5434fc6b57784c792be4b375ae8335f71a8f290c5"
+  },
+  "registry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 669233,
+    "sha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5"
+  },
+  "allocationWal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 3990,
+    "sha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9"
+  },
+  "pass": true
+}

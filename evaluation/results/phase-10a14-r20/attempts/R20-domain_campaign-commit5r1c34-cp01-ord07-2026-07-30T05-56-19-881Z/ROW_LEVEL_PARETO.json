@@ -1,0 +1,72 @@
+{
+  "totalRows": 3720,
+  "baseCorrect": 3575,
+  "candidateCorrect": 3576,
+  "newlyCorrected": [
+    {
+      "oracleId": "S3-IR17-073",
+      "query": "What is the deadline to protest a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "newlyRegressed": [],
+  "wrongToDifferentWrong": [],
+  "priorOverrideChanges": [],
+  "changedSignatures": [
+    {
+      "oracleId": "S3-IR17-073",
+      "query": "What is the deadline to protest a BIR assessment?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "outsideTarget": [],
+  "pass": true
+}

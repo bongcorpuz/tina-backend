@@ -1,0 +1,187 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.729Z",
+  "candidates": [
+    {
+      "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3401,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "da95e8360d569ee41c4f470b357e89d0112afc2ffc7e7fb4586a46903aa570d0",
+          "shuffledOutputSha256": "da95e8360d569ee41c4f470b357e89d0112afc2ffc7e7fb4586a46903aa570d0"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3402,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+          "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3403,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+          "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3401,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "29343e7ea1921f66a1a639c43ad7582c9f406d5c767e4cf883a99b6b4b09d58f",
+          "shuffledOutputSha256": "29343e7ea1921f66a1a639c43ad7582c9f406d5c767e4cf883a99b6b4b09d58f"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3402,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+          "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3403,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+          "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3401,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "a99fed0ae7e66f563731815cfd61763ca60bc21e0c8d16dcfba1003143e92fd3",
+          "shuffledOutputSha256": "a99fed0ae7e66f563731815cfd61763ca60bc21e0c8d16dcfba1003143e92fd3"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3402,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+          "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3403,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+          "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3401,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "acff53fdd9bbe64d1ebff5a312bb5bd251ec8404e83fc6b79a6aa733c1b0031c",
+          "shuffledOutputSha256": "acff53fdd9bbe64d1ebff5a312bb5bd251ec8404e83fc6b79a6aa733c1b0031c"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3402,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+          "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3403,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+          "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3401,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "4e74fe3843b2574e0c71b4879a8058f2e27678877836dfaed6d9690be1e16638",
+          "shuffledOutputSha256": "4e74fe3843b2574e0c71b4879a8058f2e27678877836dfaed6d9690be1e16638"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3402,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+          "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3403,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+          "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "records": [
+        {
+          "name": "R3",
+          "seed": 3401,
+          "records": 3720,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "26f4658fcfe34feef3b61c206fe17e8cdf72ecdd4640509358acd3fd927f4893",
+          "shuffledOutputSha256": "26f4658fcfe34feef3b61c206fe17e8cdf72ecdd4640509358acd3fd927f4893"
+        },
+        {
+          "name": "reason_suite_344",
+          "seed": 3402,
+          "records": 344,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d",
+          "shuffledOutputSha256": "1881339a7d8495b9089949d996f967ab69dc046a57f76dc1afe67b25fab16e5d"
+        },
+        {
+          "name": "collision_probes_196",
+          "seed": 3403,
+          "records": 196,
+          "outputsInvariant": true,
+          "baselineOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11",
+          "shuffledOutputSha256": "512584aeed352b54b87a4c0cab1db74288a681682162dd60d1d6affb10839b11"
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

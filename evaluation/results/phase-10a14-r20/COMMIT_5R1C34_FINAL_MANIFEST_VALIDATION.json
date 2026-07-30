@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:33:13.923Z",
+  "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+  "manifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_EVIDENCE.sha256",
+    "bytes": 93862,
+    "sha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764"
+  },
+  "entries": 500,
+  "badHashes": [],
+  "badHashCount": 0,
+  "missingFiles": [],
+  "duplicatePaths": [],
+  "requiredPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE_REPLACEMENT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_CONTINUATION_RESULT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_CUMULATIVE_COMPOSITION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_FROZEN_GATE_RESULT.json",
+    "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_SERVICE_RUNTIME_IDENTITY.json",
+    "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+    "knowledge/CURRENT_STATE.md"
+  ],
+  "missingRequiredPaths": [],
+  "c34CheckpointCount": 45,
+  "bothOpusCliCapturesIncluded": true,
+  "replacementReviewIncluded": true,
+  "documentationIncluded": true,
+  "registryWalIncluded": true,
+  "serviceRuntimeIdentityIncluded": true,
+  "candidate7OrC35Paths": [],
+  "pass": true
+}

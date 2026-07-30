@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:05:15.618Z",
+  "classification": "TECHNICAL_INCOMPLETE_REVIEW_INVOCATION",
+  "priorInvocation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_INVOCATION.json",
+    "bytes": 8172,
+    "sha256": "0248fc7b51a71b67159d5140663d2d7d7cbebe734d1f64b2d562369b147565ab"
+  },
+  "priorCapture": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+    "bytes": 7899,
+    "sha256": "675a282c92738b589b0bb7e4d181e0d1b5f42d184ca12b43fffea314a553ad9a"
+  },
+  "exitCode": 1,
+  "stdoutBytes": 0,
+  "stderr": "Error: --json-schema is not valid JSON: JSON Parse error: Expected '}'\n",
+  "evidenceReviewPerformed": false,
+  "decisionReturned": false,
+  "approvalReturned": false,
+  "semanticDisposition": "NOT_A_REVIEW_REJECTION",
+  "priorPromptInvocationConsumed": true,
+  "replacementAuthorizedOnlyByCheckpoint57Prompt": true,
+  "priorArtifactsPreservedUnchanged": true,
+  "pass": true
+}

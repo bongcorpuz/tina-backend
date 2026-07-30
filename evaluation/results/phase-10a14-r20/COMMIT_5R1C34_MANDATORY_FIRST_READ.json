@@ -1,0 +1,26 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:32.921Z",
+  "recoveryContext": "The prior executor completed the full read before transfer. The account-transfer preallocation artifact independently validated the same immutable 156-file inventory; semantic execution consumes that durable validation without rereading the entire set.",
+  "validationMethod": "Independent immutable inventory reconstruction against the unchanged C33 commit and governed evidence; the completed 156-file semantic read is not repeated during execution.",
+  "pass": true,
+  "fileCount": 156,
+  "totalBytes": 15320821,
+  "explicitRequiredFiles": 30,
+  "completeAttemptDirectoriesRead": 6,
+  "c33AttemptDirectories": [
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c33_m01r_m02r_composition-commit5r1c33-composition-ord03-2026-07-28T05-19-49-712Z",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c33_m01r_m02r_composition-commit5r1c33-composition-v2-ord03-2026-07-28T05-27-52-136Z",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-ord01-2026-07-28T05-16-51-606Z",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m02r-ord02-2026-07-28T05-19-14-496Z",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m02r-v2-ord02-2026-07-28T05-27-30-024Z"
+  ],
+  "missing": [],
+  "changed": [],
+  "helperCombinedInventorySha256": "6f8fc695ecb584cc7970d7e10c00e0ad4edd6cc44629462a31708b75be239248",
+  "runnerCombinedInventorySha256": "c1670b46610bc5ec509e26d73988d90cd7e6b4381482218644f4e966d934904a",
+  "repeatedDuringAccountTransfer": false,
+  "repeatedDuringSemanticExecution": false,
+  "validationArtifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ACCOUNT_TRANSFER_PREALLOCATION_VALIDATION.json"
+}

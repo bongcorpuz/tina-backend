@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 15,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-28T13:34:35.641Z",
+  "stage": "R5 exact M01R reconstruction",
+  "status": "COMPLETED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_BASE_RUNTIME_IDENTITY.json",
+      "bytes": 2125,
+      "sha256": "f088e0e8467f010953f8e944842f037dbee40c9ea4efc2bcaa0b6a7c2094829f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_C33_SELECTED_RUNTIME_RECONSTRUCTION.json",
+      "bytes": 31324,
+      "sha256": "c3ecf15304e5cd16f1cdf91ce945a3f1908f00a4bb6b6f6ec83d68104e362551"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z/ITERATION_RESULT.json",
+      "bytes": 30990,
+      "sha256": "bc9937b489bd1db3cc2f2650416e8a271259be2c1b1fc50da631bcb2f9c22f91"
+    }
+  ],
+  "previousLogSha256": "bc7295532ba0c3f855afe3c033e8cbee821c1cf5633cac65f2e3878f630832f7",
+  "nextExactOperation": "Reconcile all 216 remaining reason-only residuals against the exact reconstructed M01R runtime.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "0e4c4264a28293b834dddb351408bf22e8a0ca37c7ec123f587751eea36c76c2"
+}

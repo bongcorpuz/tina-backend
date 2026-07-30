@@ -1,0 +1,160 @@
+{
+  "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+  "withheldFamily": "unseen_resolved_tax_tokens_and_tax_contexts",
+  "developmentCorpusExcluded": true,
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "records": [
+    {
+      "query": "What is FWT in a BIR deficiency review for a cooperative?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "What is CGT in a revenue case about a donated warehouse?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "What is FBT in a BIR compensation audit for a medical clinic?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "What is OSD in Philippine tax for an architecture studio?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "What is CWT in a BIR withholding review for a seed supplier?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_WITHHOLDING_ON",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

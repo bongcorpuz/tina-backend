@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "generatedAtUtc": "2026-07-28T12:31:39.9563919Z",
+  "continuationType": "CODEX_ACCOUNT_TRANSFER",
+  "previousExecutor": {
+    "tool": "Codex",
+    "sessionId": "019fa7b7-2d8f-7d21-87c9-d0e7e010ed10",
+    "accountExhausted": true,
+    "exhaustionPoint": "after transferred runner implementation and development static checks, before first governed semantic attempt allocation"
+  },
+  "newExecutor": {
+    "tool": "Codex",
+    "accountOrSessionIdentity": "not_visible_in_runtime_context",
+    "model": "GPT-5.6 Sol",
+    "reasoning": "Ultra High",
+    "speed": "Low"
+  },
+  "repository": {
+    "path": "C:/Projects/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "upstreamRef": "origin/feature/source-availability-engine-v1",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "leftRightCount": {
+      "ahead": 0,
+      "behind": 0
+    },
+    "fetchPruneCompleted": true,
+    "c34CommitPresent": false,
+    "branchDiverged": false
+  },
+  "transferSnapshot": {
+    "path": "C:/Temp/tina-c34-account-transfer-20260728T122651264Z",
+    "artifacts": [
+      {
+        "name": "TRANSFER_CHECKPOINT_COPY.json",
+        "bytes": 1154,
+        "sha256": "ac0c5518a088485ea798631624b2cd58b32148b96a95c161db5534dfbf942aae"
+      },
+      {
+        "name": "TRANSFER_FILE_INVENTORY.json",
+        "bytes": 4355,
+        "sha256": "e47a9aa98724660790962be0d0e3944394cdd3856d4986fa2a8c09febcb23ad8"
+      },
+      {
+        "name": "TRANSFER_GIT_STATUS.txt",
+        "bytes": 1528,
+        "sha256": "dd57d320abd0cf04e3fbe777377e0ef8715bf971e6ffb82a94405a704db63885"
+      },
+      {
+        "name": "TRANSFER_HASH_INVENTORY.json",
+        "bytes": 5033,
+        "sha256": "a67e20b8d5538474b4cd1848f01c5b1a67bd2665334889a6ff3eea1d13172e54"
+      },
+      {
+        "name": "TRANSFER_PROCESS_SNAPSHOT.json",
+        "bytes": 11694,
+        "sha256": "3e5abbe074bc5657829d813ca3890e2c6215f2b4affb3dbd02db8a0114dc732e"
+      },
+      {
+        "name": "TRANSFER_REFLOG.txt",
+        "bytes": 5921,
+        "sha256": "46fb275639427d9e8496f14c9c630443b4047e361bd9e7496d0845ad1f7c0bbc"
+      },
+      {
+        "name": "TRANSFER_STAGED_DIFF.patch",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "TRANSFER_UNSTAGED_DIFF.patch",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "transferredPathsAndHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_FORENSIC_SNAPSHOT.json",
+      "bytes": 5557,
+      "sha256": "d90d6133dbad834fe7b3cef783e23f09525ec8e9f39441616ee7167a252e697f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_RECOVERY_DECISION.json",
+      "bytes": 1338,
+      "sha256": "9d76025cc2f7702525686f810242e00f78436d0a4e37d130a030474742d8e206"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_RECOVERY_LOG.ndjson",
+      "bytes": 1091,
+      "sha256": "3b8a066d216bf706a34e823192a760e71d09bc94294b7f3747269a519b395143"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREEXISTING_PARTIAL_DIFF.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREEXISTING_STAGED_DIFF.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+      "bytes": 1154,
+      "sha256": "ac0c5518a088485ea798631624b2cd58b32148b96a95c161db5534dfbf942aae"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 1984,
+      "sha256": "6493382d8a52a026e63e702220d9531ec2605e75ccb7814bf138838417edcf8b"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 154813,
+      "sha256": "c0034b02dddbfe0137ee955124d688fd0769a3d16124f4ac397120a2155c4828"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 57024,
+      "sha256": "afb457b6ae5cad7ebbb91c1b364ce691e85fdfe0bab2f3fa2c6da8c734c02259"
+    }
+  ],
+  "existingRecoveryArtifacts": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_FORENSIC_SNAPSHOT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_RECOVERY_DECISION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_RECOVERY_LOG.ndjson",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREEXISTING_PARTIAL_DIFF.patch",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREEXISTING_STAGED_DIFF.patch",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson"
+  ],
+  "checkpointAtTransfer": {
+    "stage": "R4 crash evidence",
+    "status": "COMPLETED",
+    "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+    "sha256": "ac0c5518a088485ea798631624b2cd58b32148b96a95c161db5534dfbf942aae"
+  },
+  "firstReadContinuity": {
+    "priorSessionReportedFileCount": 156,
+    "priorSessionReportedTotalBytesApproximate": 15300000,
+    "priorSessionReportedMissingFiles": 0,
+    "repeatedDuringTransfer": false,
+    "validationBasis": "The controlling continuation brief records completion; HEAD/upstream are unchanged, the C33 governed evidence remains at the same commit, and the transferred runner hashes match the transfer snapshot."
+  },
+  "allocationAndWorkingState": {
+    "c34AttemptAllocationCount": 0,
+    "c34AttemptDirectoryCount": 0,
+    "c34RegistryEntryCount": 0,
+    "trackedServiceModification": false,
+    "stagedFiles": false,
+    "oracleOrFrozenSuiteModification": false,
+    "liveStartingHeadServiceIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 31045,
+        "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 11976,
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 64424,
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      }
+    }
+  },
+  "processState": {
+    "classification": "NO_ACTIVE_C34_RUNNER",
+    "gitIndexLock": "ABSENT",
+    "port5173": "FREE",
+    "snapshotObservation": "Only the current Codex host and the transfer-capture PowerShell process were recorded; the capture process matched because its own command line contained the C34 runner name. No node.exe, git.exe, or actual C34 runner process was present."
+  },
+  "controllingSemanticBase": {
+    "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+    "attemptId": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+    "analyzerBytes": 179760,
+    "analyzerNormalizedLfSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55",
+    "domainBoundaryNormalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+    "boundaryPatternsNormalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+    "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+    "useRepositoryHeadServicesAsSemanticBase": false
+  },
+  "classification": "ACCOUNT_TRANSFER_PRE_ATTEMPT_CONTINUATION",
+  "lastCompletedSafeStage": "Transferred C34 library/orchestration runners and bounded candidate plan exist with prior development syntax, replay, and static-audit work; no governed semantic attempt was allocated.",
+  "nextExactStage": "Final pre-allocation validation: syntax, static audit, independent leakage/path/runtime-identity audit, isolated replay self-tests, and review-cutover audit.",
+  "safeToResume": true,
+  "blocker": null
+}

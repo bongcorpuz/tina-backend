@@ -1,0 +1,31 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index a514ce1..89774b1 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1311,6 +1311,26 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c33DirectRequestedTaxConsequence)
+     return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };
+ 
++  const c34HasGovernedTaxRelation = v.rels.some((r) =>
++    r === 'ASKS_TAX_TREATMENT_OF' || r === 'ASKS_VAT_TREATMENT_OF'
++    || r === 'ASKS_DEDUCTIBILITY_OF' || r === 'ASKS_WITHHOLDING_ON'
++    || r === 'ASKS_CUSTOMS_DUTY_ON' || r === 'ASKS_TAX_COMPLIANCE_FOR');
++  const c34OrdinarySelectionRequest = /^(?:alin|ano|aling)\b[^?.!]*\b(?:na\s+)?bibilhin\b/i.test(v.t);
++  const c34OrdinaryDomainInquiryHasNoTaxRelation = v.reason === 'explicit_non_tax_task'
++      && evidence.nonTaxControllingDomain
++      && evidence.primaryIsInterrogative
++      && /\?\s*$/.test(v.t)
++      && !evidence.reasonDenialAssertion
++      && !evidence.reasonRequestsOperation
++      && !c34HasGovernedTaxRelation
++      && !evidence.governedTaxPredicateAnywhere
++      && !evidence.taxRelationOverPrimaryTarget
++      && !evidence.filipinoTaxRelationOverTarget
++      && !evidence.contractQuestionAboutTaxClause
++      && !c34OrdinarySelectionRequest;
++  if (c34OrdinaryDomainInquiryHasNoTaxRelation)
++    return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.87 };
++
+   return null;
+ }
+ 

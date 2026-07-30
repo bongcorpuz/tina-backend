@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:05:14.860Z",
+  "classification": "OPUS_CLI_INVOCATION_TRANSPORT_DEFECT",
+  "priorInvocation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_INVOCATION.json",
+    "bytes": 8172,
+    "sha256": "0248fc7b51a71b67159d5140663d2d7d7cbebe734d1f64b2d562369b147565ab"
+  },
+  "priorCapture": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+    "bytes": 7899,
+    "sha256": "675a282c92738b589b0bb7e4d181e0d1b5f42d184ca12b43fffea314a553ad9a"
+  },
+  "claudeVersion": "2.1.212 (Claude Code)",
+  "intendedSchema": {
+    "bytes": 1934,
+    "characters": 1934,
+    "sha256": "10a328e79b179c6469cfd3a8a425e7ab3a035bfc2a1f36245310bcdabbc1dade",
+    "jsonValid": true,
+    "bomPresent": false,
+    "newlinePresent": false
+  },
+  "authoritativeLocalHelp": {
+    "nativeExecutable": {
+      "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+      "bytes": 255334560,
+      "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa"
+    },
+    "helpSha256": "fcd5b45507c7c602d54d85a300eab288a8a3c6770c6def696ca19a3100725de4",
+    "jsonSchemaOptionPresent": true
+  },
+  "transport": {
+    "priorSchema": {
+      "expectedLength": 1934,
+      "expectedSha256": "10a328e79b179c6469cfd3a8a425e7ab3a035bfc2a1f36245310bcdabbc1dade",
+      "expectedJsonValid": true,
+      "powerShellForwardedLength": 1676,
+      "powerShellForwardedSha256": "888fb59a4718cdb85f1b578446183b5153ab60e4a8f6b82c72cef60c1e2127a5",
+      "powerShellForwardedJsonValid": false,
+      "powerShellRemovedEmbeddedQuotes": true
+    },
+    "directTransport": {
+      "expectedArgc": 18,
+      "actualArgc": 18,
+      "exactArgvRoundTrip": true
+    },
+    "nativeParserNegativeControl": {
+      "exitCode": 1,
+      "signal": null,
+      "stderr": "error: option '--permission-mode <mode>' argument '__C34_INTENTIONAL_INVALID_PROBE__' is invalid. Allowed choices are acceptEdits, auto, bypassPermissions, manual, dontAsk, plan.\n",
+      "schemaRejected": false,
+      "intentionalLaterOptionGateReached": true
+    },
+    "launcher": {
+      "shim": {
+        "path": "C:/Users/USER/AppData/Roaming/npm/claude.ps1",
+        "bytes": 520,
+        "sha256": "b5f3d62824ffd02d9e9ca8786868f4d1233d78a68a199d8e91d3cd3a9a11b4f7"
+      },
+      "native": {
+        "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+        "bytes": 255334560,
+        "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa"
+      }
+    },
+    "pass": true
+  },
+  "ruledOut": {
+    "invalidSourceJson": true,
+    "bomOrEncoding": true,
+    "pathQuoting": true,
+    "unsupportedOption": true,
+    "cliVersionIncompatibility": true,
+    "commandLengthOverflow": true
+  },
+  "rootCause": "Windows PowerShell 5.1 received the correct JSON argument at the -File script boundary, but the npm claude.ps1 shim expanded $args into native claude.exe. That second PowerShell-to-native boundary removed embedded double quotes, converting valid JSON into an invalid object-like token before evidence review.",
+  "repair": "Spawn the verified native claude.exe directly from Node with an argv array and shell=false. Do not invoke powershell.exe, claude.ps1, claude.cmd, or a shell-joined command.",
+  "pass": true
+}

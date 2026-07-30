@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 24,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T00:54:14.857Z",
+  "stage": "self-tests",
+  "status": "PASS_TESTS_A_B_C_D_DUAL_ENVIRONMENT",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_REPLAY_SELF_TEST.json",
+      "bytes": 285693,
+      "sha256": "611921d64a414206590b546f89fec9177ff21e1e064c15796eeb256e3b858b0c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_HEADER_VALIDATION.json",
+      "bytes": 7421,
+      "sha256": "24202bbcefab302d1127a8794422411e793199e1a2e77ad5d5e35a2db9f8a0ce"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_REMEDIATION_RESULT.json",
+      "bytes": 198254,
+      "sha256": "4be1ad000366005853cdb61267f71e0bd42c92d7019a20595f02c2250ef3dec3"
+    }
+  ],
+  "previousLogSha256": "79f33f6743927136311cd61c826b50339ff1cc510d2129eb6af742321ac40a50",
+  "nextExactOperation": "Authorize exactly one new linked retry with the required linkage and new ordinal.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "76bea4b682d25c04e46698b7c0b62cc6b6391a7add4ed82254a940660d351375"
+}

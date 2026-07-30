@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 44,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T03:26:39.645Z",
+  "stage": "linked retry execution",
+  "status": "COMPLETED_ALL_SEMANTIC_AND_REPLAY_CONTROLS",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "activeAttemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ITERATION_RESULT.json",
+      "bytes": 657407,
+      "sha256": "60e5e6dea588c95e13c2c38c0cca0d8ffe11ec96e315e5a69dfab92c5921253d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/C34_CANDIDATE_DELTA_REPLAY.json",
+      "bytes": 439995,
+      "sha256": "410a792c1917188e33950f2f490d32f5a6ce4f047b44cd56a6806dc7fed706b9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/FULL_HEAD_REPLAY.json",
+      "bytes": 21401,
+      "sha256": "a7a843d1bd07f1494215be1376ecdd9fc7f51d428179411f413cfaddbe26bc58"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/FROZEN_GATES.json",
+      "bytes": 27423,
+      "sha256": "18cc76097fdc6df7a1f998599d6f9efa3fccb47d3cd9d62a5aae17f17b8edc1c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ROW_LEVEL_PARETO.json",
+      "bytes": 5238,
+      "sha256": "9da062f1cd2114e453e923d9c4dcee4289d92c6c4b9a4fbe9d1425bca64a339b"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/M01R_AND_PRIOR_PRESERVATION.json",
+      "bytes": 296,
+      "sha256": "5fc979ca5fc4f65ec5aa1a0446b4bf47a0929d1f325aa11f91db1cf43162a72b"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/GENERALIZATION_QUERY_RESULTS.json",
+      "bytes": 38938,
+      "sha256": "4344ac715a51cbe5a0c27e8e8ed6145897306c2143089a54f622ec108d5dc943"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/LEAVE_ONE_FAMILY_OUT.json",
+      "bytes": 4558,
+      "sha256": "246402049704b6fa37f4537624dd67a93fd06fe3d634fa8d8f055b6df21c0f56"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/SENTINEL_SHUFFLE_TAINT.json",
+      "bytes": 6366,
+      "sha256": "68e4a8897405fb2edeabf44c35de72e46cd55f6571a2f167738f379f477dce84"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/MONOTONIC_FEATURE_ABLATION.json",
+      "bytes": 79032,
+      "sha256": "a6785954366f74a75ec28a4f710051829694937567c9533645811cc86fdadd4e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/PRECEDENCE_TRACE.json",
+      "bytes": 494,
+      "sha256": "9606d275ddd39fe9133e3a4eb71ea7425815f038adb9230a76b2df3ada057a26"
+    }
+  ],
+  "previousLogSha256": "9806a9048deea83c721be8260a4b4268e63b24eecb9de9a64b14f5f85191c0ec",
+  "nextExactOperation": "Record the precise linked retry semantic disposition.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "48208760fec67f8421a8e2a4278a4d3c624161eb5c3de4ebc4a7ab118b9ed5a3"
+}

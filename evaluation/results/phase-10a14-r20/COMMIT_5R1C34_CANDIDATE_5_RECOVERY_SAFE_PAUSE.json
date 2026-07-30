@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:27:48.165Z",
+  "classification": "TWO_HOUR_SAFE_PAUSE_AFTER_CANDIDATE_5_LINKED_RETRY",
+  "startingCheckpoint": 42,
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "originalAttemptId": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "linkedRetryAttemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "linkedRetryStatus": "completed",
+  "linkedRetryDisposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "endingActiveBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "endingMetrics": {
+    "canonicalPassed": 3575,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3575,
+    "reasonMismatches": 145,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "reasonCounterfactualTotal": 344,
+    "reasonCounterfactualFailed": 0,
+    "collisionProbesPassed": 196,
+    "collisionProbesTotal": 196,
+    "collisionProbesFailed": 0,
+    "decisionCounterfactualPassed": 756,
+    "decisionCounterfactualTotal": 756,
+    "decisionCounterfactualFailed": 0,
+    "relationCounterfactualPassed": 282,
+    "relationCounterfactualTotal": 282,
+    "relationCounterfactualFailed": 0,
+    "clauseProbesPassed": 68,
+    "clauseProbesTotal": 68,
+    "clauseProbesFailed": 0,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "focusedReasonFamilies": {
+      "explicit_tax_task_relation": {
+        "required": 451,
+        "satisfied": 435
+      },
+      "tax_compliance_task": {
+        "required": 291,
+        "satisfied": 290
+      },
+      "tax_treatment_of_ordinary_object": {
+        "required": 784,
+        "satisfied": 782
+      },
+      "explicit_non_tax_task": {
+        "required": 897,
+        "satisfied": 852
+      },
+      "non_tax_label_or_name": {
+        "required": 201,
+        "satisfied": 201
+      },
+      "quoted_tax_term_only": {
+        "required": 120,
+        "satisfied": 120
+      },
+      "no_tax_relation": {
+        "required": 563,
+        "satisfied": 482
+      },
+      "ambiguous_tax_acronym": {
+        "required": 220,
+        "satisfied": 220
+      },
+      "non_tax_expansion": {
+        "required": 88,
+        "satisfied": 88
+      },
+      "tax_definition_with_context": {
+        "required": 79,
+        "satisfied": 79
+      },
+      "tax_negation_but_tax_review_requested": {
+        "required": 26,
+        "satisfied": 26
+      }
+    },
+    "closedControlsPass": true,
+    "relationObjectIntegrityPass": false,
+    "clauseSchemaRegressionPass": true,
+    "antiMemorizationPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "registryTotal": 226,
+  "walRows": 26,
+  "c34AttemptDirectories": 8,
+  "ledgerPass": true,
+  "retryLinkage": {
+    "retryOf": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+    "retryReason": "C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED",
+    "retryType": "TECHNICAL_LINKED_RETRY",
+    "retryCount": 1
+  },
+  "allocationLocks": [],
+  "temporaryRuntimeDirectories": [],
+  "processState": {
+    "inspectionMethod": "PowerShell CIM node.exe inventory with current-PID exclusion and independent netstat",
+    "currentExecutorPid": 9868,
+    "processInspectionStatus": 0,
+    "processInspectionSignal": null,
+    "processInspectionStderr": "",
+    "processInspectionParseError": null,
+    "processInspectionSucceeded": true,
+    "currentExecutorPresent": true,
+    "currentExecutorCommandLineReadable": true,
+    "otherNodeProcesses": [],
+    "unreadableNodeProcesses": [],
+    "allOtherNodeCommandLinesReadable": true,
+    "activeC34Runners": [],
+    "activeC34RunnerCount": 0,
+    "netstatInspectionStatus": 0,
+    "netstatInspectionSignal": null,
+    "netstatInspectionStderr": "",
+    "listeners5173": [],
+    "port5173Free": true
+  },
+  "gitState": {
+    "serviceDiff": "",
+    "stagedDiff": "",
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "sync": "0\t0",
+    "c35Items": [],
+    "indexLock": false,
+    "liveServices": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 31045,
+        "rawSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+        "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 11976,
+        "rawSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 64424,
+        "rawSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+    }
+  },
+  "commitOccurred": false,
+  "pushOccurred": false,
+  "opusStatus": "NOT_INVOKED_NO_APPROVAL_CLAIMED",
+  "candidate6Authorized": false,
+  "candidate6Allocated": false,
+  "candidate6Executed": false,
+  "nextExactOperation": "Resume from this safe checkpoint. Candidate 5 is terminal. Candidate 6 remains unauthorized in this session; obtain a new governed continuation before any Candidate 6 decision.",
+  "pass": true
+}

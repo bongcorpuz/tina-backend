@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:48.213Z",
+  "originalAttemptId": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "historicDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+  "effectiveDisposition": "TECHNICAL_INCOMPLETE_DUAL_REPLAY_FAILURE",
+  "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+  "allocationConsumed": true,
+  "semanticResultConsumed": false,
+  "duplicateAllocationAuthorized": false,
+  "originalAttemptRecordPreserved": true,
+  "originalTerminalWalEventPreserved": true,
+  "rootCause": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_5_TECHNICAL_ROOT_CAUSE.json",
+    "bytes": 5224,
+    "sha256": "78574d7b95671343b4b641e1d852b9baff6aa5890597b9216bea46469a564cd9"
+  },
+  "pass": true
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:05:15.624Z",
+  "classification": "OPUS_CLI_DIRECT_NATIVE_TRANSPORT_REMEDIATED",
+  "rootCause": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_OPUS_CLI_DEFECT_ROOT_CAUSE.json",
+    "bytes": 3445,
+    "sha256": "0ec9ea62078db6c6e613bd0d0562aad1655b9196aa8f0494326f8e35db1ad763"
+  },
+  "oldTransport": {
+    "executable": "powershell.exe",
+    "intermediateLauncher": {
+      "path": "C:/Users/USER/AppData/Roaming/npm/claude.ps1",
+      "bytes": 520,
+      "sha256": "b5f3d62824ffd02d9e9ca8786868f4d1233d78a68a199d8e91d3cd3a9a11b4f7"
+    },
+    "shellBoundaryCount": 2,
+    "safe": false
+  },
+  "newTransport": {
+    "executable": {
+      "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+      "bytes": 255334560,
+      "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa"
+    },
+    "caller": "Node child_process.spawnSync",
+    "argvArray": true,
+    "shell": false,
+    "shellBoundaryCount": 0,
+    "fullArgvRoundTrip": {
+      "expectedArgc": 18,
+      "actualArgc": 18,
+      "exactArgvRoundTrip": true
+    },
+    "parserNegativeControl": {
+      "exitCode": 1,
+      "signal": null,
+      "stderr": "error: option '--permission-mode <mode>' argument '__C34_INTENTIONAL_INVALID_PROBE__' is invalid. Allowed choices are acceptEdits, auto, bypassPermissions, manual, dontAsk, plan.\n",
+      "schemaRejected": false,
+      "intentionalLaterOptionGateReached": true
+    },
+    "safe": true
+  },
+  "runtimeModified": false,
+  "candidateEvidenceModified": false,
+  "compositionModified": false,
+  "frozenEvidenceModified": false,
+  "oldReviewArtifactsModified": false,
+  "pass": true
+}

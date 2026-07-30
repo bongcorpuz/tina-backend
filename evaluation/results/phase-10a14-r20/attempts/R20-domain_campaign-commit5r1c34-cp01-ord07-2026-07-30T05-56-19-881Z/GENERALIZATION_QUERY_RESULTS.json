@@ -1,0 +1,1257 @@
+{
+  "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+  "requirements": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3,
+    "copiedFrozenQueries": 0,
+    "fixtureDependency": 0
+  },
+  "counts": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3
+  },
+  "rows": [
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "What is the deadline to appeal a BIR deficiency assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "When is the due date to protest a revenue assessment notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "Which deadline applies to objecting to a BIR deficiency notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "How long is the prescriptive period to contest a tax assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "What is the deadline to respond to a BIR assessment notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "Which due date controls an appeal from a revenue deficiency notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "What prescriptive period governs a protest of a tax assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "positives",
+      "query": "When is the deadline to reply to a BIR deficiency notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "What is the deadline to contest a VAT assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "When is the due date to appeal an income-tax deficiency notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "Which deadline governs an objection to a withholding assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "How long is the prescriptive period to protest an estate-tax assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "What deadline applies to responding to a BIR assessment notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "Which due date governs a reply to a BIR assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "When is the deadline to object to a deficiency-tax notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "substitutions",
+      "query": "What prescriptive period controls an appeal of a BIR assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "Tax protest deadline.",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "What is the deadline to file an income-tax return?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "What happens after a BIR assessment?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "What is the civil-court deadline to appeal?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "When is a labor appeal due?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "Is assessment interest taxable?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "How is deficiency tax computed?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "nearMisses",
+      "query": "Can you write a BIR protest letter?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "constructions",
+      "query": "What is the deadline to reply to a BIR revenue assessment notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "constructions",
+      "query": "When is the due date to contest a BIR deficiency?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "constructions",
+      "query": "Which deadline governs an appeal of a tax notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "constructions",
+      "query": "How long is the prescriptive period to respond to an assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "fillers",
+      "query": "What is the deadline to protest a VAT deficiency assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "fillers",
+      "query": "When is the due date to appeal a withholding assessment notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "fillers",
+      "query": "Which deadline governs an income-tax deficiency objection?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "fillers",
+      "query": "How long is the prescriptive period to contest an estate-tax deficiency?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "fillers",
+      "query": "What is the deadline to respond to a BIR excise notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "skeletons",
+      "query": "Which deadline controls a protest of a donor-tax assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "skeletons",
+      "query": "What due date applies to an appeal from a percentage-tax notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "skeletons",
+      "query": "How long is the prescriptive period to object to an excise assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "skeletons",
+      "query": "When is the deadline to contest a documentary-stamp-tax deficiency?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "skeletons",
+      "query": "What is the deadline to object to a BIR revenue assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "taglish",
+      "query": "Kailan ang deadline to protest ang BIR deficiency assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "taglish",
+      "query": "Ano ang due date to appeal ang BIR assessment notice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "category": "taglish",
+      "query": "Kailan ang deadline to object sa BIR excise assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=tax_compliance_task",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    }
+  ],
+  "executedRows": 41,
+  "passedRows": 41,
+  "failedRows": [],
+  "positiveCandidateFirings": 12,
+  "copiedFrozenQueries": [],
+  "duplicatedQueries": [],
+  "noCopiedFrozenQueries": true,
+  "protectedQuerySources": [
+    "R3",
+    "reason_counterfactual",
+    "collision_probes",
+    "decision_counterfactual_v3",
+    "decision_counterfactual_v4",
+    "decision_counterfactual_v5",
+    "decision_counterfactual_v6",
+    "relation_counterfactual",
+    "clause_probes",
+    "rich_context_guard"
+  ],
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "noFixtureDependency": true,
+  "pass": true
+}

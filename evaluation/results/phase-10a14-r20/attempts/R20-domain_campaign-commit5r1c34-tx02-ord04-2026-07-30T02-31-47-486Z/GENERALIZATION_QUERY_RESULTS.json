@@ -1,0 +1,1253 @@
+{
+  "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+  "requirements": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3,
+    "copiedFrozenQueries": 0,
+    "fixtureDependency": 0
+  },
+  "counts": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3
+  },
+  "rows": [
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "Is import duty payable before a charity parcel is released?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "What happens when undervaluation changes import duty on a donated machine?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "Which records support an import duty protest for a prototype shipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "How is import duty assessed for a refurbished-tablet shipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "Are import duties taxes under a regional trade rule?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "May import duty apply to a gift sent from overseas?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "Does import duty become payable when a courier releases the package?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "positives",
+      "query": "What evidence is needed for an import duty protest over a sample?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "When does import duty become payable on a returned appliance?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "How is import duty assessed after customs revaluation?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "Can import duties attach to an unsolicited parcel?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "What follows if import duty was underpaid on donated equipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "Are import duties considered national taxes?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "Which documents substantiate an import duty protest?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "May import duty arise on replacement goods?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "substitutions",
+      "query": "Does an import duty assessment follow undervaluation?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "Could a revised tariff classification alter the import duty rate?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "How do I calculate import duty on a laptop?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "What is the import duty rate on shoes?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "Is a cooling fan subject to customs duty?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "cooling fan",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "cooling fan",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "May customs duty apply to imported equipment?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "How are customs duties paid before release?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "How do I file a customs protest?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "nearMisses",
+      "query": "Which tariff schedule classifies the machine?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "constructions",
+      "query": "Is import duty payable on a donated weather sensor?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "constructions",
+      "query": "What happens if import duty was underpaid on a repaired instrument?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "constructions",
+      "query": "May import duty attach to replacement laboratory goods?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "constructions",
+      "query": "Import duty on an unsolicited research parcel?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "fillers",
+      "query": "How is import duty assessed for a donated microscope?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "fillers",
+      "query": "May import duty apply to donated school tablets?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "fillers",
+      "query": "When is import duty payable on returned online goods?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "fillers",
+      "query": "Can import duties attach to warranty replacements?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "fillers",
+      "query": "Which records support an import duty protest for exhibit equipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "skeletons",
+      "query": "Is import duty payable on a marine-research shipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "skeletons",
+      "query": "How is import duty assessed for a laboratory glassware shipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "skeletons",
+      "query": "What evidence supports an import duty protest for a farm sensor?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "skeletons",
+      "query": "Are import duties taxes for a humanitarian parcel?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "are",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "skeletons",
+      "query": "When does import duty become payable on a repaired camera?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "taglish",
+      "query": "May import duty ba sa regalong parcel mula abroad?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "taglish",
+      "query": "Kailan nagiging payable ang import duty sa replacement tools?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "category": "taglish",
+      "query": "Anong records ang kailangan sa import duty protest ng sample equipment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_CUSTOMS_DUTY_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    }
+  ],
+  "executedRows": 41,
+  "passedRows": 41,
+  "failedRows": [],
+  "positiveCandidateFirings": 33,
+  "copiedFrozenQueries": [],
+  "duplicatedQueries": [],
+  "noCopiedFrozenQueries": true,
+  "protectedQuerySources": [
+    "R3",
+    "reason_counterfactual",
+    "collision_probes",
+    "decision_counterfactual_v3",
+    "decision_counterfactual_v4",
+    "decision_counterfactual_v5",
+    "decision_counterfactual_v6",
+    "relation_counterfactual",
+    "clause_probes",
+    "rich_context_guard"
+  ],
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "noFixtureDependency": true,
+  "pass": true
+}

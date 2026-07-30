@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T04:52:49.056Z",
+  "classification": "NO_ALLOCATION_DIAGNOSTIC_CLI_MISUSE",
+  "invocation": "node evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs --help",
+  "cause": "The frozen executor has no help mode; its global fail-closed catch appended a technical-stop checkpoint.",
+  "startingCheckpoint46": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_46_candidate_5_linked_retry_recovery_safe_pause.json",
+    "bytes": 4667,
+    "sha256": "a514eb815fbb5349970a0c948f70d7a94bfe380d364883fed702238cf55d19c2"
+  },
+  "checkpoint46EventSha256": "198842da0ca9a571f491c0f65e58ec0ee2b7ea0f18e01c0dc500efcb1d9ed1b8",
+  "diagnosticCheckpoint47": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_47_executor_technical_stop.json",
+    "bytes": 1060,
+    "sha256": "3b543113ecb65f7a86cd6ce528ed9bf9f8feab4a519c09e3b7dbd1dda533c47b"
+  },
+  "diagnosticEventSha256": "23aa20a3ac9c9ad18adebb471989a0c1f6942a0e88ea2daa43808dcfe57a4a02",
+  "diagnosticBlocker": "C34_EXACTLY_ONE_MODE_REQUIRED_[]",
+  "misleadingStaleFields": {
+    "recordedActiveBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+    "actualControllingActiveBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "recordedAttemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+    "actualActiveAttemptId": null,
+    "explanation": "The generic catch inferred the latest attempt semantic base and did not represent a new attempt or active owner."
+  },
+  "mutations": {
+    "checkpointCurrentAndLogOnly": true,
+    "numberedCheckpoint47Created": true,
+    "technicalBlockerArtifactReusedUnchanged": true,
+    "registrySha256": "ac198cb30d5f41dc2161bc3f1079e259f8c8dee49dc649242c30138c85ae5a8a",
+    "walSha256": "9e499593785a23515ff1986057dd786797df9007ab5c38b26a96840901281363",
+    "registryAttempts": 226,
+    "walRows": 26,
+    "c34AttemptDirectories": 8,
+    "candidate6RegistryRecords": 0,
+    "candidate6WalRows": 0,
+    "candidate6Directories": 0,
+    "serviceDiff": "",
+    "stagedDiff": ""
+  },
+  "processState": {
+    "inspectionSucceeded": true,
+    "activeC34": [],
+    "unreadable": [],
+    "listeners5173": []
+  },
+  "temporaryRuntimeDirectories": [],
+  "allocationLocks": [],
+  "semanticDisposition": "NOT_A_CANDIDATE_ATTEMPT_AND_NOT_A_SEMANTIC_REJECTION",
+  "allocationConsumed": false,
+  "candidate6BudgetConsumed": false,
+  "checkpoint47PreservedAppendOnly": true,
+  "supersedingAction": "Append a reconciled safe checkpoint with the exact Candidate-5 linked-retry active base; do not rewrite row 47.",
+  "pass": true
+}

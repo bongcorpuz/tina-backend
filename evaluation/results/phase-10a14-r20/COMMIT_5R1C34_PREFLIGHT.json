@@ -1,0 +1,87 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:32.916Z",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "expectedHead": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "parent": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "expectedParent": "17f86896c9c6dcca860dbf038ee8b3b963817bcb",
+  "branch": "feature/source-availability-engine-v1",
+  "expectedBranch": "feature/source-availability-engine-v1",
+  "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "sync": "0\t0",
+  "trackedDiff": "",
+  "stagedDiff": "",
+  "roadmapLegacyDiffs": "",
+  "currentStateGitBlob": "981b8ff17a0c166da0aad7a1af647b2cef99deab",
+  "expectedCurrentStateGitBlob": "981b8ff17a0c166da0aad7a1af647b2cef99deab",
+  "roadmapV9GitBlob": "167c5daf808edf3deb84280363db6bb1df9b161a",
+  "expectedRoadmapV9GitBlob": "167c5daf808edf3deb84280363db6bb1df9b161a",
+  "roadmapV9NormalizedLfSha256": "bdb294ea1ee28849be8c0e4afae7a97c650a70445a96eb9023e194c04be777ae",
+  "expectedRoadmapV9NormalizedLfSha256": "bdb294ea1ee28849be8c0e4afae7a97c650a70445a96eb9023e194c04be777ae",
+  "registry": {
+    "totalAttempts": 218,
+    "cumulativeThrough": "commit5r1c33-incomplete",
+    "orphan": 0,
+    "dangling": 0,
+    "attemptsSha256": "8ffeba5e2f32b3399327afa4300f736f672125d86cd689f36acd1006a6c5947f"
+  },
+  "processAndPortState": {
+    "currentExecutorPid": 18964,
+    "processInspectionStatus": 0,
+    "processInspectionSucceeded": true,
+    "processInspectionError": null,
+    "processInspectionStderr": "",
+    "otherNodeProcesses": [],
+    "unreadableNodeProcesses": [],
+    "allNodeCommandLinesReadable": true,
+    "activeC34Runners": [],
+    "activeC34RunnerCount": 0,
+    "netstatInspectionStatus": 0,
+    "netstatInspectionStderr": "",
+    "listeners5173": [],
+    "port5173Free": true
+  },
+  "accountTransfer": {
+    "exists": true,
+    "classification": "ACCOUNT_TRANSFER_PRE_ATTEMPT_CONTINUATION",
+    "safeToResume": true
+  },
+  "preallocation": {
+    "exists": true,
+    "decision": "PASS_READY_FOR_FIRST_ATTEMPT",
+    "pass": true,
+    "runnerHashes": {
+      "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+      "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6"
+    },
+    "recordedRunnerHashes": {
+      "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs": "86ba07a5825ddec587e99ac5fe6946bd9dd08caff78c56221c317b4def3f422a",
+      "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs": "51f7b9b5552fc8fb46b237de0a77d158e00d15c6316d523161ae268086d479b6"
+    },
+    "runnerHashesMatch": true
+  },
+  "gitIndexLockExists": false,
+  "untracked": [
+    ".vscode/extensions.json",
+    "evaluation/factcheck/README.md",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "evaluation/factcheck/hardest-philippine-tax-question.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ACCOUNT_TRANSFER_PREALLOCATION_VALIDATION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CODEX_ACCOUNT_TRANSFER_CONTINUITY.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CODEX_ACCOUNT_TRANSFER_LOG.ndjson",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_FORENSIC_SNAPSHOT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_RECOVERY_DECISION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_EXECUTOR_CRASH_RECOVERY_LOG.ndjson",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREEXISTING_PARTIAL_DIFF.patch",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREEXISTING_STAGED_DIFF.patch",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+    "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+    "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs"
+  ],
+  "unauthorizedUntracked": [],
+  "externalR0Snapshot": "C:/Temp/tina-c34-crash-recovery-20260728T075732836Z",
+  "externalR0SnapshotExists": true,
+  "pass": true
+}

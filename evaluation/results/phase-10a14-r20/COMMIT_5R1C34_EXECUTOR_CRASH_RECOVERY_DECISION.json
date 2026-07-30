@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "decidedAtUtc": "2026-07-28T08:03:20.7818549Z",
+  "recoveryExecutor": "Codex",
+  "commitStateCase": "A",
+  "processClassification": "NO_ACTIVE_C34_PROCESS",
+  "workingStateClassification": "CLEAN_NOT_STARTED",
+  "decision": "BEGIN_C34_FROM_THE_BEGINNING",
+  "basis": [
+    "Fetched HEAD and upstream both equal 7c95019622d7174c8b1fd258b9a10137e59feb57 with left-right count 0 0.",
+    "No tracked or staged change existed at R0.",
+    "No C34 runner, result, attempt directory, or registry allocation existed.",
+    "No exact C34 runner process or Git index lock existed and port 5173 was free.",
+    "Tracked service files matched committed HEAD.",
+    "The only C34 inventory content match was the committed C33 runner's textual next-step reference."
+  ],
+  "preexistingPartialWork": false,
+  "resumedAttempts": [],
+  "technicalIncompleteAttempts": [],
+  "retryAttempts": [],
+  "restoredFiles": [],
+  "recoveryActions": [
+    "Captured the required external R0 forensic snapshot before repository writes.",
+    "Performed a second process/lock/port check.",
+    "Fetched with prune and verified Case A.",
+    "Classified the local state as CLEAN_NOT_STARTED."
+  ],
+  "nextSafeStage": "R5 exact M01R reconstruction",
+  "safeToResume": true,
+  "blocker": null
+}

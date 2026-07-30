@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 43,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T03:24:56.722Z",
+  "stage": "linked retry allocation",
+  "status": "ALLOCATED_NEW_DISTINCT_ATTEMPT",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "activeAttemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ATTEMPT.json",
+      "bytes": 3378,
+      "sha256": "fe3b24647de1e7be11bae997aa7f287946cb84c1c44eb67070c607f9f1e04b7e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_NT01_LINKED_RETRY_AUTHORIZATION.json",
+      "bytes": 1424,
+      "sha256": "d4bcf437429079bddbedda8a46b5cf21dc77f02043c67955debad497478d7422"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 9568,
+      "sha256": "87d443f7e0025d50c5f9222ac7dd73f277b55341402f341a29a9a46ef70aa205"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 695385,
+      "sha256": "b58cbdab8435baa132b8f886e589fef8d348535cddffc93e75a7988954631a92"
+    }
+  ],
+  "previousLogSha256": "db5c545f92e2511f0d2d73c936c755f7666df1969019354b89c3f92c7b4a9b48",
+  "nextExactOperation": "Execute the linked NT01 retry once against the exact immutable C33 M01R base.",
+  "safeToResume": false,
+  "blocker": null,
+  "eventSha256": "25a3241193a13bba000875562223b25f341f94f2577357bd058367f90886c7b1"
+}

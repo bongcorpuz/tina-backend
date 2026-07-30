@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 51,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T05:56:17.883Z",
+  "stage": "starting-ledger guard no-allocation reconciliation",
+  "status": "PREALLOCATION_STARTING_LEDGER_GUARD_DIAGNOSTIC_SUPERSEDED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": null,
+  "activeAttemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FOUR_HOUR_TERMINAL_STATE_RECONCILED.json",
+      "bytes": 4360,
+      "sha256": "9562ce6bac6ee4400a5d7006d6b25aca472d8198148ccbb3f9da19b47a9ea48e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_PREALLOCATION_STARTING_LEDGER_GUARD_ADJUDICATION.json",
+      "bytes": 1992,
+      "sha256": "537cd6a97f35fac19c0b95dcedc3a0c83061f783984b7bbca3d9161d97811945"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 697791,
+      "sha256": "ac198cb30d5f41dc2161bc3f1079e259f8c8dee49dc649242c30138c85ae5a8a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 9787,
+      "sha256": "9e499593785a23515ff1986057dd786797df9007ab5c38b26a96840901281363"
+    }
+  ],
+  "previousLogSha256": "d2c8489d6af1e4c460a18b9064bcc5fca7b1ac172e53ccd05153a329fa325a3f",
+  "nextExactOperation": "Repeat all Candidate-6 authorization and non-duplication gates using the exact global C34 state, then allocate exactly once only if every gate passes.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "ea2ffc0812dab653a153b9476ba24af891d581003623b2b36dd339698b9ada9b"
+}

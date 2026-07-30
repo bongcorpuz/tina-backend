@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 45,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T03:26:39.844Z",
+  "stage": "linked retry disposition",
+  "status": "ACCEPTED_PROMOTED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "activeAttemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ITERATION_RESULT.json",
+      "bytes": 657407,
+      "sha256": "60e5e6dea588c95e13c2c38c0cca0d8ffe11ec96e315e5a69dfab92c5921253d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/ATTEMPT.json",
+      "bytes": 5806,
+      "sha256": "05db330640b897d736228ee5c481d230d6af4808d84017a7337b4f19c232043f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 697791,
+      "sha256": "ac198cb30d5f41dc2161bc3f1079e259f8c8dee49dc649242c30138c85ae5a8a"
+    }
+  ],
+  "previousLogSha256": "87d3b4aaa60f08008acde2e04dcb0c92ff2644385aa60fb81d297bbeac2703aa",
+  "nextExactOperation": "Reconcile registry and WAL, confirm the cumulative active base, then continue original C34 candidates 2-6.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "864e02b42eba42f215d088d27c264d1d2c8169a3e943eff6c96fad66b041682f"
+}

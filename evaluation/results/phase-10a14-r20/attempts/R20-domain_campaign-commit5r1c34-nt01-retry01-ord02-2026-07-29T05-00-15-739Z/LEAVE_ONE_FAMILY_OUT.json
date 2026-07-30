@@ -1,0 +1,156 @@
+{
+  "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+  "withheldFamily": "unseen_ordinary_domains_and_interrogative_constructions",
+  "developmentCorpusExcluded": true,
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "records": [
+    {
+      "query": "Can shareholders inspect corporate minutes before an annual meeting?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Does an unpaid personal loan survive the borrower moving abroad?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "May an employer recover relocation costs under a private contract?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Can a school enrollment decision be challenged through an academic process?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Does a club membership meeting need a written agenda?",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

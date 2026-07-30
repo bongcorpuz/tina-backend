@@ -1,0 +1,1636 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:36.173Z",
+  "exactM01rIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 179760,
+      "rawSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55",
+      "normalizedLfSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503"
+  },
+  "selectedC33Attempt": "R20-domain_campaign-r20_commit5r1c33_replay_remediated_reason_continuation-commit5r1c33-m01r-v2-ord01-2026-07-28T05-27-05-812Z",
+  "m01rCorrections": {
+    "required": 22,
+    "records": [
+      {
+        "oracleId": "S1-IR19-1017",
+        "query": "Are tuition receipts for culture classes taxable? Group MM-09.",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are tuition receipts for culture classes taxable?\"]]}"
+      },
+      {
+        "oracleId": "S1-IR19-1057",
+        "query": "Are tuition receipts for culture classes taxable? Group MM-29.",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are tuition receipts for culture classes taxable?\"]]}"
+      },
+      {
+        "oracleId": "S1-IR19-1097",
+        "query": "Are tuition receipts for culture classes taxable? Group MM-49.",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are tuition receipts for culture classes taxable?\"]]}"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-022",
+        "query": "capital gains tax",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"capital gains tax\"]]}"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-064",
+        "query": "taxable compensation",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"taxable compensation\"]]}"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-470",
+        "query": "Is compensation taxable in the Philippines?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is compensation taxable in the Philippines?\"]]}"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-478",
+        "query": "What is capital gains tax?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is capital gains tax?\"]]}"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-510",
+        "query": "What is taxable compensation?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is taxable compensation?\"]]}"
+      },
+      {
+        "oracleId": "S2-IR18-DOM-546",
+        "query": "What is taxable income?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is taxable income?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-016",
+        "query": "What is the tax treatment of demurrage in customs valuation?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the tax treatment of demurrage in customs valuation?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-034",
+        "query": "Is capital gain on shares of stock taxable?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is capital gain on shares of stock taxable?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-040",
+        "query": "When is capital gains tax due after selling land?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"When is capital gains tax due after selling land?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-041",
+        "query": "Is gain from selling inherited property taxable?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is gain from selling inherited property taxable?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-047",
+        "query": "How does zonal value affect capital gains tax?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How does zonal value affect capital gains tax?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-053",
+        "query": "Is gain taxable if the asset was held more than one year?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is gain taxable if the asset was held more than one year?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-054",
+        "query": "How does BIR assess capital gains tax deficiencies?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"bir\",\"c01\",\"How does BIR assess capital gains tax deficiencies?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-055",
+        "query": "What exemptions apply to capital gains tax on principal residence?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What exemptions apply to capital gains tax on principal residence?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-060",
+        "query": "What is the tax base for capital gains tax?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the tax base for capital gains tax?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-144",
+        "query": "Is it taxable?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is it taxable?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-152",
+        "query": "Is the gain taxable?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is the gain taxable?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-172",
+        "query": "Kailan due ang capital gains tax pag nagbenta ng lupa?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Kailan due ang capital gains tax pag nagbenta ng lupa?\"]]}"
+      },
+      {
+        "oracleId": "S3-IR17-189",
+        "query": "Taxable ba ito?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "signature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Taxable ba ito?\"]]}"
+      }
+    ],
+    "pass": true
+  },
+  "generalization": {
+    "required": 31,
+    "records": [
+      {
+        "category": "positives",
+        "query": "Are receipts from a community art workshop taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are receipts from a community art workshop taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "are",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "positives",
+        "query": "Is freelance consulting compensation taxable in the Philippines?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is freelance consulting compensation taxable in the Philippines?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "positives",
+        "query": "What tax treatment applies to customs demurrage?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What tax treatment applies to customs demurrage?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "positives",
+        "query": "Is a gain from selling inherited land taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is a gain from selling inherited land taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "positives",
+        "query": "How is the tax base determined for capital gains tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How is the tax base determined for capital gains tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "how",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "positives",
+        "query": "What exemption may apply to capital gains tax on a principal home?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What exemption may apply to capital gains tax on a principal home?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "substitutions",
+        "query": "Are seminar fees subject to tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are seminar fees subject to tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "are",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "substitutions",
+        "query": "Is a designer fee deductible for income tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_DEDUCTIBILITY_OF\",\"subject\",\"c01\",\"Is a designer fee deductible for income tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_DEDUCTIBILITY_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "substitutions",
+        "query": "What VAT treatment applies to a training fee?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_VAT_TREATMENT_OF\",\"vat\",\"c01\",\"What VAT treatment applies to a training fee?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_VAT_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "vat",
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "substitutions",
+        "query": "Is the proceeds amount taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is the proceeds amount taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "substitutions",
+        "query": "What is the capital gains tax base?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the capital gains tax base?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "substitutions",
+        "query": "Are relocation benefits taxable compensation?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are relocation benefits taxable compensation?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "are",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "near_miss",
+        "query": "How do I file a capital gains tax return?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"How do I file a capital gains tax return?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_compliance_task",
+          "relations": [
+            "ASKS_TAX_COMPLIANCE_FOR"
+          ],
+          "requestedAction": "how",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "near_miss",
+        "query": "Which form is required to remit withholding tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"transaction\",\"c01\",\"Which form is required to remit withholding tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_compliance_task",
+          "relations": [
+            "ASKS_TAX_COMPLIANCE_FOR"
+          ],
+          "requestedAction": "which",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "near_miss",
+        "query": "How is capital gains tax computed?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How is capital gains tax computed?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "how",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "near_miss",
+        "query": "How do I pay capital gains tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How do I pay capital gains tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "how",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "near_miss",
+        "query": "What is the holding period for a capital gains tax asset?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the holding period for a capital gains tax asset?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "near_miss",
+        "query": "How does a corporation recognize capital gains tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"How does a corporation recognize capital gains tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "how",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "constructions",
+        "query": "Please explain whether the land-sale gain is taxable.",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Please explain whether the land-sale gain is taxable.\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": "sale",
+          "speechAct": "other"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "constructions",
+        "query": "Could a taxpayer ask if the allowance is subject to tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Could a taxpayer ask if the allowance is subject to tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "constructions",
+        "query": "Could a sales commission be subject to tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Could a sales commission be subject to tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": "sale",
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "fillers",
+        "query": "For a small bakery, are delivery receipts taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a small bakery, are delivery receipts taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "fillers",
+        "query": "For a neighborhood clinic, is a service fee taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a neighborhood clinic, is a service fee taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "fillers",
+        "query": "For a charity event, are ticket receipts subject to tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a charity event, are ticket receipts subject to tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "fillers",
+        "query": "For a software studio, is a project bonus taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"For a software studio, is a project bonus taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "structural_skeleton",
+        "query": "Is [ordinary receipt] taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is [ordinary receipt] taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "structural_skeleton",
+        "query": "What tax treatment applies to [ordinary transaction]?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"transaction\",\"c01\",\"What tax treatment applies to [ordinary transaction]?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "transaction",
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "structural_skeleton",
+        "query": "Is [gain from sale] subject to tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"sale\",\"c01\",\"Is [gain from sale] subject to tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": "sale",
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "structural_skeleton",
+        "query": "What is the tax base for [capital gains tax event]?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What is the tax base for [capital gains tax event]?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "taglish",
+        "query": "Taxable ba ang bayad sa freelance work?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Taxable ba ang bayad sa freelance work?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "category": "taglish",
+        "query": "Ano ang tax treatment ng kita sa pagbenta ng lupa?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Ano ang tax treatment ng kita sa pagbenta ng lupa?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      }
+    ],
+    "pass": true
+  },
+  "leaveOneFamilyOut": {
+    "required": 4,
+    "records": [
+      {
+        "query": "Are museum gift-shop receipts taxable?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Are museum gift-shop receipts taxable?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "are",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "query": "Is a farmers-market stall fee subject to tax?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Is a farmers-market stall fee subject to tax?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "is",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "query": "What tax treatment applies to a cooperative rebate?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"What tax treatment applies to a cooperative rebate?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      },
+      {
+        "query": "Taxable ba ang honorarium sa barangay event?",
+        "selectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_treatment_of_ordinary_object\",\"relations\":[[\"task\",\"ASKS_TAX_TREATMENT_OF\",\"subject\",\"c01\",\"Taxable ba ang honorarium sa barangay event?\"]]}",
+        "selectedEvidence": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_treatment_of_ordinary_object",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF"
+          ],
+          "requestedAction": null,
+          "requestedTarget": null,
+          "speechAct": "ask"
+        },
+        "c33Pass": true
+      }
+    ],
+    "pass": true
+  },
+  "procedureAndComputationExclusions": [],
+  "treatmentFamily": {
+    "required": 784,
+    "satisfied": 779
+  },
+  "frozenGates": {
+    "metrics": {
+      "canonicalPassed": 3504,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3504,
+      "reasonMismatches": 216,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 424
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 779
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 847
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 430
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "gates": {
+      "runtimeIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 179760,
+          "rawSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55",
+          "normalizedLfSha256": "d28ebd235a786e77cbf7545111e28d8f9224114ce7dc018651dd8eb46282ef55"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503"
+      },
+      "r3": {
+        "total": 3720,
+        "canonicalPassed": 3504,
+        "decisionMismatches": 0,
+        "reasonMismatches": 216,
+        "relationMismatches": 0,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "relationRowsWithExpectations": 1623,
+        "relationRowsPassed": 1623,
+        "relationPassed": 3720,
+        "decisionPassed": 3720
+      },
+      "reasonPassed": 3504,
+      "decisionFailures": [],
+      "relationFailures": [],
+      "reasonCounterfactual": {
+        "total": 344,
+        "passed": 344,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 172,
+        "authoredQueries": 344,
+        "nonControllingProbes": 0,
+        "probes": []
+      },
+      "collisionProbes": {
+        "total": 196,
+        "passed": 196,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 98
+      },
+      "decisionCounterfactual": {
+        "total": 756,
+        "passed": 756,
+        "failed": 0,
+        "bySuite": {
+          "v3": {
+            "total": 331,
+            "passed": 331,
+            "failed": 0
+          },
+          "v4": {
+            "total": 177,
+            "passed": 177,
+            "failed": 0
+          },
+          "v5": {
+            "total": 134,
+            "passed": 134,
+            "failed": 0
+          },
+          "v6": {
+            "total": 114,
+            "passed": 114,
+            "failed": 0
+          }
+        },
+        "byFamily": {},
+        "failures": []
+      },
+      "relationCounterfactual": {
+        "total": 282,
+        "passed": 282,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 148,
+        "authoredQueries": 296,
+        "nonControllingProbes": 14,
+        "probes": [
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the ZTX rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the QVL rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the MBK rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the JPR rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the KDN rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the WTF rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the NRB rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the HGS rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the guitar lesson subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the hiking trail subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the chess tournament subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the aquarium filter subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the bicycle helmet subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the pottery kiln subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          }
+        ]
+      },
+      "clauseProbes": {
+        "total": 68,
+        "passed": 68,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 34
+      },
+      "richContextGuard": {
+        "probes": [
+          {
+            "shape": "bare_term",
+            "query": "holding period",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "recognized_polysemous_acronym",
+            "query": "RMC",
+            "expected": "CLARIFY",
+            "actual": "CLARIFY",
+            "pass": true
+          },
+          {
+            "shape": "issuance_context",
+            "query": "What did the RMC issuance say about VAT?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "procedure_context",
+            "query": "Explain RMC for BIR issuances.",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "ordinary_homograph",
+            "query": "Can a supplier reject a return of goods?",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          },
+          {
+            "shape": "richer_tax_sentence",
+            "query": "How is the holding period applied to a capital gains tax computation on land?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "metadata_suffixed_contentless",
+            "query": "What is the holding period? Context 1.",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          }
+        ],
+        "allPass": true,
+        "passed": 7,
+        "total": 7
+      },
+      "reasonIntegrity": {
+        "invalidCodeCount": 0,
+        "incompatibleCount": 0,
+        "invalidCode": [],
+        "incompatible": [],
+        "pass": true
+      },
+      "focusedReasonRegression": {
+        "perFamily": {
+          "explicit_tax_task_relation": {
+            "required": 451,
+            "satisfied": 424
+          },
+          "tax_compliance_task": {
+            "required": 291,
+            "satisfied": 290
+          },
+          "tax_treatment_of_ordinary_object": {
+            "required": 784,
+            "satisfied": 779
+          },
+          "explicit_non_tax_task": {
+            "required": 897,
+            "satisfied": 847
+          },
+          "non_tax_label_or_name": {
+            "required": 201,
+            "satisfied": 201
+          },
+          "quoted_tax_term_only": {
+            "required": 120,
+            "satisfied": 120
+          },
+          "no_tax_relation": {
+            "required": 563,
+            "satisfied": 430
+          },
+          "ambiguous_tax_acronym": {
+            "required": 220,
+            "satisfied": 220
+          },
+          "non_tax_expansion": {
+            "required": 88,
+            "satisfied": 88
+          },
+          "tax_definition_with_context": {
+            "required": 79,
+            "satisfied": 79
+          },
+          "tax_negation_but_tax_review_requested": {
+            "required": 26,
+            "satisfied": 26
+          }
+        },
+        "allBucketsPass": false
+      },
+      "closedControls": {
+        "controls": [
+          {
+            "control": "tax_compliance_task",
+            "passed": 108,
+            "total": 108,
+            "closed": true
+          },
+          {
+            "control": "acronym_homograph_control",
+            "passed": 200,
+            "total": 200,
+            "closed": true
+          },
+          {
+            "control": "ambiguous_clarification_control",
+            "passed": 150,
+            "total": 150,
+            "closed": true
+          },
+          {
+            "control": "internal_label_proper_name",
+            "passed": 104,
+            "total": 104,
+            "closed": true
+          },
+          {
+            "control": "quoted_term_only",
+            "passed": 110,
+            "total": 110,
+            "closed": true
+          }
+        ],
+        "allClosed": true
+      },
+      "relationObjectIntegrity": {
+        "counts": {
+          "unknownType": 0,
+          "missingField": 0,
+          "placeholderTarget": 130,
+          "wholeQuerySpan": 200,
+          "duplicateTuple": 20,
+          "unstableOrder": 0
+        },
+        "violations": {
+          "unknownType": [],
+          "missingField": [],
+          "placeholderTarget": [
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 3.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 8.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 9.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 11.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 12.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Create a checklist for Professional Artists Network. Control 15.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Translate conference room booking into plain English. Control 16.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by school newspaper printing authority. Control 18.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the Downtown Theater Association. Control 20.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 23.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 28.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 29.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 31.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 32.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "wholeQuerySpan": [
+            {
+              "q": "How do we compute income tax for a Philippine corporation in case 1?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to VAT in case 2?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "When is the deadline for expanded withholding tax in case 3?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to final withholding tax in case 4?",
+              "relation": "ASKS_WITHHOLDING_ON"
+            },
+            {
+              "q": "Can the expense be deducted for percentage tax in case 5?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support documentary stamp tax in case 6?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How should we disclose capital gains tax in case 7?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late donor tax in case 9?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How do we document customs duty in case 10?",
+              "relation": "ASKS_CUSTOMS_DUTY_ON"
+            },
+            {
+              "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to minimum corporate income tax in case 12?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "When is the deadline for regular corporate income tax in case 13?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to BIR registration in case 14?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Can the expense be deducted for withholding tax return in case 15?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support input VAT in case 16?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "How should we disclose output VAT in case 17?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late deficiency interest in case 19?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "How do we document NOLCO in case 20?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            }
+          ],
+          "duplicateTuple": [
+            {
+              "q": "Which cooking pan brand is best? Control 2.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 22.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 39.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 42.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 59.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 62.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 79.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 82.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 99.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 102.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 119.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 122.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 139.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 142.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 159.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 162.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 179.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 182.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 199.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "unstableOrder": []
+        },
+        "pass": false
+      },
+      "clauseSchemaRegression": {
+        "counts": {
+          "emptyClause": 0,
+          "idNotPositional": 0,
+          "notExactlyOnePrimary": 0,
+          "unstable": 0,
+          "roleOutsideSchema": 0
+        },
+        "violations": {
+          "emptyClause": [],
+          "idNotPositional": [],
+          "notExactlyOnePrimary": [],
+          "unstable": [],
+          "roleOutsideSchema": []
+        },
+        "pass": true
+      },
+      "antiMemorization": {
+        "checks": {
+          "no_complete_counterfactual_query": true,
+          "no_complete_r3_query": true,
+          "no_query_hash_or_oracle_id": true,
+          "no_suite_or_family_feature": true,
+          "no_cluster_or_category_feature": true,
+          "no_scenario_number_branch": true,
+          "no_expected_decision_map": true,
+          "no_oracle_relation_backfill": true
+        },
+        "failed": [],
+        "pass": true,
+        "leakedCounterfactualQueries": [],
+        "leakedR3Queries": [],
+        "r3TerminologyOverlap": [
+          "expanded withholding tax",
+          "final withholding tax",
+          "tax credit certificate",
+          "documentary stamp tax",
+          "capital gains tax",
+          "optional standard deduction",
+          "books of accounts",
+          "transfer pricing documentation",
+          "registered business enterprise",
+          "tax treaty relief",
+          "local business tax",
+          "real property tax",
+          "substantiation for deductions",
+          "fringe benefit tax",
+          "de minimis benefits",
+          "gross receipts tax",
+          "minimum corporate income tax",
+          "regular corporate income tax",
+          "stock transaction tax",
+          "resident alien tax",
+          "tax on professional fees",
+          "tax accounting period",
+          "annual information return",
+          "refund claim prescription"
+        ],
+        "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+      },
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "structuralDiagnostics": {
+      "relationObjectIntegrityCounts": {
+        "unknownType": 0,
+        "missingField": 0,
+        "placeholderTarget": 130,
+        "wholeQuerySpan": 200,
+        "duplicateTuple": 20,
+        "unstableOrder": 0
+      },
+      "clauseSchemaRegressionCounts": {
+        "emptyClause": 0,
+        "idNotPositional": 0,
+        "notExactlyOnePrimary": 0,
+        "unstable": 0,
+        "roleOutsideSchema": 0
+      }
+    },
+    "frozenLocksHeld": true,
+    "antiMemorization": {
+      "checks": {
+        "no_complete_counterfactual_query": true,
+        "no_complete_r3_query": true,
+        "no_query_hash_or_oracle_id": true,
+        "no_suite_or_family_feature": true,
+        "no_cluster_or_category_feature": true,
+        "no_scenario_number_branch": true,
+        "no_expected_decision_map": true,
+        "no_oracle_relation_backfill": true
+      },
+      "failed": [],
+      "pass": true,
+      "leakedCounterfactualQueries": [],
+      "leakedR3Queries": [],
+      "r3TerminologyOverlap": [
+        "expanded withholding tax",
+        "final withholding tax",
+        "tax credit certificate",
+        "documentary stamp tax",
+        "capital gains tax",
+        "optional standard deduction",
+        "books of accounts",
+        "transfer pricing documentation",
+        "registered business enterprise",
+        "tax treaty relief",
+        "local business tax",
+        "real property tax",
+        "substantiation for deductions",
+        "fringe benefit tax",
+        "de minimis benefits",
+        "gross receipts tax",
+        "minimum corporate income tax",
+        "regular corporate income tax",
+        "stock transaction tax",
+        "resident alien tax",
+        "tax on professional fees",
+        "tax accounting period",
+        "annual information return",
+        "refund claim prescription"
+      ],
+      "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+    }
+  },
+  "pass": true
+}

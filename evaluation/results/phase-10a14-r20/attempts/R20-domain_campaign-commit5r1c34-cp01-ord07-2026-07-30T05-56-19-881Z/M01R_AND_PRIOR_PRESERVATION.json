@@ -1,0 +1,19 @@
+{
+  "m01rRequired": 22,
+  "m01rChanges": [],
+  "generalizationRequired": 236,
+  "generalizationChanges": [
+    {
+      "oracleId": null,
+      "query": "What is the deadline to protest a BIR deficiency assessment?",
+      "expectedSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"explicit_tax_task_relation\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"bir\",\"c01\",\"What is the deadline to protest a BIR deficiency assessment?\"]]}",
+      "actualSignature": "{\"decision\":\"ALLOW\",\"reasonCode\":\"tax_compliance_task\",\"relations\":[[\"task\",\"ASKS_TAX_COMPLIANCE_FOR\",\"bir\",\"c01\",\"What is the deadline to protest a BIR deficiency assessment?\"]]}"
+    }
+  ],
+  "leaveOneFamilyOutRequired": 29,
+  "leaveOneFamilyOutChanges": [],
+  "procedureAndComputationChanges": [],
+  "priorCorrectRequired": 3575,
+  "priorCorrectChanges": [],
+  "pass": false
+}

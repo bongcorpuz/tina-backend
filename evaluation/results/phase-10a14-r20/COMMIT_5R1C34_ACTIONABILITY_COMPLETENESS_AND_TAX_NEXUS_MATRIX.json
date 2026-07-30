@@ -1,0 +1,709 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:41.770Z",
+  "dimensions": [
+    "expectedReason",
+    "requestsOperation",
+    "primaryIsInterrogative",
+    "nonTaxControllingDomain",
+    "targetCompleteness",
+    "governedTaxPredicateAnywhere",
+    "proceduralComplianceFrame"
+  ],
+  "groups": [
+    {
+      "vector": {
+        "expectedReason": "explicit_non_tax_task",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 38,
+      "oracleIds": [
+        "S1-IR19-1026",
+        "S1-IR19-1038",
+        "S1-IR19-1066",
+        "S1-IR19-1078",
+        "S1-IR19-1106",
+        "S1-IR19-1118",
+        "S2-IR18-DOM-121",
+        "S2-IR18-DOM-134",
+        "S2-IR18-DOM-192",
+        "S2-IR18-DOM-221",
+        "S2-IR18-DOM-545",
+        "R20N-ENT-0521",
+        "R20N-ENT-0526",
+        "R20N-ENT-0531",
+        "R20N-ENT-0541",
+        "R20N-ENT-0546",
+        "R20N-ENT-0551",
+        "R20N-ENT-0556",
+        "R20N-ENT-0561",
+        "R20N-ENT-0566",
+        "R20N-ENT-0576",
+        "R20N-ENT-0591",
+        "R20N-ENT-0601",
+        "R20N-ENT-0606",
+        "R20N-ENT-0616",
+        "R20N-ENT-0621",
+        "R20N-ENT-0626",
+        "R20N-ENT-0631",
+        "R20N-ENT-0636",
+        "R20N-ENT-0641",
+        "R20N-ENT-0646",
+        "R20N-ENT-0661",
+        "R20N-ENT-0666",
+        "R20N-ENT-0671",
+        "R20N-ENT-0681",
+        "R20N-ENT-0686",
+        "R20N-ENT-0691",
+        "R20N-ENT-0716"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": true,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 34,
+      "oracleIds": [
+        "S3-IR17-081",
+        "S3-IR17-082",
+        "S3-IR17-083",
+        "S3-IR17-084",
+        "S3-IR17-087",
+        "S3-IR17-088",
+        "S3-IR17-091",
+        "S3-IR17-092",
+        "S3-IR17-095",
+        "S3-IR17-100",
+        "S3-IR17-108",
+        "S3-IR17-109",
+        "S3-IR17-112",
+        "S3-IR17-115",
+        "S3-IR17-118",
+        "S3-IR17-120",
+        "S3-IR17-121",
+        "S3-IR17-122",
+        "S3-IR17-124",
+        "S3-IR17-125",
+        "S3-IR17-126",
+        "S3-IR17-127",
+        "S3-IR17-129",
+        "S3-IR17-130",
+        "S3-IR17-137",
+        "S3-IR17-138",
+        "S3-IR17-140",
+        "S3-IR17-183",
+        "S3-IR17-185",
+        "S3-IR17-193",
+        "S3-IR17-194",
+        "S3-IR17-200",
+        "S3-IR17-208",
+        "S3-IR17-210"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": true,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 22,
+      "oracleIds": [
+        "S2-IR18-DOM-491",
+        "S3-IR17-089",
+        "S3-IR17-097",
+        "S3-IR17-098",
+        "S3-IR17-101",
+        "S3-IR17-111",
+        "S3-IR17-113",
+        "S3-IR17-114",
+        "S3-IR17-116",
+        "S3-IR17-119",
+        "S3-IR17-123",
+        "S3-IR17-128",
+        "S3-IR17-131",
+        "S3-IR17-181",
+        "S3-IR17-182",
+        "S3-IR17-184",
+        "S3-IR17-191",
+        "S3-IR17-192",
+        "S3-IR17-198",
+        "S3-IR17-201",
+        "S3-IR17-205",
+        "S3-IR17-209"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 20,
+      "oracleIds": [
+        "S1-IR19-1028",
+        "S1-IR19-1030",
+        "S1-IR19-1032",
+        "S1-IR19-1034",
+        "S1-IR19-1036",
+        "S1-IR19-1068",
+        "S1-IR19-1070",
+        "S1-IR19-1072",
+        "S1-IR19-1074",
+        "S1-IR19-1076",
+        "S1-IR19-1108",
+        "S1-IR19-1110",
+        "S1-IR19-1112",
+        "S1-IR19-1114",
+        "S1-IR19-1116",
+        "S2-IR18-DOM-115",
+        "S2-IR18-DOM-160",
+        "S2-IR18-DOM-204",
+        "S2-IR18-DOM-543",
+        "S2-IR18-DOM-549"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_tax_task_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 13,
+      "oracleIds": [
+        "S1-IR19-1007",
+        "S1-IR19-1047",
+        "S1-IR19-1087",
+        "S2-IR18-DOM-412",
+        "S2-IR18-DOM-432",
+        "S2-IR18-DOM-452",
+        "S2-IR18-DOM-506",
+        "S3-IR17-003",
+        "S3-IR17-014",
+        "S3-IR17-024",
+        "S3-IR17-030",
+        "S3-IR17-032",
+        "S3-IR17-179"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": true,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 13,
+      "oracleIds": [
+        "S1-IR19-1014",
+        "S1-IR19-1054",
+        "S1-IR19-1094",
+        "S2-IR18-DOM-244",
+        "S2-IR18-DOM-247",
+        "S2-IR18-DOM-269",
+        "S2-IR18-DOM-272",
+        "S2-IR18-DOM-294",
+        "S2-IR18-DOM-297",
+        "S2-IR18-DOM-319",
+        "S2-IR18-DOM-322",
+        "S2-IR18-DOM-493",
+        "S2-IR18-DOM-515"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": true,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 9,
+      "oracleIds": [
+        "S1-IR19-1040",
+        "S1-IR19-1080",
+        "S1-IR19-1120",
+        "S2-IR18-DOM-113",
+        "S2-IR18-DOM-120",
+        "S2-IR18-DOM-159",
+        "S2-IR18-DOM-199",
+        "S2-IR18-DOM-228",
+        "S2-IR18-DOM-565"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 8,
+      "oracleIds": [
+        "S2-IR18-DOM-240",
+        "S2-IR18-DOM-265",
+        "S2-IR18-DOM-290",
+        "S2-IR18-DOM-315",
+        "S2-IR18-DOM-475",
+        "S3-IR17-099",
+        "S3-IR17-139",
+        "S3-IR17-188"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_non_tax_task",
+        "requestsOperation": true,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 5,
+      "oracleIds": [
+        "S1-IR19-0914",
+        "S1-IR19-0934",
+        "S1-IR19-0954",
+        "S1-IR19-0974",
+        "S1-IR19-0994"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 5,
+      "oracleIds": [
+        "S2-IR18-DOM-214",
+        "S2-IR18-DOM-251",
+        "S2-IR18-DOM-276",
+        "S2-IR18-DOM-301",
+        "S2-IR18-DOM-326"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_tax_task_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-007",
+        "S2-IR18-DOM-024",
+        "S2-IR18-DOM-061",
+        "S2-IR18-DOM-072"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "LABEL_ONLY",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-233",
+        "S2-IR18-DOM-258",
+        "S2-IR18-DOM-283",
+        "S2-IR18-DOM-308"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_non_tax_task",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-243",
+        "S2-IR18-DOM-268",
+        "S2-IR18-DOM-293",
+        "S2-IR18-DOM-318"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": true,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-254",
+        "S2-IR18-DOM-279",
+        "S2-IR18-DOM-304",
+        "S2-IR18-DOM-329"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": true,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONTENTLESS",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-348",
+        "S2-IR18-DOM-368",
+        "S2-IR18-DOM-388",
+        "S2-IR18-DOM-408"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_tax_task_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 4,
+      "oracleIds": [
+        "S2-IR18-DOM-514",
+        "S2-IR18-DOM-516",
+        "S2-IR18-DOM-534",
+        "S2-IR18-DOM-556"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_tax_task_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "LABEL_ONLY",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 3,
+      "oracleIds": [
+        "S1-IR19-1033",
+        "S1-IR19-1073",
+        "S1-IR19-1113"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 3,
+      "oracleIds": [
+        "S3-IR17-132",
+        "S3-IR17-134",
+        "S3-IR17-136"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_tax_task_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 2,
+      "oracleIds": [
+        "S2-IR18-DOM-059",
+        "S2-IR18-DOM-073"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": true,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 2,
+      "oracleIds": [
+        "S2-IR18-DOM-166",
+        "S3-IR17-186"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_non_tax_task",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 2,
+      "oracleIds": [
+        "R20N-ENT-0651",
+        "R20N-ENT-0706"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-021"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-062"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-229"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-503"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": true,
+        "targetCompleteness": "LABEL_ONLY",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-531"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "LABEL_ONLY",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-533"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "no_tax_relation",
+        "requestsOperation": true,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S2-IR18-DOM-541"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S3-IR17-010"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_tax_task_relation",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "RESOLVED_REFERENT",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S3-IR17-021"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S3-IR17-050"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "tax_compliance_task",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": false,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S3-IR17-073"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "tax_treatment_of_ordinary_object",
+        "requestsOperation": false,
+        "primaryIsInterrogative": true,
+        "nonTaxControllingDomain": true,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "S3-IR17-105"
+      ]
+    },
+    {
+      "vector": {
+        "expectedReason": "explicit_non_tax_task",
+        "requestsOperation": false,
+        "primaryIsInterrogative": false,
+        "nonTaxControllingDomain": false,
+        "targetCompleteness": "CONCRETE",
+        "governedTaxPredicateAnywhere": true,
+        "proceduralComplianceFrame": false
+      },
+      "count": 1,
+      "oracleIds": [
+        "R20N-ENT-0536"
+      ]
+    }
+  ],
+  "total": 216,
+  "pass": true
+}

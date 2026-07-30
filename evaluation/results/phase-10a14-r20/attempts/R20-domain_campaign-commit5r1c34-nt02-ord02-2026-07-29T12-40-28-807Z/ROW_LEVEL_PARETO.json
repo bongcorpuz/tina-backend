@@ -1,0 +1,264 @@
+{
+  "totalRows": 3720,
+  "baseCorrect": 3556,
+  "candidateCorrect": 3561,
+  "newlyCorrected": [
+    {
+      "oracleId": "S1-IR19-0914",
+      "query": "Project code lang ang SLSP? TG14",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0934",
+      "query": "Project code lang ang SLSP? TG34",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0954",
+      "query": "Project code lang ang SLSP? TG54",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0974",
+      "query": "Project code lang ang SLSP? TG74",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0994",
+      "query": "Project code lang ang SLSP? TG94",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "newlyRegressed": [],
+  "wrongToDifferentWrong": [],
+  "priorOverrideChanges": [],
+  "changedSignatures": [
+    {
+      "oracleId": "S1-IR19-0914",
+      "query": "Project code lang ang SLSP? TG14",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0934",
+      "query": "Project code lang ang SLSP? TG34",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0954",
+      "query": "Project code lang ang SLSP? TG54",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0974",
+      "query": "Project code lang ang SLSP? TG74",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    },
+    {
+      "oracleId": "S1-IR19-0994",
+      "query": "Project code lang ang SLSP? TG94",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "slsp",
+        "speechAct": "ask"
+      },
+      "baseCorrect": false,
+      "candidateCorrect": true
+    }
+  ],
+  "outsideTarget": [],
+  "pass": true
+}

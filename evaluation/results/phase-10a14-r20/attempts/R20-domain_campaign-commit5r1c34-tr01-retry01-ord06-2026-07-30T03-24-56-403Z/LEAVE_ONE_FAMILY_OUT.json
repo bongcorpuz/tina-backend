@@ -1,0 +1,154 @@
+{
+  "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+  "withheldFamily": "unseen_statutes_rules_contracts_and_ordinary_bearers",
+  "developmentCorpusExcluded": true,
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "records": [
+    {
+      "query": "Does the NIRC govern VAT treatment of a community-library donation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Can the TRAIN law affect tax treatment of a rural-clinic stipend?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Does a holding period rule apply to gains from a vintage instrument?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "May a cooperative agreement include a withholding-allocation clause?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "May an agricultural lease include a taxable costs clause?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [],
+        "requestedAction": "may",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 40,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T02:33:05.610Z",
+  "stage": "material candidate 4 of 6",
+  "status": "ACCEPTED_PROMOTED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z",
+  "activeAttemptId": "R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/ITERATION_RESULT.json",
+      "bytes": 667424,
+      "sha256": "0aeb88e61c1423246f033482235b593349bf4f231c031ffe840b36d31908e964"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/FROZEN_GATES.json",
+      "bytes": 27423,
+      "sha256": "c4d202bbf8957b4c75968532ba5cb14e1b12a14bfb8b74c8ec4735802a97902e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/ROW_LEVEL_PARETO.json",
+      "bytes": 11938,
+      "sha256": "c129db0b42eb98f73c9b618b9d0e05ca6505513e8f71725042ef08121bb07c20"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/M01R_AND_PRIOR_PRESERVATION.json",
+      "bytes": 296,
+      "sha256": "9aec122e4dec15cad691fda6289e6fdf552fc63f61bf5fe9e72292191cc67da2"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/GENERALIZATION_QUERY_RESULTS.json",
+      "bytes": 39713,
+      "sha256": "d99e76683bb1ac270e48fa5edc20b55ee681a66ef98e0d278a1807016c21d096"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/LEAVE_ONE_FAMILY_OUT.json",
+      "bytes": 4529,
+      "sha256": "b8f8abc7ec53ee10c91fec515a58fda1db394a947c6ffb6ddfc39159d4fef059"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/SENTINEL_SHUFFLE_TAINT.json",
+      "bytes": 6411,
+      "sha256": "fd161314f5bba32bc56b576052b878e1a9c795234c65888aeec34f518df1f6a5"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/MONOTONIC_FEATURE_ABLATION.json",
+      "bytes": 82548,
+      "sha256": "85069f8a2e38fd05c53d6b621c5c909e6d895c612bb2891e10eec9f43787fb3f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/PRECEDENCE_TRACE.json",
+      "bytes": 509,
+      "sha256": "e2900306f6e079fbb6e492688d67220a337e0e1161e52bb8177f2dc7767ba98e"
+    }
+  ],
+  "previousLogSha256": "41baedd0d3bd189f3c613fa7436387d93bb6988d16c7ce62d134cec7ed883750",
+  "nextExactOperation": "Execute material candidate 5 against the exact cumulative accepted base.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "6b8e915234142aebd50ce062e78c71e9818d70b30c920e950b826f0008b91777"
+}

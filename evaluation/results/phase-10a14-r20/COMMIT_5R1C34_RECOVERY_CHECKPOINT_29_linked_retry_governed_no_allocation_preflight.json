@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 29,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T04:59:39.042Z",
+  "stage": "linked retry governed no-allocation preflight",
+  "status": "PASS_READY_FOR_LINKED_RETRY_ALLOCATION",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_NO_ALLOCATION_PREFLIGHT.json",
+      "bytes": 1107925,
+      "sha256": "b52e8c7c1a03d1c04296a9e1d3447023c31b58870d65c518487b72d90693b57c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_SUPERSEDING_COMPATIBILITY_VALIDATION.json",
+      "bytes": 290894,
+      "sha256": "0fec4857013be470cd27b7cd2b9a13f90e1491a544714d43079e1ccf3843c283"
+    }
+  ],
+  "previousLogSha256": "22b82de16e4cde88c57c0c9710eaf35035afd2b4968f9078dc900e2679e31087",
+  "nextExactOperation": "If at least 20 minutes remain, allocate exactly one new nt01-retry01 ordinal-2 TECHNICAL_LINKED_RETRY of the original NT01 against the exact C33 M01R base.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "c0a518289c982ccfa54f61324e66b77eb2cf70c1595403863f726a9901c19407"
+}

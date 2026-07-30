@@ -1,0 +1,476 @@
+{
+  "unit": "COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T03:24:57.204Z",
+  "label": "candidate_only",
+  "identityPolicy": "exact_raw_all",
+  "patch": {
+    "sha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af",
+    "bytes": 1165,
+    "changedFiles": [
+      "services/philippine-tax-intent-analyzer.js"
+    ],
+    "rawHeaders": [
+      {
+        "name": "philippine-tax-intent-analyzer.js",
+        "diff": "diff --git a/base/services/philippine-tax-intent-analyzer.js b/candidate/services/philippine-tax-intent-analyzer.js",
+        "old": "--- a/base/services/philippine-tax-intent-analyzer.js",
+        "next": "+++ b/candidate/services/philippine-tax-intent-analyzer.js"
+      }
+    ],
+    "diffCommands": [
+      {
+        "command": "git diff --no-index --binary --src-prefix=a/ --dst-prefix=b/ base/services/philippine-tax-intent-analyzer.js candidate/services/philippine-tax-intent-analyzer.js",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-patch-TtAU67",
+        "status": 1,
+        "signal": null,
+        "stdoutBytes": 1195,
+        "stdoutSha256": "bef6608650e2bb6564c019634e905dda7943bcc437db833a04abbe93be9aa04d",
+        "stderr": "warning: in the working copy of 'base/services/philippine-tax-intent-analyzer.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'candidate/services/philippine-tax-intent-analyzer.js', LF will be replaced by CRLF the next time Git touches it\n",
+        "error": null,
+        "statusMeaning": "git diff --no-index returns 1 when differences were emitted"
+      }
+    ],
+    "canonicalHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "expectedHeaders": [
+      "diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js",
+      "--- a/services/philippine-tax-intent-analyzer.js",
+      "+++ b/services/philippine-tax-intent-analyzer.js"
+    ],
+    "diffBlockCount": 1,
+    "expectedDiffBlockCount": 1,
+    "safeChangedFiles": true,
+    "headerParseErrors": [],
+    "isolatedPatchSource": "C:/Users/USER/AppData/Local/Temp/tina-c34-patch-TtAU67",
+    "isolatedPatchSourceRemoved": true,
+    "forbiddenPathHeaders": [],
+    "hasForbiddenPath": false,
+    "headersValid": true,
+    "pass": true
+  },
+  "environments": [
+    {
+      "environment": "non_repository",
+      "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/non-repository",
+      "gitRepository": false,
+      "cleanGitWorktreeKind": null,
+      "detachedStartingHeadWorktreeNotUsed": null,
+      "gitInit": null,
+      "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af",
+      "preHashes": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 182494,
+          "rawSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf",
+          "normalizedLfSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        }
+      },
+      "postForwardHashes": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        }
+      },
+      "postReverseHashes": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 182494,
+          "rawSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf",
+          "normalizedLfSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        }
+      },
+      "preFiles": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "postForwardFiles": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "postReverseFiles": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "expectedChangedFiles": [
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "forwardChangedFiles": [
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "reverseChangedFiles": [],
+      "forwardCheck": {
+        "command": "git -c core.autocrlf=false apply --check --binary -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/non-repository",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "forwardApply": {
+        "command": "git -c core.autocrlf=false apply --binary -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/non-repository",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "reverseCheck": {
+        "command": "git -c core.autocrlf=false apply --check --binary -R -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/non-repository",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "reverseApply": {
+        "command": "git -c core.autocrlf=false apply --binary -R -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/non-repository",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "expectedCandidateIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+      },
+      "forwardIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+      },
+      "identityPolicy": "exact_raw_all",
+      "forwardRawHashMatchAll": true,
+      "forwardNormalizedHashMatch": true,
+      "changedFileRawIdentityMatch": true,
+      "forwardServicesTreeMatch": true,
+      "forwardCandidateIdentityPass": true,
+      "rawIdentityNote": "All raw bytes and normalized identities match the candidate snapshot.",
+      "skippedPatchCount": 0,
+      "noOp": false,
+      "noOpCount": 0,
+      "unexpectedFiles": [],
+      "unexpectedFileCount": 0,
+      "reverseSkippedPatchCount": 0,
+      "reverseUnexpectedFiles": [],
+      "reverseUnexpectedFileCount": 0,
+      "forwardNormalizedReplayMatchesCandidate": true,
+      "forwardReplayMatchesCandidate": true,
+      "forwardPass": true,
+      "reversePass": true,
+      "pass": true
+    },
+    {
+      "environment": "clean_git_worktree",
+      "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+      "gitRepository": true,
+      "cleanGitWorktreeKind": "isolated repository worktree committed from exact active-base bytes",
+      "detachedStartingHeadWorktreeNotUsed": {
+        "reason": "The governed source repository contains Windows-invalid historical paths (nul.txt and CON); a detached checkout cannot be materialized on this platform.",
+        "compensatingControl": "Exact committed C33 blobs are reconstructed with git cat-file, then committed in this isolated clean repository before forward/reverse replay."
+      },
+      "gitInit": [
+        {
+          "command": "git init --quiet",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "error": null
+        },
+        {
+          "command": "git config core.longpaths true",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "error": null
+        },
+        {
+          "command": "git config core.autocrlf false",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "error": null
+        },
+        {
+          "command": "git config user.email c34@example.invalid",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "error": null
+        },
+        {
+          "command": "git config user.name C34 replay",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "error": null
+        },
+        {
+          "command": "git add services",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "warning: in the working copy of 'services/philippine-tax-intent-analyzer.js', LF will be replaced by CRLF the next time Git touches it\n",
+          "error": null
+        },
+        {
+          "command": "git commit --quiet -m C34 isolated semantic base",
+          "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+          "status": 0,
+          "signal": null,
+          "stdout": "",
+          "stderr": "",
+          "error": null
+        }
+      ],
+      "patchSha256": "b5b9c0a24f95f017960f00231da9f8ae5d4c23a6ea1225f133389286188d08af",
+      "preHashes": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 182494,
+          "rawSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf",
+          "normalizedLfSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        }
+      },
+      "postForwardHashes": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        }
+      },
+      "postReverseHashes": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 182494,
+          "rawSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf",
+          "normalizedLfSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        }
+      },
+      "preFiles": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "postForwardFiles": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "postReverseFiles": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "expectedChangedFiles": [
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "forwardChangedFiles": [
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "reverseChangedFiles": [],
+      "forwardCheck": {
+        "command": "git -c core.autocrlf=false apply --check --binary -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "forwardApply": {
+        "command": "git -c core.autocrlf=false apply --binary -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "reverseCheck": {
+        "command": "git -c core.autocrlf=false apply --check --binary -R -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "reverseApply": {
+        "command": "git -c core.autocrlf=false apply --binary -R -",
+        "cwd": "C:/Users/USER/AppData/Local/Temp/tina-c34-replay-aF5uvW/clean-git-worktree",
+        "status": 0,
+        "signal": null,
+        "stdout": "",
+        "stderr": "",
+        "error": null
+      },
+      "expectedCandidateIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+      },
+      "forwardIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+      },
+      "identityPolicy": "exact_raw_all",
+      "forwardRawHashMatchAll": true,
+      "forwardNormalizedHashMatch": true,
+      "changedFileRawIdentityMatch": true,
+      "forwardServicesTreeMatch": true,
+      "forwardCandidateIdentityPass": true,
+      "rawIdentityNote": "All raw bytes and normalized identities match the candidate snapshot.",
+      "skippedPatchCount": 0,
+      "noOp": false,
+      "noOpCount": 0,
+      "unexpectedFiles": [],
+      "unexpectedFileCount": 0,
+      "reverseSkippedPatchCount": 0,
+      "reverseUnexpectedFiles": [],
+      "reverseUnexpectedFileCount": 0,
+      "forwardNormalizedReplayMatchesCandidate": true,
+      "forwardReplayMatchesCandidate": true,
+      "forwardPass": true,
+      "reversePass": true,
+      "pass": true
+    }
+  ],
+  "temporaryRootRemoved": true,
+  "pass": true,
+  "skippedPatchCount": 0,
+  "noOpCount": 0,
+  "unexpectedFileCount": 0
+}

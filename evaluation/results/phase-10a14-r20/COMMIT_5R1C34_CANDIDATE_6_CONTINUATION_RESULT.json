@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:05.316Z",
+  "classification": "CANDIDATE_6_SEMANTIC_TERMINAL",
+  "attemptId": "R20-domain_campaign-commit5r1c34-cp01-ord07-2026-07-30T05-56-19-881Z",
+  "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+  "cycle": "cp01",
+  "governedCandidateOrdinal": 6,
+  "governedAllocationOrdinal": 7,
+  "status": "completed",
+  "disposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+  "semanticDisposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+  "accepted": false,
+  "startingActiveBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "endingActiveBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "startingMetrics": {
+    "canonicalPassed": 3575,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3575,
+    "reasonMismatches": 145,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "reasonCounterfactualTotal": 344,
+    "reasonCounterfactualFailed": 0,
+    "collisionProbesPassed": 196,
+    "collisionProbesTotal": 196,
+    "collisionProbesFailed": 0,
+    "decisionCounterfactualPassed": 756,
+    "decisionCounterfactualTotal": 756,
+    "decisionCounterfactualFailed": 0,
+    "relationCounterfactualPassed": 282,
+    "relationCounterfactualTotal": 282,
+    "relationCounterfactualFailed": 0,
+    "clauseProbesPassed": 68,
+    "clauseProbesTotal": 68,
+    "clauseProbesFailed": 0,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "focusedReasonFamilies": {
+      "explicit_tax_task_relation": {
+        "required": 451,
+        "satisfied": 435
+      },
+      "tax_compliance_task": {
+        "required": 291,
+        "satisfied": 290
+      },
+      "tax_treatment_of_ordinary_object": {
+        "required": 784,
+        "satisfied": 782
+      },
+      "explicit_non_tax_task": {
+        "required": 897,
+        "satisfied": 852
+      },
+      "non_tax_label_or_name": {
+        "required": 201,
+        "satisfied": 201
+      },
+      "quoted_tax_term_only": {
+        "required": 120,
+        "satisfied": 120
+      },
+      "no_tax_relation": {
+        "required": 563,
+        "satisfied": 482
+      },
+      "ambiguous_tax_acronym": {
+        "required": 220,
+        "satisfied": 220
+      },
+      "non_tax_expansion": {
+        "required": 88,
+        "satisfied": 88
+      },
+      "tax_definition_with_context": {
+        "required": 79,
+        "satisfied": 79
+      },
+      "tax_negation_but_tax_review_requested": {
+        "required": 26,
+        "satisfied": 26
+      }
+    },
+    "closedControlsPass": true,
+    "relationObjectIntegrityPass": false,
+    "clauseSchemaRegressionPass": true,
+    "antiMemorizationPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "endingMetrics": {
+    "canonicalPassed": 3575,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3575,
+    "reasonMismatches": 145,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "reasonCounterfactualTotal": 344,
+    "reasonCounterfactualFailed": 0,
+    "collisionProbesPassed": 196,
+    "collisionProbesTotal": 196,
+    "collisionProbesFailed": 0,
+    "decisionCounterfactualPassed": 756,
+    "decisionCounterfactualTotal": 756,
+    "decisionCounterfactualFailed": 0,
+    "relationCounterfactualPassed": 282,
+    "relationCounterfactualTotal": 282,
+    "relationCounterfactualFailed": 0,
+    "clauseProbesPassed": 68,
+    "clauseProbesTotal": 68,
+    "clauseProbesFailed": 0,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "focusedReasonFamilies": {
+      "explicit_tax_task_relation": {
+        "required": 451,
+        "satisfied": 435
+      },
+      "tax_compliance_task": {
+        "required": 291,
+        "satisfied": 290
+      },
+      "tax_treatment_of_ordinary_object": {
+        "required": 784,
+        "satisfied": 782
+      },
+      "explicit_non_tax_task": {
+        "required": 897,
+        "satisfied": 852
+      },
+      "non_tax_label_or_name": {
+        "required": 201,
+        "satisfied": 201
+      },
+      "quoted_tax_term_only": {
+        "required": 120,
+        "satisfied": 120
+      },
+      "no_tax_relation": {
+        "required": 563,
+        "satisfied": 482
+      },
+      "ambiguous_tax_acronym": {
+        "required": 220,
+        "satisfied": 220
+      },
+      "non_tax_expansion": {
+        "required": 88,
+        "satisfied": 88
+      },
+      "tax_definition_with_context": {
+        "required": 79,
+        "satisfied": 79
+      },
+      "tax_negation_but_tax_review_requested": {
+        "required": 26,
+        "satisfied": 26
+      }
+    },
+    "closedControlsPass": true,
+    "relationObjectIntegrityPass": false,
+    "clauseSchemaRegressionPass": true,
+    "antiMemorizationPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "metricDelta": {
+    "reasonPassed": 0,
+    "reasonMismatches": 0,
+    "decisionPassed": 0,
+    "relationPassed": 0
+  },
+  "residualFamilyDelta": {
+    "starting": {
+      "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "reasonPassed": 3575,
+      "reasonMismatches": 145,
+      "residualCount": 145,
+      "expectedReasonFamilies": {
+        "explicit_non_tax_task": 45,
+        "explicit_tax_task_relation": 16,
+        "no_tax_relation": 81,
+        "tax_compliance_task": 1,
+        "tax_treatment_of_ordinary_object": 2
+      },
+      "actualReasonFamilies": {
+        "explicit_non_tax_task": 54,
+        "explicit_tax_task_relation": 3,
+        "no_tax_relation": 42,
+        "non_tax_expansion": 25,
+        "non_tax_label_or_name": 5,
+        "tax_treatment_of_ordinary_object": 16
+      },
+      "allReasonOnly": true,
+      "pass": true
+    },
+    "ending": {
+      "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "reasonPassed": 3575,
+      "reasonMismatches": 145,
+      "residualCount": 145,
+      "expectedReasonFamilies": {
+        "explicit_non_tax_task": 45,
+        "explicit_tax_task_relation": 16,
+        "no_tax_relation": 81,
+        "tax_compliance_task": 1,
+        "tax_treatment_of_ordinary_object": 2
+      },
+      "actualReasonFamilies": {
+        "explicit_non_tax_task": 54,
+        "explicit_tax_task_relation": 3,
+        "no_tax_relation": 42,
+        "non_tax_expansion": 25,
+        "non_tax_label_or_name": 5,
+        "tax_treatment_of_ordinary_object": 16
+      },
+      "allReasonOnly": true,
+      "pass": true
+    },
+    "residualCountDelta": 0,
+    "expectedReasonFamilyDelta": {
+      "explicit_non_tax_task": 0,
+      "explicit_tax_task_relation": 0,
+      "no_tax_relation": 0,
+      "tax_compliance_task": 0,
+      "tax_treatment_of_ordinary_object": 0
+    },
+    "actualReasonFamilyDelta": {
+      "explicit_non_tax_task": 0,
+      "explicit_tax_task_relation": 0,
+      "no_tax_relation": 0,
+      "non_tax_expansion": 0,
+      "non_tax_label_or_name": 0,
+      "tax_treatment_of_ordinary_object": 0
+    },
+    "removedExpectedReasonFamilies": {},
+    "addedExpectedReasonFamilies": {},
+    "pass": true
+  },
+  "iterationResult": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-cp01-ord07-2026-07-30T05-56-19-881Z/ITERATION_RESULT.json",
+    "bytes": 654655,
+    "sha256": "b828ab05821b74b2c83721ad69b6d976795a61913d3b54b1fb337aa29eec58ce"
+  },
+  "protectedSignatureValidation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_6_ACCEPTED_CANDIDATES_1_TO_5_REGRESSION_VALIDATION.json",
+    "bytes": 305622,
+    "sha256": "09c3b80b1805230983d2708d54fbe32644df5e213f19023b9bf58a800a6ab50f"
+  },
+  "ledger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_6.json",
+    "bytes": 9496,
+    "sha256": "1a5d70f5a29bea3ddeef68c53230e2e79e0184d64943a2d1fee68cff1846b7b5"
+  },
+  "technicalError": null,
+  "candidate7Authorized": false,
+  "c35Authorized": false,
+  "pass": true
+}

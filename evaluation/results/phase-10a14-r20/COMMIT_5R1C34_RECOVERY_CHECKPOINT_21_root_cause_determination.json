@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 21,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T00:54:14.435Z",
+  "stage": "root-cause determination",
+  "status": "COMPLETED_VALIDATOR_FALSE_POSITIVE",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_BLOCKER_ROOT_CAUSE.json",
+      "bytes": 23935,
+      "sha256": "7994ac12f31257230b54b632094c96d5ed1e00d23eb13effa02627cf23c3b3ea"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_BLOCKER_ROOT_CAUSE.md",
+      "bytes": 1294,
+      "sha256": "e1df581a30a3382d89bf84dc1c34437d659ffe0742d66a6f0ad44532cd0881f0"
+    }
+  ],
+  "previousLogSha256": "3939af21fb2065153996c6abb8158cafbf957007c7fcfec2c16781d3664e8afb",
+  "nextExactOperation": "Record the append-only NT01 technical disposition without rewriting original terminal evidence.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "1a80aa2d3f725ded28232082a478731e954e12bff3e99e62049f97f35959279f"
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 41,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T02:33:05.949Z",
+  "stage": "candidate 4 post-terminal reconciliation",
+  "status": "CANDIDATE_4_SEMANTIC_TERMINAL_RECONCILED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "attemptId": null,
+  "activeAttemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_POST_TERMINAL_RECONCILIATION.json",
+      "bytes": 1691,
+      "sha256": "194a2296eafd5eb7ff1a2a181f125ca1aaecb5d2a62616a37599c5e5cf1d6b14"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_4.json",
+      "bytes": 6012,
+      "sha256": "ee38f673ed9436d0e892cd7ca2044a3ea551946ee07297ead39276ebcc0d1cd1"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_ACCEPTED_CANDIDATES_1_TO_3_REGRESSION_VALIDATION.json",
+      "bytes": 832,
+      "sha256": "46ec1898f136490b791cc12fe3be3b609afab0c3b1eea69d2df72ad91957ccdf"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_CONTINUATION_RESULT.json",
+      "bytes": 3977,
+      "sha256": "245770d72a04080f1f450f1663d7da0553fb329398749dcea2483d5bb4ebd129"
+    }
+  ],
+  "previousLogSha256": "943aaf5ce4baf775c0d03a79bc9b0a98db500f0d3b3dd477be57684fba1bc478",
+  "nextExactOperation": "Evaluate the governed candidate-5 remaining-time and reconciliation gate; allocate candidate 5 only if every prerequisite passes.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "35f5b970740b8cbc22e11946da08ba6cba7ecc78f766994932b6b98bb901819e"
+}

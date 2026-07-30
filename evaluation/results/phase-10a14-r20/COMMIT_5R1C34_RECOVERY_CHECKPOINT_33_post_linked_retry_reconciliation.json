@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 33,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T05:01:33.278Z",
+  "stage": "post-linked-retry reconciliation",
+  "status": "REGISTRY_WAL_RECONCILED_CUMULATIVE_BASE_CONFIRMED",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_LINKED_RETRY.json",
+      "bytes": 3966,
+      "sha256": "6ca696489cf71e47d8cc17d00241f275b7dfc2bfb761179c9ac2b2978638fcd7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+      "bytes": 780890,
+      "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+    }
+  ],
+  "previousLogSha256": "4db1804855f9154eba3e8f83b2853e0b7414effd19ed52a59db08fb60269448a",
+  "nextExactOperation": "Stop for the one-hour safe pause. On a future authorized continuation, resume C34 at material candidate 2 against this exact cumulative active base; do not rerun the linked retry.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "7ce02947b4c90740b8df1ca0175ca7930b97a7e6c6f69b2f533ecd366ce4c3b6"
+}

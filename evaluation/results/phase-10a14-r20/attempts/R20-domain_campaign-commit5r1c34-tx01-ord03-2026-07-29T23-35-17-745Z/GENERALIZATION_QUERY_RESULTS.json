@@ -1,0 +1,1301 @@
+{
+  "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+  "requirements": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3,
+    "copiedFrozenQueries": 0,
+    "fixtureDependency": 0
+  },
+  "counts": {
+    "positives": 8,
+    "substitutions": 8,
+    "nearMisses": 8,
+    "constructions": 4,
+    "fillers": 5,
+    "skeletons": 5,
+    "taglish": 3
+  },
+  "rows": [
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is CWT?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is MCIT in a BIR assessment review?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is RCIT in Philippine tax practice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is FWT in a BIR assessment file?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is CGT in a revenue assessment review?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is FBT in a BIR assessment discussion?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is OSD in Philippine tax practice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "positives",
+      "query": "What is VAT in a BIR assessment context?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is CWT in a revenue audit?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is MCIT in Philippine tax for a domestic company?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is RCIT in a BIR notice review?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is FWT in a BIR revenue examination?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is CGT in a BIR property audit?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is FBT in Philippine tax for compensation?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is OSD in a BIR deduction review?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "substitutions",
+      "query": "What is BOC in a BIR cross-agency assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "What does CWT mean in a BIR assessment?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "Define MCIT in Philippine tax.",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "What does RCIT stand for under tax rules?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "What is XQD for item forty-two?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "What is VAT?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "define"
+      },
+      "candidate": {
+        "decision": "CLARIFY",
+        "reasonCode": "ambiguous_tax_acronym",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "define"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "What is LOA in a BIR audit?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "What is MCIT within corporate income-tax rules?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "nearMisses",
+      "query": "Can you explain what FWT means in BIR rules?",
+      "expectedStructuralBehavior": "preserve active-base behavior",
+      "base": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "constructions",
+      "query": "What is DST in a revenue property review?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "dst",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "dst",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "constructions",
+      "query": "What is EWT in a BIR payroll assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "ewt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "ewt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "constructions",
+      "query": "Ano ang MCIT sa BIR deficiency assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "constructions",
+      "query": "Ano ang RCIT sa Philippine tax practice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "fillers",
+      "query": "What is CWT in a BIR farm-supplier audit?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "fillers",
+      "query": "What is FWT in a BIR clinic assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "fillers",
+      "query": "What is RCIT in a revenue cooperative review?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "fillers",
+      "query": "What is OSD in a BIR expense audit?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "fillers",
+      "query": "What is CGT in a tax examination of inherited land?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "skeletons",
+      "query": "What is FBT in a BIR compensation procedure?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "skeletons",
+      "query": "What is DST in a revenue deed assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "dst",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "dst",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "skeletons",
+      "query": "What is EWT in Philippine tax practice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "ewt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "ewt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "skeletons",
+      "query": "What is CGT in a BIR property procedure?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "skeletons",
+      "query": "What is OSD in a revenue deduction assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "candidateFiring": true,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "taglish",
+      "query": "Ano ang CWT sa BIR payroll assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "taglish",
+      "query": "Ano ang FWT sa Philippine tax practice?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "category": "taglish",
+      "query": "Ano ang FBT sa BIR payroll assessment?",
+      "expectedStructuralBehavior": "decision=ALLOW; reason=explicit_tax_task_relation",
+      "base": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "candidateFiring": false,
+      "pass": true
+    }
+  ],
+  "executedRows": 41,
+  "passedRows": 41,
+  "failedRows": [],
+  "positiveCandidateFirings": 28,
+  "copiedFrozenQueries": [],
+  "duplicatedQueries": [],
+  "noCopiedFrozenQueries": true,
+  "protectedQuerySources": [
+    "R3",
+    "reason_counterfactual",
+    "collision_probes",
+    "decision_counterfactual_v3",
+    "decision_counterfactual_v4",
+    "decision_counterfactual_v5",
+    "decision_counterfactual_v6",
+    "relation_counterfactual",
+    "clause_probes",
+    "rich_context_guard"
+  ],
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "noFixtureDependency": true,
+  "pass": true
+}

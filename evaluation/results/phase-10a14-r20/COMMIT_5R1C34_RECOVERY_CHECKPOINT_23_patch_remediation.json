@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 23,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T00:54:14.718Z",
+  "stage": "patch remediation",
+  "status": "COMPLETED_HEADER_ONLY_VALIDATION_AND_FULL_HEAD_REPLAY",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_REMEDIATION_RESULT.json",
+      "bytes": 198254,
+      "sha256": "4be1ad000366005853cdb61267f71e0bd42c92d7019a20595f02c2250ef3dec3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_HEADER_VALIDATION.json",
+      "bytes": 7421,
+      "sha256": "24202bbcefab302d1127a8794422411e793199e1a2e77ad5d5e35a2db9f8a0ce"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 295401,
+      "sha256": "cb22cadc8183a3fe7d7b1f74f8fad5b327d40e2d524c709c1a0b9ce1c8f9c699"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 87485,
+      "sha256": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298"
+    }
+  ],
+  "previousLogSha256": "3734fabe700e5bdb0c01ceebbd6a8be1e1b31e4e706c77fab2b61395030aa343",
+  "nextExactOperation": "Seal the no-allocation A-D repair self-test evidence.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "c4590e4e2259b0c0f31cde5afb476fdd62530ef24eca84a636f81ec4eff55c0a"
+}

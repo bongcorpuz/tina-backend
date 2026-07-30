@@ -1,0 +1,156 @@
+{
+  "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+  "withheldFamily": "unseen_tax_types_remedy_verbs_and_taxpayer_contexts",
+  "developmentCorpusExcluded": true,
+  "dependencyAudit": {
+    "forbiddenTerms": [
+      {
+        "term": "oracleId",
+        "pattern": "\\boracle[\\s_-]*id\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "queryHash",
+        "pattern": "\\bquery[\\s_-]*hash\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedLabel",
+        "pattern": "\\bexpected[\\s_-]*label\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedReason",
+        "pattern": "\\bexpected[\\s_-]*reason\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "expectedDecision",
+        "pattern": "\\bexpected[\\s_-]*decision\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "familyName",
+        "pattern": "\\bfamily[\\s_-]*name\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "sourceSet",
+        "pattern": "\\bsource[\\s_-]*set\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "primaryCategory",
+        "pattern": "\\bprimary[\\s_-]*category\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "rowPosition",
+        "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "fixture",
+        "pattern": "\\bfixture\\b",
+        "presentInCandidateBlock": false
+      },
+      {
+        "term": "governedEvidencePath",
+        "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+        "presentInCandidateBlock": false
+      }
+    ],
+    "fixtureDependencyFindings": [],
+    "noForbiddenMetadataDependency": true,
+    "noFixtureDependency": true,
+    "pass": true
+  },
+  "records": [
+    {
+      "query": "What is the deadline to protest a donor's-tax assessment for a family foundation?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "When is the due date to appeal a percentage-tax deficiency for a food kiosk?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "Which deadline governs an objection to an excise assessment for a craft producer?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "which",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "How long is the prescriptive period to contest a documentary-stamp-tax assessment for a cooperative?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    },
+    {
+      "query": "What is the deadline to respond to a BIR notice issued to a medical practice?",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_compliance_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "copiedFrozenQuery": false,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

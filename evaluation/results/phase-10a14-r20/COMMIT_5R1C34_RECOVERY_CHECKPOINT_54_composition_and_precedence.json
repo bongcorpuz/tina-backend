@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 54,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-30T05:57:25.339Z",
+  "stage": "composition and precedence",
+  "status": "COMPLETED_PASS",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "attemptId": "R20-domain_campaign-commit5r1c34-compose-ord01-2026-07-30T05-57-05-814Z",
+  "activeAttemptId": "R20-domain_campaign-commit5r1c34-compose-ord01-2026-07-30T05-57-05-814Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-compose-ord01-2026-07-30T05-57-05-814Z/ITERATION_RESULT.json",
+      "bytes": 658801,
+      "sha256": "acd92201f7b432320fc25c52a87c674a8493d0c1ba875a4eb8b8a2fdf54053a0"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-compose-ord01-2026-07-30T05-57-05-814Z/COMPOSITION_ORDER_INDEPENDENCE.json",
+      "bytes": 6721,
+      "sha256": "969b2c36ef0166a4b3c9f441cd5c3652e6fe8afaab7c7e8163b8c14747f7f5b6"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-compose-ord01-2026-07-30T05-57-05-814Z/COMPOSITION_ROW_DELTA.json",
+      "bytes": 114190,
+      "sha256": "c05905b9be1de44e88d0df2b31e5366f02107e3efc6dd891f5fb5c63bb52961a"
+    }
+  ],
+  "previousLogSha256": "fd32feafe942173db4cf3c678c0d5c131e983cff4ffaae3fd111f2ccbe6764bc",
+  "nextExactOperation": "Finalize aggregate evidence, registry, service restoration, and the pre-review report.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "6d6158f10103ff07993c020396198f3b6b73c98d1a814a8bc4036c9a9fd425c3"
+}

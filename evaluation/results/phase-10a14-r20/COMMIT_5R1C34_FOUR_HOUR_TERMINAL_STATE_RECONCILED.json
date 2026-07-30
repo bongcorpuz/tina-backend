@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:48:30.395Z",
+  "elapsedMilliseconds": 5299508,
+  "sessionStartedUtc": "2026-07-30T04:20:10.8872565Z",
+  "sessionHardStopUtc": "2026-07-30T08:20:10.8872565Z",
+  "startingCheckpoint": 46,
+  "endingCheckpointOrdinal": 50,
+  "stage": "four-hour terminal reconciliation",
+  "classification": "FOUR_HOUR_SAFE_PAUSE_TECHNICAL_BLOCKER",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "activeBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "currentMetrics": {
+    "reasonPassed": 3575,
+    "reasonMismatches": 145,
+    "decisionPassed": 3720,
+    "relationPassed": 3720
+  },
+  "candidate6": {
+    "attemptId": null,
+    "status": "NOT_ALLOCATED",
+    "disposition": "NOT_EXECUTED",
+    "accepted": false,
+    "metricDelta": null
+  },
+  "compositionStatus": "NOT_COMPLETED",
+  "frozenGateStatus": "NOT_COMPLETED_OR_FAILED",
+  "opus": {
+    "invocationStatus": "NOT_INVOKED",
+    "decision": null,
+    "commitAuthorized": false,
+    "observations": []
+  },
+  "knowledge": {
+    "roadmapV9Status": "UNCHANGED",
+    "currentStateStatus": "UNCHANGED"
+  },
+  "manifest": {
+    "status": "NOT_CREATED"
+  },
+  "git": {
+    "stagedPaths": [],
+    "commit": null,
+    "push": null,
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "sync": "0\t0",
+    "indexLock": false,
+    "trackedServiceDiff": ""
+  },
+  "reconciliation": {
+    "registryAttempts": 226,
+    "registrySha256": "ac198cb30d5f41dc2161bc3f1079e259f8c8dee49dc649242c30138c85ae5a8a",
+    "walRows": 26,
+    "walSha256": "9e499593785a23515ff1986057dd786797df9007ab5c38b26a96840901281363",
+    "attemptDirectories": 8,
+    "orphan": 0,
+    "dangling": 0,
+    "running": [],
+    "ledgerPass": true,
+    "retryLinkage": {
+      "records": [
+        {
+          "original": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+          "retry": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+          "reason": "C34_FULL_HEAD_PATCH_INVALID",
+          "cycle": "nt01-retry01",
+          "originalCount": 1,
+          "retryCount": 1,
+          "retryPlanCount": 1,
+          "adjudicationCount": 1,
+          "historicDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+          "retryStatus": "completed",
+          "retryDisposition": "ACCEPTED_PROMOTED_CONTROLLING",
+          "actualRetryOf": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+          "actualRetryReason": "C34_FULL_HEAD_PATCH_INVALID",
+          "actualRetryType": "TECHNICAL_LINKED_RETRY",
+          "actualRetryCycle": "nt01-retry01",
+          "pass": true
+        },
+        {
+          "original": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+          "retry": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+          "reason": "C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED",
+          "cycle": "tr01-retry01",
+          "originalCount": 1,
+          "retryCount": 1,
+          "retryPlanCount": 1,
+          "adjudicationCount": 1,
+          "historicDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+          "retryStatus": "completed",
+          "retryDisposition": "ACCEPTED_PROMOTED_CONTROLLING",
+          "actualRetryOf": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+          "actualRetryReason": "C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED",
+          "actualRetryType": "TECHNICAL_LINKED_RETRY",
+          "actualRetryCycle": "tr01-retry01",
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  },
+  "allocationLocks": [],
+  "processState": {
+    "inspectionSucceeded": true,
+    "activeC34": [],
+    "unreadable": [],
+    "listeners5173": []
+  },
+  "temporaryRuntimeDirectories": [],
+  "port5173Free": true,
+  "serviceDiffEmpty": true,
+  "candidate7Created": false,
+  "unauthorizedC34AttemptIds": [],
+  "c35Items": [],
+  "blocker": "C34_CP46_STARTING_REGISTRY_WAL_DIRECTORY_OR_LEDGER_INVALID",
+  "nextExactOperation": "Resume from this reconciled safe checkpoint and address the recorded technical blocker. Do not duplicate Candidate 6 or composition, do not stage without Opus approval, and do not begin Candidate 7 or C35.",
+  "pass": true
+}

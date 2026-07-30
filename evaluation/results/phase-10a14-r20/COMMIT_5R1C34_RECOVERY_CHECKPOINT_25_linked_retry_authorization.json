@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 25,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T00:54:15.660Z",
+  "stage": "linked retry authorization",
+  "status": "PASS_READY_FOR_LINKED_NT01_RETRY",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_NT01_LINKED_RETRY_AUTHORIZATION.json",
+      "bytes": 1424,
+      "sha256": "d4bcf437429079bddbedda8a46b5cf21dc77f02043c67955debad497478d7422"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TECHNICAL_RECOVERY_PREALLOCATION_VALIDATION.json",
+      "bytes": 18698,
+      "sha256": "aeaf00708a4a94d068f65850e333c615fde97377536cf258fb0005fc31187ede"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FULL_HEAD_PATCH_REPLAY_SELF_TEST.json",
+      "bytes": 285693,
+      "sha256": "611921d64a414206590b546f89fec9177ff21e1e064c15796eeb256e3b858b0c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 663111,
+      "sha256": "8121185cc23706466003f0b5077e1419c65e680ca84e8d93c407af8d3384388a"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2900,
+      "sha256": "59c887eb2283ab14ae01932453ce7d1609600c50be6282fd76708285cfd0fb0c"
+    }
+  ],
+  "previousLogSha256": "2bf830c52c17639b69c0c0c36675fb0cc540612d9899c943b58f41fa71126bbc",
+  "nextExactOperation": "Run the technical recovery preflight, then allocate one new ord02 linked NT01 retry.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "22b72c15897219415ed47f916014a8005db701b11fdba703011ffef3a1e355d6"
+}

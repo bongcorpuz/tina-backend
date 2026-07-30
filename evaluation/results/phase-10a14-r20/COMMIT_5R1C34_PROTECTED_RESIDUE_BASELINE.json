@@ -1,0 +1,45 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "label": "preexisting",
+  "capturedUtc": "2026-07-28T13:34:33.318Z",
+  "protectedPrefixes": [
+    ".claude/",
+    ".vscode/",
+    "evaluation/factcheck/"
+  ],
+  "statusSha256": "7a2a99f2a2d95961493f36226a8972773bae79033f1ae8631beda2871c35b8f6",
+  "protectedItems": [
+    "?? .vscode/extensions.json",
+    "?? evaluation/factcheck/README.md",
+    "?? evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+    "?? evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+    "?? evaluation/factcheck/hardest-philippine-tax-question.md"
+  ],
+  "fileRecords": [
+    {
+      "path": ".vscode/extensions.json",
+      "bytes": 70,
+      "sha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09"
+    },
+    {
+      "path": "evaluation/factcheck/README.md",
+      "bytes": 1890,
+      "sha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a"
+    },
+    {
+      "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "bytes": 35275,
+      "sha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08"
+    },
+    {
+      "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "bytes": 87771,
+      "sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed"
+    },
+    {
+      "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+      "bytes": 8064,
+      "sha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7"
+    }
+  ]
+}

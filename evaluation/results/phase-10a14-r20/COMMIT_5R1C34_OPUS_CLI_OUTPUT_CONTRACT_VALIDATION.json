@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T13:05:16.302Z",
+  "classification": "STRUCTURED_OUTPUT_CONTRACT_VALIDATED",
+  "allowedDecisionTokens": [
+    "APPROVED",
+    "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "REJECTED",
+    "INCOMPLETE_REVIEW"
+  ],
+  "exactDecisionRequired": true,
+  "narrativeApprovalInferenceForbidden": true,
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "decision",
+      "reviewedStateDigest",
+      "reviewerTool",
+      "reviewerModel",
+      "independenceConfirmed",
+      "readOnlyConfirmed",
+      "summary",
+      "verification",
+      "blockingFindings",
+      "nonblockingObservations",
+      "commitSafe"
+    ],
+    "properties": {
+      "decision": {
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+          "REJECTED",
+          "INCOMPLETE_REVIEW"
+        ]
+      },
+      "reviewedStateDigest": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "reviewerTool": {
+        "type": "string",
+        "const": "Claude Code"
+      },
+      "reviewerModel": {
+        "type": "string",
+        "const": "claude-opus-4-8"
+      },
+      "independenceConfirmed": {
+        "type": "boolean"
+      },
+      "readOnlyConfirmed": {
+        "type": "boolean"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "verification": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "checkpoint57Continuity",
+          "priorInvocationTechnicalIncomplete",
+          "cliRemediationPass",
+          "candidate6ExactOnce",
+          "candidates1Through5Preserved",
+          "technicalRetryLinksPreserved",
+          "compositionPass",
+          "frozenGatesPass",
+          "residualReconciled",
+          "registryWalLedgerReconciled",
+          "serviceAndGitHygiene",
+          "manifestDraftValid",
+          "roadmapDraftAccurate",
+          "currentStateDraftAccurate",
+          "stagingSetExplicit",
+          "noCandidate7OrC35"
+        ],
+        "properties": {
+          "checkpoint57Continuity": {
+            "type": "boolean"
+          },
+          "priorInvocationTechnicalIncomplete": {
+            "type": "boolean"
+          },
+          "cliRemediationPass": {
+            "type": "boolean"
+          },
+          "candidate6ExactOnce": {
+            "type": "boolean"
+          },
+          "candidates1Through5Preserved": {
+            "type": "boolean"
+          },
+          "technicalRetryLinksPreserved": {
+            "type": "boolean"
+          },
+          "compositionPass": {
+            "type": "boolean"
+          },
+          "frozenGatesPass": {
+            "type": "boolean"
+          },
+          "residualReconciled": {
+            "type": "boolean"
+          },
+          "registryWalLedgerReconciled": {
+            "type": "boolean"
+          },
+          "serviceAndGitHygiene": {
+            "type": "boolean"
+          },
+          "manifestDraftValid": {
+            "type": "boolean"
+          },
+          "roadmapDraftAccurate": {
+            "type": "boolean"
+          },
+          "currentStateDraftAccurate": {
+            "type": "boolean"
+          },
+          "stagingSetExplicit": {
+            "type": "boolean"
+          },
+          "noCandidate7OrC35": {
+            "type": "boolean"
+          }
+        }
+      },
+      "blockingFindings": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "nonblockingObservations": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "commitSafe": {
+        "type": "boolean"
+      }
+    }
+  },
+  "schemaSha256": "ec8e78af1f35d9d010a397639a75d70d74818fffd13b061cfa4a8822317008d1",
+  "schemaParsesLocally": true,
+  "envelopeRequirements": {
+    "type": "result",
+    "subtype": "success",
+    "isError": false,
+    "permissionDenials": 0,
+    "structuredOutputRequired": true
+  },
+  "failureHandling": "Any timeout, nonzero exit, schema failure, missing token, invalid binding, REJECTED, or INCOMPLETE_REVIEW stops without staging/commit/push and consumes the replacement invocation.",
+  "pass": true
+}

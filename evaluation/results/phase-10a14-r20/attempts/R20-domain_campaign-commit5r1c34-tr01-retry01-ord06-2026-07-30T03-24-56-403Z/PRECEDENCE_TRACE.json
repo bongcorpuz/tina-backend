@@ -1,0 +1,11 @@
+{
+  "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+  "insertionSite": "governed override after all inherited accepted rules and before return null",
+  "activeBaseDigest": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "candidateDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "changedRows": 3,
+  "newlyCorrectedRows": 3,
+  "outsideCorrectionTarget": [],
+  "inheritedRulesPreserved": true,
+  "pass": true
+}

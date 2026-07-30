@@ -1,0 +1,11 @@
+{
+  "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+  "insertionSite": "governed override after all inherited accepted rules and before return null",
+  "activeBaseDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "candidateDigest": "6491921ab7c67b056ef95bae15f9571b8b1472c8a82c4532e87de90ed3b561aa",
+  "changedRows": 1,
+  "newlyCorrectedRows": 1,
+  "outsideCorrectionTarget": [],
+  "inheritedRulesPreserved": false,
+  "pass": false
+}

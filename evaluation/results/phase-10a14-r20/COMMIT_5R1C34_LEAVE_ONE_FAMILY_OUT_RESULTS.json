@@ -1,0 +1,945 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:32.727Z",
+  "candidates": [
+    {
+      "candidateId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+      "withheldFamily": "unseen_ordinary_domains_and_interrogative_constructions",
+      "developmentCorpusExcluded": true,
+      "dependencyAudit": {
+        "forbiddenTerms": [
+          {
+            "term": "oracleId",
+            "pattern": "\\boracle[\\s_-]*id\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "queryHash",
+            "pattern": "\\bquery[\\s_-]*hash\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedLabel",
+            "pattern": "\\bexpected[\\s_-]*label\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedReason",
+            "pattern": "\\bexpected[\\s_-]*reason\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedDecision",
+            "pattern": "\\bexpected[\\s_-]*decision\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "familyName",
+            "pattern": "\\bfamily[\\s_-]*name\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "sourceSet",
+            "pattern": "\\bsource[\\s_-]*set\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "primaryCategory",
+            "pattern": "\\bprimary[\\s_-]*category\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "rowPosition",
+            "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "fixture",
+            "pattern": "\\bfixture\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "governedEvidencePath",
+            "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+            "presentInCandidateBlock": false
+          }
+        ],
+        "fixtureDependencyFindings": [],
+        "noForbiddenMetadataDependency": true,
+        "noFixtureDependency": true,
+        "pass": true
+      },
+      "records": [
+        {
+          "query": "Can shareholders inspect corporate minutes before an annual meeting?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "no_tax_relation",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "no_tax_relation",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Does an unpaid personal loan survive the borrower moving abroad?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "no_tax_relation",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "no_tax_relation",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": "does",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "May an employer recover relocation costs under a private contract?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "no_tax_relation",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "no_tax_relation",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": "may",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Can a school enrollment decision be challenged through an academic process?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "no_tax_relation",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "no_tax_relation",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Does a club membership meeting need a written agenda?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "no_tax_relation",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "no_tax_relation",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": "does",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task",
+      "withheldFamily": "unseen_identifier_roles_and_short_tokens",
+      "developmentCorpusExcluded": true,
+      "dependencyAudit": {
+        "forbiddenTerms": [
+          {
+            "term": "oracleId",
+            "pattern": "\\boracle[\\s_-]*id\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "queryHash",
+            "pattern": "\\bquery[\\s_-]*hash\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedLabel",
+            "pattern": "\\bexpected[\\s_-]*label\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedReason",
+            "pattern": "\\bexpected[\\s_-]*reason\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedDecision",
+            "pattern": "\\bexpected[\\s_-]*decision\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "familyName",
+            "pattern": "\\bfamily[\\s_-]*name\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "sourceSet",
+            "pattern": "\\bsource[\\s_-]*set\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "primaryCategory",
+            "pattern": "\\bprimary[\\s_-]*category\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "rowPosition",
+            "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "fixture",
+            "pattern": "\\bfixture\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "governedEvidencePath",
+            "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+            "presentInCandidateBlock": false
+          }
+        ],
+        "fixtureDependencyFindings": [],
+        "noForbiddenMetadataDependency": true,
+        "noFixtureDependency": true,
+        "pass": true
+      },
+      "records": [
+        {
+          "query": "Inventory code lang ang AMR?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "explicit_non_tax_task",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "explicit_non_tax_task",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Festival playlist code lang ang BNS?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "explicit_non_tax_task",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "explicit_non_tax_task",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Research prototype label lang ang CTO?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "explicit_non_tax_task",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "explicit_non_tax_task",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Volunteer workshop codename lang ang DUP?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "explicit_non_tax_task",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "explicit_non_tax_task",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Sports-team identifier lang ang EVQ?",
+          "expectedDecision": "REFUSE",
+          "expectedReason": "explicit_non_tax_task",
+          "actual": {
+            "decision": "REFUSE",
+            "reasonCode": "explicit_non_tax_task",
+            "relations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "requestedAction": null,
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+      "withheldFamily": "unseen_resolved_tax_tokens_and_tax_contexts",
+      "developmentCorpusExcluded": true,
+      "dependencyAudit": {
+        "forbiddenTerms": [
+          {
+            "term": "oracleId",
+            "pattern": "\\boracle[\\s_-]*id\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "queryHash",
+            "pattern": "\\bquery[\\s_-]*hash\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedLabel",
+            "pattern": "\\bexpected[\\s_-]*label\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedReason",
+            "pattern": "\\bexpected[\\s_-]*reason\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedDecision",
+            "pattern": "\\bexpected[\\s_-]*decision\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "familyName",
+            "pattern": "\\bfamily[\\s_-]*name\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "sourceSet",
+            "pattern": "\\bsource[\\s_-]*set\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "primaryCategory",
+            "pattern": "\\bprimary[\\s_-]*category\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "rowPosition",
+            "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "fixture",
+            "pattern": "\\bfixture\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "governedEvidencePath",
+            "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+            "presentInCandidateBlock": false
+          }
+        ],
+        "fixtureDependencyFindings": [],
+        "noForbiddenMetadataDependency": true,
+        "noFixtureDependency": true,
+        "pass": true
+      },
+      "records": [
+        {
+          "query": "What is FWT in a BIR deficiency review for a cooperative?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF",
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "fwt",
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "What is CGT in a revenue case about a donated warehouse?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "What is FBT in a BIR compensation audit for a medical clinic?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF",
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "bir",
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "What is OSD in Philippine tax for an architecture studio?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF",
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "osd",
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "What is CWT in a BIR withholding review for a seed supplier?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_WITHHOLDING_ON",
+              "ASKS_DEFINITION_OF"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "bir",
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "withheldFamily": "unseen_import_duty_events_objects_and_procedural_frames",
+      "developmentCorpusExcluded": true,
+      "dependencyAudit": {
+        "forbiddenTerms": [
+          {
+            "term": "oracleId",
+            "pattern": "\\boracle[\\s_-]*id\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "queryHash",
+            "pattern": "\\bquery[\\s_-]*hash\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedLabel",
+            "pattern": "\\bexpected[\\s_-]*label\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedReason",
+            "pattern": "\\bexpected[\\s_-]*reason\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedDecision",
+            "pattern": "\\bexpected[\\s_-]*decision\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "familyName",
+            "pattern": "\\bfamily[\\s_-]*name\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "sourceSet",
+            "pattern": "\\bsource[\\s_-]*set\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "primaryCategory",
+            "pattern": "\\bprimary[\\s_-]*category\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "rowPosition",
+            "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "fixture",
+            "pattern": "\\bfixture\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "governedEvidencePath",
+            "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+            "presentInCandidateBlock": false
+          }
+        ],
+        "fixtureDependencyFindings": [],
+        "noForbiddenMetadataDependency": true,
+        "noFixtureDependency": true,
+        "pass": true
+      },
+      "records": [
+        {
+          "query": "May import duty apply to an ocean-research sample?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_CUSTOMS_DUTY_ON"
+            ],
+            "requestedAction": "may",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "How is import duty assessed for a touring orchestra shipment?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_CUSTOMS_DUTY_ON"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "What evidence supports an import duty protest for a greenhouse sensor?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_CUSTOMS_DUTY_ON"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Are import duties taxes for an emergency-relief parcel?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_CUSTOMS_DUTY_ON"
+            ],
+            "requestedAction": "are",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "When does import duty become payable on a restored film camera?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "explicit_tax_task_relation",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "explicit_tax_task_relation",
+            "relations": [
+              "ASKS_CUSTOMS_DUTY_ON"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+      "withheldFamily": "unseen_statutes_rules_contracts_and_ordinary_bearers",
+      "developmentCorpusExcluded": true,
+      "dependencyAudit": {
+        "forbiddenTerms": [
+          {
+            "term": "oracleId",
+            "pattern": "\\boracle[\\s_-]*id\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "queryHash",
+            "pattern": "\\bquery[\\s_-]*hash\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedLabel",
+            "pattern": "\\bexpected[\\s_-]*label\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedReason",
+            "pattern": "\\bexpected[\\s_-]*reason\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedDecision",
+            "pattern": "\\bexpected[\\s_-]*decision\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "familyName",
+            "pattern": "\\bfamily[\\s_-]*name\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "sourceSet",
+            "pattern": "\\bsource[\\s_-]*set\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "primaryCategory",
+            "pattern": "\\bprimary[\\s_-]*category\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "rowPosition",
+            "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "fixture",
+            "pattern": "\\bfixture\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "governedEvidencePath",
+            "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+            "presentInCandidateBlock": false
+          }
+        ],
+        "fixtureDependencyFindings": [],
+        "noForbiddenMetadataDependency": true,
+        "noFixtureDependency": true,
+        "pass": true
+      },
+      "records": [
+        {
+          "query": "Does the NIRC govern VAT treatment of a community-library donation?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_VAT_TREATMENT_OF"
+            ],
+            "requestedAction": "does",
+            "requestedTarget": "vat",
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Can the TRAIN law affect tax treatment of a rural-clinic stipend?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "can",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Does a holding period rule apply to gains from a vintage instrument?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "does",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "May a cooperative agreement include a withholding-allocation clause?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [
+              "ASKS_WITHHOLDING_ON"
+            ],
+            "requestedAction": "may",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "May an agricultural lease include a taxable costs clause?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_treatment_of_ordinary_object",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_treatment_of_ordinary_object",
+            "relations": [],
+            "requestedAction": "may",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "withheldFamily": "unseen_tax_types_remedy_verbs_and_taxpayer_contexts",
+      "developmentCorpusExcluded": true,
+      "dependencyAudit": {
+        "forbiddenTerms": [
+          {
+            "term": "oracleId",
+            "pattern": "\\boracle[\\s_-]*id\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "queryHash",
+            "pattern": "\\bquery[\\s_-]*hash\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedLabel",
+            "pattern": "\\bexpected[\\s_-]*label\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedReason",
+            "pattern": "\\bexpected[\\s_-]*reason\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "expectedDecision",
+            "pattern": "\\bexpected[\\s_-]*decision\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "familyName",
+            "pattern": "\\bfamily[\\s_-]*name\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "sourceSet",
+            "pattern": "\\bsource[\\s_-]*set\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "primaryCategory",
+            "pattern": "\\bprimary[\\s_-]*category\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "rowPosition",
+            "pattern": "\\brow[\\s_-]*(?:position|index|ordinal)\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "fixture",
+            "pattern": "\\bfixture\\b",
+            "presentInCandidateBlock": false
+          },
+          {
+            "term": "governedEvidencePath",
+            "pattern": "evaluation[\\\\/](?:oracles|results|factcheck)|COMMIT_5R1C\\d|_SUITE",
+            "presentInCandidateBlock": false
+          }
+        ],
+        "fixtureDependencyFindings": [],
+        "noForbiddenMetadataDependency": true,
+        "noFixtureDependency": true,
+        "pass": true
+      },
+      "records": [
+        {
+          "query": "What is the deadline to protest a donor's-tax assessment for a family foundation?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_compliance_task",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "When is the due date to appeal a percentage-tax deficiency for a food kiosk?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_compliance_task",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "when",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "Which deadline governs an objection to an excise assessment for a craft producer?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_compliance_task",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "which",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "How long is the prescriptive period to contest a documentary-stamp-tax assessment for a cooperative?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_compliance_task",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "requestedAction": "how",
+            "requestedTarget": null,
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        },
+        {
+          "query": "What is the deadline to respond to a BIR notice issued to a medical practice?",
+          "expectedDecision": "ALLOW",
+          "expectedReason": "tax_compliance_task",
+          "actual": {
+            "decision": "ALLOW",
+            "reasonCode": "tax_compliance_task",
+            "relations": [
+              "ASKS_TAX_COMPLIANCE_FOR"
+            ],
+            "requestedAction": "what",
+            "requestedTarget": "bir",
+            "speechAct": "ask"
+          },
+          "copiedFrozenQuery": false,
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

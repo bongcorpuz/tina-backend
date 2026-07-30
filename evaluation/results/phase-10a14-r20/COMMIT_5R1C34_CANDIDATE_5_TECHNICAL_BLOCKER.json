@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:33:58.296Z",
+  "classification": "CANDIDATE_5_TECHNICAL_INCOMPLETE",
+  "candidateId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tr01-ord05-2026-07-30T02-33-54-720Z",
+  "status": "technical_failure",
+  "disposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+  "activeBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+  "error": "Error: C34_CANDIDATE_ONLY_DUAL_REPLAY_FAILED\n    at requirePass (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:79:25)\n    at dualEnvironmentReplay (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:976:5)\n    at Module.replayAndInheritance (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:1009:22)\n    at Module.runMaterialCandidate (file:///C:/Users/USER/AppData/Local/Temp/tina-c34-checkpoint39-adapter-27188-b4ec52daadbc.mjs?sha=d672a9b38e26ab366ee25155eb38a821517adb14b5f1ca3bcfb0dd173bea1fd6:4487:22)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2243:16\n    at async withAllocationLock (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:1316:12)\n    at async main (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2842:20)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint39-continue.mjs:2867:3",
+  "registry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 690785,
+    "sha256": "1136d6e0aebf64c1037114ad63b37288b36bcb28a25283bfd27df9a72fd270ae"
+  },
+  "allocationWal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 7773,
+    "sha256": "740d134e6c1179c3d7bcf32036180c2d84b88df0ae9b767f7b93a9f2efa6c515"
+  },
+  "ledger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_5.json",
+    "bytes": 6702,
+    "sha256": "1504eff580f64d6da80800675d888cbb082c9f0dc9dbedee57cacf1eed8f3c87"
+  },
+  "pass": true
+}

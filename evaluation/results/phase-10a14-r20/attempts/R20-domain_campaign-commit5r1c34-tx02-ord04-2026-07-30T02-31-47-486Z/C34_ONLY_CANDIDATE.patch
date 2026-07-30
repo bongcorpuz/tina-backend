@@ -1,0 +1,18 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index 3691824..08cc490 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1350,6 +1350,13 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c34CopularShortTaxTopic)
+     return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.87 };
+ 
++  const c34ImportDutyInstrumentTopic = v.reason === 'tax_treatment_of_ordinary_object'
++      && v.rels.includes('ASKS_CUSTOMS_DUTY_ON')
++      && /\bimport\s+dut(?:y|ies)\b/i.test(v.t)
++      && !/\b(?:rate|classification|tariff\s+schedule|comput\w*|calculat\w*)\b/i.test(v.t);
++  if (c34ImportDutyInstrumentTopic)
++    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.86 };
++
+   return null;
+ }
+ 

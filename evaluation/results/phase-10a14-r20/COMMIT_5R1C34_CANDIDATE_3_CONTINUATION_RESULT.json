@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T23:35:56.056Z",
+  "classification": "CANDIDATE_3_ACCEPTED_PROMOTED",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+  "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+  "candidateOrdinal": 3,
+  "allocationCycle": "tx01",
+  "allocationOrdinal": 3,
+  "status": "completed",
+  "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "accepted": true,
+  "startingActiveBaseHash": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a",
+  "endingActiveBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+  "metrics": {
+    "canonicalPassed": 3565,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3565,
+    "reasonMismatches": 155,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "reasonCounterfactualTotal": 344,
+    "reasonCounterfactualFailed": 0,
+    "collisionProbesPassed": 196,
+    "collisionProbesTotal": 196,
+    "collisionProbesFailed": 0,
+    "decisionCounterfactualPassed": 756,
+    "decisionCounterfactualTotal": 756,
+    "decisionCounterfactualFailed": 0,
+    "relationCounterfactualPassed": 282,
+    "relationCounterfactualTotal": 282,
+    "relationCounterfactualFailed": 0,
+    "clauseProbesPassed": 68,
+    "clauseProbesTotal": 68,
+    "clauseProbesFailed": 0,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "focusedReasonFamilies": {
+      "explicit_tax_task_relation": {
+        "required": 451,
+        "satisfied": 428
+      },
+      "tax_compliance_task": {
+        "required": 291,
+        "satisfied": 290
+      },
+      "tax_treatment_of_ordinary_object": {
+        "required": 784,
+        "satisfied": 779
+      },
+      "explicit_non_tax_task": {
+        "required": 897,
+        "satisfied": 852
+      },
+      "non_tax_label_or_name": {
+        "required": 201,
+        "satisfied": 201
+      },
+      "quoted_tax_term_only": {
+        "required": 120,
+        "satisfied": 120
+      },
+      "no_tax_relation": {
+        "required": 563,
+        "satisfied": 482
+      },
+      "ambiguous_tax_acronym": {
+        "required": 220,
+        "satisfied": 220
+      },
+      "non_tax_expansion": {
+        "required": 88,
+        "satisfied": 88
+      },
+      "tax_definition_with_context": {
+        "required": 79,
+        "satisfied": 79
+      },
+      "tax_negation_but_tax_review_requested": {
+        "required": 26,
+        "satisfied": 26
+      }
+    },
+    "closedControlsPass": true,
+    "relationObjectIntegrityPass": false,
+    "clauseSchemaRegressionPass": true,
+    "antiMemorizationPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "metricDelta": {
+    "reasonPassedBefore": 3561,
+    "reasonPassedAfter": 3565,
+    "reasonDelta": 4,
+    "remainingBefore": 159,
+    "remainingAfter": 155,
+    "decisionPassed": 3720,
+    "relationPassed": 3720
+  },
+  "preflight": {
+    "authorization": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_AUTHORIZATION.json",
+      "bytes": 3866,
+      "sha256": "7eb770306292e6bf2c96b3f74aac4a925b5c654df85cfd4670bcef77455d83ab"
+    },
+    "nonDuplication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_NON_DUPLICATION_PREFLIGHT.json",
+      "bytes": 560,
+      "sha256": "8a33318df5393d5ba1e43b2ccba5edcdca930546d4711744c396e7780e8bd716"
+    },
+    "compatibility": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_RESUME_COMPATIBILITY_VALIDATION.json",
+      "bytes": 9111,
+      "sha256": "9edfee2d97fea6060a2011136f67ac606476e57dce1114c344ad86b953cf7472"
+    },
+    "decision": "PASS_READY_FOR_MATERIAL_CANDIDATE_3"
+  },
+  "iterationResult": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z/ITERATION_RESULT.json",
+    "bytes": 659280,
+    "sha256": "565f0498e4b6832872cc75cf80dd3fa361345de022930319f7f1f598610e567b"
+  },
+  "acceptedCandidates1And2Regression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_ACCEPTED_CANDIDATES_1_AND_2_REGRESSION_VALIDATION.json",
+    "bytes": 873,
+    "sha256": "2b03d58e5e74f2afc277367b12e54708a07e480ecddc8d3a55f2b61b156146eb"
+  },
+  "ledger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_3.json",
+    "bytes": 5330,
+    "sha256": "32fb621199b1bbb7dd47bd27a818e719257f67d695dbffe90785d001fa6d9773"
+  },
+  "semanticDisposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "blocker": null,
+  "pass": true
+}

@@ -1,0 +1,10 @@
+{
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-28T13:34:45.194Z",
+  "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+  "label": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation",
+  "classification": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+  "error": "Error: C34_FULL_HEAD_PATCH_INVALID\n    at Module.requirePass (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs:79:25)\n    at fullHeadPatch (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs:1767:5)\n    at runMaterialCandidate (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs:1819:22)\n    at async execute (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs:3118:20)\n    at async main (file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs:3788:5)\n    at async file:///C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs:3802:3",
+  "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+  "recoverableOnlyByNewLinkedAttempt": true
+}

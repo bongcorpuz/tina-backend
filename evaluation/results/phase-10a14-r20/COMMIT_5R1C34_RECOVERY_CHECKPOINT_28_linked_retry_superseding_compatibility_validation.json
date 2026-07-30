@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 28,
+  "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+  "updatedAtUtc": "2026-07-29T04:58:15.526Z",
+  "stage": "linked retry superseding compatibility validation",
+  "status": "PASS_SUPERSEDING_COMPATIBILITY_VALIDATION",
+  "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+  "activeBaseHash": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+  "attemptId": null,
+  "artifactHashes": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_SUPERSEDING_COMPATIBILITY_VALIDATION.json",
+      "bytes": 290894,
+      "sha256": "0fec4857013be470cd27b7cd2b9a13f90e1491a544714d43079e1ccf3843c283"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TECHNICAL_RECOVERY_PREALLOCATION_VALIDATION.json",
+      "bytes": 18698,
+      "sha256": "aeaf00708a4a94d068f65850e333c615fde97377536cf258fb0005fc31187ede"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_PREALLOCATION_SAFE_PAUSE.json",
+      "bytes": 35376,
+      "sha256": "afe9b0176076174eb701d6dc19204001550184743a3cf177007192ff39fef9a3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_PREALLOCATION_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 13779,
+      "sha256": "cf1e30b35d4c9fff23d335f6d77c55e9dcccdde8bab2950f95649e2e41346f1e"
+    }
+  ],
+  "previousLogSha256": "d273406d3a240385636608962c077cd400c3d5f7b909b60785874c859439a11a",
+  "nextExactOperation": "Run the amended no-allocation technical recovery preflight and require PASS_READY_FOR_LINKED_RETRY_ALLOCATION.",
+  "safeToResume": true,
+  "blocker": null,
+  "eventSha256": "d886153fd4e6edd784e45012bf5a0f3061d183af84dfa047f6a5116fd108f2ec"
+}

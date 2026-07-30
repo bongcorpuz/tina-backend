@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:08:19.1458210Z",
+  "decision": "PASS_READY_FOR_MATERIAL_CANDIDATE_4",
+  "exactActiveBase": {
+    "attemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+    "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 182087,
+        "rawSha256": "e201ebdb083e9952cf39e51309ba59d1aab4e1a272b6c543106eb1e509f5f190",
+        "normalizedLfSha256": "e201ebdb083e9952cf39e51309ba59d1aab4e1a272b6c543106eb1e509f5f190"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd"
+    },
+    "metrics": {
+      "canonicalPassed": 3565,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3565,
+      "reasonMismatches": 155,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 428
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 779
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 852
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 482
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    }
+  },
+  "candidate4Preview": {
+    "candidate": {
+      "id": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+      "cycle": "tx02",
+      "frontier": "explicit_tax_task_relation",
+      "principle": "An import-duty instrument or regime question is an explicit tax task when it does not ask for rate, tariff classification, schedule, or computation treatment.",
+      "observablePredicate": "baseline tax treatment + customs-duty relation + import-duty instrument + rate/classification/schedule/computation exclusions",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedDecision": "ALLOW",
+      "forecastCorrections": 7,
+      "leaveFamilyName": "unseen_import_duty_events_objects_and_procedural_frames"
+    },
+    "exactActiveBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+    "sourceMarkersBefore": {
+      "candidate1": 1,
+      "candidate2": 1,
+      "candidate3": 1,
+      "candidate4": 0,
+      "candidate5": 0,
+      "candidate6": 0
+    },
+    "sourceMarkersAfter": {
+      "candidate1": 1,
+      "candidate2": 1,
+      "candidate3": 1,
+      "candidate4": 1,
+      "candidate5": 0,
+      "candidate6": 0
+    },
+    "materializedIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 182494,
+        "rawSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf",
+        "normalizedLfSha256": "779b44639e8d9385e74c5a3f675ea60f67819112975117a3e41fe9a448cdbccf"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e"
+    },
+    "candidatePatch": {
+      "sha256": "254d28c3a6d7428ee37d38605460dc7903e16459de4af33c96eec4f19e8613fc",
+      "bytes": 867,
+      "changedFiles": [
+        "services/philippine-tax-intent-analyzer.js"
+      ],
+      "headersValid": true,
+      "hasForbiddenPath": false,
+      "pass": true
+    },
+    "allocationPerformed": false,
+    "semanticGatesExecuted": false,
+    "temporaryRuntimeRemoved": true,
+    "pass": true
+  },
+  "checkpoint39Idempotence": {
+    "currentEqualsNumbered": true,
+    "currentEqualsLogTip": true,
+    "duplicateCheckpointAbsent": true,
+    "pass": true
+  },
+  "processState": {
+    "inspectionMethod": "PowerShell CIM node.exe inventory with current-PID exclusion and independent netstat",
+    "currentExecutorPid": 22456,
+    "processInspectionStatus": 0,
+    "processInspectionSignal": null,
+    "processInspectionStderr": "",
+    "processInspectionParseError": null,
+    "processInspectionSucceeded": true,
+    "currentExecutorPresent": true,
+    "currentExecutorCommandLineReadable": true,
+    "otherNodeProcesses": [],
+    "unreadableNodeProcesses": [],
+    "allOtherNodeCommandLinesReadable": true,
+    "activeC34Runners": [],
+    "activeC34RunnerCount": 0,
+    "netstatInspectionStatus": 0,
+    "netstatInspectionSignal": null,
+    "netstatInspectionStderr": "",
+    "listeners5173": [],
+    "port5173Free": true
+  },
+  "temporaryRuntimeState": {
+    "directories": [],
+    "temporaryCandidateInstalled": false,
+    "restorationRequired": false,
+    "restorationAction": "NO_WRITE_REQUIRED"
+  },
+  "allocationLocks": [],
+  "serviceStagingState": {
+    "serviceDiff": "",
+    "stagedDiff": "",
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "sync": "0\t0",
+    "c35Items": [],
+    "indexLock": false,
+    "liveServices": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 31045,
+        "rawSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+        "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 11976,
+        "rawSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 64424,
+        "rawSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+    }
+  },
+  "pass": true
+}

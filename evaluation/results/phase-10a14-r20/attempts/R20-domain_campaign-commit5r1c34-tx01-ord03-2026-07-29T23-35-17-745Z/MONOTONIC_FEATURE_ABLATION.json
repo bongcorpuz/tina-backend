@@ -1,0 +1,2495 @@
+{
+  "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+  "activeBaseIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 181548,
+      "rawSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971",
+      "normalizedLfSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a"
+  },
+  "candidateIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 182087,
+      "rawSha256": "e201ebdb083e9952cf39e51309ba59d1aab4e1a272b6c543106eb1e509f5f190",
+      "normalizedLfSha256": "e201ebdb083e9952cf39e51309ba59d1aab4e1a272b6c543106eb1e509f5f190"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd"
+  },
+  "ablatedIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 181548,
+      "rawSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971",
+      "normalizedLfSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a"
+  },
+  "candidateAddedLines": [
+    "  const c34CopularShortTaxTopic = v.reason === 'tax_definition_with_context'",
+    "      && v.rels.includes('ASKS_DEFINITION_OF')",
+    "      && !evidence.reasonDefinitionOutcomeUnderTaxContext",
+    "      && /^(?:what\\s+is|ano\\s+ang)\\s+[a-z]{3,5}(?:\\s+(?:in|sa)\\s+(?:an?\\s+)?(?:bir|philippine tax|tax|revenue)[^?]*)?\\?$/i.test(v.t)",
+    "      && !/\\b(?:mean|meaning|define|definition|refer(?:s)?\\s+to|stand(?:s)?\\s+for)\\b/i.test(v.t);",
+    "  if (c34CopularShortTaxTopic)",
+    "    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.87 };"
+  ],
+  "inheritedRemovedLines": [],
+  "candidateGates": {
+    "metrics": {
+      "canonicalPassed": 3565,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3565,
+      "reasonMismatches": 155,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 428
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 779
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 852
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 482
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "gates": {
+      "runtimeIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 182087,
+          "rawSha256": "e201ebdb083e9952cf39e51309ba59d1aab4e1a272b6c543106eb1e509f5f190",
+          "normalizedLfSha256": "e201ebdb083e9952cf39e51309ba59d1aab4e1a272b6c543106eb1e509f5f190"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd"
+      },
+      "r3": {
+        "total": 3720,
+        "canonicalPassed": 3565,
+        "decisionMismatches": 0,
+        "reasonMismatches": 155,
+        "relationMismatches": 0,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "relationRowsWithExpectations": 1623,
+        "relationRowsPassed": 1623,
+        "relationPassed": 3720,
+        "decisionPassed": 3720
+      },
+      "reasonPassed": 3565,
+      "decisionFailures": [],
+      "relationFailures": [],
+      "reasonCounterfactual": {
+        "total": 344,
+        "passed": 344,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 172,
+        "authoredQueries": 344,
+        "nonControllingProbes": 0,
+        "probes": []
+      },
+      "collisionProbes": {
+        "total": 196,
+        "passed": 196,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 98
+      },
+      "decisionCounterfactual": {
+        "total": 756,
+        "passed": 756,
+        "failed": 0,
+        "bySuite": {
+          "v3": {
+            "total": 331,
+            "passed": 331,
+            "failed": 0
+          },
+          "v4": {
+            "total": 177,
+            "passed": 177,
+            "failed": 0
+          },
+          "v5": {
+            "total": 134,
+            "passed": 134,
+            "failed": 0
+          },
+          "v6": {
+            "total": 114,
+            "passed": 114,
+            "failed": 0
+          }
+        },
+        "byFamily": {},
+        "failures": []
+      },
+      "relationCounterfactual": {
+        "total": 282,
+        "passed": 282,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 148,
+        "authoredQueries": 296,
+        "nonControllingProbes": 14,
+        "probes": [
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the ZTX rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the QVL rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the MBK rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the JPR rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the KDN rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the WTF rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the NRB rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the HGS rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the guitar lesson subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the hiking trail subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the chess tournament subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the aquarium filter subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the bicycle helmet subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the pottery kiln subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          }
+        ]
+      },
+      "clauseProbes": {
+        "total": 68,
+        "passed": 68,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 34
+      },
+      "richContextGuard": {
+        "probes": [
+          {
+            "shape": "bare_term",
+            "query": "holding period",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "recognized_polysemous_acronym",
+            "query": "RMC",
+            "expected": "CLARIFY",
+            "actual": "CLARIFY",
+            "pass": true
+          },
+          {
+            "shape": "issuance_context",
+            "query": "What did the RMC issuance say about VAT?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "procedure_context",
+            "query": "Explain RMC for BIR issuances.",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "ordinary_homograph",
+            "query": "Can a supplier reject a return of goods?",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          },
+          {
+            "shape": "richer_tax_sentence",
+            "query": "How is the holding period applied to a capital gains tax computation on land?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "metadata_suffixed_contentless",
+            "query": "What is the holding period? Context 1.",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          }
+        ],
+        "allPass": true,
+        "passed": 7,
+        "total": 7
+      },
+      "reasonIntegrity": {
+        "invalidCodeCount": 0,
+        "incompatibleCount": 0,
+        "invalidCode": [],
+        "incompatible": [],
+        "pass": true
+      },
+      "focusedReasonRegression": {
+        "perFamily": {
+          "explicit_tax_task_relation": {
+            "required": 451,
+            "satisfied": 428
+          },
+          "tax_compliance_task": {
+            "required": 291,
+            "satisfied": 290
+          },
+          "tax_treatment_of_ordinary_object": {
+            "required": 784,
+            "satisfied": 779
+          },
+          "explicit_non_tax_task": {
+            "required": 897,
+            "satisfied": 852
+          },
+          "non_tax_label_or_name": {
+            "required": 201,
+            "satisfied": 201
+          },
+          "quoted_tax_term_only": {
+            "required": 120,
+            "satisfied": 120
+          },
+          "no_tax_relation": {
+            "required": 563,
+            "satisfied": 482
+          },
+          "ambiguous_tax_acronym": {
+            "required": 220,
+            "satisfied": 220
+          },
+          "non_tax_expansion": {
+            "required": 88,
+            "satisfied": 88
+          },
+          "tax_definition_with_context": {
+            "required": 79,
+            "satisfied": 79
+          },
+          "tax_negation_but_tax_review_requested": {
+            "required": 26,
+            "satisfied": 26
+          }
+        },
+        "allBucketsPass": false
+      },
+      "closedControls": {
+        "controls": [
+          {
+            "control": "tax_compliance_task",
+            "passed": 108,
+            "total": 108,
+            "closed": true
+          },
+          {
+            "control": "acronym_homograph_control",
+            "passed": 200,
+            "total": 200,
+            "closed": true
+          },
+          {
+            "control": "ambiguous_clarification_control",
+            "passed": 150,
+            "total": 150,
+            "closed": true
+          },
+          {
+            "control": "internal_label_proper_name",
+            "passed": 104,
+            "total": 104,
+            "closed": true
+          },
+          {
+            "control": "quoted_term_only",
+            "passed": 110,
+            "total": 110,
+            "closed": true
+          }
+        ],
+        "allClosed": true
+      },
+      "relationObjectIntegrity": {
+        "counts": {
+          "unknownType": 0,
+          "missingField": 0,
+          "placeholderTarget": 130,
+          "wholeQuerySpan": 200,
+          "duplicateTuple": 20,
+          "unstableOrder": 0
+        },
+        "violations": {
+          "unknownType": [],
+          "missingField": [],
+          "placeholderTarget": [
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 3.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 8.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 9.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 11.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 12.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Create a checklist for Professional Artists Network. Control 15.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Translate conference room booking into plain English. Control 16.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by school newspaper printing authority. Control 18.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the Downtown Theater Association. Control 20.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 23.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 28.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 29.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 31.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 32.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "wholeQuerySpan": [
+            {
+              "q": "How do we compute income tax for a Philippine corporation in case 1?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to VAT in case 2?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "When is the deadline for expanded withholding tax in case 3?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to final withholding tax in case 4?",
+              "relation": "ASKS_WITHHOLDING_ON"
+            },
+            {
+              "q": "Can the expense be deducted for percentage tax in case 5?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support documentary stamp tax in case 6?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How should we disclose capital gains tax in case 7?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late donor tax in case 9?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How do we document customs duty in case 10?",
+              "relation": "ASKS_CUSTOMS_DUTY_ON"
+            },
+            {
+              "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to minimum corporate income tax in case 12?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "When is the deadline for regular corporate income tax in case 13?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to BIR registration in case 14?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Can the expense be deducted for withholding tax return in case 15?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support input VAT in case 16?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "How should we disclose output VAT in case 17?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late deficiency interest in case 19?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "How do we document NOLCO in case 20?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            }
+          ],
+          "duplicateTuple": [
+            {
+              "q": "Which cooking pan brand is best? Control 2.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 22.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 39.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 42.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 59.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 62.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 79.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 82.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 99.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 102.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 119.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 122.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 139.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 142.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 159.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 162.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 179.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 182.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 199.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "unstableOrder": []
+        },
+        "pass": false
+      },
+      "clauseSchemaRegression": {
+        "counts": {
+          "emptyClause": 0,
+          "idNotPositional": 0,
+          "notExactlyOnePrimary": 0,
+          "unstable": 0,
+          "roleOutsideSchema": 0
+        },
+        "violations": {
+          "emptyClause": [],
+          "idNotPositional": [],
+          "notExactlyOnePrimary": [],
+          "unstable": [],
+          "roleOutsideSchema": []
+        },
+        "pass": true
+      },
+      "antiMemorization": {
+        "checks": {
+          "no_complete_counterfactual_query": true,
+          "no_complete_r3_query": true,
+          "no_query_hash_or_oracle_id": true,
+          "no_suite_or_family_feature": true,
+          "no_cluster_or_category_feature": true,
+          "no_scenario_number_branch": true,
+          "no_expected_decision_map": true,
+          "no_oracle_relation_backfill": true
+        },
+        "failed": [],
+        "pass": true,
+        "leakedCounterfactualQueries": [],
+        "leakedR3Queries": [],
+        "r3TerminologyOverlap": [
+          "expanded withholding tax",
+          "final withholding tax",
+          "tax credit certificate",
+          "documentary stamp tax",
+          "capital gains tax",
+          "optional standard deduction",
+          "books of accounts",
+          "transfer pricing documentation",
+          "registered business enterprise",
+          "tax treaty relief",
+          "local business tax",
+          "real property tax",
+          "substantiation for deductions",
+          "fringe benefit tax",
+          "de minimis benefits",
+          "gross receipts tax",
+          "minimum corporate income tax",
+          "regular corporate income tax",
+          "stock transaction tax",
+          "resident alien tax",
+          "tax on professional fees",
+          "tax accounting period",
+          "annual information return",
+          "refund claim prescription"
+        ],
+        "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+      },
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "structuralDiagnostics": {
+      "relationObjectIntegrityCounts": {
+        "unknownType": 0,
+        "missingField": 0,
+        "placeholderTarget": 130,
+        "wholeQuerySpan": 200,
+        "duplicateTuple": 20,
+        "unstableOrder": 0
+      },
+      "clauseSchemaRegressionCounts": {
+        "emptyClause": 0,
+        "idNotPositional": 0,
+        "notExactlyOnePrimary": 0,
+        "unstable": 0,
+        "roleOutsideSchema": 0
+      }
+    },
+    "frozenLocksHeld": true,
+    "antiMemorization": {
+      "checks": {
+        "no_complete_counterfactual_query": true,
+        "no_complete_r3_query": true,
+        "no_query_hash_or_oracle_id": true,
+        "no_suite_or_family_feature": true,
+        "no_cluster_or_category_feature": true,
+        "no_scenario_number_branch": true,
+        "no_expected_decision_map": true,
+        "no_oracle_relation_backfill": true
+      },
+      "failed": [],
+      "pass": true,
+      "leakedCounterfactualQueries": [],
+      "leakedR3Queries": [],
+      "r3TerminologyOverlap": [
+        "expanded withholding tax",
+        "final withholding tax",
+        "tax credit certificate",
+        "documentary stamp tax",
+        "capital gains tax",
+        "optional standard deduction",
+        "books of accounts",
+        "transfer pricing documentation",
+        "registered business enterprise",
+        "tax treaty relief",
+        "local business tax",
+        "real property tax",
+        "substantiation for deductions",
+        "fringe benefit tax",
+        "de minimis benefits",
+        "gross receipts tax",
+        "minimum corporate income tax",
+        "regular corporate income tax",
+        "stock transaction tax",
+        "resident alien tax",
+        "tax on professional fees",
+        "tax accounting period",
+        "annual information return",
+        "refund claim prescription"
+      ],
+      "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+    }
+  },
+  "featureRemovedGates": {
+    "metrics": {
+      "canonicalPassed": 3561,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3561,
+      "reasonMismatches": 159,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 424
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 779
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 852
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 482
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "gates": {
+      "runtimeIdentity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 181548,
+          "rawSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971",
+          "normalizedLfSha256": "1a1d837ad0f48154c32f13f934b29cf9c8d1c8e14a08b1351f66f67328353971"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "a9b3df0f2e11597bcc05f1074e64df39a3d37213ea0ad780f1cc3c71ce4c1d0a"
+      },
+      "r3": {
+        "total": 3720,
+        "canonicalPassed": 3561,
+        "decisionMismatches": 0,
+        "reasonMismatches": 159,
+        "relationMismatches": 0,
+        "materialFalseAllows": 0,
+        "materialFalseRefusals": 0,
+        "clarifyMismatches": 0,
+        "relationRowsWithExpectations": 1623,
+        "relationRowsPassed": 1623,
+        "relationPassed": 3720,
+        "decisionPassed": 3720
+      },
+      "reasonPassed": 3561,
+      "decisionFailures": [],
+      "relationFailures": [],
+      "reasonCounterfactual": {
+        "total": 344,
+        "passed": 344,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 172,
+        "authoredQueries": 344,
+        "nonControllingProbes": 0,
+        "probes": []
+      },
+      "collisionProbes": {
+        "total": 196,
+        "passed": 196,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 98
+      },
+      "decisionCounterfactual": {
+        "total": 756,
+        "passed": 756,
+        "failed": 0,
+        "bySuite": {
+          "v3": {
+            "total": 331,
+            "passed": 331,
+            "failed": 0
+          },
+          "v4": {
+            "total": 177,
+            "passed": 177,
+            "failed": 0
+          },
+          "v5": {
+            "total": 134,
+            "passed": 134,
+            "failed": 0
+          },
+          "v6": {
+            "total": 114,
+            "passed": 114,
+            "failed": 0
+          }
+        },
+        "byFamily": {},
+        "failures": []
+      },
+      "relationCounterfactual": {
+        "total": 282,
+        "passed": 282,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 148,
+        "authoredQueries": 296,
+        "nonControllingProbes": 14,
+        "probes": [
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the ZTX rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the QVL rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the MBK rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the JPR rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the KDN rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the WTF rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the NRB rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "declarative_expansion_forms",
+            "query": "What is the HGS rate under the Tax Code?",
+            "actualRelations": [
+              "REQUESTS_NON_TAX_ACTION_ON"
+            ],
+            "actualDecision": "REFUSE",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the guitar lesson subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the hiking trail subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the chess tournament subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the aquarium filter subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the bicycle helmet subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          },
+          {
+            "family": "nontax_action_on_tax_token",
+            "query": "Is the pottery kiln subject to percentage tax?",
+            "actualRelations": [
+              "ASKS_TAX_TREATMENT_OF"
+            ],
+            "actualDecision": "ALLOW",
+            "missing": [],
+            "forbidden": []
+          }
+        ]
+      },
+      "clauseProbes": {
+        "total": 68,
+        "passed": 68,
+        "failed": 0,
+        "byFamily": {},
+        "failures": [],
+        "pairs": 34
+      },
+      "richContextGuard": {
+        "probes": [
+          {
+            "shape": "bare_term",
+            "query": "holding period",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "recognized_polysemous_acronym",
+            "query": "RMC",
+            "expected": "CLARIFY",
+            "actual": "CLARIFY",
+            "pass": true
+          },
+          {
+            "shape": "issuance_context",
+            "query": "What did the RMC issuance say about VAT?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "procedure_context",
+            "query": "Explain RMC for BIR issuances.",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "ordinary_homograph",
+            "query": "Can a supplier reject a return of goods?",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          },
+          {
+            "shape": "richer_tax_sentence",
+            "query": "How is the holding period applied to a capital gains tax computation on land?",
+            "expected": "ALLOW",
+            "actual": "ALLOW",
+            "pass": true
+          },
+          {
+            "shape": "metadata_suffixed_contentless",
+            "query": "What is the holding period? Context 1.",
+            "expected": "REFUSE",
+            "actual": "REFUSE",
+            "pass": true
+          }
+        ],
+        "allPass": true,
+        "passed": 7,
+        "total": 7
+      },
+      "reasonIntegrity": {
+        "invalidCodeCount": 0,
+        "incompatibleCount": 0,
+        "invalidCode": [],
+        "incompatible": [],
+        "pass": true
+      },
+      "focusedReasonRegression": {
+        "perFamily": {
+          "explicit_tax_task_relation": {
+            "required": 451,
+            "satisfied": 424
+          },
+          "tax_compliance_task": {
+            "required": 291,
+            "satisfied": 290
+          },
+          "tax_treatment_of_ordinary_object": {
+            "required": 784,
+            "satisfied": 779
+          },
+          "explicit_non_tax_task": {
+            "required": 897,
+            "satisfied": 852
+          },
+          "non_tax_label_or_name": {
+            "required": 201,
+            "satisfied": 201
+          },
+          "quoted_tax_term_only": {
+            "required": 120,
+            "satisfied": 120
+          },
+          "no_tax_relation": {
+            "required": 563,
+            "satisfied": 482
+          },
+          "ambiguous_tax_acronym": {
+            "required": 220,
+            "satisfied": 220
+          },
+          "non_tax_expansion": {
+            "required": 88,
+            "satisfied": 88
+          },
+          "tax_definition_with_context": {
+            "required": 79,
+            "satisfied": 79
+          },
+          "tax_negation_but_tax_review_requested": {
+            "required": 26,
+            "satisfied": 26
+          }
+        },
+        "allBucketsPass": false
+      },
+      "closedControls": {
+        "controls": [
+          {
+            "control": "tax_compliance_task",
+            "passed": 108,
+            "total": 108,
+            "closed": true
+          },
+          {
+            "control": "acronym_homograph_control",
+            "passed": 200,
+            "total": 200,
+            "closed": true
+          },
+          {
+            "control": "ambiguous_clarification_control",
+            "passed": 150,
+            "total": 150,
+            "closed": true
+          },
+          {
+            "control": "internal_label_proper_name",
+            "passed": 104,
+            "total": 104,
+            "closed": true
+          },
+          {
+            "control": "quoted_term_only",
+            "passed": 110,
+            "total": 110,
+            "closed": true
+          }
+        ],
+        "allClosed": true
+      },
+      "relationObjectIntegrity": {
+        "counts": {
+          "unknownType": 0,
+          "missingField": 0,
+          "placeholderTarget": 130,
+          "wholeQuerySpan": 200,
+          "duplicateTuple": 20,
+          "unstableOrder": 0
+        },
+        "violations": {
+          "unknownType": [],
+          "missingField": [],
+          "placeholderTarget": [
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 3.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 8.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 9.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 10.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 11.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 12.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 13.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Create a checklist for Professional Artists Network. Control 15.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Translate conference room booking into plain English. Control 16.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by school newspaper printing authority. Control 18.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the Downtown Theater Association. Control 20.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain on-screen display brightness for our training class. Control 23.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Sort records by culture and customs lesson. Control 28.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about medicine prescription period. Control 29.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Debug the board-game transfer pricing mechanic. Control 30.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Change the novels about accountants. Control 31.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which gross estate marketing slogan is best? Control 32.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Explain Metro City Innovation Team for our training class. Control 33.",
+              "target": "object",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "wholeQuerySpan": [
+            {
+              "q": "How do we compute income tax for a Philippine corporation in case 1?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to VAT in case 2?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "When is the deadline for expanded withholding tax in case 3?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to final withholding tax in case 4?",
+              "relation": "ASKS_WITHHOLDING_ON"
+            },
+            {
+              "q": "Can the expense be deducted for percentage tax in case 5?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support documentary stamp tax in case 6?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How should we disclose capital gains tax in case 7?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect estate tax in case 8?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late donor tax in case 9?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "How do we document customs duty in case 10?",
+              "relation": "ASKS_CUSTOMS_DUTY_ON"
+            },
+            {
+              "q": "How do we compute local business tax for a Philippine corporation in case 11?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What BIR form applies to minimum corporate income tax in case 12?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "When is the deadline for regular corporate income tax in case 13?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Is the transaction subject to BIR registration in case 14?",
+              "relation": "ASKS_TAX_COMPLIANCE_FOR"
+            },
+            {
+              "q": "Can the expense be deducted for withholding tax return in case 15?",
+              "relation": "ASKS_DEDUCTIBILITY_OF"
+            },
+            {
+              "q": "What records support input VAT in case 16?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "How should we disclose output VAT in case 17?",
+              "relation": "ASKS_VAT_TREATMENT_OF"
+            },
+            {
+              "q": "Does TRAIN or CREATE affect tax amnesty in case 18?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "What penalty applies for late deficiency interest in case 19?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            },
+            {
+              "q": "How do we document NOLCO in case 20?",
+              "relation": "ASKS_TAX_TREATMENT_OF"
+            }
+          ],
+          "duplicateTuple": [
+            {
+              "q": "Which cooking pan brand is best? Control 2.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 19.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 22.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 39.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 42.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 59.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 62.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 79.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 82.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 99.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 102.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 119.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 122.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 139.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 142.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 159.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 162.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 179.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Which cooking pan brand is best? Control 182.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            },
+            {
+              "q": "Make a poster about sports club registration fee. Control 199.",
+              "relation": "REQUESTS_NON_TAX_ACTION_ON"
+            }
+          ],
+          "unstableOrder": []
+        },
+        "pass": false
+      },
+      "clauseSchemaRegression": {
+        "counts": {
+          "emptyClause": 0,
+          "idNotPositional": 0,
+          "notExactlyOnePrimary": 0,
+          "unstable": 0,
+          "roleOutsideSchema": 0
+        },
+        "violations": {
+          "emptyClause": [],
+          "idNotPositional": [],
+          "notExactlyOnePrimary": [],
+          "unstable": [],
+          "roleOutsideSchema": []
+        },
+        "pass": true
+      },
+      "antiMemorization": {
+        "checks": {
+          "no_complete_counterfactual_query": true,
+          "no_complete_r3_query": true,
+          "no_query_hash_or_oracle_id": true,
+          "no_suite_or_family_feature": true,
+          "no_cluster_or_category_feature": true,
+          "no_scenario_number_branch": true,
+          "no_expected_decision_map": true,
+          "no_oracle_relation_backfill": true
+        },
+        "failed": [],
+        "pass": true,
+        "leakedCounterfactualQueries": [],
+        "leakedR3Queries": [],
+        "r3TerminologyOverlap": [
+          "expanded withholding tax",
+          "final withholding tax",
+          "tax credit certificate",
+          "documentary stamp tax",
+          "capital gains tax",
+          "optional standard deduction",
+          "books of accounts",
+          "transfer pricing documentation",
+          "registered business enterprise",
+          "tax treaty relief",
+          "local business tax",
+          "real property tax",
+          "substantiation for deductions",
+          "fringe benefit tax",
+          "de minimis benefits",
+          "gross receipts tax",
+          "minimum corporate income tax",
+          "regular corporate income tax",
+          "stock transaction tax",
+          "resident alien tax",
+          "tax on professional fees",
+          "tax accounting period",
+          "annual information return",
+          "refund claim prescription"
+        ],
+        "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+      },
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "structuralDiagnostics": {
+      "relationObjectIntegrityCounts": {
+        "unknownType": 0,
+        "missingField": 0,
+        "placeholderTarget": 130,
+        "wholeQuerySpan": 200,
+        "duplicateTuple": 20,
+        "unstableOrder": 0
+      },
+      "clauseSchemaRegressionCounts": {
+        "emptyClause": 0,
+        "idNotPositional": 0,
+        "notExactlyOnePrimary": 0,
+        "unstable": 0,
+        "roleOutsideSchema": 0
+      }
+    },
+    "frozenLocksHeld": true,
+    "antiMemorization": {
+      "checks": {
+        "no_complete_counterfactual_query": true,
+        "no_complete_r3_query": true,
+        "no_query_hash_or_oracle_id": true,
+        "no_suite_or_family_feature": true,
+        "no_cluster_or_category_feature": true,
+        "no_scenario_number_branch": true,
+        "no_expected_decision_map": true,
+        "no_oracle_relation_backfill": true
+      },
+      "failed": [],
+      "pass": true,
+      "leakedCounterfactualQueries": [],
+      "leakedR3Queries": [],
+      "r3TerminologyOverlap": [
+        "expanded withholding tax",
+        "final withholding tax",
+        "tax credit certificate",
+        "documentary stamp tax",
+        "capital gains tax",
+        "optional standard deduction",
+        "books of accounts",
+        "transfer pricing documentation",
+        "registered business enterprise",
+        "tax treaty relief",
+        "local business tax",
+        "real property tax",
+        "substantiation for deductions",
+        "fringe benefit tax",
+        "de minimis benefits",
+        "gross receipts tax",
+        "minimum corporate income tax",
+        "regular corporate income tax",
+        "stock transaction tax",
+        "resident alien tax",
+        "tax on professional fees",
+        "tax accounting period",
+        "annual information return",
+        "refund claim prescription"
+      ],
+      "terminologyNote": "Canonical Philippine tax terms that coincide with bare-term R3 rows are recorded as domain vocabulary, not memorization. Sentence-shaped rows and non-tax-scenario rows are flagged as leakage."
+    }
+  },
+  "rowEffect": {
+    "newlyCorrected": [
+      {
+        "oracleId": "S2-IR18-DOM-514",
+        "query": "What is MCIT?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "explicit_tax_task_relation",
+        "expectedRelations": [],
+        "base": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_definition_with_context",
+          "relations": [
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "mcit",
+          "speechAct": "define"
+        },
+        "candidate": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "mcit",
+          "speechAct": "define"
+        },
+        "baseCorrect": false,
+        "candidateCorrect": true
+      },
+      {
+        "oracleId": "S2-IR18-DOM-516",
+        "query": "What is RCIT?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "explicit_tax_task_relation",
+        "expectedRelations": [],
+        "base": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_definition_with_context",
+          "relations": [
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "rcit",
+          "speechAct": "define"
+        },
+        "candidate": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "rcit",
+          "speechAct": "define"
+        },
+        "baseCorrect": false,
+        "candidateCorrect": true
+      },
+      {
+        "oracleId": "S2-IR18-DOM-534",
+        "query": "What is FLD in a BIR assessment?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "explicit_tax_task_relation",
+        "expectedRelations": [],
+        "base": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_definition_with_context",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF",
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "fld",
+          "speechAct": "ask"
+        },
+        "candidate": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF",
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "fld",
+          "speechAct": "ask"
+        },
+        "baseCorrect": false,
+        "candidateCorrect": true
+      },
+      {
+        "oracleId": "S2-IR18-DOM-556",
+        "query": "What is PAN in BIR assessment process?",
+        "expectedDecision": "ALLOW",
+        "expectedReason": "explicit_tax_task_relation",
+        "expectedRelations": [],
+        "base": {
+          "decision": "ALLOW",
+          "reasonCode": "tax_definition_with_context",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF",
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "pan",
+          "speechAct": "ask"
+        },
+        "candidate": {
+          "decision": "ALLOW",
+          "reasonCode": "explicit_tax_task_relation",
+          "relations": [
+            "ASKS_TAX_TREATMENT_OF",
+            "ASKS_DEFINITION_OF"
+          ],
+          "requestedAction": "what",
+          "requestedTarget": "pan",
+          "speechAct": "ask"
+        },
+        "baseCorrect": false,
+        "candidateCorrect": true
+      }
+    ],
+    "newlyRegressed": [],
+    "wrongToDifferentWrong": []
+  },
+  "probes": [
+    {
+      "query": "What is CWT?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "define"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is MCIT in a BIR assessment review?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is RCIT in Philippine tax practice?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is FWT in a BIR assessment file?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is CGT in a revenue assessment review?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is FBT in a BIR assessment discussion?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is OSD in Philippine tax practice?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is VAT in a BIR assessment context?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "vat",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is CWT in a revenue audit?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is MCIT in Philippine tax for a domestic company?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "mcit",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is RCIT in a BIR notice review?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is FWT in a BIR revenue examination?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is CGT in a BIR property audit?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is FBT in Philippine tax for compensation?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is OSD in a BIR deduction review?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is BOC in a BIR cross-agency assessment?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is FWT in a BIR deficiency review for a cooperative?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "fwt",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is CGT in a revenue case about a donated warehouse?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is FBT in a BIR compensation audit for a medical clinic?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is OSD in Philippine tax for an architecture studio?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "osd",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    },
+    {
+      "query": "What is CWT in a BIR withholding review for a seed supplier?",
+      "candidate": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_WITHHOLDING_ON",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "featureRemoved": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_definition_with_context",
+        "relations": [
+          "ASKS_WITHHOLDING_ON",
+          "ASKS_DEFINITION_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "distinctionObserved": true
+    }
+  ],
+  "distinguishedProbeCount": 21,
+  "candidateChangesRuntime": true,
+  "noInheritedFeatureRemoval": true,
+  "pass": true
+}

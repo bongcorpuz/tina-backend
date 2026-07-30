@@ -1,0 +1,2988 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T05:57:29.782Z",
+  "activeBaseIdentity": {
+    "services/philippine-tax-intent-analyzer.js": {
+      "bytes": 183191,
+      "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+      "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+    },
+    "services/philippine-tax-domain-boundary.js": {
+      "bytes": 12192,
+      "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    "services/philippine-tax-boundary-patterns.js": {
+      "bytes": 65451,
+      "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+  },
+  "totalRows": 3720,
+  "correctRows": 3575,
+  "residualCount": 145,
+  "expectedResidualFromReasonScore": 145,
+  "allReasonOnly": true,
+  "records": [
+    {
+      "oracleId": "S1-IR19-1007",
+      "query": "Is a cooling fan purchase deductible for income tax? Group MM-04.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "cooling fan",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1014",
+      "query": "Tune the RMC music channel. Group MM-07.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "music channel",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1026",
+      "query": "Books means novels about accountants. Group MM-13.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1028",
+      "query": "Transfer pricing is a board-game mechanic. Group MM-14.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1030",
+      "query": "mcit (my cool internal tool) joke expansion. Group MM-15.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1032",
+      "query": "RCIT (Regional Coding Internship Track) applies? Group MM-16.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1033",
+      "query": "Is PAN sale VATable if PAN is a product code? Group MM-17.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "sale",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1034",
+      "query": "PAN means cooking utensil. Group MM-17.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "pan",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1036",
+      "query": "FAN means cooling fan. Group MM-18.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "cooling fan",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1038",
+      "query": "Authority to print a school newspaper. Group MM-19.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1040",
+      "query": "Annual registration fee for a sports club. Group MM-20.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1047",
+      "query": "Is a cooling fan purchase deductible for income tax? Group MM-24.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "cooling fan",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1054",
+      "query": "Tune the RMC music channel. Group MM-27.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "music channel",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1066",
+      "query": "Books means novels about accountants. Group MM-33.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1068",
+      "query": "Transfer pricing is a board-game mechanic. Group MM-34.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1070",
+      "query": "mcit (my cool internal tool) joke expansion. Group MM-35.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1072",
+      "query": "RCIT (Regional Coding Internship Track) applies? Group MM-36.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "query": "Is PAN sale VATable if PAN is a product code? Group MM-37.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "sale",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1074",
+      "query": "PAN means cooking utensil. Group MM-37.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "pan",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1076",
+      "query": "FAN means cooling fan. Group MM-38.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "cooling fan",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1078",
+      "query": "Authority to print a school newspaper. Group MM-39.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1080",
+      "query": "Annual registration fee for a sports club. Group MM-40.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1087",
+      "query": "Is a cooling fan purchase deductible for income tax? Group MM-44.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "cooling fan",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1094",
+      "query": "Tune the RMC music channel. Group MM-47.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "music channel",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1106",
+      "query": "Books means novels about accountants. Group MM-53.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1108",
+      "query": "Transfer pricing is a board-game mechanic. Group MM-54.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1110",
+      "query": "mcit (my cool internal tool) joke expansion. Group MM-55.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "mcit",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1112",
+      "query": "RCIT (Regional Coding Internship Track) applies? Group MM-56.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rcit",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "query": "Is PAN sale VATable if PAN is a product code? Group MM-57.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "sale",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1114",
+      "query": "PAN means cooking utensil. Group MM-57.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "pan",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1116",
+      "query": "FAN means cooling fan. Group MM-58.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "cooling fan",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1118",
+      "query": "Authority to print a school newspaper. Group MM-59.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S1-IR19-1120",
+      "query": "Annual registration fee for a sports club. Group MM-60.",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "query": "final withholding tax",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-021",
+      "query": "excise tax",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-059",
+      "query": "withholding certificate",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-061",
+      "query": "deductible representation expense",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "representation expense",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-062",
+      "query": "fringe benefit tax",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_treatment_of_ordinary_object",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-072",
+      "query": "deficiency withholding tax",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-073",
+      "query": "stock transaction tax",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "transaction",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-113",
+      "query": "CSS grid layout",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "css",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-115",
+      "query": "color palette selection",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "palette",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-120",
+      "query": "software variable naming",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-121",
+      "query": "TypeScript interface design",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-134",
+      "query": "pharmacology trial design",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-159",
+      "query": "private lease weekend deadline",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-160",
+      "query": "office duty roster",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-166",
+      "query": "filing cabinet organization",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-192",
+      "query": "official receipt layout design",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-199",
+      "query": "reconsideration request for exam grade",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-204",
+      "query": "assessment in classroom rubric",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-214",
+      "query": "input VAT as form input label",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-221",
+      "query": "VAT paint swatch",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-228",
+      "query": "deadline in school calendar",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-229",
+      "query": "return due in library books",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-233",
+      "query": "Set the taxable variable to true. Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_label_or_name",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-240",
+      "query": "Is BOC a band of chords? Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-243",
+      "query": "Does the BOC band play jazz? Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-244",
+      "query": "Tune the BOC chord progression. Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "boc",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-247",
+      "query": "Use capital as a font style. Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "use",
+        "requestedTarget": "font",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-251",
+      "query": "Input VAT into this web form field. Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-254",
+      "query": "Add taxable to the CSS class list Variant 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "add",
+        "requestedTarget": "css",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-258",
+      "query": "Set the taxable variable to true. Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_label_or_name",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-265",
+      "query": "Is BOC a band of chords? Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-268",
+      "query": "Does the BOC band play jazz? Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-269",
+      "query": "Tune the BOC chord progression. Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "boc",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-272",
+      "query": "Use capital as a font style. Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "use",
+        "requestedTarget": "font",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-276",
+      "query": "Input VAT into this web form field. Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-279",
+      "query": "Add taxable to the CSS class list Variant 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "add",
+        "requestedTarget": "css",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-283",
+      "query": "Set the taxable variable to true. Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_label_or_name",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-290",
+      "query": "Is BOC a band of chords? Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-293",
+      "query": "Does the BOC band play jazz? Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-294",
+      "query": "Tune the BOC chord progression. Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "boc",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-297",
+      "query": "Use capital as a font style. Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "use",
+        "requestedTarget": "font",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-301",
+      "query": "Input VAT into this web form field. Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-304",
+      "query": "Add taxable to the CSS class list Variant 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "add",
+        "requestedTarget": "css",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-308",
+      "query": "Set the taxable variable to true. Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_label_or_name",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-315",
+      "query": "Is BOC a band of chords? Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-318",
+      "query": "Does the BOC band play jazz? Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "does",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-319",
+      "query": "Tune the BOC chord progression. Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "tune",
+        "requestedTarget": "boc",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-322",
+      "query": "Use capital as a font style. Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "use",
+        "requestedTarget": "font",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-326",
+      "query": "Input VAT into this web form field. Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-329",
+      "query": "Add taxable to the CSS class list Variant 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "add",
+        "requestedTarget": "css",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-348",
+      "query": "What form should I use? Context 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-368",
+      "query": "What form should I use? Context 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-388",
+      "query": "What form should I use? Context 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-408",
+      "query": "What form should I use? Context 4.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-412",
+      "query": "Kailan due ang withholding tax? Batch 1.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "filipino_taglish",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-432",
+      "query": "Kailan due ang withholding tax? Batch 2.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "filipino_taglish",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-452",
+      "query": "Kailan due ang withholding tax? Batch 3.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "filipino_taglish",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_WITHHOLDING_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-475",
+      "query": "Is BOC a band of chords?",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "EXPANDS_AS_NON_TAX"
+        ],
+        "requestedAction": "is",
+        "requestedTarget": "boc",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-493",
+      "query": "Make an alphabetical list of names.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "make",
+        "requestedTarget": null,
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-503",
+      "query": "Input VAT into a text box.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_VAT_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "vat",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-506",
+      "query": "What expenses are deductible?",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_DEDUCTIBILITY_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-515",
+      "query": "Use MCIT as a random SKU.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "use",
+        "requestedTarget": "mcit",
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-533",
+      "query": "RCIT is my robotics course ID; define it generically.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_label_or_name",
+        "relations": [
+          "NAMES_AS_INTERNAL_LABEL"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rcit",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-541",
+      "query": "Make an alphalist of students alphabetically.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "make",
+        "requestedTarget": null,
+        "speechAct": "request"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-543",
+      "query": "BOC means band of chords in this song.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [],
+        "requestedAction": null,
+        "requestedTarget": "boc",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-545",
+      "query": "VAT is a color token in my design system.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "color",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-549",
+      "query": "Gross estate means ugly real-estate ads here.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "non_tax_expansion",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S2-IR18-DOM-565",
+      "query": "EFPS is a random software flag.",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-032",
+      "query": "How is capital gain tax computed on sale of real property?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "capital_gain_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "explicit_tax_task_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "tax_treatment_of_ordinary_object",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "sale",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-073",
+      "query": "What is the deadline to protest a BIR assessment?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "bir_enforcement_tax",
+      "expectedDecision": "ALLOW",
+      "expectedReason": "tax_compliance_task",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "ALLOW",
+        "reasonCode": "explicit_tax_task_relation",
+        "relations": [
+          "ASKS_TAX_COMPLIANCE_FOR"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": "bir",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-081",
+      "query": "When is rent due under a private lease contract?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "private_contract_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-095",
+      "query": "Can a buyer cancel a private sale agreement?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "private_contract_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "can",
+        "requestedTarget": "sale",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-099",
+      "query": "How do I make an insurance claim under my policy?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "private_contract_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "how",
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-127",
+      "query": "What is the prescriptive period for money claims in labor?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-132",
+      "query": "What return date appears in a summons?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-134",
+      "query": "What report must a corporation file after board changes?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-136",
+      "query": "What is the due date for a position paper?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-139",
+      "query": "What is the deadline for a labor appeal bond?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "what",
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-181",
+      "query": "Kailan ang due date ng private lease rent?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "filipino_taglish_mixed",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "rent",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-186",
+      "query": "Pwede bang mag-return ng defective computer file?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "filipino_taglish_mixed",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-188",
+      "query": "Paano ang insurance claim?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "filipino_taglish_mixed",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "insurance",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "S3-IR17-208",
+      "query": "When is a private lease car returned?",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "substring_traps",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "no_tax_relation",
+      "expectedRelations": [],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "explicit_non_tax_task",
+        "relations": [
+          "ASKS_TAX_TREATMENT_OF",
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": "when",
+        "requestedTarget": "car",
+        "speechAct": "ask"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0521",
+      "query": "basketball match final buzzer",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0526",
+      "query": "penalty box clearance rule",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0531",
+      "query": "homework submission portal",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0536",
+      "query": "insurance policy deductible clause",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "insurance policy",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "query": "delivery app service surcharge",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": "delivery app",
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0546",
+      "query": "commuter railway timetable",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0551",
+      "query": "GitHub merge request reviewers",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0556",
+      "query": "board game pricing tokens mechanic",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0561",
+      "query": "weekend sermon slide deck",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0566",
+      "query": "court hearing arraignment memo",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0576",
+      "query": "music festival stage lineup",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "query": "in-game points reward levy",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0601",
+      "query": "video game currency exchange",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0606",
+      "query": "soccer match penalty box",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0616",
+      "query": "restaurant service charge menu",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0621",
+      "query": "hotel resort fee brochure",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0626",
+      "query": "airline baggage fee chart",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0631",
+      "query": "concert ticket surcharge notice",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0636",
+      "query": "movie rating classification",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0641",
+      "query": "cooking recipe measurement",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0646",
+      "query": "yoga class schedule",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0651",
+      "query": "marathon registration form",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0661",
+      "query": "podcast episode transcript",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0666",
+      "query": "weather forecast report",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0671",
+      "query": "traffic penalty appeal letter",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0681",
+      "query": "grocery loyalty discount",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0686",
+      "query": "streaming subscription tier",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0691",
+      "query": "apartment lease cleaning clause",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0706",
+      "query": "bakery order form",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    },
+    {
+      "oracleId": "R20N-ENT-0716",
+      "query": "pet grooming price list",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "expectedDecision": "REFUSE",
+      "expectedReason": "explicit_non_tax_task",
+      "expectedRelations": [
+        "REQUESTS_NON_TAX_ACTION_ON"
+      ],
+      "actual": {
+        "decision": "REFUSE",
+        "reasonCode": "no_tax_relation",
+        "relations": [
+          "REQUESTS_NON_TAX_ACTION_ON"
+        ],
+        "requestedAction": null,
+        "requestedTarget": null,
+        "speechAct": "other"
+      },
+      "reasonOnly": true
+    }
+  ],
+  "pass": true
+}

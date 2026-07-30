@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-30T02:33:05.926Z",
+  "classification": "CANDIDATE_4_ACCEPTED_PROMOTED",
+  "attemptId": "R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z",
+  "candidateId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation",
+  "candidateOrdinal": 4,
+  "allocationCycle": "tx02",
+  "allocationOrdinal": 4,
+  "status": "completed",
+  "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "accepted": true,
+  "startingActiveBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+  "endingActiveBaseHash": "82bf8550d0f89ad708c90a3471a68811d0f825ea194a00345ca910647bf5cf5e",
+  "metrics": {
+    "canonicalPassed": 3572,
+    "decisionPassed": 3720,
+    "relationPassed": 3720,
+    "reasonPassed": 3572,
+    "reasonMismatches": 148,
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "reasonCounterfactualPassed": 344,
+    "reasonCounterfactualTotal": 344,
+    "reasonCounterfactualFailed": 0,
+    "collisionProbesPassed": 196,
+    "collisionProbesTotal": 196,
+    "collisionProbesFailed": 0,
+    "decisionCounterfactualPassed": 756,
+    "decisionCounterfactualTotal": 756,
+    "decisionCounterfactualFailed": 0,
+    "relationCounterfactualPassed": 282,
+    "relationCounterfactualTotal": 282,
+    "relationCounterfactualFailed": 0,
+    "clauseProbesPassed": 68,
+    "clauseProbesTotal": 68,
+    "clauseProbesFailed": 0,
+    "richContextGuardPassed": 7,
+    "richContextGuardTotal": 7,
+    "reasonIntegrityPass": true,
+    "focusedReasonFamilies": {
+      "explicit_tax_task_relation": {
+        "required": 451,
+        "satisfied": 435
+      },
+      "tax_compliance_task": {
+        "required": 291,
+        "satisfied": 290
+      },
+      "tax_treatment_of_ordinary_object": {
+        "required": 784,
+        "satisfied": 779
+      },
+      "explicit_non_tax_task": {
+        "required": 897,
+        "satisfied": 852
+      },
+      "non_tax_label_or_name": {
+        "required": 201,
+        "satisfied": 201
+      },
+      "quoted_tax_term_only": {
+        "required": 120,
+        "satisfied": 120
+      },
+      "no_tax_relation": {
+        "required": 563,
+        "satisfied": 482
+      },
+      "ambiguous_tax_acronym": {
+        "required": 220,
+        "satisfied": 220
+      },
+      "non_tax_expansion": {
+        "required": 88,
+        "satisfied": 88
+      },
+      "tax_definition_with_context": {
+        "required": 79,
+        "satisfied": 79
+      },
+      "tax_negation_but_tax_review_requested": {
+        "required": 26,
+        "satisfied": 26
+      }
+    },
+    "closedControlsPass": true,
+    "relationObjectIntegrityPass": false,
+    "clauseSchemaRegressionPass": true,
+    "antiMemorizationPass": true,
+    "decisionLockHeld": true,
+    "relationLockHeld": true
+  },
+  "metricDelta": {
+    "reasonPassedBefore": 3565,
+    "reasonPassedAfter": 3572,
+    "reasonDelta": 7,
+    "remainingBefore": 155,
+    "remainingAfter": 148,
+    "decisionPassed": 3720,
+    "relationPassed": 3720
+  },
+  "iterationResult": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx02-ord04-2026-07-30T02-31-47-486Z/ITERATION_RESULT.json",
+    "bytes": 667424,
+    "sha256": "0aeb88e61c1423246f033482235b593349bf4f231c031ffe840b36d31908e964"
+  },
+  "priorAcceptedRegression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_4_ACCEPTED_CANDIDATES_1_TO_3_REGRESSION_VALIDATION.json",
+    "bytes": 832,
+    "sha256": "46ec1898f136490b791cc12fe3be3b609afab0c3b1eea69d2df72ad91957ccdf"
+  },
+  "ledger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_4.json",
+    "bytes": 6012,
+    "sha256": "ee38f673ed9436d0e892cd7ca2044a3ea551946ee07297ead39276ebcc0d1cd1"
+  },
+  "semanticDisposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "blocker": null,
+  "error": null,
+  "pass": true
+}

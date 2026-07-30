@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T23:36:34.490Z",
+  "session": {
+    "startedUtc": "2026-07-29T23:21:46.2671751Z",
+    "hardStopUtc": "2026-07-30T00:21:46.2671751Z",
+    "stoppedBeforeHardStop": true
+  },
+  "stage": "checkpoint 37 continuation one-hour safe pause",
+  "classification": "ONE_HOUR_SAFE_PAUSE_AFTER_CANDIDATE_3",
+  "activeBaseHash": "81b2212e82228094f414abbce126082889beb57f8e3fbb6b1c813a8f4cff31bd",
+  "activeAttemptId": null,
+  "currentMetrics": {
+    "reasonPassed": 3565,
+    "reasonTotal": 3720,
+    "remainingReasonMismatches": 155,
+    "decisionPassed": 3720,
+    "decisionTotal": 3720,
+    "relationPassed": 3720,
+    "relationTotal": 3720
+  },
+  "candidate3": {
+    "allocated": true,
+    "attemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+    "candidateId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task",
+    "status": "completed",
+    "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+    "accepted": true,
+    "iterationResult": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z/ITERATION_RESULT.json",
+      "bytes": 659280,
+      "sha256": "565f0498e4b6832872cc75cf80dd3fa361345de022930319f7f1f598610e567b"
+    },
+    "outcome": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_CONTINUATION_RESULT.json",
+      "bytes": 4764,
+      "sha256": "1258d64fde21f1ca9d38802cb52c925d1332130e2f0387fab158986ffcd8629f"
+    },
+    "acceptedCandidates1And2Regression": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_ACCEPTED_CANDIDATES_1_AND_2_REGRESSION_VALIDATION.json",
+      "bytes": 873,
+      "sha256": "2b03d58e5e74f2afc277367b12e54708a07e480ecddc8d3a55f2b61b156146eb"
+    }
+  },
+  "attemptDispositions": [
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+      "cycle": "reconstruct",
+      "status": "completed",
+      "disposition": "RECONSTRUCTED_EXACT_C33_SELECTED_RUNTIME",
+      "controlling": true,
+      "activeRunningAttempt": false
+    },
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "cycle": "nt01",
+      "status": "technical_failure",
+      "disposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+      "controlling": true,
+      "activeRunningAttempt": false
+    },
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "cycle": "nt01-retry01",
+      "status": "completed",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "controlling": true,
+      "activeRunningAttempt": false
+    },
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+      "cycle": "nt02",
+      "status": "completed",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "controlling": true,
+      "activeRunningAttempt": false
+    },
+    {
+      "attemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+      "cycle": "tx01",
+      "status": "completed",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "controlling": true,
+      "activeRunningAttempt": false
+    }
+  ],
+  "reconciliation": {
+    "registrySha256": "3405656ab1382014017bf3b904665425b498ed5089f83b9334bc620380bff1c4",
+    "allocationWalSha256": "8f61c4bb9e2d0a3ea06b9c5429feaa57c4db41ea007f702119504ba5a1164f75",
+    "endingRegistrySnapshotSha256": "3405656ab1382014017bf3b904665425b498ed5089f83b9334bc620380bff1c4",
+    "endingAllocationWalSnapshotSha256": "8f61c4bb9e2d0a3ea06b9c5429feaa57c4db41ea007f702119504ba5a1164f75",
+    "attemptDirectoryCount": 5,
+    "ledger": {
+      "unit": "COMMIT 5R1-C34",
+      "generatedUtc": "2026-07-29T23:36:33.451Z",
+      "registrySha256": "3405656ab1382014017bf3b904665425b498ed5089f83b9334bc620380bff1c4",
+      "walSha256": "8f61c4bb9e2d0a3ea06b9c5429feaa57c4db41ea007f702119504ba5a1164f75",
+      "registryAttemptIds": [
+        "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+        "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+        "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+        "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+        "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z"
+      ],
+      "attemptDirectoryIds": [
+        "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+        "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+        "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+        "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+        "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z"
+      ],
+      "walAttemptIds": [
+        "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+        "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+        "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+        "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+        "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z"
+      ],
+      "records": [
+        {
+          "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+          "status": "completed",
+          "plannedLines": [
+            1
+          ],
+          "registeredLines": [
+            2
+          ],
+          "terminalLines": [
+            3
+          ],
+          "attemptRecordPresent": true,
+          "attemptAndRegistryMatch": true,
+          "ordered": true,
+          "terminalMatches": true,
+          "plannedLinkageMatches": true,
+          "pass": true
+        },
+        {
+          "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+          "status": "technical_failure",
+          "plannedLines": [
+            4
+          ],
+          "registeredLines": [
+            5
+          ],
+          "terminalLines": [
+            6
+          ],
+          "attemptRecordPresent": true,
+          "attemptAndRegistryMatch": true,
+          "ordered": true,
+          "terminalMatches": true,
+          "plannedLinkageMatches": true,
+          "pass": true
+        },
+        {
+          "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+          "status": "completed",
+          "plannedLines": [
+            8
+          ],
+          "registeredLines": [
+            9
+          ],
+          "terminalLines": [
+            10
+          ],
+          "attemptRecordPresent": true,
+          "attemptAndRegistryMatch": true,
+          "ordered": true,
+          "terminalMatches": true,
+          "plannedLinkageMatches": true,
+          "pass": true
+        },
+        {
+          "attemptId": "R20-domain_campaign-commit5r1c34-nt02-ord02-2026-07-29T12-40-28-807Z",
+          "status": "completed",
+          "plannedLines": [
+            11
+          ],
+          "registeredLines": [
+            12
+          ],
+          "terminalLines": [
+            13
+          ],
+          "attemptRecordPresent": true,
+          "attemptAndRegistryMatch": true,
+          "ordered": true,
+          "terminalMatches": true,
+          "plannedLinkageMatches": true,
+          "pass": true
+        },
+        {
+          "attemptId": "R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z",
+          "status": "completed",
+          "plannedLines": [
+            14
+          ],
+          "registeredLines": [
+            15
+          ],
+          "terminalLines": [
+            16
+          ],
+          "attemptRecordPresent": true,
+          "attemptAndRegistryMatch": true,
+          "ordered": true,
+          "terminalMatches": true,
+          "plannedLinkageMatches": true,
+          "pass": true
+        }
+      ],
+      "adjudicationRecords": [
+        {
+          "originalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+          "walLines": [
+            7
+          ],
+          "oneWalEvent": true,
+          "attemptIdMatches": true,
+          "originalTerminalLines": [
+            6
+          ],
+          "retryPlannedLines": [
+            8
+          ],
+          "orderedAfterOriginalTerminal": true,
+          "orderedBeforeEveryRetryPlan": true,
+          "recoveryArtifactExists": true,
+          "recoveryArtifactHashMatches": true,
+          "fieldsMatch": true,
+          "pass": true
+        }
+      ],
+      "orphan": 0,
+      "dangling": 0,
+      "running": [],
+      "technicalAdjudications": [
+        {
+          "originalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+          "historicDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+          "effectiveDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_STOP",
+          "blocker": "C34_FULL_HEAD_PATCH_INVALID",
+          "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+          "allocationConsumed": true,
+          "semanticResultConsumed": false,
+          "originalAttemptRecordPreserved": true,
+          "originalTerminalWalEventPreserved": true,
+          "recoveryArtifact": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z/EXECUTOR_TECHNICAL_STOP_RECOVERY.json",
+          "recoveryArtifactSha256": "be426e957d1e7f95f877c9eaf7337815ff1a24b23ba73908e6813bf25074ad35",
+          "adjudicatedAt": "2026-07-29T00:54:14.358Z"
+        }
+      ],
+      "pass": true
+    }
+  },
+  "processState": {
+    "inspectionMethod": "Windows Script Host WMI node.exe inventory with strict sentinels, current-PID completeness proof, command-line classification, and independent netstat ownership",
+    "currentExecutorPid": 3076,
+    "processInspectionStatus": 0,
+    "processInspectionSignal": null,
+    "processInspectionSucceeded": true,
+    "processInspectionError": null,
+    "processInspectionStderr": "",
+    "currentExecutorPresent": true,
+    "currentExecutorCommandLineReadable": true,
+    "cleanupSucceeded": true,
+    "inspectionClassification": "NO_ACTIVE_C34_PROCESS",
+    "otherNodeProcesses": [],
+    "unreadableNodeProcesses": [],
+    "allNodeCommandLinesReadable": true,
+    "activeC34Runners": [],
+    "activeC34RunnerCount": 0,
+    "uiOrToolingNodeProcesses": [],
+    "unrelatedNodeProcesses": [],
+    "uiStateInterpretation": "ANY_VS_CODE_OR_CODEX_RUNNING_C34_INDICATOR_IS_STALE_OR_NON_AUTHORITATIVE",
+    "netstatInspectionStatus": 0,
+    "netstatInspectionSignal": null,
+    "netstatInspectionStderr": "",
+    "listeners5173": [],
+    "port5173Free": true
+  },
+  "temporaryRuntimeState": {
+    "directories": [],
+    "temporaryCandidateInstalled": false,
+    "restorationRequired": false,
+    "restorationAction": "NO_WRITE_REQUIRED"
+  },
+  "serviceStagingState": {
+    "serviceDiff": "",
+    "stagedDiff": "",
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "sync": "0\t0",
+    "commitOccurred": false,
+    "pushOccurredOrSyncChanged": false,
+    "c35Items": []
+  },
+  "evidenceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_SAFE_PAUSE_EVIDENCE.sha256",
+    "bytes": 10090,
+    "sha256": "34bd79c7b658661b44b91e2a3b88a736e196ff32df7ad10a60f18aace7da0d97"
+  },
+  "checkpointOrdinal": 39,
+  "checkpointArtifacts": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_SAFE_PAUSE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_SAFE_PAUSE_EVIDENCE.sha256",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_CONTINUATION_RESULT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_CANDIDATE_3.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_3_ACCEPTED_CANDIDATES_1_AND_2_REGRESSION_VALIDATION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_ENDING_CANONICAL_ATTEMPT_REGISTRY_SNAPSHOT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_ENDING_ATTEMPT_ALLOCATION_WAL_SNAPSHOT.ndjson",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_37_CONTINUATION_LOG_PREFIX.ndjson",
+    "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tx01-ord03-2026-07-29T23-35-17-745Z/ITERATION_RESULT.json"
+  ],
+  "nextExactOperation": "Resume C34 from checkpoint 39. Preserve candidates 1-3 and the exact active base; candidate 4 requires a separate explicit continuation. Do not rerun or reallocate candidates 1, 2, or 3.",
+  "safeToResume": true,
+  "blocker": null,
+  "pass": true
+}

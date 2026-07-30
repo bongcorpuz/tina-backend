@@ -1,0 +1,1003 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C34",
+  "generatedUtc": "2026-07-29T06:28:33.506Z",
+  "session": {
+    "startedUtc": "2026-07-29T06:01:34.821Z",
+    "hardStopUtc": "2026-07-29T07:01:34.821Z",
+    "elapsedMsAtStopDecision": 1618685
+  },
+  "classification": "CHECKPOINT_34_CONTINUITY_MISMATCH",
+  "stage": "checkpoint 34 initial continuity verification",
+  "status": "CHECKPOINT_34_CONTINUITY_MISMATCH",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "activeBaseHash": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+  "mismatch": {
+    "field": "activeAttemptId",
+    "expected": null,
+    "checkpoint34Observed": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+    "safePauseObserved": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+    "code": "CHECKPOINT_34_ACTIVE_ATTEMPT_ID_NOT_NULL",
+    "terminalAttemptMistakenForActiveAttempt": true
+  },
+  "checkpoint34": {
+    "chain": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "rows": 34,
+      "sha256": "f68e018ceb69d314b65ccc12f19c46b859de78311613f00a752eaf87ff27b104",
+      "records": [
+        {
+          "ordinal": 1,
+          "stage": "R0 forensic capture",
+          "status": "COMPLETED",
+          "eventSha256": null,
+          "actualEventSha256": "d6fb7dbf84e52c76ad5f6d3bb7d6e958d7cc5ca5ee81c4487c873a13939ca363",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "pass": true
+        },
+        {
+          "ordinal": 2,
+          "stage": "R1 process adjudication",
+          "status": "COMPLETED",
+          "eventSha256": null,
+          "actualEventSha256": "4b74d802423f08a0655dac57e4bf0fb1b67bb22ce1126e56e2c6c24106064032",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "2bce354dbd3712ed20aff8faf0746f71ed94dc74bdba3fda159636f10494d656",
+          "pass": true
+        },
+        {
+          "ordinal": 3,
+          "stage": "R2 commit-state determination",
+          "status": "COMPLETED_CASE_A",
+          "eventSha256": null,
+          "actualEventSha256": "0f86008611d540bc32415601d57555be8dfa94bac86a97036151e1dac3a5f62c",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "c57159dcb42d4a7e46a3eb8189a6ed336760c28730f8cd48c0b496791c726004",
+          "pass": true
+        },
+        {
+          "ordinal": 4,
+          "stage": "R3 local-state classification",
+          "status": "COMPLETED_CLEAN_NOT_STARTED",
+          "eventSha256": null,
+          "actualEventSha256": "7d756b627526a375132ea6f3ef76d9bd596c48296e359b9b1d92e9475a676fac",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "4f4fd394deb4824e16318fcd97f49d1e788d38f88fa6f3f98ff12d12a8559385",
+          "pass": true
+        },
+        {
+          "ordinal": 5,
+          "stage": "R4 crash evidence",
+          "status": "COMPLETED",
+          "eventSha256": null,
+          "actualEventSha256": "29d1aeebfac0eac775f489e70807b15c3f096c99d5b0266430f1cc559d64cc7b",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "c8bfc5e878b36b9a05d25fea96274f27add7508eeacf850775ab73a6556953ed",
+          "pass": true
+        },
+        {
+          "ordinal": 6,
+          "stage": "account transfer pre-attempt continuity",
+          "status": "COMPLETED_ACCOUNT_TRANSFER_PRE_ATTEMPT_CONTINUATION",
+          "eventSha256": null,
+          "actualEventSha256": "14e67a10f47bebe889907a543f5a568559a5cf077f3c8838b7124ea749bebf7e",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "6493382d8a52a026e63e702220d9531ec2605e75ccb7814bf138838417edcf8b",
+          "pass": true
+        },
+        {
+          "ordinal": 7,
+          "stage": "account transfer handoff verification",
+          "status": "PASS",
+          "eventSha256": null,
+          "actualEventSha256": "9ba61263801336dc9f8a17f07a308457d89f1ff8e9ba4db7b031589534eba6a2",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "e47cdae80971019e0de7eb332f33215a8eb5ff665dea5aa7506b23bebd0710b4",
+          "pass": true
+        },
+        {
+          "ordinal": 8,
+          "stage": "account transfer syntax validation",
+          "status": "PASS",
+          "eventSha256": null,
+          "actualEventSha256": "adde7bec3c52efb4dfc210d9e2a52431ef2cc092aec958f79cee5b7996f27e1a",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "beaceebd33c87841ca71ac3474ee9275e760eb44bbb6ae6d7abc3e856c2281e1",
+          "pass": true
+        },
+        {
+          "ordinal": 9,
+          "stage": "account transfer static shadow audit",
+          "status": "PASS_SIX_OF_SIX_ZERO_REGRESSION",
+          "eventSha256": null,
+          "actualEventSha256": "196116113a058d0ceed9242a1b34c43ef214ba05f6b9b578f1ac1fc81c744b6c",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "f9c1784234447550315f55d9af38e0098ec3dbf87299856c1ad3a61c8380fea5",
+          "pass": true
+        },
+        {
+          "ordinal": 10,
+          "stage": "account transfer leakage and dependency audit",
+          "status": "PASS_ZERO_OVERLAP_ZERO_FORBIDDEN_DEPENDENCY",
+          "eventSha256": null,
+          "actualEventSha256": "bcbd183066f07ad3f15dc0c63659954c630b00f5090e77c5ef224a27df73828e",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "112bc10261e0b061785ae1240f8d2757ef20a4c6f234583868136157ae3662f9",
+          "pass": true
+        },
+        {
+          "ordinal": 11,
+          "stage": "account transfer attempt path and runtime metadata audit",
+          "status": "PASS_EIGHT_UNIQUE_PATH_SAFE_PROPOSALS",
+          "eventSha256": null,
+          "actualEventSha256": "9956b6d1c0502c52e5857f141bbe401b64dd4f7484b3d5d4e622a0e9ba7bacc8",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "55f259079a34160dff44c88f86b1fd1c786e46eaec3b2adc9c478885790dd197",
+          "pass": true
+        },
+        {
+          "ordinal": 12,
+          "stage": "account transfer isolated replay self-test",
+          "status": "PASS_SIX_OF_SIX_DUAL_ENVIRONMENT_FORWARD_REVERSE",
+          "eventSha256": null,
+          "actualEventSha256": "62cc13b3a7160d6314b86623565f70f0b637678db5249df8f7bcc593a959c42f",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "bc4960bbff5c3a753a0b129d08fd15130984d26f183ef71ee58d897287a4fd1f",
+          "pass": true
+        },
+        {
+          "ordinal": 13,
+          "stage": "account transfer review cutover audit",
+          "status": "PASS_FAIL_CLOSED_EXACT_READ_ONLY_CUTOVER",
+          "eventSha256": null,
+          "actualEventSha256": "a8358cd77068007ea678e1124575dc3f7599b4bdffefdee6e1c5256dd0be7a0e",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "7a1a1ee0735beeb0d5af5215ce5139d5fd08f55a7b97a6a34fe608e10fb269db",
+          "pass": true
+        },
+        {
+          "ordinal": 14,
+          "stage": "account transfer preallocation validation",
+          "status": "PASS_READY_FOR_FIRST_ATTEMPT",
+          "eventSha256": null,
+          "actualEventSha256": "b686efadcc2faf53ed867a28eeab01fc6d0a5ff31725497a33b2c5cd5c8f9a4e",
+          "previousLogSha256": null,
+          "actualPreviousLogSha256": "9ca9689803b67edb075dadd710181e4d2ee879cdc45aeff874c8e6fea80bd906",
+          "pass": true
+        },
+        {
+          "ordinal": 15,
+          "stage": "R5 exact M01R reconstruction",
+          "status": "COMPLETED",
+          "eventSha256": "0e4c4264a28293b834dddb351408bf22e8a0ca37c7ec123f587751eea36c76c2",
+          "actualEventSha256": "0e4c4264a28293b834dddb351408bf22e8a0ca37c7ec123f587751eea36c76c2",
+          "previousLogSha256": "bc7295532ba0c3f855afe3c033e8cbee821c1cf5633cac65f2e3878f630832f7",
+          "actualPreviousLogSha256": "bc7295532ba0c3f855afe3c033e8cbee821c1cf5633cac65f2e3878f630832f7",
+          "pass": true
+        },
+        {
+          "ordinal": 16,
+          "stage": "R6 216-row residual reconciliation",
+          "status": "COMPLETED",
+          "eventSha256": "d15e21cb6a0fbed97cfa5f97dab5ffe0a133ca65c12b7e1f5147ed5813cfcf99",
+          "actualEventSha256": "d15e21cb6a0fbed97cfa5f97dab5ffe0a133ca65c12b7e1f5147ed5813cfcf99",
+          "previousLogSha256": "c3dc2eba6455eb99df7b6308cd6434e0daf35b8606c5dd340818116d6bec57ef",
+          "actualPreviousLogSha256": "c3dc2eba6455eb99df7b6308cd6434e0daf35b8606c5dd340818116d6bec57ef",
+          "pass": true
+        },
+        {
+          "ordinal": 17,
+          "stage": "R7 hypotheses frozen",
+          "status": "COMPLETED",
+          "eventSha256": "4e5cd5366102c124a9af7c7d84fbc4cf65986759059e8f807ebd4cf08118907e",
+          "actualEventSha256": "4e5cd5366102c124a9af7c7d84fbc4cf65986759059e8f807ebd4cf08118907e",
+          "previousLogSha256": "43ef55b189a728fcd36dc0717842cde65f022f9b3a6df4bf078b62f527afb726",
+          "actualPreviousLogSha256": "43ef55b189a728fcd36dc0717842cde65f022f9b3a6df4bf078b62f527afb726",
+          "pass": true
+        },
+        {
+          "ordinal": 18,
+          "stage": "executor technical stop",
+          "status": "BLOCKED_TECHNICAL_INCOMPLETE",
+          "eventSha256": "3eeb0fd737c80cb72a5a43754faaf2366c54c3a06f31fd02626578e15fddda63",
+          "actualEventSha256": "3eeb0fd737c80cb72a5a43754faaf2366c54c3a06f31fd02626578e15fddda63",
+          "previousLogSha256": "36a931ab726003d09dc2ed9862b802ffc7705e6d9298124b23a969ac2c8aa4b8",
+          "actualPreviousLogSha256": "36a931ab726003d09dc2ed9862b802ffc7705e6d9298124b23a969ac2c8aa4b8",
+          "pass": true
+        },
+        {
+          "ordinal": 19,
+          "stage": "executor technical stop",
+          "status": "BLOCKED_TECHNICAL_INCOMPLETE",
+          "eventSha256": "34c3af5054d8922c55cf3592d52d2e49812cf98db78f32dc15f86bc045eb07b8",
+          "actualEventSha256": "34c3af5054d8922c55cf3592d52d2e49812cf98db78f32dc15f86bc045eb07b8",
+          "previousLogSha256": "8f953f508db30a86645257f1a10820d31fd360c0d9e4820b640540ec553c6d2f",
+          "actualPreviousLogSha256": "8f953f508db30a86645257f1a10820d31fd360c0d9e4820b640540ec553c6d2f",
+          "pass": true
+        },
+        {
+          "ordinal": 20,
+          "stage": "executor technical stop",
+          "status": "BLOCKED_TECHNICAL_INCOMPLETE",
+          "eventSha256": "634fdfac8278ab6efdff17dd4b5ba91156198f2b495f05e04d59b0405f723716",
+          "actualEventSha256": "634fdfac8278ab6efdff17dd4b5ba91156198f2b495f05e04d59b0405f723716",
+          "previousLogSha256": "fd6f9c8a994c84bf8610269c563bdba831180cea2b8235cd64bf09610e3573ec",
+          "actualPreviousLogSha256": "fd6f9c8a994c84bf8610269c563bdba831180cea2b8235cd64bf09610e3573ec",
+          "pass": true
+        },
+        {
+          "ordinal": 21,
+          "stage": "root-cause determination",
+          "status": "COMPLETED_VALIDATOR_FALSE_POSITIVE",
+          "eventSha256": "1a80aa2d3f725ded28232082a478731e954e12bff3e99e62049f97f35959279f",
+          "actualEventSha256": "1a80aa2d3f725ded28232082a478731e954e12bff3e99e62049f97f35959279f",
+          "previousLogSha256": "3939af21fb2065153996c6abb8158cafbf957007c7fcfec2c16781d3664e8afb",
+          "actualPreviousLogSha256": "3939af21fb2065153996c6abb8158cafbf957007c7fcfec2c16781d3664e8afb",
+          "pass": true
+        },
+        {
+          "ordinal": 22,
+          "stage": "nt01 technical disposition",
+          "status": "TECHNICAL_INCOMPLETE_EXECUTOR_STOP_RECORDED_APPEND_ONLY",
+          "eventSha256": "6ef1c3d4c0c23ad42bb74c5ba016288d22d571fdf7e79709486fb305777fd9e9",
+          "actualEventSha256": "6ef1c3d4c0c23ad42bb74c5ba016288d22d571fdf7e79709486fb305777fd9e9",
+          "previousLogSha256": "e150497bf75e52b7ad89d2c0321b5a9fde8c277cde322ce64f6a3d64beced111",
+          "actualPreviousLogSha256": "e150497bf75e52b7ad89d2c0321b5a9fde8c277cde322ce64f6a3d64beced111",
+          "pass": true
+        },
+        {
+          "ordinal": 23,
+          "stage": "patch remediation",
+          "status": "COMPLETED_HEADER_ONLY_VALIDATION_AND_FULL_HEAD_REPLAY",
+          "eventSha256": "c4590e4e2259b0c0f31cde5afb476fdd62530ef24eca84a636f81ec4eff55c0a",
+          "actualEventSha256": "c4590e4e2259b0c0f31cde5afb476fdd62530ef24eca84a636f81ec4eff55c0a",
+          "previousLogSha256": "3734fabe700e5bdb0c01ceebbd6a8be1e1b31e4e706c77fab2b61395030aa343",
+          "actualPreviousLogSha256": "3734fabe700e5bdb0c01ceebbd6a8be1e1b31e4e706c77fab2b61395030aa343",
+          "pass": true
+        },
+        {
+          "ordinal": 24,
+          "stage": "self-tests",
+          "status": "PASS_TESTS_A_B_C_D_DUAL_ENVIRONMENT",
+          "eventSha256": "76bea4b682d25c04e46698b7c0b62cc6b6391a7add4ed82254a940660d351375",
+          "actualEventSha256": "76bea4b682d25c04e46698b7c0b62cc6b6391a7add4ed82254a940660d351375",
+          "previousLogSha256": "79f33f6743927136311cd61c826b50339ff1cc510d2129eb6af742321ac40a50",
+          "actualPreviousLogSha256": "79f33f6743927136311cd61c826b50339ff1cc510d2129eb6af742321ac40a50",
+          "pass": true
+        },
+        {
+          "ordinal": 25,
+          "stage": "linked retry authorization",
+          "status": "PASS_READY_FOR_LINKED_NT01_RETRY",
+          "eventSha256": "22b72c15897219415ed47f916014a8005db701b11fdba703011ffef3a1e355d6",
+          "actualEventSha256": "22b72c15897219415ed47f916014a8005db701b11fdba703011ffef3a1e355d6",
+          "previousLogSha256": "2bf830c52c17639b69c0c0c36675fb0cc540612d9899c943b58f41fa71126bbc",
+          "actualPreviousLogSha256": "2bf830c52c17639b69c0c0c36675fb0cc540612d9899c943b58f41fa71126bbc",
+          "pass": true
+        },
+        {
+          "ordinal": 26,
+          "stage": "executor technical stop",
+          "status": "BLOCKED_TECHNICAL_INCOMPLETE",
+          "eventSha256": "e24b753b83b1fe00f01481d6a1c0b3652d71198a92a51c3cdda7a664d19944b0",
+          "actualEventSha256": "e24b753b83b1fe00f01481d6a1c0b3652d71198a92a51c3cdda7a664d19944b0",
+          "previousLogSha256": "0aac253acb8f7d77cdee43f184387c42cb50d630fb58898e85147ae8e68571ee",
+          "actualPreviousLogSha256": "0aac253acb8f7d77cdee43f184387c42cb50d630fb58898e85147ae8e68571ee",
+          "pass": true
+        },
+        {
+          "ordinal": 27,
+          "stage": "linked retry pre-allocation safe pause",
+          "status": "PAUSED_SAFE_TO_RESUME",
+          "eventSha256": "2c6a5062017c53a6b68b76d020cafbb63c6640d22f81a9f057dcd8a4655ce93d",
+          "actualEventSha256": "2c6a5062017c53a6b68b76d020cafbb63c6640d22f81a9f057dcd8a4655ce93d",
+          "previousLogSha256": "9203f774cdbbdf3d7eb0a0bd7895cde4958e7903f7c33cd7b01a376f99b5e48a",
+          "actualPreviousLogSha256": "9203f774cdbbdf3d7eb0a0bd7895cde4958e7903f7c33cd7b01a376f99b5e48a",
+          "pass": true
+        },
+        {
+          "ordinal": 28,
+          "stage": "linked retry superseding compatibility validation",
+          "status": "PASS_SUPERSEDING_COMPATIBILITY_VALIDATION",
+          "eventSha256": "d886153fd4e6edd784e45012bf5a0f3061d183af84dfa047f6a5116fd108f2ec",
+          "actualEventSha256": "d886153fd4e6edd784e45012bf5a0f3061d183af84dfa047f6a5116fd108f2ec",
+          "previousLogSha256": "d273406d3a240385636608962c077cd400c3d5f7b909b60785874c859439a11a",
+          "actualPreviousLogSha256": "d273406d3a240385636608962c077cd400c3d5f7b909b60785874c859439a11a",
+          "pass": true
+        },
+        {
+          "ordinal": 29,
+          "stage": "linked retry governed no-allocation preflight",
+          "status": "PASS_READY_FOR_LINKED_RETRY_ALLOCATION",
+          "eventSha256": "c0a518289c982ccfa54f61324e66b77eb2cf70c1595403863f726a9901c19407",
+          "actualEventSha256": "c0a518289c982ccfa54f61324e66b77eb2cf70c1595403863f726a9901c19407",
+          "previousLogSha256": "22b82de16e4cde88c57c0c9710eaf35035afd2b4968f9078dc900e2679e31087",
+          "actualPreviousLogSha256": "22b82de16e4cde88c57c0c9710eaf35035afd2b4968f9078dc900e2679e31087",
+          "pass": true
+        },
+        {
+          "ordinal": 30,
+          "stage": "linked retry allocation",
+          "status": "ALLOCATED_NEW_DISTINCT_ATTEMPT",
+          "eventSha256": "70af3d3fb1091bc5fc364b6bab42a45832939e061d81e9358b2b02db05ca7f6e",
+          "actualEventSha256": "70af3d3fb1091bc5fc364b6bab42a45832939e061d81e9358b2b02db05ca7f6e",
+          "previousLogSha256": "3a4ff8f6ab121ec8a685e4ac078eb6a61bd24bd442a468447015baed37978cb1",
+          "actualPreviousLogSha256": "3a4ff8f6ab121ec8a685e4ac078eb6a61bd24bd442a468447015baed37978cb1",
+          "pass": true
+        },
+        {
+          "ordinal": 31,
+          "stage": "linked retry execution",
+          "status": "COMPLETED_ALL_SEMANTIC_AND_REPLAY_CONTROLS",
+          "eventSha256": "145d2b1a78b110d5939d72bcbd2c8a7c82e48847ba5d2e65d3005a060fff6d6e",
+          "actualEventSha256": "145d2b1a78b110d5939d72bcbd2c8a7c82e48847ba5d2e65d3005a060fff6d6e",
+          "previousLogSha256": "de1ee15bdfe85594eb93e3ab012209b4991c67012e60a4236eb9e08bf5328201",
+          "actualPreviousLogSha256": "de1ee15bdfe85594eb93e3ab012209b4991c67012e60a4236eb9e08bf5328201",
+          "pass": true
+        },
+        {
+          "ordinal": 32,
+          "stage": "linked retry disposition",
+          "status": "ACCEPTED_PROMOTED",
+          "eventSha256": "93b51fb374972af9875f8631504dc519c5fcf202d4752d459574eda069b2ed6e",
+          "actualEventSha256": "93b51fb374972af9875f8631504dc519c5fcf202d4752d459574eda069b2ed6e",
+          "previousLogSha256": "481a65511949c45cdc463c79ed532b06bb149988b96550288d21d566b646140b",
+          "actualPreviousLogSha256": "481a65511949c45cdc463c79ed532b06bb149988b96550288d21d566b646140b",
+          "pass": true
+        },
+        {
+          "ordinal": 33,
+          "stage": "post-linked-retry reconciliation",
+          "status": "REGISTRY_WAL_RECONCILED_CUMULATIVE_BASE_CONFIRMED",
+          "eventSha256": "7ce02947b4c90740b8df1ca0175ca7930b97a7e6c6f69b2f533ecd366ce4c3b6",
+          "actualEventSha256": "7ce02947b4c90740b8df1ca0175ca7930b97a7e6c6f69b2f533ecd366ce4c3b6",
+          "previousLogSha256": "4db1804855f9154eba3e8f83b2853e0b7414effd19ed52a59db08fb60269448a",
+          "actualPreviousLogSha256": "4db1804855f9154eba3e8f83b2853e0b7414effd19ed52a59db08fb60269448a",
+          "pass": true
+        },
+        {
+          "ordinal": 34,
+          "stage": "one-hour terminal safe pause",
+          "status": "ONE_HOUR_SAFE_PAUSE_POST_ATTEMPT",
+          "eventSha256": "f60ed4fc39325cbf813ecbdc3b46e1fe4c0be80391cb55feb2eccdaf62dc9fe4",
+          "actualEventSha256": "f60ed4fc39325cbf813ecbdc3b46e1fe4c0be80391cb55feb2eccdaf62dc9fe4",
+          "previousLogSha256": "b9e1c6c1fdc366017e26af5f31cc6c50954bfc3ded4b4ac1096f9a38a877f10c",
+          "actualPreviousLogSha256": "b9e1c6c1fdc366017e26af5f31cc6c50954bfc3ded4b4ac1096f9a38a877f10c",
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    "row34": {
+      "schemaVersion": 2,
+      "ordinal": 34,
+      "commitUnit": "PHASE-10A14-R20-COMMIT-5R1-C34",
+      "updatedAtUtc": "2026-07-29T05:02:03.776Z",
+      "stage": "one-hour terminal safe pause",
+      "status": "ONE_HOUR_SAFE_PAUSE_POST_ATTEMPT",
+      "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "activeBaseHash": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "artifactHashes": [
+        {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ONE_HOUR_SAFE_PAUSE.json",
+          "bytes": 313246,
+          "sha256": "748f20191a9521283332b6c35a7598f8a1bb91427145287195025d8a7591e032"
+        },
+        {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ONE_HOUR_SAFE_PAUSE_EVIDENCE.sha256",
+          "bytes": 22465,
+          "sha256": "b0e5a3f5ca964d1504a86892863b8686a590171ca128739e2e0c3224d1dbc2ee"
+        },
+        {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_SUPERSEDING_COMPATIBILITY_VALIDATION.json",
+          "bytes": 290894,
+          "sha256": "0fec4857013be470cd27b7cd2b9a13f90e1491a544714d43079e1ccf3843c283"
+        },
+        {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_NO_ALLOCATION_PREFLIGHT.json",
+          "bytes": 1107925,
+          "sha256": "b52e8c7c1a03d1c04296a9e1d3447023c31b58870d65c518487b72d90693b57c"
+        },
+        {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_LINKED_RETRY_LATE_ALLOCATION_GATE.json",
+          "bytes": 3159,
+          "sha256": "e68bc8d135ac99d7b79ee4bcfbe18ca7bc2533350587bfd01463a15d3cbad8fc"
+        },
+        {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_LEDGER_AFTER_LINKED_RETRY.json",
+          "bytes": 3966,
+          "sha256": "6ca696489cf71e47d8cc17d00241f275b7dfc2bfb761179c9ac2b2978638fcd7"
+        },
+        {
+          "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+          "bytes": 780890,
+          "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+        }
+      ],
+      "previousLogSha256": "b9e1c6c1fdc366017e26af5f31cc6c50954bfc3ded4b4ac1096f9a38a877f10c",
+      "nextExactOperation": "Resume C34 at material candidate 2 against the exact recorded cumulative active base. Do not rerun or reallocate nt01-retry01.",
+      "safeToResume": true,
+      "blocker": null,
+      "eventSha256": "f60ed4fc39325cbf813ecbdc3b46e1fe4c0be80391cb55feb2eccdaf62dc9fe4"
+    },
+    "row35": null,
+    "numbered34": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_34_one_hour_terminal_safe_pause.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    "current": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    "currentOrdinal": 34,
+    "currentEventSha256": "f60ed4fc39325cbf813ecbdc3b46e1fe4c0be80391cb55feb2eccdaf62dc9fe4",
+    "row34ObjectMatchesNumbered": true,
+    "row34EventSha256": "f60ed4fc39325cbf813ecbdc3b46e1fe4c0be80391cb55feb2eccdaf62dc9fe4",
+    "row34ActualEventSha256": "f60ed4fc39325cbf813ecbdc3b46e1fe4c0be80391cb55feb2eccdaf62dc9fe4",
+    "pass": true
+  },
+  "prompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C34-ONE-HOUR-CONTINUATION-FROM-CHECKPOINT-34.md",
+    "bytes": 6308,
+    "sha256": "24275307f7de31123a4b489320b2eadea442ac6df7b22b340c5e40091e1a34bd"
+  },
+  "retry": {
+    "attempt": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ATTEMPT.json",
+      "bytes": 5793,
+      "sha256": "a1a177e886561973f40875852b1193eca5497a5ee1aefaf80250df820782e46c"
+    },
+    "result": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+      "bytes": 780890,
+      "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+    },
+    "gates": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/FROZEN_GATES.json",
+      "bytes": 27423,
+      "sha256": "61ba8d1b2e609eb853d6cf3fa77fadb8419c6e26f7aef0a820f8b680c80142f3"
+    },
+    "runtimeIdentityArtifact": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/runtime-snapshot/RUNTIME_IDENTITY.json",
+      "bytes": 857,
+      "sha256": "10e9ca8bc5d9f8a11e8059919a5b905d0a6b087d5758635961176f0ef23af70f"
+    },
+    "record": {
+      "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "attemptCategory": "domain_campaign",
+      "gateName": "commit5r1c34",
+      "cycle": "nt01-retry01",
+      "attemptOrdinal": 2,
+      "retryOf": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "retryReason": "C34_FULL_HEAD_PATCH_INVALID",
+      "retryType": "TECHNICAL_LINKED_RETRY",
+      "evidenceHeadAtAllocation": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "evidenceHeadAtStart": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "evidenceHeadAtEnd": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "runtimeBaselineCommit": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+      "runtimeTreeDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129",
+      "runtimeBlobs": {
+        "services/philippine-tax-intent-analyzer.js": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b",
+        "services/philippine-tax-domain-boundary.js": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "services/philippine-tax-boundary-patterns.js": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "runtimeRawBlobs": {
+        "services/philippine-tax-intent-analyzer.js": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b",
+        "services/philippine-tax-domain-boundary.js": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "services/philippine-tax-boundary-patterns.js": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465"
+      },
+      "runtimeBytes": {
+        "services/philippine-tax-intent-analyzer.js": 180812,
+        "services/philippine-tax-domain-boundary.js": 12192,
+        "services/philippine-tax-boundary-patterns.js": 65451
+      },
+      "semanticBase": {
+        "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+        "candidateId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment",
+        "servicesTreeDigest": "79ecf65483b9d04bb71ad3fcdb049a5d6ef7c5914ff272bb085f67e700d5f503",
+        "reasonPassed": 3504
+      },
+      "executionMode": "isolated_immutable_runtime_snapshot",
+      "harnessTreeDigest": "51662e79945f33e0eef134e1b4c45486d730fa88b62eb98fc5c0a5b34cedbce4",
+      "dependencyLockDigest": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+      "environmentFingerprint": {
+        "os": "win32",
+        "osRelease": "10.0.26200",
+        "nodeVersion": "v22.18.0",
+        "arch": "x64",
+        "timezone": "Asia/Manila",
+        "cwd": "C:/Projects/tina-backend"
+      },
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "commandArgs": [
+        "C:\\Projects\\tina-backend\\evaluation\\runner\\phase-10a14-r20\\commit5r1c34-execute.mjs",
+        "--timeboxed-linked-retry"
+      ],
+      "commandHash": "ee266c0b136aefe80227bdf950a0921270be2dca72ae7e4247de0f761d601644",
+      "startedAt": "2026-07-29T05:00:15.739Z",
+      "endedAt": "2026-07-29T05:01:32.842Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "completed",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "controlling": true,
+      "stdoutPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/stdout.txt",
+      "stderrPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/stderr.txt",
+      "resultPaths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/runtime-snapshot/RUNTIME_IDENTITY.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/C34_CANDIDATE_DELTA_REPLAY.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/C34_ONLY_CANDIDATE.patch",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/FULL_HEAD_DIFF.patch",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/FULL_HEAD_REPLAY.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/FROZEN_GATES.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ROW_LEVEL_PARETO.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/M01R_AND_PRIOR_PRESERVATION.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/GENERALIZATION_QUERY_RESULTS.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/LEAVE_ONE_FAMILY_OUT.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/SENTINEL_SHUFFLE_TAINT.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/MONOTONIC_FEATURE_ABLATION.json",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/PRECEDENCE_TRACE.json"
+      ],
+      "oracleVersion": "R3",
+      "oracleSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "stdoutSha256": "09aee4d536b614f4d524e8079df6570aa96b31eb2845eb061ed124325e4c4d2a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "accepted": true,
+    "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+    "candidateIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 180812,
+        "rawSha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b",
+        "normalizedLfSha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129"
+    },
+    "runtimeIdentity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 180812,
+        "rawSha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b",
+        "normalizedLfSha256": "817f709dc9ebde79dbe73293130a88207af2d4e40e2213eef28ec54b5392a30b"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "02d53a0480db28aebbb47568aab5700a80ed502bb65c072eb2ebfff9d5a60129"
+    },
+    "metrics": {
+      "canonicalPassed": 3556,
+      "decisionPassed": 3720,
+      "relationPassed": 3720,
+      "reasonPassed": 3556,
+      "reasonMismatches": 164,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "reasonCounterfactualPassed": 344,
+      "reasonCounterfactualTotal": 344,
+      "reasonCounterfactualFailed": 0,
+      "collisionProbesPassed": 196,
+      "collisionProbesTotal": 196,
+      "collisionProbesFailed": 0,
+      "decisionCounterfactualPassed": 756,
+      "decisionCounterfactualTotal": 756,
+      "decisionCounterfactualFailed": 0,
+      "relationCounterfactualPassed": 282,
+      "relationCounterfactualTotal": 282,
+      "relationCounterfactualFailed": 0,
+      "clauseProbesPassed": 68,
+      "clauseProbesTotal": 68,
+      "clauseProbesFailed": 0,
+      "richContextGuardPassed": 7,
+      "richContextGuardTotal": 7,
+      "reasonIntegrityPass": true,
+      "focusedReasonFamilies": {
+        "explicit_tax_task_relation": {
+          "required": 451,
+          "satisfied": 424
+        },
+        "tax_compliance_task": {
+          "required": 291,
+          "satisfied": 290
+        },
+        "tax_treatment_of_ordinary_object": {
+          "required": 784,
+          "satisfied": 779
+        },
+        "explicit_non_tax_task": {
+          "required": 897,
+          "satisfied": 847
+        },
+        "non_tax_label_or_name": {
+          "required": 201,
+          "satisfied": 201
+        },
+        "quoted_tax_term_only": {
+          "required": 120,
+          "satisfied": 120
+        },
+        "no_tax_relation": {
+          "required": 563,
+          "satisfied": 482
+        },
+        "ambiguous_tax_acronym": {
+          "required": 220,
+          "satisfied": 220
+        },
+        "non_tax_expansion": {
+          "required": 88,
+          "satisfied": 88
+        },
+        "tax_definition_with_context": {
+          "required": 79,
+          "satisfied": 79
+        },
+        "tax_negation_but_tax_review_requested": {
+          "required": 26,
+          "satisfied": 26
+        }
+      },
+      "closedControlsPass": true,
+      "relationObjectIntegrityPass": false,
+      "clauseSchemaRegressionPass": true,
+      "antiMemorizationPass": true,
+      "decisionLockHeld": true,
+      "relationLockHeld": true
+    },
+    "promotionChecks": {
+      "strictReasonImprovement": true,
+      "frozenGatesExact": true,
+      "correctRowRegressionsZero": true,
+      "wrongToDifferentWrongZero": true,
+      "priorRuleRegressionsZero": true,
+      "m01rRegressionsZero": true,
+      "decisionRelationDriftZero": true,
+      "inheritedStructuralDiagnosticsStable": true,
+      "branchDriftOutsideTargetZero": true,
+      "dualReplayPass": true,
+      "inheritedChangeExclusionPass": true,
+      "fullHeadReplayPass": true,
+      "generalizationPass": true,
+      "leaveOneFamilyOutPass": true,
+      "sentinelPass": true,
+      "shufflePass": true,
+      "taintPass": true,
+      "featureAblationPass": true,
+      "precedencePass": true,
+      "antiMemorizationPass": true
+    },
+    "failedChecks": []
+  },
+  "candidate2": {
+    "allocated": false,
+    "registryAttemptIds": [],
+    "walLines": [],
+    "attemptDirectories": []
+  },
+  "ledger": {
+    "unit": "COMMIT 5R1-C34",
+    "generatedUtc": "2026-07-29T06:28:31.345Z",
+    "registrySha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5",
+    "walSha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9",
+    "registryAttemptIds": [
+      "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z"
+    ],
+    "attemptDirectoryIds": [
+      "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z"
+    ],
+    "walAttemptIds": [
+      "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+      "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+      "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z"
+    ],
+    "records": [
+      {
+        "attemptId": "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z",
+        "status": "completed",
+        "plannedLines": [
+          1
+        ],
+        "registeredLines": [
+          2
+        ],
+        "terminalLines": [
+          3
+        ],
+        "attemptRecordPresent": true,
+        "attemptAndRegistryMatch": true,
+        "ordered": true,
+        "terminalMatches": true,
+        "plannedLinkageMatches": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+        "status": "technical_failure",
+        "plannedLines": [
+          4
+        ],
+        "registeredLines": [
+          5
+        ],
+        "terminalLines": [
+          6
+        ],
+        "attemptRecordPresent": true,
+        "attemptAndRegistryMatch": true,
+        "ordered": true,
+        "terminalMatches": true,
+        "plannedLinkageMatches": true,
+        "pass": true
+      },
+      {
+        "attemptId": "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+        "status": "completed",
+        "plannedLines": [
+          8
+        ],
+        "registeredLines": [
+          9
+        ],
+        "terminalLines": [
+          10
+        ],
+        "attemptRecordPresent": true,
+        "attemptAndRegistryMatch": true,
+        "ordered": true,
+        "terminalMatches": true,
+        "plannedLinkageMatches": true,
+        "pass": true
+      }
+    ],
+    "adjudicationRecords": [
+      {
+        "originalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+        "walLines": [
+          7
+        ],
+        "oneWalEvent": true,
+        "attemptIdMatches": true,
+        "originalTerminalLines": [
+          6
+        ],
+        "retryPlannedLines": [
+          8
+        ],
+        "orderedAfterOriginalTerminal": true,
+        "orderedBeforeEveryRetryPlan": true,
+        "recoveryArtifactExists": true,
+        "recoveryArtifactHashMatches": true,
+        "fieldsMatch": true,
+        "pass": true
+      }
+    ],
+    "orphan": 0,
+    "dangling": 0,
+    "running": [],
+    "technicalAdjudications": [
+      {
+        "originalAttemptId": "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+        "historicDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_FAILURE",
+        "effectiveDisposition": "TECHNICAL_INCOMPLETE_EXECUTOR_STOP",
+        "blocker": "C34_FULL_HEAD_PATCH_INVALID",
+        "semanticDisposition": "NOT_A_SEMANTIC_REJECTION",
+        "allocationConsumed": true,
+        "semanticResultConsumed": false,
+        "originalAttemptRecordPreserved": true,
+        "originalTerminalWalEventPreserved": true,
+        "recoveryArtifact": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z/EXECUTOR_TECHNICAL_STOP_RECOVERY.json",
+        "recoveryArtifactSha256": "be426e957d1e7f95f877c9eaf7337815ff1a24b23ba73908e6813bf25074ad35",
+        "adjudicatedAt": "2026-07-29T00:54:14.358Z"
+      }
+    ],
+    "pass": true
+  },
+  "registry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 669233,
+    "sha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5",
+    "totalAttempts": 221,
+    "c34Attempts": 3,
+    "linkedRetries": 1,
+    "running": []
+  },
+  "wal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 3990,
+    "sha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9",
+    "rows": 10,
+    "eventCounts": {
+      "ALLOCATION_PLANNED": 3,
+      "ALLOCATION_REGISTERED": 3,
+      "ATTEMPT_TECHNICAL_ADJUDICATED": 1,
+      "ATTEMPT_TERMINAL": 3
+    }
+  },
+  "attemptDirectories": [
+    "R20-domain_campaign-commit5r1c34-nt01-ord01-2026-07-28T13-34-41-962Z",
+    "R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z",
+    "R20-domain_campaign-commit5r1c34-reconstruct-ord01-2026-07-28T13-34-33-514Z"
+  ],
+  "processes": {
+    "inspectionMethod": "WSH WMI node.exe inventory with current-PID completeness and command-line classification",
+    "inspectionStatus": 0,
+    "inspectionSignal": null,
+    "inspectionStderr": "",
+    "protocolValid": true,
+    "parseError": null,
+    "currentExecutorPid": 16440,
+    "currentExecutorPresent": true,
+    "currentExecutorCommandLineReadable": true,
+    "cleanupSucceeded": true,
+    "otherNodeProcesses": [],
+    "unreadableNodeProcesses": [],
+    "activeC34Processes": [],
+    "activeC34ProcessCount": 0,
+    "inspectionSucceeded": true,
+    "netstatStatus": 0,
+    "netstatSignal": null,
+    "netstatStderr": "",
+    "listeners5173": [],
+    "port5173Free": true,
+    "pass": true
+  },
+  "temporaryRuntime": {
+    "directories": [],
+    "temporaryCandidateInstalled": false,
+    "restorationRequired": false,
+    "restorationAction": "NO_WRITE_REQUIRED",
+    "pass": true
+  },
+  "liveServices": {
+    "identity": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 31045,
+        "rawSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+        "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 11976,
+        "rawSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 64424,
+        "rawSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+      },
+      "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+    },
+    "serviceDiff": "",
+    "temporaryCandidateInstalled": false
+  },
+  "git": {
+    "head": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "branch": "feature/source-availability-engine-v1",
+    "upstream": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "sync": "0\t0",
+    "stagedDiff": "",
+    "c35Items": [],
+    "indexLockExists": false,
+    "commitOccurred": false,
+    "pushOccurredOrSyncChanged": false
+  },
+  "snapshots": {
+    "checkpoint34": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_34_CURRENT_SNAPSHOT.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    "logThrough34": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG_THROUGH_34.ndjson",
+      "bytes": 292652,
+      "sha256": "f68e018ceb69d314b65ccc12f19c46b859de78311613f00a752eaf87ff27b104"
+    },
+    "sourceChainRows": 34
+  },
+  "preMismatchEvidence": [
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-checkpoint34-mismatch-pause.mjs",
+      "bytes": 35851,
+      "sha256": "f2c24ca0c0fd74e77f94084fd7fe479cbc7a3f3eb4f027a0c69dab2fe1e65319"
+    },
+    {
+      "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C34-ONE-HOUR-CONTINUATION-FROM-CHECKPOINT-34.md",
+      "bytes": 6308,
+      "sha256": "24275307f7de31123a4b489320b2eadea442ac6df7b22b340c5e40091e1a34bd"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CHECKPOINT_34_CURRENT_SNAPSHOT.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG_THROUGH_34.ndjson",
+      "bytes": 292652,
+      "sha256": "f68e018ceb69d314b65ccc12f19c46b859de78311613f00a752eaf87ff27b104"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_34_one_hour_terminal_safe_pause.json",
+      "bytes": 2486,
+      "sha256": "7b14bd89bfcfc3f01303c9e1f0c504cce90c752f5bdb5c93851b2ca96745bb28"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ONE_HOUR_SAFE_PAUSE.json",
+      "bytes": 313246,
+      "sha256": "748f20191a9521283332b6c35a7598f8a1bb91427145287195025d8a7591e032"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ONE_HOUR_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 22465,
+      "sha256": "b0e5a3f5ca964d1504a86892863b8686a590171ca128739e2e0c3224d1dbc2ee"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-execute.mjs",
+      "bytes": 348007,
+      "sha256": "a38759fbde67e67b06e0165fcbb8ef97f5163e4f6c8aa08e951ab05dec3b4b5e"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c34-lib.mjs",
+      "bytes": 87485,
+      "sha256": "dd3bd236eee0dd515146ac20314b3678b87cbca4d907e0225fdeec8a16431298"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 669233,
+      "sha256": "1fedcc3133b197cac32cb963df145d7211560c538be36665a326ed91ccf3d4c5"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 3990,
+      "sha256": "0903746c13125c6f749c7df473eb8b653bf9fa01ee068f2c0b3188c39adadeb9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ATTEMPT.json",
+      "bytes": 5793,
+      "sha256": "a1a177e886561973f40875852b1193eca5497a5ee1aefaf80250df820782e46c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/ITERATION_RESULT.json",
+      "bytes": 780890,
+      "sha256": "209fd7a60b5854139559db2c66809d3560b7da1f1ef7677b9eb4c2075e482054"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/FROZEN_GATES.json",
+      "bytes": 27423,
+      "sha256": "61ba8d1b2e609eb853d6cf3fa77fadb8419c6e26f7aef0a820f8b680c80142f3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-nt01-retry01-ord02-2026-07-29T05-00-15-739Z/runtime-snapshot/RUNTIME_IDENTITY.json",
+      "bytes": 857,
+      "sha256": "10e9ca8bc5d9f8a11e8059919a5b905d0a6b087d5758635961176f0ef23af70f"
+    }
+  ],
+  "nextExactOperation": "Obtain a separately authorized continuation from checkpoint 35 that accepts the additive activeAttemptId correction and provides a non-duplicating candidate-2 resume path. Preserve the accepted linked retry and active base; do not rerun candidate 1.",
+  "pass": true
+}

@@ -1,0 +1,67 @@
+diff --git a/services/philippine-tax-intent-analyzer.js b/services/philippine-tax-intent-analyzer.js
+index a514ce1..244fa50 100644
+--- a/services/philippine-tax-intent-analyzer.js
++++ b/services/philippine-tax-intent-analyzer.js
+@@ -1311,6 +1311,62 @@ function resolveGovernedReasonOverride(evidence) {
+   if (c33DirectRequestedTaxConsequence)
+     return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.89 };
+ 
++  const c34HasGovernedTaxRelation = v.rels.some((r) =>
++    r === 'ASKS_TAX_TREATMENT_OF' || r === 'ASKS_VAT_TREATMENT_OF'
++    || r === 'ASKS_DEDUCTIBILITY_OF' || r === 'ASKS_WITHHOLDING_ON'
++    || r === 'ASKS_CUSTOMS_DUTY_ON' || r === 'ASKS_TAX_COMPLIANCE_FOR');
++  const c34OrdinarySelectionRequest = /^(?:alin|ano|aling)\b[^?.!]*\b(?:na\s+)?bibilhin\b/i.test(v.t);
++  const c34OrdinaryDomainInquiryHasNoTaxRelation = v.reason === 'explicit_non_tax_task'
++      && evidence.nonTaxControllingDomain
++      && evidence.primaryIsInterrogative
++      && /\?\s*$/.test(v.t)
++      && !evidence.reasonDenialAssertion
++      && !evidence.reasonRequestsOperation
++      && !c34HasGovernedTaxRelation
++      && !evidence.governedTaxPredicateAnywhere
++      && !evidence.taxRelationOverPrimaryTarget
++      && !evidence.filipinoTaxRelationOverTarget
++      && !evidence.contractQuestionAboutTaxClause
++      && !c34OrdinarySelectionRequest;
++  if (c34OrdinaryDomainInquiryHasNoTaxRelation)
++    return { decision: 'REFUSE', reasonCode: 'no_tax_relation', confidence: 0.87 };
++
++  const c34IdentifierRole = /\b(?:(?:project|product|internal|team|channel)\s+)?(?:code|label|name|identifier|codename)\b/i.test(v.t);
++  const c34LocalIdentifierRedefinition = v.reason === 'no_tax_relation'
++      && evidence.reasonLocalRedefinitionAct
++      && (evidence.namingActControlsRequest || c34IdentifierRole)
++      && !evidence.governedTaxPredicateAnywhere
++      && !v.rels.some((r) => r === 'ASKS_TAX_TREATMENT_OF' || r === 'ASKS_VAT_TREATMENT_OF'
++        || r === 'ASKS_DEDUCTIBILITY_OF' || r === 'ASKS_WITHHOLDING_ON'
++        || r === 'ASKS_CUSTOMS_DUTY_ON' || r === 'ASKS_TAX_COMPLIANCE_FOR');
++  if (c34LocalIdentifierRedefinition)
++    return { decision: 'REFUSE', reasonCode: 'explicit_non_tax_task', confidence: 0.88 };
++
++  const c34CopularShortTaxTopic = v.reason === 'tax_definition_with_context'
++      && v.rels.includes('ASKS_DEFINITION_OF')
++      && !evidence.reasonDefinitionOutcomeUnderTaxContext
++      && /^(?:what\s+is|ano\s+ang)\s+[a-z]{3,5}(?:\s+(?:in|sa)\s+(?:an?\s+)?(?:bir|philippine tax|tax|revenue)[^?]*)?\?$/i.test(v.t)
++      && !/\b(?:mean|meaning|define|definition|refer(?:s)?\s+to|stand(?:s)?\s+for)\b/i.test(v.t);
++  if (c34CopularShortTaxTopic)
++    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.87 };
++
++  const c34ImportDutyInstrumentTopic = v.reason === 'tax_treatment_of_ordinary_object'
++      && v.rels.includes('ASKS_CUSTOMS_DUTY_ON')
++      && /\bimport\s+dut(?:y|ies)\b/i.test(v.t)
++      && !/\b(?:rate|classification|tariff\s+schedule|comput\w*|calculat\w*)\b/i.test(v.t);
++  if (c34ImportDutyInstrumentTopic)
++    return { decision: 'ALLOW', reasonCode: 'explicit_tax_task_relation', confidence: 0.86 };
++
++  const c34TaxRuleEffectVerb = /\b(?:affect\w*|apply|applies|govern\w*|treat\w*|cover\w*)\b/i.test(v.t);
++  const c34HoldingPeriodRule = /\bholding\s+period\s+rule\b/i.test(v.t);
++  const c34LegalRuleBearsTaxTreatment = v.reason === 'explicit_tax_task_relation'
++      && !evidence.proceduralComplianceFrame
++      && !/\b(?:file|filing|form|remit\w*|payment|register\w*|submit\w*|comput\w*|calculat\w*)\b/i.test(v.t)
++      && (evidence.contractQuestionAboutTaxClause
++        || ((evidence.statuteInEffectFrame || c34HoldingPeriodRule) && c34TaxRuleEffectVerb));
++  if (c34LegalRuleBearsTaxTreatment)
++    return { decision: 'ALLOW', reasonCode: 'tax_treatment_of_ordinary_object', confidence: 0.87 };
++
+   return null;
+ }
+ 
