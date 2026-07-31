@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:17:00.000Z",
+  "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+  "candidateCount": 1,
+  "events": [
+    {
+      "order": 1,
+      "operation": "isolated replay harness",
+      "result": "TECHNICAL_INCOMPLETE",
+      "cause": "Sandbox denied creation under C:/tmp.",
+      "semanticCandidateExecuted": false,
+      "residue": false
+    },
+    {
+      "order": 2,
+      "operation": "workspace-local isolated replay harness",
+      "result": "TECHNICAL_INCOMPLETE",
+      "cause": "The first dependency set omitted a transitive tax-engine module.",
+      "semanticCandidateExecuted": false,
+      "automaticFinallyCleanup": true,
+      "residue": false
+    },
+    {
+      "order": 3,
+      "operation": "all-JSON clean-base materialization",
+      "result": "TECHNICAL_INCOMPLETE",
+      "cause": "Overbroad materialization exceeded the command timeout.",
+      "semanticCandidateExecuted": false,
+      "residuePath": "evaluation/results/phase-10a14-r20/.c35-replay-23092-1785471101119",
+      "residueRemovedAfterResolvedPathValidation": true,
+      "residue": false
+    },
+    {
+      "order": 4,
+      "operation": "exact static import-closure clean-base replay",
+      "result": "PASS",
+      "artifact": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_REPLAY.json",
+        "sha256": "c42f1457da64ff43c9de5955157983f3bab79c24d556b9034342e2521ea7d2d3"
+      },
+      "temporaryDirectoryRemoved": true,
+      "residue": false
+    }
+  ],
+  "adjudication": "SAME_CANDIDATE_TECHNICAL_REPLAY_RECOVERY; NOT_A_SEMANTIC_REJECTION; NO_LINKED_OR_SECOND_CANDIDATE_ALLOCATED",
+  "finalReplayPass": true,
+  "pass": true
+}

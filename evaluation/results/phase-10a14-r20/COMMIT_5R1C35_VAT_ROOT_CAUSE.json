@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:56:00.000Z",
+  "status": "ROOT_CAUSE_PROVEN",
+  "evidence": {
+    "live": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_LIVE_REPRODUCTION.json",
+      "sha256": "cd74ddf28616adbc385ae11aab471d122f70ca05cc3faf53f22b655bf323266c"
+    },
+    "trace": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+      "sha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e",
+      "evaluatedPairs": 45,
+      "falseFiringPairs": 2
+    },
+    "preFixFixture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_FIX_FIXTURE_RESULT_SUPERSEDING.json",
+      "sha256": "37504d54ce7a8ac0d9426f229f2a193060230b5aed9f3a9ad7c2edc224b757f6",
+      "result": "EXPECTED_PRE_FIX_FAILURE_REPRODUCED"
+    }
+  },
+  "exactField": "pipeline conflictAnalysis.hasConflict, derived from trueConflicts[].pairAnalysis.conflict",
+  "exactProducer": "conflict-engine.js analyzeConflictPair, invoked by pipeline.js Step 9 fourPartDoctrineTest for every pair among the first ten reranked chunks",
+  "exactConsumer": "services/conflict-trust-classifier.js classifyConflictState; it correctly maps an incomplete upstream hasConflict=true signal to trust.conflictState=POTENTIAL_CONFLICT and public hasConflict=false",
+  "exactCondition": "sameIssueGate passes on shared lexical VAT signals and a shared substantive dimension; oppositeHoldingGate passes on taxable/subject versus exempt/not-subject polarity; the engine has no prerequisite that the two inputs represent distinct authority positions",
+  "exactInput": {
+    "query": "tell me more about VAT",
+    "firingPairs": [[4, 5], [5, 8]],
+    "sharedPath": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+    "sharedCitation": "NIRC Sec. 106",
+    "sourceKind": "Adjacent or overlapping chunks of one statutory record",
+    "structuredDistinctPositionMetadata": false
+  },
+  "expectedValue": {
+    "pairConflict": false,
+    "pipelineHasConflict": false,
+    "trustHasConflict": false,
+    "conflictState": "NO_CONFLICT"
+  },
+  "actualValue": {
+    "pairConflict": true,
+    "pipelineHasConflict": true,
+    "trustHasConflict": false,
+    "conflictState": "POTENTIAL_CONFLICT"
+  },
+  "trustContractViolation": "The upstream conflict evidence violates the semantic precondition that a conflict requires two identified authority positions. Complementary fragments within one NIRC §106 record are not two authorities merely because local lexical polarity differs. The classifier and frontend faithfully fail closed on the invalid upstream signal.",
+  "generalizationRationale": "Chunking can split any statute, regulation, case, or issuance across exceptions, general rules, deemed transactions, effectivity clauses, or remedies. A source- and normalized-reference identity guard applies to all authority types and queries without VAT-specific terms. Structured position, version, effectivity, amendment, or supersession metadata must permit genuinely distinct positions within a consolidated record.",
+  "genuineBehaviorToPreserve": [
+    "Same-issue opposite positions from distinct authority records",
+    "Verified conflict classification when complete metadata exists",
+    "Justified potential conflict for incomplete but genuine two-position evidence",
+    "Same-record positions explicitly distinguished by structured version or effectivity metadata",
+    "Hierarchy, supersession, and effectivity uncertainty",
+    "Authority-support derivation independent of conflict state",
+    "Fail-closed source-only, bare-list, missing, malformed, or ineligible answerSupport behavior"
+  ],
+  "excludedCauses": {
+    "frontendWrongBanner": false,
+    "conflictClassifierWrongMapping": false,
+    "authoritySupportCoupledToPotentialConflict": false,
+    "staleFieldOverride": false,
+    "modelAnswerProseContaminatedConflictState": false,
+    "genericVersusSpecificAuthorityDifferenceAlone": false
+  },
+  "candidateHypothesis": "Before lexical same-issue/opposite-holding signals may establish conflict, reject a pair whose normalized source identity and normalized legal reference are both the same unless both inputs contain structured metadata that identifies distinct positions, versions, temporal scopes, amendments, or supersession states.",
+  "pass": true
+}

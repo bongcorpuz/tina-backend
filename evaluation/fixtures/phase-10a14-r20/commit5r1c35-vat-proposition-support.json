@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "artifactRole": "POST_ALLOCATION_EXACT_NAME_CASE_INDEX",
+  "temporalAdjudication": "The source fixture was frozen before Candidate 2 under a different filename. This exact-name index was generated later and does not alter or backdate the frozen expectations.",
+  "sourceFixture": {
+    "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+    "bytes": 9661,
+    "sha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244",
+    "frozenUtc": "2026-07-31T04:58:00.000Z",
+    "expectationsChanged": false
+  },
+  "requiredScenarioIndex": [
+    {
+      "scenario": "properly qualified generic input-VAT statement",
+      "sourceCase": "G4",
+      "expected": "PASS_ONLY_WHEN_EVERY_HOST_PROPOSITION_HAS_EXACT_PASSAGE_SUPPORT"
+    },
+    {
+      "scenario": "overbroad all-businesses input-VAT statement",
+      "sourceCase": "G3",
+      "expected": "FAIL_CLOSED"
+    },
+    {
+      "scenario": "non-VAT-registered business",
+      "sourceCase": "G3 qualification dimension",
+      "expected": "FAIL_CLOSED"
+    },
+    {
+      "scenario": "VAT-exempt or mixed activities",
+      "sourceCase": "G4 attribution dimension",
+      "expected": "FAIL_CLOSED_UNLESS_EXACT_ALLOCATION_SUPPORT"
+    },
+    {
+      "scenario": "source-only listing without proposition support",
+      "sourceCase": "G1",
+      "expected": "FAIL_CLOSED"
+    },
+    {
+      "scenario": "no-conflict answer with insufficient support",
+      "sourceCase": "G1 plus Candidate-1 no-conflict fixture",
+      "expected": "NO_CONFLICT_AND_RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "scenario": "verified-support answer with no conflict",
+      "sourceCase": "G2 transport contract with exact host binding",
+      "expected": "NO_CONFLICT_AND_VERIFIED_CONTROLLING"
+    }
+  ],
+  "frozenG4Adjudication": "G4 mentions invoicing without a Section 113 passage. Its frozen expected transport behavior is preserved, but final positive validation uses only the narrower two-proposition Section 110 and RR 4.110-4 answer.",
+  "pass": true
+}

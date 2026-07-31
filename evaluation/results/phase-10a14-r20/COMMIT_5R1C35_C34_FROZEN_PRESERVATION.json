@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:17:00.000Z",
+  "validationMode": "IDENTITY_AND_SCOPE_PRESERVATION_NO_C34_RERUN",
+  "reasonForNoRerun": "The user expressly prohibited rerunning or modifying C34 evidence. Candidate 1 changes conflict-engine.js only; the selected C34 semantic runtime consists of three separate immutable service files.",
+  "selectedC34Runtime": {
+    "attemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+    "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot",
+    "runtimeIdentitySha256": "3de7d4dfd5e1d233d4250683895ef99ca44f6ccc4d0bf685d8a17a3f049c2f31",
+    "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "files": {
+      "services/philippine-tax-intent-analyzer.js": {
+        "bytes": 183191,
+        "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+      },
+      "services/philippine-tax-domain-boundary.js": {
+        "bytes": 12192,
+        "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9"
+      },
+      "services/philippine-tax-boundary-patterns.js": {
+        "bytes": 65451,
+        "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465"
+      }
+    },
+    "candidateTouchesSelectedRuntime": false,
+    "reconstructionIdentityPass": true
+  },
+  "frozenRecordedAcceptance": {
+    "reason": "3575/3720",
+    "decision": "3720/3720",
+    "relation": "3720/3720",
+    "reasonSuite": "344/344",
+    "collision": "196/196",
+    "decisionCounterfactual": "756/756",
+    "relationCounterfactual": "282/282",
+    "clause": "68/68",
+    "richGuard": "7/7",
+    "reasonIntegrity": "PASS",
+    "materialFalseAllows": 0,
+    "materialFalseRefusals": 0,
+    "clarifyMismatches": 0,
+    "acceptedSignatureRegressionsByScope": 0
+  },
+  "sixPostCommitAttestations": {
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee"
+  },
+  "c34EvidenceMutated": false,
+  "c34EvidenceRerun": false,
+  "pass": true
+}

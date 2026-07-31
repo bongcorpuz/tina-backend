@@ -17,7 +17,7 @@ PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS an
 - Gates: Candidate 1 6/6; Candidate 2 25/25; isolated forward/reverse 31/31 each; legacy trust suites PASS; C34 frozen evidence unchanged.
 - Complete deterministic run: 184/217 suites passed; 33 suites/54 groups fail only historical diff-scope or stale CURRENT_STATE assertions; zero C35 runtime-behavior failures.
 - Registry 230; C35 WAL 6; attempt directories 230; orphan/dangling/running 0; activeAttemptId null.
-- Independent final Opus decision: **APPROVED_WITH_NONBLOCKING_OBSERVATIONS**.
+- Independent final Opus decision: **{{OPUS_DECISION}}**.
 - Phase 10A: **OPEN** because reason remains 3575/3720 with **145 reason-only rows**: explicit_non_tax_task=45, explicit_tax_task_relation=16, no_tax_relation=81, tax_compliance_task=1, tax_treatment_of_ordinary_object=2.
 - R20: **IN PROGRESS**. C35: **TERMINAL**.
 - No deployment, C36, Phase 10B implementation, reindex, or model migration occurred.

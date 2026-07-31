@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:56:00.000Z",
+  "subject": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+    "sha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e"
+  },
+  "correction": {
+    "field": "execution.externalWrites",
+    "recordedValue": false,
+    "adjudicatedValue": "NO_GOVERNED_DATA_OR_APPLICATION_STATE_WRITE; OBSERVABILITY_TELEMETRY_MAY_HAVE_BEEN_EMITTED",
+    "reason": "Importing the normal local retrieval stack initialized its configured Langfuse client. The run made read-only corpus calls and did not mutate the database, index, deployment, application data, registry, or C34 evidence, but an observability trace may have been sent by normal instrumentation."
+  },
+  "effectOnSemanticEvidence": "NONE",
+  "originalWriteOnceEvidenceMutated": false,
+  "pass": true
+}

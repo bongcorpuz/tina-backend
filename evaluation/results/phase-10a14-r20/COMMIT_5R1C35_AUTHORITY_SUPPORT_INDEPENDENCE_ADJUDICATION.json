@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_AUTHORITY_CONFLICT_SUPPORT_INDEPENDENCE.json",
+    "sha256": "4d776479decca571a109d809a5a0b7a232985a8ee16a7e8677545e93149c3e68"
+  },
+  "adjudications": {
+    "noConflictDoesNotImplyVerifiedControlling": true,
+    "verifiedControllingDoesNotMakeEveryUnqualifiedSentenceSafe": true,
+    "relatedAuthorityOnlyDoesNotImplyPotentialConflict": true,
+    "missingMaterialPassageSupportFailsClosed": true,
+    "conflictStateAndAuthoritySupportAreIndependentAxes": true
+  },
+  "genericVatExpected": {
+    "conflictState": "NO_CONFLICT",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "possibleAuthorityConflictBanner": false,
+    "broadInputVatPromoted": false
+  },
+  "verdict": "AUTHORITY_SUPPORT_INDEPENDENCE_PROVEN",
+  "pass": true
+}

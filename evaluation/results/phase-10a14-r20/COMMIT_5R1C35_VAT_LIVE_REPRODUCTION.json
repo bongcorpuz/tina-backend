@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "capturedUtc": "2026-07-31T03:35:20.748Z",
+  "evidenceOrder": "LIVE_EVIDENCE_FIRST",
+  "frontendUrl": "https://app.tina.bentoph.com/",
+  "backendUrl": "https://tina-backend-y11x.onrender.com",
+  "query": "tell me more about VAT",
+  "userVisiblePath": {
+    "loginStatus": 200,
+    "conversationCreateStatus": 201,
+    "askStatus": 200,
+    "sameRequestContractAsFrontend": true,
+    "semanticQueryCount": 1
+  },
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "service": "tina-backend"
+    }
+  },
+  "publicState": {
+    "responseType": null,
+    "responseMode": "LEGAL_ANALYSIS",
+    "sourceOnlyFallback": false,
+    "retrievedSourceCount": 12,
+    "displayedSourceCount": 5,
+    "sourceStatus": "AUTHORITY_FOUND",
+    "sourceAvailability": "AUTHORITY_FOUND",
+    "saeStatus": "AUTHORITY_FOUND",
+    "trust": {
+      "version": "1.0",
+      "authoritySupport": "VERIFIED_CONTROLLING",
+      "sourceState": "AUTHORITY_FOUND",
+      "legalConclusion": "ALLOWED",
+      "humanReviewRequired": false,
+      "filingReadyDocumentGenerated": false,
+      "automaticSubmission": false,
+      "hasConflict": false,
+      "conflictState": "POTENTIAL_CONFLICT",
+      "limitations": [
+        "POTENTIAL_CONFLICT"
+      ],
+      "responseKind": "GENERAL_TAX",
+      "specificAuthorityNotFound": false
+    },
+    "conflictState": "POTENTIAL_CONFLICT",
+    "hasConflict": false,
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "answerSupport": {
+      "verifiedEligible": true,
+      "stage": "llm",
+      "schemaValid": true,
+      "missingFields": [],
+      "invalidTypeFields": [],
+      "invalidValueFields": [],
+      "inheritedFieldsRejected": [],
+      "failureReasons": [],
+      "gates": {
+        "structural": true,
+        "answerResponsive": true,
+        "primaryIssueAnswered": true,
+        "requiredIssueKeysCovered": true,
+        "materialExceptionsCovered": true,
+        "materialAlternativesCovered": true,
+        "citationRelevant": true,
+        "citationSupportsProposition": true,
+        "substantive": true,
+        "propositionSupported": true,
+        "materiallyComplete": true,
+        "treatmentDirectionMatches": true,
+        "thresholdDimensionMatches": true,
+        "sourcePropositionAligned": true,
+        "eligibleForVerifiedControlling": true,
+        "contradictsSources": true,
+        "unsupportedMaterialProposition": true,
+        "answerContradictsControllingSource": true
+      },
+      "reason": "The answer provides a comprehensive overview of VAT, including its definition, applicability, rate, and legal basis, with relevant citations."
+    },
+    "runtimeIdentity": {
+      "runtimeCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+      "runtimeCommitSource": "ENV:RENDER_GIT_COMMIT",
+      "deploymentId": "srv-d7n4bsdckfvc73ep7mn0",
+      "service": "tina-backend"
+    },
+    "answer": "### Short Answer\nValue-Added Tax (VAT) is an indirect tax imposed on the sale of goods, properties, and services in the Philippines, with a standard rate of twelve percent (12%). It is applicable to any person engaged in trade or business who sells, barters, exchanges, or leases goods or properties, or renders services.\n\n### Controlling Authorities\nThe primary legal basis for VAT is found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 105**: Defines persons liable for VAT.\n- **Section 106**: Details the VAT on the sale of goods or properties.\n- **Section 107**: Covers VAT on the importation of goods.\n- **Section 108**: Addresses VAT on the sale of services, including digital services.\n\n### Interpretation\nUnder **Section 105** of the NIRC, any person engaged in trade or business is subject to VAT for transactions involving the sale, barter, or exchange of goods and services. **Section 106** specifies that VAT is levied at a rate of 12% on gross sales of goods or properties. **Section 107** imposes VAT on imported goods based on their total value, including customs duties. Finally, **Section 108** extends VAT to services rendered, including digital services, also at a rate of 12%.\n\n### Practical Meaning\nVAT is a significant source of revenue for the government and affects pricing strategies for businesses. Sellers can pass on the VAT to buyers, making it essential for businesses to understand their VAT obligations to ensure compliance and avoid penalties. Additionally, businesses can claim input VAT on purchases related to their taxable sales, which can help reduce their overall tax liability. Understanding these provisions is crucial for effective tax planning and compliance in the Philippines.",
+    "sourceCards": [
+      {
+        "label": "NIRC Sec. 105",
+        "title": "NIRC Sec. 105",
+        "citation": "NIRC Sec. 105",
+        "authorityType": "STATUTE",
+        "displayLabel": "NIRC Sec. 105",
+        "limitationRequired": false,
+        "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+      },
+      {
+        "label": "NIRC Sec. 106",
+        "title": "NIRC Sec. 106",
+        "citation": "NIRC Sec. 106",
+        "authorityType": "STATUTE",
+        "displayLabel": "NIRC Sec. 106",
+        "limitationRequired": false,
+        "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+      },
+      {
+        "label": "NIRC Sec. 107",
+        "title": "NIRC Sec. 107",
+        "citation": "NIRC Sec. 107",
+        "authorityType": "STATUTE",
+        "displayLabel": "NIRC Sec. 107",
+        "limitationRequired": false,
+        "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+      },
+      {
+        "label": "NIRC Sec. 108",
+        "title": "NIRC Sec. 108",
+        "citation": "NIRC Sec. 108",
+        "authorityType": "STATUTE",
+        "displayLabel": "NIRC Sec. 108",
+        "limitationRequired": false,
+        "publicUrl": "https://drive.google.com/file/d/1fDZA1wY_DdfZzOz_c_R3BDYWyPODIuPW/view?usp=drivesdk"
+      },
+      {
+        "label": "RR 16-2005",
+        "title": "RR 16-2005",
+        "citation": "RR 16-2005",
+        "authorityType": "RR",
+        "displayLabel": "RR 16-2005",
+        "limitationRequired": false,
+        "publicUrl": "https://drive.google.com/file/d/15AZ5CJymXUzA8eIlfy0A1WXubLw1HmeJ/view?usp=drivesdk"
+      }
+    ]
+  },
+  "observedDefect": {
+    "potentialConflict": true,
+    "relatedAuthorityOnly": false,
+    "combined": false
+  },
+  "rawApiResponse": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_API_RESPONSE_SANITIZED.json",
+    "bytes": 40312,
+    "sha256": "4b38cf1518f099fe9915f76c03eb76dc7c6588445ac6fdee3c3fb6f2f9086661",
+    "created": true
+  },
+  "preflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_GOVERNED_START_PREFLIGHT.json",
+    "bytes": 10914,
+    "sha256": "a85a2a3551d16627f8f9c9de1f6feb16c44df9348af89d132c0ccb6b97d257d3"
+  },
+  "secretsStored": false,
+  "pass": true
+}

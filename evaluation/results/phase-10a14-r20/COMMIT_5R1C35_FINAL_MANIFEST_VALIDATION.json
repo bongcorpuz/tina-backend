@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T07:39:00.000Z",
+  "manifestPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_EVIDENCE.sha256",
+  "selfExcluded": true,
+  "sourceRows": 117,
+  "governedC35PathsIncluded": true,
+  "opusAndPhase10AAssessmentIncluded": true,
+  "roadmapAndCurrentStateIncluded": true,
+  "registryAndC35WalIncluded": true,
+  "immutableC34WalIncluded": true,
+  "protectedResidueExcludedAndBoundByPreservationEvidence": true,
+  "mutableRecoveryPointerAndLogTemporallyExcluded": true,
+  "futurePostcommitAttestationsTemporallyExcluded": true,
+  "bad": 0,
+  "missing": 0,
+  "duplicates": 0,
+  "deterministicLexicalOrder": true,
+  "verdict": "FINAL_MANIFEST_SOURCE_SET_VALID",
+  "pass": true
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:56:00.000Z",
+  "query": "tell me more about VAT",
+  "scope": "Proposition-level authority-support adjudication, kept independent from conflict-state adjudication.",
+  "inputs": {
+    "liveReproduction": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_LIVE_REPRODUCTION.json",
+      "sha256": "cd74ddf28616adbc385ae11aab471d122f70ca05cc3faf53f22b655bf323266c"
+    },
+    "retrievalTrace": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+      "sha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e"
+    }
+  },
+  "liveStructuredState": {
+    "authoritySupport": "VERIFIED_CONTROLLING",
+    "sourceState": "AUTHORITY_FOUND",
+    "answerSupportSchemaValid": true,
+    "answerSupportVerifiedEligible": true,
+    "answerSupportReason": "The live validator attested that the answer was responsive, proposition-supported, materially complete, and eligible for verified controlling treatment.",
+    "conflictState": "POTENTIAL_CONFLICT",
+    "statesCoupled": false
+  },
+  "materialPropositionAudit": [
+    {
+      "id": "P1",
+      "proposition": "VAT is an indirect tax whose amount may be shifted or passed on to the buyer, transferee, or lessee.",
+      "support": "DIRECT",
+      "retrievalIndices": [0, 7],
+      "authority": "NIRC Sec. 105"
+    },
+    {
+      "id": "P2",
+      "proposition": "A person engaged in trade or business who sells, barters, exchanges, or leases goods or properties, renders services, or imports goods is within the VAT provisions.",
+      "support": "DIRECT",
+      "retrievalIndices": [7],
+      "authority": "NIRC Sec. 105"
+    },
+    {
+      "id": "P3",
+      "proposition": "The ordinary VAT rate on sale, barter, or exchange of goods or properties is twelve percent of gross sales.",
+      "support": "DIRECT",
+      "retrievalIndices": [2],
+      "authority": "NIRC Sec. 106"
+    },
+    {
+      "id": "P4",
+      "proposition": "Importation of goods is generally subject to twelve percent VAT on the statutory import base.",
+      "support": "DIRECT",
+      "retrievalIndices": [6],
+      "authority": "NIRC Sec. 107"
+    },
+    {
+      "id": "P5",
+      "proposition": "Sale or exchange of services, including digital services, is generally subject to twelve percent VAT on gross sales.",
+      "support": "DIRECT",
+      "retrievalIndices": [3, 10, 11],
+      "authority": "NIRC Sec. 108"
+    },
+    {
+      "id": "P6",
+      "proposition": "Businesses can generally claim input VAT on purchases related to taxable sales to reduce overall tax liability.",
+      "support": "NOT_PROVEN_BY_CAPTURED_PASSAGES",
+      "retrievalIndices": [],
+      "authority": null,
+      "reason": "The captured NIRC Sec. 106 passage at retrieval index 5 addresses a narrower and materially different rule: input tax otherwise due on certain VAT zero-rated purchases attributable to VAT-exempt sales is paid and deductible from gross income. The public RR 16-2005 card exposes a label and URL but no validator-visible passage in the captured public response. Neither proves the broad input-VAT credit proposition as stated."
+    }
+  ],
+  "adjudication": {
+    "currentLiveRelatedAuthorityOnlyReproduced": false,
+    "currentLiveVerifiedControllingObserved": true,
+    "independentAuditFullySupportsEveryMaterialProposition": false,
+    "preciseIndependentDowngradeReasonIfRevalidated": "UNSUPPORTED_MATERIAL_INPUT_VAT_PROPOSITION",
+    "requiredSupportState": "REQUIRES_CONTROLLED_ANSWER_SUPPORT_REVALIDATION",
+    "candidateConstraint": "The conflict correction must neither promote authoritySupport nor force RELATED_AUTHORITY_ONLY. Authority support remains derived by the answer-support contract."
+  },
+  "conclusion": "The historical Related authority only display and the live Possible authority conflict display are not one state. The current live run reproduced the conflict warning but not the support downgrade. The broad input-VAT proposition supplies a precise, non-conflict support concern for later controlled revalidation; it is not a reason to retain a false conflict.",
+  "pass": true
+}

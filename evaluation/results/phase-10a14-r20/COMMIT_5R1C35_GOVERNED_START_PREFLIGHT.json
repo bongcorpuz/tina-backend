@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:24:24.2280798Z",
+  "session": {
+    "conservativeStartedUtc": "2026-07-31T03:10:00.000Z",
+    "hardStopUtc": "2026-07-31T05:10:00.000Z",
+    "maximumElapsedMinutes": 120,
+    "candidateLimit": 1,
+    "candidate2Authorized": false
+  },
+  "git": {
+    "repository": "C:/Projects/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "ahead": 0,
+    "behind": 0,
+    "freshFetchPerformed": true,
+    "parent": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "commitMessage": "PHASE-10A14-R20 COMMIT 5R1-C34 complete - preserve governed cumulative reason-layer evidence",
+    "headTree": "b2279e06d765b5a70ae29f1afa642f0648f29390",
+    "trackedWorkingDiff": [],
+    "stagedDiff": [],
+    "stagingEmpty": true,
+    "indexLock": false,
+    "pass": true
+  },
+  "checkpoint60": {
+    "pointer": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+      "bytes": 6287,
+      "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a"
+    },
+    "archive": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+      "bytes": 6287,
+      "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a"
+    },
+    "log": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 385974,
+      "sha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "rows": 60
+    },
+    "ordinal": 60,
+    "eventSha256": "3d431970d558a6d6e31f1bb307bd966b467cba67159db5ccda9c01a1a84eb9eb",
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "status": "C34_COMMITTED_AND_PUSHED_PHASE_10A_OPEN",
+    "pass": true
+  },
+  "c34Manifest": {
+    "manifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_EVIDENCE.sha256",
+      "bytes": 93862,
+      "sha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764"
+    },
+    "validation": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_MANIFEST_VALIDATION.json",
+      "sha256": "fdf17516b023be7e80e0067407eff41488b7fdfa7719a9cceace8d961984cc79"
+    },
+    "entries": 500,
+    "badHashes": 0,
+    "missingFiles": 0,
+    "duplicatePaths": 0,
+    "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "pass": true
+  },
+  "c34SelectedRuntime": {
+    "activeBaseIdentity": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACTIVE_BASE_IDENTITY.json",
+      "sha256": "30eae37b9f9257048ff129ff18d94addfde9f8c6ffa37b252c18b65bc34d9232"
+    },
+    "attemptId": "R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z",
+    "snapshotPath": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot",
+    "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "recomputedServicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "metrics": {
+      "reason": "3575/3720",
+      "remainingReasonOnlyRows": 145,
+      "decision": "3720/3720",
+      "relation": "3720/3720",
+      "reasonSuite": "344/344",
+      "collision": "196/196",
+      "decisionCounterfactual": "756/756",
+      "relationCounterfactual": "282/282",
+      "clause": "68/68",
+      "richGuard": "7/7",
+      "reasonIntegrity": "PASS",
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0
+    },
+    "pass": true
+  },
+  "documentation": {
+    "roadmapV9": {
+      "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+      "blobSha": "7148a371c941d0e523c75bc97fdd56034500a7b6",
+      "bytes": 29826,
+      "sha256": "1ff4772a3c082f8072997e8c86f291a322ec7d1986b866325a7895594fcbf280",
+      "modified": false
+    },
+    "currentState": {
+      "path": "knowledge/CURRENT_STATE.md",
+      "blobSha": "ef0fcc0dab9781b425a26cfccd26a14dbb0fc532",
+      "bytes": 120184,
+      "sha256": "e17a7a73b9966458e1410690d2ad2f2c82d75e8808cc78de60f8ee10c3ca1a2c",
+      "modified": false
+    },
+    "pass": true
+  },
+  "ledger": {
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 711915,
+      "sha256": "b42e030f49c3e30959ad6043d2897af55029d268aaeea17cc37bfbe93c383e43",
+      "attempts": 228
+    },
+    "wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 12143,
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+      "rows": 32
+    },
+    "attemptDirectories": {
+      "count": 228,
+      "inventorySha256": "221fd1fb2c722f55982fe6179ae99f3918fc5244e81061627241ad3ca907b615",
+      "c34Count": 10,
+      "c35Count": 0
+    },
+    "orphan": 0,
+    "dangling": 0,
+    "running": 0,
+    "existingC35RegistryRows": 0,
+    "existingC35WalRows": 0,
+    "pass": true
+  },
+  "protectedUntrackedInventory": {
+    "allUntrackedFiles": [
+      {
+        "path": ".claude/settings.local.json",
+        "bytes": 4466,
+        "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"
+      },
+      {
+        "path": ".vscode/extensions.json",
+        "bytes": 70,
+        "sha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09"
+      },
+      {
+        "path": "evaluation/factcheck/README.md",
+        "bytes": 1890,
+        "sha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a"
+      },
+      {
+        "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+        "bytes": 35275,
+        "sha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08"
+      },
+      {
+        "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+        "bytes": 87771,
+        "sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed"
+      },
+      {
+        "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+        "bytes": 8064,
+        "sha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json",
+        "bytes": 281280,
+        "sha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json",
+        "bytes": 982,
+        "sha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+        "bytes": 6287,
+        "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+        "bytes": 6287,
+        "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+        "bytes": 385974,
+        "sha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json",
+        "bytes": 14572,
+        "sha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee"
+      }
+    ],
+    "postCommitC34Attestations": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json"
+    ],
+    "postCommitC34AttestationCount": 6,
+    "unrelatedProtectedFiles": [
+      ".claude/settings.local.json",
+      ".vscode/extensions.json",
+      "evaluation/factcheck/README.md",
+      "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "evaluation/factcheck/hardest-philippine-tax-question.md"
+    ],
+    "pass": true
+  },
+  "runtimeAndProcessState": {
+    "nodeVersion": "v22.18.0",
+    "npmVersion": "10.9.3",
+    "processInspectionSucceeded": true,
+    "nodeProcesses": [],
+    "unreadableNodeCommandLines": [],
+    "activeC34Processes": [],
+    "activeC35Processes": [],
+    "port5173Listeners": [],
+    "port5173Free": true,
+    "temporaryRuntimeDirectories": [],
+    "allocationLocks": [],
+    "gitIndexLock": false,
+    "preexistingEmptyWorkspaceScratch": {
+      "path": ".c34-recovery-temp",
+      "children": 0,
+      "classifiedAsRuntime": false,
+      "preserved": true
+    },
+    "workingTreeServiceIdentity": {
+      "source": "committed HEAD services",
+      "gitTree": "c16daac64b34261899fef1b8941d8b23a290bed8",
+      "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+    },
+    "selectedSemanticRuntimeIdentity": {
+      "source": "immutable C34 selected attempt snapshot",
+      "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+    },
+    "localServiceState": "STOPPED_NO_NODE_PROCESS",
+    "deployedServiceIdentity": "PENDING_LIVE_CAPTURE",
+    "pass": true
+  },
+  "initializationGuards": {
+    "existingC35EvidencePaths": 0,
+    "existingC35RunnerPaths": 0,
+    "existingC35AttemptDirectories": 0,
+    "existingC35RegistryRows": 0,
+    "existingC35WalRows": 0,
+    "candidate7Created": false,
+    "candidate2Authorized": false,
+    "c36Started": false,
+    "phase10BStarted": false,
+    "deploymentPerformed": false,
+    "modelMigrationPerformed": false,
+    "pass": true
+  },
+  "gates": {
+    "committedC34Continuity": "PASS",
+    "checkpoint60TerminalAndResumable": "PASS",
+    "c34ManifestImmutableAndValid": "PASS",
+    "c34SelectedRuntimeRecomputedExact": "PASS",
+    "protectedResidueFrozen": "PASS",
+    "ledgerReconciled": "PASS",
+    "noExistingC35Allocation": "PASS",
+    "noProcessTempLockOrPortListener": "PASS",
+    "stagingEmpty": "PASS"
+  },
+  "verdict": "PASS_READY_TO_INITIALIZE_C35",
+  "pass": true
+}

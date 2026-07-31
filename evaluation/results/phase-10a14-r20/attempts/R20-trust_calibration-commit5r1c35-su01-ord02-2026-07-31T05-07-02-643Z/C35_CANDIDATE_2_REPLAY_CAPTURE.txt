@@ -1,0 +1,431 @@
+FORWARD
+TAP version 13
+# Subtest: private evidence builder preserves displayed order and exact bounded passage digests
+ok 1 - private evidence builder preserves displayed order and exact bounded passage digests
+  ---
+  duration_ms: 15.5354
+  type: 'test'
+  ...
+# Subtest: evidence join never relabels one RR subsection as another
+ok 2 - evidence join never relabels one RR subsection as another
+  ---
+  duration_ms: 3.6108
+  type: 'test'
+  ...
+# Subtest: evidence join matches the same RR subsection and issuance-level variants only at equal specificity
+ok 3 - evidence join matches the same RR subsection and issuance-level variants only at equal specificity
+  ---
+  duration_ms: 3.1321
+  type: 'test'
+  ...
+# Subtest: evidence join rejects different NIRC sections and incompatible declared authority types
+ok 4 - evidence join rejects different NIRC sections and incompatible declared authority types
+  ---
+  duration_ms: 0.8769
+  type: 'test'
+  ...
+# Subtest: section-symbol and bare administrative locators cannot bypass provision-aware joining
+ok 5 - section-symbol and bare administrative locators cannot bypass provision-aware joining
+  ---
+  duration_ms: 1.6753
+  type: 'test'
+  ...
+# Subtest: plural, ranged, and bare NIRC locators remain provision-specific
+ok 6 - plural, ranged, and bare NIRC locators remain provision-specific
+  ---
+  duration_ms: 6.668
+  type: 'test'
+  ...
+# Subtest: label-only displayed authority fails closed before any reviewer call
+ok 7 - label-only displayed authority fails closed before any reviewer call
+  ---
+  duration_ms: 64.5545
+  type: 'test'
+  ...
+# Subtest: displayed-source limit overflow is explicit and fails closed
+ok 8 - displayed-source limit overflow is explicit and fails closed
+  ---
+  duration_ms: 4.6565
+  type: 'test'
+  ...
+# Subtest: every displayed live VAT authority must have a passage; RR label alone cannot verify
+ok 9 - every displayed live VAT authority must have a passage; RR label alone cannot verify
+  ---
+  duration_ms: 2.5671
+  type: 'test'
+  ...
+# Subtest: a mixed valid and invalid passage row fails closed before reviewer invocation
+ok 10 - a mixed valid and invalid passage row fails closed before reviewer invocation
+  ---
+  duration_ms: 0.874
+  type: 'test'
+  ...
+# Subtest: host binding index excludes an invalid-digest passage even beside a valid passage
+ok 11 - host binding index excludes an invalid-digest passage even beside a valid passage
+  ---
+  duration_ms: 1.5647
+  type: 'test'
+  ...
+# Subtest: supported final answer and exact passage reach reviewer and host-valid binding verifies
+ok 12 - supported final answer and exact passage reach reviewer and host-valid binding verifies
+  ---
+  duration_ms: 2.4739
+  type: 'test'
+  ...
+# Subtest: adversarial closing-tag text is reversibly JSON-escaped and cannot break prompt boundaries
+ok 13 - adversarial closing-tag text is reversibly JSON-escaped and cannot break prompt boundaries
+  ---
+  duration_ms: 1.3244
+  type: 'test'
+  ...
+# Subtest: all-safe reviewer verdict without material proposition bindings fails on host
+ok 14 - all-safe reviewer verdict without material proposition bindings fails on host
+  ---
+  duration_ms: 0.7489
+  type: 'test'
+  ...
+# Subtest: invented passage digest cannot verify even with an all-safe semantic verdict
+ok 15 - invented passage digest cannot verify even with an all-safe semantic verdict
+  ---
+  duration_ms: 0.6378
+  type: 'test'
+  ...
+# Subtest: attestation for a different final answer digest cannot verify
+ok 16 - attestation for a different final answer digest cannot verify
+  ---
+  duration_ms: 0.9746
+  type: 'test'
+  ...
+# Subtest: reviewer cannot undercount a two-sentence final answer as one proposition
+ok 17 - reviewer cannot undercount a two-sentence final answer as one proposition
+  ---
+  duration_ms: 0.8531
+  type: 'test'
+  ...
+# Subtest: two exact host propositions with exact passage bindings can verify
+ok 18 - two exact host propositions with exact passage bindings can verify
+  ---
+  duration_ms: 0.9884
+  type: 'test'
+  ...
+# Subtest: a subphrase binding cannot stand in for the exact host proposition
+ok 19 - a subphrase binding cannot stand in for the exact host proposition
+  ---
+  duration_ms: 0.6118
+  type: 'test'
+  ...
+# Subtest: duplicating one proposition binding cannot cover another host proposition
+ok 20 - duplicating one proposition binding cannot cover another host proposition
+  ---
+  duration_ms: 0.7185
+  type: 'test'
+  ...
+# Subtest: more than twenty-four host propositions fail closed without truncation or reviewer call
+ok 21 - more than twenty-four host propositions fail closed without truncation or reviewer call
+  ---
+  duration_ms: 1.0103
+  type: 'test'
+  ...
+# Subtest: broad input-VAT statement remains unsupported when reviewer sees only narrow Section 106 text
+ok 22 - broad input-VAT statement remains unsupported when reviewer sees only narrow Section 106 text
+  ---
+  duration_ms: 1.9858
+  type: 'test'
+  ...
+# Subtest: private passages never enter the unchanged public source-card shape
+ok 23 - private passages never enter the unchanged public source-card shape
+  ---
+  duration_ms: 1.1312
+  type: 'test'
+  ...
+# Subtest: authority conflict and proposition support remain independent axes
+ok 24 - authority conflict and proposition support remain independent axes
+  ---
+  duration_ms: 1.9881
+  type: 'test'
+  ...
+# Subtest: Candidate 1 active base is byte-identical during Candidate 2
+ok 25 - Candidate 1 active base is byte-identical during Candidate 2
+  ---
+  duration_ms: 1.6058
+  type: 'test'
+  ...
+# [VECTOR INSERT CONFIG] { batchSize: 20, batchDelayMs: 150 }
+# [DB IDENTITY] {
+#   supabaseUrlHost: 'c35-isolated-replay.invalid',
+#   supabaseProjectRef: 'c35-isolated-replay',
+#   VECTOR_TABLE: 'tina_vector_store',
+#   LOCK_TABLE: 'tina_reindex_locks',
+#   vectorTableFromEnv: null,
+#   vectorTableUsingDefault: true,
+#   vectorTableMatchExpected: true,
+#   NODE_ENV: null,
+#   RENDER_SERVICE_NAME: null,
+#   RENDER_GIT_COMMIT: null,
+#   RENDER_INSTANCE_ID: null,
+#   INSTANCE_ID: '1b41b2d20373e82e',
+#   pid: 19072,
+#   engineVersion: '3.0.0'
+# }
+# Subtest: same authority record fragments cannot create two conflict positions
+ok 26 - same authority record fragments cannot create two conflict positions
+  ---
+  duration_ms: 16.9331
+  type: 'test'
+  ...
+# Subtest: distinct authority records preserve same-issue opposite-position conflict
+ok 27 - distinct authority records preserve same-issue opposite-position conflict
+  ---
+  duration_ms: 2.3609
+  type: 'test'
+  ...
+# Subtest: same record with structured effectivity positions remains eligible
+ok 28 - same record with structured effectivity positions remains eligible
+  ---
+  duration_ms: 1.0243
+  type: 'test'
+  ...
+# Subtest: same record with structured supersession positions remains eligible
+ok 29 - same record with structured supersession positions remains eligible
+  ---
+  duration_ms: 1.0725
+  type: 'test'
+  ...
+# Subtest: incomplete genuine conflict remains potential and complete conflict remains verified
+ok 30 - incomplete genuine conflict remains potential and complete conflict remains verified
+  ---
+  duration_ms: 1.8651
+  type: 'test'
+  ...
+# Subtest: authority support remains independent and fail-closed
+ok 31 - authority support remains independent and fail-closed
+  ---
+  duration_ms: 2.6499
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21273.2889
+
+
+REVERSE
+TAP version 13
+# Subtest: private evidence builder preserves displayed order and exact bounded passage digests
+ok 1 - private evidence builder preserves displayed order and exact bounded passage digests
+  ---
+  duration_ms: 2.1662
+  type: 'test'
+  ...
+# Subtest: evidence join never relabels one RR subsection as another
+ok 2 - evidence join never relabels one RR subsection as another
+  ---
+  duration_ms: 0.9263
+  type: 'test'
+  ...
+# Subtest: evidence join matches the same RR subsection and issuance-level variants only at equal specificity
+ok 3 - evidence join matches the same RR subsection and issuance-level variants only at equal specificity
+  ---
+  duration_ms: 0.5695
+  type: 'test'
+  ...
+# Subtest: evidence join rejects different NIRC sections and incompatible declared authority types
+ok 4 - evidence join rejects different NIRC sections and incompatible declared authority types
+  ---
+  duration_ms: 0.1316
+  type: 'test'
+  ...
+# Subtest: section-symbol and bare administrative locators cannot bypass provision-aware joining
+ok 5 - section-symbol and bare administrative locators cannot bypass provision-aware joining
+  ---
+  duration_ms: 0.2199
+  type: 'test'
+  ...
+# Subtest: plural, ranged, and bare NIRC locators remain provision-specific
+ok 6 - plural, ranged, and bare NIRC locators remain provision-specific
+  ---
+  duration_ms: 0.419
+  type: 'test'
+  ...
+# Subtest: label-only displayed authority fails closed before any reviewer call
+ok 7 - label-only displayed authority fails closed before any reviewer call
+  ---
+  duration_ms: 28.5324
+  type: 'test'
+  ...
+# Subtest: displayed-source limit overflow is explicit and fails closed
+ok 8 - displayed-source limit overflow is explicit and fails closed
+  ---
+  duration_ms: 3.3697
+  type: 'test'
+  ...
+# Subtest: every displayed live VAT authority must have a passage; RR label alone cannot verify
+ok 9 - every displayed live VAT authority must have a passage; RR label alone cannot verify
+  ---
+  duration_ms: 3.0255
+  type: 'test'
+  ...
+# Subtest: a mixed valid and invalid passage row fails closed before reviewer invocation
+ok 10 - a mixed valid and invalid passage row fails closed before reviewer invocation
+  ---
+  duration_ms: 1.3929
+  type: 'test'
+  ...
+# Subtest: host binding index excludes an invalid-digest passage even beside a valid passage
+ok 11 - host binding index excludes an invalid-digest passage even beside a valid passage
+  ---
+  duration_ms: 1.9263
+  type: 'test'
+  ...
+# Subtest: supported final answer and exact passage reach reviewer and host-valid binding verifies
+ok 12 - supported final answer and exact passage reach reviewer and host-valid binding verifies
+  ---
+  duration_ms: 1.5434
+  type: 'test'
+  ...
+# Subtest: adversarial closing-tag text is reversibly JSON-escaped and cannot break prompt boundaries
+ok 13 - adversarial closing-tag text is reversibly JSON-escaped and cannot break prompt boundaries
+  ---
+  duration_ms: 2.0417
+  type: 'test'
+  ...
+# Subtest: all-safe reviewer verdict without material proposition bindings fails on host
+ok 14 - all-safe reviewer verdict without material proposition bindings fails on host
+  ---
+  duration_ms: 0.5079
+  type: 'test'
+  ...
+# Subtest: invented passage digest cannot verify even with an all-safe semantic verdict
+ok 15 - invented passage digest cannot verify even with an all-safe semantic verdict
+  ---
+  duration_ms: 0.4349
+  type: 'test'
+  ...
+# Subtest: attestation for a different final answer digest cannot verify
+ok 16 - attestation for a different final answer digest cannot verify
+  ---
+  duration_ms: 0.6497
+  type: 'test'
+  ...
+# Subtest: reviewer cannot undercount a two-sentence final answer as one proposition
+ok 17 - reviewer cannot undercount a two-sentence final answer as one proposition
+  ---
+  duration_ms: 0.5776
+  type: 'test'
+  ...
+# Subtest: two exact host propositions with exact passage bindings can verify
+ok 18 - two exact host propositions with exact passage bindings can verify
+  ---
+  duration_ms: 0.6135
+  type: 'test'
+  ...
+# Subtest: a subphrase binding cannot stand in for the exact host proposition
+ok 19 - a subphrase binding cannot stand in for the exact host proposition
+  ---
+  duration_ms: 0.4456
+  type: 'test'
+  ...
+# Subtest: duplicating one proposition binding cannot cover another host proposition
+ok 20 - duplicating one proposition binding cannot cover another host proposition
+  ---
+  duration_ms: 0.4975
+  type: 'test'
+  ...
+# Subtest: more than twenty-four host propositions fail closed without truncation or reviewer call
+ok 21 - more than twenty-four host propositions fail closed without truncation or reviewer call
+  ---
+  duration_ms: 0.6887
+  type: 'test'
+  ...
+# Subtest: broad input-VAT statement remains unsupported when reviewer sees only narrow Section 106 text
+ok 22 - broad input-VAT statement remains unsupported when reviewer sees only narrow Section 106 text
+  ---
+  duration_ms: 1.3578
+  type: 'test'
+  ...
+# Subtest: private passages never enter the unchanged public source-card shape
+ok 23 - private passages never enter the unchanged public source-card shape
+  ---
+  duration_ms: 0.5376
+  type: 'test'
+  ...
+# Subtest: authority conflict and proposition support remain independent axes
+ok 24 - authority conflict and proposition support remain independent axes
+  ---
+  duration_ms: 1.1964
+  type: 'test'
+  ...
+# Subtest: Candidate 1 active base is byte-identical during Candidate 2
+ok 25 - Candidate 1 active base is byte-identical during Candidate 2
+  ---
+  duration_ms: 0.8864
+  type: 'test'
+  ...
+# [VECTOR INSERT CONFIG] { batchSize: 20, batchDelayMs: 150 }
+# [DB IDENTITY] {
+#   supabaseUrlHost: 'c35-isolated-replay.invalid',
+#   supabaseProjectRef: 'c35-isolated-replay',
+#   VECTOR_TABLE: 'tina_vector_store',
+#   LOCK_TABLE: 'tina_reindex_locks',
+#   vectorTableFromEnv: null,
+#   vectorTableUsingDefault: true,
+#   vectorTableMatchExpected: true,
+#   NODE_ENV: null,
+#   RENDER_SERVICE_NAME: null,
+#   RENDER_GIT_COMMIT: null,
+#   RENDER_INSTANCE_ID: null,
+#   INSTANCE_ID: '8c9aa0f34252104c',
+#   pid: 18444,
+#   engineVersion: '3.0.0'
+# }
+# Subtest: same authority record fragments cannot create two conflict positions
+ok 26 - same authority record fragments cannot create two conflict positions
+  ---
+  duration_ms: 9.0906
+  type: 'test'
+  ...
+# Subtest: distinct authority records preserve same-issue opposite-position conflict
+ok 27 - distinct authority records preserve same-issue opposite-position conflict
+  ---
+  duration_ms: 1.1197
+  type: 'test'
+  ...
+# Subtest: same record with structured effectivity positions remains eligible
+ok 28 - same record with structured effectivity positions remains eligible
+  ---
+  duration_ms: 0.3893
+  type: 'test'
+  ...
+# Subtest: same record with structured supersession positions remains eligible
+ok 29 - same record with structured supersession positions remains eligible
+  ---
+  duration_ms: 0.6305
+  type: 'test'
+  ...
+# Subtest: incomplete genuine conflict remains potential and complete conflict remains verified
+ok 30 - incomplete genuine conflict remains potential and complete conflict remains verified
+  ---
+  duration_ms: 1.2814
+  type: 'test'
+  ...
+# Subtest: authority support remains independent and fail-closed
+ok 31 - authority support remains independent and fail-closed
+  ---
+  duration_ms: 1.3732
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20350.3715
+

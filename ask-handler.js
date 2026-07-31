@@ -80,6 +80,7 @@ import {
   buildSourceFallbackDisclosureMeta
 } from "./services/source-fallback-disclosure.js";
 import { evaluateAnswerSupport, buildCalendarRelativeSafeAnswer } from "./services/answer-support-validator.js";
+import { buildAnswerSupportEvidence } from "./services/answer-support-evidence.js";
 import { derivePersistenceReceipt } from "./services/persistence-receipt.js";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { publicRuntimeIdentity } from "./services/runtime-identity.js";
@@ -2468,10 +2469,19 @@ export function createAskHandler({
       result.responseType !== "controlled_loa_answer" &&
       result.responseType !== "controlled_loa_legal_conclusion_restricted";
     if (_verifiedCandidate) {
+      // PHASE-10A14-R20 COMMIT 5R1-C35 Candidate 2: proposition support is
+      // evaluated against a private, bounded packet that joins the FINAL
+      // displayed authority identities to exact retrieved passages. Public
+      // source cards remain sanitized and unchanged; unmatched displayed
+      // authorities stay explicit in the private packet and fail closed.
+      const _answerSupportEvidence = buildAnswerSupportEvidence({
+        displayedSources: visibleSources,
+        retrievedSources: resultSources
+      });
       result.answerSupport = await evaluateAnswerSupport({
         question: typeof question === "string" ? question : "",
         answer: result.answer || "",
-        sources: visibleSources
+        sources: _answerSupportEvidence
       });
       // PHASE-10A14-R10 (P1-R9-IR-001 / WS2/WS3/WS6): a deterministically unsupported
       // calendar-relative filing-deadline conclusion must be REPLACED entirely — not merely

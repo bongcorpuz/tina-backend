@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "artifactRole": "POST_ALLOCATION_EXACT_NAME_WRAPPER",
+  "temporalAdjudication": "The pre-fix observation existed before Candidate 2 under the bound alternate filename; this wrapper is not backdated.",
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_BINDING_PRE_FIX_RESULT.json",
+    "sha256": "2ae2aaa03060a7127d69f73fa7e9e8daaf2a68e4a4ae28e75db9bbb51a1d07e6",
+    "observation": "PRE_FIX_GENERALIZED_PASSAGE_BINDING_DEFECT_REPRODUCED"
+  },
+  "expectationsChanged": false,
+  "labelOnlyIncorrectlyVerifiedBefore": true,
+  "liveBroadInputVatIncorrectlyVerifiedWithoutPassagesBefore": true,
+  "verdict": "PRE_FIX_FIXTURE_FAILURE_REPRODUCED_AND_FROZEN",
+  "pass": true
+}

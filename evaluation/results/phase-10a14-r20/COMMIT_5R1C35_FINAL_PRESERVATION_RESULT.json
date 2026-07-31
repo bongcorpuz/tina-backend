@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "c34": {
+    "runtimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "metrics": {
+      "reason": "3575/3720",
+      "decision": "3720/3720",
+      "relation": "3720/3720",
+      "reasonSuite": "344/344",
+      "collision": "196/196",
+      "decisionCF": "756/756",
+      "relationCF": "282/282",
+      "clause": "68/68",
+      "richGuard": "7/7",
+      "reasonIntegrity": "PASS",
+      "faFrClarify": 0
+    },
+    "reasonOnlyResidual": 145,
+    "rerun": false,
+    "mutated": false,
+    "attestationHashes": {
+      "COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+      "COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+      "COMMIT_5R1C34_RECOVERY_CHECKPOINT.json": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee"
+    },
+    "pass": true
+  },
+  "protectedFiles": {
+    "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md": "1ff4772a3c082f8072997e8c86f291a322ec7d1986b866325a7895594fcbf280",
+    "knowledge/CURRENT_STATE.md": "e17a7a73b9966458e1410690d2ad2f2c82d75e8808cc78de60f8ee10c3ca1a2c",
+    ".claude/settings.local.json": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+    ".vscode/extensions.json": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09"
+  },
+  "protectedResidueMutated": false,
+  "roadmapV7V8Changed": false,
+  "deploymentPerformed": false,
+  "c36OrPhase10BBegun": false,
+  "verdict": "FINAL_PRESERVATION_PASS",
+  "pass": true
+}

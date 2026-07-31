@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T07:22:08.970Z",
+  "invocationBudgetConsumed": true,
+  "ordinal": 1,
+  "status": "STARTED_EXACTLY_ONCE",
+  "reviewedState": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_REVIEW_EVIDENCE.sha256",
+    "bytes": 17831,
+    "sha256": "ccc5d1096ef29b156638366db2c89a7a0e992471fd2a4cc6be3ae6505e740b33",
+    "rows": 121,
+    "bad": 0,
+    "missing": 0,
+    "duplicates": 0
+  },
+  "reviewedStateDigest": "ccc5d1096ef29b156638366db2c89a7a0e992471fd2a4cc6be3ae6505e740b33",
+  "manifestValidation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_REVIEW_MANIFEST_VALIDATION.json",
+    "bytes": 699,
+    "sha256": "a5ee1eaef737e92fd28254eb13674dda2d3ca15f4e91ef8d4d1e41fc33d76bfb"
+  },
+  "resolvedCliPath": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+  "cliVersion": "2.1.212",
+  "cliArtifact": {
+    "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa"
+  },
+  "transport": {
+    "caller": "Node child_process.spawnSync",
+    "shell": false,
+    "powershellUsed": false,
+    "npmShimUsed": false,
+    "argvArray": true
+  },
+  "argv": [
+    "-p",
+    "You are the mandatory independent final reviewer for PHASE-10A14-R20 COMMIT 5R1-C35.\n\nWork READ-ONLY in C:/Projects/tina-backend. Do not edit, create, delete, stage, commit, push, deploy, start a service, install anything, or run tests. You may use Read, Glob, and Grep. Bash is authorized only for a simple command of the exact form:\nsha256sum -c \"evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_REVIEW_EVIDENCE.sha256\"\nDo not use pipes, redirects, command substitution, scripts, or other shell commands.\n\nThe reviewed-state digest is the SHA-256 of that self-excluding 121-row manifest:\nccc5d1096ef29b156638366db2c89a7a0e992471fd2a4cc6be3ae6505e740b33\nReturn this exact lowercase digest as reviewedStateDigest.\n\nRead the governing prompt:\nC:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C35-FOUR-HOUR-FINALIZATION-FROM-CHECKPOINT-61.md\n\nStart with:\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_OPUS_REQUEST.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CHECKPOINT_61_CONTINUATION_PREFLIGHT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_PROPOSITION_LEDGER.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_INPUT_VAT_PASSAGE_PACKET.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_INPUT_VAT_PROPOSITION_REVALIDATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_AUTHORITY_SUPPORT_INDEPENDENCE_ADJUDICATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_NECESSITY_DECISION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_CUMULATIVE_COMPOSITION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_TRUST_STATE_MATRIX.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_PROPOSITION_SUPPORT_MATRIX.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_REPLAY_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_PRESERVATION_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_ATTEMPT_LEDGER.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_FROZEN_GATE_RESULT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FULL_DETERMINISTIC_REGRESSION_ADJUDICATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_OPUS_OPERATIONAL_HYGIENE.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PREALLOCATION_PROTOCOL_ADJUDICATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_REVIEW_MANIFEST_VALIDATION.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_CLOSURE_DECISION_DRAFT.json\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ROADMAP_V9_DRAFT.md\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CURRENT_STATE_DRAFT.md\n- evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PROPOSED_STAGED_PATHS.json\n\nIndependently inspect the runtime, fixtures, tests, attempt records, registry/WAL, and other manifest-bound evidence as needed. Candidate 1 must resolve to a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d exactly once. The final cumulative active base must reproduce as 5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c.\n\nImportant disclosed facts to adjudicate, not silently normalize:\n1. The broad input-VAT sentence is not exactly supported by the captured narrow passage packet and is not promoted. Generic VAT remains NO_CONFLICT while authority support is RELATED_AUTHORITY_ONLY.\n2. Candidate 2 was authorized only after controlled evidence showed a generalized proposition-to-passage binding defect. It is terminal and accepted; no Candidate 3 exists.\n3. The deterministic full repository runner had nominal exit 1: 184/217 suites, 5397 passed and 54 failed groups. All 54 failures were adjudicated as historical diff-scope or stale CURRENT_STATE/old-next-task checks, with zero runtime authority/support/conflict/answer-behavior failures. Do not call this an unqualified test pass; decide whether the explicit adjudication is commit-safe.\n4. Exact prompt-name wrappers for several support artifacts were generated after allocation from already frozen alternate-name evidence and are explicitly provenance-marked, not backdated.\n5. The bespoke C35 registry rows use trust_calibration and omit three generic-schema fields. They are preserved terminal history with no semantic runtime impact; do not require silent mutation merely for schema style.\n6. Candidate 2's preterminal generatedUtc is 30 seconds later than the later terminal event's inherited result timestamp. Filesystem last-write order proves preterminal then terminalization. Treat this as disclosed timestamp-source variance, not evidence reordering.\n7. The current COMMIT_5R1C35_FINAL_EVIDENCE.sha256 is checkpoint-61-era and deliberately excluded. Its exact bytes are archived as COMMIT_5R1C35_CHECKPOINT_61_EVIDENCE_MANIFEST.sha256. The true final manifest, closure assessment, decision-specific docs, staging evidence, commit, and push may be created only after your approval.\n8. Phase 10A must remain OPEN: decision/relation are 3720/3720, reason is 3575/3720, and 145 reason-only rows remain (45 explicit_non_tax_task, 16 explicit_tax_task_relation, 81 no_tax_relation, 1 tax_compliance_task, 2 tax_treatment_of_ordinary_object).\n9. The Roadmap and CURRENT_STATE files in knowledge/ are intentionally unchanged pre-review. Review their two proposed drafts. Postapproval substitution of your decision token and installation of those drafts are the only allowed documentation changes.\n10. No deployment, C36, Phase 10B implementation, reindex, or model migration is authorized.\n\nUse decision APPROVED only if every verification boolean is true, there are no blocking findings, read-only independence is confirmed, and the reviewed state is safe to commit after the expressly postapproval evidence/docs/staging steps. Use APPROVED_WITH_NONBLOCKING_OBSERVATIONS under the same conditions when observations do not require runtime, disposition, composition, or reviewed-hash changes. Otherwise use REJECTED or INCOMPLETE_REVIEW. phase10AClassification must be OPEN for an approval.\n\nReturn only the requested structured object.",
+    "--model",
+    "claude-opus-4-8",
+    "--effort",
+    "max",
+    "--permission-mode",
+    "plan",
+    "--tools",
+    "Read,Glob,Grep,Bash",
+    "--allowedTools",
+    "Read,Glob,Grep,Bash(sha256sum *)",
+    "--safe-mode",
+    "--no-session-persistence",
+    "--output-format",
+    "json",
+    "--json-schema",
+    "{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"decision\",\"reviewedStateDigest\",\"reviewerTool\",\"reviewerModel\",\"independenceConfirmed\",\"readOnlyConfirmed\",\"summary\",\"phase10AClassification\",\"verification\",\"blockingFindings\",\"nonblockingObservations\",\"commitSafe\"],\"properties\":{\"decision\":{\"type\":\"string\",\"enum\":[\"APPROVED\",\"APPROVED_WITH_NONBLOCKING_OBSERVATIONS\",\"REJECTED\",\"INCOMPLETE_REVIEW\"]},\"reviewedStateDigest\":{\"type\":\"string\",\"pattern\":\"^[0-9a-f]{64}$\"},\"reviewerTool\":{\"type\":\"string\",\"const\":\"Claude Code\"},\"reviewerModel\":{\"type\":\"string\",\"const\":\"claude-opus-4-8\"},\"independenceConfirmed\":{\"type\":\"boolean\"},\"readOnlyConfirmed\":{\"type\":\"boolean\"},\"summary\":{\"type\":\"string\"},\"phase10AClassification\":{\"type\":\"string\",\"enum\":[\"CLOSED\",\"OPEN\",\"INDETERMINATE\"]},\"verification\":{\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"checkpoint61Continuity\",\"candidate1IdentityAndExactOnce\",\"vatPropositionPassageRevalidation\",\"inputVatQualificationSupport\",\"candidate2NecessityAndDisposition\",\"candidateChainTerminal\",\"finalCompositionAndActiveBase\",\"authorityConflictPreservation\",\"authoritySupportIndependence\",\"c34FrozenPreservation\",\"c35FrozenGates\",\"replayAndGeneralization\",\"registryWalAttemptLedger\",\"protectedResidueAndServiceGitHygiene\",\"phase10AClosureAssessment\",\"reasonResidual145Explicit\",\"roadmapV9DraftAccurate\",\"currentStateDraftAccurate\",\"manifestAndStagingProposal\",\"noDeployC36OrPhase10B\"],\"properties\":{\"checkpoint61Continuity\":{\"type\":\"boolean\"},\"candidate1IdentityAndExactOnce\":{\"type\":\"boolean\"},\"vatPropositionPassageRevalidation\":{\"type\":\"boolean\"},\"inputVatQualificationSupport\":{\"type\":\"boolean\"},\"candidate2NecessityAndDisposition\":{\"type\":\"boolean\"},\"candidateChainTerminal\":{\"type\":\"boolean\"},\"finalCompositionAndActiveBase\":{\"type\":\"boolean\"},\"authorityConflictPreservation\":{\"type\":\"boolean\"},\"authoritySupportIndependence\":{\"type\":\"boolean\"},\"c34FrozenPreservation\":{\"type\":\"boolean\"},\"c35FrozenGates\":{\"type\":\"boolean\"},\"replayAndGeneralization\":{\"type\":\"boolean\"},\"registryWalAttemptLedger\":{\"type\":\"boolean\"},\"protectedResidueAndServiceGitHygiene\":{\"type\":\"boolean\"},\"phase10AClosureAssessment\":{\"type\":\"boolean\"},\"reasonResidual145Explicit\":{\"type\":\"boolean\"},\"roadmapV9DraftAccurate\":{\"type\":\"boolean\"},\"currentStateDraftAccurate\":{\"type\":\"boolean\"},\"manifestAndStagingProposal\":{\"type\":\"boolean\"},\"noDeployC36OrPhase10B\":{\"type\":\"boolean\"}}},\"blockingFindings\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"nonblockingObservations\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"commitSafe\":{\"type\":\"boolean\"}}}"
+  ],
+  "argvBindings": [
+    {
+      "index": 0,
+      "characters": 2,
+      "bytes": 2,
+      "sha256": "567479c447e472328522a1d759aabb9b579e4522a6da547c983d29e94c1604c2"
+    },
+    {
+      "index": 1,
+      "characters": 6197,
+      "bytes": 6197,
+      "sha256": "06fa42a9fddf746d8a786486ae5a8516f892a333d352b5e6b8991246224ea9c8"
+    },
+    {
+      "index": 2,
+      "characters": 7,
+      "bytes": 7,
+      "sha256": "3314578423aba83b737246a3e54f0441fafd70f61f542a73bd1061d367621b87"
+    },
+    {
+      "index": 3,
+      "characters": 15,
+      "bytes": 15,
+      "sha256": "47a46a22f0c9fb105db3f0d8bda83ad51bd59369ab8c8c30cc32ba6356ac5a4a"
+    },
+    {
+      "index": 4,
+      "characters": 8,
+      "bytes": 8,
+      "sha256": "a1da2fd39683cbab36c6284a0b7099e3a80d1dd965a990e6b308b5157056610a"
+    },
+    {
+      "index": 5,
+      "characters": 3,
+      "bytes": 3,
+      "sha256": "9baf3a40312f39849f46dad1040f2f039f1cffa1238c41e9db675315cfad39b6"
+    },
+    {
+      "index": 6,
+      "characters": 17,
+      "bytes": 17,
+      "sha256": "280ea966d5a3aa05222ac2c05add5d03a537430c1bccfd741f8c0d1dd1fe8048"
+    },
+    {
+      "index": 7,
+      "characters": 4,
+      "bytes": 4,
+      "sha256": "64879f7d6b960a01909762d911a32d4582c20010c5641ee90278b644a9e3b525"
+    },
+    {
+      "index": 8,
+      "characters": 7,
+      "bytes": 7,
+      "sha256": "eceaafd22c6e5825bd5cc439be5f871f7111609c388dd08da3f3575bd9b6939b"
+    },
+    {
+      "index": 9,
+      "characters": 19,
+      "bytes": 19,
+      "sha256": "28d13e4a249860df6430cc0562b7864527611b5ba60f9aeee6f1b7afdf613101"
+    },
+    {
+      "index": 10,
+      "characters": 14,
+      "bytes": 14,
+      "sha256": "4cdb267e8f7592995a8907313845fd1628ebd5df07277a4df4188d7f13fa689e"
+    },
+    {
+      "index": 11,
+      "characters": 32,
+      "bytes": 32,
+      "sha256": "c1ebb8a0e46d28f6ac533a8d7ded63167c7b45b6a889f48f32cc582f92071df4"
+    },
+    {
+      "index": 12,
+      "characters": 11,
+      "bytes": 11,
+      "sha256": "fca3c7db9add185b1e8c5a2d34cf8a9b35cb5f7f1785bbf8215bfc633445268f"
+    },
+    {
+      "index": 13,
+      "characters": 24,
+      "bytes": 24,
+      "sha256": "98c78a4fb072cbdbfd16c4fd8d76cc16571838b08205fd80b9d168a28383b775"
+    },
+    {
+      "index": 14,
+      "characters": 15,
+      "bytes": 15,
+      "sha256": "eeaf0d76fa8ded547f0fb280109bc95db80940cff241a5b2a9a235927fa2b743"
+    },
+    {
+      "index": 15,
+      "characters": 4,
+      "bytes": 4,
+      "sha256": "02bd175f329720378ce83dd56a1b6b1f5291a60182d6c54b5e0d1e8d248a267a"
+    },
+    {
+      "index": 16,
+      "characters": 13,
+      "bytes": 13,
+      "sha256": "58c0b9825456c1692917376a0483d92519c08c402b695d24d19b122c33594a01"
+    },
+    {
+      "index": 17,
+      "characters": 2572,
+      "bytes": 2572,
+      "sha256": "ee4391ed3b98b65e9cdd00a0a28cc7f42f007da6fd99b4ad77f0719527069b48"
+    }
+  ],
+  "cwd": "C:/Projects/tina-backend",
+  "timeoutMilliseconds": 2700000,
+  "preflight": {
+    "registryAttempts": 230,
+    "c35WalRows": 6,
+    "attemptDirectories": 230,
+    "activeAttemptId": null,
+    "finalActiveBase": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "phase10A": "PHASE_10A_OPEN",
+    "reasonOnlyResidual": 145,
+    "pass": true
+  },
+  "hygiene": {
+    "inspectedUtc": "2026-07-31T07:22:07.846Z",
+    "currentOrchestratorPid": 14656,
+    "otherNodeProcesses": [],
+    "unreadableNodeCommandLines": [],
+    "listeners5173": [],
+    "resultTemporaryRuntimes": [],
+    "osTemporaryRuntimes": [],
+    "allocationLock": false,
+    "gitIndexLock": false,
+    "stagedPaths": [],
+    "head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "aheadBehind": "0\t0",
+    "branch": "feature/source-availability-engine-v1",
+    "protectedFiles": {
+      "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md": {
+        "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+        "bytes": 29826,
+        "sha256": "1ff4772a3c082f8072997e8c86f291a322ec7d1986b866325a7895594fcbf280"
+      },
+      "knowledge/CURRENT_STATE.md": {
+        "path": "knowledge/CURRENT_STATE.md",
+        "bytes": 120184,
+        "sha256": "e17a7a73b9966458e1410690d2ad2f2c82d75e8808cc78de60f8ee10c3ca1a2c"
+      },
+      ".claude/settings.local.json": {
+        "path": ".claude/settings.local.json",
+        "bytes": 4466,
+        "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"
+      },
+      ".vscode/extensions.json": {
+        "path": ".vscode/extensions.json",
+        "bytes": 70,
+        "sha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09"
+      },
+      "evaluation/factcheck/README.md": {
+        "path": "evaluation/factcheck/README.md",
+        "bytes": 1890,
+        "sha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a"
+      },
+      "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md": {
+        "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+        "bytes": 35275,
+        "sha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08"
+      },
+      "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md": {
+        "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+        "bytes": 87771,
+        "sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed"
+      },
+      "evaluation/factcheck/hardest-philippine-tax-question.md": {
+        "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+        "bytes": 8064,
+        "sha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7"
+      }
+    },
+    "c34ProtectedAttestations": {
+      "COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json",
+        "bytes": 281280,
+        "sha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856"
+      },
+      "COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json",
+        "bytes": 982,
+        "sha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f"
+      },
+      "COMMIT_5R1C34_RECOVERY_CHECKPOINT.json": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+        "bytes": 6287,
+        "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a"
+      },
+      "COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+        "bytes": 6287,
+        "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a"
+      },
+      "COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+        "bytes": 385974,
+        "sha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d"
+      },
+      "COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json",
+        "bytes": 14572,
+        "sha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee"
+      }
+    },
+    "ledger": {
+      "registryAttempts": 230,
+      "attemptDirectories": 230,
+      "c35Wal": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+        "bytes": 2165,
+        "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f"
+      },
+      "c34Wal": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+        "bytes": 12143,
+        "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2"
+      },
+      "activeAttemptId": null
+    },
+    "serviceIdentity": {
+      "localServiceRunning": false,
+      "localPort5173Free": true,
+      "productionBackend": "https://tina-backend-y11x.onrender.com",
+      "productionDeploymentId": "srv-d7n4bsdckfvc73ep7mn0",
+      "productionRuntimeCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+      "selectedLocalWorktreeRuntime": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+      "productionServiceChanged": false,
+      "deploymentPerformed": false,
+      "known": true
+    },
+    "prohibitedOperations": {
+      "candidate3": false,
+      "c36": false,
+      "phase10BImplementation": false,
+      "deployment": false,
+      "migration": false,
+      "reindex": false,
+      "stage": false,
+      "commit": false,
+      "push": false
+    },
+    "pass": true
+  },
+  "safeMode": true,
+  "noSessionPersistence": true,
+  "permissionMode": "plan",
+  "candidateExecutionAuthorized": false,
+  "deploymentAuthorized": false,
+  "c36Authorized": false,
+  "phase10BImplementationAuthorized": false,
+  "pass": true
+}

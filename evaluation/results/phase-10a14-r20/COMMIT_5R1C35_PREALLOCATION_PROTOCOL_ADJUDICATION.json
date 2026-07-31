@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T07:12:00.000Z",
+  "classification": "DISCLOSED_NONSEMANTIC_PREALLOCATION_AND_TIMESTAMP_VARIANCES",
+  "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_AUTHORIZATION.json",
+    "sha256": "cd0218fe426be717c81c2fda0ff7cc5541baa3d160023d65a17c31559c03d15c",
+    "preservedUnmodified": true
+  },
+  "preallocationEquivalentEvidence": {
+    "supportPassagePacket": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_PACKET.json",
+      "bytes": 1203,
+      "sha256": "5c60730f4e4214adb33e05d5e49d3105399769a364b0a1f7449da435f99a4586",
+      "lastWriteUtc": "2026-07-31T05:05:18.8883775Z",
+      "authorizationDirectHashBindingPresent": false
+    },
+    "preauthorizationCompatibility": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_PREAUTH_COMPATIBILITY.json",
+      "bytes": 2107,
+      "sha256": "bc3118ce55132bb111ef57129cc7987ed214a55a2ba428390e7b90768eb10f82",
+      "lastWriteUtc": "2026-07-31T05:09:19.2532551Z",
+      "authorizationDirectHashBindingPresent": true
+    },
+    "supportFixture": {
+      "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+      "bytes": 9661,
+      "sha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244",
+      "lastWriteUtc": "2026-07-31T04:58:48.2119979Z",
+      "authorizationDirectHashBindingPresent": true
+    },
+    "supportPreFixResult": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_BINDING_PRE_FIX_RESULT.json",
+      "bytes": 1950,
+      "sha256": "2ae2aaa03060a7127d69f73fa7e9e8daaf2a68e4a4ae28e75db9bbb51a1d07e6",
+      "lastWriteUtc": "2026-07-31T05:03:56.2702863Z",
+      "authorizationDirectHashBindingPresent": true
+    }
+  },
+  "postallocationExactNameArtifacts": {
+    "fixtureCaseIndex": {
+      "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-vat-proposition-support.json",
+      "bytes": 2162,
+      "sha256": "8483e3b309142d08ee49d487c86f54eda854984d9621fcf0aca0ff9ab9776d60",
+      "lastWriteUtc": "2026-07-31T06:16:47.0016113Z",
+      "role": "Provenance-preserving exact-name case index over the frozen support fixture; not a backdated preallocation expectation."
+    },
+    "supportPreFixWrapper": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PRE_FIX_FIXTURE_RESULT.json",
+      "bytes": 827,
+      "sha256": "eae7ae0ae8aa01af313ba0ffc2ed023a96e919b186d4a2cf79385693aac1977e",
+      "lastWriteUtc": "2026-07-31T06:16:47.0050763Z",
+      "role": "Exact-name wrapper binding the immutable pre-fix source; explicitly generated after allocation."
+    },
+    "compatibilityValidation": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_COMPATIBILITY_VALIDATION.json",
+      "bytes": 3270,
+      "sha256": "bff1126bba6f06974ed52186fe4552c7d426608e35adea51c26c3fa47bfe99c1",
+      "lastWriteUtc": "2026-07-31T06:32:33.5839976Z",
+      "role": "Post-candidate exact-name validation that binds the already frozen preauthorization compatibility plus fresh observed gates; not claimed as preallocation evidence."
+    }
+  },
+  "adjudication": {
+    "authorizationOmittedDirectSupportPacketHash": true,
+    "equivalentSupportPacketExistedBeforeAllocation": true,
+    "exactNameArtifactsWereGeneratedLater": true,
+    "historicalAuthorizationMutated": false,
+    "historicalFilesPreserved": true,
+    "backdatingClaimed": false,
+    "semanticRuntimeImpact": "NONE",
+    "independentReviewDisclosureRequired": true
+  },
+  "terminalTimestampVariance": {
+    "preterminalArtifact": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_PRETERMINAL_VALIDATION.json",
+      "generatedUtc": "2026-07-31T06:34:30.000Z",
+      "lastWriteUtc": "2026-07-31T06:34:34.5873781Z",
+      "sha256": "975645f38e49ec883d811f455e23b81ad0e320c90224367b58c4dc84a4a77ea9"
+    },
+    "terminalEvent": {
+      "eventUtcInheritedFromResultGeneratedUtc": "2026-07-31T06:34:00.000Z",
+      "filesystemTerminalizationUtc": "2026-07-31T06:35:19Z",
+      "registryAfterSha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+      "walAfterSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f"
+    },
+    "cause": "The terminalizer reused Candidate 2 result.generatedUtc rather than its filesystem execution time.",
+    "filesystemOrderProvesPreterminalThenTerminal": true,
+    "evidenceReordering": false,
+    "semanticRuntimeImpact": "NONE"
+  },
+  "verdict": "PROTOCOL_VARIANCES_PRESERVED_BOUND_AND_DISCLOSED",
+  "pass": true
+}

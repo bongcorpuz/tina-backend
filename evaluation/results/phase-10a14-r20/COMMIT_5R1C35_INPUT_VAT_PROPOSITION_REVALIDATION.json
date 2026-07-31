@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "exactClaim": "Additionally, businesses can claim input VAT on purchases related to their taxable sales, which can help reduce their overall tax liability.",
+  "claimSha256": "51f1b6813b5ffdfe6c0e659560d5a07c116d75cdc2c515e34565b75309f3ec8c",
+  "capturedAuthorityAssessment": {
+    "nirc105To108PassagesSupportClaim": false,
+    "rr162005PassageCaptured": false,
+    "nirc110PassageCaptured": false,
+    "nirc113PassageCaptured": false,
+    "onlyInputTaxPassage": {
+      "citation": "NIRC Sec. 106",
+      "traceJsonPointer": "/rerankedSources/5/text",
+      "scope": "A narrow rule for VAT zero-rated local purchases attributable to VAT-exempt sales.",
+      "supportsBroadClaim": false
+    }
+  },
+  "officialPrimaryCorroboration": [
+    {
+      "authority": "Revenue Regulations No. 16-2005",
+      "officialUrl": "https://bir-cdn.bir.gov.ph/BIR/pdf/26116rr16-2005.pdf",
+      "location": "pages 22-23, Sections 4.110-1 and 4.110-2",
+      "relevantQualification": "Input tax is defined for a VAT-registered person, must arise from specified importations or local business purchases, and creditability is tied to documentary and transaction conditions."
+    },
+    {
+      "authority": "Revenue Regulations No. 16-2005",
+      "officialUrl": "https://bir-cdn.bir.gov.ph/BIR/pdf/26116rr16-2005.pdf",
+      "location": "pages 25-27, Section 4.110-4",
+      "relevantQualification": "Mixed taxable and exempt activities require attribution or proration; the exempt portion is not available as an input-tax credit."
+    },
+    {
+      "authority": "Revenue Memorandum Circular No. 126-2024 digest of Republic Act No. 12023",
+      "officialUrl": "https://bir-cdn.bir.gov.ph/BIR/pdf/RMC%20No.%20126-2024%20Digest.pdf",
+      "location": "page 4, Section 110 amendments",
+      "relevantQualification": "The current amendment text identifies VAT-registered status and timing rules for domestic purchases, imports, services, and leases; nonresident digital service providers cannot claim creditable input tax."
+    }
+  ],
+  "requiredQualifications": [
+    "claimant is VAT-registered",
+    "the transaction is among covered purchases or importations",
+    "the purchase has a trade-or-business nexus",
+    "documentary and invoicing requirements are met",
+    "input tax is attributed or allocated between taxable, zero-rated, and exempt activities",
+    "timing, carry-over, refund, and non-creditable restrictions are observed"
+  ],
+  "safeHighLevelProposition": "Subject to Section 110 and the invoicing, attribution, timing, and other statutory limits, a VAT-registered purchaser may credit qualifying input VAT on covered business purchases or importations against output VAT.",
+  "safeHighLevelPropositionStatus": "LEGALLY_QUALIFIED_BUT_NOT_VERIFIABLE_FROM_THE_CAPTURED_PACKET_UNTIL_EXACT_PASSAGES_ARE_RETRIEVED",
+  "verdict": "BROAD_INPUT_VAT_STATEMENT_NOT_SUPPORTED_BY_CAPTURED_PASSAGES",
+  "pass": true,
+  "artifactRole": "EXACT_NAME_PROPOSITION_REVALIDATION",
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_INPUT_VAT_REVALIDATION.json",
+    "sha256": "f9ee14ec5bea772b5e2df26dfbd27fab163b4175ef4655a0ea791961c6bcc848"
+  },
+  "controlledConclusion": "The captured generic VAT answer cannot receive verified-controlling support because the broad input-VAT sentence is materially underqualified and lacks exact Section 110/113/RR 4.110 passages."
+}

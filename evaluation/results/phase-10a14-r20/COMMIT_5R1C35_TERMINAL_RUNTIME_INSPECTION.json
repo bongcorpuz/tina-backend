@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "inspectedUtc": "2026-07-31T04:22:43.933Z",
+  "processInspection": {
+    "elevatedReadOnlyInspectionSucceeded": true,
+    "nodeProcesses": 0,
+    "unreadableNodeCommandLines": 0,
+    "activeC34C35Processes": 0,
+    "port5173Listeners": 0,
+    "port5173Free": true,
+    "pass": true
+  },
+  "temporaryRuntimeInspection": {
+    "activeC35TemporaryRuntimeDirectories": [],
+    "workspaceC35TemporaryDirectories": [],
+    "protectedPreexistingC34ForensicFreezes": [
+      "C:/Users/USER/AppData/Local/Temp/c34-evidence-D993je",
+      "C:/Users/USER/AppData/Local/Temp/c34-reconstruct-audit-YiJCk1",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-audit-1WxcVi",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-audit-E1hsuy",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-audit-KVIvrN",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-selftest-2fiJDM",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-selftest-ib2crY",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-selftest-LSaAfw",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-selftest-u9cAIT",
+      "C:/Users/USER/AppData/Local/Temp/c34-replay-selftest-XPbFVK",
+      "C:/Users/USER/AppData/Local/Temp/c34-static-audit-38NSmm",
+      "C:/Users/USER/AppData/Local/Temp/c34-static-audit-kHC2zf",
+      "C:/Users/USER/AppData/Local/Temp/c34-static-audit-TBUURo",
+      "C:/Temp/tina-c34-account-transfer-20260728T122651264Z",
+      "C:/Temp/tina-c34-crash-recovery-20260728T075732836Z",
+      "C:/Temp/tina-c34-full-head-patch-blocker-20260728T234300515Z",
+      "C:/Temp/tina-c34-technical-recovery-20260728T134942137Z"
+    ],
+    "classification": "INACTIVE_IMMUTABLE_C34_FORENSIC_EVIDENCE_NOT_ACTIVE_RUNTIME",
+    "rationale": "No Node process or listener references these historical C34 audit/freeze directories. C34 evidence expressly identifies the C:/Temp snapshots as immutable forensic freezes. They were preserved under the instruction not to modify C34 evidence.",
+    "activeTemporaryRuntimeCount": 0,
+    "pass": true
+  },
+  "locks": {
+    "gitIndexLock": false,
+    "c35AllocationLock": false,
+    "databaseOrIndexAllocationPerformed": false,
+    "pass": true
+  },
+  "ledger": {
+    "registryAttempts": 229,
+    "registryC35Rows": 1,
+    "registryRunningRows": 0,
+    "registryActiveAttemptId": null,
+    "attemptDirectories": 229,
+    "c35AttemptDirectories": 1,
+    "c34WalRows": 32,
+    "c34WalSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+    "c35WalRows": 3,
+    "c35WalSha256": "493dff0caedd11420ae4ea3a61fe26e5b6cd52879ef8673a065d588a953b6761",
+    "canonicalRegistrySha256": "08d714949661501f4ef762c54eb40e5a67619359a791193b6e18cdc2d4e2156a",
+    "orphan": 0,
+    "dangling": 0,
+    "pass": true
+  },
+  "git": {
+    "head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "commitCreated": false,
+    "pushPerformed": false,
+    "pass": true
+  },
+  "serviceIdentity": {
+    "localServiceRunning": false,
+    "localPort5173Free": true,
+    "productionBackend": "https://tina-backend-y11x.onrender.com",
+    "productionDeploymentId": "srv-d7n4bsdckfvc73ep7mn0",
+    "productionRuntimeCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "productionServiceChanged": false,
+    "deploymentPerformed": false,
+    "known": true,
+    "pass": true
+  },
+  "protectedFiles": {
+    "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md": "1ff4772a3c082f8072997e8c86f291a322ec7d1986b866325a7895594fcbf280",
+    "knowledge/CURRENT_STATE.md": "e17a7a73b9966458e1410690d2ad2f2c82d75e8808cc78de60f8ee10c3ca1a2c",
+    ".claude/settings.local.json": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+    ".vscode/extensions.json": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+    "evaluation/factcheck/hardest-philippine-tax-question.md": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+    "evaluation/factcheck/README.md": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+    "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+    "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+    "mutated": false,
+    "pass": true
+  },
+  "prohibitedOperations": {
+    "candidate2": false,
+    "c36": false,
+    "phase10B": false,
+    "stage": false,
+    "commit": false,
+    "push": false,
+    "deploy": false,
+    "migration": false,
+    "reindex": false,
+    "modelMigration": false,
+    "pass": true
+  },
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

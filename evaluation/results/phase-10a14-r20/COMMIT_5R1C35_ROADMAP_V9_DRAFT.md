@@ -24,7 +24,7 @@
 - Complete deterministic repository run: 184/217 suites passed; all 54 failed groups are historical diff-scope or stale CURRENT_STATE checks, with zero runtime authority/support/conflict failures.
 - C34 remains frozen at reason **3575/3720**, decision/relation **3720/3720**, and all recorded exact gates. The **145 reason-only rows remain** (45 explicit_non_tax_task, 16 explicit_tax_task_relation, 81 no_tax_relation, 1 tax_compliance_task, 2 tax_treatment_of_ordinary_object).
 - Phase 10A assessment: **PHASE_10A_OPEN**. Reason closure is not proven; R20 remains **IN PROGRESS**.
-- Final read-only Opus decision: **APPROVED_WITH_NONBLOCKING_OBSERVATIONS**.
+- Final read-only Opus decision: **{{OPUS_DECISION}}**.
 - No deployment, C36, Phase 10B implementation, reindex, or model migration occurred.
 
 Current controlling result: **COMMIT 5R1-C35 terminal; Phase 10A OPEN; R20 IN PROGRESS.**

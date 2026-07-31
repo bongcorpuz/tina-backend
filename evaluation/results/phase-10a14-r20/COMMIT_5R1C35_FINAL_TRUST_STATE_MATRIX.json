@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "rows": [
+    {
+      "hasConflict": false,
+      "support": "INSUFFICIENT",
+      "conflictState": "NO_CONFLICT",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "banner": false
+    },
+    {
+      "hasConflict": false,
+      "support": "EXACT_COMPLETE",
+      "conflictState": "NO_CONFLICT",
+      "authoritySupport": "VERIFIED_CONTROLLING",
+      "banner": false
+    },
+    {
+      "hasConflict": true,
+      "support": "INCOMPLETE_CONFLICT_METADATA",
+      "conflictState": "POTENTIAL_CONFLICT",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY",
+      "banner": true
+    },
+    {
+      "hasConflict": true,
+      "support": "EXACT_COMPLETE",
+      "conflictState": "VERIFIED_CONFLICT",
+      "authoritySupport": "CONFLICTING_AUTHORITY",
+      "banner": true
+    }
+  ],
+  "genericVat": {
+    "hasConflict": false,
+    "support": "INSUFFICIENT",
+    "conflictState": "NO_CONFLICT",
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "banner": false
+  },
+  "conflictSupportAxesIndependent": true,
+  "verdict": "FINAL_TRUST_STATE_MATRIX_PASS",
+  "pass": true
+}

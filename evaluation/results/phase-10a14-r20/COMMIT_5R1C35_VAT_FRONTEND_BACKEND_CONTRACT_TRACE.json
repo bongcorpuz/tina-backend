@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:56:00.000Z",
+  "query": "tell me more about VAT",
+  "backendFlow": [
+    {
+      "order": 1,
+      "producer": "conflict-engine.js analyzeConflictPair",
+      "input": "Reranked source pairs",
+      "outputField": "pairAnalysis.conflict",
+      "observed": true,
+      "sourceSha256": "e68d72239bc8e1545392149e36b96d8b91d0b7546dbf4494e0302c0340240ec5"
+    },
+    {
+      "order": 2,
+      "producer": "pipeline.js Step 9 fourPartDoctrineTest",
+      "input": "First ten reranked chunks, pairwise",
+      "outputField": "conflictAnalysis.hasConflict",
+      "observed": true,
+      "sourceLines": "3838-3852",
+      "sourceSha256": "ba4dfd2a7e999cde8c68e8e0cfdb3b26335606f79f69ff403265c5c0a0b959a7"
+    },
+    {
+      "order": 3,
+      "producer": "services/conflict-trust-classifier.js classifyConflictState",
+      "input": "Incomplete upstream conflictAnalysis with hasConflict=true",
+      "outputFields": {
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT"
+      },
+      "sourceLines": "54-101",
+      "sourceSha256": "908fa6c74373fa09455d21b8b17493f8e306a6747a8980a3f89de1d273008622"
+    },
+    {
+      "order": 4,
+      "producer": "services/trust-contract.js buildTrustContract",
+      "input": "Conflict classification plus source and answer-support state",
+      "outputFields": {
+        "conflictState": "POTENTIAL_CONFLICT",
+        "hasConflict": false,
+        "authoritySupport": "VERIFIED_CONTROLLING"
+      },
+      "authoritySupportIndependent": true,
+      "sourceLines": "213-278, 405-455",
+      "sourceSha256": "1657a45a9691787b5f3b7042f00829bf4257e84981945aea411c7544c21f8227"
+    },
+    {
+      "order": 5,
+      "producer": "ask response assembly",
+      "input": "Canonical trust contract",
+      "outputField": "public JSON trust",
+      "observed": "Forwarded without a contradictory legacy override"
+    }
+  ],
+  "frontendFlow": {
+    "repository": "C:/Projects/tina-ai",
+    "presentation": {
+      "path": "src/lib/trustPresentation.js",
+      "sha256": "5c470c8bcbeee1b2ebf3623ab7b5c416b21758aa1845a9a0ef6c7d03de3c18da",
+      "branch": "POTENTIAL_CONFLICT",
+      "lines": "209-219",
+      "label": "Possible authority conflict",
+      "secondaryRule": "Related authority only is rendered only when authoritySupport === RELATED_AUTHORITY_ONLY"
+    },
+    "banner": {
+      "path": "src/components/TrustBanner.jsx",
+      "sha256": "5962f451923bc97d666fdf912ccd2a10bc5ccd45a8ac21a97754fabc5ea9ac36"
+    },
+    "sourceTrustSummary": {
+      "path": "src/components/SourceTrustSummary.jsx",
+      "sha256": "803c7c7b0f63dc9d728d09e3582f3817dc9bbcd326aee2269617c83d2a7345fb"
+    }
+  },
+  "deterministicPresentationForCapturedLiveTrust": {
+    "kind": "POTENTIAL_CONFLICT",
+    "severity": "warning",
+    "label": "Possible authority conflict",
+    "secondaryLabel": null,
+    "sourceQualifier": "Controlling authority"
+  },
+  "historicalCombinedDisplayContract": {
+    "possibleAuthorityConflictRequires": "conflictState=POTENTIAL_CONFLICT",
+    "relatedAuthorityOnlyRequires": "authoritySupport=RELATED_AUTHORITY_ONLY",
+    "coupled": false
+  },
+  "findings": {
+    "firstPotentialConflictProducer": "conflict-engine.js / pipeline Step 9",
+    "firstSupportDowngradeInCurrentLiveRun": null,
+    "frontendMappedWrongBanner": false,
+    "staleTrustFieldsSurvived": false,
+    "generalSpecificDifferenceWasRootCause": false,
+    "modelProseControlledStructuredConflictState": false,
+    "backendClassifierBehaviorGivenItsInput": "CORRECT_FAIL_CLOSED_MAPPING",
+    "contractViolationLocation": "UPSTREAM_PAIR_QUALIFICATION"
+  },
+  "pass": true
+}

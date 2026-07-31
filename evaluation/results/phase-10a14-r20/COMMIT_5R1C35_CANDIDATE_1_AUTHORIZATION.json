@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:00:20.140Z",
+  "verdict": "PASS_READY_FOR_C35_CANDIDATE_1",
+  "candidateNumber": 1,
+  "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+  "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+  "materialCandidateLimit": 1,
+  "candidate2Authorized": false,
+  "hypothesis": {
+    "text": "Before lexical same-issue/opposite-holding signals may establish conflict, reject a pair whose normalized source identity and normalized legal reference are both the same unless both inputs contain structured metadata that identifies distinct positions, versions, temporal scopes, amendments, or supersession states.",
+    "sha256": "07e343b3ef53db149b998db1078f29a8b52d6f43fe79920d53f08bf94e3e7e35"
+  },
+  "bindings": {
+    "c34CommitSha": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "c34ParentSha": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "c34RuntimeHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "checkpoint60": {
+      "pointerSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "logSha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "eventSha256": "3d431970d558a6d6e31f1bb307bd966b467cba67159db5ccda9c01a1a84eb9eb",
+      "safeToResume": true,
+      "activeAttemptId": null
+    },
+    "c35PreflightSha256": "a85a2a3551d16627f8f9c9de1f6feb16c44df9348af89d132c0ccb6b97d257d3",
+    "preFixFixtureResultSha256": "37504d54ce7a8ac0d9426f229f2a193060230b5aed9f3a9ad7c2edc224b757f6",
+    "rootCauseSha256": "c49e14f6a56b8a799df93bf9993d842da24aac9c66cf601a7c0d3ad41789de07",
+    "runnerSha256": "e62850dabaf33a8d7529f80af436dd44b7064cfbb936840a8adf58f0b8404c53",
+    "canonicalRegistrySha256": "b42e030f49c3e30959ad6043d2897af55029d268aaeea17cc37bfbe93c383e43",
+    "c34WalSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+    "conflictEnginePreCandidateSha256": "e68d72239bc8e1545392149e36b96d8b91d0b7546dbf4494e0302c0340240ec5"
+  },
+  "scope": {
+    "allowed": [
+      "One generalized pair-qualification guard in conflict-engine.js",
+      "Candidate-specific fixtures, runner, attempt, registry, WAL, and evidence",
+      "Read-only focused tests and replay validation"
+    ],
+    "forbidden": [
+      "VAT-specific query or citation hardcoding",
+      "Authority-support promotion or forced downgrade",
+      "Frontend-only concealment",
+      "C34 evidence mutation or rerun",
+      "Stage, commit, push, deploy, migration, reindex, Candidate 2, C36, or Phase 10B"
+    ]
+  },
+  "rootCauseStatus": "ROOT_CAUSE_PROVEN",
+  "preFixStatus": "EXPECTED_PRE_FIX_FAILURE_REPRODUCED",
+  "authorization": "AUTHORIZED_EXACTLY_ONE_BOUNDED_CANDIDATE",
+  "pass": true
+}

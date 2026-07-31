@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "artifactRole": "NORMALIZED_EXACT_NAME_LEDGER",
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_PROPOSITION_TO_PASSAGE_LEDGER.json",
+    "sha256": "ca8da24e40bbb22c297aaa3f47b322c87eb9390eae058a51157281e2a2cda913"
+  },
+  "query": "tell me more about VAT",
+  "finalAnswerSha256": "d6d377c378937fe5f827f7a3002325e676985cb96f1c9df63957f45d3dc90ced",
+  "propositions": [
+    {
+      "propositionId": "P1",
+      "exactCapturedWording": "Value-Added Tax (VAT) is an indirect tax imposed on the sale of goods, properties, and services in the Philippines, with a standard rate of twelve percent (12%).",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "VAT is an indirect tax and may be shifted or passed on to buyers.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 105"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 105"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 105",
+          "location": "/rerankedSources/0/text",
+          "exactPassage": "The value-added tax is an indirect tax and the amount of tax may be shifted or passed on to the buyer, transferee or lessee of the goods, properties or services.",
+          "passageSha256": "1abdd23aefeb50300e4b86893bd309319ecf9412223dea72923c1f38e0164446"
+        },
+        {
+          "citation": "NIRC Sec. 105",
+          "location": "/rerankedSources/7/text",
+          "exactPassage": "The value-added tax is an indirect tax and the amount of tax may be shifted or passed on to the buyer, transferee or lessee of the goods, properties or services.",
+          "passageSha256": "1abdd23aefeb50300e4b86893bd309319ecf9412223dea72923c1f38e0164446"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT",
+      "qualificationNeeded": null,
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P2",
+      "exactCapturedWording": "It is applicable to any person engaged in trade or business who sells, barters, exchanges, or leases goods or properties, or renders services.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "Persons acting in trade or business who sell, barter, exchange, or lease goods or properties, render services including digital services, and importers fall within Sections 106 to 108.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 105"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 105"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 105",
+          "location": "/rerankedSources/7/text",
+          "exactPassage": "Any person who, in the course of trade or business, sells, barters, exchanges, leases goods or properties, renders services, including digital services, and any person who imports goods shall be subject to the value-added tax imposed in Sections 106 to 108 of this Code.",
+          "passageSha256": "a96b974bdd3181e52c9383d914aff9b64d636e69a5a78a495d15117fccfba049"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT_WITH_REQUIRED_STATUTORY_QUALIFICATION",
+      "qualificationNeeded": "The captured packet does not supply Sections 109 or 236; this must not be normalized into an absolute claim that every business owes VAT.",
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P3",
+      "exactCapturedWording": "Section 106 specifies that VAT is levied at a rate of 12% on gross sales of goods or properties.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "The standard VAT rate on taxable sales of goods or properties is twelve percent of gross sales.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 106"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 106"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 106",
+          "location": "/rerankedSources/2/text",
+          "exactPassage": "There shall be levied, assessed and collected on every sale, barter or exchange of goods or properties, value-added tax equivalent to twelve percent (12%) of the gross sales of the goods or properties sold, bartered or exchanged.",
+          "passageSha256": "c865f81bb72de71271c98697570229e3c9a5183494bbca8c0e2f4a1102c8f6d1"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT",
+      "qualificationNeeded": "The word standard is essential; the passage does not eliminate statutory zero-rating or exemptions.",
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P4",
+      "exactCapturedWording": "Section 107 imposes VAT on imported goods based on their total value, including customs duties.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "Import VAT is twelve percent on the statutory customs-value base plus specified duties, taxes, and charges.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 107"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 107"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 107",
+          "location": "/rerankedSources/6/text",
+          "exactPassage": "There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.",
+          "passageSha256": "f6dfb01394be1fd2b0021f7f44dc61ee1233712e0ca339988902e1ae6260276f"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT",
+      "qualificationNeeded": null,
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P5",
+      "exactCapturedWording": "Finally, Section 108 extends VAT to services rendered, including digital services, also at a rate of 12%.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "The standard VAT rate on services, including digital services, and use or lease of properties is twelve percent of gross sales.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 108"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 108"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 108",
+          "location": "/rerankedSources/3/text",
+          "exactPassage": "There shall be levied, assessed and collected, a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the sale or exchange of services, including digital services, and the use or lease of properties.",
+          "passageSha256": "b36452a6a55cb4ddc99fa59a48a762619298073f2e308b66dbdcba203d6e7863"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT",
+      "qualificationNeeded": null,
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P6",
+      "exactCapturedWording": null,
+      "exactWordingStatus": "NORMALIZED_ONLY",
+      "normalizedWording": "Sections 105, 106, 107, and 108 respectively concern persons liable, goods/properties, importation, and services/use or lease.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 105",
+        "NIRC Sec. 106",
+        "NIRC Sec. 107",
+        "NIRC Sec. 108"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 105",
+        "NIRC Sec. 106",
+        "NIRC Sec. 107",
+        "NIRC Sec. 108"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 105",
+          "location": "/rerankedSources/7/text",
+          "exactPassage": "",
+          "passageSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "citation": "NIRC Sec. 106",
+          "location": "/rerankedSources/2/text",
+          "exactPassage": "",
+          "passageSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "citation": "NIRC Sec. 107",
+          "location": "/rerankedSources/6/text",
+          "exactPassage": "",
+          "passageSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "citation": "NIRC Sec. 108",
+          "location": "/rerankedSources/3/text",
+          "exactPassage": "",
+          "passageSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT",
+      "qualificationNeeded": null,
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P7",
+      "exactCapturedWording": "Sellers can pass on the VAT to buyers, making it essential for businesses to understand their VAT obligations to ensure compliance and avoid penalties.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "Sellers can pass VAT to buyers.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 105"
+      ],
+      "retrievedAuthority": [
+        "NIRC Sec. 105"
+      ],
+      "exactPassageAndLocation": [
+        {
+          "citation": "NIRC Sec. 105",
+          "location": "/rerankedSources/0/text",
+          "exactPassage": "",
+          "passageSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "authorityClass": [
+        "STATUTE"
+      ],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "DIRECT",
+      "qualificationNeeded": null,
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P8",
+      "exactCapturedWording": "VAT is a significant source of revenue for the government and affects pricing strategies for businesses.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "VAT is government revenue and affects pricing, planning, and compliance.",
+      "materiality": "NON_DISPOSITIVE",
+      "requiredAuthority": [],
+      "retrievedAuthority": [],
+      "exactPassageAndLocation": [],
+      "authorityClass": [],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "NON_DISPOSITIVE_COMMENTARY",
+      "qualificationNeeded": null,
+      "risk": "LOW_WITH_RECORDED_QUALIFICATIONS"
+    },
+    {
+      "propositionId": "P9",
+      "exactCapturedWording": "Additionally, businesses can claim input VAT on purchases related to their taxable sales, which can help reduce their overall tax liability.",
+      "exactWordingStatus": "CAPTURED_EXACT",
+      "normalizedWording": "Businesses can claim input VAT on purchases related to taxable sales, reducing overall tax liability.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [
+        "NIRC Sec. 110",
+        "NIRC Sec. 113",
+        "RR 16-2005 Secs. 4.110-1, 4.110-2, 4.110-4"
+      ],
+      "retrievedAuthority": [],
+      "exactPassageAndLocation": [],
+      "authorityClass": [],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "NOT_PROVEN_MATERIALLY_UNDERQUALIFIED",
+      "qualificationNeeded": [
+        "VAT-registered status",
+        "creditable versus non-creditable input tax",
+        "trade-or-business nexus",
+        "taxable, zero-rated, exempt, and mixed-activity attribution or allocation",
+        "valid invoice and substantiation",
+        "timing, carry-over, refund, and other statutory limitations"
+      ],
+      "risk": "HIGH_IF_RENDERED_AS_CONTROLLING"
+    },
+    {
+      "propositionId": "P10",
+      "exactCapturedWording": null,
+      "exactWordingStatus": "NORMALIZED_ONLY",
+      "normalizedWording": "All businesses must charge VAT regardless of form.",
+      "materiality": "MATERIAL_LEGAL_PROPOSITION",
+      "requiredAuthority": [],
+      "retrievedAuthority": [],
+      "exactPassageAndLocation": [],
+      "authorityClass": [],
+      "effectivitySupersession": {
+        "status": "NOT_PROVEN_BY_CAPTURE",
+        "reason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain."
+      },
+      "supportResult": "NOT_ASSERTED_DO_NOT_ATTRIBUTE",
+      "qualificationNeeded": null,
+      "risk": "HIGH_IF_RENDERED_AS_CONTROLLING"
+    }
+  ],
+  "unsupportedMaterialPropositionIds": [
+    "P9",
+    "P10"
+  ],
+  "verdict": "PROPOSITION_TO_PASSAGE_REVALIDATION_COMPLETE",
+  "pass": true
+}

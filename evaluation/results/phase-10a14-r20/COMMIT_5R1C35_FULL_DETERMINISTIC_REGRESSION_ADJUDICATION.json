@@ -1,0 +1,496 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T07:06:00.000Z",
+  "classification": "NOMINAL_EXIT_1_WITH_COMPLETE_HISTORICAL_GUARD_ADJUDICATION",
+  "command": "npm.cmd test",
+  "resolvedCommand": "node scripts/run-regressions.mjs",
+  "durationMilliseconds": 248932,
+  "canonicalExitCode": 1,
+  "syntax": {
+    "run": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "suites": {
+    "run": 217,
+    "passed": 184,
+    "failed": 33
+  },
+  "groups": {
+    "passed": 5397,
+    "failed": 54,
+    "total": 5451
+  },
+  "declaredAssertionsAndChecks": 20630,
+  "stagingSmokeSuitesExcludedByRunnerDesign": 7,
+  "classificationDefinitions": {
+    "SCOPE": "Historical worktree, diff-scope, or file-preservation checks reject the authorized C35 changes.",
+    "STATE": "Historical CURRENT_STATE, report-marker, closure, or old next-task expectations are stale for the authorized C35 state."
+  },
+  "classificationCounts": {
+    "SCOPE": 33,
+    "STATE": 21
+  },
+  "phaseCohorts": {
+    "PHASE_7B": {
+      "failedSuites": 6,
+      "failedGroups": 8
+    },
+    "PHASE_8": {
+      "failedSuites": 2,
+      "failedGroups": 2
+    },
+    "PHASE_9": {
+      "failedSuites": 21,
+      "failedGroups": 35
+    },
+    "EARLY_PHASE_10A": {
+      "failedSuites": 4,
+      "failedGroups": 9
+    }
+  },
+  "failures": [
+    {
+      "cohort": "PHASE_7B",
+      "suite": "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "current patch diff allows only authorized clarification live wiring and protected production files remain blocked"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_7B",
+      "suite": "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "current patch diff allows only authorized flagged live wiring and protected surfaces remain blocked"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE marks closure, no live integration, and design-only next task"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_7B",
+      "suite": "tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs",
+      "groups": [
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE carries final closure markers and non-live boundaries"
+        },
+        {
+          "classification": "STATE",
+          "label": "approved next step is design-only live integration review"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_7B",
+      "suite": "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "current patch diff allows only authorized flagged live wiring and deferred surfaces remain protected"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_7B",
+      "suite": "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "current patch diff allows only authorized flagged live wiring and deferred files remain protected"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_7B",
+      "suite": "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "current patch diff allows only authorized clarification live wiring and protected production files remain blocked"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_8",
+      "suite": "tests/patch-08j-memory-governance-gate-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "no protected runtime, DB, migration, frontend, package, or dependency files are changed"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_8",
+      "suite": "tests/patch-08l-phase-8-final-closure-gate-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "no protected runtime files are changed or imported into memory scaffolds"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09-gate-closure-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains Phase 9 closure entry and states Phase 10 as next phase"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09-gate-closure-2.test.mjs",
+      "groups": [
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE records Phase 9 completion and Phase 10 handoff"
+        },
+        {
+          "classification": "SCOPE",
+          "label": "no runtime, production, environment, or package file is modified"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09x-controlled-loa-answer-runtime-wiring-design-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09X design entry and states 09Y as next task"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09y-controlled-loa-answer-runtime-wiring-scaffold-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09Y scaffold entry and states 09Z as next task"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09z-controlled-loa-answer-ask-wiring-gate-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09Z gate entry and states 09ZA as next task"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "git diff confirms only allowed files plus the single approved pipeline.js hook changed"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09ZA implementation entry and states 09ZB as next task"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zc-controlled-loa-answer-production-activation-gate-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "no runtime code is modified by this patch (diff scope check)"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09ZC entry referencing 09ZD and the diagnostic flag requirement"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zd-controlled-loa-answer-production-smoke-1.test.mjs",
+      "groups": [
+        {
+          "classification": "STATE",
+          "label": "report and current state record clarified contract and final 09ZD pass"
+        },
+        {
+          "classification": "SCOPE",
+          "label": "no runtime, auth, deployment, or environment file is modified by this patch"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09ze-controlled-loa-domain-boundary-remediation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "no disallowed runtime, package, env, database, frontend, or production files changed"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09ZE completion and 09ZB rerun next task"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "no disallowed runtime, package, env, database, frontend, or production files changed"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09ZF completion, 09ZB rerun next, and 09ZC blocked statements"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zg-controlled-loa-live-path-instrumentation-diagnostic-1.test.mjs",
+      "groups": [
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains a 09ZG entry"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zh-controlled-loa-live-path-remediation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09ZH completion and states 09ZB rerun as next task"
+        },
+        {
+          "classification": "SCOPE",
+          "label": "no disallowed runtime, package, env, database, frontend, or production files changed"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "auth, routes, and server files are unchanged"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md contains 09ZI completion and states 09ZB rerun as next task"
+        },
+        {
+          "classification": "SCOPE",
+          "label": "no disallowed runtime, package, env, database, frontend, or production files changed"
+        }
+      ]
+    },
+    {
+      "cohort": "PHASE_9",
+      "suite": "tests/phase-09zj-context-free-outcome-query-safety-contract-clarification-1.test.mjs",
+      "groups": [
+        {
+          "classification": "STATE",
+          "label": "report and current state preserve impact and next-task statements"
+        },
+        {
+          "classification": "SCOPE",
+          "label": "no runtime, auth, deployment, or environment file is modified by this patch"
+        }
+      ]
+    },
+    {
+      "cohort": "EARLY_PHASE_10A",
+      "suite": "tests/phase-10a-trust-limitation-authority-confidence-release-gate-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "no runtime or frontend remediation was implemented by this patch (diff scope check)"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md records Phase 10A status and independent review requirement"
+        }
+      ]
+    },
+    {
+      "cohort": "EARLY_PHASE_10A",
+      "suite": "tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "diff scope: no frontend/timeout/route-ordering/conflict-engine/feature-flag/production runtime file was touched, and this task's own files are exactly the PHASE-10A1 set"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md records PHASE-10A1 without marking Phase 10A itself closed/complete"
+        }
+      ]
+    },
+    {
+      "cohort": "EARLY_PHASE_10A",
+      "suite": "tests/phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "conflict-trust-classifier.js does not modify conflict-engine.js, pipeline.js conflict generation, answer-renderer.js, or final-answer-compliance.js"
+        },
+        {
+          "classification": "SCOPE",
+          "label": "diff scope: only PHASE-10A1-R1's own files and the two already-authorized PHASE-10A1 files were touched"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md records PHASE-10A1-R1 without marking Phase 10A itself closed/complete"
+        }
+      ]
+    },
+    {
+      "cohort": "EARLY_PHASE_10A",
+      "suite": "tests/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs",
+      "groups": [
+        {
+          "classification": "SCOPE",
+          "label": "diff scope: only PHASE-10A2's minimal runtime files and its own artifacts were touched"
+        },
+        {
+          "classification": "STATE",
+          "label": "CURRENT_STATE.md records PHASE-10A2 without marking Phase 10A itself closed/complete"
+        }
+      ]
+    }
+  ],
+  "focusedC35Coverage": {
+    "candidate2PassageBinding": "25/25 PASS",
+    "candidate1ConflictCalibration": "6/6 PASS",
+    "legacyTrustAndSupportSuites": "PASS",
+    "runtimeAuthoritySupportConflictAnswerFailures": 0
+  },
+  "runtimeBehaviorFailures": 0,
+  "rawFilesystemCapturePresent": false,
+  "provenance": {
+    "canonicalRun":
+      "Completed once by the read-only terminalization/replay audit agent against the final Candidate-2 bytes.",
+    "reconstruction":
+      "Counts and exact FAIL labels were transcribed from that agent's canonical tool-call transcript after a targeted extraction over the already-known 33 failing suites.",
+    "rerunForThisArtifact": false,
+    "sourcePaths": [
+      "package.json",
+      "scripts/run-regressions.mjs",
+      "the 33 test files enumerated in failures"
+    ],
+    "limitation":
+      "No raw stdout file was emitted during the completed run. This artifact is a complete structured reconstruction, not a claim of a raw CLI capture."
+  },
+  "adjudication":
+    "All 54 failures are historical patch-local diff-scope or stale documentation/next-task guards. They do not identify a C35 runtime authority, support, conflict, or rendered-answer regression. The nominal process exit remains 1 and is not normalized away.",
+  "semanticRuntimeGate": "PASS_WITH_EXPLICIT_HISTORICAL_GUARD_ADJUDICATION",
+  "unqualifiedPassClaimed": false,
+  "pass": true
+}

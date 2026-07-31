@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:22:43.933Z",
+  "requiredReviewer": "Opus",
+  "status": "PENDING_INDEPENDENT_REVIEW",
+  "reason": "No Opus-capable review tool or model is available in this execution environment. Codex did not self-approve the candidate.",
+  "reviewPackage": [
+    "COMMIT_5R1C35_VAT_ROOT_CAUSE.json",
+    "COMMIT_5R1C35_PRE_FIX_FIXTURE_RESULT_SUPERSEDING.json",
+    "COMMIT_5R1C35_POST_FIX_FIXTURE_RESULT.json",
+    "attempts/R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z/C35_CANDIDATE_ONLY.patch",
+    "COMMIT_5R1C35_VAT_AUTHORITY_SUPPORT_TRACE.json",
+    "COMMIT_5R1C35_C34_FROZEN_PRESERVATION.json",
+    "COMMIT_5R1C35_CANDIDATE_1_REPLAY.json"
+  ],
+  "effect": "Candidate 1 remains a provisional working-tree selection. No staging, commit, push, or deployment is authorized.",
+  "pass": true
+}

@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:01:40.000Z",
+  "query": "tell me more about VAT",
+  "finalAnswerSha256": "d6d377c378937fe5f827f7a3002325e676985cb96f1c9df63957f45d3dc90ced",
+  "capturedPacketEffectivityStatus": "NOT_PROVEN_BY_CAPTURE",
+  "effectivityReason": "The retrieved chunks have null statute/sourceState metadata and a NIRC-1997-RA-10963 document identity. Some text appears amended, but the packet does not establish a structured current amendment/effectivity chain.",
+  "propositions": [
+    {
+      "id": "P1",
+      "proposition": "VAT is an indirect tax and may be shifted or passed on to buyers.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/0/text",
+          "citation": "NIRC Sec. 105",
+          "exactExcerpt": "The value-added tax is an indirect tax and the amount of tax may be shifted or passed on to the buyer, transferee or lessee of the goods, properties or services."
+        },
+        {
+          "traceJsonPointer": "/rerankedSources/7/text",
+          "citation": "NIRC Sec. 105",
+          "exactExcerpt": "The value-added tax is an indirect tax and the amount of tax may be shifted or passed on to the buyer, transferee or lessee of the goods, properties or services."
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "proposition": "Persons acting in trade or business who sell, barter, exchange, or lease goods or properties, render services including digital services, and importers fall within Sections 106 to 108.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT_WITH_REQUIRED_STATUTORY_QUALIFICATION",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/7/text",
+          "citation": "NIRC Sec. 105",
+          "exactExcerpt": "Any person who, in the course of trade or business, sells, barters, exchanges, leases goods or properties, renders services, including digital services, and any person who imports goods shall be subject to the value-added tax imposed in Sections 106 to 108 of this Code."
+        }
+      ],
+      "qualification": "The captured packet does not supply Sections 109 or 236; this must not be normalized into an absolute claim that every business owes VAT."
+    },
+    {
+      "id": "P3",
+      "proposition": "The standard VAT rate on taxable sales of goods or properties is twelve percent of gross sales.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/2/text",
+          "citation": "NIRC Sec. 106",
+          "exactExcerpt": "There shall be levied, assessed and collected on every sale, barter or exchange of goods or properties, value-added tax equivalent to twelve percent (12%) of the gross sales of the goods or properties sold, bartered or exchanged."
+        }
+      ],
+      "qualification": "The word standard is essential; the passage does not eliminate statutory zero-rating or exemptions."
+    },
+    {
+      "id": "P4",
+      "proposition": "Import VAT is twelve percent on the statutory customs-value base plus specified duties, taxes, and charges.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/6/text",
+          "citation": "NIRC Sec. 107",
+          "exactExcerpt": "There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges."
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "proposition": "The standard VAT rate on services, including digital services, and use or lease of properties is twelve percent of gross sales.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/3/text",
+          "citation": "NIRC Sec. 108",
+          "exactExcerpt": "There shall be levied, assessed and collected, a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the sale or exchange of services, including digital services, and the use or lease of properties."
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "proposition": "Sections 105, 106, 107, and 108 respectively concern persons liable, goods/properties, importation, and services/use or lease.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/7/text",
+          "citation": "NIRC Sec. 105"
+        },
+        {
+          "traceJsonPointer": "/rerankedSources/2/text",
+          "citation": "NIRC Sec. 106"
+        },
+        {
+          "traceJsonPointer": "/rerankedSources/6/text",
+          "citation": "NIRC Sec. 107"
+        },
+        {
+          "traceJsonPointer": "/rerankedSources/3/text",
+          "citation": "NIRC Sec. 108"
+        }
+      ]
+    },
+    {
+      "id": "P7",
+      "proposition": "Sellers can pass VAT to buyers.",
+      "materialLegalProposition": true,
+      "supportVerdict": "DIRECT",
+      "passages": [
+        {
+          "traceJsonPointer": "/rerankedSources/0/text",
+          "citation": "NIRC Sec. 105"
+        }
+      ]
+    },
+    {
+      "id": "P8",
+      "proposition": "VAT is government revenue and affects pricing, planning, and compliance.",
+      "materialLegalProposition": false,
+      "supportVerdict": "NON_DISPOSITIVE_COMMENTARY",
+      "passages": []
+    },
+    {
+      "id": "P9",
+      "proposition": "Businesses can claim input VAT on purchases related to taxable sales, reducing overall tax liability.",
+      "materialLegalProposition": true,
+      "supportVerdict": "NOT_PROVEN_MATERIALLY_UNDERQUALIFIED",
+      "passages": [],
+      "capturedCounterQualification": {
+        "traceJsonPointer": "/rerankedSources/5/text",
+        "citation": "NIRC Sec. 106",
+        "exactExcerpt": "Input tax otherwise due on VAT zero-rated local purchases attributable to VAT-exempt sales shall be paid and deductible from the gross income of the taxpayer.",
+        "assessment": "This narrow rule does not establish the broad credit claim."
+      },
+      "missingAuthorities": [
+        "NIRC Sec. 110 passage",
+        "NIRC Sec. 113 passage",
+        "RR 16-2005 Sec. 4.110 passage"
+      ],
+      "requiredQualifications": [
+        "VAT-registered status",
+        "creditable versus non-creditable input tax",
+        "trade-or-business nexus",
+        "taxable, zero-rated, exempt, and mixed-activity attribution or allocation",
+        "valid invoice and substantiation",
+        "timing, carry-over, refund, and other statutory limitations"
+      ]
+    },
+    {
+      "id": "P10",
+      "proposition": "All businesses must charge VAT regardless of form.",
+      "materialLegalProposition": true,
+      "supportVerdict": "NOT_ASSERTED_DO_NOT_ATTRIBUTE",
+      "passages": []
+    }
+  ],
+  "summary": {
+    "direct": 6,
+    "directWithQualification": 1,
+    "nonDispositiveCommentary": 1,
+    "notProvenMaterial": 1,
+    "notAsserted": 1,
+    "broadInputVatStatementSupported": false
+  },
+  "verdict": "CONTROLLED_REVALIDATION_COMPLETE_INPUT_VAT_PROPOSITION_NOT_SUPPORTED_BY_CAPTURE",
+  "pass": true
+}

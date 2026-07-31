@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "observation": "POST_FIX_CANDIDATE_2",
+  "fixture": {
+    "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+    "bytes": 9661,
+    "sha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244"
+  },
+  "labelsOnly": {
+    "result": {
+      "verifiedEligible": false,
+      "schemaValid": false,
+      "stage": "passage-source-sufficiency",
+      "gates": {
+        "structural": true,
+        "passageEvidencePresent": false,
+        "allDisplayedAuthoritiesPassageBound": false
+      },
+      "passageSufficiency": {
+        "evidenceVersion": "C35-PASSAGE-BINDING-V1",
+        "displayedSourceCount": 1,
+        "passageSourceCount": 0,
+        "passageCount": 0,
+        "missingPassageCitations": [
+          "NIRC Sec. 105"
+        ],
+        "malformedPassageCitations": []
+      },
+      "reason": "displayed_authority_missing_exact_passage"
+    },
+    "clientCalls": 0,
+    "pass": true
+  },
+  "exactLiveVatPacket": {
+    "result": {
+      "verifiedEligible": false,
+      "schemaValid": false,
+      "stage": "passage-source-sufficiency",
+      "gates": {
+        "structural": true,
+        "passageEvidencePresent": true,
+        "allDisplayedAuthoritiesPassageBound": false
+      },
+      "passageSufficiency": {
+        "evidenceVersion": "C35-PASSAGE-BINDING-V1",
+        "displayedSourceCount": 5,
+        "passageSourceCount": 4,
+        "passageCount": 5,
+        "missingPassageCitations": [
+          "RR 16-2005"
+        ],
+        "malformedPassageCitations": []
+      },
+      "reason": "displayed_authority_missing_exact_passage"
+    },
+    "clientCalls": 0,
+    "unmatchedDisplayedAuthorities": [
+      "RR 16-2005"
+    ],
+    "broadInputVatStatementPromoted": false,
+    "pass": true
+  },
+  "supportedQualifiedInputVat": {
+    "frozenFixtureAnswerUsedAsPositiveControl": false,
+    "fixtureAnswerAdjudication": "The frozen G4 wording mentions invoicing and other limits without a Section 113 passage; the controlled positive narrows each proposition to the supplied Section 110 and RR 4.110-4 passages.",
+    "controlledAnswer": "Under NIRC Section 110, input tax on a domestic purchase of goods by a VAT-registered purchaser is creditable upon consummation of the sale. Under RR 16-2005 Section 4.110-4, an input tax that cannot be directly attributed must be prorated, and only the ratable portion pertaining to a transaction subject to VAT may be recognized as an input tax credit.",
+    "result": {
+      "verifiedEligible": true,
+      "stage": "llm",
+      "schemaValid": true,
+      "missingFields": [],
+      "invalidTypeFields": [],
+      "invalidValueFields": [],
+      "inheritedFieldsRejected": [],
+      "failureReasons": [],
+      "gates": {
+        "structural": true,
+        "answerResponsive": true,
+        "primaryIssueAnswered": true,
+        "requiredIssueKeysCovered": true,
+        "materialExceptionsCovered": true,
+        "materialAlternativesCovered": true,
+        "citationRelevant": true,
+        "citationSupportsProposition": true,
+        "substantive": true,
+        "propositionSupported": true,
+        "materiallyComplete": true,
+        "treatmentDirectionMatches": true,
+        "thresholdDimensionMatches": true,
+        "sourcePropositionAligned": true,
+        "eligibleForVerifiedControlling": true,
+        "contradictsSources": true,
+        "unsupportedMaterialProposition": true,
+        "answerContradictsControllingSource": true,
+        "passageEvidencePresent": true,
+        "allDisplayedAuthoritiesPassageBound": true,
+        "finalAnswerDigestBound": true,
+        "materialPropositionBindingsValid": true
+      },
+      "passageBinding": {
+        "version": "C35-PASSAGE-BINDING-V1",
+        "valid": true,
+        "answerSha256": "9ca40625c072affdb1eba0a42fbea5e3873e8004b24000247183ebd69f41bb6a",
+        "expectedMaterialPropositionCount": 2,
+        "materialPropositionCount": 2,
+        "supportedMaterialPropositionCount": 2,
+        "coveredMaterialPropositionCount": 2,
+        "bindingCount": 2
+      },
+      "reason": "exact_material_propositions_passage_bound"
+    },
+    "clientCalls": 1,
+    "promptSha256": "22a0f4586673c4f1de97bbd95b7a53ebda79f9a304e0d6181f876fae4c94bf05",
+    "promptContainsExactFinalAnswer": true,
+    "promptContainsExactNirc110Passage": true,
+    "promptContainsExactRrPassage": true,
+    "pass": true
+  },
+  "broadInputVatNarrowPassage": {
+    "result": {
+      "verifiedEligible": false,
+      "stage": "llm",
+      "schemaValid": true,
+      "missingFields": [],
+      "invalidTypeFields": [],
+      "invalidValueFields": [
+        "propositionSupported",
+        "materiallyComplete",
+        "eligibleForVerifiedControlling",
+        "unsupportedMaterialProposition"
+      ],
+      "inheritedFieldsRejected": [],
+      "failureReasons": [
+        "unsafe_value_fields:propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition",
+        "host_proposition_P1_unbound",
+        "host_proposition_P2_unbound",
+        "host_proposition_P3_unbound",
+        "host_proposition_P4_unbound",
+        "host_proposition_P5_unbound",
+        "host_proposition_P6_unbound",
+        "host_proposition_P7_unbound",
+        "host_proposition_P8_unbound",
+        "host_proposition_P9_unbound",
+        "host_proposition_P10_unbound",
+        "host_proposition_P11_unbound",
+        "host_proposition_P12_unbound",
+        "host_proposition_P13_unbound",
+        "host_proposition_P14_unbound",
+        "host_proposition_P15_unbound",
+        "not_all_material_propositions_supported"
+      ],
+      "gates": {
+        "structural": true,
+        "answerResponsive": true,
+        "primaryIssueAnswered": true,
+        "requiredIssueKeysCovered": true,
+        "materialExceptionsCovered": true,
+        "materialAlternativesCovered": true,
+        "citationRelevant": true,
+        "citationSupportsProposition": true,
+        "substantive": true,
+        "propositionSupported": false,
+        "materiallyComplete": false,
+        "treatmentDirectionMatches": true,
+        "thresholdDimensionMatches": true,
+        "sourcePropositionAligned": true,
+        "eligibleForVerifiedControlling": false,
+        "contradictsSources": true,
+        "unsupportedMaterialProposition": false,
+        "answerContradictsControllingSource": true,
+        "passageEvidencePresent": true,
+        "allDisplayedAuthoritiesPassageBound": true,
+        "finalAnswerDigestBound": true,
+        "materialPropositionBindingsValid": false
+      },
+      "passageBinding": {
+        "version": "C35-PASSAGE-BINDING-V1",
+        "valid": false,
+        "answerSha256": "d6d377c378937fe5f827f7a3002325e676985cb96f1c9df63957f45d3dc90ced",
+        "expectedMaterialPropositionCount": 15,
+        "materialPropositionCount": 15,
+        "supportedMaterialPropositionCount": 0,
+        "coveredMaterialPropositionCount": 0,
+        "bindingCount": 0
+      },
+      "reason": "unsafe_value_fields:propositionSupported,materiallyComplete,eligibleForVerifiedControlling,unsupportedMaterialProposition"
+    },
+    "clientCalls": 1,
+    "promptSha256": "c172746e18ee95cad66297373e9a7b4c2060e28ee426730d5c3c37a430835634",
+    "promptContainsBroadClaim": true,
+    "promptContainsNarrowPassage": true,
+    "pass": true
+  },
+  "publicSourceShapeChanged": false,
+  "privatePassageLeakedToPublicShape": false,
+  "conflictEngineTouchedByCandidate2": false,
+  "verdict": "POST_FIX_GENERALIZED_PASSAGE_BINDING_CONTRACT_PASSES",
+  "pass": true,
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "runner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c35-support-postfix-observe.mjs",
+    "bytes": 10446,
+    "sha256": "11ab6509284c37c0b96b0d15334065e3499593b90200821ec8258ff47d1b4aaf"
+  },
+  "runtimeComposition": {
+    "algorithm": "For each POSIX path in lexical order: path + NUL + raw-byte-length + NUL + SHA256(raw bytes) + LF; SHA256 the UTF-8 concatenation.",
+    "components": [
+      {
+        "path": "ask-handler.js",
+        "bytes": 147494,
+        "sha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602"
+      },
+      {
+        "path": "conflict-engine.js",
+        "bytes": 40905,
+        "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+      },
+      {
+        "path": "services/answer-support-evidence.js",
+        "bytes": 9507,
+        "sha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37"
+      },
+      {
+        "path": "services/answer-support-validator.js",
+        "bytes": 142463,
+        "sha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+      }
+    ],
+    "recordsSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+  },
+  "hardenedSuite": {
+    "path": "tests/phase-10a14-r20-commit5r1c35-answer-support-passage-binding.test.mjs",
+    "assertions": 25,
+    "passed": 25,
+    "failed": 0,
+    "identity": {
+      "path": "tests/phase-10a14-r20-commit5r1c35-answer-support-passage-binding.test.mjs",
+      "bytes": 32091,
+      "sha256": "326fa824ae4fe34ac7e13a378df251f96dfdce19948cc13177a5bd939e241373"
+    }
+  }
+}

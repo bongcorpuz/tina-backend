@@ -1,0 +1,46 @@
+{
+  "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+  "attemptCategory": "trust_calibration",
+  "gateName": "commit5r1c35",
+  "cycle": "su01",
+  "attemptOrdinal": 2,
+  "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "retryOf": null,
+  "retryReason": null,
+  "retryType": null,
+  "evidenceHeadAtAllocation": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "evidenceHeadAtStart": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "evidenceHeadAtEnd": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "runtimeBaselineCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "runtimeTreeDigest": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+  "semanticBase": {
+    "commit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "selectedC34Runtime": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "candidate1ActiveBase": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "candidate1AttemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z"
+  },
+  "executionMode": "bounded_worktree_candidate_no_service",
+  "command": "C:\\Program Files\\nodejs\\node.exe",
+  "commandArgs": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c35-candidate2.mjs",
+    "allocate"
+  ],
+  "commandHash": "ccba5e27e22429e8d64cb8553f65224d84dd1179c58d504d6ca258d878858d74",
+  "startedAt": "2026-07-31T05:07:02.643Z",
+  "endedAt": "2026-07-31T06:34:00.000Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "controlling": true,
+  "stdoutPath": null,
+  "stderrPath": null,
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_RESULT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_REPLAY.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_COMPATIBILITY_VALIDATION.json"
+  ],
+  "oracleVersion": "C35-ANSWER-SUPPORT-PASSAGE-BINDING-V1",
+  "oracleSha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244",
+  "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+}

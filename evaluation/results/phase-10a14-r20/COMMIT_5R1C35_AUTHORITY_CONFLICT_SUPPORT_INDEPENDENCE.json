@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:01:55.000Z",
+  "candidate1": {
+    "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+    "activeBaseSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "responsibility": "Classify whether authority records establish an actual conflict."
+  },
+  "candidate2Proposed": {
+    "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+    "responsibility": "Require exact final-answer material propositions to bind to exact displayed-authority passages."
+  },
+  "invariants": [
+    "NO_CONFLICT does not imply proposition support.",
+    "Insufficient proposition support does not imply an authority conflict.",
+    "A genuine authority conflict remains a conflict even when individual propositions have passage support.",
+    "VERIFIED_CONTROLLING requires support independently of conflict state.",
+    "Public source-card display is not evidence of proposition support by itself."
+  ],
+  "expectedGenericVatTrustAfterCandidate2": {
+      "conflictState": "NO_CONFLICT",
+    "hasConflict": false,
+    "authoritySupport": "RELATED_AUTHORITY_ONLY",
+    "reason": "Candidate 1 removes the false same-record conflict, while Candidate 2 independently withholds verified support because RR 16-2005 lacks a matched passage and the broad input-VAT proposition lacks supporting Section 110/113/4.110 passages."
+  },
+  "verdict": "AUTHORITY_CONFLICT_AND_PROPOSITION_SUPPORT_ARE_SEPARATE_AXES",
+  "pass": true
+}

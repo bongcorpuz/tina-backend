@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:36:45.554Z",
+  "liveRuntimeCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "liveRuntimeCommitSource": "ENV:RENDER_GIT_COMMIT",
+  "liveDeploymentServiceIdentity": "srv-d7n4bsdckfvc73ep7mn0",
+  "expectedCommittedC34Head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "selectedC34SemanticRuntime": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "trackedHeadServiceRuntime": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+  "classification": "LIVE_GIT_COMMIT_MATCH_SEMANTIC_RUNTIME_NOT_DEPLOYED",
+  "deploymentLagAtGitCommitLevel": false,
+  "semanticRuntimeDeploymentLag": true,
+  "rationale": [
+    "The C34 selected runtime exists in an immutable attempt snapshot.",
+    "C34 records liveServicesWereSemanticBase=false.",
+    "The deployed application starts the tracked root server and services.",
+    "The tracked root service digest differs from the selected C34 semantic runtime."
+  ],
+  "deploymentChanged": false,
+  "pass": true
+}

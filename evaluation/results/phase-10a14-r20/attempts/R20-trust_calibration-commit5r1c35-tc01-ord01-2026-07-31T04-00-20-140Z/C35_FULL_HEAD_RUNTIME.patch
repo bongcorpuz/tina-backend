@@ -1,0 +1,148 @@
+diff --git a/conflict-engine.js b/conflict-engine.js
+index 44b5b492..0616c927 100644
+--- a/conflict-engine.js
++++ b/conflict-engine.js
+@@ -459,10 +459,103 @@ function areOppositeHoldings(a = {}, b = {}) {
+   return false;
+ }
+ 
++const STRUCTURED_AUTHORITY_POSITION_FIELDS = Object.freeze([
++  "authorityPositionId",
++  "positionId",
++  "authorityVersionId",
++  "versionId",
++  "amendmentId",
++  "revisionId",
++  "effectiveFrom",
++  "effectiveTo",
++  "validFrom",
++  "validTo",
++  "supersedes",
++  "supersededBy"
++]);
++
++function normalizeAuthorityRecordValue(value = "") {
++  return lower(value)
++    .replace(/\\/g, "/")
++    .replace(/\s*\/\s*/g, "/")
++    .replace(/\s+/g, " ")
++    .trim();
++}
++
++function getStructuredAuthorityPositionSignature(doc = {}) {
++  return STRUCTURED_AUTHORITY_POSITION_FIELDS
++    .map((field) => {
++      const value = doc[field] ?? doc.metadata?.[field];
++      const normalized = normalizeAuthorityRecordValue(value);
++      return normalized ? `${field}:${normalized}` : null;
++    })
++    .filter(Boolean)
++    .sort();
++}
++
++/**
++ * Chunk boundaries do not create independent legal positions. Two fragments
++ * from the same source and normalized legal reference are one authority
++ * record unless structured version/effectivity/supersession metadata
++ * identifies genuinely distinct positions.
++ */
++function distinctAuthorityPositionsGate(a = {}, b = {}) {
++  const sourceA = normalizeAuthorityRecordValue(getDocPath(a) || getDocSource(a));
++  const sourceB = normalizeAuthorityRecordValue(getDocPath(b) || getDocSource(b));
++  const referenceA = normalizeAuthorityRecordValue(
++    getDocNormalizedReference(a) || a.citation || a.statute || a.primaryStatute
++  );
++  const referenceB = normalizeAuthorityRecordValue(
++    getDocNormalizedReference(b) || b.citation || b.statute || b.primaryStatute
++  );
++
++  const sameAuthorityRecord =
++    Boolean(sourceA && sourceB && referenceA && referenceB) &&
++    sourceA === sourceB &&
++    referenceA === referenceB;
++
++  const positionA = getStructuredAuthorityPositionSignature(a);
++  const positionB = getStructuredAuthorityPositionSignature(b);
++  const structuredPositionDivergence =
++    positionA.length > 0 &&
++    positionB.length > 0 &&
++    positionA.join("|") !== positionB.join("|");
++  const passed = !sameAuthorityRecord || structuredPositionDivergence;
++
++  return {
++    passed,
++    sameAuthorityRecord,
++    structuredPositionDivergence,
++    sourceIdentity: sameAuthorityRecord ? sourceA : null,
++    referenceIdentity: sameAuthorityRecord ? referenceA : null,
++    sourceAPositionSignature: positionA,
++    sourceBPositionSignature: positionB,
++    reason: passed
++      ? sameAuthorityRecord
++        ? "Same authority record contains structured metadata identifying distinct legal positions."
++        : "Inputs are not the same normalized authority record."
++      : "Fragments of one authority record are not two identified legal positions."
++  };
++}
++
+ function sameIssueGate(a = {}, b = {}) {
+   const sameIssues = getSameIssues(a, b);
+   const sameDimensions = getSameDimensions(a, b);
+   const vatDoctrineMismatch = hasDifferentVatDoctrine(a, b);
++  const distinctPositions = distinctAuthorityPositionsGate(a, b);
++
++  if (!distinctPositions.passed) {
++    return {
++      passed: false,
++      sameIssues,
++      sameDimensions,
++      sameExactIssue: sameIssues.length > 0,
++      sameLegalDimension: sameDimensions.length > 0,
++      distinctionType: "Same authority record; no structured distinct-position metadata.",
++      reason: distinctPositions.reason,
++      distinctAuthorityPositionsGate: distinctPositions
++    };
++  }
+ 
+   if (vatDoctrineMismatch) {
+     return {
+@@ -472,7 +565,8 @@ function sameIssueGate(a = {}, b = {}) {
+       sameExactIssue: false,
+       sameLegalDimension: false,
+       distinctionType: "VAT liability doctrine distinguished from VAT refund/procedural doctrine.",
+-      reason: "Authorities mention VAT but resolve different VAT doctrines."
++      reason: "Authorities mention VAT but resolve different VAT doctrines.",
++      distinctAuthorityPositionsGate: distinctPositions
+     };
+   }
+ 
+@@ -484,7 +578,8 @@ function sameIssueGate(a = {}, b = {}) {
+       sameExactIssue: false,
+       sameLegalDimension: sameDimensions.length > 0,
+       distinctionType: "Different tax issue.",
+-      reason: "Authorities do not resolve the same legal issue."
++      reason: "Authorities do not resolve the same legal issue.",
++      distinctAuthorityPositionsGate: distinctPositions
+     };
+   }
+ 
+@@ -497,7 +592,8 @@ function sameIssueGate(a = {}, b = {}) {
+       sameLegalDimension: false,
+       distinctionType: "Same broad tax topic but different legal dimension.",
+       reason:
+-        "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal."
++        "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal.",
++      distinctAuthorityPositionsGate: distinctPositions
+     };
+   }
+ 
+@@ -508,7 +604,8 @@ function sameIssueGate(a = {}, b = {}) {
+     sameExactIssue: true,
+     sameLegalDimension: true,
+     distinctionType: null,
+-    reason: "Authorities pass same-issue and same-dimension gate."
++    reason: "Authorities pass same-issue and same-dimension gate.",
++    distinctAuthorityPositionsGate: distinctPositions
+   };
+ }
+ 

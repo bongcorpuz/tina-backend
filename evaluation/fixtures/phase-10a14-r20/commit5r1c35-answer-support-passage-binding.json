@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "fixtureId": "C35-SUPPORT-PASSAGE-BINDING-V1",
+  "frozenUtc": "2026-07-31T04:58:00.000Z",
+  "purpose": "Generalized, VAT-observed fixtures proving that verified proposition support must bind the exact final rendered answer to exact retrieved passages rather than to citation labels alone.",
+  "liveObservation": {
+    "question": "tell me more about VAT",
+    "answer": "### Short Answer\nValue-Added Tax (VAT) is an indirect tax imposed on the sale of goods, properties, and services in the Philippines, with a standard rate of twelve percent (12%). It is applicable to any person engaged in trade or business who sells, barters, exchanges, or leases goods or properties, or renders services.\n\n### Controlling Authorities\nThe primary legal basis for VAT is found in the National Internal Revenue Code (NIRC), specifically:\n- **Section 105**: Defines persons liable for VAT.\n- **Section 106**: Details the VAT on the sale of goods or properties.\n- **Section 107**: Covers VAT on the importation of goods.\n- **Section 108**: Addresses VAT on the sale of services, including digital services.\n\n### Interpretation\nUnder **Section 105** of the NIRC, any person engaged in trade or business is subject to VAT for transactions involving the sale, barter, or exchange of goods and services. **Section 106** specifies that VAT is levied at a rate of 12% on gross sales of goods or properties. **Section 107** imposes VAT on imported goods based on their total value, including customs duties. Finally, **Section 108** extends VAT to services rendered, including digital services, also at a rate of 12%.\n\n### Practical Meaning\nVAT is a significant source of revenue for the government and affects pricing strategies for businesses. Sellers can pass on the VAT to buyers, making it essential for businesses to understand their VAT obligations to ensure compliance and avoid penalties. Additionally, businesses can claim input VAT on purchases related to their taxable sales, which can help reduce their overall tax liability. Understanding these provisions is crucial for effective tax planning and compliance in the Philippines.",
+    "publicSourceCards": [
+      {
+        "label": "NIRC Sec. 105",
+        "citation": "NIRC Sec. 105",
+        "authorityType": "STATUTE"
+      },
+      {
+        "label": "NIRC Sec. 106",
+        "citation": "NIRC Sec. 106",
+        "authorityType": "STATUTE"
+      },
+      {
+        "label": "NIRC Sec. 107",
+        "citation": "NIRC Sec. 107",
+        "authorityType": "STATUTE"
+      },
+      {
+        "label": "NIRC Sec. 108",
+        "citation": "NIRC Sec. 108",
+        "authorityType": "STATUTE"
+      },
+      {
+        "label": "RR 16-2005",
+        "citation": "RR 16-2005",
+        "authorityType": "RR"
+      }
+    ],
+    "retrievedPassages": [
+      {
+        "traceIndex": 0,
+        "citation": "NIRC Sec. 105",
+        "text": "The value-added tax is an indirect tax and the amount of tax may be shifted or passed on to the buyer, transferee or lessee of the goods, properties or services. The phrase 'in the course of trade or business' means the regular conduct or pursuit of a commercial or an economic activity, including transactions incidental thereto."
+      },
+      {
+        "traceIndex": 2,
+        "citation": "NIRC Sec. 106",
+        "text": "SEC. 106. Value-Added Tax on Sale of Goods or Properties. - (A) Rate and Base of Tax. - There shall be levied, assessed and collected on every sale, barter or exchange of goods or properties, value-added tax equivalent to twelve percent (12%) of the gross sales of the goods or properties sold, bartered or exchanged, such tax to be paid by the seller or transferor."
+      },
+      {
+        "traceIndex": 6,
+        "citation": "NIRC Sec. 107",
+        "text": "SEC. 107. Value-Added Tax on Importation of Goods. - (A) In General. - There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges."
+      },
+      {
+        "traceIndex": 3,
+        "citation": "NIRC Sec. 108",
+        "text": "SEC. 108. Value-Added Tax on the Sale of Services, Including Digital Services, and the Use or Lease of Properties. - (A) Rate and Base of Tax. — There shall be levied, assessed and collected, a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the sale or exchange of services, including digital services, and the use or lease of properties."
+      },
+      {
+        "traceIndex": 5,
+        "citation": "NIRC Sec. 106",
+        "text": "Any export-oriented enterprise that fails to meet the threshold shall be disqualified from availing of VAT zero-rating on local purchases in the immediately succeeding year: Provided, finally, That input tax otherwise due on VAT zero-rated local purchases attributable to VAT-exempt sales shall be paid and deductible from the gross income of the taxpayer."
+      }
+    ],
+    "missingPassageForDisplayedAuthority": "RR 16-2005",
+    "unsupportedMaterialProposition": "Additionally, businesses can claim input VAT on purchases related to their taxable sales, which can help reduce their overall tax liability."
+  },
+  "generalizedCases": [
+    {
+      "id": "G1_LABELS_ONLY_CANNOT_VERIFY",
+      "question": "Explain the governing tax treatment.",
+      "answer": "The governing tax treatment applies to the transaction described by the taxpayer. The cited authority is said to establish the treatment, and the taxpayer should apply that treatment when computing the amount due.",
+      "displayedSources": [
+        {
+          "label": "NIRC Sec. 105",
+          "citation": "NIRC Sec. 105",
+          "authorityType": "STATUTE"
+        }
+      ],
+      "retrievedSources": [],
+      "expectedPostFix": {
+        "verifiedEligible": false,
+        "stage": "passage-source-sufficiency",
+        "clientCalls": 0
+      }
+    },
+    {
+      "id": "G2_EXACT_PASSAGE_AND_FINAL_ANSWER_REACH_REVIEWER",
+      "question": "What rate applies to a sale of goods?",
+      "answer": "A sale, barter, or exchange of goods or properties is generally subject to twelve percent VAT on gross sales under NIRC Section 106, subject to any applicable zero-rating or exemption.",
+      "displayedSources": [
+        {
+          "label": "NIRC Sec. 106",
+          "citation": "NIRC Sec. 106",
+          "authorityType": "STATUTE"
+        }
+      ],
+      "retrievedSources": [
+        {
+          "citation": "NIRC Sec. 106",
+          "text": "There shall be levied, assessed and collected on every sale, barter or exchange of goods or properties, value-added tax equivalent to twelve percent (12%) of the gross sales of the goods or properties sold, bartered or exchanged."
+        }
+      ],
+      "expectedPostFix": {
+        "verifiedEligible": true,
+        "stage": "llm",
+        "promptContainsExactAnswer": true,
+        "promptContainsExactPassage": true
+      }
+    },
+    {
+      "id": "G3_BROAD_INPUT_VAT_NOT_SUPPORTED_BY_NARROW_PASSAGE",
+      "question": "Tell me more about VAT.",
+      "answer": "All businesses can claim input VAT on purchases related to taxable sales, reducing their overall tax liability.",
+      "displayedSources": [
+        {
+          "label": "NIRC Sec. 106",
+          "citation": "NIRC Sec. 106",
+          "authorityType": "STATUTE"
+        }
+      ],
+      "retrievedSources": [
+        {
+          "citation": "NIRC Sec. 106",
+          "text": "Input tax otherwise due on VAT zero-rated local purchases attributable to VAT-exempt sales shall be paid and deductible from the gross income of the taxpayer."
+        }
+      ],
+      "expectedPostFix": {
+        "verifiedEligible": false,
+        "stage": "llm",
+        "unsupportedMaterialProposition": true
+      }
+    },
+    {
+      "id": "G4_QUALIFIED_INPUT_VAT_SUPPORTED",
+      "question": "At a high level, when may input VAT be credited?",
+      "answer": "Subject to Section 110 and the invoicing, attribution, timing, and other statutory limits, a VAT-registered purchaser may credit qualifying input VAT on covered business purchases or importations against output VAT.",
+      "displayedSources": [
+        {
+          "label": "NIRC Sec. 110",
+          "citation": "NIRC Sec. 110",
+          "authorityType": "STATUTE"
+        },
+        {
+          "label": "RR 16-2005 Sec. 4.110-4",
+          "citation": "RR 16-2005 Sec. 4.110-4",
+          "authorityType": "RR"
+        }
+      ],
+      "retrievedSources": [
+        {
+          "citation": "NIRC Sec. 110",
+          "text": "The input tax on domestic purchase or importation of goods or properties by a VAT-registered person shall be creditable to the purchaser upon consummation of sale and on importation of goods or properties, and to the importer upon payment of the value-added tax prior to release of the goods from customs custody."
+        },
+        {
+          "citation": "RR 16-2005 Sec. 4.110-4",
+          "text": "If any input tax cannot be directly attributed to either a VAT taxable or VAT-exempt transaction, the input tax shall be pro-rated to the VAT taxable and VAT-exempt transactions and only the ratable portion pertaining to transactions subject to VAT may be recognized for input tax credit."
+        }
+      ],
+      "expectedPostFix": {
+        "verifiedEligible": true,
+        "stage": "llm",
+        "promptContainsExactAnswer": true,
+        "allDisplayedSourcesPassageBound": true
+      }
+    }
+  ]
+}

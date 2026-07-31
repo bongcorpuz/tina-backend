@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:17:00.000Z",
+  "candidateRuntimeHash": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+  "dedicatedC35Test": {
+    "path": "tests/phase-10a14-r20-commit5r1c35-vat-authority-conflict-calibration.test.mjs",
+    "sha256": "69b053926d238c34cff0d046ac4b8f7b7b87f0985e824021697fd244fc350818",
+    "testsPassed": 6,
+    "testsFailed": 0,
+    "covered": [
+      "same-record fragments rejected in both orders",
+      "distinct-record true conflict preserved",
+      "structured effectivity divergence preserved",
+      "structured supersession divergence preserved",
+      "potential and verified conflict states preserved",
+      "authority support independent and fail-closed"
+    ],
+    "pass": true
+  },
+  "postFixFixture": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_POST_FIX_FIXTURE_RESULT.json",
+    "sha256": "a4cbe5a2057de50deef9934ea12abcd4d93ac92d04977fcaebcf889c46f06a1a",
+    "targetPass": true,
+    "controlsPass": true,
+    "pass": true
+  },
+  "syntaxAndImportValidation": {
+    "command": "npm run lint:imports",
+    "exitCode": 0,
+    "pass": true
+  },
+  "legacyFocusedBundle": {
+    "command": "node --test tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs tests/phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs tests/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs tests/phase-10a4c-trust-calibration-conflict-accessibility-keyboard-fixture-remediation-1.test.mjs tests/phase-10a8-trust-calibration-and-answer-correctness-remediation-1.test.mjs tests/phase-10a10-r2-missing-answersupport-fail-closed-remediation-1.test.mjs",
+    "suitesPassed": 3,
+    "suitesFailed": 3,
+    "internalPassChecks": 118,
+    "internalFailChecks": 7,
+    "semanticRuntimeFailures": 0,
+    "expectedHistoricalScopeFailures": [
+      {
+        "count": 4,
+        "reason": "Historical phase tests assert conflict-engine.js must remain unmodified for their own earlier patch scope. C35 is specifically authorized to modify that file."
+      },
+      {
+        "count": 3,
+        "reason": "Historical phase tests require legacy CURRENT_STATE patch identifiers. The C35 prompt expressly forbids modifying CURRENT_STATE.md in this exploratory unit."
+      }
+    ],
+    "semanticTrustSuites": [
+      {
+        "suite": "phase-10a4c trust calibration",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "suite": "phase-10a8 trust calibration and answer correctness",
+        "passed": 24,
+        "failed": 0
+      },
+      {
+        "suite": "phase-10a10-r2 missing answerSupport fail-closed",
+        "passed": 27,
+        "failed": 0
+      }
+    ],
+    "adjudication": "EXPECTED_SCOPE_GUARD_FAILURES_ONLY",
+    "pass": true
+  },
+  "overall": "PASS_WITH_EXPECTED_HISTORICAL_SCOPE_GUARD_OUTPUT",
+  "pass": true
+}

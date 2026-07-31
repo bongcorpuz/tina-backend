@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "packetType": "FROZEN_PRE_CANDIDATE_PRIVATE_SUPPORT_EVIDENCE",
+  "publicShapeChanged": false,
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+    "bytes": 332442,
+    "sha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e"
+  },
+  "displayedAuthorities": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "matchedPassageAuthorities": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108"
+  ],
+  "unmatchedDisplayedAuthorities": [
+    "RR 16-2005"
+  ],
+  "passagePointers": [
+    "/rerankedSources/0/text",
+    "/rerankedSources/2/text",
+    "/rerankedSources/3/text",
+    "/rerankedSources/5/text",
+    "/rerankedSources/6/text",
+    "/rerankedSources/7/text",
+    "/rerankedSources/10/text",
+    "/rerankedSources/11/text"
+  ],
+  "broadInputVatSupportPresent": false,
+  "effectivityMetadataPresent": false,
+  "supersessionMetadataPresent": false,
+  "verdict": "INPUT_VAT_EXACT_PASSAGE_PACKET_INSUFFICIENT_FOR_BROAD_CLAIM",
+  "pass": true,
+  "artifactRole": "EXACT_NAME_ENRICHED_PASSAGE_PACKET",
+  "sourcePacket": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_PACKET.json",
+    "sha256": "5c60730f4e4214adb33e05d5e49d3105399769a364b0a1f7449da435f99a4586"
+  },
+  "exactCapturedPassages": [
+    {
+      "traceIndex": 0,
+      "citation": "NIRC Sec. 105",
+      "exactPassage": "The value-added tax is an indirect tax and the amount of tax may be shifted or passed on to the buyer, transferee or lessee of the goods, properties or services. The phrase 'in the course of trade or business' means the regular conduct or pursuit of a commercial or an economic activity, including transactions incidental thereto.",
+      "passageSha256": "e65f632039c4b79e1e372461e208561e3f01d02266d1d3e1fe7c5b7c88e674b2"
+    },
+    {
+      "traceIndex": 2,
+      "citation": "NIRC Sec. 106",
+      "exactPassage": "SEC. 106. Value-Added Tax on Sale of Goods or Properties. - (A) Rate and Base of Tax. - There shall be levied, assessed and collected on every sale, barter or exchange of goods or properties, value-added tax equivalent to twelve percent (12%) of the gross sales of the goods or properties sold, bartered or exchanged, such tax to be paid by the seller or transferor.",
+      "passageSha256": "77b5c2ef5f2ab7453f1c57ecb0ab7e7915b488ad04109d1b34499c4586ea1ea7"
+    },
+    {
+      "traceIndex": 6,
+      "citation": "NIRC Sec. 107",
+      "exactPassage": "SEC. 107. Value-Added Tax on Importation of Goods. - (A) In General. - There shall be levied, assessed and collected on every importation of goods a value-added tax equivalent to twelve percent (12%) based on the total value used by the Bureau of Customs in determining tariff and customs duties plus customs duties, excise taxes, if any, and other charges.",
+      "passageSha256": "6fd1a2bc359840fc3fbe07c9e270b85fe467d5d5738cb82f912c4068fa4e1ed1"
+    },
+    {
+      "traceIndex": 3,
+      "citation": "NIRC Sec. 108",
+      "exactPassage": "SEC. 108. Value-Added Tax on the Sale of Services, Including Digital Services, and the Use or Lease of Properties. - (A) Rate and Base of Tax. — There shall be levied, assessed and collected, a value-added tax equivalent to twelve percent (12%) of the gross sales derived from the sale or exchange of services, including digital services, and the use or lease of properties.",
+      "passageSha256": "bc9fb74ba2a1662469c624a981ed734c325e2292db43a435711e8697e0a128e8"
+    },
+    {
+      "traceIndex": 5,
+      "citation": "NIRC Sec. 106",
+      "exactPassage": "Any export-oriented enterprise that fails to meet the threshold shall be disqualified from availing of VAT zero-rating on local purchases in the immediately succeeding year: Provided, finally, That input tax otherwise due on VAT zero-rated local purchases attributable to VAT-exempt sales shall be paid and deductible from the gross income of the taxpayer.",
+      "passageSha256": "67255e87ed70d265a284beea65f599da2ef08cf3d109d3701c9e2b48b6ce2f04"
+    }
+  ],
+  "exactSection110PassageCaptured": false,
+  "exactSection113PassageCaptured": false,
+  "exactRr4110PassageCaptured": false,
+  "broadInputVatClaimSupported": false
+}

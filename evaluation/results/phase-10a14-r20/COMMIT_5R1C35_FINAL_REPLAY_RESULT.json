@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "candidate1Replay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_REPLAY.json",
+    "sha256": "c42f1457da64ff43c9de5955157983f3bab79c24d556b9034342e2521ea7d2d3",
+    "pass": true
+  },
+  "candidate2Replay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_REPLAY.json",
+    "sha256": "510ba0e65173169235713d1f2e694889bc31ef2513db86a112ef765565642ace",
+    "isolatedForwardPass": 31,
+    "isolatedReversePass": 31,
+    "pass": true
+  },
+  "cumulativeActiveBase": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+  "candidateOnly": true,
+  "cumulativeC35": true,
+  "fullHead": true,
+  "forwardReverse": true,
+  "isolatedCleanArchive": true,
+  "querySourceOrderSourceCountModelWordingVariation": true,
+  "skippedOrNoop": 0,
+  "unexpectedPaths": 0,
+  "temporaryDirectoryRemoved": true,
+  "verdict": "FINAL_REPLAY_PASS",
+  "pass": true
+}

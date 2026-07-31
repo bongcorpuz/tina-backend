@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "supplementedUtc": "2026-07-31T07:14:00.000Z",
+  "classification": "PHASE_10A_OPEN",
+  "decisionClosure": true,
+  "relationClosure": true,
+  "reasonClosure": false,
+  "reason": {
+    "satisfied": 3575,
+    "required": 3720,
+    "remainingReasonOnlyRows": 145
+  },
+  "residualFamilies": {
+    "explicit_non_tax_task": 45,
+    "explicit_tax_task_relation": 16,
+    "no_tax_relation": 81,
+    "tax_compliance_task": 1,
+    "tax_treatment_of_ordinary_object": 2
+  },
+  "criteria": {
+    "decisionClosure": {
+      "status": "SATISFIED",
+      "result": "3720/3720"
+    },
+    "relationClosure": {
+      "status": "SATISFIED",
+      "result": "3720/3720"
+    },
+    "reasonClosure": {
+      "status": "NOT_SATISFIED",
+      "result": "3575/3720; 145 reason-only rows remain"
+    },
+    "standaloneAndIntegratedExactGates": {
+      "status": "SATISFIED_FOR_BOUNDED_C35",
+      "evidence": "Candidate 1 6/6, Candidate 2 25/25, legacy trust 66 checks, and isolated forward/reverse composition 31/31 each."
+    },
+    "frozenRuntime": {
+      "status": "SATISFIED_FOR_BOUNDED_C35",
+      "c34Runtime": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "c35Runtime": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    },
+    "postFreezeEvidence": {
+      "status": "SATISFIED_FOR_BOUNDED_C35",
+      "evidence": "C34 evidence and oracles were not rerun or modified; C35 operates as a separately governed post-C34 chain."
+    },
+    "deterministicCleanCycles": {
+      "status": "SATISFIED_WITH_EXPLICIT_HISTORICAL_GUARD_ADJUDICATION",
+      "evidence": "The full deterministic run has nominal exit 1 with 33 historical scope/state suites and zero runtime authority/support/conflict/answer failures; no unqualified pass is claimed."
+    },
+    "stagingCleanCycles": {
+      "status": "PRE_REVIEW_CLEAN_POSTAPPROVAL_VALIDATION_PENDING",
+      "evidence": "Staging is empty before the mandatory Opus review."
+    },
+    "independentReview": {
+      "status": "PENDING_MANDATORY_SINGLE_OPUS_REVIEW",
+      "satisfied": false
+    },
+    "E2": {
+      "status": "NOT_EXECUTED",
+      "authorized": false,
+      "rationale": "The governing sequence forbids E2 before R20 independent review passes."
+    },
+    "A15": {
+      "status": "NOT_EXECUTED",
+      "authorized": false,
+      "rationale": "A15 is the final Phase 10A closure gate and cannot close an unresolved 145-row reason layer."
+    },
+    "allKnownMaterialTrustDefects": {
+      "status": "KNOWN_C35_DEFECTS_RESOLVED_NO_UNIVERSAL_CLOSURE_INFERRED",
+      "evidence": "The generic VAT false conflict and generalized proposition-to-passage binding defects are resolved and preserved; this does not prove reason-layer or Phase 10A closure."
+    }
+  },
+  "closureCriteriaAllProven": false,
+  "rationale": "C35 closes the observed authority-conflict and proposition-support defects but does not authorize treating the 145 reason-only residual rows as closed.",
+  "c35Terminal": true,
+  "r20": "IN_PROGRESS",
+  "nextExactTask": "Separately governed Phase-10A14-R20 continuation for the unresolved reason layer; C36 and Phase 10B remain unauthorized.",
+  "pass": true
+}

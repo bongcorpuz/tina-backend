@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T07:39:00.000Z",
+  "proposedCount": 117,
+  "observedBaseCount": 113,
+  "temporalSelfAttestingCount": 4,
+  "finalExpectedCount": 117,
+  "baseExact": true,
+  "unionExact": true,
+  "missing": [],
+  "unexpected": [],
+  "duplicates": 0,
+  "explicitFileByFileOnly": true,
+  "gitAddDotUsed": false,
+  "gitAddAllUsed": false,
+  "excludedMutableCheckpointPointerAndLog": true,
+  "protectedResidueExcluded": true,
+  "verdict": "STAGING_SET_READY_FOR_TEMPORAL_ATTESTATION_ADDITION",
+  "pass": true
+}

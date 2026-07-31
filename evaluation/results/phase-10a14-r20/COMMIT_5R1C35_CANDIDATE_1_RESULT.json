@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:18:56.041Z",
+  "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+  "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+  "verdict": "ACCEPTED_PROMOTED_CONTROLLING",
+  "meaning": "Provisional C35 working-tree selection only; not staged, committed, pushed, deployed, or independently approved.",
+  "candidateRuntimeHash": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+  "candidateRuntime": {
+    "path": "conflict-engine.js",
+    "bytes": 40905,
+    "preCandidateSha256": "e68d72239bc8e1545392149e36b96d8b91d0b7546dbf4494e0302c0340240ec5",
+    "postCandidateSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "runtimeInstalled": "WORKTREE_ONLY_NO_SERVICE"
+  },
+  "targetResult": {
+    "queryFamily": [
+      "tell me more about VAT",
+      "what is VAT",
+      "explain VAT in the Philippines",
+      "how do Sections 105 to 108 work together",
+      "what is the relationship between the VAT provisions and RR 16-2005"
+    ],
+    "exactCapturedFiringPairsBefore": 2,
+    "exactCapturedFiringPairsAfter": 0,
+    "pipelineHasConflictAfter": false,
+    "trustHasConflictAfter": false,
+    "conflictStateAfter": "NO_CONFLICT",
+    "possibleAuthorityConflictBannerAfter": false,
+    "sourceOrderPass": true,
+    "sourceCountVariationPass": true,
+    "modelWordingIndependencePass": true,
+    "pass": true
+  },
+  "conflictPreservation": {
+    "distinctRecordTrueConflict": true,
+    "sameRecordStructuredEffectivityConflict": true,
+    "sameRecordStructuredSupersessionConflict": true,
+    "verifiedConflictState": true,
+    "justifiedPotentialConflictState": true,
+    "hierarchyBehaviorUnchanged": true,
+    "pass": true
+  },
+  "authoritySupportIndependence": {
+    "conflictPatchChangesSupportCode": false,
+    "noConflictDoesNotImplyVerified": true,
+    "relatedDoesNotImplyPotential": true,
+    "potentialDoesNotForceRelated": true,
+    "sourceOnlyFallbackCapped": true,
+    "bareSourceListingCapped": true,
+    "missingOrMalformedAnswerSupportFailsClosed": true,
+    "currentLiveAuthoritySupport": "VERIFIED_CONTROLLING",
+    "independentPropositionAudit": "REQUIRES_CONTROLLED_ANSWER_SUPPORT_REVALIDATION",
+    "precisePossibleDowngradeReason": "UNSUPPORTED_MATERIAL_INPUT_VAT_PROPOSITION",
+    "pass": true
+  },
+  "evidence": {
+    "postFixFixture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_POST_FIX_FIXTURE_RESULT.json",
+      "sha256": "a4cbe5a2057de50deef9934ea12abcd4d93ac92d04977fcaebcf889c46f06a1a"
+    },
+    "focusedRegression": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FOCUSED_REGRESSION_RESULTS.json",
+      "sha256": "c6eb9dbae8ac80214a1122893d9f7182d19a53511ed4f0f8d4a29209b39d8d7c"
+    },
+    "replay": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_REPLAY.json",
+      "sha256": "c42f1457da64ff43c9de5955157983f3bab79c24d556b9034342e2521ea7d2d3"
+    },
+    "c34Preservation": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_C34_FROZEN_PRESERVATION.json",
+      "sha256": "cdc9951db40128857df786f1ac68db4c185fd70beb5d000f71a9711cdb72e9e8"
+    },
+    "replayTechnicalAdjudication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_REPLAY_TECHNICAL_ADJUDICATION.json",
+      "sha256": "1177367580e4d95292e2c3938d43135152ef566b52aa484ca5102709e184de3a"
+    }
+  },
+  "replay": {
+    "candidateOnly": "PASS",
+    "fullHeadRuntime": "PASS",
+    "forwardReverse": "PASS",
+    "isolatedDirectory": "PASS",
+    "cleanCommittedBase": "PASS",
+    "skippedOrNoop": 0,
+    "unexpectedPaths": 0,
+    "temporaryDirectoryRemoved": true,
+    "pass": true
+  },
+  "c34FrozenPreservation": {
+    "runtimeHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "recordedMetricsUnchanged": true,
+    "acceptedSignatureRegressionsByScope": 0,
+    "c34EvidenceRerun": false,
+    "c34EvidenceMutated": false,
+    "pass": true
+  },
+  "legacyFocusedSuiteAdjudication": "All semantic trust assertions passed. Seven historical phase-local scope/documentation assertions failed because C35 intentionally modifies conflict-engine.js and the prompt prohibits CURRENT_STATE edits.",
+  "productionState": {
+    "liveServiceChanged": false,
+    "frontendChanged": false,
+    "deploymentChanged": false,
+    "databaseChanged": false,
+    "indexChanged": false,
+    "model": "gpt-4o-mini",
+    "modelMigrated": false
+  },
+  "independentReview": "PENDING_INDEPENDENT_REVIEW",
+  "candidate2Allocated": false,
+  "pass": true
+}

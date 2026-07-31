@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:34:30.000Z",
+  "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+  "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+  "result": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_RESULT.json",
+    "sha256": "ec6747a8df8fbd033b34a7526e47851b5319c67401d9bd03b08122ef14d371e8",
+    "verdict": "ACCEPTED_PROMOTED_CONTROLLING",
+    "pass": true
+  },
+  "compatibility": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_COMPATIBILITY_VALIDATION.json",
+    "sha256": "bff1126bba6f06974ed52186fe4552c7d426608e35adea51c26c3fa47bfe99c1",
+    "verdict": "PASS_CANDIDATE_2_COMPATIBILITY",
+    "pass": true
+  },
+  "replay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_REPLAY.json",
+    "sha256": "510ba0e65173169235713d1f2e694889bc31ef2513db86a112ef765565642ace",
+    "verdict": "CANDIDATE_2_REPLAY_PASS",
+    "pass": true
+  },
+  "allRuntimeHashesMatch": true,
+  "activeAttemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+  "c35WalRows": 5,
+  "stagingEmpty": true,
+  "verdict": "PASS_READY_TO_TERMINALIZE_CANDIDATE_2",
+  "pass": true
+}

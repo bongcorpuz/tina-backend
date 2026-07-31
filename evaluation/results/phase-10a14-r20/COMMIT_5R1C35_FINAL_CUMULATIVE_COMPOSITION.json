@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "chain": [
+    {
+      "ordinal": 1,
+      "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+      "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "rule": "Same-source, same-reference fragments are not distinct authority positions absent structured proof of version, effectivity, legal position, or supersession.",
+      "candidateRuntimeHash": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+    },
+    {
+      "ordinal": 2,
+      "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+      "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "rule": "Verified support requires the exact final-answer digest and complete host-issued material-proposition bindings to exact hash-valid passages.",
+      "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    }
+  ],
+  "activeBase": {
+    "algorithm": "For each POSIX path in lexical order: path + NUL + raw-byte-length + NUL + SHA256(raw bytes) + LF; SHA256 the UTF-8 concatenation.",
+    "components": [
+      {
+        "path": "ask-handler.js",
+        "bytes": 147494,
+        "sha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602"
+      },
+      {
+        "path": "conflict-engine.js",
+        "bytes": 40905,
+        "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+      },
+      {
+        "path": "services/answer-support-evidence.js",
+        "bytes": 9507,
+        "sha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37"
+      },
+      {
+        "path": "services/answer-support-validator.js",
+        "bytes": 142463,
+        "sha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+      }
+    ],
+    "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+  },
+  "runtimePaths": [
+    "ask-handler.js",
+    "conflict-engine.js",
+    "services/answer-support-evidence.js",
+    "services/answer-support-validator.js"
+  ],
+  "candidate1ExactlyOnce": true,
+  "candidate2AcceptedAndExactlyOnce": true,
+  "orderDeterministic": true,
+  "noShadowing": true,
+  "noDrift": true,
+  "noRejectedOrTechnicalAttemptContamination": true,
+  "verdict": "FINAL_CUMULATIVE_COMPOSITION_PASS",
+  "pass": true
+}

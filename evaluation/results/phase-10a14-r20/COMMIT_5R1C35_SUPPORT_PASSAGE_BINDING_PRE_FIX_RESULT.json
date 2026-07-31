@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "observedUtc": "2026-07-31T05:00:40.000Z",
+  "observation": "PRE_FIX",
+  "fixture": {
+    "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+    "bytes": 9661,
+    "sha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244"
+  },
+  "runner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c35-support-prefix-observe.mjs",
+    "bytes": 4465,
+    "sha256": "ace230847db113955a20d9826a01ce4f1221d2b8fd7628658b3576e582cef630"
+  },
+  "labelOnlyCase": {
+    "id": "G1_LABELS_ONLY_CANNOT_VERIFY",
+    "validatorResult": {
+      "verifiedEligible": true,
+      "schemaValid": true,
+      "stage": "llm"
+    },
+    "clientCalls": 1,
+    "validatorUserPrompt": "QUESTION:\nExplain the governing tax treatment.\n\nSOURCE CITATIONS:\nNIRC Sec. 105\n\nANSWER:\nThe governing tax treatment applies to the transaction described by the taxpayer. The cited authority is said to establish the treatment, and the taxpayer should apply that treatment when computing the amount due.",
+    "promptContainsSourceCitationsHeading": true,
+    "promptContainsSourcePassagesHeading": false,
+    "promptContainsAnyPassageField": false,
+    "defectReproduced": true
+  },
+  "liveVatCase": {
+    "validatorResult": {
+      "verifiedEligible": true,
+      "schemaValid": true,
+      "stage": "llm"
+    },
+    "clientCalls": 1,
+    "finalAnswerSha256": "d6d377c378937fe5f827f7a3002325e676985cb96f1c9df63957f45d3dc90ced",
+    "validatorPromptSha256": "e34c0b3f2bd80aeb08d95ba4fcf07c91a8d2e9ff12c08d11fce19e660a1f8cc1",
+    "promptContainsExactFinalAnswer": true,
+    "promptContainsExactRetrievedPassage": false,
+    "promptContainsBroadInputVatClaim": true,
+    "displayedAuthorityWithoutCapturedPassage": "RR 16-2005",
+    "defectReproduced": true
+  },
+  "verdict": "PRE_FIX_GENERALIZED_PASSAGE_BINDING_DEFECT_REPRODUCED",
+  "pass": true
+}

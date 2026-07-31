@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "registry": {
+    "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "bytes": 718108,
+    "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "attempts": 230
+  },
+  "c35Wal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 2165,
+    "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+    "rows": 6
+  },
+  "c34Wal": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+    "bytes": 12143,
+    "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2"
+  },
+  "attemptDirectories": 230,
+  "attempts": [
+    {
+      "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+      "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+      "status": "completed",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "controlling": true,
+      "candidateRuntimeHash": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+    },
+    {
+      "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+      "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+      "status": "completed",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "controlling": true,
+      "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    }
+  ],
+  "activeAttemptId": null,
+  "running": 0,
+  "orphan": 0,
+  "dangling": 0,
+  "terminalizationIdempotence": "PASS_NO_DUPLICATE_WAL_OR_REGISTRY_ROW",
+  "schemaVarianceAdjudication": {
+    "observed": "The checkpoint-61 bespoke C35 rows use attemptCategory trust_calibration and omit harnessTreeDigest, dependencyLockDigest, and environmentFingerprint required by the generic ATTEMPT_REGISTRY_CONTRACT closed schema.",
+    "action": "Preserve both historical C35 rows exactly; do not silently rewrite Candidate 1 or the terminal Candidate 2 allocation.",
+    "semanticImpact": "NONE",
+    "disclosedForIndependentReview": true
+  },
+  "verdict": "FINAL_ATTEMPT_LEDGER_RECONCILED",
+  "pass": true
+}

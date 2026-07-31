@@ -1,0 +1,1141 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T03:47:34.568Z",
+  "phase": "PRE_FIX",
+  "fixture": {
+    "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-vat-conflict-calibration.json",
+    "bytes": 11410,
+    "sha256": "49d144dbab500d8241d196ff3d6853e53be40c31aa0f59ca5c4b0cf24091c369"
+  },
+  "preflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_GOVERNED_START_PREFLIGHT.json",
+    "bytes": 10914,
+    "sha256": "a85a2a3551d16627f8f9c9de1f6feb16c44df9348af89d132c0ccb6b97d257d3"
+  },
+  "defectPair": {
+    "id": "VAT-SAME-SECTION-ADJACENT-COMPLEMENTARY-CHUNKS",
+    "expectedTrueConflict": false,
+    "forward": {
+      "trueConflict": false,
+      "parts": {
+        "sameIssue": false,
+        "sameMaterialFacts": null,
+        "sameStatute": true,
+        "oppositeHolding": false
+      },
+      "pairAnalysis": {
+        "conflict": false,
+        "apparentConflict": false,
+        "doctrinalConflict": false,
+        "hierarchyConflict": false,
+        "conflictType": "NO_CONFLICT",
+        "distinctionType": "Different tax issue.",
+        "sameIssueGate": {
+          "passed": false,
+          "sameIssues": [],
+          "sameDimensions": [
+            "SUBSTANTIVE"
+          ],
+          "sameExactIssue": false,
+          "sameLegalDimension": true,
+          "distinctionType": "Different tax issue.",
+          "reason": "Authorities do not resolve the same legal issue."
+        },
+        "oppositeHoldingGate": {
+          "passed": true,
+          "oppositeHoldingOrRule": true,
+          "sourceAHoldingPolarity": [
+            "NOT_TAXABLE_OR_EXEMPT",
+            "ALLOWED_OR_GRANTED"
+          ],
+          "sourceBHoldingPolarity": [
+            "TAXABLE_OR_SUBJECT"
+          ],
+          "reason": "Authorities contain opposite holding polarity on the same issue."
+        },
+        "sameExactIssue": false,
+        "sameLegalDimension": true,
+        "oppositeHoldingOrRule": true,
+        "exactIssue": null,
+        "exactLegalDimension": "SUBSTANTIVE",
+        "sourceA": {
+          "source": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+          "reference": "NIRC Sec. 106",
+          "authorityType": "STATUTE",
+          "authorityLabel": "Primary Statute",
+          "authorityLevel": 2,
+          "controllingPrecedence": 2
+        },
+        "sourceB": {
+          "source": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+          "reference": "NIRC Sec. 106",
+          "authorityType": "STATUTE",
+          "authorityLabel": "Primary Statute",
+          "authorityLevel": 2,
+          "controllingPrecedence": 2
+        },
+        "source_a_title": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+        "source_b_title": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+        "winningSource": null,
+        "overriddenSource": null,
+        "winningAuthority": null,
+        "overriddenAuthority": null,
+        "controllingAuthority": null,
+        "controllingSource": null,
+        "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+        "conflictResolutionBasis": "Authorities do not resolve the same legal issue.",
+        "resolutionBasis": "Authorities do not resolve the same legal issue.",
+        "reason": "No direct same-issue and opposite-holding conflict detected.",
+        "masterPromptAuthorityHierarchyApplied": true,
+        "courtAuthorityNotSubordinatedToBIRIssuances": true,
+        "birIssuanceCannotOverrideCourtDoctrine": true,
+        "conflictLabelMayBeDisplayed": false
+      }
+    },
+    "reverse": {
+      "trueConflict": false,
+      "parts": {
+        "sameIssue": false,
+        "sameMaterialFacts": null,
+        "sameStatute": true,
+        "oppositeHolding": false
+      },
+      "pairAnalysis": {
+        "conflict": false,
+        "apparentConflict": false,
+        "doctrinalConflict": false,
+        "hierarchyConflict": false,
+        "conflictType": "NO_CONFLICT",
+        "distinctionType": "Different tax issue.",
+        "sameIssueGate": {
+          "passed": false,
+          "sameIssues": [],
+          "sameDimensions": [
+            "SUBSTANTIVE"
+          ],
+          "sameExactIssue": false,
+          "sameLegalDimension": true,
+          "distinctionType": "Different tax issue.",
+          "reason": "Authorities do not resolve the same legal issue."
+        },
+        "oppositeHoldingGate": {
+          "passed": true,
+          "oppositeHoldingOrRule": true,
+          "sourceAHoldingPolarity": [
+            "TAXABLE_OR_SUBJECT"
+          ],
+          "sourceBHoldingPolarity": [
+            "NOT_TAXABLE_OR_EXEMPT",
+            "ALLOWED_OR_GRANTED"
+          ],
+          "reason": "Authorities contain opposite holding polarity on the same issue."
+        },
+        "sameExactIssue": false,
+        "sameLegalDimension": true,
+        "oppositeHoldingOrRule": true,
+        "exactIssue": null,
+        "exactLegalDimension": "SUBSTANTIVE",
+        "sourceA": {
+          "source": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+          "reference": "NIRC Sec. 106",
+          "authorityType": "STATUTE",
+          "authorityLabel": "Primary Statute",
+          "authorityLevel": 2,
+          "controllingPrecedence": 2
+        },
+        "sourceB": {
+          "source": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+          "reference": "NIRC Sec. 106",
+          "authorityType": "STATUTE",
+          "authorityLabel": "Primary Statute",
+          "authorityLevel": 2,
+          "controllingPrecedence": 2
+        },
+        "source_a_title": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+        "source_b_title": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+        "winningSource": null,
+        "overriddenSource": null,
+        "winningAuthority": null,
+        "overriddenAuthority": null,
+        "controllingAuthority": null,
+        "controllingSource": null,
+        "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+        "conflictResolutionBasis": "Authorities do not resolve the same legal issue.",
+        "resolutionBasis": "Authorities do not resolve the same legal issue.",
+        "reason": "No direct same-issue and opposite-holding conflict detected.",
+        "masterPromptAuthorityHierarchyApplied": true,
+        "courtAuthorityNotSubordinatedToBIRIssuances": true,
+        "birIssuanceCannotOverrideCourtDoctrine": true,
+        "conflictLabelMayBeDisplayed": false
+      }
+    },
+    "orderIndependent": true,
+    "pass": true
+  },
+  "queryResults": [
+    {
+      "query": "tell me more about VAT",
+      "expectedTrueConflict": false,
+      "actualTrueConflict": false,
+      "pass": true
+    },
+    {
+      "query": "what is VAT",
+      "expectedTrueConflict": false,
+      "actualTrueConflict": false,
+      "pass": true
+    },
+    {
+      "query": "explain VAT in the Philippines",
+      "expectedTrueConflict": false,
+      "actualTrueConflict": false,
+      "pass": true
+    },
+    {
+      "query": "how do Sections 105 to 108 work together",
+      "expectedTrueConflict": false,
+      "actualTrueConflict": false,
+      "pass": true
+    },
+    {
+      "query": "what is the relationship between the VAT provisions and RR 16-2005",
+      "expectedTrueConflict": false,
+      "actualTrueConflict": false,
+      "pass": true
+    }
+  ],
+  "complementaryAuthorityControls": [
+    {
+      "id": "STATUTE-AND-IMPLEMENTING-REGULATION",
+      "expectedTrueConflict": false,
+      "forward": {
+        "trueConflict": false,
+        "parts": {
+          "sameIssue": false,
+          "sameMaterialFacts": null,
+          "sameStatute": false,
+          "oppositeHolding": false
+        },
+        "pairAnalysis": {
+          "conflict": false,
+          "apparentConflict": true,
+          "doctrinalConflict": false,
+          "hierarchyConflict": false,
+          "conflictType": "DISTINGUISHABLE_AUTHORITIES",
+          "distinctionType": "Same broad tax topic but different legal dimension.",
+          "sameIssueGate": {
+            "passed": false,
+            "sameIssues": [
+              "VAT_LIABILITY"
+            ],
+            "sameDimensions": [],
+            "sameExactIssue": true,
+            "sameLegalDimension": false,
+            "distinctionType": "Same broad tax topic but different legal dimension.",
+            "reason": "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal."
+          },
+          "oppositeHoldingGate": {
+            "passed": false,
+            "oppositeHoldingOrRule": false,
+            "sourceAHoldingPolarity": [],
+            "sourceBHoldingPolarity": [],
+            "reason": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": false,
+          "oppositeHoldingOrRule": false,
+          "exactIssue": "VAT_LIABILITY",
+          "exactLegalDimension": null,
+          "sourceA": {
+            "source": "NIRC.pdf",
+            "reference": "NIRC Sec. 105",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "sourceB": {
+            "source": "RR-16-2005.pdf",
+            "reference": "RR 16-2005",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "source_a_title": "NIRC.pdf",
+          "source_b_title": "RR-16-2005.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+          "conflictResolutionBasis": "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal.",
+          "resolutionBasis": "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal.",
+          "reason": "Authorities are distinguishable because they do not resolve the same legal issue or legal dimension.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": false
+        }
+      },
+      "reverse": {
+        "trueConflict": false,
+        "parts": {
+          "sameIssue": false,
+          "sameMaterialFacts": null,
+          "sameStatute": false,
+          "oppositeHolding": false
+        },
+        "pairAnalysis": {
+          "conflict": false,
+          "apparentConflict": true,
+          "doctrinalConflict": false,
+          "hierarchyConflict": false,
+          "conflictType": "DISTINGUISHABLE_AUTHORITIES",
+          "distinctionType": "Same broad tax topic but different legal dimension.",
+          "sameIssueGate": {
+            "passed": false,
+            "sameIssues": [
+              "VAT_LIABILITY"
+            ],
+            "sameDimensions": [],
+            "sameExactIssue": true,
+            "sameLegalDimension": false,
+            "distinctionType": "Same broad tax topic but different legal dimension.",
+            "reason": "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal."
+          },
+          "oppositeHoldingGate": {
+            "passed": false,
+            "oppositeHoldingOrRule": false,
+            "sourceAHoldingPolarity": [],
+            "sourceBHoldingPolarity": [],
+            "reason": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": false,
+          "oppositeHoldingOrRule": false,
+          "exactIssue": "VAT_LIABILITY",
+          "exactLegalDimension": null,
+          "sourceA": {
+            "source": "RR-16-2005.pdf",
+            "reference": "RR 16-2005",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "sourceB": {
+            "source": "NIRC.pdf",
+            "reference": "NIRC Sec. 105",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "source_a_title": "RR-16-2005.pdf",
+          "source_b_title": "NIRC.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+          "conflictResolutionBasis": "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal.",
+          "resolutionBasis": "Authorities may involve the same tax type but one may be substantive, procedural, evidentiary, jurisdictional, factual, contractual, or temporal.",
+          "reason": "Authorities are distinguishable because they do not resolve the same legal issue or legal dimension.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": false
+        }
+      },
+      "orderIndependent": true,
+      "pass": true
+    },
+    {
+      "id": "GENERAL-AND-SPECIFIC-WITHHOLDING-PROVISIONS",
+      "expectedTrueConflict": false,
+      "forward": {
+        "trueConflict": false,
+        "parts": {
+          "sameIssue": false,
+          "sameMaterialFacts": null,
+          "sameStatute": true,
+          "oppositeHolding": false
+        },
+        "pairAnalysis": {
+          "conflict": false,
+          "apparentConflict": false,
+          "doctrinalConflict": false,
+          "hierarchyConflict": false,
+          "conflictType": "NO_CONFLICT",
+          "distinctionType": "Different tax issue.",
+          "sameIssueGate": {
+            "passed": false,
+            "sameIssues": [],
+            "sameDimensions": [
+              "SUBSTANTIVE"
+            ],
+            "sameExactIssue": false,
+            "sameLegalDimension": true,
+            "distinctionType": "Different tax issue.",
+            "reason": "Authorities do not resolve the same legal issue."
+          },
+          "oppositeHoldingGate": {
+            "passed": false,
+            "oppositeHoldingOrRule": false,
+            "sourceAHoldingPolarity": [],
+            "sourceBHoldingPolarity": [],
+            "reason": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict."
+          },
+          "sameExactIssue": false,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": false,
+          "exactIssue": null,
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sourceA": {
+            "source": "RR-2-98.pdf",
+            "reference": "RR 2-98 Sec. 2.57",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "sourceB": {
+            "source": "RR-2-98.pdf",
+            "reference": "RR 2-98 Sec. 2.57.2",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "source_a_title": "RR-2-98.pdf",
+          "source_b_title": "RR-2-98.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+          "conflictResolutionBasis": "Authorities do not resolve the same legal issue.",
+          "resolutionBasis": "Authorities do not resolve the same legal issue.",
+          "reason": "No direct same-issue and opposite-holding conflict detected.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": false
+        }
+      },
+      "reverse": {
+        "trueConflict": false,
+        "parts": {
+          "sameIssue": false,
+          "sameMaterialFacts": null,
+          "sameStatute": true,
+          "oppositeHolding": false
+        },
+        "pairAnalysis": {
+          "conflict": false,
+          "apparentConflict": false,
+          "doctrinalConflict": false,
+          "hierarchyConflict": false,
+          "conflictType": "NO_CONFLICT",
+          "distinctionType": "Different tax issue.",
+          "sameIssueGate": {
+            "passed": false,
+            "sameIssues": [],
+            "sameDimensions": [
+              "SUBSTANTIVE"
+            ],
+            "sameExactIssue": false,
+            "sameLegalDimension": true,
+            "distinctionType": "Different tax issue.",
+            "reason": "Authorities do not resolve the same legal issue."
+          },
+          "oppositeHoldingGate": {
+            "passed": false,
+            "oppositeHoldingOrRule": false,
+            "sourceAHoldingPolarity": [],
+            "sourceBHoldingPolarity": [],
+            "reason": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict."
+          },
+          "sameExactIssue": false,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": false,
+          "exactIssue": null,
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sourceA": {
+            "source": "RR-2-98.pdf",
+            "reference": "RR 2-98 Sec. 2.57.2",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "sourceB": {
+            "source": "RR-2-98.pdf",
+            "reference": "RR 2-98 Sec. 2.57",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "source_a_title": "RR-2-98.pdf",
+          "source_b_title": "RR-2-98.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+          "conflictResolutionBasis": "Authorities do not resolve the same legal issue.",
+          "resolutionBasis": "Authorities do not resolve the same legal issue.",
+          "reason": "No direct same-issue and opposite-holding conflict detected.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": false
+        }
+      },
+      "orderIndependent": true,
+      "pass": true
+    },
+    {
+      "id": "GENERAL-INCOME-TAX-AND-SPECIFIC-DEDUCTION",
+      "expectedTrueConflict": false,
+      "forward": {
+        "trueConflict": false,
+        "parts": {
+          "sameIssue": false,
+          "sameMaterialFacts": null,
+          "sameStatute": false,
+          "oppositeHolding": false
+        },
+        "pairAnalysis": {
+          "conflict": false,
+          "apparentConflict": true,
+          "doctrinalConflict": false,
+          "hierarchyConflict": false,
+          "conflictType": "APPARENT_CONFLICT_ONLY",
+          "distinctionType": "Same issue, but no opposite holding detected.",
+          "sameIssueGate": {
+            "passed": true,
+            "sameIssues": [
+              "INCOME_TAX"
+            ],
+            "sameDimensions": [
+              "SUBSTANTIVE"
+            ],
+            "sameExactIssue": true,
+            "sameLegalDimension": true,
+            "distinctionType": null,
+            "reason": "Authorities pass same-issue and same-dimension gate."
+          },
+          "oppositeHoldingGate": {
+            "passed": false,
+            "oppositeHoldingOrRule": false,
+            "sourceAHoldingPolarity": [],
+            "sourceBHoldingPolarity": [
+              "ALLOWED_OR_GRANTED"
+            ],
+            "reason": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": false,
+          "exactIssue": "INCOME_TAX",
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sourceA": {
+            "source": "NIRC.pdf",
+            "reference": "NIRC Sec. 23",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "sourceB": {
+            "source": "NIRC.pdf",
+            "reference": "NIRC Sec. 34",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "source_a_title": "NIRC.pdf",
+          "source_b_title": "NIRC.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+          "conflictResolutionBasis": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict.",
+          "resolutionBasis": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict.",
+          "reason": "Only apparent conflict detected because no opposite holding was found.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": false
+        }
+      },
+      "reverse": {
+        "trueConflict": false,
+        "parts": {
+          "sameIssue": false,
+          "sameMaterialFacts": null,
+          "sameStatute": false,
+          "oppositeHolding": false
+        },
+        "pairAnalysis": {
+          "conflict": false,
+          "apparentConflict": true,
+          "doctrinalConflict": false,
+          "hierarchyConflict": false,
+          "conflictType": "APPARENT_CONFLICT_ONLY",
+          "distinctionType": "Same issue, but no opposite holding detected.",
+          "sameIssueGate": {
+            "passed": true,
+            "sameIssues": [
+              "INCOME_TAX"
+            ],
+            "sameDimensions": [
+              "SUBSTANTIVE"
+            ],
+            "sameExactIssue": true,
+            "sameLegalDimension": true,
+            "distinctionType": null,
+            "reason": "Authorities pass same-issue and same-dimension gate."
+          },
+          "oppositeHoldingGate": {
+            "passed": false,
+            "oppositeHoldingOrRule": false,
+            "sourceAHoldingPolarity": [
+              "ALLOWED_OR_GRANTED"
+            ],
+            "sourceBHoldingPolarity": [],
+            "reason": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": false,
+          "exactIssue": "INCOME_TAX",
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sourceA": {
+            "source": "NIRC.pdf",
+            "reference": "NIRC Sec. 34",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "sourceB": {
+            "source": "NIRC.pdf",
+            "reference": "NIRC Sec. 23",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "source_a_title": "NIRC.pdf",
+          "source_b_title": "NIRC.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy conflict established because the same-issue opposite-holding gates did not both pass.",
+          "conflictResolutionBasis": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict.",
+          "resolutionBasis": "No opposite holding polarity detected. Similar keywords do not establish doctrinal conflict.",
+          "reason": "Only apparent conflict detected because no opposite holding was found.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": false
+        }
+      },
+      "orderIndependent": true,
+      "pass": true
+    }
+  ],
+  "mustPreserveConflictControls": [
+    {
+      "id": "INDEPENDENT-SAME-ISSUE-OPPOSITE-POSITIONS",
+      "expectedTrueConflict": true,
+      "forward": {
+        "trueConflict": true,
+        "parts": {
+          "sameIssue": true,
+          "sameMaterialFacts": true,
+          "sameStatute": true,
+          "oppositeHolding": true
+        },
+        "pairAnalysis": {
+          "conflict": true,
+          "apparentConflict": true,
+          "doctrinalConflict": false,
+          "hierarchyConflict": true,
+          "conflictType": "HIERARCHY_CONFLICT",
+          "distinctionType": null,
+          "sameIssueGate": {
+            "passed": true,
+            "sameIssues": [
+              "VAT_LIABILITY"
+            ],
+            "sameDimensions": [
+              "SUBSTANTIVE",
+              "FACTUAL"
+            ],
+            "sameExactIssue": true,
+            "sameLegalDimension": true,
+            "distinctionType": null,
+            "reason": "Authorities pass same-issue and same-dimension gate."
+          },
+          "oppositeHoldingGate": {
+            "passed": true,
+            "oppositeHoldingOrRule": true,
+            "sourceAHoldingPolarity": [
+              "TAXABLE_OR_SUBJECT"
+            ],
+            "sourceBHoldingPolarity": [
+              "NOT_TAXABLE_OR_EXEMPT"
+            ],
+            "reason": "Authorities contain opposite holding polarity on the same issue."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": true,
+          "exactIssue": "VAT_LIABILITY",
+          "exactLegalDimension": "SUBSTANTIVE, FACTUAL",
+          "sourceA": {
+            "source": "authority-position-a.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "SUPREME_COURT",
+            "authorityLabel": "Supreme Court Decision",
+            "authorityLevel": 5,
+            "controllingPrecedence": 5
+          },
+          "sourceB": {
+            "source": "authority-position-b.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "source_a_title": "authority-position-a.pdf",
+          "source_b_title": "authority-position-b.pdf",
+          "winningSource": {
+            "source": "authority-position-a.pdf",
+            "normalizedReference": "NIRC Sec. 106",
+            "citation": "NIRC Sec. 106",
+            "authorityType": "SUPREME_COURT",
+            "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+            "text": "On these facts the domestic sale is subject to VAT and is taxable."
+          },
+          "overriddenSource": {
+            "source": "authority-position-b.pdf",
+            "normalizedReference": "NIRC Sec. 106",
+            "citation": "NIRC Sec. 106",
+            "authorityType": "RR",
+            "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+            "text": "On these facts the domestic sale is not subject to VAT and is VAT-exempt."
+          },
+          "winningAuthority": "SUPREME_COURT",
+          "overriddenAuthority": "RR",
+          "controllingAuthority": "SUPREME_COURT",
+          "controllingSource": {
+            "source": "authority-position-a.pdf",
+            "normalizedReference": "NIRC Sec. 106",
+            "citation": "NIRC Sec. 106",
+            "authorityType": "SUPREME_COURT",
+            "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+            "text": "On these facts the domestic sale is subject to VAT and is taxable."
+          },
+          "hierarchyAnalysis": "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue.",
+          "conflictResolutionBasis": "A BIR issuance cannot override Supreme Court or CTA doctrine within the court decision's proper issue scope.",
+          "resolutionBasis": "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue.",
+          "reason": "A genuine same-issue opposite-holding conflict was detected.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": true
+        }
+      },
+      "reverse": {
+        "trueConflict": true,
+        "parts": {
+          "sameIssue": true,
+          "sameMaterialFacts": true,
+          "sameStatute": true,
+          "oppositeHolding": true
+        },
+        "pairAnalysis": {
+          "conflict": true,
+          "apparentConflict": true,
+          "doctrinalConflict": false,
+          "hierarchyConflict": true,
+          "conflictType": "HIERARCHY_CONFLICT",
+          "distinctionType": null,
+          "sameIssueGate": {
+            "passed": true,
+            "sameIssues": [
+              "VAT_LIABILITY"
+            ],
+            "sameDimensions": [
+              "SUBSTANTIVE",
+              "FACTUAL"
+            ],
+            "sameExactIssue": true,
+            "sameLegalDimension": true,
+            "distinctionType": null,
+            "reason": "Authorities pass same-issue and same-dimension gate."
+          },
+          "oppositeHoldingGate": {
+            "passed": true,
+            "oppositeHoldingOrRule": true,
+            "sourceAHoldingPolarity": [
+              "NOT_TAXABLE_OR_EXEMPT"
+            ],
+            "sourceBHoldingPolarity": [
+              "TAXABLE_OR_SUBJECT"
+            ],
+            "reason": "Authorities contain opposite holding polarity on the same issue."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": true,
+          "exactIssue": "VAT_LIABILITY",
+          "exactLegalDimension": "SUBSTANTIVE, FACTUAL",
+          "sourceA": {
+            "source": "authority-position-b.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "RR",
+            "authorityLabel": "Revenue Regulations",
+            "authorityLevel": 8,
+            "controllingPrecedence": 8
+          },
+          "sourceB": {
+            "source": "authority-position-a.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "SUPREME_COURT",
+            "authorityLabel": "Supreme Court Decision",
+            "authorityLevel": 5,
+            "controllingPrecedence": 5
+          },
+          "source_a_title": "authority-position-b.pdf",
+          "source_b_title": "authority-position-a.pdf",
+          "winningSource": {
+            "source": "authority-position-a.pdf",
+            "normalizedReference": "NIRC Sec. 106",
+            "citation": "NIRC Sec. 106",
+            "authorityType": "SUPREME_COURT",
+            "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+            "text": "On these facts the domestic sale is subject to VAT and is taxable."
+          },
+          "overriddenSource": {
+            "source": "authority-position-b.pdf",
+            "normalizedReference": "NIRC Sec. 106",
+            "citation": "NIRC Sec. 106",
+            "authorityType": "RR",
+            "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+            "text": "On these facts the domestic sale is not subject to VAT and is VAT-exempt."
+          },
+          "winningAuthority": "SUPREME_COURT",
+          "overriddenAuthority": "RR",
+          "controllingAuthority": "SUPREME_COURT",
+          "controllingSource": {
+            "source": "authority-position-a.pdf",
+            "normalizedReference": "NIRC Sec. 106",
+            "citation": "NIRC Sec. 106",
+            "authorityType": "SUPREME_COURT",
+            "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+            "text": "On these facts the domestic sale is subject to VAT and is taxable."
+          },
+          "hierarchyAnalysis": "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue.",
+          "conflictResolutionBasis": "A BIR issuance cannot override Supreme Court or CTA doctrine within the court decision's proper issue scope.",
+          "resolutionBasis": "Court doctrine prevails over a conflicting BIR administrative issuance on the same exact issue.",
+          "reason": "A genuine same-issue opposite-holding conflict was detected.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": true
+        }
+      },
+      "orderIndependent": true,
+      "pass": true
+    },
+    {
+      "id": "SAME-RECORD-STRUCTURED-EFFECTIVITY-DIVERGENCE",
+      "expectedTrueConflict": true,
+      "forward": {
+        "trueConflict": true,
+        "parts": {
+          "sameIssue": true,
+          "sameMaterialFacts": true,
+          "sameStatute": true,
+          "oppositeHolding": true
+        },
+        "pairAnalysis": {
+          "conflict": true,
+          "apparentConflict": true,
+          "doctrinalConflict": true,
+          "hierarchyConflict": false,
+          "conflictType": "DOCTRINAL_CONFLICT",
+          "distinctionType": null,
+          "sameIssueGate": {
+            "passed": true,
+            "sameIssues": [
+              "VAT_LIABILITY"
+            ],
+            "sameDimensions": [
+              "SUBSTANTIVE"
+            ],
+            "sameExactIssue": true,
+            "sameLegalDimension": true,
+            "distinctionType": null,
+            "reason": "Authorities pass same-issue and same-dimension gate."
+          },
+          "oppositeHoldingGate": {
+            "passed": true,
+            "oppositeHoldingOrRule": true,
+            "sourceAHoldingPolarity": [
+              "TAXABLE_OR_SUBJECT"
+            ],
+            "sourceBHoldingPolarity": [
+              "NOT_TAXABLE_OR_EXEMPT"
+            ],
+            "reason": "Authorities contain opposite holding polarity on the same issue."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": true,
+          "exactIssue": "VAT_LIABILITY",
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sourceA": {
+            "source": "consolidated-authority.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "sourceB": {
+            "source": "consolidated-authority.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "source_a_title": "consolidated-authority.pdf",
+          "source_b_title": "consolidated-authority.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy override determined because authorities appear to have the same precedence.",
+          "conflictResolutionBasis": "If same-precedence authorities conflict, analyze later controlling doctrine, en banc status, finality, and factual applicability.",
+          "resolutionBasis": "No hierarchy override determined.",
+          "reason": "A genuine same-issue opposite-holding conflict was detected.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": true
+        }
+      },
+      "reverse": {
+        "trueConflict": true,
+        "parts": {
+          "sameIssue": true,
+          "sameMaterialFacts": true,
+          "sameStatute": true,
+          "oppositeHolding": true
+        },
+        "pairAnalysis": {
+          "conflict": true,
+          "apparentConflict": true,
+          "doctrinalConflict": true,
+          "hierarchyConflict": false,
+          "conflictType": "DOCTRINAL_CONFLICT",
+          "distinctionType": null,
+          "sameIssueGate": {
+            "passed": true,
+            "sameIssues": [
+              "VAT_LIABILITY"
+            ],
+            "sameDimensions": [
+              "SUBSTANTIVE"
+            ],
+            "sameExactIssue": true,
+            "sameLegalDimension": true,
+            "distinctionType": null,
+            "reason": "Authorities pass same-issue and same-dimension gate."
+          },
+          "oppositeHoldingGate": {
+            "passed": true,
+            "oppositeHoldingOrRule": true,
+            "sourceAHoldingPolarity": [
+              "NOT_TAXABLE_OR_EXEMPT"
+            ],
+            "sourceBHoldingPolarity": [
+              "TAXABLE_OR_SUBJECT"
+            ],
+            "reason": "Authorities contain opposite holding polarity on the same issue."
+          },
+          "sameExactIssue": true,
+          "sameLegalDimension": true,
+          "oppositeHoldingOrRule": true,
+          "exactIssue": "VAT_LIABILITY",
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sourceA": {
+            "source": "consolidated-authority.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "sourceB": {
+            "source": "consolidated-authority.pdf",
+            "reference": "NIRC Sec. 106",
+            "authorityType": "STATUTE",
+            "authorityLabel": "Primary Statute",
+            "authorityLevel": 2,
+            "controllingPrecedence": 2
+          },
+          "source_a_title": "consolidated-authority.pdf",
+          "source_b_title": "consolidated-authority.pdf",
+          "winningSource": null,
+          "overriddenSource": null,
+          "winningAuthority": null,
+          "overriddenAuthority": null,
+          "controllingAuthority": null,
+          "controllingSource": null,
+          "hierarchyAnalysis": "No hierarchy override determined because authorities appear to have the same precedence.",
+          "conflictResolutionBasis": "If same-precedence authorities conflict, analyze later controlling doctrine, en banc status, finality, and factual applicability.",
+          "resolutionBasis": "No hierarchy override determined.",
+          "reason": "A genuine same-issue opposite-holding conflict was detected.",
+          "masterPromptAuthorityHierarchyApplied": true,
+          "courtAuthorityNotSubordinatedToBIRIssuances": true,
+          "birIssuanceCannotOverrideCourtDoctrine": true,
+          "conflictLabelMayBeDisplayed": true
+        }
+      },
+      "orderIndependent": true,
+      "pass": true
+    }
+  ],
+  "conflictStateControls": [
+    {
+      "id": "NO-CONFLICT",
+      "expected": {
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT"
+      },
+      "actual": {
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT"
+      },
+      "pass": true
+    },
+    {
+      "id": "JUSTIFIED-POTENTIAL-CONFLICT",
+      "expected": {
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT"
+      },
+      "actual": {
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT"
+      },
+      "pass": true
+    },
+    {
+      "id": "VERIFIED-CONFLICT",
+      "expected": {
+        "hasConflict": true,
+        "conflictState": "VERIFIED_CONFLICT"
+      },
+      "actual": {
+        "hasConflict": true,
+        "conflictState": "VERIFIED_CONFLICT"
+      },
+      "pass": true
+    }
+  ],
+  "authoritySupportIndependenceControls": [
+    {
+      "id": "NO-CONFLICT-DOES-NOT-IMPLY-VERIFIED",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "actualConflictState": "NO_CONFLICT",
+      "actualHasConflict": false,
+      "actualAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "pass": true
+    },
+    {
+      "id": "RELATED-ONLY-DOES-NOT-IMPLY-POTENTIAL",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "actualConflictState": "NO_CONFLICT",
+      "actualHasConflict": false,
+      "actualAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "pass": true
+    },
+    {
+      "id": "POTENTIAL-CONFLICT-DOES-NOT-FORCE-RELATED",
+      "expectedConflictState": "POTENTIAL_CONFLICT",
+      "expectedAuthoritySupport": "VERIFIED_CONTROLLING",
+      "actualConflictState": "POTENTIAL_CONFLICT",
+      "actualHasConflict": false,
+      "actualAuthoritySupport": "VERIFIED_CONTROLLING",
+      "pass": true
+    },
+    {
+      "id": "SOURCE-ONLY-FALLBACK-CAPPED",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "actualConflictState": "NO_CONFLICT",
+      "actualHasConflict": false,
+      "actualAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "pass": true
+    },
+    {
+      "id": "BARE-SOURCE-LIST-CAPPED",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "actualConflictState": "NO_CONFLICT",
+      "actualHasConflict": false,
+      "actualAuthoritySupport": "VERIFIED_CONTROLLING",
+      "pass": false
+    },
+    {
+      "id": "MISSING-ANSWER-SUPPORT-FAILS-CLOSED",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "actualConflictState": "NO_CONFLICT",
+      "actualHasConflict": false,
+      "actualAuthoritySupport": "RELATED_AUTHORITY_ONLY",
+      "pass": true
+    }
+  ],
+  "shuffle": {
+    "forward": false,
+    "reverse": false,
+    "orderIndependent": true
+  },
+  "defectReproduced": false,
+  "controlsPass": false,
+  "result": "PRE_FIX_CONTRACT_NOT_REPRODUCED",
+  "pass": false
+}

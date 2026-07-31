@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "rows": [
+    {
+      "case": "source label only",
+      "expected": "FAIL_CLOSED",
+      "observed": "FAIL_CLOSED",
+      "pass": true
+    },
+    {
+      "case": "displayed authority missing exact passage",
+      "expected": "FAIL_CLOSED",
+      "observed": "FAIL_CLOSED",
+      "pass": true
+    },
+    {
+      "case": "malformed digest beside valid passage",
+      "expected": "FAIL_CLOSED",
+      "observed": "FAIL_CLOSED",
+      "pass": true
+    },
+    {
+      "case": "reviewer undercounts propositions",
+      "expected": "FAIL_CLOSED",
+      "observed": "FAIL_CLOSED",
+      "pass": true
+    },
+    {
+      "case": "wrong RR/NIRC subsection or range",
+      "expected": "FAIL_CLOSED",
+      "observed": "FAIL_CLOSED",
+      "pass": true
+    },
+    {
+      "case": "broad input VAT with narrow Section 106 passage",
+      "expected": "FAIL_CLOSED",
+      "observed": "FAIL_CLOSED",
+      "pass": true
+    },
+    {
+      "case": "two exact propositions with two exact passages",
+      "expected": "VERIFIED_ELIGIBLE",
+      "observed": "VERIFIED_ELIGIBLE",
+      "pass": true
+    }
+  ],
+  "unsupportedPromotions": 0,
+  "verdict": "FINAL_PROPOSITION_SUPPORT_MATRIX_PASS",
+  "pass": true
+}

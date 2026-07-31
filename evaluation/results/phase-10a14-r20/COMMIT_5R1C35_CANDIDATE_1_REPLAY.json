@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:15:28.349Z",
+  "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+  "head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "candidateRuntime": {
+    "path": "conflict-engine.js",
+    "bytes": 40905,
+    "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+  },
+  "candidatePatch": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z/C35_CANDIDATE_ONLY.patch",
+    "bytes": 5474,
+    "sha256": "410a0ddd8ac9d47994442c7374b3caf821bd60d9513cfbb972edf159e8614271"
+  },
+  "fullHeadRuntimePatch": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z/C35_FULL_HEAD_RUNTIME.patch",
+    "bytes": 5474,
+    "sha256": "410a0ddd8ac9d47994442c7374b3caf821bd60d9513cfbb972edf159e8614271"
+  },
+  "trackedChanges": [
+    "conflict-engine.js",
+    "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json"
+  ],
+  "expectedTrackedChanges": [
+    "conflict-engine.js",
+    "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json"
+  ],
+  "unexpectedTrackedPaths": [],
+  "candidateOnlyReplay": {
+    "cleanCommittedHeadDependencies": true,
+    "candidateFileOnlyRuntimeDelta": true,
+    "dependencyClosureFiles": [
+      "authority-alias-registry.js",
+      "authority-constants.js",
+      "authority-engine.js",
+      "authority-utils.js",
+      "conflict-engine.js",
+      "doctrine-authority-map.js",
+      "issue-classification-engine.js",
+      "issue-exact-authority-detector.js",
+      "main-tax-engine-classification.js",
+      "source-intent-registry.js",
+      "tax-engines/VAT/domain-config.js",
+      "tax-engines/shared/authority-hierarchy.js",
+      "taxpayer-definition-registry.js"
+    ],
+    "result": {
+      "sameForward": false,
+      "sameReverse": false,
+      "distinct": true,
+      "structuredTemporal": true,
+      "dependencyClosureFiles": [
+        "authority-alias-registry.js",
+        "authority-constants.js",
+        "authority-engine.js",
+        "authority-utils.js",
+        "conflict-engine.js",
+        "doctrine-authority-map.js",
+        "issue-classification-engine.js",
+        "issue-exact-authority-detector.js",
+        "main-tax-engine-classification.js",
+        "source-intent-registry.js",
+        "tax-engines/VAT/domain-config.js",
+        "tax-engines/shared/authority-hierarchy.js",
+        "taxpayer-definition-registry.js"
+      ]
+    },
+    "pass": true
+  },
+  "fullHeadReplay": {
+    "runtimeDeltaPaths": [
+      "conflict-engine.js"
+    ],
+    "governanceDeltaPaths": [
+      "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json"
+    ],
+    "unexpectedPaths": [],
+    "pass": true
+  },
+  "forwardReversePass": true,
+  "isolatedDirectoryPass": true,
+  "cleanWorktreeReplayPass": true,
+  "skippedOrNoop": 0,
+  "temporaryDirectoryRemoved": true,
+  "stagingEmpty": true,
+  "pass": true
+}

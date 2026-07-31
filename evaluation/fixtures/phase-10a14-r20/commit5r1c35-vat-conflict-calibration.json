@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "fixtureId": "C35-VAT-CONFLICT-CALIBRATION-V1",
+  "frozenBeforeCandidate": true,
+  "provenance": {
+    "liveQuery": "tell me more about VAT",
+    "liveApiEvidence": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_API_RESPONSE_SANITIZED.json",
+    "localConflictTrace": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+    "gitBaseline": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "c34SemanticBaseline": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+  },
+  "contracts": {
+    "genericComplementaryAuthoritySet": {
+      "hasConflict": false,
+      "conflictState": "NO_CONFLICT"
+    },
+    "potentialConflictRequiresTwoPositions": true,
+    "sameAuthorityFragmentsAreNotTwoAuthorityPositions": true,
+    "structuredTemporalOrVersionDivergenceMayBypassSameRecordGuard": true,
+    "authoritySupportDerivedIndependently": true
+  },
+  "mustNotConflictQueries": [
+    "tell me more about VAT",
+    "what is VAT",
+    "explain VAT in the Philippines",
+    "how do Sections 105 to 108 work together",
+    "what is the relationship between the VAT provisions and RR 16-2005"
+  ],
+  "provenFalseConflictPair": {
+    "id": "VAT-SAME-SECTION-ADJACENT-COMPLEMENTARY-CHUNKS",
+    "expectedTrueConflict": false,
+    "sourceA": {
+      "source": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+      "path": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+      "normalizedReference": "NIRC Sec. 106",
+      "citation": "NIRC Sec. 106",
+      "authorityType": "STATUTE",
+      "text": "Sale of goods to an export-oriented enterprise may qualify for VAT zero-rating when the statutory conditions are met. An enterprise that fails the threshold is disqualified from zero-rating. Input tax on VAT zero-rated local purchases attributable to VAT-exempt sales shall be paid and may be deductible from gross income."
+    },
+    "sourceB": {
+      "source": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+      "path": "01_TAX_CODE/NIRC-1997-RA-10963 (BIR).pdf",
+      "normalizedReference": "NIRC Sec. 106",
+      "citation": "NIRC Sec. 106",
+      "authorityType": "STATUTE",
+      "text": "Certain transactions are deemed sale. The tax imposed by this Section also applies to taxable goods disposed of or existing upon retirement from or cessation of business."
+    }
+  },
+  "complementaryAuthorityCases": [
+    {
+      "id": "STATUTE-AND-IMPLEMENTING-REGULATION",
+      "expectedTrueConflict": false,
+      "sourceA": {
+        "source": "NIRC.pdf",
+        "normalizedReference": "NIRC Sec. 105",
+        "citation": "NIRC Sec. 105",
+        "authorityType": "STATUTE",
+        "text": "A person who sells goods or services in the course of trade or business is subject to value-added tax under the applicable provisions."
+      },
+      "sourceB": {
+        "source": "RR-16-2005.pdf",
+        "normalizedReference": "RR 16-2005",
+        "citation": "RR 16-2005",
+        "authorityType": "RR",
+        "text": "These regulations implement the value-added tax provisions, including registration, invoicing, input tax, and output tax rules."
+      }
+    },
+    {
+      "id": "GENERAL-AND-SPECIFIC-WITHHOLDING-PROVISIONS",
+      "expectedTrueConflict": false,
+      "sourceA": {
+        "source": "RR-2-98.pdf",
+        "normalizedReference": "RR 2-98 Sec. 2.57",
+        "citation": "RR 2-98 Sec. 2.57",
+        "authorityType": "RR",
+        "text": "Income payments subject to expanded withholding tax are withheld by the payor under the general withholding framework."
+      },
+      "sourceB": {
+        "source": "RR-2-98.pdf",
+        "normalizedReference": "RR 2-98 Sec. 2.57.2",
+        "citation": "RR 2-98 Sec. 2.57.2",
+        "authorityType": "RR",
+        "text": "Specific professional and rental income payments are subject to the rates and conditions stated in this subsection."
+      }
+    },
+    {
+      "id": "GENERAL-INCOME-TAX-AND-SPECIFIC-DEDUCTION",
+      "expectedTrueConflict": false,
+      "sourceA": {
+        "source": "NIRC.pdf",
+        "normalizedReference": "NIRC Sec. 23",
+        "citation": "NIRC Sec. 23",
+        "authorityType": "STATUTE",
+        "text": "Income tax applies according to taxpayer status and the source of income."
+      },
+      "sourceB": {
+        "source": "NIRC.pdf",
+        "normalizedReference": "NIRC Sec. 34",
+        "citation": "NIRC Sec. 34",
+        "authorityType": "STATUTE",
+        "text": "Ordinary and necessary business expenses may be deductible subject to statutory limitations and substantiation."
+      }
+    }
+  ],
+  "mustPreserveConflictCases": [
+    {
+      "id": "INDEPENDENT-SAME-ISSUE-OPPOSITE-POSITIONS",
+      "expectedTrueConflict": true,
+      "sourceA": {
+        "source": "authority-position-a.pdf",
+        "normalizedReference": "NIRC Sec. 106",
+        "citation": "NIRC Sec. 106",
+        "authorityType": "SUPREME_COURT",
+        "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+        "text": "On these facts the domestic sale is subject to VAT and is taxable."
+      },
+      "sourceB": {
+        "source": "authority-position-b.pdf",
+        "normalizedReference": "NIRC Sec. 106",
+        "citation": "NIRC Sec. 106",
+        "authorityType": "RR",
+        "factPattern": "The same domestic sale of the same goods by the same VAT-registered seller during the same period.",
+        "text": "On these facts the domestic sale is not subject to VAT and is VAT-exempt."
+      }
+    },
+    {
+      "id": "SAME-RECORD-STRUCTURED-EFFECTIVITY-DIVERGENCE",
+      "expectedTrueConflict": true,
+      "sourceA": {
+        "source": "consolidated-authority.pdf",
+        "normalizedReference": "NIRC Sec. 106",
+        "citation": "NIRC Sec. 106",
+        "authorityType": "STATUTE",
+        "authorityPositionId": "PRE_AMENDMENT",
+        "effectiveTo": "2025-06-30",
+        "factPattern": "The same domestic sale in the transition period with uncertain governing effectivity.",
+        "text": "The sale is subject to VAT and taxable under the pre-amendment position."
+      },
+      "sourceB": {
+        "source": "consolidated-authority.pdf",
+        "normalizedReference": "NIRC Sec. 106",
+        "citation": "NIRC Sec. 106",
+        "authorityType": "STATUTE",
+        "authorityPositionId": "POST_AMENDMENT",
+        "effectiveFrom": "2025-06-30",
+        "factPattern": "The same domestic sale in the transition period with uncertain governing effectivity.",
+        "text": "The sale is not subject to VAT and VAT-exempt under the post-amendment position."
+      }
+    }
+  ],
+  "conflictStateCases": [
+    {
+      "id": "NO-CONFLICT",
+      "input": {
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        }
+      },
+      "expected": {
+        "hasConflict": false,
+        "conflictState": "NO_CONFLICT"
+      }
+    },
+    {
+      "id": "JUSTIFIED-POTENTIAL-CONFLICT",
+      "input": {
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            {
+              "incomplete": true
+            }
+          ],
+          "count": 1
+        }
+      },
+      "expected": {
+        "hasConflict": false,
+        "conflictState": "POTENTIAL_CONFLICT"
+      }
+    },
+    {
+      "id": "VERIFIED-CONFLICT",
+      "input": {
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            {
+              "complete": true
+            }
+          ],
+          "count": 1,
+          "conflict": true,
+          "conflictType": "DOCTRINAL_CONFLICT",
+          "exactIssue": "same transaction treatment",
+          "exactLegalDimension": "SUBSTANTIVE",
+          "sameIssueGate": {
+            "passed": true
+          },
+          "oppositeHoldingGate": {
+            "passed": true
+          },
+          "resolutionBasis": "Unresolved same-issue opposite positions."
+        }
+      },
+      "expected": {
+        "hasConflict": true,
+        "conflictState": "VERIFIED_CONFLICT"
+      }
+    }
+  ],
+  "authoritySupportIndependenceCases": [
+    {
+      "id": "NO-CONFLICT-DOES-NOT-IMPLY-VERIFIED",
+      "result": {
+        "answer": "A substantive answer without an answer-support attestation.",
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        }
+      },
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "id": "RELATED-ONLY-DOES-NOT-IMPLY-POTENTIAL",
+      "result": {
+        "answer": "Related authorities are available.",
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": false
+        }
+      },
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "id": "POTENTIAL-CONFLICT-DOES-NOT-FORCE-RELATED",
+      "result": {
+        "answer": "A proposition-level supported answer.",
+        "conflictAnalysis": {
+          "hasConflict": true,
+          "trueConflicts": [
+            {
+              "incomplete": true
+            }
+          ],
+          "count": 1
+        },
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        }
+      },
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "expectedConflictState": "POTENTIAL_CONFLICT",
+      "expectedAuthoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "id": "SOURCE-ONLY-FALLBACK-CAPPED",
+      "result": {
+        "answer": "Related authorities only.",
+        "sourceOnlyFallback": true,
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        },
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        }
+      },
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "id": "BARE-SOURCE-LIST-CAPPED",
+      "result": {
+        "answer": "Sources:\n- NIRC Sec. 105\n- NIRC Sec. 106",
+        "answerSupport": {
+          "schemaValid": true,
+          "verifiedEligible": true
+        },
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        }
+      },
+      "displayedSourceCount": 2,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "id": "MISSING-ANSWER-SUPPORT-FAILS-CLOSED",
+      "result": {
+        "answer": "VAT is an indirect tax with statutory sources.",
+        "conflictAnalysis": {
+          "hasConflict": false,
+          "trueConflicts": [],
+          "count": 0
+        }
+      },
+      "displayedSourceCount": 5,
+      "sourceStatus": "AUTHORITY_FOUND",
+      "expectedConflictState": "NO_CONFLICT",
+      "expectedAuthoritySupport": "RELATED_AUTHORITY_ONLY"
+    }
+  ]
+}

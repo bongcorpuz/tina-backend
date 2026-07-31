@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:01:58.000Z",
+  "decision": "C35_CANDIDATE_2_REQUIRED",
+  "candidate2Id": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "reason": "Live and generalized pre-fix evidence proves that the runtime can award verified-controlling support from citation labels without supplying or host-validating exact passages for the exact final-rendered material propositions.",
+  "notAuthorizedFor": [
+    "style improvement",
+    "rewriting the VAT answer",
+    "VAT-specific query or citation hardcoding",
+    "changing Candidate 1",
+    "changing public source-card shape",
+    "changing conflict-state semantics"
+  ],
+  "evidence": {
+    "continuationPreflight": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CHECKPOINT_61_CONTINUATION_PREFLIGHT.json",
+      "bytes": 6645,
+      "sha256": "627483a3e21b93aaf8ad4f6e71108d77e3c7b9435dfae8d011c3c2e7522c8d26"
+    },
+    "rootCause": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_BINDING_ROOT_CAUSE.json",
+    "preFixResult": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_BINDING_PRE_FIX_RESULT.json",
+    "propositionLedger": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_PROPOSITION_TO_PASSAGE_LEDGER.json",
+    "inputVatRevalidation": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_INPUT_VAT_REVALIDATION.json",
+    "frozenFixture": {
+      "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+      "bytes": 9661,
+      "sha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244"
+    }
+  },
+  "timeGate": {
+    "sessionStartUtc": "2026-07-31T04:45:55.977Z",
+    "hardStopUtc": "2026-07-31T08:45:55.977Z",
+    "measuredUtc": "2026-07-31T05:01:18.779Z",
+    "remainingMinutes": 224.62,
+    "minimumRequiredMinutes": 130,
+    "pass": true
+  },
+  "candidateLimit": {
+    "candidate1Preserved": true,
+    "candidate2Authorized": true,
+    "candidate3Authorized": false,
+    "maximumAdditionalCandidates": 1
+  },
+  "pass": true
+}

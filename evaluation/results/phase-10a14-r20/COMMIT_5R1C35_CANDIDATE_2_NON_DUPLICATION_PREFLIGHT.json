@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:07:02.643Z",
+  "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+  "registryBefore": {
+    "attempts": 229,
+    "sha256": "08d714949661501f4ef762c54eb40e5a67619359a791193b6e18cdc2d4e2156a",
+    "candidateIdMatches": 0,
+    "attemptIdMatches": 0,
+    "runningAttempts": 0,
+    "activeAttemptId": null
+  },
+  "c35Before": {
+    "candidate1Count": 1,
+    "candidate2Count": 0,
+    "candidate3Count": 0,
+    "walRows": 3,
+    "walSha256": "493dff0caedd11420ae4ea3a61fe26e5b6cd52879ef8673a065d588a953b6761",
+    "attemptDirectories": 229,
+    "orphanAttemptDirectories": 0,
+    "danglingRegistryAttempts": 0
+  },
+  "semanticNonDuplication": {
+    "candidate1Concern": "Same authority record fragments must not be treated as distinct opposing positions.",
+    "candidate2Concern": "Material final-answer propositions must bind to exact passages.",
+    "priorAnswerSupportControls": "Prior controls validate structural form, schema, selected deterministic proposition classes, and answer correctness, but no prior registry row or current runtime control transports and host-validates exact passage bindings for every verified candidate.",
+    "duplicate": false
+  },
+  "verdict": "PASS_CANDIDATE_2_IS_NONDUPLICATIVE",
+  "pass": true
+}

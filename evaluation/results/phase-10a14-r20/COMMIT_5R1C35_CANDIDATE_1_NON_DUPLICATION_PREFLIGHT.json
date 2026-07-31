@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:00:20.140Z",
+  "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+  "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+  "startingLedger": {
+    "canonicalRegistry": {
+      "attempts": 228,
+      "sha256": "b42e030f49c3e30959ad6043d2897af55029d268aaeea17cc37bfbe93c383e43"
+    },
+    "c34Wal": {
+      "rows": 32,
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2"
+    },
+    "attemptDirectories": 228,
+    "c35RegistryRows": 0,
+    "c35WalRows": 0,
+    "c35AttemptDirectories": 0,
+    "orphan": 0,
+    "dangling": 0,
+    "running": 0
+  },
+  "checks": {
+    "candidateIdAbsent": true,
+    "attemptIdAbsent": true,
+    "candidateSpecificWalAbsent": true,
+    "attemptDirectoryAbsent": true,
+    "allocationLockAbsent": true,
+    "gitIndexLockAbsent": true,
+    "activeAttemptAbsent": true,
+    "candidateCountWithinLimit": true
+  },
+  "allocationPlan": {
+    "registryRowsToAdd": 1,
+    "attemptDirectoriesToAdd": 1,
+    "c35WalLifecycleRows": 3,
+    "c34WalMutationAllowed": false,
+    "unique": true
+  },
+  "verdict": "PASS_READY_FOR_C35_CANDIDATE_1",
+  "pass": true
+}

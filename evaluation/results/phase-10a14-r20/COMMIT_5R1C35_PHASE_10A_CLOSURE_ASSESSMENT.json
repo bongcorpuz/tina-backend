@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T07:36:00.000Z",
+  "classification": "PHASE_10A_OPEN",
+  "opusDecision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+  "reviewedStateDigest": "ccc5d1096ef29b156638366db2c89a7a0e992471fd2a4cc6be3ae6505e740b33",
+  "decisionClosure": {
+    "status": "SATISFIED",
+    "result": "3720/3720"
+  },
+  "relationClosure": {
+    "status": "SATISFIED",
+    "result": "3720/3720"
+  },
+  "reasonClosure": {
+    "status": "NOT_SATISFIED",
+    "result": "3575/3720",
+    "remainingReasonOnlyRows": 145
+  },
+  "reasonOnlyResidualFamilies": {
+    "explicit_non_tax_task": 45,
+    "explicit_tax_task_relation": 16,
+    "no_tax_relation": 81,
+    "tax_compliance_task": 1,
+    "tax_treatment_of_ordinary_object": 2
+  },
+  "criteria": {
+    "standaloneAndIntegratedExactGates": {
+      "status": "SATISFIED_FOR_C35",
+      "evidence": "Candidate 1 6/6; Candidate 2 25/25; legacy trust/support 66 checks; cumulative isolated replay 31/31 in each order."
+    },
+    "frozenRuntime": {
+      "status": "SATISFIED_FOR_C35",
+      "c34": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "c35": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    },
+    "postFreezeEvidence": {
+      "status": "SATISFIED_FOR_C35",
+      "c34Rerun": false,
+      "c34Mutation": false
+    },
+    "deterministicCleanCycles": {
+      "status": "SATISFIED_WITH_EXPLICIT_HISTORICAL_GUARD_ADJUDICATION",
+      "result": "Nominal exit 1; 184/217 suites; 54 failures are 33 SCOPE plus 21 STATE; zero runtime behavior failures; no unqualified pass claimed."
+    },
+    "stagingCleanCycles": {
+      "status": "PRE_REVIEW_AND_PRE_STAGE_CLEAN_FINAL_EXPLICIT_STAGE_GATE_PENDING",
+      "evidence": "Staging was empty at checkpoint 61, after Candidate 2, and through Opus review."
+    },
+    "independentReview": {
+      "status": "SATISFIED",
+      "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+      "reviewer": "Claude Code Opus 4.8",
+      "readOnly": true
+    },
+    "E2": {
+      "status": "NOT_EXECUTED",
+      "authorized": false,
+      "rationale": "Opus approval permits C35 finalization but does not itself authorize or satisfy E2."
+    },
+    "A15": {
+      "status": "NOT_EXECUTED",
+      "authorized": false,
+      "rationale": "A15 cannot close Phase 10A while the reason layer retains 145 rows."
+    },
+    "allKnownMaterialTrustDefects": {
+      "status": "KNOWN_C35_DEFECTS_RESOLVED",
+      "scope": "The generic VAT false-conflict defect and generalized proposition-to-passage support defect are resolved; universal trust or reason-layer closure is not inferred."
+    }
+  },
+  "closureCriteriaAllProven": false,
+  "c35": "TERMINAL",
+  "r20": "IN_PROGRESS",
+  "nextExactTask": "Separately governed Phase-10A14-R20 continuation for the unresolved reason layer; C36 and Phase 10B remain unauthorized.",
+  "noDeployment": true,
+  "noC36": true,
+  "noPhase10BImplementation": true,
+  "verdict": "PHASE_10A_OPEN_REASON_LAYER_UNRESOLVED",
+  "pass": true
+}

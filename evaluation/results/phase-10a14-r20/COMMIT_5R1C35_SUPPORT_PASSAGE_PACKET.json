@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:01:50.000Z",
+  "packetType": "FROZEN_PRE_CANDIDATE_PRIVATE_SUPPORT_EVIDENCE",
+  "publicShapeChanged": false,
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+    "bytes": 332442,
+    "sha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e"
+  },
+  "displayedAuthorities": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108",
+    "RR 16-2005"
+  ],
+  "matchedPassageAuthorities": [
+    "NIRC Sec. 105",
+    "NIRC Sec. 106",
+    "NIRC Sec. 107",
+    "NIRC Sec. 108"
+  ],
+  "unmatchedDisplayedAuthorities": [
+    "RR 16-2005"
+  ],
+  "passagePointers": [
+    "/rerankedSources/0/text",
+    "/rerankedSources/2/text",
+    "/rerankedSources/3/text",
+    "/rerankedSources/5/text",
+    "/rerankedSources/6/text",
+    "/rerankedSources/7/text",
+    "/rerankedSources/10/text",
+    "/rerankedSources/11/text"
+  ],
+  "broadInputVatSupportPresent": false,
+  "effectivityMetadataPresent": false,
+  "supersessionMetadataPresent": false,
+  "verdict": "PASSAGE_PACKET_FROZEN_BEFORE_CANDIDATE_2",
+  "pass": true
+}

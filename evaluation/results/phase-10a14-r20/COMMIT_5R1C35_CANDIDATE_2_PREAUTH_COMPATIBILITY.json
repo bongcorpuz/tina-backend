@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:07:02.643Z",
+  "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "allowedRuntimePaths": [
+    "ask-handler.js",
+    "services/answer-support-evidence.js",
+    "services/answer-support-validator.js"
+  ],
+  "allowedValidationPaths": [
+    "tests/phase-10a14-r20-commit5r1c35-answer-support-passage-binding.test.mjs",
+    "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+    "evaluation/runner/phase-10a14-r20/commit5r1c35-support-prefix-observe.mjs",
+    "evaluation/runner/phase-10a14-r20/commit5r1c35-candidate2.mjs",
+    "Candidate 2 attempt and evidence files under evaluation/results/phase-10a14-r20"
+  ],
+  "mustRemainByteIdentical": [
+    {
+      "path": "conflict-engine.js",
+      "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+    },
+    {
+      "path": "services/ask-handler-public-source-sanitizer.js",
+      "sha256": "7e2faf0464cb9f96d6ae02150654bbf2ced7ceec1d7d0678be6c58bcd36c6b38"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2"
+    }
+  ],
+  "compatibilityContract": [
+    "The public source-card response shape is unchanged.",
+    "The private evidence packet is bounded and contains only displayed-authority identities, exact retrieved passages, and host-computed digests.",
+    "Missing displayed-authority passages fail closed before model review.",
+    "A controlled model verdict cannot verify without host-valid material-proposition bindings to known passage digests.",
+    "Existing deterministic answer-support gates run unchanged.",
+    "Candidate 1 conflict behavior is untouched.",
+    "The candidate can only withhold VERIFIED_CONTROLLING; it cannot independently upgrade a response.",
+    "No VAT-specific production rule is introduced."
+  ],
+  "verdict": "PASS_READY_FOR_BOUNDED_CANDIDATE_2_AUTHORIZATION",
+  "pass": true
+}

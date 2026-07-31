@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:20:00.000Z",
+  "matrix": [
+    {
+      "conflictState": "NO_CONFLICT",
+      "propositionSupport": "INSUFFICIENT",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "conflictState": "NO_CONFLICT",
+      "propositionSupport": "EXACT_COMPLETE",
+      "authoritySupport": "VERIFIED_CONTROLLING"
+    },
+    {
+      "conflictState": "POTENTIAL_CONFLICT",
+      "propositionSupport": "INSUFFICIENT",
+      "authoritySupport": "RELATED_AUTHORITY_ONLY"
+    },
+    {
+      "conflictState": "VERIFIED_CONFLICT",
+      "propositionSupport": "EXACT_COMPLETE",
+      "authoritySupport": "CONFLICTING_AUTHORITY"
+    }
+  ],
+  "invariants": [
+    "No conflict state upgrades proposition support.",
+    "A displayed source label without an exact passage cannot verify a proposition.",
+    "Every host-issued material proposition must bind the exact final-answer digest and one or more hash-valid passages.",
+    "Malformed or incomplete private evidence fails closed without changing public source cards."
+  ],
+  "verdict": "FINAL_TRUST_EXPECTATION_FROZEN",
+  "pass": true
+}

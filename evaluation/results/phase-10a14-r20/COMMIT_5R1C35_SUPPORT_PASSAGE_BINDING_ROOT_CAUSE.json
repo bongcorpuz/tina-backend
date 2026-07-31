@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T05:01:30.000Z",
+  "verdict": "ROOT_CAUSE_PROVEN",
+  "classification": "GENERALIZED_RUNTIME_DEFECT",
+  "liveEvidenceFirst": {
+    "apiResponse": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_API_RESPONSE_SANITIZED.json",
+      "bytes": 40312,
+      "sha256": "4b38cf1518f099fe9915f76c03eb76dc7c6588445ac6fdee3c3fb6f2f9086661"
+    },
+    "retrievalTrace": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+      "bytes": 332442,
+      "sha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e"
+    },
+    "preFixReproduction": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_BINDING_PRE_FIX_RESULT.json"
+  },
+  "runtimeChain": [
+    {
+      "step": 1,
+      "path": "pipeline.js",
+      "location": "return object near lines 5768-5773",
+      "fact": "The pipeline returns passage-bearing reranked chunks as result.sources and separately returns final public source cards."
+    },
+    {
+      "step": 2,
+      "path": "ask-handler.js",
+      "location": "lines 2356-2391",
+      "fact": "The handler retains raw resultSources but produces visibleSources by sanitizing source cards."
+    },
+    {
+      "step": 3,
+      "path": "services/ask-handler-public-source-sanitizer.js",
+      "location": "lines 38-80",
+      "fact": "The public sanitizer intentionally emits labels, titles, citations, types, flags, and URLs but no passage text."
+    },
+    {
+      "step": 4,
+      "path": "ask-handler.js",
+      "location": "lines 2471-2475",
+      "fact": "The answer-support evaluator receives visibleSources, not raw resultSources."
+    },
+    {
+      "step": 5,
+      "path": "services/answer-support-validator.js",
+      "location": "lines 194-200 and 1729-1733",
+      "fact": "The controlled reviewer receives SOURCE CITATIONS labels and the final answer, but no source passages."
+    },
+    {
+      "step": 6,
+      "path": "services/answer-support-validator.js",
+      "location": "evaluatePropositionSourceSufficiency",
+      "fact": "The exact generic VAT answer is outside the deterministic proposition classes: applicable=false, sufficient=true, propositionClass=null, and propositionLedger=[] even though generalVatOnly=true and five source cards are present."
+    }
+  ],
+  "provenFailure": {
+    "labelOnlyCanVerify": true,
+    "exactFinalAnswerIsProvided": true,
+    "exactRetrievedPassagesAreNotProvided": true,
+    "hostValidatedPropositionToPassageBindingsRequired": false,
+    "effect": "A schema-valid all-safe model verdict can promote VERIFIED_CONTROLLING from citation labels without proving that each material final-rendered legal proposition is supported by an exact passage."
+  },
+  "separationFromCandidate1": {
+    "candidate1Concern": "Whether two sources establish an actual authority conflict.",
+    "candidate2Concern": "Whether each material final-answer proposition is supported by exact displayed-authority passages.",
+    "independent": true,
+    "candidate1Preserved": true
+  },
+  "boundedRepairContract": [
+    "Construct a private, bounded evidence packet by matching final displayed authority identities to raw retrieved chunks.",
+    "Keep public source-card serialization unchanged.",
+    "Fail closed before model review when a displayed authority has no exact passage.",
+    "Provide the exact final answer, its host-computed digest, exact bounded passages, and host-computed passage digests to the controlled reviewer.",
+    "Require reviewer-returned material-proposition bindings and validate their answer quotes, source identities, and passage digests on the host.",
+    "Do not introduce VAT-specific query, answer, citation, or wording rules.",
+    "Do not change conflict-state computation or use conflict state as a proxy for support."
+  ],
+  "candidateRequired": true,
+  "pass": true
+}

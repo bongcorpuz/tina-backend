@@ -1,0 +1,44 @@
+{
+  "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+  "attemptCategory": "trust_calibration",
+  "gateName": "commit5r1c35",
+  "cycle": "tc01",
+  "attemptOrdinal": 1,
+  "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+  "retryOf": null,
+  "retryReason": null,
+  "retryType": null,
+  "evidenceHeadAtAllocation": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "evidenceHeadAtStart": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "evidenceHeadAtEnd": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "runtimeBaselineCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "runtimeTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "semanticBase": {
+    "commit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "selectedC34Runtime": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+  },
+  "executionMode": "bounded_worktree_candidate_no_service",
+  "command": "C:\\Program Files\\nodejs\\node.exe",
+  "commandArgs": [
+    "evaluation/runner/phase-10a14-r20/commit5r1c35-candidate.mjs",
+    "allocate"
+  ],
+  "commandHash": "8c09632bfafbf1d720c9f043d189a3dd46c4e1f718a97f49bac135c88d8e46ea",
+  "startedAt": "2026-07-31T04:00:20.140Z",
+  "endedAt": "2026-07-31T04:18:56.041Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "completed",
+  "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+  "controlling": true,
+  "stdoutPath": null,
+  "stderrPath": null,
+  "resultPaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_RESULT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_REPLAY.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_C34_FROZEN_PRESERVATION.json"
+  ],
+  "oracleVersion": "C35-VAT-CONFLICT-CALIBRATION-V1",
+  "oracleSha256": "56649a2cfaf6bc3159b2d5b18900f634278a1c8d10069ed86f5be4d828088cee",
+  "candidateRuntimeHash": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+}

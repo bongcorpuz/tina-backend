@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:40:00.000Z",
+  "chain": [
+    {
+      "ordinal": 1,
+      "attemptId": "R20-trust_calibration-commit5r1c35-tc01-ord01-2026-07-31T04-00-20-140Z",
+      "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "rule": "Same-source, same-reference fragments are not distinct authority positions absent structured proof of version, effectivity, legal position, or supersession.",
+      "candidateRuntimeHash": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+    },
+    {
+      "ordinal": 2,
+      "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+      "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+      "disposition": "ACCEPTED_PROMOTED_CONTROLLING",
+      "rule": "Verified support requires the exact final-answer digest and complete host-issued material-proposition bindings to exact hash-valid passages.",
+      "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    }
+  ],
+  "candidate1Occurrences": 1,
+  "candidate2Occurrences": 1,
+  "rejectedOrTechnicalRuntimeContamination": false,
+  "orderDeterministic": true,
+  "shadowing": false,
+  "drift": false,
+  "verdict": "FINAL_ACCEPTED_RULE_CHAIN_PASS",
+  "pass": true
+}

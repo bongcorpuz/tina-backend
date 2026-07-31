@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:50:00.000Z",
+  "reviewer": {
+    "tool": "Claude Code",
+    "model": "claude-opus-4-8",
+    "effort": "max",
+    "invocationBudget": 1,
+    "readOnly": true
+  },
+  "governingPrompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C35-FOUR-HOUR-FINALIZATION-FROM-CHECKPOINT-61.md",
+    "bytes": 19831,
+    "sha256": "187038e0465da84d38655cc243569ee8959e9e11a63898c21874919c36ba4adb"
+  },
+  "reviewedState": {
+    "headAndUpstream": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "parent": "7c95019622d7174c8b1fd258b9a10137e59feb57",
+    "checkpoint61": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CHECKPOINT_61_CONTINUATION_PREFLIGHT.json",
+    "candidate1ExactActiveBase": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "candidate1Result": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_RESULT.json",
+    "candidate2Result": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_RESULT.json",
+    "finalActiveBase": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "finalFrozenGates": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_FROZEN_GATE_RESULT.json",
+    "fullDeterministicRegression": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FULL_DETERMINISTIC_REGRESSION_ADJUDICATION.json",
+    "preOpusOperationalHygiene": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_OPUS_OPERATIONAL_HYGIENE.json",
+    "preReviewManifestValidation": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_REVIEW_MANIFEST_VALIDATION.json",
+    "preallocationProtocolAdjudication": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PREALLOCATION_PROTOCOL_ADJUDICATION.json",
+    "finalAttemptLedger": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_ATTEMPT_LEDGER.json",
+    "proposedRoadmap": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ROADMAP_V9_DRAFT.md",
+    "proposedCurrentState": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CURRENT_STATE_DRAFT.md",
+    "proposedStaging": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PROPOSED_STAGED_PATHS.json",
+    "phase10AClosureDraft": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_CLOSURE_DECISION_DRAFT.json"
+  },
+  "mandatoryAdjudications": {
+    "broadInputVat": "The captured passages do not exactly support the broad rendered input-VAT proposition; it must not be promoted.",
+    "genericVatTrust": "NO_CONFLICT and RELATED_AUTHORITY_ONLY are independent axes for this evidence packet.",
+    "candidate2": "Authorized only because live evidence proved a generalized proposition-to-passage binding defect; accepted and terminal.",
+    "deterministicRegression": "The complete deterministic runner exited 1: 184/217 suites and 5397/5451 groups passed. All 54 failures were historical diff-scope or stale CURRENT_STATE checks; zero runtime authority/support/conflict/answer failures. This is not represented as an unqualified pass.",
+    "registrySchemaVariance": "The two bespoke C35 rows use trust_calibration and omit three fields from a generic closed schema. Preserve the terminal historical rows; no silent mutation; semantic impact NONE.",
+    "candidate2TimestampVariance": "Candidate 2's preterminal artifact is generatedUtc 06:34:30Z while its later terminal registry/WAL event inherited result.generatedUtc 06:34:00Z. Filesystem ordering is monotonic (preterminal last-write 06:34:34Z; terminalization 06:35:19Z). This is a disclosed nonsemantic timestamp-source variance, not evidence reordering.",
+    "preallocationNamingVariance": "Several prompt-exact support artifacts were generated post-allocation as provenance-preserving wrappers over already frozen alternate-name evidence. They are explicitly not backdated.",
+    "staleCheckpointManifest": "COMMIT_5R1C35_FINAL_EVIDENCE.sha256 still contains checkpoint-61 bytes and is excluded from the reviewed-state manifest. The same bytes are archived as COMMIT_5R1C35_CHECKPOINT_61_EVIDENCE_MANIFEST.sha256. A new final self-excluding manifest is permitted only after approval.",
+    "phase10A": "OPEN: decision and relation are 3720/3720, reason is 3575/3720, and 145 reason-only rows remain.",
+    "mutationBoundary": "After approval, only decision-specific evidence/docs, manifest, explicit staging, commit, and push are authorized. Runtime/dispositions/composition/reviewed hashes may not change."
+  },
+  "requiredDecisionTokens": [
+    "APPROVED",
+    "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "REJECTED",
+    "INCOMPLETE_REVIEW"
+  ],
+  "verificationKeys": [
+    "checkpoint61Continuity",
+    "candidate1IdentityAndExactOnce",
+    "vatPropositionPassageRevalidation",
+    "inputVatQualificationSupport",
+    "candidate2NecessityAndDisposition",
+    "candidateChainTerminal",
+    "finalCompositionAndActiveBase",
+    "authorityConflictPreservation",
+    "authoritySupportIndependence",
+    "c34FrozenPreservation",
+    "c35FrozenGates",
+    "replayAndGeneralization",
+    "registryWalAttemptLedger",
+    "protectedResidueAndServiceGitHygiene",
+    "phase10AClosureAssessment",
+    "reasonResidual145Explicit",
+    "roadmapV9DraftAccurate",
+    "currentStateDraftAccurate",
+    "manifestAndStagingProposal",
+    "noDeployC36OrPhase10B"
+  ],
+  "noSecondInvocation": true,
+  "noDeployment": true,
+  "noC36": true,
+  "noPhase10BImplementation": true,
+  "pass": true
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T06:34:00.000Z",
+  "candidateId": "C35-SU01-MATERIAL-PROPOSITION-SUPPORT-MUST-BIND-FINAL-RENDERED-CLAIM",
+  "attemptId": "R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z",
+  "verdict": "ACCEPTED_PROMOTED_CONTROLLING",
+  "meaning": "Provisional cumulative C35 worktree selection pending final Opus review; not yet staged, committed, pushed, deployed, or served.",
+  "startingCandidate1ActiveBase": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+  "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+  "cumulativeRuntime": {
+    "algorithm": "For each POSIX path in lexical order: path + NUL + raw-byte-length + NUL + SHA256(raw bytes) + LF; SHA256 the UTF-8 concatenation.",
+    "components": [
+      {
+        "path": "ask-handler.js",
+        "bytes": 147494,
+        "sha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602"
+      },
+      {
+        "path": "conflict-engine.js",
+        "bytes": 40905,
+        "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+      },
+      {
+        "path": "services/answer-support-evidence.js",
+        "bytes": 9507,
+        "sha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37"
+      },
+      {
+        "path": "services/answer-support-validator.js",
+        "bytes": 142463,
+        "sha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+      }
+    ],
+    "recordsSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "candidateRuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+  },
+  "acceptance": {
+    "labelsAloneFailClosed": true,
+    "everyDisplayedAuthorityRequiresExactPassage": true,
+    "finalAnswerDigestBound": true,
+    "hostPropositionInventoryBounded": true,
+    "everyHostPropositionExactlyCovered": true,
+    "malformedPassagesFailClosed": true,
+    "provisionAwareEvidenceJoin": true,
+    "unsupportedBroadInputVatPromoted": false,
+    "supportedQualifiedPropositionsCanVerify": true,
+    "publicSourceShapeChanged": false,
+    "conflictAndSupportIndependent": true
+  },
+  "preservation": {
+    "candidate1Sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "genuineConflictRegressionCount": 0,
+    "c34RuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "c34EvidenceRerun": false,
+    "c34FrozenMetricsUnchanged": true
+  },
+  "evidence": {
+    "postFix": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_SUPPORT_PASSAGE_BINDING_POST_FIX_RESULT.json",
+      "sha256": "9539673b452aa8d0850462629da69a43293e3b5a36ed171657ad524070afc248"
+    },
+    "compatibility": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_COMPATIBILITY_VALIDATION.json",
+      "sha256": "bff1126bba6f06974ed52186fe4552c7d426608e35adea51c26c3fa47bfe99c1"
+    },
+    "replay": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_REPLAY.json",
+      "sha256": "510ba0e65173169235713d1f2e694889bc31ef2513db86a112ef765565642ace"
+    },
+    "fixture": {
+      "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-answer-support-passage-binding.json",
+      "sha256": "66d7b5e884c5779b4d034fc64db16a72ebb9fb5b4cdf6f6acd2afb09e1cca244"
+    },
+    "candidatePatch": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z/C35_CANDIDATE_2_ONLY.patch",
+      "bytes": 38200,
+      "sha256": "d5b8b2b01dcdbab2e87bc12f52a4a64936f317e4c61a291009d8b40dd7384df6"
+    },
+    "cumulativePatch": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-trust_calibration-commit5r1c35-su01-ord02-2026-07-31T05-07-02-643Z/C35_CUMULATIVE_RUNTIME.patch",
+      "bytes": 43674,
+      "sha256": "1406fe979be6a54cc3d0c5f81020f6b8c2211c76a44d69c29dac425f2586a1ab"
+    }
+  },
+  "independentReview": "PENDING_FINAL_OPUS_REVIEW",
+  "candidate3Authorized": false,
+  "serviceChanged": false,
+  "deployed": false,
+  "modelMigrated": false,
+  "staged": false,
+  "committed": false,
+  "pushed": false,
+  "pass": true
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "capturedUtc": "2026-07-31T03:35:20.748Z",
+  "runtimeIdentity": {
+    "runtimeCommit": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "runtimeCommitSource": "ENV:RENDER_GIT_COMMIT",
+    "deploymentId": "srv-d7n4bsdckfvc73ep7mn0",
+    "service": "tina-backend"
+  },
+  "expectedCommittedC34Head": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "c34SelectedSemanticRuntime": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "c34TrackedHeadServiceRuntime": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+  "exactCommitMatch": true,
+  "semanticRuntimeDeploymentProven": false,
+  "reason": "A deployed Git commit identity does not prove installation of the isolated C34 selected semantic snapshot.",
+  "pass": true
+}

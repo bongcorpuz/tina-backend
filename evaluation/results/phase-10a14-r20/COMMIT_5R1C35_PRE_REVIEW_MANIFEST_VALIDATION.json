@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "validatedUtc": "2026-07-31T07:18:00.000Z",
+  "manifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_PRE_REVIEW_EVIDENCE.sha256",
+    "bytes": 17831,
+    "sha256": "ccc5d1096ef29b156638366db2c89a7a0e992471fd2a4cc6be3ae6505e740b33",
+    "rows": 121,
+    "bad": 0,
+    "missing": 0,
+    "duplicates": 0
+  },
+  "selfExcluded": true,
+  "validationArtifactTemporallyExcludedToAvoidCircularHashing": true,
+  "rows": 121,
+  "bad": 0,
+  "missing": 0,
+  "duplicates": 0,
+  "deterministicLexicalOrder": true,
+  "staleCheckpoint61FinalManifestExcluded": true,
+  "verdict": "PRE_REVIEW_MANIFEST_VALID",
+  "pass": true
+}

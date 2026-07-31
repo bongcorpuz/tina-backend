@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "generatedUtc": "2026-07-31T04:00:20.140Z",
+  "candidateId": "C35-TC01-SAME-AUTHORITY-RECORD-FRAGMENTS-ARE-NOT-TWO-POSITIONS",
+  "candidateState": "PROPOSED_NOT_YET_APPLIED",
+  "target": {
+    "path": "conflict-engine.js",
+    "preCandidateSha256": "e68d72239bc8e1545392149e36b96d8b91d0b7546dbf4494e0302c0340240ec5",
+    "semanticBoundary": "Pair qualification only"
+  },
+  "compatibility": {
+    "c34SelectedRuntimeFilesTouched": false,
+    "c34SelectedRuntimeHashBefore": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "trustContractTouched": false,
+    "conflictClassifierTouched": false,
+    "frontendTouched": false,
+    "retrievalOrIndexTouched": false,
+    "databaseOrSchemaTouched": false,
+    "modelTouched": false,
+    "oracleTouched": false,
+    "answerSupportTouched": false
+  },
+  "requiredPreservationControls": [
+    "Distinct-record same-issue opposite positions remain conflicts",
+    "Same-record structured position/effectivity divergence remains eligible",
+    "Verified and justified potential conflict-state fixtures remain unchanged",
+    "Authority-support independence fixtures remain unchanged",
+    "Source-only, bare-source, and malformed/missing answerSupport remain capped",
+    "C34 accepted semantic runtime identity and frozen recorded metrics remain unchanged"
+  ],
+  "rollback": "Remove only the bounded conflict-engine guard and restore its exact pre-candidate hash; no service or deployment restoration is required because no service will be launched or deployed.",
+  "verdict": "PASS_READY_FOR_C35_CANDIDATE_1",
+  "pass": true
+}

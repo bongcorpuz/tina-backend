@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C35",
+  "fixtureId": "C35-VAT-CONFLICT-CALIBRATION-V1-SUPERSEDING-EXACT-LIVE-PAIR",
+  "frozenBeforeCandidate": true,
+  "supersedes": {
+    "fixture": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-vat-conflict-calibration.json",
+    "reason": "The first paraphrased pair preserved the opposite-polarity signal but omitted the exact shared VAT issue token, so it did not reproduce the proven live pair. No candidate patch existed when this superseding freeze was written."
+  },
+  "controlFixture": {
+    "path": "evaluation/fixtures/phase-10a14-r20/commit5r1c35-vat-conflict-calibration.json",
+    "sha256": "PENDING_BOUND_BY_RUNNER"
+  },
+  "exactProvenPair": {
+    "tracePath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_VAT_CONFLICT_TRACE.json",
+    "traceSha256": "60a3cbbb26820d44773b8df29e60f7203c221c7ad9a80a4173b3805dee37f89e",
+    "sourceAIndex": 4,
+    "sourceBIndex": 5,
+    "expectedTrueConflict": false,
+    "preFixActualTrueConflict": true
+  },
+  "controlCorrections": {
+    "bareSourceListingAnswer": "Indexed sources found:\n- NIRC Sec. 105\n- NIRC Sec. 106"
+  }
+}
