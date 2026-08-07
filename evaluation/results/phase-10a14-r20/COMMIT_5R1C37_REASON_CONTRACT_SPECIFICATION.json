@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_OPERATIVE_REASON_CONTRACT_DERIVED_FROM_CODE_FIXTURES_AND_ACCEPTED_PRECEDENCE",
+  "generatedUtc": "2026-08-01T09:36:54.048Z",
+  "controllingHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "sources": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/CLAUSE_LEVEL_INTENT_SCHEMA.md",
+      "bytes": 2929,
+      "sha256": "10dd95cfc409fcebbfa623b46c9ac3c5aa0bf443fca0b7a97df75e71c3f88a07"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/RELATION_AND_PRECEDENCE_SPEC.md",
+      "bytes": 3010,
+      "sha256": "83089bbd12c27e9ccf8a322dfe04293d3bf2083f71cc4df907d4204befc79432"
+    },
+    {
+      "path": "services/philippine-tax-intent-analyzer.js",
+      "bytes": 31045,
+      "sha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+    },
+    {
+      "path": "services/philippine-tax-domain-boundary.js",
+      "bytes": 11976,
+      "sha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+    },
+    {
+      "path": "services/philippine-tax-boundary-patterns.js",
+      "bytes": 64424,
+      "sha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_FINAL_EXECUTION_REPORT.json",
+      "bytes": 6463,
+      "sha256": "f07a29b7474371b452ac2ddaa1c0b9e7ac44a1207c42385db09479a8951214f8"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_PRIOR_OVERRIDE_REGRESSION.json",
+      "bytes": 490,
+      "sha256": "028a97f7523ba195ec9602b42a1eb28666c83a1870d0e551d6c1fa0fd28fd046"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C33_BRANCH_SIGNATURE_DRIFT.json",
+      "bytes": 559,
+      "sha256": "190306acc6785aec7d5d30cdfce6632c7e09038cdf2da7cf0c133f07fda7a876"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACCEPTED_RULE_CHAIN.json",
+      "bytes": 29159,
+      "sha256": "38696058ff96c452913756e00629e2471999ba1fd1d6b78eed84056790314605"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACTIVE_BASE_IDENTITY.json",
+      "bytes": 4570,
+      "sha256": "30eae37b9f9257048ff129ff18d94addfde9f8c6ffa37b252c18b65bc34d9232"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACCEPTED_SIGNATURE_REGRESSION_VALIDATION.json",
+      "bytes": 239075,
+      "sha256": "0baf299b0007e4087421198efc3de2bea21cca8a9b25340c2fa1ff2be20932a9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_REASON_ASSIGNMENT_PRECEDENCE_TRACE.json",
+      "bytes": 97404,
+      "sha256": "6b4b73b8dbe52ae80af477cd88db8032550a9bee28c4c7d31aaf46b6204d5a57"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_CLUSTER_ANALYSIS.json",
+      "bytes": 26768,
+      "sha256": "f4a4f40dbad6c278bb75ff3189309b41a9fb053a78b05f2d1a5cf2bb045b6510"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CANDIDATE_HYPOTHESIS_LEDGER.json",
+      "bytes": 11122,
+      "sha256": "a4a2bb68c9c0cd5421a9a27674a88ca5243d43297b03a6bc9a2ae0f09a559481"
+    },
+    {
+      "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+      "bytes": 32070,
+      "sha256": "3a829e69216addfdcad0f45e975475c3b4b006bfc2481e6745157585bfeeec54"
+    },
+    {
+      "path": "knowledge/CURRENT_STATE.md",
+      "bytes": 122561,
+      "sha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0"
+    }
+  ],
+  "semanticBase": {
+    "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot",
+    "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "reasonScore": "3575/3720",
+    "decisionScore": "3720/3720",
+    "relationScore": "3720/3720",
+    "note": "This isolated selected C34 snapshot is the operative semantic base. The committed live services are a deliberately restored scaffold and are architectural evidence, not a substitute semantic base."
+  },
+  "liveCommittedScaffold": {
+    "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+    "semanticBase": false
+  },
+  "closedReasonCodes": [
+    {
+      "reasonCode": "explicit_tax_task_relation",
+      "decision": "ALLOW",
+      "meaning": "Direct tax task linked to a target by a typed tax relation."
+    },
+    {
+      "reasonCode": "tax_treatment_of_ordinary_object",
+      "decision": "ALLOW",
+      "meaning": "Requested tax consequence or treatment of an ordinary bearer."
+    },
+    {
+      "reasonCode": "tax_compliance_task",
+      "decision": "ALLOW",
+      "meaning": "Filing, withholding, remittance, registration, or other typed compliance operation."
+    },
+    {
+      "reasonCode": "tax_definition_with_context",
+      "decision": "ALLOW",
+      "meaning": "Definition request resolved by tax context."
+    },
+    {
+      "reasonCode": "ambiguous_tax_acronym",
+      "decision": "CLARIFY",
+      "meaning": "Unresolved acronym or weak tax-adjacent ambiguity."
+    },
+    {
+      "reasonCode": "explicit_non_tax_task",
+      "decision": "REFUSE",
+      "meaning": "A requested non-tax action controls the primary task."
+    },
+    {
+      "reasonCode": "non_tax_label_or_name",
+      "decision": "REFUSE",
+      "meaning": "A tax-like token is used as an internal label or proper name."
+    },
+    {
+      "reasonCode": "non_tax_expansion",
+      "decision": "REFUSE",
+      "meaning": "An acronym or phrase is explicitly expanded into a non-tax sense."
+    },
+    {
+      "reasonCode": "quoted_tax_term_only",
+      "decision": "REFUSE",
+      "meaning": "A tax term is quoted or mentioned without becoming the task."
+    },
+    {
+      "reasonCode": "tax_negation_but_tax_review_requested",
+      "decision": "ALLOW",
+      "meaning": "A typed tax-review request controls despite incidental negation."
+    },
+    {
+      "reasonCode": "no_tax_relation",
+      "decision": "REFUSE",
+      "meaning": "No typed relation connects a tax predicate to the requested target."
+    }
+  ],
+  "invariants": [
+    "Exactly one closed-set scalar reason is emitted for each terminal decision.",
+    "Typed clause, task, target, object, and relation evidence controls; a tax-like token or benchmark identity never authorizes a reason.",
+    "Reason work may not change the frozen decision or relation score, user routing, or downstream behavior.",
+    "The original total terminating selector runs first; accepted governed overrides are narrow, baseline-reason-gated, and return null for unmatched rows.",
+    "Unmatched rows preserve their original one-clause serialization, decision, relation, reason, and branch signature byte-for-byte.",
+    "Labels, expansions, quotations, explicit non-tax actions, treatment, compliance, definitions, ambiguity, and no-relation are distinct explanatory families whose precedence cannot be collapsed for benchmark gain.",
+    "Fail-closed ambiguity and non-promotion are preferred when the query omits a causal operation, bearer, or context."
+  ],
+  "acceptedPrecedence": [
+    {
+      "ordinal": 1,
+      "ruleId": "C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment"
+    },
+    {
+      "ordinal": 2,
+      "ruleId": "C34-NT01-typed-ordinary-domain-inquiry-without-operation-is-no-tax-relation"
+    },
+    {
+      "ordinal": 3,
+      "ruleId": "C34-NT02-local-identifier-redefinition-is-explicit-non-tax-task"
+    },
+    {
+      "ordinal": 4,
+      "ruleId": "C34-TX01-copular-resolved-tax-topic-is-explicit-tax-task"
+    },
+    {
+      "ordinal": 5,
+      "ruleId": "C34-TX02-import-duty-instrument-excluding-rate-classification-and-computation"
+    },
+    {
+      "ordinal": 6,
+      "ruleId": "C34-TR01-legal-rule-effect-or-contract-tax-clause-is-treatment"
+    },
+    {
+      "ordinal": 7,
+      "ruleId": "BASELINE_TOTAL_TERMINATING_PRECEDENCE"
+    }
+  ],
+  "acceptedSignatureProtection": {
+    "passed": 301,
+    "total": 301,
+    "failures": 0
+  },
+  "terminalRejectedRule": {
+    "id": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+    "disposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+    "correctedRow": "S3-IR17-073",
+    "featureAblationDistinguished": 7,
+    "featureAblationRequired": 8,
+    "featureAblationPass": false,
+    "precedencePass": false,
+    "protectedCounterexample": "What is the deadline to protest a BIR deficiency assessment?",
+    "rerunAuthorized": false,
+    "reintroductionAuthorized": false
+  },
+  "scorerBoundary": {
+    "reasonScoreUsesStrictScalarEquality": true,
+    "strictScalarMismatchAloneProvesSemanticRuntimeDefect": false,
+    "inventoryRelationArraysAreDiagnosticNotLiteralScorerEquality": true,
+    "controllingAggregateRelationScore": "3720/3720",
+    "userVisibleErrorRequiresChangedOutputDecisionRelationOrDownstreamBehavior": true
+  },
+  "pass": true
+}

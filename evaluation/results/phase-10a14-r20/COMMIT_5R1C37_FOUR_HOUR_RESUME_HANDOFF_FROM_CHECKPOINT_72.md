@@ -1,0 +1,9 @@
+# C37 resume handoff from checkpoint 72
+
+Classification: `C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_AUTHORIZATION_UNUSED`.
+
+The preserved checkpoint-71 compatible wrapper ran its final gates once. Every gate passed except the current Codex-session minimum: 83,242 tokens remained, 36,758 below the required 120,000. The wrapper stopped before the marker. No Claude process was spawned, no provider contact or substantive submission occurred, and the one-use manifest-indexed authorization remains AUTHORIZED_UNUSED with invocation count 0 and remaining count 1. Do not rerun the checkpoint-71 wrapper because its immutable checkpoint-71 final-preflight output now exists.
+
+Checkpoint 71 and all compatibility evidence remain preserved. The 57-file package is 57/57 over 4,109,852 bytes with aggregate 7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08. The capsule remains 7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f. C35 runtime 5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c, C34 reason runtime 73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775, registry, WALs, oracle, fixtures, and protected residue remain unchanged. Decision/relation/reason remain 3720/3720, 3720/3720, and 3575/3720 with 145 reason-only rows. Phase 10A remains OPEN and R20 IN PROGRESS. Roadmap v9 and CURRENT_STATE.md were not updated; nothing was staged, committed, pushed, deployed, reindexed, or migrated.
+
+Exact next operation: Start a fresh owner-governed Codex continuation from checkpoint 72 with at least 120000 current-session tokens remaining. Preserve checkpoint 71, its compatible wrapper, the checkpoint-71 failed final preflight, the exact 57-file package, capsule, bootstrap, read rules, protected evidence, and the still-unused one-use authorization. Authorize and validate a checkpoint-72 noncolliding final-preflight/output binding before any marker or provider contact; do not begin C38 or later work.

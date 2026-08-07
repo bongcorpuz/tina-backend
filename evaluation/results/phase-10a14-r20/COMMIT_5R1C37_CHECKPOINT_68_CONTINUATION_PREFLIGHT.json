@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_68_CONTINUATION_PREFLIGHT_PASS",
+  "generatedUtc": "2026-08-01T13:49:09.2032306Z",
+  "governingPrompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-FRESH-SESSION-MANIFEST-INDEXED-OPUS-RESUME-FROM-CHECKPOINT-68.md",
+    "bytes": 19457,
+    "sha256": "289ab7b1763106fa7b0f75afffde02f89a50f65a7ee7bfa5f74123b672cfbc75",
+    "readCompletely": true
+  },
+  "freshSessionGate": {
+    "ledgerSequence": 11,
+    "freshSessionId": "019fbd88-8065-7011-99a0-f59a6588d4d4",
+    "checkpoint68SessionId": "019fbd0f-37ee-7db2-9470-1c98e0e77f0d",
+    "distinctSession": true,
+    "effectiveContextWindowTokens": 258400,
+    "activeContextTokens": 53861,
+    "remainingTokens": 204539,
+    "requiredMinimumTokens": 200000,
+    "headroomTokens": 4539,
+    "requiredReserveTokens": 54400,
+    "pass": true
+  },
+  "checkpoint68": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_68_manifest_indexed_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 4358,
+    "sha256": "42e585b08a2d31958a8b3f44238196c20188ca41069ea22e68cb0a190b59c603",
+    "ordinal": 68,
+    "status": "C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "eventSha256": "a2443e3d2e9ad98a517d1533f9ffda078d8b43a254b8fc99976530dfbcb0613c",
+    "pass": true
+  },
+  "handoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_68.md",
+    "bytes": 2393,
+    "sha256": "c110166aa9411718d4c6434393f99293cfada3429036d1a9fc5c6f184f46af8b",
+    "readCompletely": true,
+    "pass": true
+  },
+  "checkpoint67IdempotenceReplay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_67_IDEMPOTENCE_REPLAY.json",
+    "bytes": 1429,
+    "sha256": "49bc8a316c4bbda4a1cc26397131688b2cd057ae2da48cca1c7f4a55a31f81d5",
+    "classification": "C37_CHECKPOINT_67_IDEMPOTENCE_REPLAY_PASS",
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "pass": true
+  },
+  "git": {
+    "repository": "C:/Projects/tina-backend",
+    "origin": "https://github.com/bongcorpuz/tina-backend.git",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "liveFetchHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true,
+    "indexLockExists": false,
+    "pass": true
+  },
+  "package": {
+    "sourceManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    },
+    "detailedManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+      "bytes": 45178,
+      "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+    },
+    "entriesExpected": 57,
+    "entriesActual": 57,
+    "uniquePaths": 57,
+    "presentMembers": 57,
+    "hashMatches": 57,
+    "rawEvidenceBytesExpected": 4109852,
+    "rawEvidenceBytesActual": 4109852,
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "sourceDetailedOrderingMatch": true,
+    "mutated": false,
+    "pass": true
+  },
+  "authorizationContinuity": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_68_AUTHORIZATION_CONTINUITY.json",
+    "sourceAuthorizationSha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44",
+    "status": "AUTHORIZED_UNUSED",
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false,
+    "pass": true
+  },
+  "frozenSemanticRuntimeState": {
+    "rowsAdjudicated": "145/145",
+    "generalizedRuntimeDefects": 0,
+    "frozenDecision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+    "decision": "3720/3720",
+    "relation": "3720/3720",
+    "reason": "3575/3720",
+    "fullRegressionSuites": "197/217",
+    "fullRegressionGroups": "5429/5451",
+    "newRuntimeBehaviorFailures": 0,
+    "c35CompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "c34ReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "rerunPerformed": false,
+    "pass": true
+  },
+  "protectedResidue": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_68_PROTECTED_RESIDUE_VERIFICATION.json",
+    "protectedRecords": 22,
+    "mismatches": 0,
+    "registryAttempts": 230,
+    "attemptDirectories": 230,
+    "orphan": 0,
+    "dangling": 0,
+    "running": 0,
+    "c36WalAbsent": true,
+    "c37WalAbsent": true,
+    "runtimeOracleFixtureRegistryWalMutations": 0,
+    "pass": true
+  },
+  "hygiene": {
+    "observedUtc": "2026-08-01T13:48:55.2447483Z",
+    "activeC37TaskProcesses": 0,
+    "nodeProcesses": 0,
+    "taskTempEntries": 0,
+    "taskLocks": 0,
+    "port5173Listeners": 0,
+    "userOwnedVsCodeClaude": {
+      "pid": 24136,
+      "parentPid": 7384,
+      "extensionVersion": "2.1.220",
+      "preservedUntouched": true,
+      "taskProcess": false
+    },
+    "pass": true
+  },
+  "manifestIndexedArtifactsBeforeContinuation": {
+    "roleLedger": false,
+    "allowlist": false,
+    "capsuleBuilder": false,
+    "capsuleJson": false,
+    "capsuleMarkdown": false,
+    "bootstrap": false,
+    "toolBoundary": false,
+    "contextPlan": false,
+    "finalPreflight": false,
+    "invocationMarker": false,
+    "providerCapture": false,
+    "review": false,
+    "transmissionReceipt": false
+  },
+  "readOnlyDelegatedChecks": [
+    {
+      "agentPath": "/root/checkpoint_preflight",
+      "scope": "checkpoint, handoff, authorization, evidence-manifest, and 57-entry package integrity",
+      "mutations": 0,
+      "providerInvocations": 0,
+      "result": "PASS"
+    },
+    {
+      "agentPath": "/root/git_process_preflight",
+      "scope": "Git/index/untracked categorization and process, listener, lock, temp, and user-owned Claude separation",
+      "mutations": 0,
+      "providerInvocations": 0,
+      "result": "PASS"
+    },
+    {
+      "agentPath": "/root/runner_inventory",
+      "scope": "applicable instructions, token telemetry source, and reusable runner inventory",
+      "mutations": 0,
+      "providerInvocations": 0,
+      "result": "PASS"
+    }
+  ],
+  "prohibitedOperationsObserved": {
+    "adjudicationRerun": false,
+    "diagnosticRerun": false,
+    "regressionRerun": false,
+    "runtimeMutation": false,
+    "oracleFixtureMutation": false,
+    "registryWalMutation": false,
+    "c38": false,
+    "e2": false,
+    "a15": false,
+    "phase10B": false,
+    "deployment": false,
+    "reindex": false,
+    "modelMigration": false
+  },
+  "safeToContinue": true,
+  "pass": true
+}

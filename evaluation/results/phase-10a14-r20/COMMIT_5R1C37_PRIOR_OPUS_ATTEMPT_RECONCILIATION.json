@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_PRIOR_OPUS_ATTEMPT_TECHNICAL_INCOMPLETE_RECONCILED",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "cli": {
+    "version": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8",
+    "exitCode": 1,
+    "signal": null,
+    "stderrBytes": 97,
+    "stderrSha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b",
+    "error": "Invalid MCP configuration: mcpServers expected a record, received undefined"
+  },
+  "rootCause": "The prior write-once driver supplied --mcp-config {}. Claude Code required a top-level mcpServers record and rejected the process-scoped argument locally.",
+  "review": {
+    "modelReviewReached": false,
+    "actualDecisionToken": null,
+    "actualSubstantivePathToken": null,
+    "observations": [],
+    "complete57EntryPackageReviewed": false
+  },
+  "transmission": {
+    "attemptedApplicationStdinBytes": 4188309,
+    "completeChildStdinAcceptanceConfirmed": false,
+    "childStdinError": "write EOF",
+    "providerApplicationRequestObserved": false,
+    "confirmedEvidenceBytesTransmittedToAnthropic": 0,
+    "exactProviderWireBytes": null,
+    "wireTrafficExactlyObservable": false
+  },
+  "authorization": {
+    "priorAuthorizationConsumed": true,
+    "priorRetryAuthorized": false,
+    "replacementAuthorizationSeparate": true,
+    "replacementAuthorizationStatus": "AUTHORIZED_UNUSED"
+  },
+  "authoritativeCorrectionSha256": "55580deba146f75170a84c2859740457a71bdc0b1e6473101143230ad88c9d09",
+  "technicalAdjudicationSha256": "ef91d6290b5a5da61f876fa4d26ae9363389b756bacce12cae15fb9366665625",
+  "semanticRejection": false,
+  "pass": true
+}

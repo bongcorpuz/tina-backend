@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_69_OPUS_BOOTSTRAP_PASS",
+  "generatedUtc": "2026-08-01T16:31:03.649Z",
+  "markdown": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md",
+    "bytes": 6773,
+    "sha256": "3c876ad0ce5e783df5c13bd04ad687b0bb10c928f65325b17686286691bc05dc"
+  },
+  "childStdinMethod": "bootstrap Markdown bytes only; no @file expansion and no capsule/original inlining",
+  "outputSchema": {
+    "bytes": 4229,
+    "sha256": "077a307b0e9a67514f5fcf4b0023899d927bf4b6023cae9c629e4211ad0fda90"
+  },
+  "systemPrompt": {
+    "bytes": 512,
+    "sha256": "943df6398414abbd9ef2442377b20ce0165e108390d55620c7551769c8084c00"
+  },
+  "requiredOriginalSpotChecks": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.md",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.md",
+      "bytes": 29787,
+      "sha256": "8c651be00f190a374e4b7997380da6bc9f626c398a93fb0b7e3e0b67e6bf13a2",
+      "evidenceClass": "SEMANTIC_CORE_ADJUDICATION"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CHECKPOINT_63_IDEMPOTENCE_REPLAY.json",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CHECKPOINT_63_IDEMPOTENCE_REPLAY.json",
+      "bytes": 1724,
+      "sha256": "dda67ba0087a87861ca9923f59063fce25eb8365f682057e3c5b98cface3cd5b",
+      "evidenceClass": "MANIFEST_OR_CHECKPOINT_INTEGRITY"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_STDERR.txt",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_STDERR.txt",
+      "bytes": 38863,
+      "sha256": "2a938897035d1f4eb5036c8f21a7d742106883f52b8317ba81fa63f2c5315f70",
+      "evidenceClass": "RAW_CAPTURE_INTEGRITY_SUPPORT"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+      "bytes": 2928,
+      "sha256": "fd58900dd03a66bc02f426a44ed741a97ad00875abb7ad9e4ed5ad70d5edc8c9",
+      "evidenceClass": "SEMANTIC_CORE_REGRESSION_ADJUDICATION"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_REASON_METRICS.json",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_REASON_METRICS.json",
+      "bytes": 787,
+      "sha256": "2d8bed8906119579fbe5f4d7680aff4ce389ff92986caf8ed052bb82c47236f8",
+      "evidenceClass": "SEMANTIC_CORE_GATE_OR_PRESERVATION"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROTECTED_RESIDUE_BASELINE.json",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROTECTED_RESIDUE_BASELINE.json",
+      "bytes": 8839,
+      "sha256": "8de6ed4d617a561fe0e3a1357d051c3e9aee343849fcb659636aab5059b38094",
+      "evidenceClass": "SEMANTIC_CORE_GATE_OR_PRESERVATION"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+      "bytes": 2289,
+      "sha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983",
+      "evidenceClass": "SEMANTIC_CORE_DECISION"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json",
+      "bytes": 577,
+      "sha256": "2ceb3f5aa6f145775e62040ec491f73574b602419bdceb38f517aafa86599064",
+      "evidenceClass": "SEMANTIC_CORE_STATUS_OR_DOCUMENTATION"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-preflight.mjs",
+      "absolutePath": "C:/Projects/tina-backend/evaluation/runner/phase-10a14-r20/commit5r1c37-preflight.mjs",
+      "bytes": 19121,
+      "sha256": "8ee7a020324915f432094901adff4d449b363f8f7c30d64323c787e436e1b2c5",
+      "evidenceClass": "RUNNER_OR_DRIVER_PROVENANCE"
+    }
+  ],
+  "capsuleReadDirectlyThroughReadTool": true,
+  "fullPackageInlineOrConcatenated": false,
+  "pass": true
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 74",
+  "classification": "DOCUMENTATION_CUTOVER_MANIFEST_ENTRY_RECONCILIATION_EXPECTED_NOT_AN_INTEGRITY_DEFECT",
+  "generatedUtc": "2026-08-07T02:26:00.000Z",
+  "finding": "knowledge/CURRENT_STATE.md is indexed by 36 evidence manifests. The authorized documentation cutover advanced its SHA-256 from f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0 to 70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849, which necessarily invalidates that single documentation entry in every manifest that recorded the prior value.",
+  "newlyInvalidatedManifests": [
+    "COMMIT_5R1C35_FINAL_EVIDENCE.sha256",
+    "COMMIT_5R1C37_CHECKPOINT_71_PREPARED_TRANSPORT_MISMATCH_EVIDENCE.sha256",
+    "COMMIT_5R1C37_CHECKPOINT_72_FINAL_EVIDENCE.sha256",
+    "COMMIT_5R1C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_EVIDENCE.sha256"
+  ],
+  "newlyInvalidatedEntryCount": 4,
+  "newlyInvalidatedPath": "knowledge/CURRENT_STATE.md",
+  "precedent": {
+    "statement": "Each unit manifest snapshots CURRENT_STATE.md as of that unit. Prior generations were already historical for this entry before this operation.",
+    "examples": {
+      "COMMIT_5R1C32_EVIDENCE_MANIFEST": "f18ca7f90b9dfa6f...",
+      "COMMIT_5R1C34_FINAL_EVIDENCE": "e17a7a73b9966458...",
+      "COMMIT_5R1C35_FINAL_EVIDENCE": "f53cf577c7b4a979..."
+    },
+    "distinctPriorHashesAlreadyStale": 31
+  },
+  "fullManifestSweep": {
+    "manifestsScanned": 74,
+    "currentStateDocEntryMismatches": 20,
+    "otherMismatches": 85,
+    "otherMismatchCauses": {
+      "CANONICAL_ATTEMPT_REGISTRY.json": 33,
+      "CANONICAL_COUNT_SUMMARY.json": 15,
+      "commit5r1c34-lib.mjs": 8,
+      "COMMIT_5R1C37_TOKEN_CONTEXT_BUDGET_LEDGER.ndjson": 7,
+      "TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md": 4,
+      "COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson": 3,
+      "COMMIT_5R1C35_RECOVERY_CHECKPOINT_LOG.ndjson": 2,
+      "COMMIT_5R1C35_RECOVERY_CHECKPOINT.json": 2,
+      "services (COMMIT_5R1C6-era manifest only)": 3
+    },
+    "otherMismatchClassification": "PRE_EXISTING_HISTORICAL_SNAPSHOT_DIVERGENCE_ON_APPEND_ONLY_AND_EVOLVING_FILES",
+    "causedByThisOperation": false,
+    "proof": "COMMIT_5R1C35_FINAL_EVIDENCE.sha256 verified 117/117 at session start before any change, and 116/117 after, with knowledge/CURRENT_STATE.md as the sole delta. No registry, WAL, runner, ledger, roadmap, oracle, fixture or services file was modified by this operation; the 865-file working-tree aggregate is byte-identical pre and post reset."
+  },
+  "currentGenerationIntegrity": {
+    "COMMIT_5R1C35_FINAL_EVIDENCE": "116/117 - sole mismatch is the authorized CURRENT_STATE.md cutover",
+    "COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE": "48/48 PASS",
+    "COMMIT_5R1C37_CHECKPOINT_73_EVIDENCE": "3/3 PASS",
+    "COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE": "6/6 PASS",
+    "preservedAttemptEvidence": "byte-for-byte intact",
+    "c35ImmutabilityPreserved": true
+  },
+  "remediationApplied": "NONE. Sealed manifests were deliberately NOT edited: modifying manifests is prohibited and would constitute evidence tampering. The divergence is recorded here instead.",
+  "actionRequiredByNextGovernedUnit": "The reissued C37 prompt must regenerate its own evidence manifest against the post-cutover CURRENT_STATE.md hash 70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849. Prior manifests remain valid as historical point-in-time snapshots and must not be edited.",
+  "pass": true
+}

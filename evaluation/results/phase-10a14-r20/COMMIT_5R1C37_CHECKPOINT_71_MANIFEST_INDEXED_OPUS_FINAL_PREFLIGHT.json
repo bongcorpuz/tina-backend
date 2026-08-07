@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT_FAIL",
+  "generatedUtc": "2026-08-03T13:31:11.047Z",
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_71_prepared_transport_mismatch_pre_invocation.json",
+    "bytes": 7302,
+    "sha256": "9e7537d5e93399f2e721ce60478cf12f1dd52f289ea3dead0b4e7f643115cf50"
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 3216,
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44"
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "branch": "feature/source-availability-engine-v1",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "fetchHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "trackedStatusCount": 0,
+    "stagedCount": 0,
+    "pass": true
+  },
+  "preparationArtifacts": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_CONTINUATION_PREFLIGHT.json",
+      "bytes": 2968,
+      "sha256": "1af9c323345ecf5eb73b6b219b7339c3ccfc187cc399badfc6274b206249177c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_PROTECTED_RESIDUE_VERIFICATION.json",
+      "bytes": 3432,
+      "sha256": "d9941d2750a52bfa7fe4c2f159c1bb2b454a9d5376330a90325b8c1914ee68f7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_CAPSULE_CONTINUITY_VERIFICATION.json",
+      "bytes": 2884,
+      "sha256": "921bbee7c24e614d817af602ba2656a76626b8b17a24ad69ba9ca3c2ae3a0793"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_AUTHORIZATION_CONTINUITY.json",
+      "bytes": 1009,
+      "sha256": "1ca05bf3becd1b9781bb65b1dbb9bdcc1956e86dfe1687164be1c158bf81a073"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_PLAN.json",
+      "bytes": 35270,
+      "sha256": "f8ec634e78016e1a19548c613922a45b3ffb62aeecde7f4654dc240d96f66d3e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_VALIDATION.json",
+      "bytes": 4975,
+      "sha256": "f20bea8102cc23d8c4a17f8003d2634b8e85bc5bb41c281c875509522eabc10e"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.json",
+      "bytes": 4544,
+      "sha256": "e58cd332e13718932e4820d0394cd089189028f0d74162958afe50fc32a23d43"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md",
+      "bytes": 6773,
+      "sha256": "3c876ad0ce5e783df5c13bd04ad687b0bb10c928f65325b17686286691bc05dc"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_CONTEXT_PROJECTION.json",
+      "bytes": 1913,
+      "sha256": "700894ec8a0b813a391522b587236736814a758097e54392b616a9b542119494"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_TRANSPORT_PREFLIGHT.json",
+      "bytes": 2796,
+      "sha256": "7f8b18b8edbfbc2b95c88a8b589b4415821a2abbfd9caa284a922c13efd80d7f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBILITY_CONTINUATION_PREFLIGHT.json",
+      "bytes": 6106,
+      "sha256": "08d6d7562e575195c360af9d1ae7a3ac502704a06d8363fd3577e1593414a518"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DERIVATION_PLAN.json",
+      "bytes": 2423,
+      "sha256": "3ffdd71ee3950f7b87bc7f4cbe0f2e046500d48057888a1d3e6956fbba6eafb9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DIFF_PROOF.json",
+      "bytes": 27608,
+      "sha256": "8711cc4feb26cd494b96a4501fa445a50e776fcf1d047d9502f32e623c8459f0"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_OUTPUT_LEDGER.json",
+      "bytes": 3508,
+      "sha256": "1673b8d051507d48faa3251b8ba76b34d203749569bbcf9ce5eb9749ff74119f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_DRY_PREFLIGHT.json",
+      "bytes": 5963,
+      "sha256": "53307747b1fb1067e5f0b70a1ecf471b358ce7cde8545efcca37e046c35301c6"
+    }
+  ],
+  "cli": {
+    "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "version": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8"
+  },
+  "token": {
+    "sessionFile": "C:\\Users\\USER\\.codex\\sessions\\2026\\08\\03\\rollout-2026-08-03T21-07-01-019fc7bc-192f-7c91-80a2-80a76ddb7067.jsonl",
+    "sessionId": "019fc7bc-192f-7c91-80a2-80a76ddb7067",
+    "latestTokenEventLine": 372,
+    "eventTimestampUtc": "2026-08-03T13:30:26.118Z",
+    "configuredContextCapacityTokens": 272000,
+    "effectiveContextWindowTokens": 258400,
+    "telemetryReportedActiveContextTokens": 175158,
+    "calculatedEffectiveRemainingTokens": 83242,
+    "requiredPreSubmissionRemainingTokens": 120000,
+    "headroomAbovePreSubmissionRequirementTokens": -36758,
+    "requiredSafePauseReserveTokens": 54400,
+    "headroomAboveReserveTokens": 28842,
+    "method": "latest current-session event_msg/payload.token_count last_token_usage.total_tokens subtracted from model_context_window",
+    "gatePass": false
+  },
+  "gates": {
+    "checkpoint71Continuity": true,
+    "originalRunnerImmutableInput": true,
+    "protectedFinalPreflight69ImmutableInput": true,
+    "gitIdentityAndCleanBaseline": true,
+    "protectedResidueAndC35": true,
+    "runtimeOracleFixtureRegistryWalUnchanged": true,
+    "package57Integrity": true,
+    "capsuleIdentityAndCoverage": true,
+    "capsuleTokenEstimate": true,
+    "authorizationUnused": true,
+    "invocationCountZero": true,
+    "isolatedMcpConfigValidated": true,
+    "readOnlyAllowlistEnforcement": true,
+    "bootstrapAndProjection": true,
+    "noTaskTempResidue": true,
+    "cliIdentity": true,
+    "remainingCodexContextAtLeast120000": false
+  },
+  "authorizationStatus": "AUTHORIZED_UNUSED",
+  "invocationCount": 0,
+  "markerExists": false,
+  "modelContacted": false,
+  "pass": false
+}

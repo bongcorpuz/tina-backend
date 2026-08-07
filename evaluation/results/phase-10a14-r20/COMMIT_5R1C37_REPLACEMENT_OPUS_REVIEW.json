@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "classification": "C37_REPLACEMENT_OPUS_NO_VALID_REVIEWER_OBJECT_CAPTURED",
+  "reviewerObjectReceived": false,
+  "actualDecisionToken": null,
+  "actualSubstantivePathToken": null,
+  "executorTechnicalError": "CLI_TECHNICAL_INCOMPLETE",
+  "rawStdoutSha256": "d3e5a82a70d840593b682a7a54dd745e5adad6e77f7abeef8a25573e7568d142",
+  "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "note": "Executor capture only. No synthetic reviewer decision or substantive token is asserted."
+}

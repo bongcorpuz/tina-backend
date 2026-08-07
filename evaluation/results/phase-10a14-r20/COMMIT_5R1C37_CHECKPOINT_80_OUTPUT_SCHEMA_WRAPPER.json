@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_OUTPUT_SCHEMA_WRAPPER_REVIEWER_IDENTITY_AMENDMENT_ONLY",
+  "generatedAtUtc": "2026-08-07T17:59:00Z",
+
+  "existingSchemaInspected": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "artifactEdited": false,
+    "artifactPreservedExactly": true,
+    "hardCodesOpus48": true,
+    "hardCodedFields": [
+      { "field": "reviewerModel", "constraint": "const \"claude-opus-4-8\"" }
+    ],
+    "otherReviewerIdentityRelatedField": {
+      "field": "reviewerTool",
+      "constraint": "const \"Claude Code\"",
+      "assessment": "Not a model-identity binding. This constraint remains accurate: this invocation is also performed through Claude Code agent infrastructure. Not changed by this amendment."
+    },
+    "caseTriggered": "PHASE 4 CASE B — the schema hard-codes Opus 4.8 and would reject claude-opus-5 solely because of reviewer identity."
+  },
+
+  "additionalStalenessNotedButNotTreatedAsIdentityIssue": {
+    "observation": "The historical schema's surrounding prose (not the JSON Schema block itself) references a checkpoint-64-specific commit message, a Roadmap v9 finalization order, and a normal git push as prerequisites for C37 becoming terminal. The CURRENT governing prompt explicitly states this continuation 'is not... authorization to publish Git changes' and no commit/push/staging is authorized in this operation.",
+    "handling": "This is a substantive-scope staleness, not a reviewer-identity issue, and Phase 4 of the governing prompt scopes the wrapper mechanism specifically to the reviewer-identity binding. Rather than editing the historical prose (prohibited) or silently asking the reviewer to validate an authorization to commit/push that does not exist in this operation, the governing addendum supplied to the reviewer (Layer 2) explicitly states that no commit or push is authorized now, and instructs the reviewer to evaluate the inherited 'commitSafe' and related fields as a forward-looking safety judgment ('would this be safe to eventually commit, if and when separately authorized') rather than as confirmation that a commit is about to happen. This is recorded here as a transparent interpretive instruction, not a schema edit.",
+    "fieldsAffectedByThisInterpretiveNote": ["commitSafe", "verification.documentationFinalizationPlanAccurate", "verification.manifestAndExplicitStagingPlanAccurate", "verification.checkpoint64Continuity", "verification.c38NextSeparateOperation"]
+  },
+
+  "fieldByFieldComparison": {
+    "topLevelRequired": {
+      "unchanged": [
+        "decision", "substantivePathDecision", "complete57EntryPackageReviewed",
+        "dataBeyondAuthorizedPackageReviewed", "independenceConfirmed", "readOnlyConfirmed",
+        "summary", "verification", "runtimeCandidateRequestedForC37", "blockingFindings",
+        "nonblockingObservations", "commitSafe"
+      ],
+      "changed": [
+        {
+          "field": "reviewerModel",
+          "before": { "type": "string", "const": "claude-opus-4-8" },
+          "after": { "type": "string", "const": "claude-opus-5" },
+          "reason": "Reviewer-identity binding amendment per this governance decision. This is the ONLY substantive constraint change in the entire schema."
+        }
+      ],
+      "unchangedIdentityConstants": [
+        { "field": "reviewedStateDigest", "const": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb", "reason": "Layer 1 package identity is unchanged; this constant still identifies the same immutable source manifest." },
+        { "field": "reviewedPackageManifestSha256", "const": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0", "reason": "Layer 1 package identity is unchanged." },
+        { "field": "reviewedPackageAggregateSha256", "const": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08", "reason": "Layer 1 package identity is unchanged." },
+        { "field": "reviewerTool", "const": "Claude Code", "reason": "Not a model-identity field; remains accurate." }
+      ]
+    },
+    "decisionEnum": { "unchanged": ["APPROVED", "APPROVED_WITH_NONBLOCKING_OBSERVATIONS", "REJECTED", "INCOMPLETE_REVIEW"] },
+    "substantivePathDecisionEnum": { "unchanged": ["NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED", "NO_RUNTIME_CANDIDATE_SEMANTICALLY_SAFE_BUT_REASON_GATE_OPEN", "MORE_EVIDENCE_REQUIRED"] },
+    "verificationObjectRequired": {
+      "unchangedFieldNames": [
+        "checkpoint64Continuity", "packageCountAndIntegrity", "sensitiveScopeBoundaryAccepted",
+        "c36InventoryVerified", "reasonContractSound", "rowAdjudicationComplete",
+        "categoryTotalsExact", "clusterMatrixComplete", "diagnosticsNecessitySound",
+        "noRuntimeCandidateDispositionSound", "c35Preserved", "c34ReasonRuntimePreserved",
+        "noRuntimeOracleRegistryWalMutation", "regressionAcceptedZeroNewRuntimeFailures",
+        "phase10ARemainsOpen", "c38NextSeparateOperation", "documentationFinalizationPlanAccurate",
+        "manifestAndExplicitStagingPlanAccurate", "prohibitedWorkAbsent"
+      ],
+      "note": "All 19 verification booleans are preserved unchanged by name and type. Per the interpretive note above, the reviewer is instructed to answer each in light of CURRENT (checkpoint 80) facts rather than literal checkpoint-64 wording, since these are still meaningful, answerable questions about the present state (e.g. checkpoint64Continuity = whether the checkpoint chain from 64 through 80 remains unbroken and non-repeating, which it does)."
+    },
+    "blockingFindingsAndNonblockingObservations": { "unchanged": true, "type": "array of string, both fields" },
+    "additionalDeterminationsNotInHistoricalSchema": {
+      "explicitNote": "The current governing prompt's Phase 5 item 9 lists determinations not present as named booleans in the checkpoint-64 schema (e.g. explicit sourceManifestSha256/detailedManifestSha256 provenance acceptability, whether B7 can close under this amendment, whether C37 may become terminal). These are additive requirements layered on top of, not a replacement for, the historical schema's fields. The wrapper below carries them as new top-level fields on the wrapper object itself (outside originalDecisionPayload), so that the historical decision payload's shape is preserved exactly per Phase 4, while the new determinations required by this specific continuation are still captured."
+    }
+  },
+
+  "wrapperSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "amendmentVersion",
+      "supersedesReviewerIdentityOnly",
+      "reviewerModel",
+      "reviewerSelector",
+      "evidenceCorpusHash",
+      "governingAddendumHash",
+      "provenanceAdjudicationAcceptable",
+      "b7ClosureDetermination",
+      "c37TerminalDetermination",
+      "furtherGovernanceDecisionRequired",
+      "originalDecisionPayload"
+    ],
+    "properties": {
+      "amendmentVersion": { "type": "string", "const": "C37_CHECKPOINT_80_OPUS5_REVIEWER_IDENTITY_AMENDMENT_V1" },
+      "supersedesReviewerIdentityOnly": { "type": "boolean", "const": true },
+      "reviewerModel": { "type": "string", "const": "claude-opus-5" },
+      "reviewerSelector": { "type": "string", "const": "opus" },
+      "evidenceCorpusHash": { "type": "string", "const": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08" },
+      "governingAddendumHash": { "type": "string", "description": "SHA-256 of the Layer 2 governing addendum, as supplied to the reviewer in the review request." },
+      "provenanceAdjudicationAcceptable": {
+        "type": "string",
+        "enum": ["ACCEPTABLE_NON_BLOCKING", "BLOCKING", "EVIDENCE_OF_INCONSISTENCY"],
+        "description": "The reviewer's own independent determination on the sourceManifestSha256/detailedManifestSha256 provenance result. Must not be assumed from the primary executor's own adjudication."
+      },
+      "b7ClosureDetermination": { "type": "string", "enum": ["CLOSE_B7", "KEEP_B7_OPEN", "REVISE_B7"] },
+      "c37TerminalDetermination": { "type": "string", "enum": ["C37_MAY_BECOME_TERMINAL", "C37_REMAINS_NONTERMINAL", "INSUFFICIENT_BASIS"] },
+      "furtherGovernanceDecisionRequired": { "type": "boolean" },
+      "furtherGovernanceDecisionDescription": { "type": "string" },
+      "originalDecisionPayload": {
+        "description": "Validates against the ORIGINAL COMMIT_5R1C37_FINAL_OPUS_REQUEST.md decision schema exactly, EXCEPT reviewerModel is amended to the const shown here instead of claude-opus-4-8. All other required fields, enums, and the full 19-field verification object are unchanged from the historical schema.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "decision", "substantivePathDecision", "reviewedStateDigest", "reviewedPackageManifestSha256",
+          "reviewedPackageAggregateSha256", "complete57EntryPackageReviewed", "dataBeyondAuthorizedPackageReviewed",
+          "reviewerTool", "reviewerModel", "independenceConfirmed", "readOnlyConfirmed", "summary",
+          "verification", "runtimeCandidateRequestedForC37", "blockingFindings", "nonblockingObservations", "commitSafe"
+        ],
+        "properties": {
+          "decision": { "type": "string", "enum": ["APPROVED", "APPROVED_WITH_NONBLOCKING_OBSERVATIONS", "REJECTED", "INCOMPLETE_REVIEW"] },
+          "substantivePathDecision": { "type": "string", "enum": ["NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED", "NO_RUNTIME_CANDIDATE_SEMANTICALLY_SAFE_BUT_REASON_GATE_OPEN", "MORE_EVIDENCE_REQUIRED"] },
+          "reviewedStateDigest": { "type": "string", "const": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb" },
+          "reviewedPackageManifestSha256": { "type": "string", "const": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0" },
+          "reviewedPackageAggregateSha256": { "type": "string", "const": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08" },
+          "complete57EntryPackageReviewed": { "type": "boolean" },
+          "dataBeyondAuthorizedPackageReviewed": { "type": "boolean" },
+          "reviewerTool": { "type": "string", "const": "Claude Code" },
+          "reviewerModel": { "type": "string", "const": "claude-opus-5" },
+          "independenceConfirmed": { "type": "boolean" },
+          "readOnlyConfirmed": { "type": "boolean" },
+          "summary": { "type": "string" },
+          "verification": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "checkpoint64Continuity", "packageCountAndIntegrity", "sensitiveScopeBoundaryAccepted",
+              "c36InventoryVerified", "reasonContractSound", "rowAdjudicationComplete", "categoryTotalsExact",
+              "clusterMatrixComplete", "diagnosticsNecessitySound", "noRuntimeCandidateDispositionSound",
+              "c35Preserved", "c34ReasonRuntimePreserved", "noRuntimeOracleRegistryWalMutation",
+              "regressionAcceptedZeroNewRuntimeFailures", "phase10ARemainsOpen", "c38NextSeparateOperation",
+              "documentationFinalizationPlanAccurate", "manifestAndExplicitStagingPlanAccurate", "prohibitedWorkAbsent"
+            ],
+            "properties": {
+              "checkpoint64Continuity": { "type": "boolean" }, "packageCountAndIntegrity": { "type": "boolean" },
+              "sensitiveScopeBoundaryAccepted": { "type": "boolean" }, "c36InventoryVerified": { "type": "boolean" },
+              "reasonContractSound": { "type": "boolean" }, "rowAdjudicationComplete": { "type": "boolean" },
+              "categoryTotalsExact": { "type": "boolean" }, "clusterMatrixComplete": { "type": "boolean" },
+              "diagnosticsNecessitySound": { "type": "boolean" }, "noRuntimeCandidateDispositionSound": { "type": "boolean" },
+              "c35Preserved": { "type": "boolean" }, "c34ReasonRuntimePreserved": { "type": "boolean" },
+              "noRuntimeOracleRegistryWalMutation": { "type": "boolean" }, "regressionAcceptedZeroNewRuntimeFailures": { "type": "boolean" },
+              "phase10ARemainsOpen": { "type": "boolean" }, "c38NextSeparateOperation": { "type": "boolean" },
+              "documentationFinalizationPlanAccurate": { "type": "boolean" }, "manifestAndExplicitStagingPlanAccurate": { "type": "boolean" },
+              "prohibitedWorkAbsent": { "type": "boolean" }
+            }
+          },
+          "runtimeCandidateRequestedForC37": { "type": "boolean" },
+          "blockingFindings": { "type": "array", "items": { "type": "string" } },
+          "nonblockingObservations": { "type": "array", "items": { "type": "string" } },
+          "commitSafe": { "type": "boolean" }
+        }
+      }
+    }
+  },
+
+  "schemaWeakenedToAcceptMalformedOutput": false,
+  "evidenceDecisionObservationOrSignatureFieldsRemoved": 0,
+  "onlyChangeIsReviewerIdentityBindingPlusAdditiveDeterminationFields": true
+}

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_69_CAPSULE_CONTINUITY_VERIFICATION_PASS",
+  "generatedUtc": "2026-08-01T16:31:03.649Z",
+  "package": {
+    "entries": 57,
+    "present": 57,
+    "verifiedHashes": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    },
+    "detailedManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+      "bytes": 45178,
+      "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+    },
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "duplicatePaths": 0,
+    "pathEscapes": 0,
+    "pass": true
+  },
+  "capsule": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+    "bytes": 437230,
+    "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f"
+  },
+  "capsuleMarkdown": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md",
+    "bytes": 15610,
+    "sha256": "02e154c75e6aaa6863fdd55e99723741cd353e036694e04c71f22271267b0af6"
+  },
+  "roleLedger": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ROLE_LEDGER.json",
+    "bytes": 81855,
+    "sha256": "34cd2c404033581643540ba98ebe67266487a049d8aeec216841854937e0d860"
+  },
+  "allowlist": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+    "bytes": 30365,
+    "sha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e"
+  },
+  "coverage": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_COVERAGE_VALIDATION.json",
+    "bytes": 4073,
+    "sha256": "c96fc58d459118dcc84a6492feb439e16e4677d8c34962e4450db3824e464799"
+  },
+  "tokenEstimate": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_TOKEN_ESTIMATE.json",
+    "bytes": 918,
+    "sha256": "95d71733a98f249c5841c78de17112b78dc2fe1854fea7c5191dc02fc2be988c"
+  },
+  "semantic": {
+    "semanticCoreEntries": 45,
+    "materialClaims": 222,
+    "adjudicatedRows": 145,
+    "evidenceClasses": 8,
+    "unfavorableEvidenceItems": 10,
+    "unsupportedClaims": 0,
+    "omittedUnfavorableEvidence": 0,
+    "coveragePercent": 100
+  },
+  "estimate": {
+    "combinedUtf8Bytes": 452840,
+    "conservativeEstimatedTokens": 188684,
+    "maximumEstimatedTokens": 200000,
+    "headroomTokens": 11316
+  },
+  "capsuleRebuiltOrModified": false,
+  "capsuleContentsReturnedToCodex": false,
+  "deterministicRepeatMatch": true,
+  "pass": true
+}

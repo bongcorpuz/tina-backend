@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FIVE_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+  "generatedUtc": "2026-08-01T11:54:38.011Z",
+  "reason": "The conservative token estimator left insufficient headroom above the mandatory 54,400-token reserve to guarantee a complete replacement submission, capture, adjudication, and checkpoint atomic group.",
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_TOKEN_LIMIT_SAFE_PAUSE_RECONCILIATION.json",
+    "bytes": 4113,
+    "sha256": "9c0e0a45c5aefc656735cdf961981fd1875a97ccba8d0058b6bf90ff85a1e99f"
+  },
+  "fourHourResumeHandoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_66.md",
+    "bytes": 4213,
+    "sha256": "98d15c2fccb53911107e5ccdfca19eea467d0fe1dab1cc316e3fdf78a861e92a"
+  },
+  "checkpointBefore": 65,
+  "checkpointAfter": 66,
+  "replacementAuthorizationUnused": true,
+  "replacementInvocationCount": 0,
+  "providerRequestObserved": false,
+  "confirmedEvidenceBytesTransmitted": 0,
+  "documentationUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "runtimeOracleRegistryWalMutationCount": 0,
+  "c38Begun": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "phase10BBegun": false,
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "exactNextOperation": "Under a new four-hour governed resume prompt, reverify checkpoint 66 and token capacity, recreate the same 18-byte isolated MCP config, revalidate locally, and only if the invocation/capture/adjudication/checkpoint reserve is proven create the single replacement invocation marker and submit once.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

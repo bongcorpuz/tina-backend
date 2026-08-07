@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_66_REPLACEMENT_OPUS_FINAL_PREFLIGHT_PASS",
+  "generatedUtc": "2026-08-01T12:44:48.347Z",
+  "checkpointGitProtectedResidueGatesPass": true,
+  "immutableRuntimeOracleRegistryWalIdentitiesPass": true,
+  "isolatedConfigRevalidationPass": true,
+  "packageAndRequestContinuityPass": true,
+  "replacementAuthorizationUnused": true,
+  "replacementInvocationMarkerAbsent": true,
+  "replacementCaptureTransmissionReviewAbsent": true,
+  "taskOwnedClaudeReviewProcesses": 0,
+  "userOwnedVsCodeClaudeExtension": {
+    "count": 1,
+    "pid": 24136,
+    "separate": true,
+    "untouched": true
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "liveRemoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true
+  },
+  "boundEvidence": {
+    "authorizationContinuitySha256": "bd1cd7d653424e1a69165de1d80009370656a56900632b140e2f6bbcaee16404",
+    "continuationPreflightSha256": "e5825b1b25e9b077e7f8a6428c9ca5f7b3cd4e18c09f2d79d51185a0e6e00bca",
+    "protectedResidueVerificationSha256": "429e87896bb6a057f5c3f2ad320c156874468449364aae68e7ad512cf538f70a",
+    "isolatedConfigRevalidationSha256": "41b691d90eac0674f88d43626fadf3cdc2aa26911788bf2d1210a17f26b44324",
+    "packageAndRequestContinuitySha256": "6381df75c6acb30343649091a2eff914f55e0ddebca1dbb3882781ac8a0844e5",
+    "checkpoint65WrapperJsonSha256": "1311ff53a80e93d5c7fe35fdbc5c2029ab789d68c2e5cb41dafb11f90554f712",
+    "checkpoint65WrapperMarkdownSha256": "ad8511245e2b4fecc7d12a0f53de560c62a3601b138be664bcfaa9c35a130ec8",
+    "checkpoint66WrapperJsonSha256": "7533999219d398cccba423ddd169b54437ef2a98be321888d96d6083e75d5c36",
+    "checkpoint66WrapperMarkdownSha256": "1ffdf578a00957b9bb2a7da520cd44c29e52059754977ac17cf29d6b15e1b9b6",
+    "invocationDriverSha256": "5b82dc6ebbc927fbf16610d38fb54aac0fe6d9231aefc9439cdd6e7a06d7d1d5"
+  },
+  "cli": {
+    "version": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8",
+    "binarySha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa"
+  },
+  "config": {
+    "path": "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\empty-mcp.json",
+    "bytes": 18,
+    "sha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "strictCommandScopedOnly": true
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "token": {
+    "ledgerSequence": 8,
+    "effectiveSessionContextWindowTokens": 258400,
+    "telemetryReportedActiveContextTokens": 164185,
+    "calculatedEffectiveRemainingTokens": 94215,
+    "requiredReserveTokens": 54400,
+    "additionalAtomicAllowanceTokens": 24000,
+    "minimumPreInvocationRemainingTokens": 78400,
+    "headroomAboveMinimumTokens": 15815,
+    "projectedRemainingAfterAtomicAllowanceTokens": 70215,
+    "projectedHeadroomAboveReserveTokens": 15815,
+    "gatePass": true
+  },
+  "elapsedTime": {
+    "underFourHourMaximum": true,
+    "enoughForInvocationCaptureAdjudicationAndCheckpoint": true
+  },
+  "invocationOrdinal": 1,
+  "maximumInvocations": 1,
+  "retryAuthorized": false,
+  "substantiveRequestSubmitted": false,
+  "providerRequestObserved": false,
+  "pass": true
+}

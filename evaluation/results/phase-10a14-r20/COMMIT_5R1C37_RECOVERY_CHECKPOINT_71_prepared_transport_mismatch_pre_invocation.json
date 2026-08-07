@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 71,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-01T23:30:08.817Z",
+  "stage": "checkpoint-70 direct completion pre-invocation prepared-transport mismatch safe pause",
+  "status": "C37_CHECKPOINT_70_PREPARED_TRANSPORT_MISMATCH",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "branch": "feature/source-availability-engine-v1",
+  "activeReasonBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "c35RuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+  "activeAttemptId": null,
+  "decision": "3720/3720",
+  "relation": "3720/3720",
+  "reason": "3575/3720",
+  "reasonOnlyRowsRemaining": 145,
+  "frozenDecision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "generalizedRuntimeDefects": 0,
+  "phase10A": "PHASE_10A_OPEN_PENDING_MANDATORY_INDEPENDENT_REVIEW",
+  "r20": "IN_PROGRESS",
+  "c36": "SAFE_PAUSED_UNCOMMITTED_NOT_TERMINAL",
+  "c37": "SAFE_PAUSED_PREPARED_TRANSPORT_MISMATCH_PRE_INVOCATION",
+  "priorAuthorizationsConsumed": 2,
+  "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+  "manifestIndexedAuthorizationConsumed": false,
+  "manifestIndexedInvocationCount": 0,
+  "manifestIndexedRetryAuthorized": false,
+  "providerRequestObserved": false,
+  "modelReviewReached": false,
+  "reviewerObjectReceived": false,
+  "decisionToken": null,
+  "substantivePathToken": null,
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "unchanged": true,
+    "pass": true
+  },
+  "token": {
+    "ledgerSequence": 15,
+    "effectiveContextWindowTokens": 258400,
+    "activeContextTokens": 36229,
+    "remainingTokens": 222171,
+    "preSubmissionRequiredTokens": 120000,
+    "headroomAbovePreSubmissionRequirementTokens": 102171,
+    "requiredReserveTokens": 54400,
+    "headroomAboveReserveTokens": 167771,
+    "decision": "THRESHOLD_PASS_BUT_TRANSPORT_COMPATIBILITY_GATE_FAIL"
+  },
+  "capsuleCreated": true,
+  "capsuleValidated": true,
+  "capsuleSemanticCoveragePercent": 100,
+  "capsuleConservativeEstimatedTokens": 188684,
+  "bootstrapCreated": true,
+  "toolBoundaryValidated": true,
+  "providerContextPlanCreated": true,
+  "transportPreflightCreated": true,
+  "directCompletionPreflightCreated": true,
+  "directCompletionPreflightPass": false,
+  "onlyFailedDirectCompletionGate": "exactPreparedRunnerCanInvokeFromCheckpoint70WithoutProhibitedMutation",
+  "runnerByteIdentityPass": true,
+  "continuationInvocationReady": false,
+  "invocationRunnerExecuted": false,
+  "invocationMarkerExists": false,
+  "roadmapV9Updated": false,
+  "currentStateUpdated": false,
+  "finalApprovalManifestCreated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "stagingEmpty": true,
+  "trackedWorktreeClean": true,
+  "headEqualsUpstream": true,
+  "ahead": 0,
+  "behind": 0,
+  "protectedResiduePreserved": true,
+  "hygiene": {
+    "otherNodePids": [],
+    "taskClaudePids": [],
+    "vscodeClaudePids": [
+      24136
+    ],
+    "port5173": 0,
+    "validationTempExists": false,
+    "invocationTempExists": false,
+    "indexLockExists": false,
+    "taskServiceCount": 0,
+    "pass": true
+  },
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "c38Begun": false,
+  "phase10BImplementationBegun": false,
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 3216,
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44"
+  },
+  "directCompletionPreflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_70_DIRECT_COMPLETION_PREFLIGHT.json",
+    "bytes": 6694,
+    "sha256": "de32b5c4289e3f667885b8c80e38329f3f07197c2d6c1e4f4c5d99e68875ca49"
+  },
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_PREPARED_TRANSPORT_MISMATCH_RECONCILIATION.json",
+    "bytes": 12421,
+    "sha256": "653667ecb80cae20a3b354330cd62ac4ee7cb84a68857028304840189461969f"
+  },
+  "fourHourResumeHandoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_71.md",
+    "bytes": 3348,
+    "sha256": "d57f1abf0ab242ab5c9a0337842c568935f941f5bbca9af5c48c6d022da218b5"
+  },
+  "terminalState": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_PREPARED_TRANSPORT_MISMATCH_TERMINAL_STATE.json",
+    "bytes": 1512,
+    "sha256": "e96450ce415f9af6e765c4fbf2d989cfebed93384b7686fc0eac6faa10160d86"
+  },
+  "evidenceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_PREPARED_TRANSPORT_MISMATCH_EVIDENCE.sha256",
+    "bytes": 5167,
+    "sha256": "979d0373df67a18e34073fec74b524d2d91ebfbc578a73f4e100260a91195b2b"
+  },
+  "capsule": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+    "bytes": 437230,
+    "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f"
+  },
+  "preparedRunner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+    "bytes": 79610,
+    "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795"
+  },
+  "protectedFinalPreflight69": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 5290,
+    "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f"
+  },
+  "previousCheckpoint": {
+    "ordinal": 70,
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_70_transport_prepared_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 6970,
+    "sha256": "4d7503bc4139dc0b5978e0afd47ac21f45e46861ac0512bfe7893660e60d7318",
+    "eventSha256": "05625e0b2f38585feeca762c0e4710a1030267f4cab9df590f5716897f9215a6",
+    "logSha256BeforeAppend": "cef841acc47d0b3c26909ef2074b7ac167e43cf458462b0bf2bd8f9bea70c6c4"
+  },
+  "blocker": "PREPARED_RUNNER_PROTECTED_FINAL_PREFLIGHT_OUTPUT_COLLISION",
+  "safePauseReason": "C37_CHECKPOINT_70_PREPARED_TRANSPORT_MISMATCH",
+  "nextExactOperation": "Start a separately governed continuation from checkpoint 71 that explicitly authorizes only a compatible invocation mechanism for the prepared runner checkpoint-69 final-preflight output binding. Preserve the completed capsule, package, bootstrap, 63 Read rules, nine spot checks, isolated MCP configuration, all existing evidence, and the still-unused manifest-indexed authorization. Revalidate the corrected invocation boundary before any marker or substantive submission; do not begin C38 or any later work.",
+  "safeToResume": true,
+  "eventSha256": "15dbab12f1e800c7e9cf59267241b93fe1465ddb874e8f9638a87bb1ebb21d88"
+}

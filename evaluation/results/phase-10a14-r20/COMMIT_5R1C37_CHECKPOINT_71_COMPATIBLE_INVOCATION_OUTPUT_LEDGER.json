@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_OUTPUT_LEDGER_PASS",
+  "generatedUtc": "2026-08-02T07:18:01.047396Z",
+  "protectedImmutableInput": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 5290,
+    "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f"
+  },
+  "entries": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+      "role": "current-session final preflight written before marker only after context gate",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_INVOCATION_MARKER.json",
+      "role": "exact-once marker",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_CLI_CAPTURE.json",
+      "role": "CLI capture",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_STDOUT.txt",
+      "role": "reviewer stdout",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_STDERR.txt",
+      "role": "reviewer stderr",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_REVIEW.json",
+      "role": "structured review",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_REVIEW.md",
+      "role": "review summary",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_TRANSMISSION_RECEIPT.json",
+      "role": "transmission receipt",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_REVIEW_COVERAGE.json",
+      "role": "review coverage",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_ADJUDICATION.json",
+      "role": "post-review adjudication",
+      "requiredInitialState": "ABSENT",
+      "exists": false,
+      "insideGovernedC37EvidenceDirectory": true
+    }
+  ],
+  "newOutputCount": 10,
+  "newOutputCollisions": 0,
+  "existingProtectedFilesClassifiedAsOutputs": 0,
+  "existingProtectedFilesRewritten": 0,
+  "unrelatedPaths": 0,
+  "pass": true
+}

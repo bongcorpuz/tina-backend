@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "recordId": "COMMIT_5R1C37_CHECKPOINT_75_HEALTH_SEMANTIC_CHANGE_GOVERNANCE_RECORD",
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 75",
+  "classification": "UNGOVERNED_HEALTH_SEMANTIC_CHANGE_PATCH_GOVERNANCE_RECORD",
+  "generatedAtUtc": "2026-08-07T03:21:43Z",
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "narrativeRecord": "COMMIT_5R1C37_CHECKPOINT_75_HEALTH_SEMANTIC_CHANGE_GOVERNANCE_RECORD.md",
+
+  "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+  "authorized": false,
+  "reverted": false,
+  "modifiedByThisOperation": false,
+  "stagedByThisOperation": false,
+  "candidateRuntimeFixCreated": false,
+
+  "paths": [
+    {
+      "path": "security/public-health.js",
+      "headBlobOid": "ac5b9a638b3372ab9085bde26248146b3b724c2f",
+      "worktreeBlobOid": "9a90c4d2fb519639f28c3453af6f7be18ee1485f",
+      "headContentSha256": "289f2dcb64b8621bc8a09d075fd977d39faccc67ae280fd84ba1253d5cfca2d3",
+      "worktreeContentSha256": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "changeSummary": [
+        "Removed exported constant PUBLIC_HEALTH_SERVICE = \"tina-backend\"",
+        "PUBLIC_HEALTH_ALLOWED_FIELDS narrowed from [\"status\",\"service\"] to [\"status\"]",
+        "buildPublicHealth() payload changed from {status:'ok',service:'tina-backend'} to {status:'ok'}",
+        "Added new exported healthHandler(req,res)"
+      ]
+    },
+    {
+      "path": "server.js",
+      "headBlobOid": "171f42a6e95390d5de551001c47e84b8ea2e5480",
+      "worktreeBlobOid": "e130430c10d4b0645cf7ea3cfeae3094fe0c49a2",
+      "headContentSha256": "3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73",
+      "worktreeContentSha256": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "changeSummary": [
+        "Inline async /health handler replaced with app.get('/health', healthHandler)",
+        "REMOVED the resilient readiness touch await getVectorStoreStats() and its try/catch",
+        "Deleted the 10-line governed PATCH-08S-FOLLOWUP policy comment block",
+        "Import narrowed from buildPublicHealth to healthHandler"
+      ]
+    },
+    {
+      "path": "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+      "headBlobOid": "cf8b1038c9faaf37addcd8bff7ff73cc3ab17987",
+      "worktreeBlobOid": "67f9a4d334c8400cdc3e97149c905a0022b06695",
+      "headContentSha256": "cc6acaacd01f2a0cf0ae3210eda4eb3d495ba90ef72f79d6968676678261fff2",
+      "worktreeContentSha256": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35",
+      "changeSummary": [
+        "Replaced status+service assertions with exact payload assertion JSON.stringify(ph)==='{\"status\":\"ok\"}'",
+        "Source-inspection test rewritten to assert healthHandler wiring instead of buildPublicHealth usage",
+        "Disclosure-scan window over the /health region narrowed from 800 to 300 characters"
+      ],
+      "governanceNote": "This is the governing regression test for the implementation changed in the same ungoverned commit."
+    }
+  ],
+
+  "origin": {
+    "commit": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+    "subject": "add /health endpoint + baseline",
+    "author": "Tina Swarm <tina@local>",
+    "dateUtc": "2026-08-04T15:11:13Z",
+    "pushedToOrigin": false,
+    "classification": "UNGOVERNED_INTRUSION",
+    "preservationRefs": [
+      "refs/heads/governance/ungoverned-ff1bc2b1",
+      "refs/tags/governance/pre-remediation-ff1bc2b1"
+    ],
+    "frozenPatch": "COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch",
+    "frozenPatchSha256": "b6e5ddd975a04fd03c6ed786f6cd41b5bd8f3d88f622cfa98a0faa07d778d66d",
+    "byteIdentityWithPreservedCommitVerified": true
+  },
+
+  "testEvidence": {
+    "modifiedGovernedSuite": {
+      "command": "node tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+      "cwd": "C:\\Projects\\tina-backend",
+      "passed": 19, "failed": 0, "assertions": 77, "exitCode": 0,
+      "interpretation": "NOT INDEPENDENT EVIDENCE — the same ungoverned commit authored both the implementation and this test."
+    },
+    "governedBaselineSuiteVsModifiedImplementation": {
+      "command": "node tests/patch-08s-HEADVERSION.test.mjs",
+      "cwd": "<scratchpad>/sandbox (isolated mirror; governed repository not written to)",
+      "passed": 17, "failed": 2, "assertions": 58, "exitCode": 1,
+      "failures": [
+        "helper: buildPublicHealth is minimal and excludes all forbidden fields -> 'service tina-backend'",
+        "source: server.js public /health returns minimal buildPublicHealth and discloses nothing -> 'buildPublicHealth used'"
+      ],
+      "interpretation": "DECISIVE — the ungoverned change breaks the governed PATCH-08S-FOLLOWUP contract as written.",
+      "repositoryStatusUnchangedBeforeAndAfter": "4 modified / 281 untracked"
+    },
+    "blastRadius": {
+      "removedSymbol": "PUBLIC_HEALTH_SERVICE",
+      "remainingReferences": 0,
+      "danglingImporters": false,
+      "getVectorStoreStatsStillImportedAndUsed": true,
+      "getVectorStoreStatsUsageLines": [39, 529, 677],
+      "unusedImportIntroduced": false
+    },
+    "notExecuted": [
+      {
+        "path": "tests/health-endpoint.test.mjs",
+        "reason": "Binds a real socket and performs HTTP; outside the authorized read-only test scope."
+      }
+    ]
+  },
+
+  "findings": [
+    { "id": "G1", "severity": "CRITICAL", "finding": "Implementation and its own governing regression test were changed in the same ungoverned commit, making the green suite self-certifying." },
+    { "id": "G2", "severity": "CRITICAL", "finding": "The governed baseline test fails against the modified implementation; the PATCH-08S-FOLLOWUP contract is broken, not merely re-expressed." },
+    { "id": "G3", "severity": "HIGH", "finding": "Readiness touch removed from a deployed unauthenticated endpoint; /health can now report 200 ok while the data layer is unreachable (liveness-vs-readiness semantic regression)." },
+    { "id": "G4", "severity": "HIGH", "finding": "Disclosure-scan window narrowed from 800 to 300 characters, weakening the guard against re-introducing commitSha, openaiModel, adaptiveStack, routeModes and indexSecretEnabled." },
+    { "id": "G5", "severity": "MEDIUM", "finding": "Governed policy comment recording PATCH-08S-FOLLOWUP rationale and the deferred diagnostic endpoint was deleted." },
+    { "id": "G6", "severity": "MEDIUM", "finding": "Removal of the service field is a breaking public response-contract change for external consumers, though no in-repo importer breaks." },
+    { "id": "G7", "severity": "INFORMATIONAL", "finding": "Directionally consistent with minimization intent: dropping service reduces the public disclosure surface. Does not cure G1-G6." }
+  ],
+
+  "missionAlignment": {
+    "question": "Does this move TINA closer to becoming the Philippine Tax Operating System?",
+    "substantive": "NEUTRAL — touches no authority, retrieval, metadata or source-card path.",
+    "process": "NEGATIVE — an ungoverned agent rewrote a governed contract together with the test guarding it, weakening the verification fabric authority integrity depends on.",
+    "conclusion": "Not authorized as delivered."
+  },
+
+  "requiredBeforeAuthorization": [
+    "Owner decision on readiness-touch removal (G3)",
+    "Owner confirmation that no external consumer depends on the service field (G6)",
+    "Restoration or governed re-scoping of the 800-character disclosure guard (G4)",
+    "A governed patch record separating the implementation change from the test change (G1)",
+    "Adjudication of tests/health-endpoint.test.mjs together with these three paths",
+    "Re-issue under a hash-bound governed prompt binding to parent ee664eab4529c636f34cb6d37d23a6a497886a17"
+  ],
+
+  "prohibitedUntilAuthorized": [
+    "staging", "committing", "pushing", "deploying",
+    "admitting tests/health-endpoint.test.mjs into the governed test corpus"
+  ],
+
+  "sealedArtifactsEdited": 0
+}

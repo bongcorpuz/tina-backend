@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FINAL_OPUS_CAPTURE_AUTHORITATIVE_CORRECTION_ADDENDUM",
+  "generatedUtc": "2026-08-01T10:55:25.055Z",
+  "immutableSources": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+      "bytes": 3586,
+      "sha256": "af71bae05ecf0fdd3489e70a9c8520b43f8281c630f0aa37e1f3c87c4721bc2d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_TRANSMISSION_RECEIPT.json",
+      "bytes": 2595,
+      "sha256": "0cfda3288c3981c63ac18cdffab0493829a33488b98681e76455beb16c394cdc"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW.json",
+      "bytes": 393,
+      "sha256": "392d944aad9063f59b5da86689407e7eb96a90ed74aceceaed2e26cfe479c6f7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW.md",
+      "bytes": 399,
+      "sha256": "e6cb8205183d88dd34a6a90bb75576068962e96d50ea51d6a086f225c9381d95"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDOUT.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDERR.txt",
+      "bytes": 97,
+      "sha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b"
+    }
+  ],
+  "corrections": {
+    "actualReviewerDecisionToken": null,
+    "actualReviewerSubstantivePathToken": null,
+    "schemaConformingReviewerObjectReceived": false,
+    "modelReviewReached": false,
+    "captureFirstDecisionTokenWasExecutorSynthetic": true,
+    "receiptFirstDecisionTokenWasExecutorSynthetic": true,
+    "reviewJsonWasExecutorSyntheticFallback": true,
+    "reviewMdWasExecutorGeneratedSummary": true,
+    "attemptedApplicationPayloadBytes": 4188309,
+    "attemptedApplicationPayloadSha256": "eb013eee8f50809d41fce9576ae8dd34f7329dad578cdbe0dbfbafb956db0de8",
+    "completeChildStdinAcceptanceConfirmed": false,
+    "childStdinError": "write EOF",
+    "providerApplicationRequestObserved": false,
+    "confirmedEvidenceBytesTransmittedToAnthropic": 0,
+    "exactProviderWireBytes": null,
+    "providerTransmissionAdjudication": "No Anthropic/model response or API envelope was observed. Claude Code exited during local MCP configuration validation and closed stdin. Exact provider wire traffic is not exposed; the evidence supports a local pre-model failure, not a completed package delivery.",
+    "authorizationConsumedConservatively": true,
+    "retryAuthorized": false,
+    "authoritativeTerminalClassification": "C37_TWO_HOUR_SAFE_PAUSE_OPUS_TECHNICAL_INCOMPLETE"
+  },
+  "supersessionRule": "For decision tokens, stdin-delivery completion, provider transmission, review completion, and terminal classification, this additive correction is authoritative; the original write-once raw/capture files remain preserved.",
+  "pass": true
+}

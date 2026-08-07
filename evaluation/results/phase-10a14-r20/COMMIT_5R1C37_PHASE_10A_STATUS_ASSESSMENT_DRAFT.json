@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_PHASE_10A_STATUS_DRAFT_PRE_OPUS",
+  "proposedStatus": "PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED",
+  "reasonScore": "3575/3720",
+  "controllingDisposition": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "exactNextSeparatelyGovernedOperation": "C38 reason-oracle governance operation",
+  "e2Pending": true,
+  "a15Pending": true,
+  "phase10BNotAuthorized": true,
+  "effectiveOnlyAfterOpusApproval": true,
+  "pass": true
+}

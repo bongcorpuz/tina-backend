@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED_PENDING_OPUS",
+  "candidateNecessity": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+    "bytes": 2289,
+    "sha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983"
+  },
+  "composition": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_CUMULATIVE_COMPOSITION.json",
+    "bytes": 1124,
+    "sha256": "c14aa84e53d8a8c9e58f469e3bc4a6f332664579161ee7e6fb8159cdb4e7099f"
+  },
+  "frozenGates": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FROZEN_GATE_RESULT.json",
+    "bytes": 2466,
+    "sha256": "5f2ab27d0b4f838729d5fd74010fc1cc272fa61d791dacb0cf9fe60214d12dff"
+  },
+  "preservation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json",
+    "bytes": 3993,
+    "sha256": "c0bc4d8028bd41e08781eedc1439eb33a7c9af2341663674ba146de315db6c90"
+  },
+  "fullRegression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+    "bytes": 2928,
+    "sha256": "fd58900dd03a66bc02f426a44ed741a97ad00875abb7ad9e4ed5ad70d5edc8c9"
+  },
+  "reasonClosed": false,
+  "phase10AStatusDraft": "PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED",
+  "opusRequired": true,
+  "opusInvoked": false,
+  "exactProposedNextOperation": "Invoke exactly one read-only Claude Code Opus 4.8 review of the complete no-runtime governance package.",
+  "pass": true
+}

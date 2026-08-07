@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_66_ISOLATED_CONFIG_REVALIDATION_PASS",
+  "generatedUtc": "2026-08-01T12:35:40.633Z",
+  "cli": {
+    "path": "C:\\Users\\USER\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\claude-code\\bin\\claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "version": "2.1.212 (Claude Code)",
+    "versionExitCode": 0
+  },
+  "config": {
+    "path": "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\empty-mcp.json",
+    "bytes": 18,
+    "hex": "7B226D637053657276657273223A7B7D7D0A",
+    "sha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "semanticValue": {"mcpServers": {}},
+    "newTaskSpecificPath": true,
+    "oldCheckpoint65PathReused": false
+  },
+  "providerFreeValidation": {
+    "nativeArgv": [
+      "--safe-mode",
+      "--no-chrome",
+      "--mcp-config",
+      "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\empty-mcp.json",
+      "--strict-mcp-config",
+      "mcp",
+      "list"
+    ],
+    "shell": false,
+    "workingDirectory": "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\work",
+    "temporaryRuntimeDirectory": "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\runtime",
+    "exitCode": 0,
+    "stdout": "No MCP servers configured. Use `claude mcp add` to add a server.",
+    "stderr": "",
+    "noMcpServersConfigured": true,
+    "providerContactPossible": false,
+    "providerRequestObserved": false,
+    "modelRequestSubmitted": false,
+    "authorizationConsumed": false
+  },
+  "persistentConfigurationAfterValidation": [
+    {"path":"C:\\Users\\USER\\.claude\\settings.json","exists":true,"bytes":244,"sha256":"02857f7edc705e00b6bf03154b034bdb382302dafbb1c1d556c4866cee0195d4"},
+    {"path":"C:\\Users\\USER\\.claude.json","exists":true,"bytes":52224,"sha256":"520f9ed5b160312d2062c1e96a751dab75964048f5af71983ca6d9ddd0a87142"},
+    {"path":"C:\\Projects\\tina-backend\\.claude\\settings.local.json","exists":true,"bytes":4466,"sha256":"9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"},
+    {"path":"C:\\Users\\USER\\AppData\\Roaming\\Code\\User\\settings.json","exists":true,"bytes":856,"sha256":"51562bec30e7170dfbcdc7178a2b1d038d29b01b7cd4f98476521d5e63aa83a9"}
+  ],
+  "absentPersistentPathsRemainAbsent": [
+    "C:\\Projects\\tina-backend\\.claude\\settings.json",
+    "C:\\Projects\\tina-backend\\.mcp.json",
+    "C:\\Projects\\tina-backend\\.vscode\\settings.json",
+    "C:\\Users\\USER\\AppData\\Roaming\\Claude\\claude_desktop_config.json"
+  ],
+  "persistentConfigurationMutationCount": 0,
+  "taskOwnedClaudeProcessesAfterValidation": 0,
+  "userOwnedVsCodeClaudeExtensionProcessCount": 1,
+  "userOwnedVsCodeClaudeExtensionPid": 24136,
+  "userOwnedVsCodeClaudeExtensionUntouched": true,
+  "finalReviewMustUseSameConfigPathAndHash": true,
+  "pass": true
+}

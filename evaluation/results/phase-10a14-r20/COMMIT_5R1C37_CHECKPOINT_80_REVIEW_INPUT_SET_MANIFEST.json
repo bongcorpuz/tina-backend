@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_REVIEW_INPUT_SET_MANIFEST",
+  "generatedAtUtc": "2026-08-07T18:00:30Z",
+
+  "layer1EvidenceCorpus": {
+    "description": "Exact immutable 57-entry package. Not modified. Presented to the reviewer as: (a) the deterministic semantic-projection capsule for full review, plus (b) direct on-demand Read access to the 57 original files for spot-checking, per the authorizedMechanism's explicit prohibition on inline/concatenated full-package transmission.",
+    "capsuleJson": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json", "bytes": 437230, "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f" },
+    "capsuleMarkdown": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md", "bytes": 15610, "sha256": "02e154c75e6aaa6863fdd55e99723741cd353e036694e04c71f22271267b0af6" },
+    "roleLedger": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ROLE_LEDGER.json", "bytes": 81855, "sha256": "34cd2c404033581643540ba98ebe67266487a049d8aeec216841854937e0d860" },
+    "allowlistManifest": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json", "bytes": 30365, "sha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e" },
+    "originalSpotCheckRequirement": "at least one per evidenceClass (8 classes), at least 8 originals total, selected on demand by the reviewer",
+    "fullPackageInlineOrConcatenatedTransmission": false,
+    "packageIdentity": {
+      "entries": 57,
+      "totalBytes": 4109852,
+      "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+    },
+    "estimatedTokens": { "base": 150947, "conservative": 188684, "maximum": 200000, "source": "COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_TOKEN_ESTIMATE.json" }
+  },
+
+  "layer2GoverningAddendum": {
+    "coreThreeDocuments": {
+      "description": "The three documents explicitly named as Layer 2 by the governing prompt's Phase 3.",
+      "opus5GovernanceAmendment": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT.json", "bytes": 8949, "sha256": "eadc16e6dc83a811b240df6be9c9c19a780bf2da67a7fdfb14af855810c2841a" },
+      "checkpoint79SafePauseEvidence": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_79_opus_4_8_unavailable_safe_pause.json", "bytes": 12715, "sha256": "83486c36af47ff35e51c6b1937e103fb475c096030c0f25a0eefa0cdba40e59b" },
+      "manifestHashProvenanceAdjudication": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_MANIFEST_HASH_PROVENANCE_ADJUDICATION.json", "bytes": 5751, "sha256": "e14bd9983627f5763438964a7e93de9368d48b879c2c280aebbcb7ea4dcb7152" },
+      "layer2CoreAggregateSha256": "0485166a10e48ca94a0cb34f72c415262c59e74cce7bb657487eccac9841d06c",
+      "layer2CoreAggregateAlgorithm": "ordinal + NUL + path + NUL + bytes + NUL + sha256 + LF, concatenated in the order listed above, SHA-256 of the UTF-8 result. Same algorithm as the Layer 1 package aggregate, for methodological consistency."
+    },
+    "additionalSupplyingDocuments": {
+      "description": "Per Phase 5 item 6 of the governing prompt, the full governing addendum actually supplied to the reviewer also includes the following, in addition to the three core documents hashed above. These are not folded into layer2CoreAggregateSha256, and are listed here individually for full transparency.",
+      "checkpoint79PreflightAndPackageVerification": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_79_PREFLIGHT_AND_PACKAGE_VERIFICATION.json", "bytes": 9223, "sha256": "ea20eb4cf05181b49eed2138be9195cd9c0b6293af96bc412831dc15bfcfc1dd" },
+      "outputSchemaWrapper": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_OUTPUT_SCHEMA_WRAPPER.json", "bytes": 12982, "sha256": "121c292cb8c6e5b7f0633f48217e1af3b87ca330ebeca70b1f5fa087a14e53b4" },
+      "originalReviewContract": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md", "note": "Provided for historical context only; superseded in its prose scope and reviewer-identity binding by the wrapper and amendment above. Not edited." },
+      "runtimeCandidateNecessityDecision": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json" },
+      "finalAttemptLedger": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ATTEMPT_LEDGER.json" },
+      "finalClosureDecisionDraft": { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json" }
+    },
+    "requiredHeadAndCheckpointBindings": {
+      "branch": "feature/source-availability-engine-v1",
+      "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+      "fullHeadParent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+      "remoteTipFreshlyVerified": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+      "checkpoint79RecoveryHash": "83486c36af47ff35e51c6b1937e103fb475c096030c0f25a0eefa0cdba40e59b"
+    }
+  },
+
+  "clearSeparationStatement": "Evidence (Layer 1, the 57-entry package and its manifests/capsule) is structurally and hash-identifiably separate from executor commentary and governance addenda (Layer 2). The reviewer prompt explicitly labels each section by layer so the reviewer can distinguish original evidence from the primary executor's own framing and must not treat the executor's Layer 2 commentary as a substitute for independently examining Layer 1."
+}

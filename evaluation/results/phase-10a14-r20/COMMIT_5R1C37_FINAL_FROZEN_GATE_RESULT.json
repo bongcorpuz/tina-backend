@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_FROZEN_GATES_PASS_NO_CANDIDATE",
+  "gates": {
+    "decision": {
+      "actual": "3720/3720",
+      "required": "3720/3720",
+      "status": "PASS"
+    },
+    "relation": {
+      "actual": "3720/3720",
+      "required": "3720/3720",
+      "status": "PASS"
+    },
+    "reason": {
+      "actual": "3575/3720",
+      "required": ">=3575/3720",
+      "status": "PASS_GATE_FLOOR_REASON_CLOSURE_OPEN"
+    },
+    "reasonSuite": {
+      "actual": "344/344",
+      "status": "PASS"
+    },
+    "collision": {
+      "actual": "196/196",
+      "status": "PASS"
+    },
+    "decisionCounterfactual": {
+      "actual": "756/756",
+      "status": "PASS"
+    },
+    "relationCounterfactual": {
+      "actual": "282/282",
+      "status": "PASS"
+    },
+    "clause": {
+      "actual": "68/68",
+      "status": "PASS"
+    },
+    "richGuard": {
+      "actual": "7/7",
+      "status": "PASS"
+    },
+    "reasonIntegrity": {
+      "status": "PASS"
+    },
+    "materialFalseAllows": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "materialFalseRefusals": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "clarificationMismatches": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "acceptedSignatureRegressions": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "c35ByteRegressions": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "c35TrustSupportRegressions": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "newRuntimeBehaviorRegressionFailures": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "orphanDanglingRunning": {
+      "actual": "0/0/0",
+      "status": "PASS"
+    },
+    "locksTempPort": {
+      "actual": "0/0/0",
+      "status": "PASS"
+    },
+    "badEvidenceHashes": {
+      "actual": 0,
+      "status": "PASS"
+    },
+    "candidateOnly": {
+      "candidateOnly": "NOT_INVOKED_NO_CANDIDATE",
+      "cumulativeCandidate": "NOT_INVOKED_NO_CANDIDATE",
+      "order": "NOT_INVOKED_NO_CANDIDATE",
+      "isolated": "NOT_INVOKED_NO_CANDIDATE",
+      "pareto": "NOT_INVOKED_NO_CANDIDATE",
+      "leaveFamilyOut": "NOT_INVOKED_NO_CANDIDATE",
+      "ablation": "NOT_INVOKED_NO_CANDIDATE",
+      "precedence": "NOT_INVOKED_NO_CANDIDATE",
+      "sentinel": "NOT_INVOKED_NO_CANDIDATE"
+    }
+  },
+  "allApplicableGatesPass": true,
+  "candidateOnlyGatesCorrectlyNotInvoked": true,
+  "pass": true
+}

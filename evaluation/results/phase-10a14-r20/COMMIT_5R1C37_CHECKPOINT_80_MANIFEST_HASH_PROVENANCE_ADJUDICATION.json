@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_MANIFEST_HASH_PROVENANCE_ADJUDICATION",
+  "generatedAtUtc": "2026-08-07T17:58:00Z",
+  "purpose": "Phase 2 of the checkpoint-79 continuation prompt: adjudicate the exact provenance of authorizedPackage.sourceManifestSha256 and authorizedPackage.detailedManifestSha256, rather than accepting checkpoint 79's provisional 'not an integrity defect, no standalone file found' suggestion as fact.",
+
+  "priorClaimBeingReAdjudicated": {
+    "source": "COMMIT_5R1C37_CHECKPOINT_79_PREFLIGHT_AND_PACKAGE_VERIFICATION.json, fiftySevenEntryPackageVerification.sourceDetailedAggregateHashDiscrepancy",
+    "priorClaim": "Neither hash matches any standalone file currently in the repository (confirmed by targeted search across evaluation/results/phase-10a14-r20).",
+    "priorAssessment": "NOT_AN_INTEGRITY_DEFECT (ephemeral byte-framing hypothesis, unverified)",
+    "priorMethodWasIncomplete": true,
+    "priorMethodDescription": "grep for the literal 64-character hex hash STRING appearing as text inside JSON files. This method cannot find a file whose CONTENT hashes to the target value if the hash never appears as text anywhere (which is normally the case for a file being the source of a hash, not a record of it).",
+    "correctionIssuedHere": "The checkpoint-79 claim that no standalone file corresponds to either hash is WITHDRAWN. Both hashes are shown below to be directly reproducible from existing, unmodified repository files. This correction is recorded plainly rather than silently overwritten."
+  },
+
+  "investigationMethod": [
+    "Read COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_BUILDER.mjs in full — the deterministic tool that consumed these two manifests when building the review capsule at 2026-08-01T13:49:09Z.",
+    "The script defines: SOURCE_MANIFEST = COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256; DETAILED_MANIFEST = COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json.",
+    "Computed SHA-256 of both named files directly from the live repository.",
+    "Cross-validated both files' 57 entries (ordinal, path, sha256) against each other and against COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json.",
+    "Independently re-derived the package aggregateSha256 using the exact algorithm read from the builder script: ordinal + NUL + path + NUL + bytes + NUL + sha256 + LF, concatenated across all 57 entries in order, then SHA-256 of the UTF-8 bytes."
+  ],
+
+  "sourceManifestSha256Adjudication": {
+    "hash": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "state": "REPRODUCED",
+    "identifiedFile": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+    "fileExists": true,
+    "fileBytes": 8473,
+    "fileLastModified": "2026-08-01T17:42:00+08:00 (local, per filesystem metadata)",
+    "recomputedSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "matches": true,
+    "derivation": "Plain SHA-256 of the file's raw bytes. The file is a 57-line manifest of '<sha256>  <repositoryRelativePath>' lines, one per package entry, in ordinal order.",
+    "sealedFileEdited": false
+  },
+
+  "detailedManifestSha256Adjudication": {
+    "hash": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "state": "REPRODUCED",
+    "identifiedFile": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+    "fileExists": true,
+    "fileBytes": 45178,
+    "fileLastModified": "2026-08-01T18:45:00+08:00 (local, per filesystem metadata)",
+    "recomputedSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "matches": true,
+    "derivation": "Plain SHA-256 of the file's raw bytes. The file is a JSON document with entryCount=57 and an entries array of 57 objects (ordinal, repositoryRelativePath, sha256, bytes, evidenceRole, whyRequiredForReview, sensitiveDataScanResult, sensitiveDataFindingClasses, transmissionAuthorized).",
+    "sealedFileEdited": false
+  },
+
+  "crossValidationResult": {
+    "sourceManifestEntryCount": 57,
+    "detailedManifestEntryCount": 57,
+    "detailedManifestEntryCountField": 57,
+    "ordinalMatches": "57/57",
+    "pathMatches": "57/57",
+    "hashMatches": "57/57",
+    "allowlistCrossMatch": "57/57",
+    "recomputedAggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "expectedAggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "aggregateMatches": true,
+    "totalBytesRecomputed": 4109852,
+    "totalBytesExpected": 4109852,
+    "totalBytesMatch": true
+  },
+
+  "conclusion": {
+    "sourceManifestSha256State": "REPRODUCED",
+    "detailedManifestSha256State": "REPRODUCED",
+    "aggregateSha256State": "REPRODUCED",
+    "packageIntegrityAffected": false,
+    "evidenceOfTampering": false,
+    "evidenceOfInconsistency": false,
+    "blockingForC37Closure": false,
+    "nonBlockingObservationForReviewer": "Checkpoint 79 incorrectly reported these two manifests as unlocatable due to an incomplete search method (grep for hash-as-text rather than hash-of-file). This is now corrected. Both source files exist unmodified, both hashes reproduce exactly, and both cross-validate 57/57 against the allowlist. This is presented to the independent reviewer as a corrected, resolved, non-blocking finding — the reviewer retains full authority to independently agree or disagree with the non-blocking classification per the governing prompt's Phase 5 requirement that the primary executor may not unilaterally declare this non-blocking."
+  },
+
+  "noHistoricalFileEdited": true,
+  "noTamperingInferredSolelyFromThisResult": true
+}

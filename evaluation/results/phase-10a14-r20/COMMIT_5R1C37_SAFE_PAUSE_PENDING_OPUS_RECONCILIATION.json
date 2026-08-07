@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_SAFE_PAUSE_RECONCILED_PENDING_EXPLICIT_OPUS_TRANSMISSION_AUTHORIZATION",
+  "generatedUtc": "2026-08-01T09:46:44.619Z",
+  "preflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_63_CONTINUATION_PREFLIGHT.json",
+    "bytes": 8065,
+    "sha256": "2b50842201ff74332a0e408975ab53e78e4dbab8c658b9f029fef97790461c0a"
+  },
+  "c36InventoryVerification": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_C36_SAFE_PAUSE_INVENTORY_VERIFICATION.json",
+    "bytes": 18803,
+    "sha256": "f088f2b5fda75acafaba3c75294102b71c4defc8eab0b256a8127a7b1fb65f85"
+  },
+  "protectedResidueBaseline": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROTECTED_RESIDUE_BASELINE.json",
+    "bytes": 8839,
+    "sha256": "8de6ed4d617a561fe0e3a1357d051c3e9aee343849fcb659636aab5059b38094"
+  },
+  "rowAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+    "bytes": 1203438,
+    "sha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d"
+  },
+  "clusterMatrix": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLUSTER_DISPOSITION_MATRIX.json",
+    "bytes": 15497,
+    "sha256": "a75afb1bc5f75b2cd7310dd064b3bb078913b94017025c0e90818d174d1990d0"
+  },
+  "candidateNecessity": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+    "bytes": 2289,
+    "sha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983"
+  },
+  "regression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION.json",
+    "bytes": 8949,
+    "sha256": "43bfec0d2227ba6d8572190340a38967ded5b79e935a6df15c77ccbd57c755b0"
+  },
+  "frozenGates": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FROZEN_GATE_RESULT.json",
+    "bytes": 2466,
+    "sha256": "5f2ab27d0b4f838729d5fd74010fc1cc272fa61d791dacb0cf9fe60214d12dff"
+  },
+  "preservation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json",
+    "bytes": 3993,
+    "sha256": "c0bc4d8028bd41e08781eedc1439eb33a7c9af2341663674ba146de315db6c90"
+  },
+  "closureDraft": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json",
+    "bytes": 1636,
+    "sha256": "8f7062cc60fd684b078ad9d47003814a460f54ceddbf05cef925f2941e51521b"
+  },
+  "reviewRequest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.json",
+    "bytes": 8101,
+    "sha256": "abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79"
+  },
+  "reviewManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+    "bytes": 8473,
+    "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "rows": 57,
+    "duplicates": 0,
+    "bad": [],
+    "pass": true
+  },
+  "blocker": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json",
+    "bytes": 1053,
+    "sha256": "282bcb85b44a954ee7409ed33f55ea794312a0727a6d998658438ac8977c88ec"
+  },
+  "candidate": {
+    "authorized": 0,
+    "allocated": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "technicalIncomplete": 0
+  },
+  "activeAttemptId": null,
+  "c37WalExists": false,
+  "c37AttemptDirectories": [],
+  "registryRows": 230,
+  "c34WalRows": 32,
+  "c35WalRows": 6,
+  "orphan": 0,
+  "dangling": 0,
+  "running": 0,
+  "opus": {
+    "invocationCount": 0,
+    "marker": false,
+    "capture": false,
+    "review": false,
+    "budgetConsumed": false
+  },
+  "metrics": {
+    "decision": "3720/3720",
+    "relation": "3720/3720",
+    "reason": "3575/3720",
+    "residualRows": 145
+  },
+  "categoryTotals": {
+    "TRUE_GENERALIZED_RUNTIME_DEFECT": 0,
+    "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED": 35,
+    "ORACLE_CONTRACT_INCONSISTENCY": 43,
+    "UNDERDETERMINED_WITHOUT_CONTEXT": 24,
+    "SEMANTICALLY_EQUIVALENT_REASON": 3,
+    "ACCEPTED_FAIL_CLOSED_BEHAVIOR": 40,
+    "HISTORICAL_STATE_ONLY_NOT_CURRENT_RUNTIME": 0,
+    "INDETERMINATE_INSUFFICIENT_EVIDENCE": 0
+  },
+  "runtime": {
+    "selectedC34Reason": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "c35": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "delta": null,
+    "oracleDelta": false
+  },
+  "documentation": {
+    "roadmapV9Updated": false,
+    "currentStateUpdated": false
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "branch": "feature/source-availability-engine-v1",
+    "ahead": 0,
+    "behind": 0,
+    "staging": "",
+    "tracked": "",
+    "otherNodePids": [],
+    "nodeInspectionExitCode": 0,
+    "port5173Listeners": [],
+    "allocationLock": false,
+    "indexLock": false,
+    "c37WalExists": false,
+    "c37Attempts": []
+  },
+  "prohibitedOperations": {
+    "e2": false,
+    "a15": false,
+    "c38": false,
+    "phase10B": false,
+    "deployment": false,
+    "reindex": false,
+    "modelMigration": false
+  },
+  "safeToResume": true,
+  "pass": true
+}

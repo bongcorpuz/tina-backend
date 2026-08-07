@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 75",
+  "classification": "INDEPENDENT_READ_ONLY_REVIEW_OF_CHECKPOINT_74",
+  "generatedAtUtc": "2026-08-07T03:21:43Z",
+  "reviewMode": "READ_ONLY",
+  "reviewIndependence": "Findings were derived directly from Git and filesystem evidence first; sealed checkpoint claims were consulted afterwards only for cross-check. No sealed artifact was edited.",
+  "overallVerdict": "CHECKPOINT_74_VERIFIED_ACCURATE_WITH_TWO_DOCUMENTATION_GAPS_AND_ONE_OPEN_BLOCKER",
+
+  "hashVerification": [
+    {
+      "artifact": "COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json",
+      "reportedSha256": "43f72ce65b7b3bf171f564c477af229148770f5490cfcc8311032ce793ebe724",
+      "observedSha256": "43f72ce65b7b3bf171f564c477af229148770f5490cfcc8311032ce793ebe724",
+      "match": true
+    },
+    {
+      "artifact": "knowledge/CURRENT_STATE.md (post-cutover)",
+      "reportedSha256": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+      "observedSha256": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+      "match": true,
+      "note": "Observed BEFORE this operation's own update. This operation subsequently and intentionally changes this hash; see the checkpoint-75 manifest reconciliation."
+    },
+    {
+      "artifact": "COMMIT_5R1C37_CHECKPOINT_74_MANIFEST_DOCUMENTATION_ENTRY_RECONCILIATION.json",
+      "observedSha256": "64f548f00b651591108873760a3c9b0e8f75653eea6ae46498405f0f08652ee5",
+      "match": "OBSERVED_RECORDED"
+    },
+    {
+      "artifact": "COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256",
+      "observedSha256": "92770a4bfee37d13ff3e2d7eec5159541460b8c03cc530621cdd0dda3e1ae9f8",
+      "match": "OBSERVED_RECORDED"
+    }
+  ],
+  "checkpoint74EvidenceManifestEntriesAllVerified": true,
+  "checkpoint74EvidenceEntryCount": 7,
+
+  "claimsIndependentlyVerified": [
+    { "claim": "head == ee664eab4529c636f34cb6d37d23a6a497886a17", "verified": true },
+    { "claim": "headEqualsGovernedBaseline == true", "verified": true },
+    { "claim": "aheadOfUpstream == 0 and behindUpstream == 0", "verified": true },
+    { "claim": "branch == feature/source-availability-engine-v1", "verified": true },
+    { "claim": "preservationRefs refs/heads/governance/ungoverned-ff1bc2b1 exists and resolves to ff1bc2b1", "verified": true },
+    { "claim": "preservationRefs refs/tags/governance/pre-remediation-ff1bc2b1 exists", "verified": true, "resolvesTo": "707990bdd89c974c4e3ec6afa90e1365fcbb53a3" },
+    { "claim": "modifiedTrackedFiles == the 4 named paths", "verified": true },
+    { "claim": "preservedUngovernedModifications == the 3 semantic /health paths", "verified": true },
+    { "claim": "stagingPerformed / commitCreated / pushPerformed / amendPerformed / forcePushPerformed all false", "verified": true, "evidence": "0 staged paths; HEAD unchanged from baseline; reflog shows no commit after the reset; remote tip identical." },
+    { "claim": "authorization AUTHORIZED_UNUSED, consumed=false, count=0, remaining=1", "verified": true },
+    { "claim": "safeToResume == true, activeAttemptId == null", "verified": true },
+    { "claim": "CP73 manifest counts 864 total / 3 SEMANTIC / 595 EOL_ONLY / 259 ADDED_EVIDENCE / 7 ADDED_UNEXPLAINED", "verified": true, "method": "Independently re-derived from git diff before consulting the manifest; agreement was exact." }
+  ],
+
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "MEDIUM",
+      "type": "DOCUMENTATION_LAG",
+      "title": "CURRENT_STATE.md did not record checkpoint 74 at all",
+      "detail": "Before this operation, knowledge/CURRENT_STATE.md named checkpoint 73 as the controlling checkpoint ('Last updated: 2026-08-07T02:20:00.000Z (COMMIT 5R1-C37 checkpoint 73 ...)') and contained ZERO occurrences of 'checkpoint 74'. CP74's documentationCutover block records beforeSha256 f53cf577... and afterSha256 70c96a60..., which is the CP73 cutover already reflected in the file; CP74 did not itself amend CURRENT_STATE.md.",
+      "consequence": "The mission precondition 'clearly identify Checkpoint 74 as the current controlling state only if verified' could not be satisfied from the document as found. Checkpoint 74's own content IS verified; only its reflection in CURRENT_STATE.md was missing.",
+      "remediatedByThisOperation": true,
+      "remediation": "The checkpoint-75 CURRENT_STATE.md update records checkpoint 74 explicitly and supersedes it with checkpoint 75."
+    },
+    {
+      "id": "R2",
+      "severity": "LOW",
+      "type": "HASH_AMBIGUITY_NOT_A_DEFECT",
+      "title": "CP74 beforeSha256 is correct but collides with an untracked duplicate",
+      "detail": "CP74 records documentationCutover.beforeSha256 = f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0. This value is CORRECT for HEAD:knowledge/CURRENT_STATE.md (122,561 bytes). It is ALSO the exact SHA-256 of the untracked file IDEA.md, which was verified byte-identical to HEAD:knowledge/CURRENT_STATE.md by cmp.",
+      "initialSuspicionRecordedAndREFUTED": "This hash was first suspected of being a mis-recorded IDEA.md hash. That suspicion was tested and REFUTED: the value is the genuine pre-cutover hash of the governed document. The collision is caused by duplication, not by an error in CP74.",
+      "consequence": "A reader matching this hash could bind it to the wrong file. Recorded so the ambiguity is explicit rather than latent.",
+      "checkpoint74Defect": false
+    },
+    {
+      "id": "R3",
+      "severity": "HIGH",
+      "type": "OPEN_BLOCKER_CARRIED_FORWARD",
+      "title": "Concurrent third-party writer is not proven disabled",
+      "detail": "CP74 records concurrentWriterIncident.classification = THIRD_PARTY_UNGOVERNED_AGENT_SCAFFOLDING_WRITE_INTO_GOVERNED_REPOSITORY with mustBeStoppedByOwnerBeforeNextGovernedOperation = true. This operation verified quiescence only. No openclaw process was observed, but openclaw-workspace-state.json carries setupCompletedAt 2026-08-07T01:58:40.448Z — the same day as this operation and after CP73/CP74 remediation. Two hermes gateway processes (PIDs 21112 and 4472, profile tina-orchestrator) are RUNNING, though their last observed write into this repository was 2026-08-04.",
+      "consequence": "The CP74 precondition for the next governed operation is NOT satisfied. A completed one-shot initializer marker is not proof that future execution is disabled.",
+      "actionTaken": "VERIFICATION_ONLY. No process was killed, deleted, disabled or modified. Explicit human authorization does not exist for that action.",
+      "remediatedByThisOperation": false,
+      "remainsOpen": true
+    },
+    {
+      "id": "R4",
+      "severity": "HIGH",
+      "type": "UNGOVERNED_CONTRACT_BREAK",
+      "title": "The three preserved /health modifications break the governed PATCH-08S-FOLLOWUP contract",
+      "detail": "CP74 correctly preserved the three semantic /health paths without adjudicating them. Independent testing in this operation shows the governed HEAD test fails 2 of 19 against the modified implementation, while the modified test passes 19/19 — because the same ungoverned commit rewrote both.",
+      "reference": "COMMIT_5R1C37_CHECKPOINT_75_HEALTH_SEMANTIC_CHANGE_GOVERNANCE_RECORD.md",
+      "remediatedByThisOperation": false,
+      "dispositionSetByThisOperation": "DEFERRED_PENDING_GOVERNED_REVIEW",
+      "remainsOpen": true
+    },
+    {
+      "id": "R5",
+      "severity": "MEDIUM",
+      "type": "SOURCE_OF_TRUTH_HAZARD",
+      "title": "IDEA.md is an unlabelled duplicate of the controlling continuity document",
+      "detail": "IDEA.md is byte-identical to knowledge/CURRENT_STATE.md at the governed baseline. It is now frozen at the pre-cutover state and will drift further with every cutover.",
+      "reference": "COMMIT_5R1C37_CHECKPOINT_75_SEVEN_PATH_ADJUDICATION.json",
+      "actionTaken": "RETAIN_AND_QUARANTINE_FLAG. Not deleted, not renamed, not modified.",
+      "remainsOpen": true
+    },
+    {
+      "id": "R6",
+      "severity": "LOW",
+      "type": "PRE_EXISTING_ENVIRONMENT_CONDITION",
+      "title": "Two governed source paths cannot exist in this working tree",
+      "detail": "tax-engines/CON/domain-config.js and tax-engines/CON/subclassifier.js carry skip-worktree bits under core.sparseCheckout=true because 'CON' is a reserved Windows device name. They are tracked at HEAD but can never be materialised on this filesystem.",
+      "consequence": "Any evidence process that reconstructs an index without preserving skip-worktree bits will report them as deletions. This is the direct cause of the 13,973-versus-13,975 arithmetic.",
+      "introducedByThisOperation": false,
+      "remainsOpen": true,
+      "recommendation": "Owner should decide whether these two paths are still required; renaming them is a governed change and was NOT performed here."
+    },
+    {
+      "id": "R7",
+      "severity": "LOW",
+      "type": "REPOSITORY_HYGIENE",
+      "title": "Five stale stash lock files from July 2026 persist in .git",
+      "detail": ".git/index.stash.{15252,16420,24536,26220,59972}.lock, dated 2026-07-14 through 2026-07-21. No .git/index.lock is present and no operation is in progress.",
+      "actionTaken": "OBSERVED_ONLY. Not removed — removal requires human authorization.",
+      "remainsOpen": true
+    }
+  ],
+
+  "checkpoint74Assessment": {
+    "contentAccurate": true,
+    "hashesValid": true,
+    "gatesSubstantiated": true,
+    "prohibitedMutationsAbsent": true,
+    "isControllingState": true,
+    "wasReflectedInCurrentStateBeforeThisOperation": false,
+    "supersededBy": 75
+  },
+
+  "reviewScopeExclusions": [
+    "No full R20 regression executed",
+    "No reindexing, migration or deployment",
+    "No production smoke test",
+    "No external review transport",
+    "No Opus external-provider invocation",
+    "tests/health-endpoint.test.mjs not executed (binds a socket, performs HTTP)"
+  ]
+}

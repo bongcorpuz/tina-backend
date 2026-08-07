@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_MANIFEST_INDEXED_REVIEW_COVERAGE_VALIDATION_PASS",
+  "generatedUtc": "2026-08-01T13:49:09.2032306Z",
+  "builder": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_BUILDER.mjs",
+    "bytes": 57301,
+    "sha256": "5f852c0d141252cfac7aa3a602c81790b54ddd610302045deff7ba75b846e160"
+  },
+  "outputs": {
+    "roleLedger": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ROLE_LEDGER.json",
+      "bytes": 81855,
+      "sha256": "34cd2c404033581643540ba98ebe67266487a049d8aeec216841854937e0d860"
+    },
+    "allowlist": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+      "bytes": 30365,
+      "sha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e"
+    },
+    "capsuleJson": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+      "bytes": 437230,
+      "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f"
+    },
+    "capsuleMarkdown": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md",
+      "bytes": 15610,
+      "sha256": "02e154c75e6aaa6863fdd55e99723741cd353e036694e04c71f22271267b0af6"
+    },
+    "tokenEstimate": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_TOKEN_ESTIMATE.json",
+      "bytes": 918,
+      "sha256": "95d71733a98f249c5841c78de17112b78dc2fe1854fea7c5191dc02fc2be988c"
+    }
+  },
+  "integrityCoverage": {
+    "expected": 57,
+    "verified": 57,
+    "bytes": 4109852,
+    "badHashes": 0,
+    "duplicatePaths": 0,
+    "pathEscapes": 0,
+    "pass": true
+  },
+  "semanticCoverage": {
+    "semanticCoreEntries": 45,
+    "semanticCoreEntriesWithClaims": 45,
+    "adjudicatedRowsExpected": 145,
+    "adjudicatedRowsProjected": 145,
+    "materialClaimCount": 222,
+    "unsupportedCapsuleClaims": 0,
+    "omittedUnfavorableEvidence": 0,
+    "requiredUnfavorableEvidenceItems": 10,
+    "capturedUnfavorableEvidenceItems": 10,
+    "percentage": 100,
+    "pass": true
+  },
+  "evidenceClassCounts": {
+    "SEMANTIC_CORE_DECISION": 4,
+    "SEMANTIC_CORE_ADJUDICATION": 13,
+    "SEMANTIC_CORE_GATE_OR_PRESERVATION": 15,
+    "SEMANTIC_CORE_REGRESSION_ADJUDICATION": 8,
+    "SEMANTIC_CORE_STATUS_OR_DOCUMENTATION": 5,
+    "RAW_CAPTURE_INTEGRITY_SUPPORT": 6,
+    "RUNNER_OR_DRIVER_PROVENANCE": 2,
+    "MANIFEST_OR_CHECKPOINT_INTEGRITY": 4
+  },
+  "allEightClassesPresent": true,
+  "exactOnDemandAllowlistEntries": 57,
+  "nonAllowlistedOriginalReadsAuthorized": false,
+  "deterministicRepeat": {
+    "firstSha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f",
+    "secondSha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f",
+    "match": true
+  },
+  "capsuleTokenEstimate": {
+    "schemaVersion": 1,
+    "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+    "classification": "C37_MANIFEST_INDEXED_REVIEW_CAPSULE_TOKEN_ESTIMATE_PASS",
+    "generatedUtc": "2026-08-01T13:49:09.2032306Z",
+    "capsuleJson": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+      "bytes": 437230,
+      "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f"
+    },
+    "capsuleMarkdown": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md",
+      "bytes": 15610,
+      "sha256": "02e154c75e6aaa6863fdd55e99723741cd353e036694e04c71f22271267b0af6"
+    },
+    "combinedUtf8Bytes": 452840,
+    "method": "ceil(combined UTF-8 bytes / 3), then add 25 percent safety margin",
+    "baseEstimatedTokens": 150947,
+    "conservativeEstimatedTokens": 188684,
+    "maximumEstimatedTokens": 200000,
+    "headroomTokens": 11316,
+    "pass": true
+  },
+  "rawCaptureCoverageMeaning": "integrity/provenance and bounded error-signature review; no byte-for-byte semantic-review claim",
+  "pass": true
+}

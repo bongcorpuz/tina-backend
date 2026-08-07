@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_CUMULATIVE_COMPOSITION_NO_RUNTIME_DELTA",
+  "finalAcceptedRuleChain": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ACCEPTED_RULE_CHAIN.json",
+    "bytes": 1511,
+    "sha256": "da89559d8e7b48e42cf17819d7b0a509c6741c4c033bca88adb265543dfe8c2b"
+  },
+  "finalActiveBaseIdentity": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ACTIVE_BASE_IDENTITY.json",
+    "bytes": 3853,
+    "sha256": "00976a12874308f7b4511b1350e02fc239e66247a3316113d8d7d20ace419c52"
+  },
+  "activeBaseBefore": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "acceptedC37PatchesInOrder": [],
+  "rejectedOrTechnicalC37Patches": [],
+  "activeBaseAfter": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "inheritedAcceptedRuleCount": 5,
+  "c37AcceptedRuleCount": 0,
+  "noShadowing": true,
+  "noDrift": true,
+  "orderDeterministic": true,
+  "activeBaseHashReproducible": true,
+  "c35RuntimePreserved": true,
+  "pass": true
+}

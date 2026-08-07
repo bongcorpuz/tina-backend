@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_NO_CANDIDATE_REPLAY_UNCHANGED",
+  "sourceC36": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_REASON_METRICS.json",
+    "bytes": 1419,
+    "sha256": "6ed0d8c625b3b0b90d6064ac98d9910a8c04e2f5fd681b2756aaee6bb88bd8e4"
+  },
+  "activeBase": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "decision": "3720/3720",
+  "relation": "3720/3720",
+  "reason": "3575/3720",
+  "residualRows": 145,
+  "candidateOnlyReplay": "NOT_INVOKED_NO_CANDIDATE",
+  "oracleMutation": false,
+  "runtimeMutation": false,
+  "pass": true
+}

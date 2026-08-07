@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_C36_FULL_REGRESSION_REUSE_PROHIBITED_HARNESS_IDENTITY_CHANGED",
+  "generatedUtc": "2026-08-01T09:37:19.661Z",
+  "c36Regression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION.json",
+    "bytes": 22397,
+    "sha256": "04c44ec82c72548a737f3c1b87b548a506071334c59334ebbc4334478d90d45d"
+  },
+  "checks": {
+    "committedHead": {
+      "identical": true,
+      "expected": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+      "actual": "ee664eab4529c636f34cb6d37d23a6a497886a17"
+    },
+    "runtimeTree": {
+      "identical": true,
+      "selected": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "live": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+      "c35": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    },
+    "trackedSourceTree": {
+      "identical": true,
+      "headTree": "747f12161d1ccf1f5568b1866fbffb41a0f9058b",
+      "trackedDiff": []
+    },
+    "dependencyLock": {
+      "identical": true,
+      "expected": {
+        "path": "package-lock.json",
+        "bytes": 113222,
+        "sha256": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b"
+      },
+      "actual": {
+        "path": "package-lock.json",
+        "bytes": 113222,
+        "sha256": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b"
+      }
+    },
+    "evaluationHarnessTree": {
+      "identical": false,
+      "expected": {
+        "algorithm": "path + NUL + bytes + NUL + raw SHA256 + LF in lexical POSIX path order; SHA256 UTF-8 concatenation",
+        "files": 654,
+        "bytes": 46680970,
+        "sha256": "ee0a3727091d3055b07489ac0cd9fc6a4a831487fc197787592845c41f1ef77d"
+      },
+      "actual": {
+        "algorithm": "path + NUL + bytes + NUL + raw SHA256 + LF in lexical POSIX path order; SHA256 UTF-8 concatenation",
+        "files": 659,
+        "bytes": 46867059,
+        "sha256": "945ab763449d46cb1f14cfaae5bfe49f00794145a74301866bd694c667a5a5f0"
+      }
+    },
+    "environmentFingerprint": {
+      "identical": true,
+      "expected": {
+        "node": "v22.18.0",
+        "npm": "unavailable",
+        "platform": "win32",
+        "arch": "x64",
+        "osRelease": "10.0.26200",
+        "cpus": 12,
+        "timezone": "Asia/Manila",
+        "locale": "en-PH",
+        "cwd": "C:/Projects/tina-backend"
+      },
+      "actual": {
+        "node": "v22.18.0",
+        "npm": "unavailable",
+        "platform": "win32",
+        "arch": "x64",
+        "osRelease": "10.0.26200",
+        "cpus": 12,
+        "timezone": "Asia/Manila",
+        "locale": "en-PH",
+        "cwd": "C:/Projects/tina-backend"
+      }
+    },
+    "canonicalCommand": {
+      "identical": true,
+      "expected": {
+        "canonical": "npm.cmd test",
+        "resolved": "node scripts/run-regressions.mjs"
+      },
+      "actual": {
+        "canonical": "npm.cmd test",
+        "resolved": "node scripts/run-regressions.mjs"
+      }
+    },
+    "rawCaptureHashes": {
+      "identical": true,
+      "expected": {
+        "stdout": {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDOUT.txt",
+          "bytes": 19171,
+          "sha256": "3b84c73c4a12f25f68275588193305728071dd9be0902efaf2f214ddc8329170"
+        },
+        "stderr": {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDERR.txt",
+          "bytes": 38860,
+          "sha256": "ffafe94a7070b7c92ecef444bc6f5bec5c1b20966221303fd8d8f04c97cdc504"
+        },
+        "childCapture": {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+          "bytes": 613835,
+          "sha256": "3e62627897541f6f9d614bffcd871e501d840bf5023b0e46bf6b7974a9b5bed6"
+        },
+        "childProcesses": 227
+      },
+      "actual": {
+        "stdout": {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDOUT.txt",
+          "bytes": 19171,
+          "sha256": "3b84c73c4a12f25f68275588193305728071dd9be0902efaf2f214ddc8329170"
+        },
+        "stderr": {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDERR.txt",
+          "bytes": 38860,
+          "sha256": "ffafe94a7070b7c92ecef444bc6f5bec5c1b20966221303fd8d8f04c97cdc504"
+        },
+        "childCapture": {
+          "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+          "bytes": 613835,
+          "sha256": "3e62627897541f6f9d614bffcd871e501d840bf5023b0e46bf6b7974a9b5bed6"
+        }
+      }
+    }
+  },
+  "allIdentical": false,
+  "differingIdentities": [
+    "evaluationHarnessTree"
+  ],
+  "reuse": "prohibited",
+  "requiredAction": "run one clean full regression",
+  "c36HarnessReference": {
+    "files": 654,
+    "bytes": 46680970,
+    "sha256": "ee0a3727091d3055b07489ac0cd9fc6a4a831487fc197787592845c41f1ef77d"
+  },
+  "explanation": "The exact C36 harness algorithm includes evaluation/runner/phase-10a14-r20. Later write-once C36 finalization runners and C37 runners change that tree even though HEAD, tracked source, dependencies, environment, runtime, command, and raw C36 captures remain exact.",
+  "pass": true
+}

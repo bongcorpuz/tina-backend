@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "commit5r1c37-checkpoint70-direct-completion-preflight-v1",
+  "createdAtUtc": "2026-08-01T23:30:08.817Z",
+  "classification": "C37_CHECKPOINT_70_PREPARED_TRANSPORT_MISMATCH",
+  "phase": "PRE_INVOCATION_CONTINUITY_GATE",
+  "governingPrompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-DIRECT-OPUS-REVIEW-AND-COMPLETION-FROM-CHECKPOINT-70.md",
+    "bytes": 25161,
+    "sha256": "74df610ea1d7ed16cac942636a0630e3d0c2bbeebad40932e046bd3829293447"
+  },
+  "checkpoint70Handoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_70.md",
+    "bytes": 2859,
+    "sha256": "633bbc89be409feb8896b79f773185ebdbfc91ca8520dc6b466a4e8d7bc39c2f"
+  },
+  "checkpoint70": {
+    "ordinal": 70,
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "checkpointSha256": "4d7503bc4139dc0b5978e0afd47ac21f45e46861ac0512bfe7893660e60d7318",
+    "idempotenceReplayPass": true,
+    "idempotenceReplaySha256": "e467f4aa6b029a31eda8b1d89f3766ab05c818c3104e9d9750902f8318222f0e",
+    "evidenceManifestPresentAndMatching": 27,
+    "evidenceManifestExpected": 27,
+    "evidenceManifestSha256": "bc44bd1065e7f762f3fd4a35f0db9be836502dfabdd0eb06a1daf81846472738"
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "fetchHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "trackedTreeClean": true,
+    "stagingClean": true
+  },
+  "frozenPackage": {
+    "entriesPresentAndMatching": 57,
+    "entriesExpected": 57,
+    "rawBytes": 4109852,
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "capsule": {
+    "bytes": 437230,
+    "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f",
+    "materialClaimsCovered": 222,
+    "materialClaimsTotal": 222,
+    "crossSourceRowsCovered": 145,
+    "crossSourceRowsTotal": 145,
+    "unsupportedClaims": 0,
+    "omittedUnfavorableEvidence": 0
+  },
+  "preparedTransport": {
+    "runner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+      "bytes": 79610,
+      "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795",
+      "byteIdentityPass": true,
+      "continuationInvocationReady": false
+    },
+    "toolPlanSha256": "f8ec634e78016e1a19548c613922a45b3ffb62aeecde7f4654dc240d96f66d3e",
+    "toolValidationSha256": "f20bea8102cc23d8c4a17f8003d2634b8e85bc5bb41c281c875509522eabc10e",
+    "bootstrapJsonSha256": "e58cd332e13718932e4820d0394cd089189028f0d74162958afe50fc32a23d43",
+    "bootstrapMarkdownSha256": "3c876ad0ce5e783df5c13bd04ad687b0bb10c928f65325b17686286691bc05dc",
+    "contextProjectionSha256": "700894ec8a0b813a391522b587236736814a758097e54392b616a9b542119494",
+    "transportPreflightSha256": "7f8b18b8edbfbc2b95c88a8b589b4415821a2abbfd9caa284a922c13efd80d7f",
+    "readRules": 63,
+    "originalFileSpotChecks": 9,
+    "evidenceClassesRepresented": 8,
+    "projectedInputTokens": 504336,
+    "projectedProviderMarginTokens": 495664,
+    "isolatedMcpSha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "cliVersion": "2.1.212 (Claude Code)",
+    "cliSha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "model": "claude-opus-4-8"
+  },
+  "blockingEvidence": {
+    "existingProtectedPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "existingProtectedBytes": 5290,
+    "existingProtectedSha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f",
+    "runnerBindings": [
+      {
+        "line": 88,
+        "fact": "F.finalPreflight is bound to the existing checkpoint-69 final-preflight path"
+      },
+      {
+        "line": 102,
+        "fact": "F.finalPreflight is included in INVOCATION_OUTPUTS"
+      },
+      {
+        "line": 770,
+        "fact": "--invoke asserts every INVOCATION_OUTPUTS path is absent and raises EXACT_ONCE_OUTPUT_EXISTS otherwise"
+      },
+      {
+        "line": 798,
+        "fact": "--invoke writes F.finalPreflight only after the absence assertion"
+      }
+    ],
+    "conclusion": "The byte-identical prepared runner cannot enter its invocation path from checkpoint 70 while the protected checkpoint-69 final-preflight artifact remains present. Deleting, renaming, or overwriting that evidence, or rewriting/replacing the runner, is expressly prohibited. No substantive model submission was attempted."
+  },
+  "contextMeasurement": {
+    "sessionFile": "C:/Users/USER/.codex/sessions/2026/08/01/rollout-2026-08-01T21-34-27-019fbd88-8065-7011-99a0-f59a6588d4d4.jsonl",
+    "sessionId": "019fbd88-8065-7011-99a0-f59a6588d4d4",
+    "latestTokenEventLine": 1179,
+    "eventTimestampUtc": "2026-08-01T23:30:08.817Z",
+    "effectiveContextWindowTokens": 258400,
+    "telemetryReportedActiveContextTokens": 36229,
+    "calculatedEffectiveRemainingTokens": 222171,
+    "requiredPreSubmissionRemainingTokens": 120000,
+    "headroomAbovePreSubmissionRequirementTokens": 102171,
+    "gatePass": true,
+    "method": "latest current-session event_msg/payload.info.token_count last_token_usage.total_tokens subtracted from model_context_window"
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44",
+    "status": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "retryAllowed": false,
+    "markerExists": false,
+    "providerRequestExists": false,
+    "reviewExists": false
+  },
+  "hygiene": {
+    "taskNodeProcesses": 0,
+    "taskClaudeProcesses": 0,
+    "port5173Listeners": 0,
+    "taskTempResidue": 0,
+    "gitIndexLock": false,
+    "userOwnedVsCodeClaudePid": 24136,
+    "userOwnedVsCodeClaudeUntouched": true
+  },
+  "gates": {
+    "checkpoint70Continuity": true,
+    "gitIdentityAndCleanBaseline": true,
+    "protectedResidueAndC35": true,
+    "runtimeOracleFixtureRegistryWalUnchanged": true,
+    "package57Integrity": true,
+    "capsuleIdentityAndCoverage": true,
+    "authorizationUnused": true,
+    "invocationCountZero": true,
+    "isolatedMcpConfigValidated": true,
+    "readOnlyAllowlistEnforcement": true,
+    "bootstrapAndProjection": true,
+    "noTaskTempResidue": true,
+    "cliIdentity": true,
+    "remainingCodexContextAtLeast120000": true,
+    "exactPreparedRunnerCanInvokeFromCheckpoint70WithoutProhibitedMutation": false
+  },
+  "modelContacted": false,
+  "technicalFailureAfterSubmission": false,
+  "pass": false
+}

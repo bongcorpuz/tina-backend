@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_FINAL_ADJUDICATION_VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS",
+  "generatedAtUtc": "2026-08-07T18:14:00Z",
+
+  "outcomeClass": "B_VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS",
+  "outcomeClassRequirementsChecked": {
+    "exactEffectiveModelIsClaudeOpus5": true,
+    "exactlyOneInvocationOccurred": true,
+    "exactEvidenceCorpusWasReviewed": true,
+    "exactGoverningAddendumWasReviewed": true,
+    "outputIsSchemaValid": true,
+    "reviewerDecision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "observationsExplicitlyClassifiedNonBlocking": true,
+    "blockingFindingsCount": 0,
+    "allRequirementsMet": true
+  },
+
+  "reviewerDecisionPreservedExactly": {
+    "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "notRewrittenAsUnconditionalApproval": true,
+    "substantivePathDecision": "NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED",
+    "allTenNonblockingObservationsPreservedVerbatim": true,
+    "preservedIn": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_RAW_REVIEWER_RESPONSE_JSON.json (unedited, hash-recorded)"
+  },
+
+  "c37Adjudication": {
+    "candidatesAuthorized": 0,
+    "candidatesAuthorizedConfirmedByIndependentReviewer": true,
+    "candidatesAllocated": 0,
+    "candidatesAllocatedConfirmedByIndependentReviewer": true,
+    "c37RuntimeAttempts": 0,
+    "c37RuntimeAttemptsConfirmedByIndependentReviewer": true,
+    "noRuntimeCandidateCreatedByThisOperation": true,
+    "noRuntimeCandidateCreatedByReviewer": true,
+    "registryAndWalUnchangedByThisOperation": true,
+    "noPriorAttemptRepeated": true,
+    "reasonMetricUnchanged": "3575/3720 (unchanged; reviewer independently notes this is explicitly NOT closed)",
+    "decisionMetricUnchanged": "3720/3720 (locked)",
+    "relationMetricUnchanged": "3720/3720 (locked)"
+  },
+
+  "b7Adjudication": {
+    "priorState": "OPEN_REVISED (checkpoint 79) — the independent-review requirement could not be satisfied because the required model (Opus 4.8) was unavailable.",
+    "reviewerDetermination": "CLOSE_B7",
+    "primaryExecutorAdjudication": "B7 IS CLOSED, narrowly: as to the specific requirement that a valid, independent, package-bound, schema-conformant review be obtained. A valid claude-opus-5 review was obtained, is schema-valid, found zero blocking findings, and explicitly determined B7 may close on its own assessment.",
+    "scopeOfClosureIsNarrow": true,
+    "b7ClosureDoesNotImply": [
+      "C37 is terminal (it is explicitly NOT, per the reviewer's own c37TerminalDetermination and furtherGovernanceDecisionRequired=true)",
+      "Phase 10A is closed or SATISFIED (remains OPEN)",
+      "R20 is complete",
+      "The overall project passed",
+      "Any commit, push, or publication is authorized"
+    ]
+  },
+
+  "c37TerminalAdjudication": {
+    "reviewerDetermination": "C37_MAY_BECOME_TERMINAL",
+    "reviewerOwnQualification": "C37 may become terminal on the substantive merits but is NOT terminal now, and this review authorizes no publication.",
+    "primaryExecutorAdjudication": "C37 REMAINS NONTERMINAL as of this checkpoint. 'May become terminal' is a merits-level assessment, not a present-tense closure. C37 is marked terminal only if and when the controlling closure contract's remaining procedural steps (documentation finalization order, exact commit message reconciliation, staging, an actual authorized commit and push) are separately completed under separate governance authorization. This operation performed none of those steps and none is authorized here.",
+    "phase10AStatus": "OPEN",
+    "phase10ASatisfied": false,
+    "r20Status": "IN_PROGRESS",
+    "r20Complete": false,
+    "projectPassClaimed": false,
+    "c38Started": false,
+    "e2Started": false,
+    "a15Started": false,
+    "phase10BStarted": false
+  },
+
+  "furtherGovernanceDecisionsRequired": [
+    {
+      "id": "G1",
+      "description": "Documentation finalization order and explicit file-by-file staging, commit, and push for C37's closure — none authorized by this operation.",
+      "blockingForTermination": true
+    },
+    {
+      "id": "G2",
+      "description": "Reconcile the exact commit message: COMMIT_5R1C37_PROPOSED_MANIFEST_AND_STAGED_PATHS_DRAFT.json proposes '...route oracle governance' while COMMIT_5R1C37_FINAL_OPUS_REQUEST.md requires exactly '...preserve open gate'. Moot until a commit is separately authorized.",
+      "blockingForTermination": true
+    },
+    {
+      "id": "G3",
+      "description": "Reconcile stale Opus-4.8 reviewer-identity references discovered by the independent reviewer in COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json, COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json, and futureWriteOncePaths CLI-capture entries, to the checkpoint-80 amendment and this claude-opus-5 review.",
+      "blockingForTermination": false,
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "G4",
+      "description": "C38 reason-oracle governance remains a separately governed, currently unauthorized operation. Not begun.",
+      "blockingForTermination": false,
+      "note": "This is the NEXT unit after C37, not a precondition of C37 itself."
+    }
+  ],
+
+  "reviewerNonblockingObservationsCarriedForward": [
+    "Ambiguous unevaluated-condition encoding in COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json's authorizationConditions block (recommend disambiguating with an explicit NOT_EVALUATED marker) — cosmetic, does not affect the fail-closed outcome.",
+    "COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json's selected-vs-live runtime byte divergence is legitimate (attempt snapshot vs. restored scaffold) but under-disambiguated in that specific artifact in isolation — recommend carrying the semanticBase/scaffold context into it directly.",
+    "Label-polarity ambiguity in COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md ('OPUS_NOT_YET_INVOKED_AT_DRAFT: false' reads as the opposite of its true meaning) — cosmetic documentation fix.",
+    "Full raw-byte semantic review of the ~1.9MB RAW_CAPTURE_INTEGRITY_SUPPORT entries was not claimed by the reviewer (consistent with the package's own declared scope); headline counts were corroborated against raw stdout directly."
+  ],
+
+  "protectedArtifactAndProcessIntegrity": {
+    "protectedArtifactsUnchanged": true,
+    "registryAndWalUnchanged": true,
+    "writerPreconditionUnchanged": true,
+    "b1StatusUpdatedDuringFinalVerification": "CLOSED (not merely subject-to-confirmation) — a genuine system reboot occurred after the checkpoint-77 disablement and the gateway did not reappear; see COMMIT_5R1C37_CHECKPOINT_80_B1_LOGON_CONFIRMATION_EVIDENCE.json",
+    "b2ThroughB6Unchanged": true,
+    "noOracleTestValidatorOrSafetyGuardModified": true,
+    "noGitPublicationOccurred": true
+  },
+
+  "finalDispositionStatement": "This checkpoint records a VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS outcome for the independent-review requirement (B7), obtained from a genuinely independent claude-opus-5 reviewer under a properly-scoped governance amendment that does not claim model equivalence with the superseded Opus-4.8 authorization. C37 itself remains NONTERMINAL. Phase 10A remains OPEN. R20 remains IN_PROGRESS. No claim is made that this checkpoint completes C37, closes Phase 10A, or satisfies R20."
+}

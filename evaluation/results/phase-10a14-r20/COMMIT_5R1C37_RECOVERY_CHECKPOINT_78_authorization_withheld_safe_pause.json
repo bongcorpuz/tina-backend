@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "ordinal": 78,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T08:33:51Z",
+  "stage": "PRE_INVOCATION",
+  "status": "NONTERMINAL",
+  "classification": "C37_CHECKPOINT_78_CONTINUATION_PREFLIGHT_AUTHORIZATION_WITHHELD_SAFE_PAUSE",
+  "disposition": "SAFE_PAUSE",
+  "dispositionQualifier": "AUTHORIZATION_WITHHELD",
+
+  "previousCheckpoint": 77,
+  "previousCheckpointPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_77_writer_precondition_satisfied.json",
+  "previousCheckpointSha256": "bf9b0a7ef177c02b4cc819f19ad8931cbcd99a31f63acf6e806923b1820a337c",
+  "supersedes": [77],
+  "priorCheckpointsPreservedUnaltered": "61 through 77",
+
+  "safeToResume": true,
+  "activeAttemptId": null,
+
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "upstream": "origin/feature/source-availability-engine-v1",
+  "remoteTipFreshlyVerified": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "remoteTipVerificationMethod": "git ls-remote --heads origin (live network read, exit 0)",
+  "aheadOfUpstream": 0,
+  "behindUpstream": 0,
+  "headEqualsGovernedBaseline": true,
+
+  "finalGitState": {
+    "verifiedAtUtc": "2026-08-07T08:33:23Z",
+    "clean": false,
+    "cleanlinessClaimMade": false,
+    "stagedPaths": 0,
+    "modifiedTrackedPaths": 4,
+    "modifiedTrackedPathList": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "untrackedPathsAtPreflight": 295,
+    "indexLockPresent": false,
+    "inProgressOperations": "NONE"
+  },
+
+  "c37Result": {
+    "operationDefinedByControllingEvidence": "Exactly one read-only Claude Code Opus 4.8 manifest-indexed independent review of the 57-entry C36/C37 no-runtime governance package.",
+    "operationUnambiguous": true,
+    "operationExecuted": false,
+    "reasonNotExecuted": "The governing prompt explicitly withholds authorization for external Opus review and lists it among prohibited operations.",
+    "c37RuntimeCandidates": 0,
+    "c37RuntimeWorkRemaining": "NONE",
+    "reasonClosed": false,
+    "semanticAdjudication": {
+      "disposition": "SAFE_PAUSE",
+      "isTechnicalIncomplete": false,
+      "isSemanticRejection": false,
+      "isAccepted": false,
+      "distinctionFromCheckpoints65And67": "Checkpoints 65 and 67 were genuine TECHNICAL_INCOMPLETE results arising from an attempted invocation that failed on CLI configuration and prompt length. Here nothing was attempted, so nothing could fail technically. Conflating the two would misrepresent the record.",
+      "substituteLocalReviewRefused": true,
+      "substituteRefusalBasis": "COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json records saferAlternativeAdequateForPrompt=false; a local self-review would not satisfy independent approval.",
+      "candidateManufactured": false,
+      "completionClaimed": false
+    }
+  },
+
+  "authorization": {
+    "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "authorizationConsumed": false,
+    "invocationCount": 0,
+    "maximumInvocations": 1,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false,
+    "externalProviderInvocationPerformed": false,
+    "externalProviderContacted": false,
+    "opusAuthorizedInGoverningPrompt": false,
+    "opusInvoked": false,
+    "priorAuthorizationsConsumedNotReused": [
+      "COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_AUTHORIZATION.json (CONSUMED_NO_RETRY_AUTHORIZED)",
+      "COMMIT_5R1C37_REPLACEMENT_OPUS_EXTERNAL_AUTHORIZATION.json (CONSUMED_NO_RETRY_AUTHORIZED)"
+    ],
+    "authorizationContinuityClear": true
+  },
+
+  "writerPrecondition": {
+    "satisfied": true,
+    "verifiedAtUtc": "2026-08-07T08:33:51Z",
+    "pid21112": "NOT_RUNNING",
+    "pid4472": "NOT_RUNNING",
+    "genuineHermesPathProcesses": 0,
+    "pythonExeProcesses": 0,
+    "wscriptCscriptProcesses": 0,
+    "startupActiveTriggerPresent": false,
+    "startupDisabledMarkerPresent": true,
+    "startupDisabledMarkerSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+    "startupEntryReEnabledOrModified": false,
+    "openClawGatewayTaskState": "Disabled",
+    "openClawGatewayTaskModified": false,
+    "newTinaOrchestratorProcessAppeared": false,
+    "b1NextLogonConfirmationPending": true
+  },
+
+  "operationLedger": {
+    "priorSessionAgent": "Codex",
+    "priorSessionOutcome": "TERMINATED_ON_USAGE_LIMIT",
+    "priorSessionEvidenceWritten": 0,
+    "priorSessionMutations": 0,
+    "priorSessionConclusionIndependentlyReverified": true,
+    "mutatingCommandsExecuted": 0,
+    "filesCreatedThisOperation": 3,
+    "filesModifiedThisOperation": 1,
+    "externalNetworkCalls": 1,
+    "externalNetworkCallDetail": "git ls-remote against configured origin for mandatory fresh remote-tip verification. Read-only ref advertisement; no fetch, no object transfer, no push."
+  },
+
+  "currentStateDocumentation": {
+    "file": "knowledge/CURRENT_STATE.md",
+    "beforeSha256": "57368584a0e80ec1f28f27589319162faf4387c44234c3cc2672eaf15ca2a779",
+    "afterSha256": "63653927a66926b80d8598c0351b9e5764a2f0d2479e0893bc9ccabfc829a856",
+    "beforeBytes": 155665,
+    "afterBytes": 164583,
+    "afterLines": 3488,
+    "linesAddedRelativeToHead": 567,
+    "linesDeletedRelativeToHead": 0,
+    "purelyAdditive": true,
+    "eolPreserved": "LF",
+    "checkpoint77BlockRetainedVerbatim": true,
+    "checkpoint75BlockRetained": true,
+    "checkpoint73BlockRetained": true
+  },
+
+  "manifestDivergenceNotice": {
+    "invalidatedEntry": {
+      "manifest": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_77_FINAL_EVIDENCE.sha256",
+      "entry": "knowledge/CURRENT_STATE.md",
+      "recordedSha256": "57368584a0e80ec1f28f27589319162faf4387c44234c3cc2672eaf15ca2a779",
+      "currentSha256": "63653927a66926b80d8598c0351b9e5764a2f0d2479e0893bc9ccabfc829a856",
+      "divergence": "EXPECTED",
+      "cause": "Intentional checkpoint-78 governed documentation update.",
+      "integrityDefect": false,
+      "remediation": "None. The checkpoint-77 manifest remains sealed and correct AS AT CHECKPOINT 77. Re-verification will fail on this single entry and must be read as expected divergence; its other seven entries must still verify.",
+      "sealedManifestEdited": false
+    }
+  },
+
+  "preservationResult": {
+    "protectedArtifactsUnchanged": true,
+    "IDEA.md": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0",
+    "package.json": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3",
+    "server.js": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+    "security/public-health.js": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+    "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35",
+    "taxEnginesCONIndexFlag": "S (both paths, unchanged)",
+    "sealedFrozenOrPriorEvidenceModified": 0,
+    "oracleTestValidatorOrSafetyGuardWeakened": false,
+    "deletionsQuarantinesOverwrites": 0,
+    "registryModified": false
+  },
+
+  "healthDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "touchedByThisOperation": false,
+    "newAuthorizationProvided": false
+  },
+
+  "blockers": [
+    { "id": "B1", "status": "CLOSED_SUBJECT_TO_NEXT_LOGON_CONFIRMATION", "nextLogonConfirmationPending": true, "changeThisOperation": "NONE" },
+    { "id": "B2", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B3", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B4", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B5", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B6", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B7", "status": "OPEN_NEW", "severity": "HIGH", "blocker": "C37 cannot advance without an explicit one-use external Opus review authorization. The controlling evidence defines no alternative operation and records that no local substitute is adequate.", "ownerActionRequired": true }
+  ],
+  "blockersOpen": 6,
+  "blockersClosedSubjectToConfirmation": 1,
+
+  "phase": "10A",
+  "workstream": "R20",
+  "phase10A": "OPEN",
+  "phase10AAdvanced": false,
+  "c37Advanced": false,
+  "metricsChanged": false,
+  "reasonOnlyRowsRemaining": 145,
+
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "amendPerformed": false,
+  "forcePushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "mergePerformed": false,
+  "pullPerformed": false,
+  "rebasePerformed": false,
+  "stashPerformed": false,
+  "deploymentPerformed": false,
+  "migrationPerformed": false,
+  "reindexPerformed": false,
+  "modelChanged": false,
+  "externalReviewPerformed": false,
+  "runtimeCodeModified": false,
+  "broadCleanupPerformed": false,
+  "unrelatedServiceOrProcessModified": false,
+  "healthWorkPerformed": false,
+  "c38Started": false,
+  "e2Started": false,
+  "a15Started": false,
+  "phase10BStarted": false,
+  "sealedEvidenceEdited": false,
+  "sealedManifestEdited": false,
+  "historyRewritten": false,
+
+  "gateResults": {
+    "gate01_branchMatches": true,
+    "gate02_headMatches": true,
+    "gate03_parentMatches": true,
+    "gate04_remoteTipFreshlyVerifiedAndMatches": true,
+    "gate05_noStagedPaths": true,
+    "gate06_allFourBoundHashesMatched": true,
+    "gate07_checkpoint77ManifestVerified": true,
+    "gate08_writerPreconditionSatisfied": true,
+    "gate09_startupEntryNotReEnabled": true,
+    "gate10_controllingSpecificationReadCompletely": true,
+    "gate11_nextOperationUnambiguouslyDefined": true,
+    "gate12_operationAuthorizedByGoverningPrompt": false,
+    "gate12_failureIsTheSafePauseTrigger": true,
+    "gate13_noPriorAttemptRepeated": true,
+    "gate14_protectedArtifactsPreserved": true,
+    "gate15_noOracleOrGuardWeakened": true,
+    "gate16_currentStateUpdatePurelyAdditive": true,
+    "gate17_opusNotInvoked": true,
+    "gate18_noCandidateManufactured": true,
+    "gate19_noProhibitedOperation": true
+  },
+
+  "nextExactOperation": "OWNER DECISION REQUIRED. C37 is blocked on exactly one thing. Either (1) issue a prompt that explicitly authorizes the single one-use read-only Claude Code Opus 4.8 manifest-indexed review of the 57-entry C36/C37 no-runtime governance package, binding to parent ee664eab4529c636f34cb6d37d23a6a497886a17 and to the checkpoint-78 evidence hashes in COMMIT_5R1C37_CHECKPOINT_78_FINAL_EVIDENCE.sha256; or (2) govern an alternative closure path for C37 that does not require external independent review, which itself requires a new governance decision because the current controlling evidence requires the Opus review and records that no local substitute is adequate. Separately confirm at next user logon that no tina-orchestrator gateway process appears, to fully close B1. Do not begin C38, E2, A15 or Phase 10B. Do not consume the one-use Opus authorization outside a prompt that explicitly governs its use.",
+
+  "completionClaims": {
+    "phase10AClosed": false,
+    "r20Complete": false,
+    "c37Complete": false,
+    "reasonClosed": false,
+    "healthChangeApproved": false,
+    "commitMade": false,
+    "pushMade": false,
+    "deploymentMade": false,
+    "repositoryClean": false,
+    "acceptanceOrClosureClaimed": false,
+    "opusReviewPerformed": false
+  }
+}

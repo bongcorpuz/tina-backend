@@ -1,0 +1,107 @@
+diff --git a/security/public-health.js b/security/public-health.js
+index ac5b9a63..9a90c4d2 100644
+--- a/security/public-health.js
++++ b/security/public-health.js
+@@ -10,10 +10,8 @@
+ 
+ "use strict";
+ 
+-export const PUBLIC_HEALTH_SERVICE = "tina-backend";
+-
+ // Only these keys are permitted in the PUBLIC health payload.
+-export const PUBLIC_HEALTH_ALLOWED_FIELDS = Object.freeze(["status", "service"]);
++export const PUBLIC_HEALTH_ALLOWED_FIELDS = Object.freeze(["status"]);
+ 
+ // Fields that must NEVER appear in the public health payload (they are the
+ // disclosure surface removed by this patch).
+@@ -38,10 +36,14 @@ export const PUBLIC_HEALTH_FORBIDDEN_FIELDS = Object.freeze([
+  * The minimal public liveness payload. Liveness only — it discloses no internal
+  * configuration and is safe to return unauthenticated to Render health polling.
+  *
+- * @returns {{status:"ok", service:string}} frozen minimal payload
++ * @returns {{status:"ok"}} frozen minimal payload
+  */
+ export function buildPublicHealth() {
+-  return Object.freeze({ status: "ok", service: PUBLIC_HEALTH_SERVICE });
++  return Object.freeze({ status: "ok" });
++}
++
++export function healthHandler(req, res) {
++  return res.status(200).json(buildPublicHealth());
+ }
+ 
+ /**
+diff --git a/server.js b/server.js
+index 171f42a6..e130430c 100644
+--- a/server.js
++++ b/server.js
+@@ -9,7 +9,7 @@ import OpenAI from "openai";
+ import { buildCorsOptionsDelegate } from "./security/cors-policy.js";
+ import { createSecurityHeadersMiddleware } from "./security/security-headers.js";
+ import { createRateLimitMiddleware } from "./security/rate-limit.js";
+-import { buildPublicHealth } from "./security/public-health.js";
++import { healthHandler } from "./security/public-health.js";
+ import { buildRouteNotFound, ROUTE_NOT_FOUND_STATUS } from "./security/route-disclosure.js";
+ import {
+   hasQueryStringSecret,
+@@ -260,26 +260,7 @@ app.get("/routes", (req, res) => {
+   return res.status(ROUTE_NOT_FOUND_STATUS).json(buildRouteNotFound());
+ });
+ 
+-// PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1: public /health is now
+-// LIVENESS ONLY. It returns a minimal {status:"ok", service:"tina-backend"} and
+-// NO longer discloses commitSha, version, environment, model name, config flags,
+-// vector-store counts, adaptive-stack internals, or which secrets are configured.
+-// It performs a resilient readiness touch (getVectorStoreStats) but never fails
+-// liveness on a DB error and never surfaces the result, so the endpoint cannot
+-// leak internal state. It stays unauthenticated and rate-limit exempt so Render
+-// health polling works. Detailed readiness/diagnostics (including deployment
+-// commitSha) are intentionally NOT re-exposed here; a dedicated authenticated
+-// diagnostic-health endpoint is deferred to a follow-up patch (see report).
+-app.get("/health", async (req, res) => {
+-  try {
+-    // Readiness touch only; the result is deliberately not included in the
+-    // public response and a failure must not break liveness.
+-    await getVectorStoreStats();
+-  } catch (error) {
+-    console.error("Health readiness touch error:", error.message || error);
+-  }
+-  return res.status(200).json(buildPublicHealth());
+-});
++app.get("/health", healthHandler);
+ 
+ /* ================= AUTH ROUTES ================= */
+ 
+diff --git a/tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs b/tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
+index cf8b1038..67f9a4d3 100644
+--- a/tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
++++ b/tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
+@@ -138,8 +138,7 @@ await test("prohibited claims include production fully hardened and Phase 9 star
+ 
+ await test("helper: buildPublicHealth is minimal and excludes all forbidden fields", () => {
+   const ph = buildPublicHealth();
+-  check(ph.status === "ok", "status ok");
+-  check(ph.service === "tina-backend", "service tina-backend");
++  check(JSON.stringify(ph) === '{"status":"ok"}', "exact public health payload");
+   check(isPublicHealthMinimal(ph) === true, "isPublicHealthMinimal true");
+   for (const f of PUBLIC_HEALTH_FORBIDDEN_FIELDS) {
+     check(!Object.prototype.hasOwnProperty.call(ph, f), `public health excludes ${f}`);
+@@ -156,13 +155,13 @@ await test("helper: buildRouteNotFound is minimal and discloses no inventory", (
+   check(isRouteResponseMinimal({ routes: ["GET /ask"] }) === false, "inventory response not minimal");
+ });
+ 
+-await test("source: server.js public /health returns minimal buildPublicHealth and discloses nothing", () => {
+-  check(/buildPublicHealth\s*\(/.test(serverSrc), "buildPublicHealth used");
+-  // The public /health handler returns the minimal payload.
+-  check(/app\.get\(\s*["']\/health["']\s*,\s*async\s*\(req,\s*res\)\s*=>\s*\{[\s\S]{0,600}buildPublicHealth/.test(serverSrc), "public /health returns buildPublicHealth");
++await test("source: server.js public /health returns the exact minimal payload", () => {
++  check(/healthHandler/.test(serverSrc), "health handler used");
++  check(/app\.get\(\s*["']\/health["']\s*,\s*healthHandler\s*\)/.test(serverSrc), "public /health route registered");
+   // The old disclosure fields must be gone from the /health handler region.
+-  const healthRegion = serverSrc.slice(serverSrc.indexOf('app.get("/health"'), serverSrc.indexOf('app.get("/health"') + 800);
++  const healthRegion = serverSrc.slice(serverSrc.indexOf('app.get("/health"'), serverSrc.indexOf('app.get("/health"') + 300);
+   check(!/adaptiveStack|routeModes|openaiModel|indexSecretEnabled|commitSha/.test(healthRegion), "no disclosure fields in /health handler");
++  check(/return res\.status\(200\)\.json\(buildPublicHealth\(\)\)/.test(readFileSync(resolve("security/public-health.js"), "utf8")), "public /health returns the minimal health payload");
+   // No separate /health/details route is introduced (avoids route-inventory drift).
+   check(!/app\.get\(\s*["']\/health\/details["']/.test(serverSrc), "no /health/details route added");
+ });

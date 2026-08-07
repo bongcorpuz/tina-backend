@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_65_PROTECTED_RESIDUE_VERIFICATION_PASS",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "checkpoint65Sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db",
+  "priorReconciliationSha256": "e16336ab89857da49de8be8163ac62ad0d1845374b708d7172383ddff0f47105",
+  "c36SafePauseManifest": {
+    "rows": 48,
+    "uniquePaths": 48,
+    "bad": 0,
+    "sha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812"
+  },
+  "c37TechnicalIncompleteManifest": {
+    "rows": 22,
+    "uniquePaths": 22,
+    "bad": 0,
+    "sha256": "de09ea11c334f86123096079c4d8f0cf7e715feaeb298332db32ef173358485a"
+  },
+  "protectedBaselineChecks": {
+    "recordsChecked": 22,
+    "mismatches": 0,
+    "continuationEvidenceIdentitiesChecked": 19,
+    "continuationEvidenceMismatches": 0
+  },
+  "runtime": {
+    "askHandlerSha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602",
+    "conflictEngineSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "answerSupportEvidenceSha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37",
+    "answerSupportValidatorSha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e",
+    "c35CompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "selectedC34ReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+  },
+  "registryWal": {
+    "registrySha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "c34WalSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+    "c35WalSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+    "c36WalAbsent": true,
+    "c37WalAbsent": true
+  },
+  "roadmapV7V8Unchanged": true,
+  "runtimeOracleFixtureRegistryWalMutationCount": 0,
+  "protectedResiduePreserved": true,
+  "pass": true
+}

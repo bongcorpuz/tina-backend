@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "generatedUtc": "2026-08-01T09:36:54.048Z",
+  "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "rowAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+    "bytes": 1203438,
+    "sha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d"
+  },
+  "clusterMatrix": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLUSTER_DISPOSITION_MATRIX.json",
+    "bytes": 15497,
+    "sha256": "a75afb1bc5f75b2cd7310dd064b3bb078913b94017025c0e90818d174d1990d0"
+  },
+  "categoryTotals": {
+    "TRUE_GENERALIZED_RUNTIME_DEFECT": 0,
+    "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED": 35,
+    "ORACLE_CONTRACT_INCONSISTENCY": 43,
+    "UNDERDETERMINED_WITHOUT_CONTEXT": 24,
+    "SEMANTICALLY_EQUIVALENT_REASON": 3,
+    "ACCEPTED_FAIL_CLOSED_BEHAVIOR": 40,
+    "HISTORICAL_STATE_ONLY_NOT_CURRENT_RUNTIME": 0,
+    "INDETERMINATE_INSUFFICIENT_EVIDENCE": 0
+  },
+  "authorizationConditions": {
+    "atLeastOneTrueGeneralizedRuntimeDefect": false,
+    "causalRuntimeFeatureObservableWithoutBenchmarkIdentity": false,
+    "notEquivalentToPriorRejectedAttempt": false,
+    "notPreviouslyRejectedOrUnsupported": false,
+    "monotonicFeatureAblationPredicted": false,
+    "precedenceAgainstEveryAcceptedRuleExplicit": false,
+    "generalizationProbesFrozen": false,
+    "collisionAndCounterfactualProbesFrozen": false,
+    "smallestRuntimeSurfaceIdentified": false,
+    "atLeast135MinutesRemain": false
+  },
+  "allRuntimeCandidateConditionsSatisfied": false,
+  "candidatesAuthorized": 0,
+  "candidatesAllocated": 0,
+  "c37WalRequired": false,
+  "rationale": "Zero rows prove a new generalized runtime defect. Seventy-eight rows are controlled directly by oracle non-entailment or contract inconsistency, the remainder are underdetermined, semantically equivalent, or accepted safe behavior. All eight C36 hypotheses remain unsupported and C34-CP01 remains terminally rejected.",
+  "nextSeparatelyGovernedOperation": "C38 reason-oracle governance operation limited to the adjudicated contract/oracle questions; do not modify the oracle in C37.",
+  "pass": true
+}

@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_VALIDATION_PASS",
+  "generatedUtc": "2026-08-01T16:32:37.022Z",
+  "toolPlan": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_PLAN.json",
+    "bytes": 35270,
+    "sha256": "f8ec634e78016e1a19548c613922a45b3ffb62aeecde7f4654dc240d96f66d3e"
+  },
+  "cliHelp": {
+    "bytes": 16036,
+    "sha256": "fcd5b45507c7c602d54d85a300eab288a8a3c6770c6def696ca19a3100725de4",
+    "requiredFlags": [
+      "--print",
+      "--allowedTools",
+      "--disallowedTools",
+      "--permission-mode",
+      "--safe-mode",
+      "--no-session-persistence",
+      "--mcp-config",
+      "--strict-mcp-config",
+      "--tools",
+      "--output-format",
+      "--json-schema",
+      "--system-prompt"
+    ],
+    "missingFlags": []
+  },
+  "semantics": {
+    "toolsArgument": [
+      "Read"
+    ],
+    "permissionMode": "dontAsk",
+    "exactAbsoluteReadRules": 63,
+    "broadReadRule": false,
+    "emptyCwdPreventsImplicitRepositoryRead": true,
+    "noAddDir": true,
+    "unmatchedPermissionRequestsDenied": true,
+    "providerFreeReadDecisionDryRunAvailable": false,
+    "runtimeReadAuditRequired": true
+  },
+  "managedPolicyAudit": {
+    "authoritativeFileCandidates": [
+      {
+        "path": "C:/Program Files/ClaudeCode/managed-settings.json",
+        "exists": false
+      },
+      {
+        "path": "C:/Program Files/ClaudeCode/managed-settings.d",
+        "exists": false
+      },
+      {
+        "path": "C:/Program Files/ClaudeCode/managed-mcp.json",
+        "exists": false
+      },
+      {
+        "path": "C:/ProgramData/ClaudeCode/managed-settings.json",
+        "exists": false
+      },
+      {
+        "path": "C:/ProgramData/ClaudeCode/managed-mcp.json",
+        "exists": false
+      }
+    ],
+    "authoritativeRegistryViews": [
+      {
+        "hivePath": "HKLM\\SOFTWARE\\Policies\\ClaudeCode",
+        "view": "64",
+        "exists": false
+      },
+      {
+        "hivePath": "HKLM\\SOFTWARE\\Policies\\ClaudeCode",
+        "view": "32",
+        "exists": false
+      }
+    ],
+    "remotelyDeliveredOrganizationPolicyObservableWithoutAuthenticatedSession": false,
+    "observedLocalManagedPolicy": false,
+    "pass": true
+  },
+  "isolatedMcpValidation": {
+    "config": {
+      "completeContent": "{\"mcpServers\":{}}",
+      "bytes": 18,
+      "sha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+      "strict": true
+    },
+    "providerFreeValidation": {
+      "argv": [
+        "--safe-mode",
+        "--no-chrome",
+        "--mcp-config",
+        "<TEMP_EMPTY_MCP_JSON>",
+        "--strict-mcp-config",
+        "mcp",
+        "list"
+      ],
+      "exitCode": 0,
+      "stdout": "No MCP servers configured. Use `claude mcp add` to add a server.",
+      "stderr": "",
+      "providerRequestObserved": false,
+      "modelRequestSubmitted": false
+    },
+    "persistentConfigurationBefore": [
+      {
+        "path": "C:/Users/USER/.claude/settings.json",
+        "exists": true,
+        "bytes": 244,
+        "sha256": "02857f7edc705e00b6bf03154b034bdb382302dafbb1c1d556c4866cee0195d4"
+      },
+      {
+        "path": "C:/Users/USER/.claude.json",
+        "exists": true,
+        "bytes": 52224,
+        "sha256": "f727bca6ea05468b4cdf7930779cfde3d07616d8cdf33b10027adbc57efaa1be"
+      },
+      {
+        "path": "C:/Projects/tina-backend/.claude/settings.local.json",
+        "exists": true,
+        "bytes": 4466,
+        "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"
+      },
+      {
+        "path": "C:/Users/USER/AppData/Roaming/Code/User/settings.json",
+        "exists": true,
+        "bytes": 856,
+        "sha256": "51562bec30e7170dfbcdc7178a2b1d038d29b01b7cd4f98476521d5e63aa83a9"
+      }
+    ],
+    "persistentConfigurationAfter": [
+      {
+        "path": "C:/Users/USER/.claude/settings.json",
+        "exists": true,
+        "bytes": 244,
+        "sha256": "02857f7edc705e00b6bf03154b034bdb382302dafbb1c1d556c4866cee0195d4"
+      },
+      {
+        "path": "C:/Users/USER/.claude.json",
+        "exists": true,
+        "bytes": 52224,
+        "sha256": "f727bca6ea05468b4cdf7930779cfde3d07616d8cdf33b10027adbc57efaa1be"
+      },
+      {
+        "path": "C:/Projects/tina-backend/.claude/settings.local.json",
+        "exists": true,
+        "bytes": 4466,
+        "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc"
+      },
+      {
+        "path": "C:/Users/USER/AppData/Roaming/Code/User/settings.json",
+        "exists": true,
+        "bytes": 856,
+        "sha256": "51562bec30e7170dfbcdc7178a2b1d038d29b01b7cd4f98476521d5e63aa83a9"
+      }
+    ],
+    "persistentConfigurationUnchanged": true,
+    "validationRootRemoved": true,
+    "pass": true
+  },
+  "noModelOrProviderContactDuringValidation": true,
+  "noPersistentConfigurationMutation": true,
+  "noValidationTempResidue": true,
+  "pass": true
+}

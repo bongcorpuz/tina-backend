@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "ordinal": 75,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T03:21:43Z",
+  "stage": "PRE_INVOCATION",
+  "status": "NONTERMINAL",
+  "classification": "C37_CHECKPOINT_75_CONTINUITY_RECONCILED_HEALTH_DEFERRED_PRE_INVOCATION_AUTHORIZATION_UNUSED",
+  "previousCheckpoint": 74,
+  "supersedes": [73, 74],
+  "priorCheckpointsPreservedUnaltered": "61 through 74",
+
+  "safeToResume": true,
+  "activeAttemptId": null,
+
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "branch": "feature/source-availability-engine-v1",
+  "upstream": "origin/feature/source-availability-engine-v1",
+  "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "headEqualsGovernedBaseline": true,
+  "parentEqualsGovernedBaseline": true,
+  "remoteTipEqualsGovernedBaseline": true,
+  "aheadOfUpstream": 0,
+  "behindUpstream": 0,
+  "gitStateVerifiedTwice": {
+    "firstReadingUtc": "2026-08-07T03:10:23Z",
+    "secondReadingUtc": "2026-08-07T03:21:43Z",
+    "driftBetweenReadings": "NONE"
+  },
+
+  "workingTree": {
+    "clean": false,
+    "cleanlinessClaimMade": false,
+    "totalTrackedFiles": 13975,
+    "trackedModifications": 4,
+    "trackedDeletions": 0,
+    "stagedPaths": 0,
+    "untrackedPaths": 281,
+    "modifiedTrackedFiles": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "intentionallyModifiedByThisOperation": ["knowledge/CURRENT_STATE.md"],
+    "preservedUngovernedModifications": [
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ]
+  },
+
+  "phase": "10A",
+  "workstream": "R20",
+  "phase10A": "OPEN",
+  "phase10BAuthorized": false,
+  "phase10BImplementationBegun": false,
+
+  "authorization": {
+    "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false,
+    "consumedByThisOperation": false,
+    "externalProviderInvocationPerformed": false,
+    "authorizationContinuityClear": true
+  },
+
+  "metrics": {
+    "note": "UNCHANGED from checkpoints 73 and 74. No evaluation, regression or candidate work was performed.",
+    "decision": "3720/3720 locked",
+    "relation": "3720/3720 locked",
+    "reason": "3575/3720",
+    "reasonOnlyRowsRemaining": 145
+  },
+
+  "operationsPerformed": [
+    "Fresh continuity and Git preflight (read-only)",
+    "Independent read-only review of checkpoint 74",
+    "Reconciliation and adjudication of the working-tree continuity conflict",
+    "Adjudication of eight unexplained paths (seven supplied, plus one from the sealed manifest)",
+    "Governance record for the three semantic /health changes (no implementation or test modified)",
+    "Purely additive governed update to knowledge/CURRENT_STATE.md",
+    "Creation of this resumable checkpoint and hash evidence"
+  ],
+
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "amendPerformed": false,
+  "forcePushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "mergePerformed": false,
+  "pullPerformed": false,
+  "deploymentPerformed": false,
+  "candidateRuntimeFixCreated": false,
+  "sealedEvidenceEdited": false,
+  "sealedManifestEdited": false,
+  "historyRewritten": false,
+  "protectedOrUnexplainedFilesDeleted": 0,
+  "processesKilledDisabledOrModified": 0,
+
+  "continuityConflictResolution": {
+    "verdict": "CONCLUSIVELY_RECONCILED",
+    "safePauseTriggered": false,
+    "priorReportStatus": "CONFIRMED_ACCURATE",
+    "laterSnapshotStatus": "INDEX_STATE_MEASUREMENT_ARTIFACT_NOT_CONTENT_DIVERGENCE",
+    "keyArithmetic": "13,973 modifications + 2 skip-worktree deletions = 13,975 total tracked files",
+    "skipWorktreePaths": ["tax-engines/CON/domain-config.js", "tax-engines/CON/subclassifier.js"],
+    "untrackedArithmetic": "265 from the ungoverned added-set + 16 others = 281; +1 globally-ignored .claude/settings.local.json = 282",
+    "contentLossDetected": false,
+    "evidenceCorruptionDetected": false,
+    "detail": "COMMIT_5R1C37_CHECKPOINT_75_WORKING_TREE_DISCREPANCY_RECONCILIATION.json"
+  },
+
+  "sevenPathAdjudication": {
+    "pathsAdjudicated": 8,
+    "originProven": 8,
+    "deleted": 0,
+    "modified": 0,
+    "executed": 0,
+    "dispositions": {
+      "RETAIN": 5,
+      "RETAIN_AND_QUARANTINE_FLAG": 1,
+      "QUARANTINE_PENDING_HEALTH_ADJUDICATION": 1,
+      "RETAIN_AS_FORENSIC_EVIDENCE": 1
+    },
+    "detail": "COMMIT_5R1C37_CHECKPOINT_75_SEVEN_PATH_ADJUDICATION.json"
+  },
+
+  "healthGovernanceDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "reverted": false,
+    "modified": false,
+    "governedBaselineTestResultAgainstModifiedImplementation": "17 passed / 2 failed / exit 1",
+    "modifiedSuiteResult": "19 passed / 0 failed / exit 0 (self-certifying, not independent evidence)",
+    "criticalFindings": ["G1", "G2"],
+    "detail": "COMMIT_5R1C37_CHECKPOINT_75_HEALTH_SEMANTIC_CHANGE_GOVERNANCE_RECORD.md"
+  },
+
+  "concurrentWriterIncident": {
+    "classification": "THIRD_PARTY_UNGOVERNED_AGENT_SCAFFOLDING_WRITE_INTO_GOVERNED_REPOSITORY",
+    "mustBeStoppedByOwnerBeforeNextGovernedOperation": true,
+    "openclawProcessObserved": false,
+    "openclawStatus": "QUIESCENT",
+    "openclawFutureExecutionDisabled": "NOT_PROVEN",
+    "hermesGatewayRunning": true,
+    "hermesGatewayPids": [21112, 4472],
+    "hermesLastRepositoryWriteLocal": "2026-08-04T23:50+08:00",
+    "nonMutatingWriterEventObserved": {
+      "atLocal": "2026-08-07T11:12:06+08:00",
+      "artifacts": [".git/FETCH_HEAD", ".git/objects"],
+      "refsChanged": 0,
+      "indexChanged": false,
+      "workingTreeChanged": false,
+      "safePauseTriggered": false
+    },
+    "actionTaken": "VERIFICATION_ONLY_NO_PROCESS_STOPPED_OR_MODIFIED",
+    "remainsOpen": true
+  },
+
+  "documentationCutover": {
+    "file": "knowledge/CURRENT_STATE.md",
+    "beforeSha256": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+    "afterSha256": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+    "afterBytes": 146279,
+    "linesAddedRelativeToHead": 311,
+    "linesDeletedRelativeToHead": 0,
+    "purelyAdditive": true,
+    "eolPreserved": "LF",
+    "historicalRecordPreserved": true,
+    "reconciliationArtifact": "COMMIT_5R1C37_CHECKPOINT_75_MANIFEST_DOCUMENTATION_ENTRY_RECONCILIATION.json"
+  },
+
+  "manifestReverificationEvidence": {
+    "checkpoint74Manifest": "COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256",
+    "checkpoint74EntriesOk": 6,
+    "checkpoint74EntriesFailed": 1,
+    "checkpoint74FailedEntry": "knowledge/CURRENT_STATE.md",
+    "checkpoint74FailureClassification": "EXPECTED_DOCUMENTATION_DIVERGENCE_NOT_AN_INTEGRITY_DEFECT",
+    "checkpoint73Manifest": "COMMIT_5R1C37_CHECKPOINT_73_EVIDENCE.sha256",
+    "checkpoint73EntriesOk": 3,
+    "checkpoint73EntriesFailed": 0
+  },
+
+  "preservationRefsVerified": {
+    "refs/heads/governance/ungoverned-ff1bc2b1": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+    "refs/tags/governance/pre-remediation-ff1bc2b1": "707990bdd89c974c4e3ec6afa90e1365fcbb53a3",
+    "ungovernedCommitObjectPresent": true
+  },
+
+  "unresolvedBlockers": [
+    { "id": "B1", "severity": "HIGH", "blocker": "Concurrent third-party writer not proven disabled; owner must stop it before the next governed operation.", "ownerActionRequired": true },
+    { "id": "B2", "severity": "HIGH", "blocker": "Three semantic /health changes deferred; owner decisions required on readiness-touch removal, the service response-contract break, and restoration of the 800-character disclosure guard.", "ownerActionRequired": true },
+    { "id": "B3", "severity": "MEDIUM", "blocker": "tests/health-endpoint.test.mjs quarantined; must be adjudicated with the three semantic paths and never admitted to the governed corpus independently.", "ownerActionRequired": true },
+    { "id": "B4", "severity": "MEDIUM", "blocker": "IDEA.md is an unlabelled byte-identical duplicate of the controlling CURRENT_STATE.md; owner decision required on deletion or non-authoritative renaming.", "ownerActionRequired": true },
+    { "id": "B5", "severity": "LOW", "blocker": "tax-engines/CON/domain-config.js and tax-engines/CON/subclassifier.js cannot be materialised on Windows (reserved device name); owner decision pending.", "ownerActionRequired": true },
+    { "id": "B6", "severity": "LOW", "blocker": "Five stale .git/index.stash.*.lock files from July 2026 remain; removal requires human authorization.", "ownerActionRequired": true }
+  ],
+
+  "gateResults": {
+    "gate01_headEqualsGovernedBaseline": true,
+    "gate02_remoteTipEqualsGovernedBaseline": true,
+    "gate03_noStagedPaths": true,
+    "gate04_workingTreeDiscrepancyReconciled": true,
+    "gate05_checkpoint74EvidenceHashesVerified": true,
+    "gate06_noOpusMarkerProviderContactOrActiveAttempt": true,
+    "gate07_sevenPathAdjudicationComplete": true,
+    "gate08_healthChangesGovernedUnderSeparateRecord": true,
+    "gate09_noProhibitedMutation": true,
+    "gate10_resumableCheckpointWrittenAndHashRecorded": true,
+    "gate11_noSealedEvidenceOrManifestEdited": true,
+    "gate12_currentStateUpdatePurelyAdditive": true
+  },
+
+  "prohibitedOperationsNotPerformed": [
+    "git reset", "git checkout", "git merge", "git pull", "git commit", "git amend",
+    "git push", "git force-push", "git add / staging", "deployment",
+    "deletion of protected or unexplained files", "editing of sealed evidence or sealed manifests",
+    "Opus external-provider invocation", "consumption of the one-use Opus authorization",
+    "creation of a candidate runtime fix", "full R20 regression", "reindexing", "migration",
+    "production smoke test", "external review transport",
+    "termination, disabling or modification of any process or service",
+    "beginning C38, E2, A15 or Phase 10B"
+  ],
+
+  "nextExactOperation": "OWNER ACTION FIRST: stop the concurrent third-party writer and confirm it cannot re-enter this working tree. THEN, and only then: reissue hash-bound governance for COMMIT 5R1-C37 based on the verified checkpoint-75 state, binding to parent ee664eab4529c636f34cb6d37d23a6a497886a17 and to the checkpoint-75 evidence hashes recorded in COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256. The reissued prompt must carry a separate decision on the deferred /health patch record. Do not begin C38, E2, A15 or Phase 10B. Do not consume the one-use Opus authorization outside a reissued C37 prompt.",
+
+  "completionClaims": {
+    "phase10AClosed": false,
+    "r20Complete": false,
+    "c37Complete": false,
+    "healthChangeApproved": false,
+    "commitMade": false,
+    "pushMade": false,
+    "acceptanceOrClosureClaimed": false
+  }
+}

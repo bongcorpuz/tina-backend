@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_B1_QUALIFYING_LOGON_CONFIRMED_GATEWAY_ABSENT_B1_FULLY_CLOSED",
+  "generatedAtUtc": "2026-08-07T22:34:27Z",
+
+  "context": "Every preflight taken during checkpoints 77 through 80's review-invocation phase (latest at 2026-08-07T17:50:11Z) found NO qualifying logon since the startup-entry disablement, so B1 was carried as CLOSED_SUBJECT_TO_NEXT_LOGON_CONFIRMATION at every prior checkpoint including the initial draft of checkpoint 80. During this checkpoint's final-verification pass, a genuine new boot/logon event was discovered to have occurred in the interim, satisfying the governing prompt's own closure criteria: 'If a qualifying logon occurred and no gateway process appeared: capture exact evidence, close B1 fully only if the governing criteria are satisfied.' This artifact captures that evidence. It is discovered and recorded BEFORE the checkpoint-80 manifest is sealed, so the recovery checkpoint's B1 field is updated to reflect it rather than silently left stale.",
+
+  "disablementEvent": {
+    "utc": "2026-08-07T06:33:15Z",
+    "mechanism": "Rename of the Startup-folder entry to Hermes_Gateway_tina-orchestrator.vbs.DISABLED-BY-C37-GOVERNANCE (checkpoint 77)."
+  },
+
+  "boundaryConditionAtEveryPriorCheck": {
+    "checks": [
+      { "checkedAtUtc": "2026-08-07T06:33:51Z", "explorerCreationUtc": "2026-08-06T23:54:44Z", "systemBootUtc": "2026-08-06T23:54:21Z", "logonOccurredSinceDisablement": false },
+      { "checkedAtUtc": "2026-08-07T04:39:33Z (checkpoint 76, prior to disablement)", "note": "N/A, predates disablement" },
+      { "checkedAtUtc": "2026-08-07T17:50:11Z", "explorerCreationUtc": "2026-08-06T23:54:44Z", "systemBootUtc": "2026-08-06T23:54:21Z", "logonOccurredSinceDisablement": false, "note": "Same boot session as all prior checks; no reboot yet." }
+    ],
+    "consistentPattern": "Every check from 06:33:51Z through 17:50:11Z on 2026-08-07 observed the SAME boot session (2026-08-06T23:54:21Z), confirming the machine had not been restarted at any point during checkpoints 76 through the start of checkpoint 80's review invocation."
+  },
+
+  "newBootEventDiscovered": {
+    "discoveredDuringCheck": "COMMIT_5R1C37_CHECKPOINT_80 final-verification pass",
+    "checkedAtUtc": "2026-08-07T22:34:27Z",
+    "systemLastBootUpTimeUtc": "2026-08-07T18:26:41Z",
+    "explorerExeCreationUtc": "2026-08-07T18:27:03Z",
+    "gapBetweenBootAndExplorerSeconds": 22,
+    "gapAssessment": "A 22-second gap between kernel boot completion and explorer.exe startup is consistent with a normal Windows boot-to-logon sequence, not merely an explorer.exe restart within a still-running session (which would show explorer's creation time far later than boot time, or boot time unchanged from the prior session).",
+    "priorSessionBootUtc": "2026-08-06T23:54:21Z",
+    "bootTimeChangedConfirmingGenuineReboot": true,
+    "bootOccurredAfterDisablement": true,
+    "gapBetweenDisablementAndRebootHours": "approximately 11.9 hours",
+    "bootOccurredAfterReviewerInvocationEnded": true,
+    "reviewerInvocationEndedUtc": "2026-08-07T18:11:49Z",
+    "note": "The reboot (18:26:41Z) occurred about 15 minutes AFTER the Opus 5 reviewer invocation completed (18:11:49Z), and about 4 hours before this final-verification check (22:34:27Z). It did not occur during, and was not caused by, the reviewer invocation itself."
+  },
+
+  "gatewayStateAfterTheNewBoot": {
+    "checkedAtUtc": "2026-08-07T22:34:27Z",
+    "pid21112": "NOT_RUNNING",
+    "pid4472": "NOT_RUNNING",
+    "pythonExeProcesses": 0,
+    "activeStartupTriggerPresent": false,
+    "disabledMarkerPresent": true,
+    "disabledMarkerSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+    "disabledMarkerHashUnchangedSinceCheckpoint77Disablement": true,
+    "openClawGatewayTaskState": "Disabled",
+    "openClawGatewayTaskUnmodified": true,
+    "newTinaOrchestratorProcessAppearedAcrossTheReboot": false
+  },
+
+  "governingCriteriaAssessment": {
+    "criterion": "If a qualifying logon occurred and no gateway process appeared: capture exact evidence, close B1 fully only if the governing criteria are satisfied.",
+    "qualifyingLogonOccurred": true,
+    "qualifyingLogonBasis": "A full system reboot (new LastBootUpTime, new explorer.exe session) is a strictly stronger event than a mere user logon within an existing session, and necessarily includes a fresh logon. This satisfies the criterion at least as strongly as a plain logon would.",
+    "noGatewayProcessAppeared": true,
+    "startupTriggerRemainedDisabledAcrossTheReboot": true,
+    "disabledMarkerIntegrityPreservedAcrossTheReboot": true,
+    "governingCriteriaSatisfied": true
+  },
+
+  "b1Disposition": {
+    "priorDisposition": "CLOSED_SUBJECT_TO_NEXT_LOGON_CONFIRMATION",
+    "newDisposition": "CLOSED",
+    "closureIsFullNotProvisional": true,
+    "closureBasis": "Automatic re-entry of the tina-orchestrator gateway at user logon/system boot is empirically disproven across an actual reboot, not merely inferred from the trigger's disabled state alone. The disabled marker's hash is unchanged, confirming the disablement itself was not tampered with or reversed at any point across the reboot.",
+    "residualCaveatCarriedForward": "This closes automatic re-entry at logon/boot specifically. It does not and cannot prove no deliberate manual re-launch could occur; that was never the disablement's purpose and remains outside this evidence's scope, exactly as noted at checkpoint 77."
+  },
+
+  "recoveryCheckpoint80FieldUpdated": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_80_opus5_review_valid_approval_nonterminal.json",
+    "fieldPath": "blockers[0] (B1)",
+    "updatedBeforeManifestSealing": true,
+    "updatedValue": { "id": "B1", "status": "CLOSED", "changeThisOperation": "CLOSED this operation, on reboot evidence discovered during final verification." }
+  }
+}

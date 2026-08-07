@@ -1,0 +1,636 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DIFF_PROOF_PASS",
+  "generatedUtc": "2026-08-02T07:20:30.651691Z",
+  "originalRunner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+    "bytes": 79610,
+    "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795"
+  },
+  "compatibleRunner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint71-opus-compatible.mjs",
+    "bytes": 86892,
+    "sha256": "6c85d355d46fe5808e7c21996e8ca44255d6b8933021eaf84fcdab7dd61e90bc"
+  },
+  "protectedFinalPreflight69": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 5290,
+    "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f"
+  },
+  "changedHunks": [
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 2,
+        "end": 3,
+        "lines": [
+          "// Checkpoint-69 manifest-indexed, read-only, exact-once Opus transport.",
+          "// This driver never mutates runtime, oracle, fixtures, registry, WAL, or Git."
+        ]
+      },
+      "compatibleLines": {
+        "start": 2,
+        "end": 4,
+        "lines": [
+          "// Checkpoint-71 compatibility wrapper for the prepared checkpoint-69 transport.",
+          "// This derived driver preserves the original runner and treats its protected",
+          "// checkpoint-69 final preflight as an immutable input, never as a new output."
+        ]
+      },
+      "semanticCategory": "COMPATIBILITY_ROLE_COMMENT"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 14,
+        "end": 16,
+        "lines": [
+          "const SESSION = 'C:/Users/USER/.codex/sessions/2026/08/01/rollout-2026-08-01T21-34-27-019fbd88-8065-7011-99a0-f59a6588d4d4.jsonl';",
+          "const VALIDATION_ROOT = 'C:/tmp/c37-manifest-indexed-checkpoint69-validation';",
+          "const INVOCATION_ROOT = 'C:/tmp/c37-manifest-indexed-checkpoint69-invocation';"
+        ]
+      },
+      "compatibleLines": {
+        "start": 15,
+        "end": 17,
+        "lines": [
+          "const SESSION = process.env.C37_CODEX_SESSION_TELEMETRY ?? null;",
+          "const VALIDATION_ROOT = 'C:/tmp/c37-manifest-indexed-checkpoint71-validation';",
+          "const INVOCATION_ROOT = 'C:/tmp/c37-manifest-indexed-checkpoint71-invocation';"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_IDENTITY_AND_SESSION_BINDING"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 25,
+        "end": 30,
+        "lines": [
+          "  checkpoint: 'bc2201dbfb8d8f7a5938939090069d89ead4d9743461c5d20e42ee6b7f93a607',",
+          "  checkpointEvent: '326b0ab78de8b53ab9c3814b24fbd550d6f27502ed6f4f01b1da128d12745997',",
+          "  checkpointReplay: '870c0295c5c898fcdbeb9b9e07f86e8ec4f253e9eff20e2fd99c3bc5c5daa10f',",
+          "  checkpointEvidence: '07e329f8ec4eebc8588a8cda4e016a5018c3f74f458f32a4e8c2f3d1062c88a5',",
+          "  handoff: 'e3a2b72ed4167886a2c99e757fcb41f6b536325f3c2fc8e343a09d6887e8cb3d',",
+          "  prompt: 'ca192be195a35cedbaefb6e208a051e788d10a163137091e303d60da6f6f75f4',"
+        ]
+      },
+      "compatibleLines": {
+        "start": 26,
+        "end": 33,
+        "lines": [
+          "  checkpoint: '9e7537d5e93399f2e721ce60478cf12f1dd52f289ea3dead0b4e7f643115cf50',",
+          "  checkpointEvent: '15dbab12f1e800c7e9cf59267241b93fe1465ddb874e8f9638a87bb1ebb21d88',",
+          "  checkpointReplay: '0c35018e85d9dc307c18c33f09f372d3787b76db43fb41e5d19522396a9c9f71',",
+          "  checkpointEvidence: '979d0373df67a18e34073fec74b524d2d91ebfbc578a73f4e100260a91195b2b',",
+          "  handoff: 'd57f1abf0ab242ab5c9a0337842c568935f941f5bbca9af5c48c6d022da218b5',",
+          "  prompt: 'dede43a0007ec2bb994071a7fc330bcf877c767ceeb9eb46f762fc1e7df2d8d3',",
+          "  originalRunner: '87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795',",
+          "  protectedFinalPreflight69: '6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f',"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_IDENTITY_AND_SESSION_BINDING"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 60,
+        "end": 61,
+        "lines": [
+          "  prompt: 'C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-MANIFEST-INDEXED-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-69.md',",
+          "  checkpoint: R('COMMIT_5R1C37_RECOVERY_CHECKPOINT_69_manifest_indexed_capsule_complete_token_reserve_safe_pause_pre_invocation.json'),"
+        ]
+      },
+      "compatibleLines": {
+        "start": 63,
+        "end": 64,
+        "lines": [
+          "  prompt: 'C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-COMPATIBLE-OPUS-INVOKE-AND-FINALIZATION-FROM-CHECKPOINT-71.md',",
+          "  checkpoint: R('COMMIT_5R1C37_RECOVERY_CHECKPOINT_71_prepared_transport_mismatch_pre_invocation.json'),"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_IDENTITY_AND_SESSION_BINDING"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 64,
+        "end": 66,
+        "lines": [
+          "  checkpointReplay: R('COMMIT_5R1C37_CHECKPOINT_69_IDEMPOTENCE_REPLAY.json'),",
+          "  checkpointEvidence: R('COMMIT_5R1C37_CHECKPOINT_69_CAPSULE_COMPLETE_TOKEN_SAFE_PAUSE_EVIDENCE.sha256'),",
+          "  handoff: R('COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_69.md'),"
+        ]
+      },
+      "compatibleLines": {
+        "start": 67,
+        "end": 69,
+        "lines": [
+          "  checkpointReplay: R('COMMIT_5R1C37_CHECKPOINT_71_IDEMPOTENCE_REPLAY.json'),",
+          "  checkpointEvidence: R('COMMIT_5R1C37_CHECKPOINT_71_PREPARED_TRANSPORT_MISMATCH_EVIDENCE.sha256'),",
+          "  handoff: R('COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_71.md'),"
+        ]
+      },
+      "semanticCategory": "IMMUTABLE_INPUT_AND_NONCOLLIDING_OUTPUT_BINDINGS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 88,
+        "end": 96,
+        "lines": [
+          "  finalPreflight: R('COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json'),",
+          "  marker: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_INVOCATION_MARKER.json'),",
+          "  capture: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_CLI_CAPTURE.json'),",
+          "  stdout: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_STDOUT.txt'),",
+          "  stderr: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_STDERR.txt'),",
+          "  reviewJson: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_REVIEW.json'),",
+          "  reviewMd: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_REVIEW.md'),",
+          "  receipt: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_TRANSMISSION_RECEIPT.json'),",
+          "  reviewCoverage: R('COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_REVIEW_COVERAGE.json'),"
+        ]
+      },
+      "compatibleLines": {
+        "start": 91,
+        "end": 107,
+        "lines": [
+          "  originalRunner: path.join(REPO, 'evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs'),",
+          "  protectedFinalPreflight69: R('COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json'),",
+          "  continuationPreflight: R('COMMIT_5R1C37_CHECKPOINT_71_COMPATIBILITY_CONTINUATION_PREFLIGHT.json'),",
+          "  derivationPlan: R('COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DERIVATION_PLAN.json'),",
+          "  diffProof: R('COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DIFF_PROOF.json'),",
+          "  outputLedger: R('COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_OUTPUT_LEDGER.json'),",
+          "  dryPreflight: R('COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_DRY_PREFLIGHT.json'),",
+          "  finalPreflight: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json'),",
+          "  marker: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_INVOCATION_MARKER.json'),",
+          "  capture: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_CLI_CAPTURE.json'),",
+          "  stdout: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_STDOUT.txt'),",
+          "  stderr: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_STDERR.txt'),",
+          "  reviewJson: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_REVIEW.json'),",
+          "  reviewMd: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_REVIEW.md'),",
+          "  receipt: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_TRANSMISSION_RECEIPT.json'),",
+          "  reviewCoverage: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_REVIEW_COVERAGE.json'),",
+          "  finalAdjudication: R('COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_ADJUDICATION.json'),"
+        ]
+      },
+      "semanticCategory": "IMMUTABLE_INPUT_AND_NONCOLLIDING_OUTPUT_BINDINGS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 101,
+        "end": 101,
+        "lines": [
+          "  F.toolPlan, F.toolValidation, F.bootstrapJson, F.bootstrapMd, F.contextProjection, F.transportPreflight];"
+        ]
+      },
+      "compatibleLines": {
+        "start": 112,
+        "end": 113,
+        "lines": [
+          "  F.toolPlan, F.toolValidation, F.bootstrapJson, F.bootstrapMd, F.contextProjection, F.transportPreflight,",
+          "  F.continuationPreflight, F.derivationPlan, F.diffProof, F.outputLedger, F.dryPreflight];"
+        ]
+      },
+      "semanticCategory": "IMMUTABLE_INPUT_AND_NONCOLLIDING_OUTPUT_BINDINGS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 103,
+        "end": 103,
+        "lines": [
+          "  F.reviewJson, F.reviewMd, F.receipt, F.reviewCoverage];"
+        ]
+      },
+      "compatibleLines": {
+        "start": 115,
+        "end": 115,
+        "lines": [
+          "  F.reviewJson, F.reviewMd, F.receipt, F.reviewCoverage, F.finalAdjudication];"
+        ]
+      },
+      "semanticCategory": "IMMUTABLE_INPUT_AND_NONCOLLIDING_OUTPUT_BINDINGS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 378,
+        "end": 379,
+        "lines": [
+          "  assert(checkpoint.ordinal === 69 && checkpoint.safeToResume === true && checkpoint.activeAttemptId === null",
+          "    && checkpoint.eventSha256 === EXPECTED.checkpointEvent && checkpoint.status === 'C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION', 'CHECKPOINT_FIELDS');"
+        ]
+      },
+      "compatibleLines": {
+        "start": 390,
+        "end": 391,
+        "lines": [
+          "  assert(checkpoint.ordinal === 71 && checkpoint.safeToResume === true && checkpoint.activeAttemptId === null",
+          "    && checkpoint.eventSha256 === EXPECTED.checkpointEvent && checkpoint.status === 'C37_CHECKPOINT_70_PREPARED_TRANSPORT_MISMATCH', 'CHECKPOINT_FIELDS');"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_CONTINUITY_VALIDATION"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 386,
+        "end": 386,
+        "lines": [
+          "  const evidence = validateShaManifest(F.checkpointEvidence, 19);"
+        ]
+      },
+      "compatibleLines": {
+        "start": 398,
+        "end": 398,
+        "lines": [
+          "  const evidence = validateShaManifest(F.checkpointEvidence, 33);"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_CONTINUITY_VALIDATION"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 389,
+        "end": 389,
+        "lines": [
+          "  assert(log.length === 6 && log.map((x) => x.ordinal).join(',') === '64,65,66,67,68,69'"
+        ]
+      },
+      "compatibleLines": {
+        "start": 401,
+        "end": 401,
+        "lines": [
+          "  assert(log.length === 8 && log.map((x) => x.ordinal).join(',') === '64,65,66,67,68,69,70,71'"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_CONTINUITY_VALIDATION"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 440,
+        "end": 440,
+        "lines": [
+          "  assert(['c37-manifest-indexed-checkpoint69-validation', 'c37-manifest-indexed-checkpoint69-invocation'].includes(path.basename(resolved)), 'TEMP_BASENAME');"
+        ]
+      },
+      "compatibleLines": {
+        "start": 452,
+        "end": 452,
+        "lines": [
+          "  assert(['c37-manifest-indexed-checkpoint71-validation', 'c37-manifest-indexed-checkpoint71-invocation'].includes(path.basename(resolved)), 'TEMP_BASENAME');"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_TEMP_AND_CURRENT_SESSION_GUARDS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 442,
+        "end": 442,
+        "lines": [
+          "  assert(ownership.nonce === ownershipNonce && ownership.owner === 'PHASE-10A14-R20 COMMIT 5R1-C37 checkpoint 69', 'TEMP_OWNERSHIP');"
+        ]
+      },
+      "compatibleLines": {
+        "start": 454,
+        "end": 454,
+        "lines": [
+          "  assert(ownership.nonce === ownershipNonce && ownership.owner === 'PHASE-10A14-R20 COMMIT 5R1-C37 checkpoint 71', 'TEMP_OWNERSHIP');"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_TEMP_AND_CURRENT_SESSION_GUARDS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 455,
+        "end": 455,
+        "lines": [
+          "  fs.writeFileSync(path.join(VALIDATION_ROOT, 'OWNERSHIP.json'), stable({ owner: 'PHASE-10A14-R20 COMMIT 5R1-C37 checkpoint 69', nonce }), { flag: 'wx' });"
+        ]
+      },
+      "compatibleLines": {
+        "start": 467,
+        "end": 467,
+        "lines": [
+          "  fs.writeFileSync(path.join(VALIDATION_ROOT, 'OWNERSHIP.json'), stable({ owner: 'PHASE-10A14-R20 COMMIT 5R1-C37 checkpoint 71', nonce }), { flag: 'wx' });"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_TEMP_AND_CURRENT_SESSION_GUARDS"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 480,
+        "end": 480,
+        "lines": [
+          "  assert(fs.existsSync(SESSION), 'SESSION_TELEMETRY_FILE');"
+        ]
+      },
+      "compatibleLines": {
+        "start": 492,
+        "end": 492,
+        "lines": [
+          "  assert(typeof SESSION === 'string' && SESSION.length > 0 && fs.existsSync(SESSION), 'CURRENT_SESSION_TELEMETRY_FILE_REQUIRED');"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_TEMP_AND_CURRENT_SESSION_GUARDS"
+    },
+    {
+      "opcode": "insert",
+      "originalLines": {
+        "start": 765,
+        "end": 764,
+        "lines": []
+      },
+      "compatibleLines": {
+        "start": 777,
+        "end": 858,
+        "lines": [
+          "function compatibilityPreflight() {",
+          "  for (const file of INVOCATION_OUTPUTS) assert(!fs.existsSync(file), `COMPATIBLE_OUTPUT_COLLISION:${rel(file)}`);",
+          "  assert(!fs.existsSync(INVOCATION_ROOT) && !fs.existsSync(VALIDATION_ROOT), 'TASK_TEMP_RESIDUE');",
+          "  assert(fs.existsSync(F.originalRunner) && shaFile(F.originalRunner) === EXPECTED.originalRunner, 'ORIGINAL_RUNNER_IDENTITY');",
+          "  assert(fs.statSync(F.originalRunner).size === 79610, 'ORIGINAL_RUNNER_BYTES');",
+          "  assert(fs.existsSync(F.protectedFinalPreflight69)",
+          "    && fs.statSync(F.protectedFinalPreflight69).size === 5290",
+          "    && shaFile(F.protectedFinalPreflight69) === EXPECTED.protectedFinalPreflight69,",
+          "  'PROTECTED_FINAL_PREFLIGHT_69_IDENTITY');",
+          "  assert(readJson(F.continuationPreflight).pass === true, 'CONTINUATION_PREFLIGHT');",
+          "  const derivationPlan = readJson(F.derivationPlan);",
+          "  const diffProof = readJson(F.diffProof);",
+          "  const outputLedger = readJson(F.outputLedger);",
+          "  assert(derivationPlan.pass === true && diffProof.pass === true && outputLedger.pass === true",
+          "    && diffProof.compatibleRunner.sha256 === shaFile(F.driver), 'COMPATIBILITY_EVIDENCE');",
+          "  const chain = validateCheckpointAndAuthorization();",
+          "  const gitState = gitSnapshot();",
+          "  const protectedState = validateProtected();",
+          "  const runtimeState = buildRuntimeState();",
+          "  const managedPolicy = managedPolicyAudit();",
+          "  const toolValidation = readJson(F.toolValidation);",
+          "  const contextProjection = readJson(F.contextProjection);",
+          "  const gates = {",
+          "    checkpoint71Continuity: chain.evidence.pass && chain.replay.pass,",
+          "    gitIdentityAndCleanBaseline: gitState.pass,",
+          "    originalRunnerImmutableInput: shaFile(F.originalRunner) === EXPECTED.originalRunner,",
+          "    protectedFinalPreflight69ImmutableInput: shaFile(F.protectedFinalPreflight69) === EXPECTED.protectedFinalPreflight69,",
+          "    protectedResidueAndC35: protectedState.pass,",
+          "    runtimeOracleFixtureRegistryWalUnchanged: protectedState.pass,",
+          "    package57Integrity: runtimeState.pkg.rows.length === 57 && runtimeState.pkg.rawBytes === EXPECTED.packageBytes,",
+          "    capsuleIdentityAndCoverage: runtimeState.capsuleState.coverage.pass === true && shaFile(F.capsule) === EXPECTED.capsule,",
+          "    authorizationUnused: chain.authorization.newAuthorization.status === 'AUTHORIZED_UNUSED'",
+          "      && chain.authorization.authorizationConsumed === false,",
+          "    invocationCountZero: chain.authorization.invocationMarkerExists === false && !fs.existsSync(F.marker),",
+          "    allNewOutputsAbsent: INVOCATION_OUTPUTS.every((file) => !fs.existsSync(file)),",
+          "    preparedIsolatedMcpValidationPreserved: toolValidation.pass === true",
+          "      && toolValidation.isolatedMcpValidation.pass === true,",
+          "    readOnlyAllowlistEnforcementPreserved: toolValidation.pass === true && managedPolicy.pass,",
+          "    bootstrapAndProviderProjectionPreserved: readJson(F.bootstrapJson).pass === true",
+          "      && contextProjection.pass === true && readJson(F.transportPreflight).pass === true,",
+          "    providerProjectionWithinCapacity: contextProjection.projectedTotalTokens === 504336",
+          "      && contextProjection.marginBelowProviderLimitTokens === 495664,",
+          "    noTaskTempResidue: !fs.existsSync(INVOCATION_ROOT) && !fs.existsSync(VALIDATION_ROOT),",
+          "    cliBinaryIdentityWithoutExecution: fs.statSync(CLI).size === EXPECTED.cliBytes && shaFile(CLI) === EXPECTED.cliSha256,",
+          "  };",
+          "  const pass = Object.values(gates).every(Boolean);",
+          "  const result = {",
+          "    schemaVersion: 1,",
+          "    unit: 'PHASE-10A14-R20 COMMIT 5R1-C37',",
+          "    classification: pass",
+          "      ? 'C37_CHECKPOINT_71_COMPATIBLE_DRY_PREFLIGHT_PASS_STOP_BEFORE_INVOCATION'",
+          "      : 'C37_CHECKPOINT_71_COMPATIBLE_DRY_PREFLIGHT_FAILED',",
+          "    generatedUtc: now(),",
+          "    checkpoint: { ordinal: 71, ...fileRecord(F.checkpoint), eventSha256: EXPECTED.checkpointEvent },",
+          "    originalRunner: fileRecord(F.originalRunner),",
+          "    compatibleRunner: fileRecord(F.driver),",
+          "    protectedFinalPreflight69: { ...fileRecord(F.protectedFinalPreflight69), role: 'IMMUTABLE_INPUT' },",
+          "    continuationPreflight: fileRecord(F.continuationPreflight),",
+          "    authorization: { ...fileRecord(F.authorization), status: 'AUTHORIZED_UNUSED', consumed: false,",
+          "      invocationCount: 0, remainingInvocationCount: 1, retryAuthorized: false },",
+          "    outputAbsence: INVOCATION_OUTPUTS.map((file) => ({ path: rel(file), exists: fs.existsSync(file) })),",
+          "    contextCapacity: {",
+          "      providerProjectionTokens: contextProjection.projectedTotalTokens,",
+          "      providerMarginTokens: contextProjection.marginBelowProviderLimitTokens,",
+          "      currentExecutorSessionTelemetryBound: typeof SESSION === 'string' && SESSION.length > 0,",
+          "      currentExecutorRemainingTokens: null,",
+          "      requiredRemainingTokens: EXPECTED.requiredRemaining,",
+          "      mandatoryPostCaptureReserveTokens: EXPECTED.reserve,",
+          "      status: 'MUST_REMEASURE_FROM_CURRENT_CODEX_SESSION_IMMEDIATELY_BEFORE_APPROVED_INVOCATION',",
+          "    },",
+          "    providerRequestObserved: false,",
+          "    modelRequestSubmitted: false,",
+          "    invocationMarkerCreated: false,",
+          "    authorizationConsumed: false,",
+          "    stopBoundary: 'STOP_BEFORE_MARKER_OR_PROVIDER_INVOCATION',",
+          "    gates,",
+          "    pass,",
+          "  };",
+          "  process.stdout.write(stable(result));",
+          "  if (!pass) process.exitCode = 3;",
+          "}",
+          ""
+        ]
+      },
+      "semanticCategory": "NO_PROVIDER_COMPATIBILITY_PREFLIGHT_STOP_BOUNDARY"
+    },
+    {
+      "opcode": "insert",
+      "originalLines": {
+        "start": 772,
+        "end": 771,
+        "lines": []
+      },
+      "compatibleLines": {
+        "start": 866,
+        "end": 869,
+        "lines": [
+          "  assert(shaFile(F.originalRunner) === EXPECTED.originalRunner, 'ORIGINAL_RUNNER_IDENTITY');",
+          "  assert(fs.statSync(F.protectedFinalPreflight69).size === 5290",
+          "    && shaFile(F.protectedFinalPreflight69) === EXPECTED.protectedFinalPreflight69,",
+          "  'PROTECTED_FINAL_PREFLIGHT_69_IDENTITY');"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 781,
+        "end": 781,
+        "lines": [
+          "    checkpoint69Continuity: chain.evidence.pass && chain.replay.pass,"
+        ]
+      },
+      "compatibleLines": {
+        "start": 879,
+        "end": 881,
+        "lines": [
+          "    checkpoint71Continuity: chain.evidence.pass && chain.replay.pass,",
+          "    originalRunnerImmutableInput: shaFile(F.originalRunner) === EXPECTED.originalRunner,",
+          "    protectedFinalPreflight69ImmutableInput: shaFile(F.protectedFinalPreflight69) === EXPECTED.protectedFinalPreflight69,"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 800,
+        "end": 800,
+        "lines": [
+          "      ? 'C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT_PASS' : 'C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT_FAIL',"
+        ]
+      },
+      "compatibleLines": {
+        "start": 900,
+        "end": 900,
+        "lines": [
+          "      ? 'C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT_PASS' : 'C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT_FAIL',"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 806,
+        "end": 806,
+        "lines": [
+          "    process.stdout.write(stable({ classification: token.gatePass ? 'C37_CHECKPOINT_69_READ_ONLY_OR_TRANSPORT_BLOCKED' : 'C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION',"
+        ]
+      },
+      "compatibleLines": {
+        "start": 906,
+        "end": 906,
+        "lines": [
+          "    process.stdout.write(stable({ classification: token.gatePass ? 'C37_CHECKPOINT_71_READ_ONLY_OR_TRANSPORT_BLOCKED' : 'C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION',"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 819,
+        "end": 819,
+        "lines": [
+          "    checkpoint: { ordinal: 69, ...fileRecord(F.checkpoint), eventSha256: EXPECTED.checkpointEvent },"
+        ]
+      },
+      "compatibleLines": {
+        "start": 919,
+        "end": 919,
+        "lines": [
+          "    checkpoint: { ordinal: 71, ...fileRecord(F.checkpoint), eventSha256: EXPECTED.checkpointEvent },"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "insert",
+      "originalLines": {
+        "start": 826,
+        "end": 825,
+        "lines": []
+      },
+      "compatibleLines": {
+        "start": 926,
+        "end": 929,
+        "lines": [
+          "    originalRunner: fileRecord(F.originalRunner), compatibleRunner: fileRecord(F.driver),",
+          "    protectedFinalPreflight69: fileRecord(F.protectedFinalPreflight69),",
+          "    compatibility: { continuationPreflight: fileRecord(F.continuationPreflight), derivationPlan: fileRecord(F.derivationPlan),",
+          "      diffProof: fileRecord(F.diffProof), outputLedger: fileRecord(F.outputLedger), dryPreflight: fileRecord(F.dryPreflight) },"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 840,
+        "end": 840,
+        "lines": [
+          "  fs.writeFileSync(path.join(INVOCATION_ROOT, 'OWNERSHIP.json'), stable({ owner: 'PHASE-10A14-R20 COMMIT 5R1-C37 checkpoint 69', nonce, markerSha256: markerRecord.sha256 }), { flag: 'wx' });"
+        ]
+      },
+      "compatibleLines": {
+        "start": 944,
+        "end": 944,
+        "lines": [
+          "  fs.writeFileSync(path.join(INVOCATION_ROOT, 'OWNERSHIP.json'), stable({ owner: 'PHASE-10A14-R20 COMMIT 5R1-C37 checkpoint 71', nonce, markerSha256: markerRecord.sha256 }), { flag: 'wx' });"
+        ]
+      },
+      "semanticCategory": "CHECKPOINT71_INVOCATION_GUARDS_AND_PROVENANCE"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 986,
+        "end": 986,
+        "lines": [
+          "  if (mode === '--prepare') prepare();"
+        ]
+      },
+      "compatibleLines": {
+        "start": 1090,
+        "end": 1090,
+        "lines": [
+          "  if (mode === '--compatibility-preflight') compatibilityPreflight();"
+        ]
+      },
+      "semanticCategory": "COMPATIBLE_MODE_BOUNDARY"
+    },
+    {
+      "opcode": "replace",
+      "originalLines": {
+        "start": 988,
+        "end": 988,
+        "lines": [
+          "  else throw new Error('USAGE: --prepare | --invoke');"
+        ]
+      },
+      "compatibleLines": {
+        "start": 1092,
+        "end": 1092,
+        "lines": [
+          "  else throw new Error('USAGE: --compatibility-preflight | --invoke');"
+        ]
+      },
+      "semanticCategory": "COMPATIBLE_MODE_BOUNDARY"
+    }
+  ],
+  "changedHunkCount": 25,
+  "unauthorizedDifferences": [],
+  "unauthorizedDifferenceCount": 0,
+  "semanticInvariants": {
+    "originalRunnerHashUnchanged": true,
+    "protectedPreflightHashUnchanged": true,
+    "cliPathUnchanged": true,
+    "modelUnchanged": true,
+    "cliVersionUnchanged": true,
+    "emptyMcpUnchanged": true,
+    "packageAggregateUnchanged": true,
+    "capsuleHashUnchanged": true,
+    "authorizationHashUnchanged": true,
+    "requiredRemainingUnchanged": true,
+    "reserveUnchanged": true,
+    "systemPromptUnchanged": true,
+    "outputSchemaUnchanged": true,
+    "requiredSpotPathsUnchanged": true,
+    "protectedPreflightExcludedFromNewOutputList": true,
+    "checkpoint71OutputsOnly": true
+  },
+  "syntaxCheck": {
+    "command": "node --check evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint71-opus-compatible.mjs",
+    "exitCode": 0,
+    "pass": true
+  },
+  "preparedTransportIdentity": "UNCHANGED",
+  "pass": true
+}

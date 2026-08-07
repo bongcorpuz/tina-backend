@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_OUT_OF_SCOPE_REGRESSION_RECONCILIATION_PASS_NO_REMEDIATION",
+  "generatedUtc": "2026-08-03T13:29:25.573Z",
+  "reportedCommand": "npm run test",
+  "adjudication": {
+    "commandWasOutOfScope": true,
+    "rerunByCurrentContinuation": false,
+    "runtimeBehaviorFailureAttributedToCompatibleWrapper": false,
+    "failuresConcernPreExistingHistoricalCurrentStateExpectationsAndIdeaScopeAssertion": true,
+    "repairAuthorized": false,
+    "repairPerformed": false,
+    "doesNotReplaceControllingRegression": true
+  },
+  "controllingRegression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+    "bytes": 2928,
+    "sha256": "fd58900dd03a66bc02f426a44ed741a97ad00875abb7ad9e4ed5ad70d5edc8c9",
+    "suitesPassed": 197,
+    "suitesTotal": 217,
+    "groupsPassed": 5429,
+    "groupsTotal": 5451,
+    "historicalStateFailures": 21,
+    "historicalScopeFailures": 1,
+    "newRuntimeBehaviorFailures": 0,
+    "pass": true
+  },
+  "currentNoMutationProof": {
+    "trackedTreeClean": true,
+    "stagingEmpty": true,
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "currentStateSha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0",
+    "ideaPath": "IDEA.md",
+    "ideaProtectedUntracked": true,
+    "ideaSha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0",
+    "compatibleWrapperSha256": "6c85d355d46fe5808e7c21996e8ca44255d6b8933021eaf84fcdab7dd61e90bc"
+  },
+  "reportedFollowupCheck": {
+    "command": "npm run check",
+    "reportedPassByGoverningPrompt": true,
+    "rerunByCurrentContinuation": false
+  },
+  "source": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-CODEX-ONLY-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-71.md",
+    "bytes": 29637,
+    "sha256": "08faa77e27a067d22cbb0f57d89f837774d599acff99df7f7c74d489de5b8cdf"
+  },
+  "pass": true
+}

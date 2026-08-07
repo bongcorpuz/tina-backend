@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_66_OPUS_REVIEW_CONTINUATION_WRAPPER_READY_NOT_SUBMITTED",
+  "generatedUtc": "2026-08-01T12:35:40.633Z",
+  "checkpoint66": {
+    "bytes": 5290,
+    "sha256": "8348750e6fb07df633514d8170c2da9c9493980f96eb61d656f205e7f4631626",
+    "eventSha256": "9371ec4dfe7243c07f50a077275b564a1c96da6511f461a9366741917f86c0c7",
+    "safeToResume": true
+  },
+  "continuationPrompt": {
+    "bytes": 23020,
+    "sha256": "870a85330fb54c3c32871e67aebec0698d65e3aca61b1e0b51ea570ff2d632f1"
+  },
+  "existingReplacementWrapperSha256": "ad8511245e2b4fecc7d12a0f53de560c62a3601b138be664bcfaa9c35a130ec8",
+  "existingReplacementAuthorizationSha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "semanticEvidenceAddedOrSubstituted": false,
+  "remainingReplacementInvocations": 1,
+  "retryAuthorized": false,
+  "submissionStatus": "NOT_SUBMITTED",
+  "pass": true
+}

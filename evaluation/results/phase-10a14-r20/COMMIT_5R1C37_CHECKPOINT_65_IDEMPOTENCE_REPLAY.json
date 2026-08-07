@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_65_IDEMPOTENCE_REPLAY_PASS",
+  "generatedUtc": "2026-08-01T10:55:26.785Z",
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "bytes": 5797,
+    "sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db"
+  },
+  "numberedCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_65_opus_cli_configuration_technical_incomplete.json",
+    "bytes": 5797,
+    "sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db"
+  },
+  "log": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+    "bytes": 8574,
+    "sha256": "7fd208e0886d887d305fb0e4a20af50e57cd4846f06f4525025e8016f19839b0"
+  },
+  "eventSha256": "d982a06613729ac6eaa0e567179f368a3f210f8ee4efcec89f9649f3f04ca7f6",
+  "checkpointRows": 2,
+  "checkpointOrdinals": [
+    64,
+    65
+  ],
+  "pointerEqualsNumberedCheckpoint": true,
+  "previousCheckpoint64Preserved": true,
+  "noDuplicateCheckpoint": true,
+  "noDuplicateOpusInvocation": true,
+  "noDuplicateReviewCapture": true,
+  "noDuplicateDocumentationCutover": true,
+  "noDuplicateStagingOrCommit": true,
+  "noManifestMutation": true,
+  "noProtectedResidueMutation": true,
+  "noActiveC37OperationProcess": true,
+  "preExistingUserOwnedClaudeExtensionProcessCount": 1,
+  "authorizationConsumed": true,
+  "retryAuthorized": false,
+  "actualReviewerDecisionToken": null,
+  "actualSubstantivePathToken": null,
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

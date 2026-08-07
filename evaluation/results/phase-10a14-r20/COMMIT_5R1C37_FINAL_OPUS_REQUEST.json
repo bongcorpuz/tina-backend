@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_OPUS_REVIEW_REQUEST_READY",
+  "reviewer": {
+    "tool": "Claude Code",
+    "model": "claude-opus-4-8",
+    "mode": "read-only",
+    "invocationBudget": 1
+  },
+  "reviewedState": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+    "bytes": 8473,
+    "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+  },
+  "reviewedStateDigest": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+  "prompt": "# PHASE-10A14-R20 COMMIT 5R1-C37 independent final review\n\nYou are the mandatory independent final reviewer: Claude Code Opus 4.8. Operate read-only. Do not edit, create, delete, stage, commit, push, or start a service. Inspect the repository evidence with read-only tools and return only the JSON object required by the supplied schema.\n\nReview checkpoint-63 continuity; the verified C36 48-path inventory; the complete C36 145-row inventory/eight-cluster/hypothesis evidence; the C37 contract specification, all 145 adjudications, category totals, cluster matrix, diagnostic-necessity ledger, and no-runtime candidate decision; final composition, active-base, frozen, replay, preservation, regression, registry/WAL/attempt, and protected-residue evidence; the draft Phase 10A status; proposed Roadmap v9/CURRENT_STATE text; and the manifest/staging proposal.\n\nThe proposed substantive disposition is NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED. Approve it only if zero TRUE_GENERALIZED_RUNTIME_DEFECT rows is sound, no new causal runtime feature is proven, C34-CP01 remains terminally excluded, and C38 oracle governance is the correct separately governed next operation. Do not authorize or perform C38.\n\nThe exact review manifest is evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256, 8473 bytes, SHA-256 e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb. Independently verify its entries. Required primary C37 entry points are evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLUSTER_DISPOSITION_MATRIX.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FROZEN_GATE_RESULT.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_ROADMAP_V9_CHANGE.md, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_CURRENT_STATE_CHANGE.md, evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_MANIFEST_AND_STAGED_PATHS_DRAFT.json.\n\nDecision must be APPROVED only when every verification field is true, blockingFindings is empty, and commitSafe is true; APPROVED_WITH_NONBLOCKING_OBSERVATIONS has the same requirements with listed observations. Use REJECTED for a proven blocker and INCOMPLETE_REVIEW if evidence/tooling is insufficient. The decision field must be the first decision token and substantivePathDecision must be one exact allowed token. Bind reviewedStateDigest to e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb. Phase 10A remains OPEN because reason is 3575/3720. Return only schema-conforming JSON.",
+  "outputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "decision",
+      "substantivePathDecision",
+      "reviewedStateDigest",
+      "reviewerTool",
+      "reviewerModel",
+      "independenceConfirmed",
+      "readOnlyConfirmed",
+      "summary",
+      "verification",
+      "blockingFindings",
+      "nonblockingObservations",
+      "commitSafe"
+    ],
+    "properties": {
+      "decision": {
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+          "REJECTED",
+          "INCOMPLETE_REVIEW"
+        ]
+      },
+      "substantivePathDecision": {
+        "type": "string",
+        "enum": [
+          "RUNTIME_CANDIDATE_DISPOSITION_APPROVED",
+          "NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED",
+          "NO_RUNTIME_CANDIDATE_SEMANTICALLY_SAFE_BUT_REASON_GATE_OPEN",
+          "MORE_EVIDENCE_REQUIRED"
+        ]
+      },
+      "reviewedStateDigest": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "reviewerTool": {
+        "type": "string",
+        "const": "Claude Code"
+      },
+      "reviewerModel": {
+        "type": "string",
+        "const": "claude-opus-4-8"
+      },
+      "independenceConfirmed": {
+        "type": "boolean"
+      },
+      "readOnlyConfirmed": {
+        "type": "boolean"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "verification": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "checkpoint63Continuity",
+          "c36InventoryVerified",
+          "reasonContractSound",
+          "rowAdjudicationComplete",
+          "categoryTotalsExact",
+          "clusterMatrixComplete",
+          "diagnosticsNecessitySound",
+          "noRuntimeCandidateDispositionSound",
+          "compositionAndActiveBasePreserved",
+          "frozenAndPreservationGatesPass",
+          "regressionDecisionAndCaptureSound",
+          "registryWalAttemptsReconciled",
+          "protectedResiduePreserved",
+          "phase10AStatusDraftAccurate",
+          "documentationChangesAccurate",
+          "manifestAndStagingProposalExplicit",
+          "prohibitedWorkAbsent"
+        ],
+        "properties": {
+          "checkpoint63Continuity": {
+            "type": "boolean"
+          },
+          "c36InventoryVerified": {
+            "type": "boolean"
+          },
+          "reasonContractSound": {
+            "type": "boolean"
+          },
+          "rowAdjudicationComplete": {
+            "type": "boolean"
+          },
+          "categoryTotalsExact": {
+            "type": "boolean"
+          },
+          "clusterMatrixComplete": {
+            "type": "boolean"
+          },
+          "diagnosticsNecessitySound": {
+            "type": "boolean"
+          },
+          "noRuntimeCandidateDispositionSound": {
+            "type": "boolean"
+          },
+          "compositionAndActiveBasePreserved": {
+            "type": "boolean"
+          },
+          "frozenAndPreservationGatesPass": {
+            "type": "boolean"
+          },
+          "regressionDecisionAndCaptureSound": {
+            "type": "boolean"
+          },
+          "registryWalAttemptsReconciled": {
+            "type": "boolean"
+          },
+          "protectedResiduePreserved": {
+            "type": "boolean"
+          },
+          "phase10AStatusDraftAccurate": {
+            "type": "boolean"
+          },
+          "documentationChangesAccurate": {
+            "type": "boolean"
+          },
+          "manifestAndStagingProposalExplicit": {
+            "type": "boolean"
+          },
+          "prohibitedWorkAbsent": {
+            "type": "boolean"
+          }
+        }
+      },
+      "blockingFindings": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "nonblockingObservations": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "commitSafe": {
+        "type": "boolean"
+      }
+    }
+  },
+  "expectedProposedPathDecision": "NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED",
+  "exactProposedNextOperation": "Invoke exactly one read-only Claude Code Opus 4.8 review; only after approval perform documentation cutover, manifest sealing, explicit staging, commit, push, and terminal checkpoint.",
+  "pass": true
+}

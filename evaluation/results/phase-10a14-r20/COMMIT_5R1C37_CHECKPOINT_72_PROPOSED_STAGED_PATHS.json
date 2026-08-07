@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_72_PROPOSED_STAGED_PATHS_EMPTY_SAFE_PAUSE",
+  "generatedUtc": "2026-08-03T13:41:57.009Z",
+  "approvalGatePassed": false,
+  "stagingAuthorized": false,
+  "proposedPaths": [],
+  "protectedUntrackedPathsStaged": [],
+  "reason": "Pre-invocation context gate failed; Step 7 is not authorized.",
+  "pass": true
+}

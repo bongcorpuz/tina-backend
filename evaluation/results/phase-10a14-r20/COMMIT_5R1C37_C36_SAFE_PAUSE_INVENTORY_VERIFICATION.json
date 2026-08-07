@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_C36_SAFE_PAUSE_INVENTORY_VERIFICATION_PASS",
+  "verifiedUtc": "2026-08-01T09:09:29.753Z",
+  "manifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256",
+    "bytes": 7228,
+    "sha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812"
+  },
+  "expectedManifestSha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812",
+  "expectedRows": 48,
+  "rows": 48,
+  "duplicateCount": 0,
+  "missingCount": 0,
+  "mismatchCount": 0,
+  "lexicalPathOrder": true,
+  "deterministicSelfExcluding": true,
+  "records": [
+    {
+      "row": 1,
+      "path": "ask-handler.js",
+      "expectedSha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602",
+      "actualSha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602",
+      "bytes": 147494,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 2,
+      "path": "conflict-engine.js",
+      "expectedSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+      "actualSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+      "bytes": 40905,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 3,
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "expectedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "actualSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "bytes": 6737848,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 4,
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-boundary-patterns.js",
+      "expectedSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "actualSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+      "bytes": 65451,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 5,
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-domain-boundary.js",
+      "expectedSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "actualSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+      "bytes": 12192,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 6,
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+      "expectedSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+      "actualSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+      "bytes": 183191,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 7,
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "expectedSha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+      "actualSha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+      "bytes": 718108,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 8,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "expectedSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+      "actualSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+      "bytes": 12143,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 9,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "expectedSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+      "actualSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+      "bytes": 2165,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 10,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_C35_BASELINE_RECONSTRUCTION.json",
+      "expectedSha256": "80e78a87ace992f3bf619f745350223079e91471d7fdc079b550ad93acabdd69",
+      "actualSha256": "80e78a87ace992f3bf619f745350223079e91471d7fdc079b550ad93acabdd69",
+      "bytes": 5369,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 11,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_C35_REGRESSION_ALLOWLIST_COMPARISON.json",
+      "expectedSha256": "1f1fe807db8b3df25a4dffd006c4528453e5dd115c0a0582be09361bfaa94edd",
+      "actualSha256": "1f1fe807db8b3df25a4dffd006c4528453e5dd115c0a0582be09361bfaa94edd",
+      "bytes": 20767,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 12,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_C35_REGRESSION_ALLOWLIST_INITIAL_PARSER_RESULT.json",
+      "expectedSha256": "4a625b1643719c679a51b8bcb615166d8baba0d23cd9a8ffa2a0f4486820474f",
+      "actualSha256": "4a625b1643719c679a51b8bcb615166d8baba0d23cd9a8ffa2a0f4486820474f",
+      "bytes": 12506,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 13,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CANDIDATE_HYPOTHESIS_LEDGER.json",
+      "expectedSha256": "a4a2bb68c9c0cd5421a9a27674a88ca5243d43297b03a6bc9a2ae0f09a559481",
+      "actualSha256": "a4a2bb68c9c0cd5421a9a27674a88ca5243d43297b03a6bc9a2ae0f09a559481",
+      "bytes": 11122,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 14,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CHECKPOINT_62_CONTINUATION_PREFLIGHT.json",
+      "expectedSha256": "7dec08d23598fe075f9a4b0cec98594692a50dd1499cddc80f4e85e63f6fb77f",
+      "actualSha256": "7dec08d23598fe075f9a4b0cec98594692a50dd1499cddc80f4e85e63f6fb77f",
+      "bytes": 7437,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 15,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+      "expectedSha256": "3e62627897541f6f9d614bffcd871e501d840bf5023b0e46bf6b7974a9b5bed6",
+      "actualSha256": "3e62627897541f6f9d614bffcd871e501d840bf5023b0e46bf6b7974a9b5bed6",
+      "bytes": 613835,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 16,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_INITIAL_PARSER_RESULT.json",
+      "expectedSha256": "c5d2ae279481cbd2d09929e742baaad574d0a4955fd16177404c104677d9d266",
+      "actualSha256": "c5d2ae279481cbd2d09929e742baaad574d0a4955fd16177404c104677d9d266",
+      "bytes": 2775,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 17,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_POSTPROCESSING.json",
+      "expectedSha256": "2abe492cbdf9d2918ba678c53600a512ca9c860318a99e0d9ced624be6514f2c",
+      "actualSha256": "2abe492cbdf9d2918ba678c53600a512ca9c860318a99e0d9ced624be6514f2c",
+      "bytes": 2897,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 18,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDERR.txt",
+      "expectedSha256": "ffafe94a7070b7c92ecef444bc6f5bec5c1b20966221303fd8d8f04c97cdc504",
+      "actualSha256": "ffafe94a7070b7c92ecef444bc6f5bec5c1b20966221303fd8d8f04c97cdc504",
+      "bytes": 38860,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 19,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDOUT.txt",
+      "expectedSha256": "3b84c73c4a12f25f68275588193305728071dd9be0902efaf2f214ddc8329170",
+      "actualSha256": "3b84c73c4a12f25f68275588193305728071dd9be0902efaf2f214ddc8329170",
+      "bytes": 19171,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 20,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION.json",
+      "expectedSha256": "04c44ec82c72548a737f3c1b87b548a506071334c59334ebbc4334478d90d45d",
+      "actualSha256": "04c44ec82c72548a737f3c1b87b548a506071334c59334ebbc4334478d90d45d",
+      "bytes": 22397,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 21,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_R3_BASELINE.json",
+      "expectedSha256": "1aeb14e04f69764877470984f1ef57f08f896345b07dcf0c71bf001cf9440246",
+      "actualSha256": "1aeb14e04f69764877470984f1ef57f08f896345b07dcf0c71bf001cf9440246",
+      "bytes": 32080,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 22,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_ACCEPTED_RULE_CHAIN.json",
+      "expectedSha256": "bea8d3b2332f560323f889942edddd6cbf90511d3641f173f41a8955b4a798d7",
+      "actualSha256": "bea8d3b2332f560323f889942edddd6cbf90511d3641f173f41a8955b4a798d7",
+      "bytes": 1586,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 23,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_ACTIVE_BASE_IDENTITY.json",
+      "expectedSha256": "cedaed720d386bbfe37fba0c845a344d640c4232f28449de14936a0bf73f3ae7",
+      "actualSha256": "cedaed720d386bbfe37fba0c845a344d640c4232f28449de14936a0bf73f3ae7",
+      "bytes": 3832,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 24,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_ATTEMPT_LEDGER.json",
+      "expectedSha256": "89b1f4a2cc15804c257dfc1582fdd458b1f1b8869ac9b50dd8f03c437df6fb46",
+      "actualSha256": "89b1f4a2cc15804c257dfc1582fdd458b1f1b8869ac9b50dd8f03c437df6fb46",
+      "bytes": 1786,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 25,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_CUMULATIVE_COMPOSITION.json",
+      "expectedSha256": "39b47932f19ebadd1ab1be5cfb8b3235e2320529a7b27ffbac8a695a3e282d07",
+      "actualSha256": "39b47932f19ebadd1ab1be5cfb8b3235e2320529a7b27ffbac8a695a3e282d07",
+      "bytes": 1124,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 26,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+      "expectedSha256": "637da31c5d06580d9a7e4c8804a2639f8b3c20c006a0d8c56a74197c5153bed9",
+      "actualSha256": "637da31c5d06580d9a7e4c8804a2639f8b3c20c006a0d8c56a74197c5153bed9",
+      "bytes": 3522,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 27,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_PRESERVATION_RESULT.json",
+      "expectedSha256": "e94b813bdb56e12986f04387b05ce1f72e6ef148bccbae0c728501127b948fe6",
+      "actualSha256": "e94b813bdb56e12986f04387b05ce1f72e6ef148bccbae0c728501127b948fe6",
+      "bytes": 13225,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 28,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_REASON_METRICS.json",
+      "expectedSha256": "6ed0d8c625b3b0b90d6064ac98d9910a8c04e2f5fd681b2756aaee6bb88bd8e4",
+      "actualSha256": "6ed0d8c625b3b0b90d6064ac98d9910a8c04e2f5fd681b2756aaee6bb88bd8e4",
+      "bytes": 1419,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 29,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_RESIDUAL_INVENTORY.json",
+      "expectedSha256": "ad0c88f4f66db327796aa90d8ba0ac521a848d5da5c1e1d77023f574be61bd3f",
+      "actualSha256": "ad0c88f4f66db327796aa90d8ba0ac521a848d5da5c1e1d77023f574be61bd3f",
+      "bytes": 594476,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 30,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FOUR_HOUR_SAFE_PAUSE_TERMINAL_STATE.json",
+      "expectedSha256": "5b5223aaeb81ed8bf91f7e80ee8b93448fb0d20cd83718f234123be1693307c8",
+      "actualSha256": "5b5223aaeb81ed8bf91f7e80ee8b93448fb0d20cd83718f234123be1693307c8",
+      "bytes": 4005,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 31,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_NO_GENERALIZED_CANDIDATE_SAFE_PAUSE_RECONCILIATION.json",
+      "expectedSha256": "9cca3a01ac858b8c785bbb4243f059fe80d82e0a4ae09e45e38206d9b8a45677",
+      "actualSha256": "9cca3a01ac858b8c785bbb4243f059fe80d82e0a4ae09e45e38206d9b8a45677",
+      "bytes": 15678,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 32,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_PROTECTED_RESIDUE_BASELINE.json",
+      "expectedSha256": "5a93da2b09fc57cd84bb2045676fb2a040dad7a222f980c7cdc7a5fd9f854fb3",
+      "actualSha256": "5a93da2b09fc57cd84bb2045676fb2a040dad7a222f980c7cdc7a5fd9f854fb3",
+      "bytes": 5485,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 33,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_READ_ONLY_DELEGATION_RECORD.json",
+      "expectedSha256": "55dde6e0e5e5e9042f6ad704dfe0d45267a0b219cb011316f601d37f596a5a46",
+      "actualSha256": "55dde6e0e5e5e9042f6ad704dfe0d45267a0b219cb011316f601d37f596a5a46",
+      "bytes": 2776,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 34,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_CLUSTER_ANALYSIS.json",
+      "expectedSha256": "f4a4f40dbad6c278bb75ff3189309b41a9fb053a78b05f2d1a5cf2bb045b6510",
+      "actualSha256": "f4a4f40dbad6c278bb75ff3189309b41a9fb053a78b05f2d1a5cf2bb045b6510",
+      "bytes": 26768,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 35,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_CLUSTER_ANALYSIS.md",
+      "expectedSha256": "034d0b9e659f71224b0c800910fc485a44c4ca271b3fc6c2263e26e6beec5eac",
+      "actualSha256": "034d0b9e659f71224b0c800910fc485a44c4ca271b3fc6c2263e26e6beec5eac",
+      "bytes": 3634,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 36,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_INVENTORY_INITIAL_TECHNICAL_INCOMPLETE.json",
+      "expectedSha256": "fc2e4696a2aa8164303d271a5287bb434d6ef3a1b60160ee446753ef84f33ae0",
+      "actualSha256": "fc2e4696a2aa8164303d271a5287bb434d6ef3a1b60160ee446753ef84f33ae0",
+      "bytes": 583310,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 37,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_INVENTORY_INITIAL_TECHNICAL_INCOMPLETE.md",
+      "expectedSha256": "67a8fdcf166ee27aff2edf59e9355273f1050c5e9588ceccd554d22f495a1213",
+      "actualSha256": "67a8fdcf166ee27aff2edf59e9355273f1050c5e9588ceccd554d22f495a1213",
+      "bytes": 29441,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 38,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_INVENTORY.json",
+      "expectedSha256": "e12f542c210e2d02f4659e279ad81e41589482de038f1e9230e805b65ebbdfb2",
+      "actualSha256": "e12f542c210e2d02f4659e279ad81e41589482de038f1e9230e805b65ebbdfb2",
+      "bytes": 595529,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 39,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_INVENTORY.md",
+      "expectedSha256": "7f760fe94723c01be43b6f825d80771b34906e600c32fc32a7d907f373719b76",
+      "actualSha256": "7f760fe94723c01be43b6f825d80771b34906e600c32fc32a7d907f373719b76",
+      "bytes": 29987,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 40,
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_RESIDUAL_FREEZE_TECHNICAL_ADJUDICATION.json",
+      "expectedSha256": "f524d96e45d5fc0263e6aa8c073b18666fab1d2883985c5885d8b3d46207c13d",
+      "actualSha256": "f524d96e45d5fc0263e6aa8c073b18666fab1d2883985c5885d8b3d46207c13d",
+      "bytes": 2713,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 41,
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c36-baseline.mjs",
+      "expectedSha256": "4fda6fbe77785b8fc6d8cc4e780822a6a81033dd23d5b1e1d120a8ae1e8b3c58",
+      "actualSha256": "4fda6fbe77785b8fc6d8cc4e780822a6a81033dd23d5b1e1d120a8ae1e8b3c58",
+      "bytes": 20021,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 42,
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c36-regression-adjudicate.mjs",
+      "expectedSha256": "c3e1ef445031ee3eb260d1ae3898e038194e5534e6b9b645f8498f885d21be54",
+      "actualSha256": "c3e1ef445031ee3eb260d1ae3898e038194e5534e6b9b645f8498f885d21be54",
+      "bytes": 12427,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 43,
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c36-regression-capture-hook.mjs",
+      "expectedSha256": "6384e30293877d53403183591210060111d61841bd29267c3ca2195425c7455e",
+      "actualSha256": "6384e30293877d53403183591210060111d61841bd29267c3ca2195425c7455e",
+      "bytes": 1638,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 44,
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c36-residual-freeze.mjs",
+      "expectedSha256": "26fc7144dd98ba1b46f49d8e5b90397ec78088ed3300678d863fac6ef059c114",
+      "actualSha256": "26fc7144dd98ba1b46f49d8e5b90397ec78088ed3300678d863fac6ef059c114",
+      "bytes": 34287,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 45,
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c36-safe-pause.mjs",
+      "expectedSha256": "f5069ce0aa903e6de7ae784d47244ebca6fd057e422fdb611f863b5078af4705",
+      "actualSha256": "f5069ce0aa903e6de7ae784d47244ebca6fd057e422fdb611f863b5078af4705",
+      "bytes": 45227,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 46,
+      "path": "package-lock.json",
+      "expectedSha256": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+      "actualSha256": "f330bc1ef6a57301b74c6340e7285cbe75c22e026ca56a45d1b800c9e1df906b",
+      "bytes": 113222,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 47,
+      "path": "services/answer-support-evidence.js",
+      "expectedSha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37",
+      "actualSha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37",
+      "bytes": 9507,
+      "exists": true,
+      "match": true
+    },
+    {
+      "row": 48,
+      "path": "services/answer-support-validator.js",
+      "expectedSha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e",
+      "actualSha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e",
+      "bytes": 142463,
+      "exists": true,
+      "match": true
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_TWO_HOUR_SAFE_PAUSE_OPUS_TECHNICAL_INCOMPLETE",
+  "generatedUtc": "2026-08-01T10:55:25.920Z",
+  "reason": "The sole authorized Claude Code invocation failed local MCP configuration validation before a model review. No valid decision token exists; authorization is consumed and retry is prohibited.",
+  "technicalAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_TECHNICAL_INCOMPLETE_ADJUDICATION.json",
+    "bytes": 3241,
+    "sha256": "ef91d6290b5a5da61f876fa4d26ae9363389b756bacce12cae15fb9366665625"
+  },
+  "correctionAddendum": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_CAPTURE_CORRECTION_ADDENDUM.json",
+    "bytes": 3036,
+    "sha256": "55580deba146f75170a84c2859740457a71bdc0b1e6473101143230ad88c9d09"
+  },
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_TWO_HOUR_OPUS_TECHNICAL_INCOMPLETE_RECONCILIATION.json",
+    "bytes": 22183,
+    "sha256": "e16336ab89857da49de8be8163ac62ad0d1845374b708d7172383ddff0f47105"
+  },
+  "auditSupplement": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_CONTINUATION_AUDIT_SUPPLEMENT.json",
+    "bytes": 4378,
+    "sha256": "7b5bdfa97226ab96b13ee5807ce99299b15ce6c41a6798133b26626d22baa7d7"
+  },
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "checkpointBefore": 64,
+  "checkpointAfter": 65,
+  "phase10A": "OPEN_PENDING_MANDATORY_INDEPENDENT_REVIEW",
+  "c37": "SAFE_PAUSED_OPUS_TECHNICAL_INCOMPLETE_NOT_TERMINAL",
+  "opusInvocationCount": 1,
+  "reviewBudgetConsumed": true,
+  "authorizationConsumed": true,
+  "actualOpusDecision": null,
+  "actualSubstantivePathDecision": null,
+  "attemptedStdinBytes": 4188309,
+  "providerRequestObserved": false,
+  "confirmedEvidenceBytesTransmittedToAnthropic": 0,
+  "exactProviderWireBytes": null,
+  "retryAuthorized": false,
+  "docsUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "runtimeOracleRegistryWalMutationCount": 0,
+  "c38Begun": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "phase10BBegun": false,
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "exactNextOperation": "STOP. This authorization is consumed. A replacement independent review would require a new separately governed prompt and explicit authorization after correcting the local CLI configuration; do not retry under this continuation and do not begin C38, E2, A15, Phase 10B, deployment, reindexing, or model migration.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

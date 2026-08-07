@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FINAL_OPUS_TECHNICAL_INCOMPLETE_LOCAL_CLI_CONFIGURATION_FAILURE",
+  "generatedUtc": "2026-08-01T10:55:25.063Z",
+  "invocationMarker": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_INVOCATION_MARKER.json",
+    "bytes": 2403,
+    "sha256": "b668dffb5e1376852ab16e788b659f61d390401b04d6d9ce70c8a4c8c74b9238"
+  },
+  "cliCapture": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+    "bytes": 3586,
+    "sha256": "af71bae05ecf0fdd3489e70a9c8520b43f8281c630f0aa37e1f3c87c4721bc2d"
+  },
+  "correction": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_CAPTURE_CORRECTION_ADDENDUM.json",
+    "bytes": 3036,
+    "sha256": "55580deba146f75170a84c2859740457a71bdc0b1e6473101143230ad88c9d09"
+  },
+  "externalTransmissionAuthorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_AUTHORIZATION.json",
+    "bytes": 2017,
+    "sha256": "57fc53266e3965fac7e402f90be17d8596bdd439eb6a938a0cd975c98703e2a4"
+  },
+  "packageManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+    "bytes": 45178,
+    "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+  },
+  "failure": {
+    "stage": "LOCAL_CLAUDE_CODE_CONFIGURATION_VALIDATION_BEFORE_MODEL_REVIEW",
+    "exitCode": 1,
+    "signal": null,
+    "stdoutBytes": 0,
+    "stderrBytes": 97,
+    "stderrSha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b",
+    "sanitizedMessage": "Invalid MCP configuration: mcpServers expected a record but was undefined.",
+    "rootCause": "The sole invocation supplied an empty JSON object to --mcp-config instead of a configuration object containing mcpServers. The CLI rejected it locally and closed stdin.",
+    "toolFailureIsTechnicalIncompleteNotSemanticRejection": true
+  },
+  "actualReviewerResult": {
+    "decisionToken": null,
+    "substantivePathToken": null,
+    "observations": [],
+    "complete57EntryPackageReviewed": false
+  },
+  "authorization": {
+    "invocationOrdinalAttempted": 1,
+    "maximumInvocations": 1,
+    "consumed": true,
+    "retryAuthorized": false
+  },
+  "transmission": {
+    "intendedEvidenceEntries": 57,
+    "intendedRawEvidenceBytes": 4109852,
+    "attemptedStdinBytes": 4188309,
+    "attemptedStdinSha256": "eb013eee8f50809d41fce9576ae8dd34f7329dad578cdbe0dbfbafb956db0de8",
+    "childAcceptedCompleteStdin": false,
+    "providerRequestObserved": false,
+    "confirmedEvidenceBytesTransmittedToAnthropic": 0,
+    "exactProviderWireBytes": null,
+    "unrelatedOrSensitivePayloadAttempted": false
+  },
+  "requiredConsequences": {
+    "retryProhibited": true,
+    "roadmapV9UpdateProhibited": true,
+    "currentStateUpdateProhibited": true,
+    "stagingProhibited": true,
+    "commitProhibited": true,
+    "pushProhibited": true,
+    "runtimeOracleRegistryWalMutationProhibited": true,
+    "c38E2A15Phase10BProhibited": true,
+    "appendTechnicalIncompleteCheckpoint65": true
+  },
+  "finalClassification": "C37_TWO_HOUR_SAFE_PAUSE_OPUS_TECHNICAL_INCOMPLETE",
+  "pass": true
+}

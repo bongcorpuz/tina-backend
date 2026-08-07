@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_SINGLE_SUBMISSION_RECEIPT",
+  "provider": "Anthropic",
+  "reviewerTool": "Claude Code",
+  "reviewerModel": "claude-opus-4-8",
+  "startedUtc": "2026-08-01T12:46:46.114Z",
+  "endedUtc": "2026-08-01T12:46:50.276Z",
+  "childPid": 11576,
+  "spawnObserved": true,
+  "spawnError": null,
+  "exitCode": 1,
+  "signal": null,
+  "timedOut": false,
+  "authorization": {
+    "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "consumed": true,
+    "invocationOrdinal": 1,
+    "maximumInvocations": 1,
+    "retryAuthorized": false
+  },
+  "applicationSubmission": {
+    "inputMethod": "binary-safe child stdin",
+    "stdinWriteInitiated": true,
+    "stdinFinishObserved": true,
+    "stdinEndCallbackObserved": true,
+    "stdinError": null,
+    "completeChildStdinAcceptanceConfirmed": true,
+    "totalStdinBytes": 4193594,
+    "stdinSha256": "8f1f3d5f18cc18a004631d38236f5389d5891b2b757ac340b73f8e01732fdb6e",
+    "evidenceEntries": 57,
+    "rawEvidenceBytes": 4109852,
+    "requestAndManifestMetadataBytes": 68087,
+    "entryFramingBytes": 15655,
+    "evidenceBeyondAuthorizedPackageIncluded": false,
+    "credentialsEnvironmentFilesOrUnrelatedClientDataIncludedInApplicationPayload": false
+  },
+  "transportObservability": {
+    "providerRequestObserved": null,
+    "providerRequestObservationMethod": "not directly instrumented",
+    "modelEnvelopeObserved": false,
+    "exactProviderWireBytes": null,
+    "exactProviderProtocolFramingObservable": false
+  },
+  "response": {
+    "stdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_STDOUT.txt",
+      "bytes": 1015,
+      "sha256": "d3e5a82a70d840593b682a7a54dd745e5adad6e77f7abeef8a25573e7568d142"
+    },
+    "stderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_STDERR.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reviewerObjectReceived": false,
+    "decisionToken": null,
+    "substantivePathToken": null
+  },
+  "repositoryInputsUnchanged": true,
+  "authorizationStatusAfterInvocation": "CONSUMED_NO_RETRY_AUTHORIZED",
+  "pass": true
+}

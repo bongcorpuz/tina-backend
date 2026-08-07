@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_NO_NEW_DIAGNOSTIC_PROBES_NECESSARY",
+  "generatedUtc": "2026-08-01T09:36:54.048Z",
+  "governingRule": "A new probe is permitted only when it resolves a recorded discriminating question not answered by C36.",
+  "unresolvedDiscriminatingQuestions": [],
+  "probes": [],
+  "probeCount": 0,
+  "c36EvidenceSufficiency": {
+    "inventoryRows": 3720,
+    "clusters": 8,
+    "hypotheses": 8,
+    "allHypothesisAuthorizationProofsFalse": true,
+    "terminalRejectedRuleBound": {
+      "candidateId": "C34-CP01-tax-administrative-remedy-deadline-is-compliance",
+      "disposition": "REJECTED_FEATUREABLATIONPASS_PRECEDENCEPASS",
+      "iterationSha256": "b828ab05821b74b2c83721ad69b6d976795a61913d3b54b1fb337aa29eec58ce",
+      "featureAblationPass": false,
+      "precedencePass": false,
+      "rerunAuthorized": false,
+      "reintroductionAuthorized": false
+    },
+    "conclusion": "C36 already froze complete traces, operative features, collision risks, accepted/rejected neighbors, and all eight failed authorization hypotheses. A new probe would duplicate resolved work rather than discriminate a new causal feature."
+  },
+  "mutationProhibition": true,
+  "pass": true
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_OPUS_EXTERNAL_TRANSMISSION_SCOPE_VALIDATION_PASS",
+  "generatedUtc": "2026-08-01T10:45:14.865Z",
+  "sourceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+    "bytes": 8473,
+    "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+  },
+  "detailedManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+    "bytes": 45178,
+    "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+  },
+  "checks": {
+    "exactly57Entries": true,
+    "ordinalsUniqueAndComplete": true,
+    "pathsUnique": true,
+    "allFilesExist": true,
+    "allHashesRecomputed": true,
+    "missingRequiredInputs": 0,
+    "unrelatedConvenienceFiles": 0,
+    "repositoryEscapePaths": 0,
+    "symlinkOrReparseEscapes": 0,
+    "mutableTemporaryFiles": 0,
+    "strictUtf8Files": 57,
+    "nulContainingFiles": 0,
+    "packageMetadataNotCountedAsEntry58": true
+  },
+  "transmissionMethod": "One binary-safe stdin submission with authorized metadata framing and all 57 raw UTF-8 file byte sequences in ordinal order; Claude tools disabled and cwd isolated.",
+  "pass": true
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_PRE_OPUS_MANIFEST_AND_STAGING_PROPOSAL",
+  "policy": "Explicit file-by-file staging only; git add . and git add -A forbidden.",
+  "include": [
+    "verified uncommitted C36 reproducibility evidence",
+    "governed C37 evidence and both C37 runners",
+    "approved Roadmap v9 and CURRENT_STATE changes",
+    "Opus and Phase 10A status artifacts"
+  ],
+  "exclude": [
+    ".claude/",
+    ".vscode/",
+    "evaluation/factcheck/",
+    "C34/C35 post-commit attestations",
+    "Roadmap v7",
+    "Roadmap v8",
+    "registry and WAL because no C37 candidate lifecycle occurred"
+  ],
+  "futureWriteOncePaths": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_INVOCATION_MARKER.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_EVIDENCE.sha256",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_MANIFEST_VALIDATION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_COMMIT_CONTENTS.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_STAGED_PATHS.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_ACTUAL_STAGED_PATHS.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_STAGING_VALIDATION.json"
+  ],
+  "exactProposedCommitMessage": "PHASE-10A14-R20 COMMIT 5R1-C37 complete - adjudicate reason residual contract and route oracle governance",
+  "pass": true
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_AUTHORIZATION_CONSUMPTION_ADJUDICATION",
+  "generatedAtUtc": "2026-08-07T18:13:00Z",
+
+  "formerOpus48Authorization": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "artifactEdited": false,
+    "status": "SUPERSEDED_UNUSED",
+    "consumed": false,
+    "remainingPermittedInvocations": 0,
+    "combinedWithNewCounter": false,
+    "usedByThisOperation": false,
+    "futureReuseProhibitedWithoutNewGovernanceDecision": true
+  },
+
+  "newOpus5Authorization": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT.json",
+    "stateBeforeSubmission": {
+      "status": "AUTHORIZED_UNUSED",
+      "consumed": false,
+      "remaining": 1,
+      "invocationCount": 0
+    },
+    "substantivePackageBoundRequestSubmitted": true,
+    "submissionEvidence": "The Agent tool invocation at 2026-08-07T18:00:59Z carried the exact Layer 1 evidence-corpus pointers (57-entry allowlist, capsule, role ledger) and the exact Layer 2 governing addendum pointers (amendment, checkpoint-79 evidence, provenance adjudication, output schema wrapper, closure/ledger/necessity artifacts) with the required HEAD/branch/parent bindings. This constitutes the substantive package-bound review request as defined by the consumption rule.",
+    "stateAfterSubmission": {
+      "status": "AUTHORIZED_CONSUMED",
+      "consumed": true,
+      "remaining": 0,
+      "invocationCount": 1
+    },
+    "consumptionOccurredAtSubmissionNotAtResponse": true,
+    "responseQuality": "A valid, schema-conformant, non-malformed response WAS received (see COMMIT_5R1C37_CHECKPOINT_80_REVIEW_INVOCATION_EVIDENCE.json). This does not change WHEN consumption occurred (at submission), but is noted because the governing prompt separately specifies that a malformed/failed response after submission would NOT restore the authorization — that scenario did not arise here, but the rule is recorded for completeness.",
+    "retryAuthorized": false,
+    "secondInvocationAuthorized": false,
+    "thisIsTheOnlyInvocationThatWillEverBePerformedUnderThisAuthorization": true
+  },
+
+  "counterIntegrity": {
+    "formerAndNewCountersKeptSeparate": true,
+    "totalOpusInvocationsAcrossBothAuthorizations": 1,
+    "totalOpusInvocationsUnderFormerOpus48Authorization": 0,
+    "totalOpusInvocationsUnderNewOpus5Authorization": 1
+  }
+}

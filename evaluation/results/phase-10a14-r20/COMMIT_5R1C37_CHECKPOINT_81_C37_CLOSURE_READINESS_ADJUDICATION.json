@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 81",
+  "classification": "C37_CHECKPOINT_81_CLOSURE_READINESS_ADJUDICATION_NONTERMINAL",
+  "generatedAtUtc": "2026-08-07T23:01:00Z",
+
+  "controllingClosureContract": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "controllingClause": "C37 becomes terminal only after its exact commit and normal push are verified.",
+    "supersededInScopeBy": "COMMIT_5R1C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT.json (reviewer identity only)",
+    "commitPushRequirementNotSuperseded": true,
+    "reasonNotSuperseded": "The checkpoint-80 amendment explicitly and narrowly amends the REVIEWER-IDENTITY requirement only. It does not touch, weaken, or supersede the separate commit/push terminality requirement, which remains fully in force.",
+    "noStrongerProjectDefinedStatusInvented": true
+  },
+
+  "checklistEvaluation": {
+    "allTenObservationsDispositioned": {
+      "result": true,
+      "evidence": "COMMIT_5R1C37_CHECKPOINT_81_NONBLOCKING_OBSERVATION_REGISTER.json — 10/10 observations dispositioned (1 closed at CP80, 4 informational, 3 via additive erratum, 2 via separate reconciliation artifact)"
+    },
+    "allActiveRepairableFindingsCorrected": {
+      "result": true,
+      "evidence": "Zero active-controlling-stale files were found (COMMIT_5R1C37_CHECKPOINT_81_STALE_REVIEWER_REFERENCE_RECONCILIATION.json). The commit-message divergence was resolved via a new canonical message, not a source edit. The label-polarity bug was resolved via additive erratum (source is frozen/hash-locked)."
+    },
+    "historicalReferencesCorrectlyPreserved": {
+      "result": true,
+      "evidence": "All checkpoint-64-through-71 frozen history, and this unit's own checkpoint-78-through-80 records, were left unedited and correctly classified as historically accurate for their respective time periods."
+    },
+    "additiveErrataCoverSealedDefects": {
+      "result": true,
+      "evidence": "Three errata created: stale-reference reconciliation (covers 3 named sealed/raw artifacts), label-polarity adjudication (covers the frozen capsule.md line)."
+    },
+    "canonicalCommitMessageAccurate": {
+      "result": true,
+      "evidence": "COMMIT_5R1C37_CHECKPOINT_81_COMMIT_MESSAGE_RECONCILIATION.json — new message uses 'nonterminal', explicitly avoids every listed overclaim category."
+    },
+    "exactFutureStagingAllowlistExists": {
+      "result": true,
+      "evidence": "COMMIT_5R1C37_CHECKPOINT_81_EXACT_FUTURE_STAGING_ALLOWLIST.json — 238 paths (237 untracked C37 evidence files + CURRENT_STATE.md), explicit exclusions, grouped inert git add -- commands."
+    },
+    "b1RemainsFullyClosed": {
+      "result": true,
+      "evidence": "Reconfirmed in this checkpoint's Phase 1 preflight with full-date-resolved timestamp arithmetic (11.89 hours, same-calendar-date-plus-one, programmatically confirmed True). Not reopened."
+    },
+    "b7RemainsNarrowlyClosed": {
+      "result": true,
+      "notBroadened": true,
+      "evidence": "No genuine blocking inconsistency was discovered during reconciliation. All 10 observations were nonblocking as the reviewer classified them, and none were converted to blocking findings. B7's closure scope remains exactly as narrow as checkpoint 80 defined it: the independent-review requirement only."
+    },
+    "b2ThroughB6RemainOpen": {
+      "result": true,
+      "evidence": "No new evidence was produced in this checkpoint bearing on B2 (/health deferred), B3 (health-endpoint test quarantine), B4 (IDEA.md duplicate), B5 (tax-engines/CON/* Windows limitation), or B6 (stale stash locks). All five remain open, unchanged, not closed by assumption."
+    },
+    "c37StillRequiresStaging": { "result": true },
+    "c37StillRequiresCommit": { "result": true },
+    "c37StillRequiresPush": { "result": true },
+    "c37StillRequiresRemoteVerification": { "result": true, "note": "Remote verification (post-push) is inherently impossible before a push occurs; not evaluated further here." },
+    "c37StillRequiresAnotherOwnerDecision": {
+      "result": true,
+      "whichDecision": "Explicit authorization to execute the staging/commit/push sequence using the allowlist and canonical message this checkpoint prepared."
+    },
+    "controllingContractPermitsTerminalBeforePublication": {
+      "result": false,
+      "evidence": "The controlling clause is explicit and was not superseded: 'C37 becomes terminal only after its exact commit and normal push are verified.' No commit or push occurred or is authorized in this unit."
+    }
+  },
+
+  "rulesComplianceCheck": {
+    "rule1_notTerminalMerelyBecauseReviewApproved": { "complied": true, "note": "Review approval alone was checkpoint 80's outcome and did NOT mark C37 terminal there either; this checkpoint does not change that." },
+    "rule2_notTerminalMerelyBecauseObservationsReconciled": { "complied": true, "note": "Observation reconciliation in this checkpoint is explicitly treated as a precondition-clearing step, not a terminality trigger." },
+    "rule3_terminalityRequiresCommitOrPushRetainNonterminal": { "complied": true, "missingOperation": "staging, commit, and push, all pending separate authorization" },
+    "rule4_doNotReopenB7UnlessGenuineBlockingInconsistency": { "complied": true, "found": "no genuine blocking inconsistency; B7 left exactly as closed at checkpoint 80" },
+    "rule5_doNotReopenB1UnlessTimestampEvidenceFails": { "complied": true, "found": "timestamp evidence strengthened, not failed; B1 remains closed" },
+    "rule6_doNotCloseB2ThroughB6WithoutSeparateEvidence": { "complied": true, "found": "no such evidence produced or claimed" },
+    "rule7_doNotClaimPhase10AComplete": { "complied": true },
+    "rule8_doNotAuthorizeOrBeginC38": { "complied": true }
+  },
+
+  "finalC37State": {
+    "status": "NONTERMINAL",
+    "exactReasonNonterminal": "The controlling closure contract requires a verified commit and normal push before C37 can become terminal. Neither has occurred, and neither is authorized by this unit.",
+    "exactMissingOperations": ["staging (git add of the allowlisted paths only)", "commit (using the canonical message)", "push", "post-push remote verification"],
+    "phase10AStatus": "OPEN",
+    "phase10ASatisfied": false,
+    "r20Status": "IN_PROGRESS",
+    "r20Complete": false,
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37RuntimeAttempts": 0,
+    "reasonMetric": "3575/3720 (unchanged, still open)",
+    "b1Status": "CLOSED",
+    "b7Status": "CLOSED_NARROWLY_UNCHANGED_FROM_CHECKPOINT_80",
+    "b2ThroughB6Status": "OPEN_UNCHANGED"
+  },
+
+  "dispositionNoStrongerThanEvidence": true
+}

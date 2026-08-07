@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+  "generatedUtc": "2026-08-01T13:20:43.856Z",
+  "reason": "Fresh remaining Codex context was below the mandatory reserve before manifest-indexed preparation or invocation.",
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_68_TOKEN_SAFE_PAUSE_RECONCILIATION.json",
+    "bytes": 3512,
+    "sha256": "7084bb4f4e43382a32584b0645afd7d5c6811438803b60ee17a8422bf126ece6"
+  },
+  "handoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_68.md",
+    "bytes": 2393,
+    "sha256": "c110166aa9411718d4c6434393f99293cfada3429036d1a9fc5c6f184f46af8b"
+  },
+  "manifestIndexedAuthorizationUnused": true,
+  "manifestIndexedInvocationCount": 0,
+  "providerRequestObserved": false,
+  "reviewerDecision": null,
+  "capsuleCreated": false,
+  "bootstrapCreated": false,
+  "documentationUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "runtimeOracleRegistryWalMutationCount": 0,
+  "c38Begun": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "phase10BBegun": false,
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "exactNextOperation": "Resume under a new four-hour governed prompt from checkpoint 68 with the existing manifest-indexed authorization still unused; recompute fresh Codex telemetry, then verify checkpoint 68 before building the role ledger, allowlist, capsule, read-only tool boundary, bootstrap, and provider-context plan.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

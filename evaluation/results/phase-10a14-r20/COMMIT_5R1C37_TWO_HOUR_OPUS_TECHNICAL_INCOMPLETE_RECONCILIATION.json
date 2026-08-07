@@ -1,0 +1,535 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_TWO_HOUR_OPUS_TECHNICAL_INCOMPLETE_RECONCILED",
+  "generatedUtc": "2026-08-01T10:55:25.844Z",
+  "startingCheckpoint": {
+    "ordinal": 64,
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json",
+    "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9",
+    "eventSha256": "853ae993a069fd9f677f62b20d90ebaed155384c4cdb7416a6aace76db93af15"
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "branch": "feature/source-availability-engine-v1",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "stagingEmpty": true,
+    "trackedTreeClean": true,
+    "commitCreated": false,
+    "pushPerformed": false
+  },
+  "reviewer": {
+    "invocationCount": 1,
+    "authorizationConsumed": true,
+    "retryAuthorized": false,
+    "actualDecisionToken": null,
+    "actualSubstantivePathToken": null,
+    "localCliExitCode": 1,
+    "modelReviewReached": false,
+    "terminalClassification": "C37_TWO_HOUR_SAFE_PAUSE_OPUS_TECHNICAL_INCOMPLETE"
+  },
+  "package": {
+    "count": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "sensitiveAndScopeValidationPass": true
+  },
+  "transmission": {
+    "intendedEvidenceEntries": 57,
+    "intendedRawEvidenceBytes": 4109852,
+    "attemptedStdinBytes": 4188309,
+    "attemptedStdinSha256": "eb013eee8f50809d41fce9576ae8dd34f7329dad578cdbe0dbfbafb956db0de8",
+    "childAcceptedCompleteStdin": false,
+    "providerRequestObserved": false,
+    "confirmedEvidenceBytesTransmittedToAnthropic": 0,
+    "exactProviderWireBytes": null,
+    "unrelatedOrSensitivePayloadAttempted": false
+  },
+  "frozenC37": {
+    "rowsAdjudicated": "145/145",
+    "generalizedRuntimeDefects": 0,
+    "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+    "reason": "3575/3720",
+    "decisionMetric": "3720/3720",
+    "relationMetric": "3720/3720",
+    "candidatesAuthorizedAllocated": "0/0"
+  },
+  "preservation": {
+    "c35": {
+      "components": [
+        {
+          "path": "ask-handler.js",
+          "bytes": 147494,
+          "sha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602"
+        },
+        {
+          "path": "conflict-engine.js",
+          "bytes": 40905,
+          "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+        },
+        {
+          "path": "services/answer-support-evidence.js",
+          "bytes": 9507,
+          "sha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37"
+        },
+        {
+          "path": "services/answer-support-validator.js",
+          "bytes": 142463,
+          "sha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+        }
+      ],
+      "compositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+      "pass": true
+    },
+    "selectedC34ReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "runtimeChanges": 0,
+    "oracleChanges": 0,
+    "registryChanges": 0,
+    "walChanges": 0
+  },
+  "registryWalAttempts": {
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 718108,
+      "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073"
+    },
+    "registryRows": 230,
+    "attemptDirectories": 230,
+    "orphan": [],
+    "dangling": [],
+    "running": [],
+    "c34Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 12143,
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+      "rows": 32
+    },
+    "c35Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2165,
+      "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+      "rows": 6
+    },
+    "c36Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "exists": false,
+      "rows": 0
+    },
+    "c37Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "exists": false,
+      "rows": 0
+    },
+    "c36OrC37Attempts": [],
+    "pass": true
+  },
+  "protectedResidue": {
+    "baseline": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROTECTED_RESIDUE_BASELINE.json",
+      "bytes": 8839,
+      "sha256": "8de6ed4d617a561fe0e3a1357d051c3e9aee343849fcb659636aab5059b38094"
+    },
+    "checks": [
+      {
+        "path": ".claude/settings.local.json",
+        "expectedBytes": 4466,
+        "expectedSha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+        "actualBytes": 4466,
+        "actualSha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+        "pass": true
+      },
+      {
+        "path": ".vscode/extensions.json",
+        "expectedBytes": 70,
+        "expectedSha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+        "actualBytes": 70,
+        "actualSha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+        "pass": true
+      },
+      {
+        "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+        "expectedBytes": 8064,
+        "expectedSha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+        "actualBytes": 8064,
+        "actualSha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+        "pass": true
+      },
+      {
+        "path": "evaluation/factcheck/README.md",
+        "expectedBytes": 1890,
+        "expectedSha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+        "actualBytes": 1890,
+        "actualSha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+        "pass": true
+      },
+      {
+        "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+        "expectedBytes": 35275,
+        "expectedSha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+        "actualBytes": 35275,
+        "actualSha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+        "pass": true
+      },
+      {
+        "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+        "expectedBytes": 87771,
+        "expectedSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+        "actualBytes": 87771,
+        "actualSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json",
+        "expectedBytes": 281280,
+        "expectedSha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+        "actualBytes": 281280,
+        "actualSha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json",
+        "expectedBytes": 982,
+        "expectedSha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+        "actualBytes": 982,
+        "actualSha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+        "expectedBytes": 6287,
+        "expectedSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+        "actualBytes": 6287,
+        "actualSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+        "expectedBytes": 6287,
+        "expectedSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+        "actualBytes": 6287,
+        "actualSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+        "expectedBytes": 385974,
+        "expectedSha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+        "actualBytes": 385974,
+        "actualSha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json",
+        "expectedBytes": 14572,
+        "expectedSha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee",
+        "actualBytes": 14572,
+        "actualSha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_GIT_VERIFICATION.json",
+        "expectedBytes": 1022,
+        "expectedSha256": "7782e02960bb7f8aac4d603bc8cca4dcf0a7def37636762d32fef033edd6b732",
+        "actualBytes": 1022,
+        "actualSha256": "7782e02960bb7f8aac4d603bc8cca4dcf0a7def37636762d32fef033edd6b732",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_REMOTE_VERIFICATION.json",
+        "expectedBytes": 1024,
+        "expectedSha256": "78bc3f1c312df6f4b415b03e0b8a11982808417ab8812e63a8c945f14fc325e0",
+        "actualBytes": 1024,
+        "actualSha256": "78bc3f1c312df6f4b415b03e0b8a11982808417ab8812e63a8c945f14fc325e0",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_POST_COMMIT_TERMINAL_STATE.json",
+        "expectedBytes": 3234,
+        "expectedSha256": "8d01a5b1faee52ab94249339317e0fba75305caeaf4047cfdc614a0e1177cc11",
+        "actualBytes": 3234,
+        "actualSha256": "8d01a5b1faee52ab94249339317e0fba75305caeaf4047cfdc614a0e1177cc11",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT.json",
+        "expectedBytes": 4212,
+        "expectedSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+        "actualBytes": 4212,
+        "actualSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT_62_four_hour_finalization_terminal_reconciliation.json",
+        "expectedBytes": 4212,
+        "expectedSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+        "actualBytes": 4212,
+        "actualSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT_LOG.ndjson",
+        "expectedBytes": 10286,
+        "expectedSha256": "f756976c8569b53376e53141075eb374849660a10f595afeb0810a17686a2412",
+        "actualBytes": 10286,
+        "actualSha256": "f756976c8569b53376e53141075eb374849660a10f595afeb0810a17686a2412",
+        "pass": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+        "expectedBytes": 14842,
+        "expectedSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+        "actualBytes": 14842,
+        "actualSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+        "pass": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+        "expectedBytes": 29298,
+        "expectedSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+        "actualBytes": 29298,
+        "actualSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_EVIDENCE.sha256",
+        "expectedBytes": 93862,
+        "expectedSha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764",
+        "actualBytes": 93862,
+        "actualSha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764",
+        "pass": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_EVIDENCE.sha256",
+        "expectedBytes": 17193,
+        "expectedSha256": "a21b4f6f2074631eb84751683178d533e0611218df9f3e440bd59e47fb15331d",
+        "actualBytes": 17193,
+        "actualSha256": "a21b4f6f2074631eb84751683178d533e0611218df9f3e440bd59e47fb15331d",
+        "pass": true
+      }
+    ],
+    "c36": {
+      "manifest": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256",
+        "bytes": 7228,
+        "sha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812"
+      },
+      "rows": 48,
+      "uniquePaths": 48,
+      "bad": [],
+      "pass": true
+    },
+    "package57": {
+      "manifest": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+        "bytes": 8473,
+        "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+      },
+      "rows": 57,
+      "uniquePaths": 57,
+      "bad": [],
+      "pass": true
+    },
+    "mismatches": [],
+    "pass": true
+  },
+  "documentation": {
+    "records": [
+      {
+        "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+        "currentBytes": 32070,
+        "currentSha256": "3a829e69216addfdcad0f45e975475c3b4b006bfc2481e6745157585bfeeec54",
+        "committedBytes": 32070,
+        "committedSha256": "3a829e69216addfdcad0f45e975475c3b4b006bfc2481e6745157585bfeeec54",
+        "unchanged": true
+      },
+      {
+        "path": "knowledge/CURRENT_STATE.md",
+        "currentBytes": 122561,
+        "currentSha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0",
+        "committedBytes": 122561,
+        "committedSha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0",
+        "unchanged": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+        "currentBytes": 14842,
+        "currentSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+        "committedBytes": 14842,
+        "committedSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+        "unchanged": true
+      },
+      {
+        "path": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+        "currentBytes": 29298,
+        "currentSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+        "committedBytes": 29298,
+        "committedSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+        "unchanged": true
+      }
+    ],
+    "roadmapV9Updated": false,
+    "currentStateUpdated": false,
+    "pass": true
+  },
+  "finalization": {
+    "phase10AStatusAssessmentCreated": false,
+    "roadmapV9Updated": false,
+    "currentStateUpdated": false,
+    "finalManifestCreated": false,
+    "staged": false,
+    "committed": false,
+    "pushed": false
+  },
+  "prohibitedWork": {
+    "c38Begun": false,
+    "e2Begun": false,
+    "a15Begun": false,
+    "phase10BBegun": false,
+    "deployment": false,
+    "reindex": false,
+    "modelMigration": false
+  },
+  "processState": {
+    "observedUtc": "2026-08-01T10:55:25.838Z",
+    "processes": [
+      {
+        "imageName": "claude.exe",
+        "pid": 24136,
+        "parentPid": 7384,
+        "executablePath": "c:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.220-win32-x64\\resources\\native-binary\\claude.exe",
+        "commandLineSha256": "d60af9d566be3a5c59cbe0ea751c06e1f2b3d4724e4be6070d0876290115c261",
+        "classification": "PRE_EXISTING_USER_OWNED_VSCODE_CLAUDE_EXTENSION"
+      },
+      {
+        "imageName": "node.exe",
+        "pid": 21420,
+        "parentPid": 6228,
+        "executablePath": "C:\\Program Files\\nodejs\\node.exe",
+        "commandLineSha256": "40dcd81b2a3bda6ae5b1cff09c882d36d011389fa39a61f840a5ddf28c8b4e23",
+        "classification": "CURRENT_CHECKPOINT_EXECUTOR"
+      }
+    ],
+    "activeC37ReviewProcesses": [],
+    "otherNodeProcesses": [],
+    "preExistingUserOwnedClaudeExtensionProcesses": [
+      {
+        "imageName": "claude.exe",
+        "pid": 24136,
+        "parentPid": 7384,
+        "executablePath": "c:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.220-win32-x64\\resources\\native-binary\\claude.exe",
+        "commandLineSha256": "d60af9d566be3a5c59cbe0ea751c06e1f2b3d4724e4be6070d0876290115c261",
+        "classification": "PRE_EXISTING_USER_OWNED_VSCODE_CLAUDE_EXTENSION"
+      }
+    ],
+    "port5173Listeners": [],
+    "resultsTemporaryRuntimes": [],
+    "externalC37TemporaryDirectories": [],
+    "locks": [],
+    "noActiveC37OperationProcess": true,
+    "pass": true
+  },
+  "continuationEvidenceBeforeCheckpoint": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_CONTINUATION_DRIVER.mjs",
+      "bytes": 64734,
+      "sha256": "e5d84ec33c37cfa6026e460f3486df67fed46fb1823699ee1cac9fca99614b6c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_CONTINUATION_PREFLIGHT.json",
+      "bytes": 6458,
+      "sha256": "f55dac2ea5c2f00c3e09a7686d581661110abdac32cc79dcdfc82132b385a267"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_PROTECTED_RESIDUE_VERIFICATION.json",
+      "bytes": 12584,
+      "sha256": "23d67be54a1d24348c65e0eefd3dd85e079f4c4624ce955e4e5611afe311af3f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_AUTHORIZATION.json",
+      "bytes": 2017,
+      "sha256": "57fc53266e3965fac7e402f90be17d8596bdd439eb6a938a0cd975c98703e2a4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+      "bytes": 45178,
+      "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_SCOPE_VALIDATION.json",
+      "bytes": 1303,
+      "sha256": "b3d0f567a26f6c6d68dff913a1e3483680c56ec008af2c8e710ebc3e4a0e78f3"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_SENSITIVE_DATA_SCAN.json",
+      "bytes": 14179,
+      "sha256": "095882b65614515e29b5db0813db8adf39021c6fc9cf4b2ec7a1515c7609ebaf"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+      "bytes": 8678,
+      "sha256": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_INVOCATION_MARKER.json",
+      "bytes": 2403,
+      "sha256": "b668dffb5e1376852ab16e788b659f61d390401b04d6d9ce70c8a4c8c74b9238"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+      "bytes": 3586,
+      "sha256": "af71bae05ecf0fdd3489e70a9c8520b43f8281c630f0aa37e1f3c87c4721bc2d"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDOUT.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDERR.txt",
+      "bytes": 97,
+      "sha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW.json",
+      "bytes": 393,
+      "sha256": "392d944aad9063f59b5da86689407e7eb96a90ed74aceceaed2e26cfe479c6f7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW.md",
+      "bytes": 399,
+      "sha256": "e6cb8205183d88dd34a6a90bb75576068962e96d50ea51d6a086f225c9381d95"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_TRANSMISSION_RECEIPT.json",
+      "bytes": 2595,
+      "sha256": "0cfda3288c3981c63ac18cdffab0493829a33488b98681e76455beb16c394cdc"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_CONTINUATION_AUDIT_SUPPLEMENT.json",
+      "bytes": 4378,
+      "sha256": "7b5bdfa97226ab96b13ee5807ce99299b15ce6c41a6798133b26626d22baa7d7"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_CAPTURE_CORRECTION_ADDENDUM.json",
+      "bytes": 3036,
+      "sha256": "55580deba146f75170a84c2859740457a71bdc0b1e6473101143230ad88c9d09"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_TECHNICAL_INCOMPLETE_ADJUDICATION.json",
+      "bytes": 3241,
+      "sha256": "ef91d6290b5a5da61f876fa4d26ae9363389b756bacce12cae15fb9366665625"
+    }
+  ],
+  "nextExactOperation": "STOP. This authorization is consumed. A replacement independent review would require a new separately governed prompt and explicit authorization after correcting the local CLI configuration; do not retry under this continuation and do not begin C38, E2, A15, Phase 10B, deployment, reindexing, or model migration.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DERIVATION_PLAN",
+  "generatedUtc": "2026-08-02T07:20:28.709551Z",
+  "source": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+    "bytes": 79610,
+    "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795"
+  },
+  "protectedFinalPreflight69": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 5290,
+    "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f",
+    "role": "IMMUTABLE_REQUIRED_INPUT"
+  },
+  "destination": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint71-opus-compatible.mjs",
+    "bytes": 86892,
+    "sha256": "6c85d355d46fe5808e7c21996e8ca44255d6b8933021eaf84fcdab7dd61e90bc"
+  },
+  "method": [
+    "exact byte copy of protected original runner",
+    "narrow patch limited to checkpoint-71 compatibility and evidence naming",
+    "automated line-level diff adjudication",
+    "syntax and no-provider compatibility preflight"
+  ],
+  "purpose": "Resolve only the checkpoint-69 final-preflight input/output collision while preserving prepared review semantics.",
+  "permittedChanges": [
+    "checkpoint-71 continuity identities and evidence names",
+    "current-session telemetry binding required immediately before invocation",
+    "checkpoint-71 task-owned temporary roots",
+    "immutable-input verification for original runner and protected checkpoint-69 final preflight",
+    "checkpoint-71-specific noncolliding invocation output paths",
+    "provider-free compatibility-preflight mode and STOP boundary",
+    "checkpoint-71 marker provenance if later explicitly approved"
+  ],
+  "forbiddenAndPreserved": [
+    "original runner bytes",
+    "protected checkpoint-69 final-preflight bytes",
+    "Claude CLI/model/provider/MCP configuration",
+    "package/capsule/manifests/bootstrap",
+    "63 exact Read rules",
+    "nine spot checks across eight evidence classes",
+    "provider context projection and thresholds",
+    "authorization count/consumption semantics",
+    "read-only reviewer boundary and approval gates",
+    "runtime/oracle/fixtures/registry/WAL/Git/finalization semantics"
+  ],
+  "providerContactAuthorized": false,
+  "invocationMarkerAuthorized": false,
+  "pass": true
+}

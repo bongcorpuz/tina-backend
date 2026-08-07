@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_REASON_METRICS_UNCHANGED_NO_RUNTIME_CANDIDATE",
+  "source": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_REASON_METRICS.json",
+    "bytes": 1419,
+    "sha256": "6ed0d8c625b3b0b90d6064ac98d9910a8c04e2f5fd681b2756aaee6bb88bd8e4"
+  },
+  "scoreBeforeC37": {
+    "decision": 3720,
+    "relation": 3720,
+    "reason": 3575,
+    "total": 3720,
+    "residuals": 145
+  },
+  "scoreAfterC37": {
+    "decision": 3720,
+    "relation": 3720,
+    "reason": 3575,
+    "total": 3720,
+    "residuals": 145
+  },
+  "delta": {
+    "decision": 0,
+    "relation": 0,
+    "reason": 0
+  },
+  "reasonClosureSatisfied": false,
+  "pass": true
+}

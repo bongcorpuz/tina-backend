@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_FULL_REGRESSION_NEW_CAPTURE_ADJUDICATED",
+  "reuseDecision": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_C36_REGRESSION_REUSE_DECISION.json",
+    "bytes": 5407,
+    "sha256": "79c60fdeb3678c779771ac2fab516834b48cbcf95090b90a8e0aa520e6d9d51f"
+  },
+  "newCapture": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION.json",
+    "bytes": 8949,
+    "sha256": "43bfec0d2227ba6d8572190340a38967ded5b79e935a6df15c77ccbd57c755b0"
+  },
+  "postprocessing": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_POSTPROCESSING.json",
+    "bytes": 590,
+    "sha256": "a925b255f87aec6f2b98d8d8b0e5372c1b916941456306bb2061de20f36e8395"
+  },
+  "execution": {
+    "canonicalCommand": "npm.cmd test",
+    "resolvedCommand": "node scripts/run-regressions.mjs",
+    "captureInstrumentation": "evaluation/runner/phase-10a14-r20/commit5r1c36-regression-capture-hook.mjs",
+    "invocationCount": 1,
+    "startedUtc": "2026-08-01T09:37:19.662Z",
+    "completedUtc": "2026-08-01T09:41:53.405Z",
+    "elapsedMilliseconds": 274349,
+    "exitCode": 1,
+    "signal": null,
+    "timedOut": false,
+    "error": null
+  },
+  "rawCapture": {
+    "stdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_STDOUT.txt",
+      "bytes": 19139,
+      "sha256": "767e3de790118c01da6c02280c78739ea64d1bcc0f6ffc110c2e47a4393ba99c"
+    },
+    "stderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_STDERR.txt",
+      "bytes": 38863,
+      "sha256": "2a938897035d1f4eb5036c8f21a7d742106883f52b8317ba81fa63f2c5315f70"
+    },
+    "childCapture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+      "bytes": 613799,
+      "sha256": "e78e4f4baef819d068c35f7356e8cad3165cc0fba7384d81c74c7e4ce8dbd993"
+    },
+    "childProcesses": 227
+  },
+  "syntax": {
+    "run": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "suites": {
+    "run": 217,
+    "passed": 197,
+    "failed": 20
+  },
+  "groups": {
+    "passed": 5429,
+    "failed": 22,
+    "total": 5451
+  },
+  "classificationCounts": {
+    "STATE": 21,
+    "SCOPE": 1
+  },
+  "nominalNonzeroExitPreserved": true,
+  "runtimeBehaviorFailures": 0,
+  "allowlistExpanded": false,
+  "c35Suites": {
+    "candidate1": "6/6",
+    "candidate2": "25/25",
+    "source": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+      "bytes": 3522,
+      "sha256": "637da31c5d06580d9a7e4c8804a2639f8b3c20c006a0d8c56a74197c5153bed9"
+    }
+  },
+  "adjudication": "All 22 exact failures are unchanged historical guards: 21 STATE and one already-allowlisted SCOPE. Zero new runtime-behavior failures.",
+  "pass": true
+}

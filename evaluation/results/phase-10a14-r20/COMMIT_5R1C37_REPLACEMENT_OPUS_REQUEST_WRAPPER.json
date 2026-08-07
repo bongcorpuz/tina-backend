@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_REQUEST_WRAPPER_READY_NOT_SUBMITTED",
+  "generatedUtc": "2026-08-01T11:42:00.000Z",
+  "checkpoint65": {
+    "ordinal": 65,
+    "sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db",
+    "eventSha256": "d982a06613729ac6eaa0e567179f368a3f210f8ee4efcec89f9649f3f04ca7f6"
+  },
+  "priorFailure": {
+    "cliCaptureSha256": "af71bae05ecf0fdd3489e70a9c8520b43f8281c630f0aa37e1f3c87c4721bc2d",
+    "stderrSha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b",
+    "correctionSha256": "55580deba146f75170a84c2859740457a71bdc0b1e6473101143230ad88c9d09",
+    "technicalAdjudicationSha256": "ef91d6290b5a5da61f876fa4d26ae9363389b756bacce12cae15fb9366665625",
+    "modelReviewReached": false,
+    "semanticRejection": false
+  },
+  "replacementAuthorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "status": "AUTHORIZED_UNUSED",
+    "maximumInvocations": 1,
+    "retryAuthorized": false
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "reverificationSha256": "ca232822c7ef41d6e1c41eb9a6b727ca511c10b5e6d2aca4d362f808d7ccbe9d"
+  },
+  "existingRequest": {
+    "jsonSha256": "abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79",
+    "markdownSha256": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449"
+  },
+  "isolation": {
+    "planSha256": "aa40dcc877e15d529acbb59f9fb8256083b06187baf5bb609ee616b5916404a0",
+    "validationSha256": "4e81ead01dd0ddc235503ffc41e52abbb0a4c8c1bb57f273eccb4d9a3f65a98a",
+    "configSha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "noModelValidationExitCode": 0
+  },
+  "frozenDisposition": {
+    "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+    "decisionEvidenceSha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983",
+    "rows": "145/145",
+    "generalizedRuntimeDefects": 0,
+    "decisionMetric": "3720/3720",
+    "relationMetric": "3720/3720",
+    "reasonMetric": "3575/3720"
+  },
+  "acceptedFirstTokens": ["APPROVED","APPROVED_WITH_NONBLOCKING_OBSERVATIONS","REJECTED","INCOMPLETE_REVIEW"],
+  "acceptedSubstantiveTokens": ["NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED","NO_RUNTIME_CANDIDATE_SEMANTICALLY_SAFE_BUT_REASON_GATE_OPEN","MORE_EVIDENCE_REQUIRED"],
+  "submissionStatus": "NOT_SUBMITTED",
+  "authorizationConsumed": false,
+  "pass": true
+}

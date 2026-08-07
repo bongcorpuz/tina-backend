@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_AUTHORIZATION_UNUSED",
+  "generatedUtc": "2026-08-03T13:41:57.009Z",
+  "blocker": "CURRENT_CODEX_SESSION_REMAINING_CONTEXT_BELOW_120000",
+  "remainingTokens": 83242,
+  "authorizationStatus": "AUTHORIZED_UNUSED",
+  "invocationCount": 0,
+  "marker": false,
+  "providerContacted": false,
+  "reviewerExecuted": false,
+  "documentationUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "phase10A": "OPEN",
+  "r20": "IN_PROGRESS",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "nextExactOperation": "Start a fresh owner-governed Codex continuation from checkpoint 72 with at least 120000 current-session tokens remaining. Preserve checkpoint 71, its compatible wrapper, the checkpoint-71 failed final preflight, the exact 57-file package, capsule, bootstrap, read rules, protected evidence, and the still-unused one-use authorization. Authorize and validate a checkpoint-72 noncolliding final-preflight/output binding before any marker or provider contact; do not begin C38 or later work.",
+  "pass": true
+}

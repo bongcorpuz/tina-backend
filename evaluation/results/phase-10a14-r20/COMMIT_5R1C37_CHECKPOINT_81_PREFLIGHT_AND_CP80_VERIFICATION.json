@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 81",
+  "classification": "C37_CHECKPOINT_81_PREFLIGHT_AND_CP80_VERIFICATION",
+  "generatedAtUtc": "2026-08-07T22:55:00Z",
+
+  "repositoryIdentity": {
+    "root": "C:\\Projects\\tina-backend",
+    "origin": "https://github.com/bongcorpuz/tina-backend.git",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "fullHeadParent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "gitOperationInProgress": "NONE",
+    "indexLockPresent": false,
+    "stagedCount": 0,
+    "modifiedCount": 4,
+    "modifiedPathList": ["knowledge/CURRENT_STATE.md", "security/public-health.js", "server.js", "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"],
+    "untrackedCount": 313,
+    "aheadOfUpstream": 0,
+    "behindUpstream": 0
+  },
+
+  "freshRemoteTipVerification": {
+    "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+    "result": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "matchesHead": true,
+    "exitCode": 0,
+    "fetchPullMergePerformed": false
+  },
+
+  "checkpoint80ManifestVerification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_80_FINAL_EVIDENCE.sha256",
+    "manifestSelfSha256": "0384e114aefb3f98121bca63f83da2c360ea7061aedd997dcd179c5cb0886f2c",
+    "entryCount": 14,
+    "verifiedCount": 14,
+    "mismatchCount": 0,
+    "exitCode": 0,
+    "recomputedNotAssumed": true,
+    "abbreviatedHashesFromPriorReportNotRelied": true
+  },
+
+  "currentStateMdVerification": {
+    "requiredStartingSha256": "42666ab963ae4dadd1a3506f6c5b2cc42ac8eadb59985c90002af557948ad9f6",
+    "observedSha256": "42666ab963ae4dadd1a3506f6c5b2cc42ac8eadb59985c90002af557948ad9f6",
+    "match": true
+  },
+
+  "checkpoint79ForwardReconciliation": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_79_FINAL_EVIDENCE.sha256",
+    "entriesOk": 7,
+    "entriesFailed": 1,
+    "failedEntry": "knowledge/CURRENT_STATE.md",
+    "failureIsExpectedDivergence": true,
+    "explainedByAdditiveCheckpoint80Update": true,
+    "exitCode": 1,
+    "exitCode1IsExpectedNotAnError": true
+  },
+
+  "fiftySevenEntryPackageReverification": {
+    "entriesTotal": 57,
+    "entriesOk": 57,
+    "entriesMismatched": 0,
+    "entriesMissing": 0,
+    "totalBytes": 4109852,
+    "totalBytesExpected": 4109852,
+    "aggregateSha256Recomputed": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "aggregateSha256Expected": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "match": true,
+    "noSealedArtifactChanged": true
+  },
+
+  "registryWalReconciliation": {
+    "registryHash": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "registryHashExpected": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "match": true,
+    "totalAttempts": 230,
+    "running": 0,
+    "orphan": 0,
+    "dangling": 0,
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37WalExists": false,
+    "activeAttemptId": null
+  },
+
+  "writerPreconditionAndB1FullTimestampResolution": {
+    "pid21112": "NOT_RUNNING",
+    "pid4472": "NOT_RUNNING",
+    "pythonExeProcesses": 0,
+    "wscriptCscriptProcesses": 0,
+    "activeStartupTriggerPresent": false,
+    "disabledMarkerSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+    "disabledMarkerHashMatchesControllingValue": true,
+    "openClawGatewayTaskState": "Disabled",
+    "fullTimestampResolution": {
+      "instructionFromPrompt": "The prior report quoted LastBootUpTime 23:54:21Z -> 18:26:41Z. Do not infer ordering from time-of-day alone. Resolve and record the full date and time for both values.",
+      "disablementEventUtc": "2026-08-07T06:33:15Z",
+      "priorSessionBootFullUtc": "2026-08-06T23:54:21.5000000Z",
+      "newBootFullUtc": "2026-08-07T18:26:41.5000000Z",
+      "explorerExeCreationFullUtc": "2026-08-07T18:27:03.6292010Z",
+      "calendarDatesDiffer": true,
+      "priorSessionDate": "2026-08-06",
+      "newBootDate": "2026-08-07",
+      "disablementDate": "2026-08-07",
+      "computedElapsedSecondsFromDisablementToNewBoot": 42806,
+      "computedElapsedHoursFromDisablementToNewBoot": 11.89,
+      "programmaticOrderingCheck": "($bootDate -gt $disableDate) evaluated to True using .NET DateTime comparison, not visual time-of-day inference",
+      "conclusion": "The new boot (2026-08-07T18:26:41.5Z) is unambiguously and provably AFTER the disablement (2026-08-07T06:33:15Z), by 11.89 hours, on the same calendar date. Full-date evidence, not time-of-day inference, supports this."
+    },
+    "b1FullyClosedConfirmed": true,
+    "noGatewayReturnedAfterTheQualifyingReboot": true
+  },
+
+  "opusAuthorizationStateConfirmation": {
+    "newOpus5Authorization": { "status": "AUTHORIZED_CONSUMED", "consumed": true, "remaining": 0, "invocationCount": 1 },
+    "formerOpus48Authorization": { "status": "SUPERSEDED_UNUSED", "consumed": false, "remainingPermittedInvocations": 0 },
+    "reviewerAuthorizationAvailableForThisUnit": false,
+    "noReviewerOrModelWillBeInvokedInThisUnit": true
+  },
+
+  "checkpoint81UsedCheck": {
+    "highestExistingCheckpointBeforeThisUnit": 80,
+    "checkpoint81PreviouslyUnused": true,
+    "checkpointNumberSelected": 81
+  },
+
+  "preMutationSnapshot": {
+    "capturedAtUtc": "2026-08-07T22:55:00Z",
+    "staged": 0,
+    "modified": 4,
+    "modifiedPathList": ["knowledge/CURRENT_STATE.md", "security/public-health.js", "server.js", "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"],
+    "untracked": 313,
+    "protectedArtifactHashes": {
+      "IDEA.md": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0",
+      "package.json": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3",
+      "server.js": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "security/public-health.js": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35"
+    },
+    "registryHash": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "currentStateMdHash": "42666ab963ae4dadd1a3506f6c5b2cc42ac8eadb59985c90002af557948ad9f6"
+  },
+
+  "allPreflightGatesPassed": true,
+  "safeToProceedToReconciliationPhases": true
+}

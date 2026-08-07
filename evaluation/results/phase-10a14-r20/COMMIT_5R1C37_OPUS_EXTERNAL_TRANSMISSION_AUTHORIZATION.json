@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_OPUS_EXTERNAL_TRANSMISSION_EXPLICIT_ONE_USE_AUTHORIZATION",
+  "generatedUtc": "2026-08-01T10:45:14.865Z",
+  "authorizationSource": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-TWO-HOUR-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-64.md",
+    "bytes": 25764,
+    "sha256": "144d55fc96403292eae094363723d14a2eada55d8442e1fd20db596ccbe8312b"
+  },
+  "authorizationStatement": "Project owner explicitly approved exactly one read-only Claude Code Opus 4.8 invocation and transmission to Anthropic of only the verified 57-entry C37 review package, subject to all prompt restrictions.",
+  "externalServiceProvider": "Anthropic",
+  "reviewerTool": "Claude Code",
+  "reviewerModel": "claude-opus-4-8",
+  "invocationOrdinalAuthorized": 1,
+  "maximumInvocations": 1,
+  "retryAuthorized": false,
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "authorizedMetadata": [
+    "detailed package manifest",
+    "57-line SHA file",
+    "checkpoint-64 review instructions",
+    "strict JSON schema",
+    "binary-safe ordinal/path/byte/hash framing"
+  ],
+  "excludedData": [
+    "credentials and credential files",
+    "environment files and serialized environment values",
+    "unrelated files",
+    "client or personal information",
+    "all repository content outside the verified package"
+  ],
+  "excludedWork": [
+    "runtime or oracle change",
+    "candidate allocation",
+    "C38",
+    "E2",
+    "A15",
+    "Phase 10B",
+    "deployment",
+    "reindexing",
+    "model migration",
+    "second invocation or retry"
+  ],
+  "statusBeforeInvocation": "AUTHORIZED_NOT_YET_CONSUMED",
+  "pass": true
+}

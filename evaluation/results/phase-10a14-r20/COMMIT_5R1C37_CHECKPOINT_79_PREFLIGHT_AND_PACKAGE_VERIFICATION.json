@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 79",
+  "classification": "C37_CHECKPOINT_79_FAIL_CLOSED_PREFLIGHT_AND_57_ENTRY_PACKAGE_VERIFICATION",
+  "generatedAtUtc": "2026-08-07T17:28:17Z",
+  "primaryExecutor": {
+    "model": "claude-sonnet-5",
+    "role": "primary executor and orchestrator",
+    "note": "Set by user /model command at session start of this unit. Not used as the independent reviewer."
+  },
+
+  "preflight": {
+    "repositoryRoot": "C:\\Projects\\tina-backend",
+    "originUrl": "https://github.com/bongcorpuz/tina-backend.git",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "fullParent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "fullParentResolutionMethod": "git rev-parse HEAD^ against the live repository, not inferred or expanded from the abbreviated form supplied in the prompt.",
+    "upstream": "origin/feature/source-availability-engine-v1",
+    "aheadOfUpstream": 0,
+    "behindUpstream": 0,
+    "stagedPaths": 0,
+    "modifiedTrackedPaths": 4,
+    "modifiedTrackedPathList": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "untrackedPathsAtPreflightStart": 299,
+    "indexLockPresent": false,
+    "gitOperationInProgress": "NONE",
+    "remoteTipFreshVerification": {
+      "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+      "exitCode": 0,
+      "result": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+      "matchesRequiredHead": true,
+      "fetchPullMergePerformed": false,
+      "localTrackingRefTreatedAsProof": false
+    }
+  },
+
+  "boundHashVerification": {
+    "recomputedLocally": true,
+    "notInferredFromPromptOrFilenames": true,
+    "entries": [
+      { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_78_authorization_withheld_safe_pause.json", "expected": "6c37573375af18c8dab75190c9bdbb2c57a54d032d488aafb9a446061b49e771", "observed": "6c37573375af18c8dab75190c9bdbb2c57a54d032d488aafb9a446061b49e771", "match": true },
+      { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_78_AUTHORIZATION_WITHHELD_ADJUDICATION.json", "expected": "b7d9ff638f48eb3a3500d5e8a4476fdd42a9299903e2b0873e2c27df6b570e30", "observed": "b7d9ff638f48eb3a3500d5e8a4476fdd42a9299903e2b0873e2c27df6b570e30", "match": true },
+      { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_78_FINAL_EVIDENCE.sha256", "expected": "4d20ef84824f71333c46bbba031906a265c77f7e435932b4f468359a0ef33ead", "observed": "4d20ef84824f71333c46bbba031906a265c77f7e435932b4f468359a0ef33ead", "match": true },
+      { "path": "knowledge/CURRENT_STATE.md", "expected": "63653927a66926b80d8598c0351b9e5764a2f0d2479e0893bc9ccabfc829a856", "observed": "63653927a66926b80d8598c0351b9e5764a2f0d2479e0893bc9ccabfc829a856", "match": true }
+    ],
+    "allFourMatched": true,
+    "checkpoint78ManifestReRun": { "entriesTotal": 8, "entriesOk": 8, "entriesFailed": 0, "exitCode": 0 }
+  },
+
+  "controllingArtifactsReadCompletely": [
+    "knowledge/CURRENT_STATE.md",
+    "COMMIT_5R1C37_RECOVERY_CHECKPOINT_78_authorization_withheld_safe_pause.json",
+    "COMMIT_5R1C37_CHECKPOINT_78_AUTHORIZATION_WITHHELD_ADJUDICATION.json",
+    "COMMIT_5R1C37_CHECKPOINT_78_FINAL_EVIDENCE.sha256",
+    "COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+    "COMMIT_5R1C37_FINAL_ATTEMPT_LEDGER.json",
+    "COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json",
+    "COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json",
+    "COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+    "CANONICAL_ATTEMPT_REGISTRY.json"
+  ],
+
+  "fiftySevenEntryPackageVerification": {
+    "manifestArtifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+    "manifestSha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e",
+    "manifestClassification": "C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST_PASS",
+    "exactOriginalEntryCount": 57,
+    "verificationMethod": "For each of the 57 allowlist entries, read the file at its repositoryRelativePath from the live working tree and compute SHA-256; compare against the entry's recorded sha256.",
+    "entriesTotal": 57,
+    "entriesExisting": 57,
+    "entriesHashMatched": 57,
+    "entriesMissing": 0,
+    "entriesHashMismatched": 0,
+    "extraFilesSilentlyAdded": 0,
+    "packageChangedSinceCheckpoint78": false,
+    "integrityCoverageAchieved": "57/57",
+    "sourceDetailedAggregateHashDiscrepancy": {
+      "observed": true,
+      "detail": "COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json records authorizedPackage.sourceManifestSha256=e317b2da... and detailedManifestSha256=b0f27090..., neither of which matches any standalone file currently in the repository (confirmed by targeted search across evaluation/results/phase-10a14-r20).",
+      "assessment": "NOT_AN_INTEGRITY_DEFECT. These two hash fields most plausibly cover ephemeral, differently-serialized concatenations produced at the time of a prior invocation attempt (e.g. a specific byte-framing of the same 57 entries), not standalone persisted artifacts. The canonical, verifiable enumeration is the allowlist itself, which achieved 57/57 integrity coverage directly against live file content. This discrepancy is recorded rather than concealed and does not alter the conclusion that the package is intact and unchanged since checkpoint 78.",
+      "sealedArtifactsEdited": 0
+    }
+  },
+
+  "registryAndWalReconciliation": {
+    "registryArtifact": "CANONICAL_ATTEMPT_REGISTRY.json",
+    "totalAttempts": 230,
+    "runningAttempts": 0,
+    "orphanAttempts": 0,
+    "danglingAttempts": 0,
+    "historicalRegistryClean": true,
+    "c37Ledger": {
+      "artifact": "COMMIT_5R1C37_FINAL_ATTEMPT_LEDGER.json",
+      "classification": "C37_FINAL_ATTEMPT_LEDGER_ZERO_CANDIDATES",
+      "candidateBudget": { "maximum": 1, "authorized": 0, "allocated": 0, "accepted": 0, "rejected": 0, "technicalIncomplete": 0 },
+      "c37WalExists": false,
+      "activeAttemptId": null,
+      "pass": true
+    },
+    "registryOrWalModifiedByThisOperation": false,
+    "noAcceptedRejectedConsumedTerminalSupersededOrTechnicalAttemptRepeated": true
+  },
+
+  "writerPreconditionReverification": {
+    "verifiedAtUtc": "2026-08-07T17:28:07Z",
+    "pid21112": "NOT_RUNNING",
+    "pid4472": "NOT_RUNNING",
+    "genuineHermesPathProcesses": 0,
+    "pythonExeProcesses": 0,
+    "wscriptCscriptProcesses": 0,
+    "activeStartupTriggerPresent": false,
+    "disabledMarkerPresent": true,
+    "disabledMarkerSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+    "disabledMarkerHashMatchesControllingFullValue": true,
+    "openClawGatewayTaskState": "Disabled",
+    "openClawGatewayTaskModified": false,
+    "newTinaOrchestratorProcessAppeared": false,
+    "startupEntryReEnabledOrModified": false
+  },
+
+  "logonSinceDisablementCheck": {
+    "disablementUtc": "2026-08-07T06:33:15Z",
+    "method": "Compared explorer.exe process CreationDate and system LastBootUpTime against the disablement timestamp.",
+    "explorerExeCreationUtc": "2026-08-06T23:54:44Z",
+    "systemLastBootUpTimeUtc": "2026-08-06T23:54:21Z",
+    "currentCheckUtc": "2026-08-07T17:28:07Z",
+    "qualifyingLogonOccurredSinceDisablement": false,
+    "reasoning": "Both explorer.exe's creation time and the system boot time predate the disablement. No new logon session has begun since the startup entry was disabled, so no opportunity to prove the trigger stays inert at logon has yet occurred.",
+    "b1Disposition": "PRESERVED_AS_CLOSED_SUBJECT_TO_NEXT_LOGON_CONFIRMATION",
+    "b1FullClosureClaimed": false
+  },
+
+  "authorizationStateBeforeInvocation": {
+    "artifact": "COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "classification": "C37_MANIFEST_INDEXED_OPUS_EXPLICIT_ONE_USE_EXTERNAL_AUTHORIZATION",
+    "status": "AUTHORIZED_UNUSED",
+    "authorizationConsumed": false,
+    "permittedModel": "claude-opus-4-8 (Claude Code Opus 4.8)",
+    "permittedInvocationCount": 1,
+    "retryAuthorized": false,
+    "permittedPackageIdentity": {
+      "entries": 57,
+      "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+    },
+    "consumptionRule": "Consumed only when the substantive manifest-indexed request is submitted."
+  },
+
+  "checkpoint77ManifestExpectedDivergenceReconfirmed": {
+    "manifest": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_77_FINAL_EVIDENCE.sha256",
+    "entriesOk": 7,
+    "entriesFailed": 1,
+    "failedEntry": "knowledge/CURRENT_STATE.md",
+    "matchesCheckpoint78DocumentedDivergence": true,
+    "sealedManifestEdited": false
+  },
+
+  "preflightConclusion": {
+    "allGatesPassed": true,
+    "repositoryIdentityVerified": true,
+    "remoteTipVerified": true,
+    "allBoundHashesMatched": true,
+    "packageIntegrityVerified57of57": true,
+    "registryClean": true,
+    "writerPreconditionHolds": true,
+    "authorizationStateClear": true,
+    "readyForPhase2Gate": true
+  }
+}

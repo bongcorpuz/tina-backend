@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_REVIEW_INVOCATION_EVIDENCE",
+
+  "invocation": {
+    "mechanism": "Primary executor's agent-spawning tool, single call, foreground (result required before continuing), no isolation (main working tree; verified unmutated afterward rather than sandboxed via worktree)",
+    "modelSelector": "opus",
+    "requestedExactModel": "claude-opus-5",
+    "effectiveModelPerAgentIdentitySelfReport": "claude-opus-5",
+    "modelMetadataSource": "The agent's own first line of output: 'I confirm I am claude-opus-5. My system prompt states: \"You are powered by the model named Opus 5. The exact model ID is claude-opus-5.\"' This is the agent's self-report of its own system configuration, not independently externally verifiable by the primary executor beyond trusting the agent-spawning tool's own model-routing guarantee.",
+    "subagentType": "general-purpose",
+    "reviewerIdentifiedAsClaudeOpus5": true,
+    "requestedThinking": "max",
+    "requestedEffort": "ultra, or the highest supported effective setting",
+    "effectiveThinkingSetting": "NOT_DIRECTLY_CONFIGURABLE",
+    "effectiveEffortSetting": "NOT_DIRECTLY_CONFIGURABLE",
+    "thinkingEffortNote": "The primary executor's agent-spawning tool exposes no per-call thinking or effort parameter (unlike a workflow-orchestration variant of the tool, which was deliberately NOT used here because it would auto-retry malformed structured-output tool calls, in tension with this operation's explicit 'do not retry for any reason' instruction). The requested 'max'/'ultra' settings could not be set as a formal parameter. As a substitute, the review prompt explicitly instructed: 'Apply your maximum reasoning depth. Think step by step through every determination below before answering. Do not rush or summarize prematurely.' This is recorded as a prompt-level request, not a verified parameter-level guarantee, and is not overclaimed as equivalent to a genuine effort-tier setting.",
+    "toolAccessGrantedToReviewer": "Full tool access (general-purpose subagent type grants all tools). The primary executor's agent-spawning tool provides no mechanism to grant a strict Read/Glob/Grep-only subset to a spawned agent. The review prompt's ABSOLUTE BOUNDARIES section instructed Read/Glob/Grep only as a behavioral constraint, not a technical one.",
+    "utcStartApprox": "2026-08-07T18:00:59Z",
+    "utcEndApprox": "2026-08-07T18:11:49Z",
+    "durationMs": 649872,
+    "toolUsesByReviewer": 63,
+    "subagentTokens": 254047,
+    "invocationId": "a18d7f3333bb554ea",
+    "providerTransmissionStatus": "SUBMITTED — this is the substantive package-bound request. Per the exact consumption rule in COMMIT_5R1C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT.json, the new authorization is CONSUMED at this point, regardless of response content.",
+    "exitStatus": "COMPLETED — the invocation returned a final response with a schema-conformant JSON object as its last content block."
+  },
+
+  "reviewerToolBoundaryDeviation": {
+    "disclosed": true,
+    "disclosedByReviewerItself": true,
+    "disclosureQuote": "I used one read-only Bash `tail` call, contrary to my stated Read/Glob/Grep-only restriction. No mutation occurred.",
+    "targetFile": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION_STDOUT.txt",
+    "independentlyVerifiedByPrimaryExecutor": true,
+    "verificationMethod": [
+      "Compared the target file's current SHA-256 against its value already recorded in COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json, which was established and verified BEFORE this invocation (at checkpoint 79 and again in this checkpoint's own preflight, both before the reviewer ran).",
+      "Compared the repository's untracked-file COUNT immediately before invocation (306) against immediately after (306) — exact match, zero net new files.",
+      "Confirmed the one unexplained-looking untracked file surfaced during the diff (auth.json) has a filesystem mtime of 2026-08-07 16:39, which PREDATES the invocation window (18:00:59-18:11:49), so it is pre-existing and unrelated.",
+      "Confirmed HEAD, staged count (0), and modified count (4, the same four paths) are unchanged before/after.",
+      "Confirmed the protected-artifact hash set (IDEA.md, package.json, server.js, security/public-health.js, PATCH-08S test) and the canonical attempt registry hash are byte-identical before/after."
+    ],
+    "verificationResult": {
+      "targetFileHashBeforeInvocation": "767e3de790118c01da6c02280c78739ea64d1bcc0f6ffc110c2e47a4393ba99c",
+      "targetFileHashAfterInvocation": "767e3de790118c01da6c02280c78739ea64d1bcc0f6ffc110c2e47a4393ba99c",
+      "targetFileUnchanged": true,
+      "noNewFilesCreated": true,
+      "noMutationOccurred": true
+    },
+    "adjudication": "This is a PROCEDURAL, tool-boundary deviation from the primary executor's own behavioral instruction to the reviewer, not a mutation and not one of the governing prompt's explicitly forbidden reviewer actions (which are all mutation/delegation/staging actions: write, edit, allocate a candidate, create an attempt, modify registry/WAL, invoke another agent, contact another model, stage/commit/push, modify a test/validator/oracle/safety guard, manufacture approval, execute C38). Independently confirmed as non-mutating. Recorded transparently rather than concealed or silently excused. Does NOT, on its own, downgrade the outcome classification to TECHNICAL_INCOMPLETE, because it caused no mutation and did not compromise the review's substantive validity — but it is an honest limitation of this invocation mechanism that the primary executor could not technically enforce a strict read-only tool sandbox on a general-purpose subagent, and that limitation is recorded here for anyone relying on this evidence in the future.",
+    "toolingLimitationNotedForFutureOperations": "If a future operation requires a technically-enforced (not merely instructed) read-only reviewer, it would need either a genuinely restricted subagent type, or worktree isolation combined with independent post-hoc verification exactly as performed here — instruction alone is not a technical guarantee."
+  },
+
+  "schemaValidationResult": {
+    "validatedAgainst": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_OUTPUT_SCHEMA_WRAPPER.json, field wrapperSchema",
+    "rawResponseArtifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_RAW_REVIEWER_RESPONSE_JSON.json",
+    "rawResponseSha256": "d317c46b82e4f6d30259169cdf3dae9f32f72370881a28aba3db02f2c905a1c4",
+    "rawResponseBytes": 12432,
+    "jsonParsesCleanly": true,
+    "topLevelRequiredFieldsPresent": "11/11",
+    "topLevelExtraUndeclaredProperties": 0,
+    "topLevelEnumAndConstFieldsValid": "5/5 (reviewerModel, reviewerSelector, evidenceCorpusHash, provenanceAdjudicationAcceptable, b7ClosureDetermination, c37TerminalDetermination — all valid)",
+    "originalDecisionPayloadRequiredFieldsPresent": "17/17",
+    "originalDecisionPayloadConstFieldsValid": "reviewedStateDigest, reviewedPackageManifestSha256, reviewedPackageAggregateSha256, reviewerTool, reviewerModel — all match the amended constants exactly",
+    "verificationObjectRequiredFieldsPresent": "19/19, all boolean, all true",
+    "blockingFindingsIsArray": true,
+    "blockingFindingsCount": 0,
+    "nonblockingObservationsIsArray": true,
+    "nonblockingObservationsCount": 10,
+    "overallSchemaValidationResult": "FULLY_VALID_NO_DEVIATIONS",
+    "reviewerModelSelfIdentification": "claude-opus-5 (matches required identification exactly, in both the wrapper-level reviewerModel field and the nested originalDecisionPayload.reviewerModel field)"
+  },
+
+  "independentSubstantiveVerificationPerformedByReviewer": {
+    "note": "Recorded here because the reviewer's own claimed methodology is itself part of what determines whether this is a genuine independent review or a rubber stamp. These are the reviewer's own claims, restated for the record, not re-verified byte-for-byte by the primary executor beyond the checks above.",
+    "originalFilesSpotChecked": 27,
+    "minimumRequired": 8,
+    "evidenceClassesCovered": "8/8 (all classes represented)",
+    "independentArithmeticRecomputation": "Cluster row counts and category-column sums recomputed by hand and cross-checked against three separate artifacts (necessity decision, cluster matrix, member-oracle-id enumeration), all agreeing at 145.",
+    "regressionClaimVerifiedAgainstRawOutput": "Compared the adjudication's regression summary against raw stdout capture directly, rather than accepting the self-reported adjudication.",
+    "adversarialPursuitOfAnApparentDiscrepancy": "Identified and pursued a ~152KB size divergence between a 'selected' and 'live' runtime file as a candidate hidden mutation before resolving it, with corroborating evidence from three independent artifacts, as disclosed design (a preserved attempt snapshot vs. a restored scaffold) rather than concealment.",
+    "newFindingsNotPreviouslyIdentifiedByThePrimaryExecutor": [
+      "Stale Opus-4.8 reviewer-identity references persist in other draft artifacts (FINAL_CLOSURE_DECISION_DRAFT.json, PHASE_10A_STATUS_ASSESSMENT_DRAFT.json, futureWriteOncePaths CLI-capture entries) that were not caught by the primary executor's own checkpoint 79/80 preflight.",
+      "A commit-message text divergence between two draft artifacts, noted as moot now but requiring reconciliation before any future commit.",
+      "A label-polarity documentation ambiguity in the capsule markdown."
+    ]
+  }
+}

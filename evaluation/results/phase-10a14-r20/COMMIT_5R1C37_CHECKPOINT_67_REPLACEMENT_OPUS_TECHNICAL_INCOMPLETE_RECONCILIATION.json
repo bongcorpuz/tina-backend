@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FOUR_HOUR_SAFE_PAUSE_REPLACEMENT_OPUS_TECHNICAL_INCOMPLETE",
+  "generatedUtc": "2026-08-01T12:52:23.506Z",
+  "startingCheckpoint": {
+    "ordinal": 66,
+    "sha256": "8348750e6fb07df633514d8170c2da9c9493980f96eb61d656f205e7f4631626"
+  },
+  "endingCheckpoint": 67,
+  "finalPreflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_66_REPLACEMENT_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 3624,
+    "sha256": "3921f03993b07f305b7ec1b86fa8d01b65df47c5bf0037ec9df31a97e24108cb"
+  },
+  "technicalAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_PROMPT_TOO_LONG_TECHNICAL_ADJUDICATION.json",
+    "bytes": 3165,
+    "sha256": "7590a5383ee796217bbb01803af7e3444cee44cda4ada423b4d8fc190c1b7b7e"
+  },
+  "review": {
+    "reviewerObjectReceived": false,
+    "decisionToken": null,
+    "substantivePathToken": null,
+    "semanticRejection": false,
+    "approvalGatePass": false
+  },
+  "authorization": {
+    "statusBefore": "AUTHORIZED_UNUSED",
+    "statusAfter": "CONSUMED_NO_RETRY_AUTHORIZED",
+    "invocationCount": 1,
+    "maximumInvocations": 1,
+    "retryAuthorized": false
+  },
+  "token": {
+    "ledgerSequence": 9,
+    "effectiveContextWindowTokens": 258400,
+    "activeContextTokens": 169775,
+    "remainingTokens": 88625,
+    "requiredReserveTokens": 54400,
+    "headroomAboveReserveTokens": 34225,
+    "decision": "SAFE_PAUSE_AFTER_TECHNICAL_INCOMPLETE_CAPTURE"
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true
+  },
+  "hygiene": {
+    "taskOwnedProcesses": 0,
+    "userOwnedVsCodeClaudeProcesses": 1,
+    "userOwnedVsCodeClaudePid": 24136,
+    "userOwnedProcessUntouched": true,
+    "port5173Listeners": 0,
+    "locks": 0,
+    "taskTempExists": false
+  },
+  "runtimeOracleRegistryWal": {
+    "c35CompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "selectedReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "registrySha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "c34WalSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+    "c35WalSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+    "c36WalAbsent": true,
+    "c37WalAbsent": true,
+    "mutations": 0
+  },
+  "finalization": {
+    "phase10AAssessmentCreated": false,
+    "roadmapV9Updated": false,
+    "currentStateUpdated": false,
+    "finalManifestCreated": false,
+    "stagingPerformed": false,
+    "commitCreated": false,
+    "pushPerformed": false
+  },
+  "prohibitedWork": {
+    "c38": false,
+    "e2": false,
+    "a15": false,
+    "phase10B": false,
+    "deployment": false,
+    "reindex": false,
+    "modelMigration": false
+  },
+  "exactNextOperation": "A future owner-governed prompt must choose a technically feasible independent-review mechanism and explicitly issue any new authorization. The consumed replacement authorization cannot be reused or retried, and the 57-entry package cannot be changed under the completed authorization.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

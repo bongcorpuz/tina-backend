@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_ISOLATED_CONFIG_PLAN_PASS",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "mechanism": "Claude Code documented --mcp-config file plus --strict-mcp-config",
+  "temporaryRoot": "C:\\tmp\\c37-replacement-isolated-config-20260801T114900Z",
+  "configPath": "C:\\tmp\\c37-replacement-isolated-config-20260801T114900Z\\empty-mcp.json",
+  "configBytes": 18,
+  "configSha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+  "configSemanticValue": {"mcpServers":{}},
+  "isolatedWorkingDirectory": "C:\\tmp\\c37-replacement-isolated-config-20260801T114900Z\\work",
+  "isolatedRuntimeDirectory": "C:\\tmp\\c37-replacement-isolated-config-20260801T114900Z\\runtime",
+  "argumentOrderingRule": "Place --strict-mcp-config after the variadic --mcp-config path, before the next command or option.",
+  "finalReviewRequirement": "Use the same direct native executable, config content hash, strict MCP isolation, empty working directory, isolated TEMP/TMP, safe mode, no Chrome, no session persistence, disabled slash commands, and no tools.",
+  "persistentConfigurationMutation": false,
+  "vsCodeProcessDependency": false,
+  "authenticationOrTlsOverride": false,
+  "pass": true
+}

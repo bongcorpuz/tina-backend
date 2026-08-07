@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_COMPATIBLE_BOUNDARY_VALIDATED_STOPPED_PRE_INVOCATION_APPROVAL_REQUIRED",
+  "generatedUtc": "2026-08-02T07:22:51.007872Z",
+  "checkpoint": {
+    "ordinal": 71,
+    "pointerPreserved": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+      "bytes": 7302,
+      "sha256": "9e7537d5e93399f2e721ce60478cf12f1dd52f289ea3dead0b4e7f643115cf50"
+    },
+    "statusBefore": "C37_CHECKPOINT_70_PREPARED_TRANSPORT_MISMATCH",
+    "continuationStatus": "COMPATIBLE_BOUNDARY_VALIDATED_STOPPED_PRE_INVOCATION_APPROVAL_REQUIRED",
+    "pointerAndLogNotModified": true
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "trackedClean": true,
+    "stagingClean": true
+  },
+  "runners": {
+    "original": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+      "bytes": 79610,
+      "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795"
+    },
+    "compatible": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint71-opus-compatible.mjs",
+      "bytes": 86892,
+      "sha256": "6c85d355d46fe5808e7c21996e8ca44255d6b8933021eaf84fcdab7dd61e90bc"
+    },
+    "protectedFinalPreflight69": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+      "bytes": 5290,
+      "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f"
+    }
+  },
+  "compatibilityEvidence": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBILITY_CONTINUATION_PREFLIGHT.json",
+      "bytes": 6106,
+      "sha256": "08d6d7562e575195c360af9d1ae7a3ac502704a06d8363fd3577e1593414a518"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DERIVATION_PLAN.json",
+      "bytes": 2423,
+      "sha256": "3ffdd71ee3950f7b87bc7f4cbe0f2e046500d48057888a1d3e6956fbba6eafb9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_RUNNER_DIFF_PROOF.json",
+      "bytes": 27608,
+      "sha256": "8711cc4feb26cd494b96a4501fa445a50e776fcf1d047d9502f32e623c8459f0"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_OUTPUT_LEDGER.json",
+      "bytes": 3508,
+      "sha256": "1673b8d051507d48faa3251b8ba76b34d203749569bbcf9ce5eb9749ff74119f"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_INVOCATION_DRY_PREFLIGHT.json",
+      "bytes": 5963,
+      "sha256": "53307747b1fb1067e5f0b70a1ecf471b358ce7cde8545efcca37e046c35301c6"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_COMPATIBLE_IDEMPOTENCE_REPLAY.json",
+      "bytes": 836,
+      "sha256": "ba715654263c542238e9770313674f3277b6f792fbc5efb95b8f5b5e83984810"
+    }
+  ],
+  "preparedTransport": {
+    "COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_PLAN.json": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_PLAN.json",
+      "bytes": 35270,
+      "sha256": "f8ec634e78016e1a19548c613922a45b3ffb62aeecde7f4654dc240d96f66d3e",
+      "expectedSha256": "f8ec634e78016e1a19548c613922a45b3ffb62aeecde7f4654dc240d96f66d3e",
+      "match": true
+    },
+    "COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_VALIDATION.json": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_VALIDATION.json",
+      "bytes": 4975,
+      "sha256": "f20bea8102cc23d8c4a17f8003d2634b8e85bc5bb41c281c875509522eabc10e",
+      "expectedSha256": "f20bea8102cc23d8c4a17f8003d2634b8e85bc5bb41c281c875509522eabc10e",
+      "match": true
+    },
+    "COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.json": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.json",
+      "bytes": 4544,
+      "sha256": "e58cd332e13718932e4820d0394cd089189028f0d74162958afe50fc32a23d43",
+      "expectedSha256": "e58cd332e13718932e4820d0394cd089189028f0d74162958afe50fc32a23d43",
+      "match": true
+    },
+    "COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md",
+      "bytes": 6773,
+      "sha256": "3c876ad0ce5e783df5c13bd04ad687b0bb10c928f65325b17686286691bc05dc",
+      "expectedSha256": "3c876ad0ce5e783df5c13bd04ad687b0bb10c928f65325b17686286691bc05dc",
+      "match": true
+    },
+    "COMMIT_5R1C37_CHECKPOINT_69_OPUS_CONTEXT_PROJECTION.json": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_CONTEXT_PROJECTION.json",
+      "bytes": 1913,
+      "sha256": "700894ec8a0b813a391522b587236736814a758097e54392b616a9b542119494",
+      "expectedSha256": "700894ec8a0b813a391522b587236736814a758097e54392b616a9b542119494",
+      "match": true
+    },
+    "COMMIT_5R1C37_CHECKPOINT_69_OPUS_TRANSPORT_PREFLIGHT.json": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_TRANSPORT_PREFLIGHT.json",
+      "bytes": 2796,
+      "sha256": "7f8b18b8edbfbc2b95c88a8b589b4415821a2abbfd9caa284a922c13efd80d7f",
+      "expectedSha256": "7f8b18b8edbfbc2b95c88a8b589b4415821a2abbfd9caa284a922c13efd80d7f",
+      "match": true
+    }
+  },
+  "package": {
+    "entries": 57,
+    "matching": 57,
+    "rawBytes": 4109852,
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "boundaryOrder": {
+    "contextMeasuredBeforeFinalPreflight": true,
+    "finalPreflightBeforeMarker": true,
+    "markerBeforeProviderSpawn": true,
+    "dryPreflightContainsNoSpawn": true
+  },
+  "contextCapacity": {
+    "providerProjectionTokens": 504336,
+    "providerMarginTokens": 495664,
+    "providerCapacityPass": true,
+    "currentHermesSessionIsNotCurrentCodexTelemetry": true,
+    "executorRemainingTokens": null,
+    "requiredBeforeInvocation": 120000,
+    "mandatoryPostCaptureReserve": 54400,
+    "status": "PENDING_CURRENT_CODEX_SESSION_MEASUREMENT_INSIDE_INVOKE_BEFORE_FINAL_PREFLIGHT_AND_MARKER"
+  },
+  "attempt": {
+    "activeAttemptId": null
+  },
+  "authorization": {
+    "status": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false
+  },
+  "provider": {
+    "reviewerExecuted": false,
+    "providerContacted": false,
+    "substantiveRequestSubmitted": false,
+    "markerCreated": false
+  },
+  "hygiene": {
+    "observedClaudeHermesNodeProcessLines": 6,
+    "taskOwnedProcessesStartedByThisContinuation": 0,
+    "processesTerminated": 0,
+    "port5173Listeners": 0,
+    "taskTempRootsAbsent": true,
+    "gitIndexLockAbsent": true
+  },
+  "checks": {
+    "gitIdentity": true,
+    "checkpoint71PointerPreserved": true,
+    "checkpointEvidence33": true,
+    "originalRunnerPreserved": true,
+    "protectedPreflight69Preserved": true,
+    "compatibleRunnerSyntax": true,
+    "diffProofPass": true,
+    "outputLedgerPass": true,
+    "dryPreflightPass": true,
+    "idempotencePass": true,
+    "package57": true,
+    "preparedTransportPreserved": true,
+    "authorizationUnused": true,
+    "activeAttemptNull": true,
+    "invocationCountZero": true,
+    "correctedBoundaryOrder": true,
+    "noTaskTempsOrLock": true,
+    "port5173Clear": true
+  },
+  "safeForSeparatelyApprovedInvocation": true,
+  "exactNextOperation": "Obtain approval to execute the single checkpoint-71 compatible --invoke command in a current governed Codex session with C37_CODEX_SESSION_TELEMETRY bound to that session rollout file. The runner must remeasure >=120000 remaining tokens before creating its checkpoint-71 final preflight or invocation marker.",
+  "pass": true
+}

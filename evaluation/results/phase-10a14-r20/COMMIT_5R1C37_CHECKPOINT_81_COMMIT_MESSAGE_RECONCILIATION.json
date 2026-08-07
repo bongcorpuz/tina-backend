@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 81",
+  "classification": "C37_CHECKPOINT_81_COMMIT_MESSAGE_RECONCILIATION",
+  "generatedAtUtc": "2026-08-07T22:58:00Z",
+  "commitExecuted": false,
+  "commitAuthorizedByThisUnit": false,
+
+  "draftA": {
+    "sourcePath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_MANIFEST_AND_STAGED_PATHS_DRAFT.json",
+    "sourceField": "exactProposedCommitMessage",
+    "sourceSealedStatus": "SEALED — 57-entry package ordinal 48",
+    "sourceSha256": "150c57a33f7191643c01f54097b88db5af55ff636c1d5af8608e15bfe53f9cf6",
+    "completeDraftMessage": "PHASE-10A14-R20 COMMIT 5R1-C37 complete - adjudicate reason residual contract and route oracle governance",
+    "intendedScope": "Written at the C36-to-C37 transition, before the independent-review requirement existed as a gate. Frames C37 as immediately routing to oracle-governance work (implicitly C38) as its own natural conclusion."
+  },
+
+  "draftB": {
+    "sourcePath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "sourceSealedStatus": "NOT in the 57-entry package; historical/frozen, checkpoint-64 vintage review contract",
+    "sourceSha256": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449",
+    "completeDraftMessage": "PHASE-10A14-R20 COMMIT 5R1-C37 complete - adjudicate reason residual contract and preserve open gate",
+    "intendedScope": "Written as the REQUIRED commit message for the checkpoint-64 review attempt specifically, framing C37 as preserving Phase 10A's OPEN gate rather than routing anywhere. That checkpoint-64 attempt failed technically (checkpoint 65) and was never used."
+  },
+
+  "exactSemanticDifference": {
+    "sharedPrefix": "PHASE-10A14-R20 COMMIT 5R1-C37 complete - adjudicate reason residual contract and",
+    "draftATail": "route oracle governance",
+    "draftBTail": "preserve open gate",
+    "semanticDelta": "Draft A implies forward motion into oracle-governance territory (reads as a segue toward C38). Draft B implies a static, closed-loop outcome (Phase 10A's gate stays open, nothing routes anywhere). Both are compatible with the actual current facts, but draft A's phrasing risks being read as implying C38 has begun or is imminent, which it has not."
+  },
+
+  "overstatementCheck": {
+    "draftA": {
+      "overstatesC37Terminality": false,
+      "overstatesPhase10ACompletion": false,
+      "overstatesB2ThroughB6Closure": false,
+      "overstatesRuntimeRemediation": false,
+      "overstatesCandidateExecution": false,
+      "overstatesPublicationStatus": false,
+      "riskNoted": "The phrase 'route oracle governance' could be MISREAD as implying C38 (oracle governance) has begun, though it does not literally claim this."
+    },
+    "draftB": {
+      "overstatesC37Terminality": false,
+      "overstatesPhase10ACompletion": false,
+      "overstatesB2ThroughB6Closure": false,
+      "overstatesRuntimeRemediation": false,
+      "overstatesCandidateExecution": false,
+      "overstatesPublicationStatus": false,
+      "riskNoted": "Neither draft mentions the independent review, B1, or B7 at all — both predate the review-gate concept and the writer-precondition incident, so neither is complete as a description of what actually happened across checkpoints 74-80."
+    }
+  },
+
+  "localRepositoryCommitConvention": {
+    "observedViaGitLog": true,
+    "sampleSize": 15,
+    "pattern": "PHASE-10A14-R20 COMMIT 5R1-C<N> complete|incomplete - <lowercase-led descriptive clause>",
+    "examples": [
+      "PHASE-10A14-R20 COMMIT 5R1-C35 complete - correct authority-conflict calibration and preserve support independence",
+      "PHASE-10A14-R20 COMMIT 5R1-C34 complete - preserve governed cumulative reason-layer evidence",
+      "PHASE-10A14-R20 COMMIT 5R1-C33 incomplete - preserve replay-remediated governed R3 reason progress"
+    ],
+    "conventionNote": "Subject only, no body observed in the last 15 commits on this branch. Both candidate drafts already conform to this subject-line convention in structure."
+  },
+
+  "selectionDecision": {
+    "neitherDraftSelectedVerbatim": true,
+    "reason": "Both drafts predate the independent-review gate, the checkpoint-80 governance amendment, and the B1 writer-precondition incident entirely. Selecting either verbatim would omit the single most significant fact about this commit unit: that it required and obtained an independent review under an amended authorization. A new canonical message is composed instead, built on the same convention, incorporating the accurate current state.",
+    "rejectedDraft": "Both A and B, as drafted",
+    "rejectionReason": "Neither is accurate as a complete description of the actual C37 closure path (checkpoints 74 through 80), and per the instruction not to overstate C37 terminality, neither draft's implicit framing (Draft A's forward motion; Draft B's implicit finality via 'complete') should be adopted without qualification given C37 remains NONTERMINAL pending a future commit/push."
+  },
+
+  "canonicalProposedMessage": {
+    "subject": "PHASE-10A14-R20 COMMIT 5R1-C37 nonterminal - no-runtime closure approved with observations, reviewer amended to Opus 5",
+    "subjectRationale": "Uses 'nonterminal' rather than 'complete', matching the actual, current, honest state (C37 has not yet been committed or pushed, so per this unit's own Phase 8 rules it cannot be terminal). Follows the existing PHASE-10A14-R20 COMMIT 5R1-C<N> <state> - <clause> convention exactly.",
+    "body": "C37 investigated the 145 reason-only residual rows and found zero rows proving a new generalized runtime defect (candidatesAuthorized=0, candidatesAllocated=0, C37 runtime attempts=0). The originally-required independent reviewer, Claude Opus 4.8, was unavailable in the execution environment (checkpoint 79); an explicit governance amendment (checkpoint 80) superseded that unused authorization with a new, separately-tracked, one-use claude-opus-5 authorization, without claiming model equivalence. The claude-opus-5 review returned APPROVED_WITH_NONBLOCKING_OBSERVATIONS (0 blocking findings, 10 nonblocking observations, all reconciled at checkpoint 81 without editing any sealed evidence). B7 (independent-review requirement) is closed narrowly. B1 (concurrent third-party writer) is fully closed on reboot evidence. B2 through B6 remain open and unchanged. Phase 10A remains OPEN; R20 remains IN PROGRESS. No runtime candidate was created at any point. This commit does not claim Phase 10A, R20, or the overall project is complete, and is not accompanied by a push.",
+    "prohibitedOverclaimsAvoided": [
+      "Does not say Phase 10A is complete",
+      "Does not say R20 is complete",
+      "Does not say C37 is terminal",
+      "Does not say B2-B6 are closed",
+      "Does not say a runtime fix was made",
+      "Does not say this has been published/pushed"
+    ]
+  },
+
+  "readyForFutureCommitUnit": {
+    "messageReadyPendingSeparateAuthorization": true,
+    "notExecutedInThisUnit": true,
+    "requiresBeforeUse": [
+      "A separately authorized commit/staging unit",
+      "The exact future staging allowlist (COMMIT_5R1C37_CHECKPOINT_81_EXACT_FUTURE_STAGING_ALLOWLIST.json) to determine what is actually staged"
+    ]
+  }
+}

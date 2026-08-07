@@ -1,0 +1,7 @@
+{
+  "decision": "INCOMPLETE_REVIEW",
+  "substantivePathDecision": "MORE_EVIDENCE_REQUIRED",
+  "classification": "C37_OPUS_TECHNICAL_INCOMPLETE_SYNTHETIC_CAPTURE_ONLY",
+  "technicalError": "C37_TWO_HOUR_SAFE_PAUSE_OPUS_TECHNICAL_INCOMPLETE:CLI",
+  "note": "This is executor adjudication because no valid schema-conforming reviewer object was available; it is not a second reviewer response."
+}

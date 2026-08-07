@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+  "generatedUtc": "2026-08-01T16:39:03.867Z",
+  "startingCheckpoint": {
+    "ordinal": 69,
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_69_manifest_indexed_capsule_complete_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 6192,
+    "sha256": "bc2201dbfb8d8f7a5938939090069d89ead4d9743461c5d20e42ee6b7f93a607",
+    "eventSha256": "326b0ab78de8b53ab9c3814b24fbd550d6f27502ed6f4f01b1da128d12745997"
+  },
+  "endingCheckpoint": 70,
+  "checkpoint69EvidenceBeforeAuthorizedLedgerAppend": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_CAPSULE_COMPLETE_TOKEN_SAFE_PAUSE_EVIDENCE.sha256",
+    "bytes": 3115,
+    "sha256": "07e329f8ec4eebc8588a8cda4e016a5018c3f74f458f32a4e8c2f3d1062c88a5",
+    "rows": 19,
+    "present": 19,
+    "matching": 19,
+    "bad": [],
+    "pass": true,
+    "ledgerPrefixBytes": 22008,
+    "ledgerPrefixSha256": "cc7c6d19a5044fe9c0e1eb811a18e0b5fc27793a71e5c0810ea5467554298d9b",
+    "appendOnlySequenceAdded": 14
+  },
+  "tokenGate": {
+    "ledgerSequence": 14,
+    "sessionFile": "C:/Users/USER/.codex/sessions/2026/08/01/rollout-2026-08-01T21-34-27-019fbd88-8065-7011-99a0-f59a6588d4d4.jsonl",
+    "sessionId": "019fbd88-8065-7011-99a0-f59a6588d4d4",
+    "latestTokenEventLine": 974,
+    "eventTimestampUtc": "2026-08-01T16:33:09.574Z",
+    "configuredContextCapacityTokens": 272000,
+    "effectiveContextWindowTokens": 258400,
+    "telemetryReportedActiveContextTokens": 153483,
+    "calculatedEffectiveRemainingTokens": 104917,
+    "requiredPreSubmissionRemainingTokens": 120000,
+    "headroomAbovePreSubmissionRequirementTokens": -15083,
+    "requiredSafePauseReserveTokens": 54400,
+    "headroomAboveReserveTokens": 50517,
+    "method": "latest current-session event_msg/payload.token_count last_token_usage.total_tokens subtracted from model_context_window",
+    "gatePass": false,
+    "shortfallTokens": 15083,
+    "decision": "SAFE_PAUSE_PRE_INVOCATION_AFTER_TRANSPORT_PREPARATION"
+  },
+  "capsule": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+    "bytes": 437230,
+    "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f",
+    "packageEntries": 57,
+    "packageBytes": 4109852,
+    "semanticCoveragePercent": 100,
+    "representedRows": 145,
+    "unsupportedClaims": 0,
+    "omittedUnfavorableEvidence": 0,
+    "conservativeEstimatedTokens": 188684
+  },
+  "transport": {
+    "driver": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+      "bytes": 79610,
+      "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795"
+    },
+    "continuation": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_CONTINUATION_PREFLIGHT.json",
+      "bytes": 2968,
+      "sha256": "1af9c323345ecf5eb73b6b219b7339c3ccfc187cc399badfc6274b206249177c"
+    },
+    "protected": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_PROTECTED_RESIDUE_VERIFICATION.json",
+      "bytes": 3432,
+      "sha256": "d9941d2750a52bfa7fe4c2f159c1bb2b454a9d5376330a90325b8c1914ee68f7"
+    },
+    "capsuleContinuity": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_CAPSULE_CONTINUITY_VERIFICATION.json",
+      "bytes": 2884,
+      "sha256": "921bbee7c24e614d817af602ba2656a76626b8b17a24ad69ba9ca3c2ae3a0793"
+    },
+    "authorizationContinuity": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_AUTHORIZATION_CONTINUITY.json",
+      "bytes": 1009,
+      "sha256": "1ca05bf3becd1b9781bb65b1dbb9bdcc1956e86dfe1687164be1c158bf81a073"
+    },
+    "toolPlan": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_PLAN.json",
+      "bytes": 35270,
+      "sha256": "f8ec634e78016e1a19548c613922a45b3ffb62aeecde7f4654dc240d96f66d3e"
+    },
+    "toolValidation": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_READ_ONLY_TOOL_VALIDATION.json",
+      "bytes": 4975,
+      "sha256": "f20bea8102cc23d8c4a17f8003d2634b8e85bc5bb41c281c875509522eabc10e"
+    },
+    "bootstrapJson": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.json",
+      "bytes": 4544,
+      "sha256": "e58cd332e13718932e4820d0394cd089189028f0d74162958afe50fc32a23d43"
+    },
+    "bootstrapMarkdown": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md",
+      "bytes": 6773,
+      "sha256": "3c876ad0ce5e783df5c13bd04ad687b0bb10c928f65325b17686286691bc05dc"
+    },
+    "contextProjection": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_CONTEXT_PROJECTION.json",
+      "bytes": 1913,
+      "sha256": "700894ec8a0b813a391522b587236736814a758097e54392b616a9b542119494"
+    },
+    "transportPreflight": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_TRANSPORT_PREFLIGHT.json",
+      "bytes": 2796,
+      "sha256": "7f8b18b8edbfbc2b95c88a8b589b4415821a2abbfd9caa284a922c13efd80d7f"
+    },
+    "finalPreflight": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+      "bytes": 5290,
+      "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f"
+    },
+    "exactAllowedReads": 63,
+    "requiredOriginalSpotChecks": 9,
+    "projectedTotalTokens": 504336,
+    "marginBelowProviderLimitTokens": 495664,
+    "pass": true
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 3216,
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44",
+    "status": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false
+  },
+  "providerRequestObserved": false,
+  "modelRequestSubmitted": false,
+  "reviewerObjectReceived": false,
+  "invocationMarkerExists": false,
+  "runtimeOracleFixtureRegistryWalMutations": 0,
+  "roadmapV9Updated": false,
+  "currentStateUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "fetchHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "ahead": 0,
+  "behind": 0,
+  "trackedWorktreeClean": true,
+  "stagingEmpty": true,
+  "hygiene": {
+    "otherNodePids": [],
+    "taskClaudePids": [],
+    "vscodeClaudePids": [
+      24136
+    ],
+    "port5173": 0,
+    "validationTempExists": false,
+    "invocationTempExists": false,
+    "indexLockExists": false,
+    "pass": true
+  },
+  "blocker": "CODEX_PRE_SUBMISSION_120000_TOKEN_GATE_NOT_MET_AFTER_TRANSPORT_PREPARATION",
+  "nextExactOperation": "Start a brand-new governed session from checkpoint 70. Measure live Codex context before creating continuation artifacts; reverify checkpoint 70, Git, protected residue, the immutable capsule/package, authorization, and the completed checkpoint-69 read-only transport. Reuse the prepared bootstrap and tool boundary byte-for-byte. Create a checkpoint-70 continuation final preflight and invoke the existing authorization exactly once only if at least 120,000 tokens remain and every gate passes.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

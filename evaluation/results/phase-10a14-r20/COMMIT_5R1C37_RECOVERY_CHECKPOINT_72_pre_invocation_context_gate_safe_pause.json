@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 72,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-03T13:41:57.009Z",
+  "stage": "checkpoint-71 compatible final pre-invocation context-gate safe pause",
+  "status": "C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_AUTHORIZATION_UNUSED",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "branch": "feature/source-availability-engine-v1",
+  "activeReasonBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "c35RuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+  "activeAttemptId": null,
+  "decision": "3720/3720",
+  "relation": "3720/3720",
+  "reason": "3575/3720",
+  "reasonOnlyRowsRemaining": 145,
+  "frozenDecision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "generalizedRuntimeDefects": 0,
+  "phase10A": "OPEN",
+  "r20": "IN_PROGRESS",
+  "c37": "SAFE_PAUSED_PRE_INVOCATION_CURRENT_CODEX_CONTEXT_GATE",
+  "priorAuthorizationsConsumed": 2,
+  "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+  "manifestIndexedAuthorizationConsumed": false,
+  "manifestIndexedInvocationCount": 0,
+  "manifestIndexedRemainingInvocationCount": 1,
+  "manifestIndexedRetryAuthorized": false,
+  "compatibleWrapperExecuted": true,
+  "finalPreflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 6544,
+    "sha256": "68a62a1cdf088a8a849dcde23d665b4b849ecc38c14245a53f6136a0f4f76c4c"
+  },
+  "onlyFailedGate": "remainingCodexContextAtLeast120000",
+  "token": {
+    "ledgerSequence": 16,
+    "sessionFile": "C:\\Users\\USER\\.codex\\sessions\\2026\\08\\03\\rollout-2026-08-03T21-07-01-019fc7bc-192f-7c91-80a2-80a76ddb7067.jsonl",
+    "sessionId": "019fc7bc-192f-7c91-80a2-80a76ddb7067",
+    "latestTokenEventLine": 372,
+    "eventTimestampUtc": "2026-08-03T13:30:26.118Z",
+    "configuredContextCapacityTokens": 272000,
+    "effectiveContextWindowTokens": 258400,
+    "telemetryReportedActiveContextTokens": 175158,
+    "calculatedEffectiveRemainingTokens": 83242,
+    "requiredPreSubmissionRemainingTokens": 120000,
+    "headroomAbovePreSubmissionRequirementTokens": -36758,
+    "requiredSafePauseReserveTokens": 54400,
+    "headroomAboveReserveTokens": 28842,
+    "method": "latest current-session event_msg/payload.token_count last_token_usage.total_tokens subtracted from model_context_window",
+    "gatePass": false
+  },
+  "invocationMarkerExists": false,
+  "providerSpawned": false,
+  "providerRequestObserved": false,
+  "modelReviewReached": false,
+  "reviewerObjectReceived": false,
+  "decisionToken": null,
+  "substantivePathToken": null,
+  "reviewCoverage": {
+    "claims": "0/222",
+    "rows": "0/145",
+    "spotChecks": "0/9",
+    "evidenceClasses": "0/8"
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "pass": true
+  },
+  "capsule": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+    "bytes": 437230,
+    "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f",
+    "claims": 222,
+    "rows": 145,
+    "unsupportedClaims": 0,
+    "omittedUnfavorableEvidence": 0
+  },
+  "originalRunner": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint69-opus.mjs",
+    "bytes": 79610,
+    "sha256": "87643d1079ff622617f4ede77d9497287f98e6df90a85f4b4dd0ddbd4db0c795"
+  },
+  "compatibleWrapper": {
+    "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint71-opus-compatible.mjs",
+    "bytes": 86892,
+    "sha256": "6c85d355d46fe5808e7c21996e8ca44255d6b8933021eaf84fcdab7dd61e90bc"
+  },
+  "protectedFinalPreflight69": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 5290,
+    "sha256": "6cd7062020d06ba7acdd71b52e8058e110b407ed7a22246b0f52c2856bb6cd1f"
+  },
+  "protectedResidueAggregate": "980cd3b5f2a5b75104bc91c9e6f4391e80bf5f0d772f48b61c79497e3d2ebd0a",
+  "registryWal": {
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 718108,
+      "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073"
+    },
+    "registryAttempts": 230,
+    "uniqueAttemptIds": 230,
+    "attemptDirectories": 230,
+    "orphanDirectories": [],
+    "danglingRegistryRows": [],
+    "controllingAttempts": 227,
+    "nonControllingAttempts": 3,
+    "runningAttempts": [],
+    "c34Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 12143,
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+      "rows": 32
+    },
+    "c35Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2165,
+      "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+      "rows": 6
+    },
+    "c36WalAbsent": true,
+    "c37WalAbsent": true
+  },
+  "hygiene": {
+    "taskOwnedNodePids": [],
+    "unrelatedNodePids": [
+      18480,
+      21060
+    ],
+    "taskOwnedClaudePids": [],
+    "userOwnedVscodeClaudePids": [],
+    "port5173Listeners": [],
+    "validationTempExists": false,
+    "invocationTempExists": false,
+    "allocationLockExists": false,
+    "gitIndexLockExists": false
+  },
+  "roadmapV9Updated": false,
+  "currentStateUpdated": false,
+  "documentationConsistency": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_DOCUMENTATION_CONSISTENCY_VALIDATION.json",
+    "bytes": 1767,
+    "sha256": "1c45f1bc42311824f9b925d8b19e449295418d7cd55e510c18555de7dc1ca4fb"
+  },
+  "stagingPerformed": false,
+  "proposedStagedPaths": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_PROPOSED_STAGED_PATHS.json",
+    "bytes": 411,
+    "sha256": "c256a919ea89696b21fefe5e4d796037225aca46752944e2dd677d39ac5ba9f0"
+  },
+  "actualStagedPaths": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_ACTUAL_STAGED_PATHS.json",
+    "bytes": 306,
+    "sha256": "84d9f1037f011ca26ea3f83d61871d24f5cd8cff57513a4a01873cec218fad39"
+  },
+  "commitCreated": false,
+  "pushPerformed": false,
+  "localGitVerification": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_LOCAL_GIT_VERIFICATION.json",
+    "bytes": 692,
+    "sha256": "50aa309a676f29a8ddf35f6ed1e23234d9d6b349d22aad3d100f49ccfae1872c"
+  },
+  "liveGithubVerification": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_LIVE_GITHUB_BASELINE_VERIFICATION.json",
+    "bytes": 683,
+    "sha256": "6dd60a0e6dc0161da7f475e00d9be3a8a61f01fb8488ee382423336f833745c1"
+  },
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "migrationPerformed": false,
+  "modelMigrationPerformed": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "c38Begun": false,
+  "phase10BImplementationBegun": false,
+  "anomalies": {
+    "outOfScopeRegression": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_OUT_OF_SCOPE_REGRESSION_RECONCILIATION.json",
+      "bytes": 2010,
+      "sha256": "8acb779a66a1e2e634bc9c921c8133979f31bce063c1f9fa8de7dca76497998c"
+    },
+    "hermesSkill": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_HERMES_SKILL_RECONCILIATION.json",
+      "bytes": 2139,
+      "sha256": "c0cff5a35efe682f62d52005b90bcbd591e46671c28f04f7769f4656d645c9fe"
+    },
+    "hermesClassification": "EXTERNAL_NONREPOSITORY_ARTIFACT_NOT_LOADED"
+  },
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_CONTEXT_GATE_SAFE_PAUSE_RECONCILIATION.json",
+    "bytes": 7180,
+    "sha256": "140ecee469b0a61afb748eadcae932c2e97c112255a527d8db570dfa4ad26c34"
+  },
+  "terminalState": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_TERMINAL_STATE.json",
+    "bytes": 1191,
+    "sha256": "b0903048693c55129e895973994d03fd7f8d657b42bd4291616c0d747d96aa32"
+  },
+  "handoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_72.md",
+    "bytes": 1966,
+    "sha256": "3f5e38737b81e84b7f1f5e5d60a9849efb95ae0df5b262c600a0a95964bbbdd3"
+  },
+  "evidenceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_EVIDENCE.sha256",
+    "bytes": 5387,
+    "sha256": "c50e8efa27337d2f2446ce3d5c74f1fc749d28b513aad6b27088e2df7204257c"
+  },
+  "plannedFinalManifestPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_FINAL_EVIDENCE.sha256",
+  "plannedReplayPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_IDEMPOTENCE_REPLAY.json",
+  "previousCheckpoint": {
+    "ordinal": 71,
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_71_prepared_transport_mismatch_pre_invocation.json",
+    "bytes": 7302,
+    "sha256": "9e7537d5e93399f2e721ce60478cf12f1dd52f289ea3dead0b4e7f643115cf50",
+    "eventSha256": "15dbab12f1e800c7e9cf59267241b93fe1465ddb874e8f9638a87bb1ebb21d88",
+    "logSha256BeforeAppend": "12bda5aa7ea885c604e08a2bae14cb4fff23867572e827b27a96620433ad1209"
+  },
+  "elapsedMilliseconds": 2081756,
+  "blocker": "CURRENT_CODEX_SESSION_REMAINING_CONTEXT_BELOW_120000",
+  "safePauseReason": "C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_AUTHORIZATION_UNUSED",
+  "nextExactOperation": "Start a fresh owner-governed Codex continuation from checkpoint 72 with at least 120000 current-session tokens remaining. Preserve checkpoint 71, its compatible wrapper, the checkpoint-71 failed final preflight, the exact 57-file package, capsule, bootstrap, read rules, protected evidence, and the still-unused one-use authorization. Authorize and validate a checkpoint-72 noncolliding final-preflight/output binding before any marker or provider contact; do not begin C38 or later work.",
+  "safeToResume": true,
+  "eventSha256": "dce1ad78a47e3631ceedba5bfa46a0195351a9ed8c69cf9d731bf8d5c504bcbd"
+}

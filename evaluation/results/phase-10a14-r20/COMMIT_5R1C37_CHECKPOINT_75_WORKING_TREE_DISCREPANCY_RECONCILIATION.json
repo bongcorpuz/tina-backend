@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 75",
+  "classification": "WORKING_TREE_CONTINUITY_CONFLICT_CONCLUSIVELY_RECONCILED_NO_CONTENT_DIVERGENCE",
+  "generatedAtUtc": "2026-08-07T03:21:43Z",
+  "verdict": "RECONCILED",
+  "safePauseRequired": false,
+
+  "conflictAsPresented": {
+    "priorReport": {
+      "claim1": "only three semantic /health files remain modified",
+      "claim2": "265 of 266 expected paths are untracked",
+      "claim3": "working-tree bytes were preserved"
+    },
+    "laterSnapshot": {
+      "claim1": "13,973 tracked modifications",
+      "claim2": "282 untracked files"
+    },
+    "instructionCompliance": "Neither report was assumed correct. Both were tested independently against repository evidence."
+  },
+
+  "measuredGroundTruth": {
+    "measuredAtUtc": "2026-08-07T03:21:43Z",
+    "totalTrackedFiles": 13975,
+    "trackedModifications": 4,
+    "trackedDeletions": 0,
+    "stagedPaths": 0,
+    "untrackedPaths": 281,
+    "modifiedPaths": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ]
+  },
+
+  "finding1_priorReportIsCORRECT": {
+    "verdict": "PRIOR_REPORT_CONFIRMED_BY_INDEPENDENT_DERIVATION",
+    "method": "Independent re-derivation of the ee664eab..ff1bc2b1 delta without consulting the sealed CP73 manifest, followed by cross-check against it.",
+    "derivation": {
+      "totalPathsChanged": 864,
+      "addedPaths": 266,
+      "modifiedPaths": 598,
+      "crlfInsensitiveDiffEntries": 269,
+      "arithmetic": "269 CRLF-insensitive entries = 266 ADDED + 3 SEMANTIC MODIFIED",
+      "eolOnlyModifications": 595,
+      "eolOnlyArithmetic": "598 modified - 3 semantic = 595 EOL_ONLY"
+    },
+    "commands": [
+      "git diff --name-status ee664eab ff1bc2b1  -> 266 A, 598 M",
+      "git diff --numstat ee664eab ff1bc2b1  -> 864 entries",
+      "git diff --ignore-cr-at-eol --numstat ee664eab ff1bc2b1  -> 269 entries"
+    ],
+    "crossCheckAgainstSealedManifest": {
+      "manifest": "COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json",
+      "manifestSha256": "f25fe43b65c60b3fb38561572cabebe48188404a83744467bff776c28b448e32",
+      "manifestTotalPaths": 864,
+      "manifestSemantic": 3,
+      "manifestEolOnly": 595,
+      "manifestAddedEvidence": 259,
+      "manifestAddedUnexplained": 7,
+      "independentDerivationAgreesExactly": true,
+      "note": "259 ADDED_EVIDENCE + 7 ADDED_UNEXPLAINED = 266 ADDED, matching the independent count."
+    },
+    "the266to265Explanation": {
+      "addedPathsInUngovernedCommit": 266,
+      "currentlyUntrackedFromThatSet": 265,
+      "theOneExcludedPath": ".claude/settings.local.json",
+      "reasonExcluded": "Suppressed from untracked enumeration by the user-global excludes file C:\\Users\\USER/.config/git/ignore containing the single pattern '**/.claude/settings.local.json'. The file EXISTS on disk; it is ignored, not missing.",
+      "verification": "git check-ignore -v .claude/settings.local.json resolves to the global ignore rule.",
+      "conclusion": "The prior report's '265 of 266' is EXACTLY CORRECT and fully explained."
+    },
+    "workingTreeBytePreservationVerified": {
+      "verified": true,
+      "method": "git diff --stat ff1bc2b1 -- <3 semantic paths> and per-file SHA-256 of the working-tree copies",
+      "result": "The three semantic /health files in the working tree are byte-identical to their content in the preserved ungoverned commit ff1bc2b1. No ungoverned byte was lost by the R3-alpha mixed reset."
+    }
+  },
+
+  "finding2_laterSnapshotIsAN_ARTIFACT": {
+    "verdict": "EXPLAINED_AS_STAT_CACHE_INVALID_INDEX_ARTIFACT_NOT_CONTENT_DIVERGENCE",
+    "reportedNumber": 13973,
+    "totalTrackedFiles": 13975,
+    "decisiveExperiment": {
+      "description": "A Git index was materialised from HEAD with NO stat cache, into a temporary index file outside the repository. The real .git/index was never touched. git diff-files was then evaluated against that fresh index.",
+      "commands": [
+        "GIT_INDEX_FILE=<scratchpad>/testidx git read-tree HEAD",
+        "GIT_INDEX_FILE=<scratchpad>/testidx git diff-files --name-only | wc -l   -> 13975",
+        "GIT_INDEX_FILE=<scratchpad>/testidx git diff-files --name-status | cut -f1 | sort | uniq -c   -> 13973 M, 2 D"
+      ],
+      "result": {
+        "totalEntriesReported": 13975,
+        "modifiedEntriesReported": 13973,
+        "deletedEntriesReported": 2,
+        "arithmetic": "13973 M + 2 D = 13975 = totalTrackedFiles"
+      },
+      "realIndexUnaffected": true,
+      "realIndexVerificationAfterExperiment": "git status --porcelain -uno -> 4 modified (unchanged)"
+    },
+    "theTwoDeletedEntries": {
+      "paths": [
+        "tax-engines/CON/domain-config.js",
+        "tax-engines/CON/subclassifier.js"
+      ],
+      "skipWorktreeFlag": "S (skip-worktree) on both, per git ls-files -v",
+      "coreSparseCheckout": true,
+      "rootCause": "'CON' is a reserved Windows device name and cannot be materialised as a directory on this filesystem. Both paths are therefore held under sparse-checkout skip-worktree bits and are intentionally absent from the working tree.",
+      "behaviourUnderRealIndex": "Correctly suppressed — git status reports neither modification nor deletion.",
+      "behaviourUnderFreshIndex": "skip-worktree bits are NOT reproduced by read-tree, so both paths surface as deletions.",
+      "significance": "This is precisely why the artifact count is 13,973 and not 13,975.",
+      "preExistingCondition": true,
+      "introducedByThisOperation": false
+    },
+    "mechanism": "Immediately after an index-rewriting operation (such as the authorised R3-alpha 'git reset --mixed'), index entries carry no valid stat data. Until a refresh repopulates the stat cache, git must treat every tracked entry as potentially changed, and a status/diff taken in that window reports the entire tracked tree as modified. The reported 13,973 is the exact signature of that window on this repository.",
+    "hypothesesTestedAndREFUTED": [
+      {
+        "hypothesis": "core.autocrlf line-ending renormalisation across the tree",
+        "test": "git -c core.autocrlf=true|false|input status --porcelain -uno",
+        "result": "4 modifications under every setting",
+        "verdict": "REFUTED as the sole cause; EOL settings alone do not produce the number."
+      },
+      {
+        "hypothesis": "Real content divergence of ~13,973 files",
+        "test": "Direct status against the live index, re-measured at operation start and end",
+        "result": "4 modifications, stable",
+        "verdict": "REFUTED. No content divergence exists."
+      }
+    ],
+    "conclusion": "The 13,973 figure is an index-state measurement artifact. It does NOT represent divergent file content, does NOT indicate loss, and does NOT contradict the prior report. Both reports describe the same repository at different index-refresh states."
+  },
+
+  "finding3_the282UntrackedFigure": {
+    "reportedUntracked": 282,
+    "observedUntracked": 281,
+    "delta": 1,
+    "identifiedDeltaPath": ".claude/settings.local.json",
+    "status": "EXISTS_ON_DISK_BUT_GLOBALLY_IGNORED",
+    "explanation": "281 enumerated untracked paths + .claude/settings.local.json (present, added by ff1bc2b1, suppressed by the user-global excludes file) = 282. An enumeration performed without that global excludes file in effect — for example by a process running under a different HOME or a non-standard excludes configuration — yields exactly 282.",
+    "confidence": "HIGH_BUT_NOT_ABSOLUTE",
+    "residualUncertainty": "The exact enumeration environment of the 282 snapshot was not recoverable from repository evidence. The one-path delta is nevertheless fully identified by name and status, is benign, and involves no governed or evidence content.",
+    "attemptedTestThatWasINVALID": {
+      "command": "git -c core.excludesFile=/dev/null status --porcelain -uall",
+      "result": "0 untracked",
+      "assessment": "INVALID ON THIS PLATFORM. The /dev/null path collapsed untracked enumeration entirely under Git-for-Windows; the result is discarded and is NOT used as evidence."
+    }
+  },
+
+  "untrackedInventoryFullReconciliation": {
+    "totalUntracked": 281,
+    "fromUngovernedCommitAddedSet": 265,
+    "notFromUngovernedCommitAddedSet": 16,
+    "arithmetic": "265 + 16 = 281",
+    "the16NonUngovernedPaths": [
+      ".hermes/plans/2026-08-04_152644-api-rate-limiting-architecture.md",
+      ".hermes/plans/2026-08-04_154814-api-rate-limiting-design.md",
+      "AGENTS.md",
+      "HEARTBEAT.md",
+      "IDENTITY.md",
+      "SOUL.md",
+      "TOOLS.md",
+      "USER.md",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_EVIDENCE.sha256",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_MANIFEST_DOCUMENTATION_ENTRY_RECONCILIATION.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_73_ungoverned_head_remediation_safe_pause.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json",
+      "openclaw-workspace-state.json"
+    ],
+    "the16Classification": {
+      "checkpoint73And74GovernedEvidence": 7,
+      "agentScaffoldingIdentityFiles": 6,
+      "hermesPlanArtifacts": 2,
+      "openclawInitialiserMarker": 1
+    }
+  },
+
+  "overallVerdict": {
+    "discrepancyConclusivelyExplainedFromRepositoryEvidence": true,
+    "contentLossDetected": false,
+    "evidenceCorruptionDetected": false,
+    "governedBaselineIntact": true,
+    "safePauseTriggered": false,
+    "priorReportStatus": "CONFIRMED_ACCURATE",
+    "laterSnapshotStatus": "ACCURATE_MEASUREMENT_OF_A_TRANSIENT_INDEX_STATE_NOT_A_DEFECT",
+    "reportsAreNotInConflict": "Both are correct observations of the same unchanged repository taken at different index-refresh states. The apparent conflict dissolves once the stat-cache mechanism and the two skip-worktree paths are accounted for."
+  }
+}

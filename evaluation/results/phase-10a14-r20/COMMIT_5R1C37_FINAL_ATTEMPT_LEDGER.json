@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_ATTEMPT_LEDGER_ZERO_CANDIDATES",
+  "sourceC36": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_ATTEMPT_LEDGER.json",
+    "bytes": 1786,
+    "sha256": "89b1f4a2cc15804c257dfc1582fdd458b1f1b8869ac9b50dd8f03c437df6fb46"
+  },
+  "candidateBudget": {
+    "maximum": 1,
+    "authorized": 0,
+    "allocated": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "technicalIncomplete": 0
+  },
+  "activeAttemptId": null,
+  "c37WalExists": false,
+  "c37AttemptDirectories": [],
+  "registryRows": 230,
+  "c34WalRows": 32,
+  "c35WalRows": 6,
+  "orphan": 0,
+  "dangling": 0,
+  "running": 0,
+  "noDuplicateAttempt": true,
+  "noDuplicateRegistryRow": true,
+  "noDuplicateWalRow": true,
+  "pass": true
+}

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_64_CONTINUATION_READ_ONLY_AUDIT_SUPPLEMENT",
+  "generatedUtc": "2026-08-01T10:55:25.051Z",
+  "checkpointAudit": {
+    "result": "PASS",
+    "checkpoint64Sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9",
+    "checkpoint64EventSha256": "853ae993a069fd9f677f62b20d90ebaed155384c4cdb7416a6aace76db93af15",
+    "checkpointIdempotenceReplay": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_IDEMPOTENCE_REPLAY.json",
+      "bytes": 4859,
+      "sha256": "80ae4bff8d2671ad3261abff5ab3e1d16da3520c97dedebc2379eb203960bade"
+    },
+    "gitHeadUpstreamRemoteTracking": "ee664eab4529c636f34cb6d37d23a6a497886a17"
+  },
+  "packageAudit": {
+    "result": "PASS",
+    "entries": 57,
+    "uniquePaths": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "jsonAndNdjsonDocumentsParsedByBoundedIndependentAudit": 493,
+    "missingOrBadHashes": 0,
+    "symlinkOrReparseEscapes": 0,
+    "credentialsEnvironmentFilesClientOrPersonalDataFindings": 0
+  },
+  "processAudit": {
+    "preInvocationIdentifiedProcess": {
+      "pid": 24136,
+      "executablePath": "C:/Users/USER/.vscode/extensions/anthropic.claude-code-2.1.220-win32-x64/resources/native-binary/claude.exe",
+      "classification": "PRE_EXISTING_USER_OWNED_VSCODE_CLAUDE_EXTENSION",
+      "basis": "Its escalated read-only command-line inspection showed the VS Code extension stream service and --add-dir for the repository; it preceded the C37 marker and was not the configured C37 review CLI executable."
+    },
+    "current": {
+      "observedUtc": "2026-08-01T10:55:24.701Z",
+      "processes": [
+        {
+          "imageName": "claude.exe",
+          "pid": 24136,
+          "parentPid": 7384,
+          "executablePath": "c:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.220-win32-x64\\resources\\native-binary\\claude.exe",
+          "commandLineSha256": "d60af9d566be3a5c59cbe0ea751c06e1f2b3d4724e4be6070d0876290115c261",
+          "classification": "PRE_EXISTING_USER_OWNED_VSCODE_CLAUDE_EXTENSION"
+        },
+        {
+          "imageName": "node.exe",
+          "pid": 21420,
+          "parentPid": 6228,
+          "executablePath": "C:\\Program Files\\nodejs\\node.exe",
+          "commandLineSha256": "40dcd81b2a3bda6ae5b1cff09c882d36d011389fa39a61f840a5ddf28c8b4e23",
+          "classification": "CURRENT_CHECKPOINT_EXECUTOR"
+        }
+      ],
+      "activeC37ReviewProcesses": [],
+      "otherNodeProcesses": [],
+      "preExistingUserOwnedClaudeExtensionProcesses": [
+        {
+          "imageName": "claude.exe",
+          "pid": 24136,
+          "parentPid": 7384,
+          "executablePath": "c:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.220-win32-x64\\resources\\native-binary\\claude.exe",
+          "commandLineSha256": "d60af9d566be3a5c59cbe0ea751c06e1f2b3d4724e4be6070d0876290115c261",
+          "classification": "PRE_EXISTING_USER_OWNED_VSCODE_CLAUDE_EXTENSION"
+        }
+      ],
+      "port5173Listeners": [],
+      "resultsTemporaryRuntimes": [],
+      "externalC37TemporaryDirectories": [],
+      "locks": [],
+      "noActiveC37OperationProcess": true,
+      "pass": true
+    }
+  },
+  "driverAuditLimitations": [
+    "The preparation driver itself did not perform the independent JSON/NDJSON parsing and heuristic adjudication that supported its sensitive-scan narrative; this supplement records the bounded independent audit provenance.",
+    "The preparation driver classified pre-existing Claude processes from the observed process list without performing command-line inspection internally; command-line inspection had been performed separately before invocation.",
+    "The review validator did not independently enforce strict JSON schema/property ordering or classify nonblocking observations. These acceptance gaps were never reached because no reviewer output existed."
+  ],
+  "effect": "These limitations do not authorize a retry and do not convert the local CLI failure into a semantic review result.",
+  "pass": true
+}

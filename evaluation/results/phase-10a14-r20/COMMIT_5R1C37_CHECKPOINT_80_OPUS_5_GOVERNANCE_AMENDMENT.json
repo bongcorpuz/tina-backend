@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 80",
+  "classification": "C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT",
+  "generatedAtUtc": "2026-08-07T17:58:30Z",
+  "amendmentNature": "DELIBERATE_GOVERNANCE_AMENDMENT_NOT_A_MODEL_EQUIVALENCE_CLAIM",
+  "explicitStatement": "This artifact records a deliberate governance decision to supersede an unsatisfiable one-use authorization with a new, distinct, satisfiable one-use authorization. It does not assert, imply, or rely on any claim that Claude Opus 4.8 and Claude Opus 5 are the same model, produce equivalent judgment, or are interchangeable in general. The two authorizations are tracked with fully separate counters.",
+
+  "taskIdentity": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT-79 CONTINUATION: OPUS-5 GOVERNANCE AMENDMENT, SINGLE INDEPENDENT REVIEW, FINAL C37 ADJUDICATION, CHECKPOINT RECONCILIATION, AND CURRENT_STATE UPDATE",
+
+  "repositoryIdentity": {
+    "root": "C:\\Projects\\tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "fullHeadParent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "fullHeadParentResolutionMethod": "git rev-parse HEAD^ against the live repository, not inferred or expanded from any abbreviated historical form.",
+    "remoteTipFreshlyVerified": "ee664eab4529c636f34cb6d37d23a6a497886a17"
+  },
+
+  "checkpoint79Hashes": {
+    "recoveryCheckpoint": "83486c36af47ff35e51c6b1937e103fb475c096030c0f25a0eefa0cdba40e59b",
+    "preflightAndPackageVerification": "ea20eb4cf05181b49eed2138be9195cd9c0b6293af96bc412831dc15bfcfc1dd",
+    "finalEvidenceManifest": "002e4558fafdefc13fd1356d7d90b3d3a2ad04896ebf2615eb3280c975b1bbee",
+    "currentStateMdAtCheckpoint79": "90740c96a0df08021a5a1a090aadca47b9f91efdc4c32fa626fe3645776fdec9",
+    "allRecomputedAndMatched": true
+  },
+
+  "immutable57EntryPackageIdentity": {
+    "entries": 57,
+    "totalBytes": 4109852,
+    "allowlistManifestPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+    "allowlistManifestSha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e",
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "manifestHashProvenanceState": "BOTH_REPRODUCED (see COMMIT_5R1C37_CHECKPOINT_80_MANIFEST_HASH_PROVENANCE_ADJUDICATION.json)",
+    "packageUnchangedSinceCheckpoint78And79": true,
+    "packageWillNotBeModifiedByThisAmendment": true
+  },
+
+  "priorReviewerRequirement": {
+    "model": "claude-opus-4-8",
+    "productLabel": "Claude Code Opus 4.8",
+    "designatedBy": "the checkpoint-64-era review request/authorization chain (COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_AUTHORIZATION.json, COMMIT_5R1C37_REPLACEMENT_OPUS_EXTERNAL_AUTHORIZATION.json, COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json)"
+  },
+
+  "checkpoint79ModelAvailabilityFinding": {
+    "claudeOpus48Present": false,
+    "availableModelsInExecutionEnvironment": ["claude-opus-5", "claude-sonnet-5", "claude-fable-5", "claude-haiku-4-5-20251001"],
+    "outcomeRecorded": "SAFE_PAUSE, Outcome D: NO_INVOCATION_BECAUSE_OF_PREFLIGHT_OR_MODEL_MISMATCH",
+    "noSubstitutionMadeAtCheckpoint79": true,
+    "noSubstantiveRequestSubmittedAtCheckpoint79": true
+  },
+
+  "formerAuthorizationDisposition": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "artifactSha256": "UNCHANGED_NOT_RECOMPUTED_BY_THIS_AMENDMENT",
+    "artifactEdited": false,
+    "artifactPreservedExactly": true,
+    "recordedStatusUnderThisAmendment": {
+      "status": "SUPERSEDED_UNUSED",
+      "consumed": false,
+      "remainingPermittedInvocations": 0,
+      "supersessionReason": "exact required model (claude-opus-4-8) unavailable in the execution environment",
+      "supersededBy": "the new claude-opus-5 authorization recorded in this artifact",
+      "supersededAtUtc": "2026-08-07T17:58:30Z"
+    },
+    "notCombinedWithNewAuthorizationCounter": true,
+    "futureReuseProhibited": "The former Opus 4.8 authorization must not be used later, even if an environment exposing that exact model is subsequently found, unless a new user governance decision explicitly reauthorizes it. This amendment does not grant that reauthorization."
+  },
+
+  "newAuthorization": {
+    "authorizationStatus": "AUTHORIZED_UNUSED",
+    "exactReviewerModel": "claude-opus-5",
+    "permittedSelector": "opus",
+    "selectorResolutionBasis": "The primary executor's own agent-spawning tool documentation states its 'opus' model-tier selector maps to 'Opus 5', with exact model identifier 'claude-opus-5', as declared in the executor's own authoritative system configuration (the same source used at checkpoint 79 to establish that 'claude-opus-4-8' does NOT exist in the roster). No provider request was made to test this; it is confirmed from local/system configuration alone, per the governing prompt's explicit instruction not to test model resolution via a live request.",
+    "maximumInvocationCount": 1,
+    "consumed": false,
+    "remaining": 1,
+    "invocationCount": 0,
+    "retryAuthorized": false,
+    "secondReviewerAuthorized": false,
+    "testProbeOrWarmupInvocationAuthorized": false,
+    "purpose": "One independent, read-only review of the complete, immutable, 57-entry C37 no-runtime governance package, together with the governing addendum layer defined in this amendment, to determine whether C37's zero-runtime-candidate closure is supported and whether B7 may close under this amendment.",
+    "package": {
+      "description": "exact immutable 57-entry C37 review package",
+      "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+      "unchangedByThisAmendment": true
+    },
+    "exactConsumptionRule": "Consumed only when the substantive package-bound review request is submitted to the claude-opus-5 model. Consumption occurs at submission, not at receipt of a valid response. A malformed response, timeout, schema failure, provider failure, or model-output failure after a genuine submission does NOT restore the authorization and does NOT authorize a retry.",
+    "exactPermittedOutcomeClasses": [
+      "VALID_APPROVAL",
+      "VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS",
+      "VALID_REJECTION_OR_BLOCK",
+      "TECHNICAL_INCOMPLETE_AFTER_SUBMISSION",
+      "NO_INVOCATION_PRECONDITION_FAILURE"
+    ]
+  },
+
+  "explicitConstraintsCarriedForward": [
+    "No GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, Sonnet, Haiku, Fable, or any other model may replace Opus 5 under this authorization.",
+    "No second review invocation is authorized.",
+    "No test invocation, model-probing invocation, warm-up request, or schema trial is authorized.",
+    "No runtime work is authorized by this amendment. candidatesAuthorized and candidatesAllocated must remain 0 in every outcome.",
+    "This amendment does not authorize C38, E2, A15, Phase 10B, deployment, migration, reindex, /health work, or publishing Git changes."
+  ],
+
+  "layerStructure": {
+    "explicitStatement": "Review inputs are treated as two separately identified layers per the governing prompt.",
+    "layer1EvidenceCorpus": {
+      "description": "The exact immutable 57-entry package and its exact package manifest. Unchanged by this or any prior checkpoint amendment.",
+      "identityHash": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+      "manifestHash": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e"
+    },
+    "layer2GoverningAddendum": {
+      "description": "The new Opus 5 authorization amendment (this artifact), the checkpoint-79 safe-pause evidence, and the manifest-hash provenance adjudication. Hashed and identified separately from Layer 1 in COMMIT_5R1C37_CHECKPOINT_80_REVIEW_INPUT_SET_MANIFEST.json, produced after this artifact is finalized.",
+      "governanceAmendmentAddedToImmutablePackage": false,
+      "explicitStatement": "This governance amendment is NOT added to, does not modify, and is not counted as one of the 57 immutable package entries."
+    }
+  },
+
+  "explicitClosureScopeStatement": {
+    "noRuntimeWorkAuthorized": true,
+    "noC38Authorized": true,
+    "noPhase10BAuthorized": true,
+    "noRuntimeCodeModificationAuthorized": true,
+    "noGitPublicationAuthorized": true,
+    "possibleOutcomesForC37": "This amendment permits C37 to reach a terminal no-runtime-candidate closure ONLY if the independent claude-opus-5 review returns a valid, package-bound, schema-conformant APPROVAL or APPROVED_WITH_NONBLOCKING_OBSERVATIONS decision AND the controlling closure contract's own criteria are independently satisfied. It does not itself close C37, B7, Phase 10A, or R20."
+  }
+}

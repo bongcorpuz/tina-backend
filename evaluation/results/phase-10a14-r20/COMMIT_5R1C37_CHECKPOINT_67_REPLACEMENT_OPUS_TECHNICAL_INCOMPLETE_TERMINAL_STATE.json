@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FOUR_HOUR_SAFE_PAUSE_REPLACEMENT_OPUS_TECHNICAL_INCOMPLETE",
+  "generatedUtc": "2026-08-01T12:52:23.506Z",
+  "reason": "The one authorized replacement submission exceeded the provider single-exchange prompt capacity before model review; authorization is consumed and retry is prohibited.",
+  "technicalAdjudication": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_PROMPT_TOO_LONG_TECHNICAL_ADJUDICATION.json",
+    "bytes": 3165,
+    "sha256": "7590a5383ee796217bbb01803af7e3444cee44cda4ada423b4d8fc190c1b7b7e"
+  },
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_67_REPLACEMENT_OPUS_TECHNICAL_INCOMPLETE_RECONCILIATION.json",
+    "bytes": 3434,
+    "sha256": "d787d68bbeb67a7d7ba204fe8816dc2d58630c4754ffb47858a2886d3e5ddfc9"
+  },
+  "handoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_67.md",
+    "bytes": 2184,
+    "sha256": "ac63d5f1daaa3929065df89eb760e41c509d0fd0030b638ade3d9e943c93a8ec"
+  },
+  "replacementAuthorizationConsumed": true,
+  "replacementInvocationCount": 1,
+  "retryAuthorized": false,
+  "reviewerObjectReceived": false,
+  "decisionToken": null,
+  "substantivePathToken": null,
+  "documentationUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "runtimeOracleRegistryWalMutationCount": 0,
+  "c38Begun": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "phase10BBegun": false,
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

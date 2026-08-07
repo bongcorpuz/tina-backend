@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_66_CONTINUATION_PREFLIGHT_PASS",
+  "generatedUtc": "2026-08-01T12:30:39.8770454Z",
+  "governingPrompt": {
+    "bytes": 23020,
+    "sha256": "870a85330fb54c3c32871e67aebec0698d65e3aca61b1e0b51ea570ff2d632f1"
+  },
+  "checkpoint": {
+    "ordinal": 66,
+    "pointerAndNumberedCopyByteIdentical": true,
+    "bytes": 5290,
+    "sha256": "8348750e6fb07df633514d8170c2da9c9493980f96eb61d656f205e7f4631626",
+    "eventSha256": "9371ec4dfe7243c07f50a077275b564a1c96da6511f461a9366741917f86c0c7",
+    "safeToResume": true,
+    "activeAttemptId": null
+  },
+  "checkpointLog": {
+    "bytes": 13324,
+    "sha256": "639d22381969200b857333a5ff397a636b4d69a6a05ac3727304e9b670250cfd",
+    "ordinals": [64, 65, 66],
+    "lastRowEqualsCheckpoint66": true
+  },
+  "idempotenceReplay": {
+    "bytes": 1452,
+    "sha256": "729975684db14f9ccf9db1bbedfe82a74609b0bfa36e457ab89e7306af9f7f08",
+    "pass": true
+  },
+  "handoff": {
+    "bytes": 4213,
+    "sha256": "98d15c2fccb53911107e5ccdfca19eea467d0fe1dab1cc316e3fdf78a861e92a"
+  },
+  "git": {
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "liveRemoteTipAfterFetch": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true
+  },
+  "frozenC37": {
+    "rowsAdjudicated": "145/145",
+    "generalizedRuntimeDefects": 0,
+    "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+    "decisionMetric": "3720/3720",
+    "relationMetric": "3720/3720",
+    "reasonMetric": "3575/3720",
+    "regressionSuites": "197/217",
+    "regressionGroups": "5429/5451",
+    "newRuntimeBehaviorFailures": 0
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "memberHashMismatches": 0,
+    "pass": true
+  },
+  "registryWalAttempts": {
+    "registryRows": 230,
+    "attemptDirectories": 230,
+    "orphan": 0,
+    "dangling": 0,
+    "running": 0,
+    "c34WalRows": 32,
+    "c35WalRows": 6,
+    "c36WalAbsent": true,
+    "c37WalAbsent": true
+  },
+  "replacementAuthorization": {
+    "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "status": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "retryAuthorized": false,
+    "markerAbsent": true,
+    "captureTransmissionReviewAbsent": true,
+    "providerRequestObserved": false
+  },
+  "hygiene": {
+    "taskOwnedNodeOrClaudeReviewProcesses": 0,
+    "port5173Listeners": 0,
+    "allocationOrIndexLocks": 0,
+    "taskOwnedC37TempDirectories": 0,
+    "oldCheckpoint65TempPathAbsent": true,
+    "userOwnedVsCodeClaudeExtensionProcesses": 1,
+    "userOwnedVsCodeClaudeExtensionPid": 24136,
+    "userOwnedVsCodeClaudeExtensionUntouched": true
+  },
+  "tokenStart": {
+    "ledgerSequence": 6,
+    "effectiveSessionContextWindowTokens": 258400,
+    "telemetryReportedActiveContextTokens": 99861,
+    "calculatedEffectiveRemainingTokens": 158539,
+    "requiredReserveTokens": 54400,
+    "minimumPreInvocationRemainingTokens": 78400,
+    "gatePass": true
+  },
+  "continuityMismatch": false,
+  "pass": true
+}

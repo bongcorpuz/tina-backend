@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 81",
+  "classification": "C37_CHECKPOINT_81_UNTRACKED_BASELINE_LABEL_ADJUDICATION",
+  "generatedAtUtc": "2026-08-07T23:00:00Z",
+
+  "phraseUnderAdjudication": "Untracked 313 = 302 (post-CP77) + 11 new checkpoint-80 files.",
+  "phraseSource": "The primary executor's own prior human-readable chat report (not a repository file).",
+
+  "categoryATest": {
+    "test": "Does the literal string 'post-CP77' (or case/separator variants) exist anywhere in repository evidence?",
+    "method": "grep -rn \"post-CP77|post-cp77|post_CP77|postCP77\" across the full repository",
+    "result": "ZERO matches",
+    "conclusion": "The phrase exists ONLY in the external chat report. It was never written into any JSON, Markdown, or log artifact.",
+    "categoryAApplies": true
+  },
+
+  "numberProvenanceTest": {
+    "test": "Does the literal untracked-count value 302 exist as a recorded field value anywhere in repository evidence?",
+    "method": "grep for the pattern \"untracked[A-Za-z]*\": 302 across all C37 evidence, plus direct field inspection of every checkpoint-77/78/79/80 recovery and preflight artifact",
+    "result": "ZERO matches — 302 never appears as a written field value in any evidence file",
+    "actualRecordedValues": {
+      "checkpoint78PreflightStart": { "field": "untrackedPathsAtPreflight", "artifact": "COMMIT_5R1C37_RECOVERY_CHECKPOINT_78_authorization_withheld_safe_pause.json", "value": 295 },
+      "checkpoint79PreflightStart": { "field": "untrackedPathsAtPreflightStart", "artifact": "COMMIT_5R1C37_CHECKPOINT_79_PREFLIGHT_AND_PACKAGE_VERIFICATION.json", "value": 299 }
+    },
+    "conclusion": "302 was never written to a file; it is an arithmetic intermediate value that existed only in the reasoning behind a prior chat message."
+  },
+
+  "trueArithmeticChainReconstructedFromEvidence": {
+    "checkpoint78PreflightStart": 295,
+    "checkpoint79PreflightStart": 299,
+    "impliedFilesCreatedDuringCheckpoint78Window": 4,
+    "note1": "295 to 299 is a 4-file delta across the checkpoint-78 window; checkpoint 78 itself created exactly 3 new evidence files (recovery checkpoint, adjudication, and final-evidence manifest), so a 4th untracked file appeared in that window from a source other than checkpoint 78's own deliberate writes (consistent with this session's repeated observation of occasional stray pre-existing or IDE-background files, e.g. auth.json, .hermes/plans/* noted at earlier checkpoints). This 1-file discrepancy is immaterial to hash integrity, does not affect any sealed artifact, and is noted for completeness rather than force-reconciled.",
+    "checkpoint79OwnFilesCreated": 3,
+    "impliedCheckpoint79EndCount": "299 + 3 = 302",
+    "conclusion": "302 = the CP79-END / CP80-START baseline, not CP77. The prior report's parenthetical '(post-CP77)' should have read '(post-CP79)'. This is the most probable origin of the mislabel: a slip during compact recap phrasing, not a repository defect and not a fabricated number — the number 302 itself was arithmetically consistent with real evidence (299+3), just attributed to the wrong checkpoint boundary in the shorthand label.",
+    "checkpoint80FilesCreated": 11,
+    "finalArithmeticCheck": "302 + 11 = 313, which matches the independently re-verified current untracked count (313) exactly."
+  },
+
+  "categoryDTest": {
+    "test": "Does repository evidence prove 302 actually corresponds to a DIFFERENT checkpoint than assumed by this prompt?",
+    "result": "Yes — repository evidence shows 302 corresponds to the CP79-end/CP80-start boundary, not CP77 as the mislabel stated, and not CP79-start either (299) as this prompt's own framing assumed when it said 'Earlier checkpoint evidence reported 302 as the post-checkpoint-79 untracked count' — that framing was ALSO imprecise: no artifact records exactly '302' at CP79-start (which was 299); 302 is the CP79-END value, one step later than CP79-start.",
+    "followedEvidenceNotAssumption": true
+  },
+
+  "finalDisposition": {
+    "categoryApplied": "A — external reporting-label typo",
+    "repositoryFileCorrectionPerformed": false,
+    "repositoryFileCorrectionRequired": false,
+    "reasonNoRepositoryCorrectionNeeded": "No repository file ever contained the incorrect label; there is nothing in the repository to correct.",
+    "currentStateMdClarificationProvided": true,
+    "clarificationContent": "CURRENT_STATE.md's checkpoint-81 block records the correct arithmetic chain (295 at CP78-start, 299 at CP79-start, 302 at CP79-end/CP80-start, 313 currently) and notes that a prior chat-only recap mislabeled the 302 baseline as 'post-CP77' rather than 'post-CP79', with zero impact on any hash, count, or file-integrity check.",
+    "arithmeticNeverWrong": true,
+    "onlyTheCheckpointAttributionLabelWasImprecise": true
+  }
+}

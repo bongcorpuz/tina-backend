@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_SAFE_PAUSE_NO_RUNTIME_CANDIDATE_PENDING_OPUS",
+  "generatedUtc": "2026-08-01T09:46:44.619Z",
+  "blocker": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json",
+    "bytes": 1053,
+    "sha256": "282bcb85b44a954ee7409ed33f55ea794312a0727a6d998658438ac8977c88ec"
+  },
+  "reconciliation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_RECONCILIATION.json",
+    "bytes": 5249,
+    "sha256": "44c8d09fff5deefe5b8c7caf4b21152c5fcbf02ac557ab9e7ad19f5eeb24eaa4"
+  },
+  "reason": "The complete no-runtime governance package is reproducible and ready, but external Opus transmission requires explicit user consent before the first and only invocation.",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "phase10A": "OPEN_PENDING_MANDATORY_INDEPENDENT_REVIEW",
+  "c37": "SAFE_PAUSED_PENDING_OPUS_NOT_TERMINAL",
+  "candidateDecision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "opusInvocationCount": 0,
+  "reviewBudgetConsumed": false,
+  "docsUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "exactNextOperation": "After explicit user consent, resume from checkpoint 64 and invoke the already-prepared Claude Code Opus 4.8 review exactly once; do not change the reviewed package first.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

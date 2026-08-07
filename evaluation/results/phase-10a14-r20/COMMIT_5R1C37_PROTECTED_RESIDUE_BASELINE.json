@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_PROTECTED_RESIDUE_BASELINE_VERIFIED",
+  "frozenUtc": "2026-08-01T09:09:29.760Z",
+  "algorithm": "For each POSIX path in lexical order: path + NUL + raw-byte-length + NUL + SHA256(raw bytes) + LF; SHA256 the UTF-8 concatenation",
+  "priorBaseline": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_PROTECTED_RESIDUE_BASELINE.json",
+    "bytes": 5485,
+    "sha256": "5a93da2b09fc57cd84bb2045676fb2a040dad7a222f980c7cdc7a5fd9f854fb3"
+  },
+  "protectedUntrackedFiles": 18,
+  "aggregateSha256": "980cd3b5f2a5b75104bc91c9e6f4391e80bf5f0d772f48b61c79497e3d2ebd0a",
+  "expectedAggregateSha256": "980cd3b5f2a5b75104bc91c9e6f4391e80bf5f0d772f48b61c79497e3d2ebd0a",
+  "records": [
+    {
+      "path": ".claude/settings.local.json",
+      "bytes": 4466,
+      "sha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+      "expectedBytes": 4466,
+      "expectedSha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+      "pass": true
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "bytes": 70,
+      "sha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+      "expectedBytes": 70,
+      "expectedSha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+      "bytes": 8064,
+      "sha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+      "expectedBytes": 8064,
+      "expectedSha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/README.md",
+      "bytes": 1890,
+      "sha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+      "expectedBytes": 1890,
+      "expectedSha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "bytes": 35275,
+      "sha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+      "expectedBytes": 35275,
+      "expectedSha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "bytes": 87771,
+      "sha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+      "expectedBytes": 87771,
+      "expectedSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json",
+      "bytes": 281280,
+      "sha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+      "expectedBytes": 281280,
+      "expectedSha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json",
+      "bytes": 982,
+      "sha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+      "expectedBytes": 982,
+      "expectedSha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+      "bytes": 6287,
+      "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "expectedBytes": 6287,
+      "expectedSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+      "bytes": 6287,
+      "sha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "expectedBytes": 6287,
+      "expectedSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 385974,
+      "sha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "expectedBytes": 385974,
+      "expectedSha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json",
+      "bytes": 14572,
+      "sha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee",
+      "expectedBytes": 14572,
+      "expectedSha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_GIT_VERIFICATION.json",
+      "bytes": 1022,
+      "sha256": "7782e02960bb7f8aac4d603bc8cca4dcf0a7def37636762d32fef033edd6b732",
+      "expectedBytes": 1022,
+      "expectedSha256": "7782e02960bb7f8aac4d603bc8cca4dcf0a7def37636762d32fef033edd6b732",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_REMOTE_VERIFICATION.json",
+      "bytes": 1024,
+      "sha256": "78bc3f1c312df6f4b415b03e0b8a11982808417ab8812e63a8c945f14fc325e0",
+      "expectedBytes": 1024,
+      "expectedSha256": "78bc3f1c312df6f4b415b03e0b8a11982808417ab8812e63a8c945f14fc325e0",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_POST_COMMIT_TERMINAL_STATE.json",
+      "bytes": 3234,
+      "sha256": "8d01a5b1faee52ab94249339317e0fba75305caeaf4047cfdc614a0e1177cc11",
+      "expectedBytes": 3234,
+      "expectedSha256": "8d01a5b1faee52ab94249339317e0fba75305caeaf4047cfdc614a0e1177cc11",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT.json",
+      "bytes": 4212,
+      "sha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "expectedBytes": 4212,
+      "expectedSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT_62_four_hour_finalization_terminal_reconciliation.json",
+      "bytes": 4212,
+      "sha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "expectedBytes": 4212,
+      "expectedSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 10286,
+      "sha256": "f756976c8569b53376e53141075eb374849660a10f595afeb0810a17686a2412",
+      "expectedBytes": 10286,
+      "expectedSha256": "f756976c8569b53376e53141075eb374849660a10f595afeb0810a17686a2412",
+      "pass": true
+    }
+  ],
+  "protectedTrackedControls": [
+    {
+      "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+      "bytes": 14842,
+      "sha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+      "expectedBytes": 14842,
+      "expectedSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+      "pass": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+      "bytes": 29298,
+      "sha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+      "expectedBytes": 29298,
+      "expectedSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_EVIDENCE.sha256",
+      "bytes": 93862,
+      "sha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764",
+      "expectedBytes": 93862,
+      "expectedSha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_EVIDENCE.sha256",
+      "bytes": 17193,
+      "sha256": "a21b4f6f2074631eb84751683178d533e0611218df9f3e440bd59e47fb15331d",
+      "expectedBytes": 17193,
+      "expectedSha256": "a21b4f6f2074631eb84751683178d533e0611218df9f3e440bd59e47fb15331d",
+      "pass": true
+    }
+  ],
+  "protectedC36SafePauseInventory": {
+    "manifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 7228,
+      "sha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812"
+    },
+    "rows": 48,
+    "duplicateCount": 0,
+    "missingCount": 0,
+    "mismatchCount": 0,
+    "pass": true
+  },
+  "pass": true
+}

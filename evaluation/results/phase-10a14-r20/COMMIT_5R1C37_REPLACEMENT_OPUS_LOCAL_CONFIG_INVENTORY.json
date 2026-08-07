@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_LOCAL_CONFIG_INVENTORY_READ_ONLY",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "sources": [
+    {"path":"C:\\Users\\USER\\.claude\\settings.json","exists":true,"bytes":244,"sha256":"02857f7edc705e00b6bf03154b034bdb382302dafbb1c1d556c4866cee0195d4","mcpServers":"absent"},
+    {"path":"C:\\Users\\USER\\.claude.json","exists":true,"bytes":52224,"sha256":"520f9ed5b160312d2062c1e96a751dab75964048f5af71983ca6d9ddd0a87142","topLevelMcpServers":"absent","tinaBackendProjectMcpServers":"empty record"},
+    {"path":"C:\\Projects\\tina-backend\\.claude\\settings.local.json","exists":true,"bytes":4466,"sha256":"9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc","scope":"permissions only"},
+    {"path":"C:\\Projects\\tina-backend\\.claude\\settings.json","exists":false},
+    {"path":"C:\\Projects\\tina-backend\\.mcp.json","exists":false},
+    {"path":"C:\\Projects\\tina-backend\\.vscode\\settings.json","exists":false},
+    {"path":"C:\\Users\\USER\\AppData\\Roaming\\Code\\User\\settings.json","exists":true,"bytes":856,"sha256":"51562bec30e7170dfbcdc7178a2b1d038d29b01b7cd4f98476521d5e63aa83a9"},
+    {"path":"C:\\Users\\USER\\AppData\\Roaming\\Claude\\claude_desktop_config.json","exists":false}
+  ],
+  "managedClaudeFilesOrPolicyKeysFound": false,
+  "configurationPrecedence": "--strict-mcp-config instructs Claude Code to use only the command-scoped --mcp-config values and ignore all other MCP configuration.",
+  "causalPersistentEntry": null,
+  "credentialsRecorded": false,
+  "persistentMutationPerformed": false,
+  "pass": true
+}

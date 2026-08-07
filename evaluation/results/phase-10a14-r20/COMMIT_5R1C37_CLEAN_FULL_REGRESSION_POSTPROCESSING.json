@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FULL_REGRESSION_RAW_CAPTURE_POSTPROCESSING",
+  "generatedUtc": "2026-08-01T09:41:53.405Z",
+  "regressionInvocations": 1,
+  "rawCaptureMutated": false,
+  "childrenParsed": 227,
+  "syntaxChildren": 10,
+  "suiteChildren": 217,
+  "exactHistoricalFailureMultiset": true,
+  "regression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION.json",
+    "bytes": 8949,
+    "sha256": "43bfec0d2227ba6d8572190340a38967ded5b79e935a6df15c77ccbd57c755b0"
+  },
+  "pass": true
+}

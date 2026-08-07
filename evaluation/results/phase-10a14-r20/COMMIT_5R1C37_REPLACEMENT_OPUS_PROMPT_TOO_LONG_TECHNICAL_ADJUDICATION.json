@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_PROMPT_TOO_LONG_TECHNICAL_INCOMPLETE",
+  "generatedUtc": "2026-08-01T12:52:23.506Z",
+  "invocation": {
+    "ordinal": 1,
+    "maximumAuthorized": 1,
+    "authorizationSha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "authorizationConsumed": true,
+    "retryAuthorized": false,
+    "marker": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_INVOCATION_MARKER.json",
+      "bytes": 2576,
+      "sha256": "a99bb6c7dde53d4b778a8e0e8fec0d5bb47292340baf70fef9e34dad1ef4d0ff"
+    },
+    "capture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_CLI_CAPTURE.json",
+      "bytes": 4290,
+      "sha256": "93723f4dbdb5e9c2d21a7fc40f80992e0e8267325426a7497a7cb45269e54b97"
+    }
+  },
+  "applicationSubmission": {
+    "completeChildStdinAcceptanceConfirmed": true,
+    "totalStdinBytes": 4193594,
+    "stdinSha256": "8f1f3d5f18cc18a004631d38236f5389d5891b2b757ac340b73f8e01732fdb6e",
+    "evidenceEntries": 57,
+    "rawEvidenceBytes": 4109852,
+    "evidenceBeyondAuthorizedPackageIncluded": false
+  },
+  "cliResult": {
+    "exitCode": 1,
+    "apiErrorStatus": 400,
+    "terminalReason": "prompt_too_long",
+    "reportedApproximateRequestTokens": 1828851,
+    "reportedRequestLimitTokens": 1000000,
+    "reportedConversationTokens": 1046914,
+    "durationApiMilliseconds": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "modelUsage": {},
+    "totalCostUsd": 0,
+    "stdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_STDOUT.txt",
+      "bytes": 1015,
+      "sha256": "d3e5a82a70d840593b682a7a54dd745e5adad6e77f7abeef8a25573e7568d142"
+    },
+    "stderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_STDERR.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "adjudication": {
+    "modelReviewReached": false,
+    "reviewerObjectReceived": false,
+    "decisionToken": null,
+    "substantivePathToken": null,
+    "semanticRejection": false,
+    "semanticApproval": false,
+    "rootCause": "The unchanged authorized 57-entry application submission exceeded Claude Code/Anthropic single-exchange prompt capacity before model inference.",
+    "packageDefect": false,
+    "mcpConfigurationDefect": false,
+    "technicalFailure": true,
+    "noRetryPermitted": true
+  },
+  "transportObservability": {
+    "providerRequestObserved": null,
+    "cliApiErrorEnvelopeObserved": true,
+    "modelEnvelopeObserved": false,
+    "exactProviderWireBytes": null,
+    "confirmedModelInputTokens": 0
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "unchanged": true
+  },
+  "finalizationAuthorized": false,
+  "pass": true
+}

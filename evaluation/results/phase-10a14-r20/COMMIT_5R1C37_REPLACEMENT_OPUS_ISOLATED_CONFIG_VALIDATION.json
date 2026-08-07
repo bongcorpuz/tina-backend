@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_ISOLATED_CONFIG_VALIDATION_PASS",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "cli": {
+    "path": "C:\\Users\\USER\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\claude-code\\bin\\claude.exe",
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "version": "2.1.212 (Claude Code)"
+  },
+  "config": {
+    "path": "C:\\tmp\\c37-replacement-isolated-config-20260801T114900Z\\empty-mcp.json",
+    "bytes": 18,
+    "sha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "mcpServers": 0
+  },
+  "diagnosticAttempt": {
+    "providerContactPossible": false,
+    "command": "claude.exe --safe-mode --no-chrome --strict-mcp-config --mcp-config <config> mcp list",
+    "exitCode": 1,
+    "result": "LOCAL_ARGUMENT_ORDER_DIAGNOSTIC: variadic --mcp-config consumed mcp and list as filenames",
+    "authorizationConsumed": false
+  },
+  "successfulValidation": {
+    "providerContactPossible": false,
+    "command": "claude.exe --safe-mode --no-chrome --mcp-config <config> --strict-mcp-config mcp list",
+    "exitCode": 0,
+    "stdout": "No MCP servers configured. Use `claude mcp add` to add a server.",
+    "noMcpServerCouldStart": true,
+    "authorizationConsumed": false
+  },
+  "persistentConfigHashesUnchanged": true,
+  "persistentConfigMutationCount": 0,
+  "taskOwnedClaudeProcessesAfterValidation": 0,
+  "userOwnedVsCodeClaudeExtensionProcessCount": 1,
+  "userOwnedVsCodeClaudeExtensionUntouched": true,
+  "providerRequestObserved": false,
+  "modelRequestSubmitted": false,
+  "finalReviewCommandUsesSameIsolation": true,
+  "pass": true
+}

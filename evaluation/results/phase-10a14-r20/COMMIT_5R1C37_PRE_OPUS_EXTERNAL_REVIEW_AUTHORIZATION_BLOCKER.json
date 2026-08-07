@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_EXTERNAL_OPUS_REVIEW_AUTHORIZATION_REQUIRED",
+  "generatedUtc": "2026-08-01T09:46:44.619Z",
+  "externalActionAttempted": false,
+  "commandExecuted": false,
+  "opusInvocationMarkerCreated": false,
+  "opusInvocationCount": 0,
+  "reviewBudgetConsumed": false,
+  "approvalGuardDecision": "REJECTED_BEFORE_EXECUTION_UNACCEPTABLE_EXTERNAL_DATA_TRANSMISSION_RISK",
+  "risk": "The mandatory Claude Code review would transmit repository evidence to Anthropic's external Claude service. The approval guard requires explicit user consent for that destination and payload.",
+  "exactConsentRequested": "Authorize one read-only Claude Code Opus 4.8 invocation that may transmit the 57-entry manifest-bound C36/C37 evidence package to Anthropic for independent review.",
+  "saferAlternativeAdequateForPrompt": false,
+  "reason": "The governing prompt requires Claude Code Opus 4.8 specifically; a local self-review would not satisfy independent approval.",
+  "pass": true
+}

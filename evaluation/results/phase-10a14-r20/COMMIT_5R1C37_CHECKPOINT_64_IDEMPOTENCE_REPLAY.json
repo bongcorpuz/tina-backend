@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_64_IDEMPOTENCE_REPLAY_PASS",
+  "generatedUtc": "2026-08-01T09:46:54.710Z",
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "bytes": 3800,
+    "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+  },
+  "numberedCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json",
+    "bytes": 3800,
+    "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+  },
+  "log": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+    "bytes": 3370,
+    "sha256": "f21f166d9ae4c79bfb152bcb4bc6705901e47ac799e43234f4031400783d3575"
+  },
+  "eventSha256": "853ae993a069fd9f677f62b20d90ebaed155384c4cdb7416a6aace76db93af15",
+  "checkpointRows": 1,
+  "noDuplicateCheckpoint": true,
+  "noDuplicateAttempt": true,
+  "noDuplicateRegistryRow": true,
+  "noDuplicateWalRow": true,
+  "noDuplicateOpusInvocation": true,
+  "noDuplicateStagingOrCommit": true,
+  "noManifestMutation": true,
+  "noProtectedResidueMutation": true,
+  "noActiveProcess": true,
+  "reviewManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+    "bytes": 8473,
+    "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "rows": 57,
+    "duplicates": 0,
+    "bad": [],
+    "pass": true
+  },
+  "evidenceBefore": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json",
+      "bytes": 1053,
+      "sha256": "282bcb85b44a954ee7409ed33f55ea794312a0727a6d998658438ac8977c88ec"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_RECONCILIATION.json",
+      "bytes": 5249,
+      "sha256": "44c8d09fff5deefe5b8c7caf4b21152c5fcbf02ac557ab9e7ad19f5eeb24eaa4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_TERMINAL_STATE.json",
+      "bytes": 1573,
+      "sha256": "e66de65ef43e214e87d86bcb4a5d3a3d697dc30693a4bcb01ddef39c326db429"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+      "bytes": 3800,
+      "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json",
+      "bytes": 3800,
+      "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 3370,
+      "sha256": "f21f166d9ae4c79bfb152bcb4bc6705901e47ac799e43234f4031400783d3575"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    }
+  ],
+  "evidenceAfter": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json",
+      "bytes": 1053,
+      "sha256": "282bcb85b44a954ee7409ed33f55ea794312a0727a6d998658438ac8977c88ec"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_RECONCILIATION.json",
+      "bytes": 5249,
+      "sha256": "44c8d09fff5deefe5b8c7caf4b21152c5fcbf02ac557ab9e7ad19f5eeb24eaa4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_TERMINAL_STATE.json",
+      "bytes": 1573,
+      "sha256": "e66de65ef43e214e87d86bcb4a5d3a3d697dc30693a4bcb01ddef39c326db429"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+      "bytes": 3800,
+      "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json",
+      "bytes": 3800,
+      "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 3370,
+      "sha256": "f21f166d9ae4c79bfb152bcb4bc6705901e47ac799e43234f4031400783d3575"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    }
+  ],
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

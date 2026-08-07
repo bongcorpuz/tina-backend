@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_EXPLICIT_ONE_USE_EXTERNAL_AUTHORIZATION",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "authorizationSource": {
+    "path": "C:\\Projects\\tina-execution-prompts\\PHASE-10A14-R20-COMMIT-5R1-C37-FIVE-HOUR-OPUS-RECOVERY-AND-FINALIZATION-FROM-CHECKPOINT-65-TOKEN-AWARE.md",
+    "bytes": 24838,
+    "sha256": "fc321560f947da3782c82ba5d4afb5db87e75813238ff42bb13e511709e3bc32"
+  },
+  "checkpoint65": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "ordinal": 65,
+    "bytes": 5797,
+    "sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db",
+    "eventSha256": "d982a06613729ac6eaa0e567179f368a3f210f8ee4efcec89f9649f3f04ca7f6"
+  },
+  "priorAuthorization": {
+    "consumed": true,
+    "retryAuthorized": false,
+    "invocationMarkerSha256": "b668dffb5e1376852ab16e788b659f61d390401b04d6d9ce70c8a4c8c74b9238"
+  },
+  "replacementAuthorization": {
+    "provider": "Anthropic",
+    "reviewer": "Claude Code Opus 4.8",
+    "cliVersion": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8",
+    "role": "read-only independent review",
+    "invocationOrdinalAuthorized": 1,
+    "maximumInvocations": 1,
+    "retryAuthorized": false,
+    "status": "AUTHORIZED_UNUSED"
+  },
+  "authorizedPackage": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "authorizedMetadata": [
+    "existing authorized review instructions and package metadata",
+    "bounded checkpoint-65 wrapper describing the prior local technical failure",
+    "strict output schema and binary-safe entry framing"
+  ],
+  "prohibitions": [
+    "second replacement invocation or retry",
+    "package expansion, substitution, redaction, or rebuilding",
+    "persistent Claude, VS Code, project, or global configuration mutation",
+    "use, control, or termination of the user-owned VS Code Claude extension process",
+    "runtime, oracle, fixture, registry, WAL, C38, E2, A15, Phase 10B, deployment, reindexing, or model migration work"
+  ],
+  "consumptionRule": "The authorization is consumed only when the substantive replacement review request is submitted.",
+  "pass": true
+}

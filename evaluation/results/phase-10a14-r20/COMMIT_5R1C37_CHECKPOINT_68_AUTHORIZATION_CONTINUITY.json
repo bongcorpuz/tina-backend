@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_68_AUTHORIZATION_CONTINUITY_PASS",
+  "generatedUtc": "2026-08-01T13:49:09.2032306Z",
+  "checkpoint68": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_68_manifest_indexed_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 4358,
+    "sha256": "42e585b08a2d31958a8b3f44238196c20188ca41069ea22e68cb0a190b59c603",
+    "ordinal": 68,
+    "safeToResume": true,
+    "activeAttemptId": null
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 3216,
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44",
+    "status": "AUTHORIZED_UNUSED",
+    "authorizationConsumed": false,
+    "manifestIndexedInvocationCount": 0,
+    "maximumInvocations": 1,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false,
+    "preservedByteForByte": true
+  },
+  "ownerReconfirmation": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-FRESH-SESSION-MANIFEST-INDEXED-OPUS-RESUME-FROM-CHECKPOINT-68.md",
+    "bytes": 19457,
+    "sha256": "289ab7b1763106fa7b0f75afffde02f89a50f65a7ee7bfa5f74123b672cfbc75",
+    "continuesExistingAuthorization": true,
+    "createsAdditionalAuthorization": false
+  },
+  "authorizedBoundary": {
+    "provider": "Anthropic",
+    "reviewer": "Claude Code Opus 4.8",
+    "cliVersion": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8",
+    "role": "independent read-only manifest-indexed review",
+    "childStdin": "compact bootstrap only",
+    "semanticInput": "deterministic capsule with source pointers",
+    "originalReads": "exact allowlisted 57 entries, read-only and on demand",
+    "fullPackageInlineOrConcatenatedTransmission": false
+  },
+  "continuityChecks": {
+    "invocationMarkerExists": false,
+    "substantiveRequestSubmitted": false,
+    "providerRequestObserved": false,
+    "modelReviewReached": false,
+    "reviewerObjectReceived": false,
+    "transmissionReceiptExists": false,
+    "manifestIndexedReviewExists": false,
+    "roleLedgerExistsBeforeContinuation": false,
+    "capsuleExistsBeforeContinuation": false,
+    "bootstrapExistsBeforeContinuation": false,
+    "readOnlyToolValidationExistsBeforeContinuation": false,
+    "providerContextPlanExistsBeforeContinuation": false,
+    "scopeSubstitutionObserved": false,
+    "packageMutationObserved": false
+  },
+  "priorAuthorizations": {
+    "count": 2,
+    "allConsumedNoRetry": true,
+    "reused": false
+  },
+  "pass": true
+}

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_69_CONTINUATION_PREFLIGHT_PASS",
+  "generatedUtc": "2026-08-01T16:31:03.649Z",
+  "governingPrompt": {
+    "path": "../tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-MANIFEST-INDEXED-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-69.md",
+    "bytes": 27092,
+    "sha256": "ca192be195a35cedbaefb6e208a051e788d10a163137091e303d60da6f6f75f4"
+  },
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_69_manifest_indexed_capsule_complete_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 6192,
+    "sha256": "bc2201dbfb8d8f7a5938939090069d89ead4d9743461c5d20e42ee6b7f93a607"
+  },
+  "checkpointPointerByteIdentical": true,
+  "checkpointOrdinal": 69,
+  "checkpointStatus": "C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "checkpointEventSha256": "326b0ab78de8b53ab9c3814b24fbd550d6f27502ed6f4f01b1da128d12745997",
+  "handoff": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FOUR_HOUR_RESUME_HANDOFF_FROM_CHECKPOINT_69.md",
+    "bytes": 2453,
+    "sha256": "e3a2b72ed4167886a2c99e757fcb41f6b536325f3c2fc8e343a09d6887e8cb3d"
+  },
+  "replay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_IDEMPOTENCE_REPLAY.json",
+    "bytes": 1434,
+    "sha256": "870c0295c5c898fcdbeb9b9e07f86e8ec4f253e9eff20e2fd99c3bc5c5daa10f"
+  },
+  "replayPass": true,
+  "checkpointEvidence": {
+    "record": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_CAPSULE_COMPLETE_TOKEN_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 3115,
+      "sha256": "07e329f8ec4eebc8588a8cda4e016a5018c3f74f458f32a4e8c2f3d1062c88a5"
+    },
+    "entries": 19,
+    "present": 19,
+    "matches": 19,
+    "bad": [],
+    "pass": true
+  },
+  "checkpointLog": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+    "bytes": 28568,
+    "sha256": "646563643ded99fbe3355745b5fbef03b1eaf655f9ef201951bdbef9b5066f03"
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "branch": "feature/source-availability-engine-v1",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "fetchHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "trackedStatusCount": 0,
+    "stagedCount": 0,
+    "pass": true
+  },
+  "frozenSemanticState": {
+    "decision": "3720/3720",
+    "relation": "3720/3720",
+    "reason": "3575/3720",
+    "reasonOnlyRows": 145,
+    "generalizedRuntimeDefects": 0,
+    "decisionDisposition": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED"
+  },
+  "trackedBaselineClean": true,
+  "stagingClean": true,
+  "outputsAbsentBeforePreparation": true,
+  "noAcceptedOrTerminalWorkRerun": true,
+  "noModelContact": true,
+  "pass": true
+}

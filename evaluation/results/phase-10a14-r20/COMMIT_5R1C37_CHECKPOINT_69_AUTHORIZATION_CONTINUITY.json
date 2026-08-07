@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_69_AUTHORIZATION_CONTINUITY_PASS",
+  "generatedUtc": "2026-08-01T16:31:03.649Z",
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 3216,
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44"
+  },
+  "provider": "Anthropic",
+  "reviewer": "Claude Code Opus 4.8",
+  "cliVersion": "2.1.212 (Claude Code)",
+  "model": "claude-opus-4-8",
+  "status": "AUTHORIZED_UNUSED",
+  "authorizationConsumed": false,
+  "manifestIndexedInvocationCount": 0,
+  "maximumInvocations": 1,
+  "retryAuthorized": false,
+  "invocationMarkerExists": false,
+  "substantiveRequestSubmitted": false,
+  "providerRequestObserved": false,
+  "modelReviewReached": false,
+  "bootstrapAbsentBeforePreparation": true,
+  "reviewAbsentBeforePreparation": true,
+  "additionalAuthorizationCreated": false,
+  "pass": true
+}

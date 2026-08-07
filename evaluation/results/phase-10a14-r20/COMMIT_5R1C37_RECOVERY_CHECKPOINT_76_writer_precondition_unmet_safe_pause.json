@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "ordinal": 76,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T04:45:00Z",
+  "stage": "PRE_INVOCATION",
+  "status": "NONTERMINAL",
+  "classification": "C37_CHECKPOINT_76_OWNER_PRECONDITION_UNMET_WRITER_STILL_RUNNING_SAFE_PAUSE_AUTHORIZATION_UNUSED",
+  "previousCheckpoint": 75,
+  "supersedes": [],
+  "supersedesNothing": "Checkpoint 75 REMAINS the controlling state. This checkpoint records a safe pause only; it does not advance the governed state.",
+  "priorCheckpointsPreservedUnaltered": "61 through 75",
+
+  "safeToResume": true,
+  "activeAttemptId": null,
+
+  "terminationReason": "OWNER_PRECONDITION_EMPIRICALLY_FALSE",
+  "terminationDetail": "The prompt asserted that the openclaw/Tina-Swarm/Hermes repository writer had been stopped or prevented from re-entering the repository, and required empirical verification before proceeding. Verification FAILED: both hermes gateway processes are still running, with unchanged creation timestamps proving they were never stopped or restarted. Per the OWNER PRECONDITION and SAFE PAUSE clauses of the governing prompt, execution stopped and only this safe-pause record was written.",
+
+  "writerVerification": {
+    "verifiedAtUtc": "2026-08-07T04:39:33Z",
+    "claimInPrompt": "The openclaw/Tina-Swarm/Hermes repository writer has been stopped or prevented from re-entering the repository.",
+    "claimVerdict": "NOT_PROVEN_AND_CONTRADICTED_BY_EVIDENCE",
+    "processesStillRunning": [
+      {
+        "pid": 21112,
+        "name": "python.exe",
+        "createdLocal": "2026-08-07T07:56:54+08:00",
+        "executablePath": "C:\\Users\\USER\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+        "commandLine": "-m hermes_cli.main --profile tina-orchestrator gateway run",
+        "aliveConfirmedBy": "Get-Process -Id 21112 -> ALIVE"
+      },
+      {
+        "pid": 4472,
+        "name": "python.exe",
+        "createdLocal": "2026-08-07T07:56:54+08:00",
+        "executablePath": "C:\\Users\\USER\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\python.exe",
+        "commandLine": "-m hermes_cli.main --profile tina-orchestrator gateway run",
+        "aliveConfirmedBy": "Get-Process -Id 4472 -> ALIVE"
+      }
+    ],
+    "decisiveEvidence": "Both PIDs are IDENTICAL to those observed during checkpoint 75, and both CreationDate values remain 2026-08-07T07:56:54+08:00. Identical PIDs with identical creation timestamps prove these are the SAME process instances, continuously running. They were neither stopped nor restarted.",
+    "openclawProcessObserved": false,
+    "openclawStatus": "QUIESCENT",
+    "openclawFutureExecutionDisabled": "NOT_PROVEN",
+    "openclawStateFileUnchanged": true,
+    "openclawStateFileSha256": "2f4259a6af80495bba6e8b12f935fe81f5e77f5d5a99d0dcd5ad46d89cf3ba32",
+    "hermesHasWrittenToThisRepositoryBefore": true,
+    "hermesPriorRepositoryWrites": [
+      ".hermes/plans/2026-08-04_152644-api-rate-limiting-architecture.md",
+      ".hermes/plans/2026-08-04_154814-api-rate-limiting-design.md"
+    ],
+    "futureReEntryPrevented": "NOT_PROVEN",
+    "futureReEntryAssessment": "The hermes gateway is running under the 'tina-orchestrator' profile and has demonstrably written into this repository before. While no new hermes write was observed since 2026-08-04, a running gateway constitutes a live re-entry capability. Absence of recent writes is not prevention of future writes.",
+    "actionTaken": "VERIFICATION_ONLY",
+    "processesKilledDisabledOrModified": 0,
+    "killAuthorizationPresent": false,
+    "killAuthorizationRationale": "The governing prompt asserted the writer was already stopped; it did NOT authorize stopping it. WRITER SAFETY requires explicit human authorization for that exact action, which does not exist."
+  },
+
+  "observedNonMutatingWriterEvent": {
+    "detectedAtLocal": "2026-08-07T12:38:21+08:00",
+    "artifacts": [".git/FETCH_HEAD", ".git/objects"],
+    "probableOrigin": "IDE/editor background git autofetch",
+    "refsChanged": 0,
+    "indexChanged": false,
+    "workingTreeChanged": false,
+    "headOrRemoteTipChanged": false,
+    "assessment": "NON_MUTATING. Second occurrence of the same benign pattern recorded at checkpoint 75. Did not itself trigger safe pause.",
+    "note": "This is a SEPARATE writer from the hermes gateway and is not the subject of the owner precondition."
+  },
+
+  "hashBoundBaselineVerification": {
+    "allBoundValuesMatched": true,
+    "verifiedAtUtc": "2026-08-07T04:39:33Z",
+    "branch": { "expected": "feature/source-availability-engine-v1", "observed": "feature/source-availability-engine-v1", "match": true },
+    "head": { "expected": "ee664eab4529c636f34cb6d37d23a6a497886a17", "observed": "ee664eab4529c636f34cb6d37d23a6a497886a17", "match": true },
+    "parent": { "expected": "d5b25e676f623fbc1888608ff250824fcd34af99", "observed": "d5b25e676f623fbc1888608ff250824fcd34af99", "match": true },
+    "remoteTip": { "expected": "ee664eab4529c636f34cb6d37d23a6a497886a17", "observed": "ee664eab4529c636f34cb6d37d23a6a497886a17", "match": true },
+    "aheadBehind": "0 / 0",
+    "checkpoint75Sha256": { "expected": "1dda15b2899c8e3c1b7794830de8f458db5dcd77157a678cf1d8f9d9b97f4c31", "observed": "1dda15b2899c8e3c1b7794830de8f458db5dcd77157a678cf1d8f9d9b97f4c31", "match": true },
+    "currentStateSha256": { "expected": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04", "observed": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04", "match": true },
+    "checkpoint75ManifestReverification": {
+      "manifest": "COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256",
+      "entriesTotal": 9,
+      "entriesOk": 9,
+      "entriesFailed": 0,
+      "exitCode": 0
+    },
+    "conclusion": "EVERY hash-bound value in the governing prompt matched observation exactly. The ONLY failed precondition is the writer-shutdown claim."
+  },
+
+  "workingTreeInventory": {
+    "clean": false,
+    "cleanlinessClaimMade": false,
+    "totalTrackedFiles": 13975,
+    "stagedPaths": 0,
+    "modifiedTrackedPaths": 4,
+    "modifiedTrackedPathList": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "untrackedPaths": 290,
+    "untrackedReconciliation": "281 untracked at checkpoint-75 start + 9 files newly created by the checkpoint-75 operation = 290. Verified empirically.",
+    "indexLockPresent": false,
+    "matchesCheckpoint75ExpectedInventory": true
+  },
+
+  "mandatoryReconciliation": {
+    "nineFilesVersusNinePlusCurrentState": {
+      "question": "Why did the checkpoint-75 report say '9 files written' while listing 9 new files PLUS knowledge/CURRENT_STATE.md?",
+      "answer": "The heading '(9 written, 0 deleted, 0 sealed artifacts edited)' counted only NEWLY CREATED files. knowledge/CURRENT_STATE.md was MODIFIED, not created, and was reported separately on the following line with its before/after hashes and its +311/-0 line delta. The heading was therefore an imprecise label, not a miscount: it should have read '10 files written: 9 created + 1 modified'.",
+      "classification": "DOCUMENTATION_IMPRECISION_IN_THE_NARRATIVE_REPORT_ONLY",
+      "underlyingEvidenceAffected": false,
+      "evidenceCorrect": "The checkpoint-75 evidence manifest COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256 correctly contains NINE entries: 8 checkpoint-75 artifacts + knowledge/CURRENT_STATE.md. Note this 9 is a DIFFERENT nine — it excludes the manifest itself (a manifest cannot list its own hash) and includes CURRENT_STATE.md. The coincidence of both counts being 9 is what made the narrative ambiguous.",
+      "arithmeticProof": {
+        "newFilesCreated": 9,
+        "trackedFilesModified": 1,
+        "totalFilesWritten": 10,
+        "untrackedBefore": 281,
+        "untrackedAfter": 290,
+        "delta": 9,
+        "deltaMatchesNewFilesCreated": true,
+        "manifestEntryCount": 9,
+        "manifestComposition": "8 checkpoint-75 artifacts + knowledge/CURRENT_STATE.md (manifest itself excluded by construction)"
+      },
+      "correctedStatement": "The checkpoint-75 operation wrote 10 files: 9 newly created evidence artifacts and 1 modified governed document (knowledge/CURRENT_STATE.md). It deleted 0 files and edited 0 sealed artifacts."
+    },
+    "finalCounts": {
+      "stagedPaths": 0,
+      "modifiedTrackedPaths": 4,
+      "untrackedPaths": 290,
+      "totalTrackedFiles": 13975,
+      "verifiedAtUtc": "2026-08-07T04:39:33Z"
+    },
+    "writerShutdownEvidence": {
+      "shutdownProven": false,
+      "futureReEntryPrevented": false,
+      "evidence": "PIDs 21112 and 4472 alive with unchanged CreationDate 2026-08-07T07:56:54+08:00; identical to the checkpoint-75 observation.",
+      "conclusion": "The owner precondition is empirically false. Blocker B1 remains OPEN and UNCHANGED."
+    }
+  },
+
+  "blockerStatus": [
+    { "id": "B1", "severity": "HIGH", "blocker": "Concurrent third-party writer not stopped and not proven prevented from re-entry.", "status": "OPEN", "changeSinceCheckpoint75": "NONE — empirically re-confirmed still running with identical PIDs and creation timestamps.", "ownerActionRequired": true },
+    { "id": "B2", "severity": "HIGH", "blocker": "Three semantic /health changes deferred; owner decisions required on readiness-touch removal, the service response-contract break, and restoration of the 800-character disclosure guard.", "status": "OPEN", "changeSinceCheckpoint75": "NONE — preserved as DEFERRED and NOT AUTHORIZED per the governing prompt.", "ownerActionRequired": true },
+    { "id": "B3", "severity": "MEDIUM", "blocker": "tests/health-endpoint.test.mjs quarantined; must be adjudicated with the three semantic paths and never admitted to the governed corpus independently.", "status": "OPEN", "changeSinceCheckpoint75": "NONE — not executed, not modified, not staged.", "ownerActionRequired": true },
+    { "id": "B4", "severity": "MEDIUM", "blocker": "IDEA.md is an unlabelled byte-identical duplicate of the controlling CURRENT_STATE.md at the governed baseline; owner decision required on deletion or non-authoritative renaming.", "status": "OPEN", "changeSinceCheckpoint75": "NONE — retained unmodified; no quarantine mutation performed.", "ownerActionRequired": true },
+    { "id": "B5", "severity": "LOW", "blocker": "tax-engines/CON/domain-config.js and tax-engines/CON/subclassifier.js cannot be materialised on Windows (reserved device name); held under skip-worktree with core.sparseCheckout=true.", "status": "OPEN", "changeSinceCheckpoint75": "NONE.", "ownerActionRequired": true },
+    { "id": "B6", "severity": "LOW", "blocker": "Five stale .git/index.stash.*.lock files from July 2026 remain; removal requires human authorization.", "status": "OPEN", "changeSinceCheckpoint75": "NONE — observed only.", "ownerActionRequired": true }
+  ],
+  "blockersOpen": 6,
+  "blockersClosed": 0,
+
+  "healthDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "preservedUnchanged": true,
+    "newAuthorizationProvidedInThisPrompt": false,
+    "filesVerifiedByteIdentical": {
+      "server.js": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "security/public-health.js": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35"
+    },
+    "modifiedRevertedStagedOrTestFixed": false,
+    "governingRecord": "COMMIT_5R1C37_CHECKPOINT_75_HEALTH_SEMANTIC_CHANGE_GOVERNANCE_RECORD.md"
+  },
+
+  "authorization": {
+    "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false,
+    "consumedByThisOperation": false,
+    "externalProviderInvocationPerformed": false,
+    "opusExplicitlyAuthorizedInGoverningPrompt": false,
+    "opusAuthorizationRationale": "The governing prompt stated Opus review would occur only 'if separately and explicitly authorized below'. No such authorization appeared. Opus was therefore NOT invoked and the one-use authorization remains unconsumed.",
+    "authorizationContinuityClear": true
+  },
+
+  "phase": "10A",
+  "workstream": "R20",
+  "phase10A": "OPEN",
+  "phase10BAuthorized": false,
+  "phase10BImplementationBegun": false,
+
+  "currentStateUpdated": false,
+  "currentStateUpdateWithheldReason": "The governing prompt permits updating knowledge/CURRENT_STATE.md ONLY after a successful preflight, and directs that if the writer precondition is not proven the operation must stop and write ONLY a safe-pause record. The writer precondition was not proven. CURRENT_STATE.md was therefore left byte-identical at SHA-256 43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04.",
+
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "amendPerformed": false,
+  "forcePushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "mergePerformed": false,
+  "pullPerformed": false,
+  "deploymentPerformed": false,
+  "migrationPerformed": false,
+  "reindexPerformed": false,
+  "fullR20RunPerformed": false,
+  "candidateRuntimeFixCreated": false,
+  "sealedEvidenceEdited": false,
+  "sealedManifestEdited": false,
+  "historyRewritten": false,
+  "protectedOrUnexplainedFilesDeleted": 0,
+  "quarantineMutationsPerformed": 0,
+  "healthFilesModified": 0,
+  "testsExecuted": 0,
+
+  "gateResults": {
+    "gate01_headEqualsGovernedBaseline": true,
+    "gate02_parentEqualsGovernedBaseline": true,
+    "gate03_remoteTipEqualsGovernedBaseline": true,
+    "gate04_noStagedPaths": true,
+    "gate05_checkpoint75Sha256Verified": true,
+    "gate06_currentStateSha256Verified": true,
+    "gate07_checkpoint75ManifestFullyVerified": true,
+    "gate08_workingTreeInventoryMatches": true,
+    "gate09_healthFilesUnchanged": true,
+    "gate10_noProhibitedMutation": true,
+    "gate11_noSealedEvidenceOrManifestEdited": true,
+    "gate12_opusNotInvoked": true,
+    "gate13_ownerWriterPreconditionProven": false,
+    "gate13_failureIsTheSafePauseTrigger": true,
+    "gate14_safePauseCheckpointWrittenAndHashRecorded": true
+  },
+
+  "prohibitedOperationsNotPerformed": [
+    "git reset", "git checkout", "git merge", "git pull", "git commit", "git amend",
+    "git push", "git force-push", "git add / staging",
+    "deletion or quarantine mutation of unexplained files",
+    "editing of sealed evidence or sealed manifests",
+    "creation of a candidate runtime fix",
+    "deployment", "migration", "reindex", "full R20 run",
+    "Phase 10B, C38, E2 or A15 work",
+    "Opus external-provider invocation",
+    "modification, reverting, staging or test-fixing of the three /health paths",
+    "termination, disabling or modification of any process or service",
+    "update of knowledge/CURRENT_STATE.md"
+  ],
+
+  "controllingState": {
+    "controllingCheckpoint": 75,
+    "controllingCheckpointPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_75_continuity_reconciliation_and_health_governance.json",
+    "controllingCheckpointSha256": "1dda15b2899c8e3c1b7794830de8f458db5dcd77157a678cf1d8f9d9b97f4c31",
+    "note": "Checkpoint 76 records a safe pause and does NOT supersede checkpoint 75 as the governed state."
+  },
+
+  "nextExactOperation": "OWNER ACTION REQUIRED, IN THIS ORDER. (1) Actually terminate hermes gateway PIDs 21112 and 4472, or otherwise prevent the 'tina-orchestrator' profile from re-entering C:\\Projects\\tina-backend. (2) Provide evidence of prevention, not merely absence of recent writes — for example a disabled service/scheduled task, a removed autostart entry, or a repository-level access restriction. A stopped process alone is not prevention of restart. (3) Re-issue this continuation prompt bound to checkpoint 75 SHA-256 1dda15b2899c8e3c1b7794830de8f458db5dcd77157a678cf1d8f9d9b97f4c31 and CURRENT_STATE.md SHA-256 43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04, both of which remain valid and were re-verified at 2026-08-07T04:39:33Z. (4) If the independent Opus review is intended, the re-issued prompt must contain an explicit, unambiguous authorization clause governing its use. Do not begin C38, E2, A15 or Phase 10B. Do not consume the one-use Opus authorization outside such a prompt.",
+
+  "completionClaims": {
+    "phase10AClosed": false,
+    "r20Complete": false,
+    "c37Complete": false,
+    "healthChangeApproved": false,
+    "commitMade": false,
+    "pushMade": false,
+    "repositoryClean": false,
+    "acceptanceOrClosureClaimed": false,
+    "opusReviewPerformed": false
+  }
+}

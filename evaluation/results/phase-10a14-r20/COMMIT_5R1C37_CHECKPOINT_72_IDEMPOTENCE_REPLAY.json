@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_72_IDEMPOTENCE_REPLAY_PASS",
+  "generatedUtc": "2026-08-03T13:41:57.009Z",
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "bytes": 10311,
+    "sha256": "70ca4f1e12f1ff705147d76a836ec9961dc68579f41c84f32f5b318244790a2a"
+  },
+  "numberedCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_72_pre_invocation_context_gate_safe_pause.json",
+    "bytes": 10311,
+    "sha256": "70ca4f1e12f1ff705147d76a836ec9961dc68579f41c84f32f5b318244790a2a"
+  },
+  "checkpointLog": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+    "bytes": 50530,
+    "sha256": "38ff83a011e3db553cbba7267aca6d8d2c2ac8e72f1d665dff27e7e654875822"
+  },
+  "eventSha256": "dce1ad78a47e3631ceedba5bfa46a0195351a9ed8c69cf9d731bf8d5c504bcbd",
+  "checkpointOrdinals": [
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "pointerEqualsNumberedCheckpoint": true,
+  "previousCheckpoint71Preserved": true,
+  "uniqueRecoveryOrdinals": true,
+  "continuousTokenLedger": true,
+  "tokenLedgerPrefixPreserved": true,
+  "evidenceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_EVIDENCE.sha256",
+    "bytes": 5387,
+    "sha256": "c50e8efa27337d2f2446ce3d5c74f1fc749d28b513aad6b27088e2df7204257c",
+    "rows": 34,
+    "matching": 34,
+    "bad": [],
+    "pass": true
+  },
+  "finalEvidenceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_72_FINAL_EVIDENCE.sha256",
+    "bytes": 6026,
+    "sha256": "379407afadbc84c08682674b842cc0b5497979d9021d2feb4c5def975766c9dd",
+    "rows": 38,
+    "matching": 38,
+    "bad": [],
+    "pass": true
+  },
+  "authorizationUnused": true,
+  "invocationCount": 0,
+  "markerAbsent": true,
+  "providerContacted": false,
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "noTaskOwnedProcessOrTempOrLock": true,
+  "userOwnedVscodeClaudePids": [],
+  "userOwnedVscodeClaudeProcessTouched": false,
+  "noMutationOnReplay": true,
+  "pass": true
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_MCP_ROOT_CAUSE_PROVEN",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "sourceDriver": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_CONTINUATION_DRIVER.mjs",
+    "sha256": "e5d84ec33c37cfa6026e460f3486df67fed46fb1823699ee1cac9fca99614b6c",
+    "failingArgument": "--mcp-config {}"
+  },
+  "rawError": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDERR.txt",
+    "bytes": 97,
+    "sha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b",
+    "message": "Invalid MCP configuration: mcpServers: Invalid input: expected record, received undefined"
+  },
+  "cli": {
+    "path": "C:\\Users\\USER\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\claude-code\\bin\\claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "version": "2.1.212 (Claude Code)"
+  },
+  "failingField": "missing top-level mcpServers record",
+  "ownershipScope": "C37 driver command-line argument",
+  "persistentConfigurationCausal": false,
+  "providerFailureStage": "local configuration validation before model review",
+  "providerApplicationRequestObserved": false,
+  "minimumSupportedWorkaround": "Use an isolated UTF-8 JSON file containing exactly {\"mcpServers\":{}} and pass its absolute path via --mcp-config followed by --strict-mcp-config so only that empty record is used.",
+  "authenticationOrTlsWeakening": false,
+  "rootCauseProvenReadOnly": true,
+  "pass": true
+}

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+  "generatedUtc": "2026-08-01T13:20:43.856Z",
+  "startingCheckpoint": {
+    "ordinal": 67,
+    "sha256": "b764f921037832e24060a27b83fc3b16afee7cac9ea855aeb6dcd6679fbf7940",
+    "eventSha256": "6a5fc4a7124167a9da88a740066361c137f33154867b619de9dc3d877b18e2f5"
+  },
+  "endingCheckpoint": 68,
+  "governingPrompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-MANIFEST-INDEXED-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-67.md",
+    "bytes": 26397,
+    "sha256": "3f159920d6eca81dce548fe4a5e898e7c1e9f01df209ffd127b44c8e2885fb97"
+  },
+  "token": {
+    "ledgerSequence": 10,
+    "effectiveContextWindowTokens": 258400,
+    "activeContextTokens": 205611,
+    "remainingTokens": 52789,
+    "requiredReserveTokens": 54400,
+    "headroomAboveReserveTokens": -1611,
+    "decision": "SAFE_PAUSE_BEFORE_MANIFEST_INDEXED_PREPARATION_OR_INVOCATION"
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44",
+    "status": "AUTHORIZED_UNUSED",
+    "invocationCount": 0,
+    "maximumInvocations": 1,
+    "retryAuthorized": false
+  },
+  "checkpoint67": {
+    "replayPass": true,
+    "technicalIncompleteEvidenceRows": 21,
+    "evidenceBad": 0,
+    "priorReplacementConsumed": true,
+    "priorReviewerDecision": null
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "memberHashMismatches": 0,
+    "unchanged": true
+  },
+  "preparation": {
+    "roleLedgerCreated": false,
+    "allowlistCreated": false,
+    "capsuleCreated": false,
+    "coverageValidationCreated": false,
+    "bootstrapCreated": false,
+    "readOnlyToolPlanCreated": false,
+    "contextPlanCreated": false,
+    "transportPreflightCreated": false
+  },
+  "externalReview": {
+    "markerCreated": false,
+    "substantiveRequestSubmitted": false,
+    "providerRequestObserved": false,
+    "reviewerObjectReceived": false,
+    "decisionToken": null,
+    "substantivePathToken": null
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true
+  },
+  "finalization": {
+    "assessment": false,
+    "docs": false,
+    "finalManifest": false,
+    "staging": false,
+    "commit": false,
+    "push": false
+  },
+  "prohibitedWork": {
+    "c38": false,
+    "e2": false,
+    "a15": false,
+    "phase10B": false,
+    "deployment": false,
+    "reindex": false,
+    "modelMigration": false
+  },
+  "exactNextOperation": "Resume under a new four-hour governed prompt from checkpoint 68 with the existing manifest-indexed authorization still unused; recompute fresh Codex telemetry, then verify checkpoint 68 before building the role ledger, allowlist, capsule, read-only tool boundary, bootstrap, and provider-context plan.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_MANIFEST_INDEXED_OPUS_EXPLICIT_ONE_USE_EXTERNAL_AUTHORIZATION",
+  "generatedUtc": "2026-08-01T13:14:54.441Z",
+  "authorizationSource": {
+    "path": "C:\\Projects\\tina-execution-prompts\\PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-MANIFEST-INDEXED-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-67.md",
+    "bytes": 26397,
+    "sha256": "3f159920d6eca81dce548fe4a5e898e7c1e9f01df209ffd127b44c8e2885fb97"
+  },
+  "checkpoint67": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_67_replacement_opus_prompt_too_long_technical_incomplete.json",
+    "bytes": 5490,
+    "sha256": "b764f921037832e24060a27b83fc3b16afee7cac9ea855aeb6dcd6679fbf7940",
+    "eventSha256": "6a5fc4a7124167a9da88a740066361c137f33154867b619de9dc3d877b18e2f5"
+  },
+  "priorAuthorizations": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_AUTHORIZATION.json",
+      "sha256": "57fc53266e3965fac7e402f90be17d8596bdd439eb6a938a0cd975c98703e2a4",
+      "status": "CONSUMED_NO_RETRY_AUTHORIZED"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_EXTERNAL_AUTHORIZATION.json",
+      "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+      "status": "CONSUMED_NO_RETRY_AUTHORIZED"
+    }
+  ],
+  "newAuthorization": {
+    "provider": "Anthropic",
+    "reviewer": "Claude Code Opus 4.8",
+    "cliVersion": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8",
+    "role": "independent read-only manifest-indexed review",
+    "invocationOrdinalAuthorized": 1,
+    "maximumInvocations": 1,
+    "retryAuthorized": false,
+    "status": "AUTHORIZED_UNUSED"
+  },
+  "authorizedPackage": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "authorizedMechanism": {
+    "childStdin": "compact bootstrap only",
+    "localReadOnlySources": "deterministic capsule, coverage ledger, allowlist, and exact original 57-entry files selected on demand",
+    "integrityCoverageRequired": "57/57",
+    "semanticCoverageRequired": "100 percent material claims through capsule/source pointers",
+    "originalSpotChecksRequired": "at least one per evidence class and at least eight originals total",
+    "fullPackageInlineOrConcatenatedTransmission": false
+  },
+  "providerContextCaps": {
+    "bootstrapBytesMaximum": 98304,
+    "bootstrapTokensMaximum": 32000,
+    "capsuleTokensMaximum": 200000,
+    "onDemandOriginalReadTokensMaximum": 300000,
+    "reservedSystemAndToolTokens": 150000,
+    "reservedOutputTokens": 50000,
+    "totalProjectedTokensMaximum": 750000,
+    "minimumMarginBelowOneMillion": 250000
+  },
+  "consumptionRule": "Consumed only when the substantive manifest-indexed request is submitted.",
+  "invocationMarkerExists": false,
+  "substantiveRequestSubmitted": false,
+  "authorizationConsumed": false,
+  "pass": true
+}

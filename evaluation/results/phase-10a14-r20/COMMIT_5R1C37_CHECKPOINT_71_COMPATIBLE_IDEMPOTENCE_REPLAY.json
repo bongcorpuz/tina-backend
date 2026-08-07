@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_71_COMPATIBLE_IDEMPOTENCE_REPLAY_PASS",
+  "generatedUtc": "2026-08-02T07:21:02.239041Z",
+  "command": "node evaluation/runner/phase-10a14-r20/commit5r1c37-checkpoint71-opus-compatible.mjs --compatibility-preflight",
+  "runs": 2,
+  "firstClassification": "C37_CHECKPOINT_71_COMPATIBLE_DRY_PREFLIGHT_PASS_STOP_BEFORE_INVOCATION",
+  "secondClassification": "C37_CHECKPOINT_71_COMPATIBLE_DRY_PREFLIGHT_PASS_STOP_BEFORE_INVOCATION",
+  "semanticOutputsEqualExcludingGeneratedUtc": true,
+  "firstPass": true,
+  "secondPass": true,
+  "invocationOutputsAbsentAfterBothRuns": true,
+  "providerContacted": false,
+  "reviewerExecuted": false,
+  "markerCreated": false,
+  "authorizationConsumed": false,
+  "invocationCount": 0,
+  "pass": true
+}

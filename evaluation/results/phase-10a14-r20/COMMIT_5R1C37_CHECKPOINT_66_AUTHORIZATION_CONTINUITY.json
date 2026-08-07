@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_66_EXISTING_REPLACEMENT_AUTHORIZATION_CONTINUITY_PASS",
+  "generatedUtc": "2026-08-01T12:30:39.8770454Z",
+  "governingResumePrompt": {
+    "path": "C:\\Projects\\tina-execution-prompts\\PHASE-10A14-R20-COMMIT-5R1-C37-FOUR-HOUR-REPLACEMENT-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-66.md",
+    "bytes": 23020,
+    "sha256": "870a85330fb54c3c32871e67aebec0698d65e3aca61b1e0b51ea570ff2d632f1"
+  },
+  "existingAuthorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 2508,
+    "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "status": "AUTHORIZED_UNUSED",
+    "provider": "Anthropic",
+    "reviewer": "Claude Code Opus 4.8",
+    "cliVersion": "2.1.212 (Claude Code)",
+    "model": "claude-opus-4-8",
+    "role": "read-only independent review",
+    "maximumInvocations": 1,
+    "remainingInvocations": 1,
+    "retryAuthorized": false
+  },
+  "authorizationSourcePreserved": {
+    "path": "C:\\Projects\\tina-execution-prompts\\PHASE-10A14-R20-COMMIT-5R1-C37-FIVE-HOUR-OPUS-RECOVERY-AND-FINALIZATION-FROM-CHECKPOINT-65-TOKEN-AWARE.md",
+    "bytes": 24838,
+    "sha256": "fc321560f947da3782c82ba5d4afb5db87e75813238ff42bb13e511709e3bc32"
+  },
+  "checkpoint65IdentityResolvedThroughImmutableNumberedPath": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_65_opus_cli_configuration_technical_incomplete.json",
+    "bytes": 5797,
+    "sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db",
+    "eventSha256": "d982a06613729ac6eaa0e567179f368a3f210f8ee4efcec89f9649f3f04ca7f6",
+    "mutablePointerNowCorrectlyAtCheckpoint66": true
+  },
+  "authorizedPackage": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "authorizedAdditionalContent": [
+    "existing authorized review instructions and package metadata",
+    "checkpoint-65 replacement request wrapper",
+    "checkpoint-66 continuation wrapper and final preflight metadata"
+  ],
+  "replacementInvocationMarkerExists": false,
+  "replacementCaptureOrReviewArtifactsExist": false,
+  "substantiveReplacementRequestSubmitted": false,
+  "providerRequestObserved": false,
+  "confirmedReplacementEvidenceBytesTransmittedToAnthropic": 0,
+  "createsNewAuthorization": false,
+  "consumptionRule": "Consumed when and only when the substantive replacement request is submitted; no retry is authorized after submission.",
+  "pass": true
+}

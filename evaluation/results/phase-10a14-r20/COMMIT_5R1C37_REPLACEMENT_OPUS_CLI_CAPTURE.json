@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_CLI_CAPTURE_NOT_APPROVED",
+  "commandWithoutCredentials": [
+    "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "--print",
+    "--model",
+    "claude-opus-4-8",
+    "--effort",
+    "max",
+    "--permission-mode",
+    "plan",
+    "--safe-mode",
+    "--no-session-persistence",
+    "--no-chrome",
+    "--mcp-config",
+    "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\empty-mcp.json",
+    "--strict-mcp-config",
+    "--disable-slash-commands",
+    "--tools",
+    "",
+    "--output-format",
+    "json",
+    "--json-schema",
+    "<JSON_SCHEMA_SHA256:1ef114207f0a98fe5f11877083ce204ae10bb473bc8b95c39e6cabafdd65fcb0>",
+    "--system-prompt",
+    "<SYSTEM_PROMPT_SHA256:47865abd0b36b95c906ad613ccac7cdc10b2084a5d1d8c59143f4fdf7cbbe027>"
+  ],
+  "commandLineContainsEvidenceOrCredentials": false,
+  "startedUtc": "2026-08-01T12:46:46.114Z",
+  "endedUtc": "2026-08-01T12:46:50.276Z",
+  "childPid": 11576,
+  "spawnObserved": true,
+  "spawnError": null,
+  "exitCode": 1,
+  "signal": null,
+  "timedOut": false,
+  "stdinWriteInitiated": true,
+  "stdinFinishObserved": true,
+  "stdinEndCallbackObserved": true,
+  "stdinError": null,
+  "authorizationConsumed": true,
+  "retryAuthorized": false,
+  "marker": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_INVOCATION_MARKER.json",
+    "bytes": 2576,
+    "sha256": "a99bb6c7dde53d4b778a8e0e8fec0d5bb47292340baf70fef9e34dad1ef4d0ff"
+  },
+  "request": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "bytes": 8678,
+    "sha256": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449"
+  },
+  "wrappers": {
+    "checkpoint65": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_REQUEST_WRAPPER.md",
+      "bytes": 2598,
+      "sha256": "ad8511245e2b4fecc7d12a0f53de560c62a3601b138be664bcfaa9c35a130ec8"
+    },
+    "checkpoint66": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_66_OPUS_REVIEW_CONTINUATION_WRAPPER.md",
+      "bytes": 2466,
+      "sha256": "1ffdf578a00957b9bb2a7da520cd44c29e52059754977ac17cf29d6b15e1b9b6"
+    }
+  },
+  "config": {
+    "path": "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\empty-mcp.json",
+    "bytes": 18,
+    "sha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "removedAfterClosedChildCapture": true,
+    "cleanupError": null
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "response": {
+    "stdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_STDOUT.txt",
+      "bytes": 1015,
+      "sha256": "d3e5a82a70d840593b682a7a54dd745e5adad6e77f7abeef8a25573e7568d142"
+    },
+    "stderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_STDERR.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reviewJson": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_REVIEW.json",
+      "bytes": 542,
+      "sha256": "fe63064f2d4027bbd2f59fa6d8456009dd0726f85afe7035f04d665315ac0ddb"
+    },
+    "reviewMd": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_REVIEW.md",
+      "bytes": 369,
+      "sha256": "15173717f963472fa8ec8fef1857e045701e18c271257d0c350845b6ff5044c7"
+    },
+    "receipt": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REPLACEMENT_OPUS_TRANSMISSION_RECEIPT.json",
+      "bytes": 2270,
+      "sha256": "51fef225382d5072696fe693b4da58accc82d0b09ed148b6c7b930cc4f768a9e"
+    },
+    "reviewerObjectReceived": false,
+    "parseError": "CLI_TECHNICAL_INCOMPLETE"
+  },
+  "decisionToken": null,
+  "substantivePathToken": null,
+  "observations": [],
+  "reviewGate": null,
+  "repositoryInputsUnchanged": true,
+  "pass": false
+}

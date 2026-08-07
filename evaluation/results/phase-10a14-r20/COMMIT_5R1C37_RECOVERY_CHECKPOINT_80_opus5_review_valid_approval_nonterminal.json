@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "ordinal": 80,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T18:15:00Z",
+  "stage": "POST_INVOCATION",
+  "status": "NONTERMINAL",
+  "classification": "C37_CHECKPOINT_80_OPUS5_GOVERNANCE_AMENDMENT_VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS_B7_CLOSED_C37_NONTERMINAL",
+  "disposition": "VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS",
+  "dispositionOutcomeClass": "B",
+
+  "previousCheckpoint": 79,
+  "previousCheckpointPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_79_opus_4_8_unavailable_safe_pause.json",
+  "previousCheckpointSha256": "83486c36af47ff35e51c6b1937e103fb475c096030c0f25a0eefa0cdba40e59b",
+  "supersedes": [79],
+  "priorCheckpointsPreservedUnaltered": "61 through 79",
+
+  "safeToResume": true,
+  "activeAttemptId": null,
+
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "remoteTipFreshlyVerified": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "aheadOfUpstream": 0,
+  "behindUpstream": 0,
+
+  "primaryExecutor": { "model": "claude-sonnet-5", "thinking": "very high", "effort": "very high" },
+  "independentReviewer": {
+    "model": "claude-opus-5",
+    "selfIdentified": true,
+    "selector": "opus",
+    "requestedThinking": "max (not directly configurable via the invocation tool; requested by prompt instruction instead)",
+    "requestedEffort": "ultra / highest supported (not directly configurable via the invocation tool)",
+    "invocationCount": 1,
+    "secondInvocationOccurred": false
+  },
+
+  "governanceAmendment": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT.json",
+    "formerOpus48Authorization": { "status": "SUPERSEDED_UNUSED", "consumed": false, "remainingPermittedInvocations": 0, "artifactEdited": false },
+    "newOpus5Authorization": { "statusBefore": "AUTHORIZED_UNUSED", "statusAfter": "AUTHORIZED_CONSUMED", "consumed": true, "remaining": 0, "invocationCount": 1, "retryAuthorized": false },
+    "countersKeptSeparate": true,
+    "modelEquivalenceClaimed": false
+  },
+
+  "manifestHashProvenance": {
+    "checkpoint79ClaimWithdrawn": true,
+    "sourceManifestSha256State": "REPRODUCED",
+    "detailedManifestSha256State": "REPRODUCED",
+    "aggregateSha256State": "REPRODUCED",
+    "reviewerIndependentAssessment": "ACCEPTABLE_NON_BLOCKING",
+    "detail": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_MANIFEST_HASH_PROVENANCE_ADJUDICATION.json"
+  },
+
+  "outputSchema": {
+    "historicalSchemaHardcodedOpus48": true,
+    "historicalSchemaEdited": false,
+    "wrapperCreated": true,
+    "wrapperArtifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_OUTPUT_SCHEMA_WRAPPER.json",
+    "onlyReviewerIdentityBindingChanged": true,
+    "reviewerOutputSchemaValidationResult": "FULLY_VALID_NO_DEVIATIONS"
+  },
+
+  "reviewInvocation": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_REVIEW_INVOCATION_EVIDENCE.json",
+    "rawResponseArtifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_RAW_REVIEWER_RESPONSE_JSON.json",
+    "rawResponseSha256": "d317c46b82e4f6d30259169cdf3dae9f32f72370881a28aba3db02f2c905a1c4",
+    "utcStart": "2026-08-07T18:00:59Z",
+    "utcEnd": "2026-08-07T18:11:49Z",
+    "originalsSpotChecked": 27,
+    "evidenceClassesCovered": "8/8",
+    "toolBoundaryDeviation": {
+      "disclosedByReviewer": true,
+      "verifiedNonMutating": true,
+      "verificationMethod": "target file hash unchanged (matches allowlist-recorded value from before invocation); untracked count identical before/after (306=306); the one unexplained untracked file (auth.json) predates the invocation by filesystem timestamp",
+      "affectsOutcomeClassification": false
+    }
+  },
+
+  "reviewerDecision": {
+    "decision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS",
+    "substantivePathDecision": "NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED",
+    "blockingFindingsCount": 0,
+    "nonblockingObservationsCount": 10,
+    "provenanceAdjudicationAcceptable": "ACCEPTABLE_NON_BLOCKING",
+    "b7ClosureDetermination": "CLOSE_B7",
+    "c37TerminalDetermination": "C37_MAY_BECOME_TERMINAL_BUT_NOT_TERMINAL_NOW",
+    "furtherGovernanceDecisionRequired": true,
+    "preservedExactlyNotUpgraded": true
+  },
+
+  "c37B7Phase10AAdjudication": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_FINAL_C37_ADJUDICATION.json",
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37RuntimeAttempts": 0,
+    "b7Status": "CLOSED_NARROWLY",
+    "c37Status": "NONTERMINAL",
+    "phase10AStatus": "OPEN",
+    "phase10ASatisfied": false,
+    "r20Status": "IN_PROGRESS",
+    "r20Complete": false,
+    "projectPassClaimed": false,
+    "reasonMetric": "3575/3720 (unchanged, still open)",
+    "decisionMetric": "3720/3720 (locked, unchanged)",
+    "relationMetric": "3720/3720 (locked, unchanged)"
+  },
+
+  "outstandingGovernanceDecisions": [
+    "Documentation finalization order, staging, commit and push — not authorized here.",
+    "Commit-message text divergence between two draft artifacts — moot until commit separately authorized.",
+    "Stale Opus-4.8 reviewer-identity references in other draft artifacts — need reconciling.",
+    "C38 reason-oracle governance — next unit, not begun, separately governed."
+  ],
+
+  "blockers": [
+    { "id": "B1", "status": "CLOSED", "changeThisOperation": "CLOSED this operation. A genuine system reboot (new LastBootUpTime 2026-08-07T18:26:41Z, superseding the prior session's 2026-08-06T23:54:21Z) occurred after the checkpoint-77 disablement; the tina-orchestrator gateway did not reappear afterward and the disabled-marker hash is unchanged. Evidence: COMMIT_5R1C37_CHECKPOINT_80_B1_LOGON_CONFIRMATION_EVIDENCE.json. Discovered during this checkpoint's final-verification pass, before manifest sealing." },
+    { "id": "B2", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B3", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B4", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B5", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B6", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B7", "status": "CLOSED", "narrowScope": "independent-review requirement only", "changeThisOperation": "CLOSED this operation" }
+  ],
+  "blockersOpen": 5,
+  "blockersClosedSubjectToConfirmation": 0,
+  "blockersClosed": 2,
+
+  "protectedArtifactPreservation": {
+    "IDEA.md": "unchanged",
+    "package.json": "unchanged",
+    "server.js": "unchanged",
+    "security/public-health.js": "unchanged",
+    "patch08sTest": "unchanged",
+    "taxEnginesCON": "unchanged, still skip-worktree",
+    "registryAndWal": "unchanged, hash a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "sealedFrozenOrPriorCheckpointArtifactsModified": 0,
+    "oracleTestValidatorOrSafetyGuardWeakened": false,
+    "reverifiedAfterReviewerInvocationSpecifically": true
+  },
+
+  "healthDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "touchedByThisOperation": false
+  },
+
+  "currentStateDocumentation": {
+    "file": "knowledge/CURRENT_STATE.md",
+    "beforeSha256": "90740c96a0df08021a5a1a090aadca47b9f91efdc4c32fa626fe3645776fdec9",
+    "afterSha256": "b50826ee856493986925fd7a0a95756d483bf0f33e49005a009d09187dea5459",
+    "linesAddedRelativeToHead": 786,
+    "linesDeletedRelativeToHead": 0,
+    "purelyAdditive": true,
+    "eolPreserved": "LF",
+    "checkpoint79BlockRetainedVerbatim": true,
+    "checkpoint78BlockRetained": true,
+    "checkpoint77BlockRetained": true,
+    "checkpoint75BlockRetained": true,
+    "checkpoint73BlockRetained": true
+  },
+
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "mergePerformed": false,
+  "pullPerformed": false,
+  "fetchPerformed": false,
+  "rebasePerformed": false,
+  "cherryPickPerformed": false,
+  "revertPerformed": false,
+  "stashPerformed": false,
+  "deploymentPerformed": false,
+  "migrationPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "healthWorkPerformed": false,
+  "c38Started": false,
+  "e2Started": false,
+  "a15Started": false,
+  "phase10BStarted": false,
+  "runtimeCodeModified": false,
+  "testWeakened": false,
+  "validatorWeakened": false,
+  "oracleChanged": false,
+  "safetyGuardModified": false,
+  "startupEntryReEnabledOrModified": false,
+  "unrelatedProcessOrServiceModified": false,
+  "secondReviewerInvoked": false,
+  "secondModelContacted": false,
+  "reviewerInvocationRetried": false,
+  "sealedEvidenceEdited": false,
+  "sealedManifestEdited": false,
+  "historyRewritten": false,
+
+  "gateResults": {
+    "gate01_repositoryIdentityVerified": true,
+    "gate02_remoteTipFreshlyVerified": true,
+    "gate03_checkpoint79HashesMatched": true,
+    "gate04_checkpoint79ManifestVerified": true,
+    "gate05_checkpoint78ForwardReconciliationExpectedDivergenceOnly": true,
+    "gate06_fiftySevenEntryPackageIntegrityVerified": true,
+    "gate07_manifestHashProvenanceInvestigatedAndReproduced": true,
+    "gate08_registryWalClean": true,
+    "gate09_writerPreconditionHolds": true,
+    "gate10_modelResolutionConfirmedFromConfigNotLiveTest": true,
+    "gate11_governanceAmendmentCreatedAdditively": true,
+    "gate12_outputSchemaWrappedNotEdited": true,
+    "gate13_exactlyOneReviewerInvocation": true,
+    "gate14_reviewerSelfIdentifiedAsClaudeOpus5": true,
+    "gate15_reviewerOutputSchemaValid": true,
+    "gate16_toolBoundaryDeviationDisclosedAndVerifiedNonMutating": true,
+    "gate17_reviewerDecisionPreservedNotUpgraded": true,
+    "gate18_candidatesAuthorizedAllocatedRemainZero": true,
+    "gate19_protectedArtifactsUnchanged": true,
+    "gate20_authorizationConsumptionCorrectlyAdjudicated": true,
+    "gate21_currentStateUpdatePurelyAdditive": true,
+    "gate22_noProhibitedOperation": true,
+    "gate23_dispositionNoStrongerThanEvidence": true
+  },
+
+  "nextExactOperation": "OWNER DECISION REQUIRED on four outstanding governance items: (1) documentation finalization order / explicit staging / commit / push for eventual C37 termination — none authorized now; (2) commit-message text reconciliation between the two draft artifacts; (3) reconciliation of stale Opus-4.8 reviewer-identity references discovered by the independent reviewer in other draft artifacts; (4) whether/when to begin C38 reason-oracle governance as a separately governed operation. Separately, confirm at next user logon that no tina-orchestrator gateway process appears, to fully close B1. Do not begin C38, E2, A15 or Phase 10B without separate authorization. Do not attempt a second Opus 5 invocation under this consumed authorization.",
+
+  "completionClaims": {
+    "phase10AClosed": false,
+    "r20Complete": false,
+    "c37Complete": false,
+    "c37Terminal": false,
+    "b7Closed": true,
+    "healthChangeApproved": false,
+    "commitMade": false,
+    "pushMade": false,
+    "repositoryClean": false,
+    "acceptanceOrClosureClaimed": false,
+    "opusReviewPerformed": true,
+    "opusReviewValid": true,
+    "opusReviewDecision": "APPROVED_WITH_NONBLOCKING_OBSERVATIONS"
+  }
+}

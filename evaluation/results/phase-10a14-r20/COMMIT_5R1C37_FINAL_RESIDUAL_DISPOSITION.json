@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "generatedUtc": "2026-08-01T09:42:13.803Z",
+  "classification": "C37_FINAL_RESIDUALS_CONTRACT_ADJUDICATED_ORACLE_GOVERNANCE_REQUIRED",
+  "sourceRows": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+    "bytes": 1203438,
+    "sha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d"
+  },
+  "sourceClusters": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLUSTER_DISPOSITION_MATRIX.json",
+    "bytes": 15497,
+    "sha256": "a75afb1bc5f75b2cd7310dd064b3bb078913b94017025c0e90818d174d1990d0"
+  },
+  "residualRows": 145,
+  "categoryTotals": {
+    "TRUE_GENERALIZED_RUNTIME_DEFECT": 0,
+    "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED": 35,
+    "ORACLE_CONTRACT_INCONSISTENCY": 43,
+    "UNDERDETERMINED_WITHOUT_CONTEXT": 24,
+    "SEMANTICALLY_EQUIVALENT_REASON": 3,
+    "ACCEPTED_FAIL_CLOSED_BEHAVIOR": 40,
+    "HISTORICAL_STATE_ONLY_NOT_CURRENT_RUNTIME": 0,
+    "INDETERMINATE_INSUFFICIENT_EVIDENCE": 0
+  },
+  "trueGeneralizedRuntimeDefects": 0,
+  "runtimeClosableRowsProven": 0,
+  "oracleOrContractControlledRows": 78,
+  "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+  "pass": true
+}

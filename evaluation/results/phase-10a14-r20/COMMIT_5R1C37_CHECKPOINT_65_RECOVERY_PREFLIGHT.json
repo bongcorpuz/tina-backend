@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_65_RECOVERY_PREFLIGHT_PASS",
+  "generatedUtc": "2026-08-01T11:41:00.000Z",
+  "checkpoint": {
+    "ordinal": 65,
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "pointerAndNumberedCopyByteIdentical": true,
+    "bytes": 5797,
+    "sha256": "54c8e1159025a9099b0572ab4b5c14eaf1b3eb92b61ed173cebaa94a83aec3db"
+  },
+  "idempotenceReplay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_65_IDEMPOTENCE_REPLAY.json",
+    "sha256": "f683d845e15ab812a2b9520bb710f35374fce6797f56851e7b0b2373c8b50abe",
+    "pass": true
+  },
+  "git": {
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "liveRemoteTipViaLsRemote": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true
+  },
+  "frozenC37": {
+    "rowsAdjudicated": "145/145",
+    "generalizedRuntimeDefects": 0,
+    "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "decisionMetric": "3720/3720",
+    "relationMetric": "3720/3720",
+    "reasonMetric": "3575/3720",
+    "regressionSuites": "197/217",
+    "regressionGroups": "5429/5451",
+    "newRuntimeBehaviorFailures": 0
+  },
+  "runtimeEvidence": {
+    "c35CompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "selectedC34ReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "runtimeOracleRegistryWalMutations": 0
+  },
+  "registryWalAttempts": {
+    "registryRows": 230,
+    "attemptDirectories": 230,
+    "orphan": 0,
+    "dangling": 0,
+    "running": 0,
+    "c34WalRows": 32,
+    "c35WalRows": 6,
+    "c36WalAbsent": true,
+    "c37WalAbsent": true
+  },
+  "hygiene": {
+    "taskOwnedNodeOrClaudeReviewProcesses": 0,
+    "port5173Listeners": 0,
+    "allocationOrIndexLocks": 0,
+    "taskOwnedC37TempDirectoriesBeforeThisRecovery": 0,
+    "userOwnedVsCodeClaudeExtensionProcesses": 1,
+    "userOwnedVsCodeClaudeExtensionUntouched": true
+  },
+  "replacementAuthorizationStatus": "AUTHORIZED_UNUSED",
+  "continuityMismatch": false,
+  "pass": true
+}

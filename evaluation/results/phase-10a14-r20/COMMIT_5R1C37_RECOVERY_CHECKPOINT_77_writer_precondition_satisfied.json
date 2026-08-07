@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "ordinal": 77,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T06:40:53Z",
+  "stage": "PRE_INVOCATION",
+  "status": "NONTERMINAL",
+  "classification": "C37_CHECKPOINT_77_WRITER_PRECONDITION_SATISFIED_SCOPED_RE_ENTRY_DISABLED_PRE_INVOCATION_AUTHORIZATION_UNUSED",
+  "disposition": "PRECONDITION_SATISFIED",
+
+  "previousCheckpoint": 76,
+  "previousCheckpointRole": "PRIOR_CONTROLLING_SAFE_PAUSE",
+  "previousCheckpointPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_76_writer_precondition_unmet_safe_pause.json",
+  "previousCheckpointSha256": "9f54fc3098318d88e6f99174df8fb8a8274b4f5c8d42900d183e318a66c22c79",
+  "supersedes": [76],
+  "priorCheckpointsPreservedUnaltered": "61 through 76",
+
+  "safeToResume": true,
+  "activeAttemptId": null,
+
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "upstream": "origin/feature/source-availability-engine-v1",
+  "remoteTipReRead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "aheadOfUpstream": 0,
+  "behindUpstream": 0,
+  "headEqualsGovernedBaseline": true,
+
+  "finalGitState": {
+    "verifiedAtUtc": "2026-08-07T06:40:53Z",
+    "clean": false,
+    "cleanlinessClaimMade": false,
+    "stagedPaths": 0,
+    "modifiedTrackedPaths": 4,
+    "modifiedTrackedPathList": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "totalTrackedFiles": 13975,
+    "indexLockPresent": false
+  },
+
+  "writerPrecondition": {
+    "satisfied": true,
+    "processAbsenceVerified": true,
+    "targetPids": [21112, 4472],
+    "pidStatus": "BOTH_NOT_RUNNING",
+    "pidAbsenceFirstObservedUtc": "2026-08-07T06:31:15Z",
+    "exitWindow": "between 2026-08-07T04:42:47Z and 2026-08-07T06:29:47Z",
+    "terminationPerformedByThisOperation": false,
+    "terminationAuthorizedButNotExercised": true,
+    "terminationNotExercisedReason": "Both PIDs were already absent; identity cannot be confirmed immediately before terminating a nonexistent process, so no termination command was issued.",
+    "processesKilled": 0,
+    "broadProcessNameTerminationUsed": false,
+    "exitCauseClaimed": false,
+    "exitCauseInference": "Most plausibly owner action following the checkpoint-76 report. Not observed by this operation; recorded as inference only.",
+
+    "reEntryPreventionAction": {
+      "mechanism": "USER_STARTUP_FOLDER_ENTRY",
+      "path": "C:\\Users\\USER\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Hermes_Gateway_tina-orchestrator.vbs",
+      "attributionProven": true,
+      "attributionBasis": "Filename and full launch chain are scoped exclusively to the tina-orchestrator profile; the chain terminates in the exact command line observed on PID 21112.",
+      "identityReconfirmedImmediatelyBeforeMutation": true,
+      "command": "Rename-Item -LiteralPath '<Startup>\\Hermes_Gateway_tina-orchestrator.vbs' -NewName 'Hermes_Gateway_tina-orchestrator.vbs.DISABLED-BY-C37-GOVERNANCE'",
+      "executedAtUtc": "2026-08-07T06:33:15Z",
+      "result": "SUCCESS",
+      "exitCode": 0,
+      "preMutationSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+      "postMutationSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+      "contentPreserved": true,
+      "deletionPerformed": false,
+      "reversible": true
+    },
+
+    "notModified": {
+      "openClawGatewayScheduledTask": "Disabled BEFORE this operation; NOT modified. Not narrowly attributable to tina-orchestrator.",
+      "hermesProfileLauncherScripts": "PRESERVED intentionally so the owner retains deliberate manual control.",
+      "otherStartupEntries": ["Ollama.lnk", "Vov Sticky Notes.lnk", "desktop.ini"],
+      "unrelatedServicesTasksIdeGitOrUserProcesses": "NONE MODIFIED"
+    },
+
+    "observationWindow": {
+      "startedUtc": "2026-08-07T06:33:36Z",
+      "endedUtc": "2026-08-07T06:38:29Z",
+      "durationSeconds": 293,
+      "samples": 10,
+      "intervalSeconds": 30,
+      "pythonProcessesEverObserved": 0,
+      "vbsHostProcessesEverObserved": 0,
+      "restartDetected": false,
+      "newPidsObserved": [],
+      "postWindowCheckUtc": "2026-08-07T06:40:53Z",
+      "postWindowResult": "python.exe=0, hermes-path executables=0, wscript/cscript=0"
+    },
+
+    "preventionEvidenceStandardMet": true,
+    "preventionScope": "AUTOMATIC_LOGON_RE_ENTRY_PREVENTED",
+    "preventionNotClaimedMerelyFromProcessAbsence": true,
+    "residualCaveats": [
+      "Hermes profile launcher scripts remain installed; deliberate manual launch remains possible by design.",
+      "Enumeration covered scheduled tasks, services, HKCU/HKLM Run and RunOnce, and both Startup folders. A launcher outside these standard autostart vectors would not have been detected.",
+      "The observation window evidences immediate restart only; it cannot evidence behaviour at the next user logon, which is the trigger that was disabled."
+    ],
+    "recommendedConfirmation": "Confirm at next user logon that no tina-orchestrator gateway process appears."
+  },
+
+  "currentStateDocumentation": {
+    "file": "knowledge/CURRENT_STATE.md",
+    "beforeSha256": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+    "afterSha256": "57368584a0e80ec1f28f27589319162faf4387c44234c3cc2672eaf15ca2a779",
+    "beforeBytes": 146279,
+    "afterBytes": 155665,
+    "afterLines": 3351,
+    "linesAddedRelativeToHead": 430,
+    "linesDeletedRelativeToHead": 0,
+    "purelyAdditive": true,
+    "eolPreserved": "LF",
+    "historicalRecordPreserved": true,
+    "checkpoint75BlockRetained": true,
+    "checkpoint73BlockRetained": true
+  },
+
+  "manifestDivergenceNotice": {
+    "invalidatedEntry": {
+      "manifest": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_76_SAFE_PAUSE_EVIDENCE.sha256",
+      "entry": "knowledge/CURRENT_STATE.md",
+      "recordedSha256": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+      "currentSha256": "57368584a0e80ec1f28f27589319162faf4387c44234c3cc2672eaf15ca2a779",
+      "divergence": "EXPECTED",
+      "cause": "Intentional checkpoint-77 governed documentation update.",
+      "integrityDefect": false,
+      "remediation": "None. The checkpoint-76 manifest remains sealed and correct AS AT CHECKPOINT 76. Re-verification of that manifest will fail on this one entry and must be read as expected divergence; its other three entries must still verify.",
+      "sealedManifestEdited": false
+    },
+    "alsoAffected": "COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256 knowledge/CURRENT_STATE.md entry, already reconciled forward at checkpoint 75 and again here."
+  },
+
+  "protectedArtifactPreservation": {
+    "IDEA.md": { "sha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0", "unchanged": true },
+    "taxEnginesCON": { "indexFlag": "S", "unchanged": true },
+    "deferredHealthFiles": { "unchanged": true, "modifiedRevertedStagedOrTestFixed": false },
+    "adjudicatedPathsAllPresent": true,
+    "anyDeletedQuarantinedOverwrittenOrRewritten": false,
+    "existingEvidenceArtifactsModified": 0
+  },
+
+  "healthDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "newAuthorizationProvidedInGoverningPrompt": false,
+    "unchangedByThisOperation": true,
+    "hashes": {
+      "server.js": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "security/public-health.js": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35"
+    }
+  },
+
+  "blockers": [
+    { "id": "B1", "blocker": "Concurrent third-party writer", "status": "CLOSED", "basis": "Processes absent; sole autostart trigger disabled with proven attribution; no restart across a 293-second observation window.", "residual": "Next-logon confirmation recommended." },
+    { "id": "B2", "severity": "HIGH", "blocker": "Three semantic /health changes deferred.", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B3", "severity": "MEDIUM", "blocker": "tests/health-endpoint.test.mjs quarantined.", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B4", "severity": "MEDIUM", "blocker": "IDEA.md is a byte-identical duplicate of the controlling CURRENT_STATE.md at the governed baseline.", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B5", "severity": "LOW", "blocker": "tax-engines/CON/* cannot be materialised on Windows.", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B6", "severity": "LOW", "blocker": "Five stale .git/index.stash.*.lock files from July 2026.", "status": "OPEN", "changeThisOperation": "NONE" }
+  ],
+  "blockersOpen": 5,
+  "blockersClosed": 1,
+
+  "authorization": {
+    "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "externalProviderInvocationPerformed": false,
+    "opusAuthorizedInGoverningPrompt": false,
+    "opusInvoked": false,
+    "authorizationContinuityClear": true
+  },
+
+  "phase": "10A",
+  "workstream": "R20",
+  "phase10A": "OPEN",
+  "phase10AAdvanced": false,
+  "c37Advanced": false,
+  "phase10BAuthorized": false,
+  "phase10BImplementationBegun": false,
+  "metricsChanged": false,
+
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "amendPerformed": false,
+  "forcePushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "mergePerformed": false,
+  "pullPerformed": false,
+  "rebasePerformed": false,
+  "stashPerformed": false,
+  "deploymentPerformed": false,
+  "migrationPerformed": false,
+  "reindexPerformed": false,
+  "modelChanged": false,
+  "externalReviewPerformed": false,
+  "runtimeCodeFixCreated": false,
+  "broadCleanupPerformed": false,
+  "sealedEvidenceEdited": false,
+  "sealedManifestEdited": false,
+  "historyRewritten": false,
+
+  "gateResults": {
+    "gate01_headEqualsGovernedBaseline": true,
+    "gate02_parentEqualsGovernedBaseline": true,
+    "gate03_remoteTipReReadAndRecorded": true,
+    "gate04_noStagedPaths": true,
+    "gate05_packageJsonHashMatched": true,
+    "gate06_serverJsHashMatched": true,
+    "gate07_checkpoint76ManifestVerified": true,
+    "gate08_checkpoint75ManifestVerified": true,
+    "gate09_processIdentityProvenBeforeAnyMutation": true,
+    "gate10_onlyNarrowlyAttributableMechanismDisabled": true,
+    "gate11_noUnrelatedProcessOrEntryModified": true,
+    "gate12_observationWindowCompletedNoRestart": true,
+    "gate13_protectedArtifactsPreserved": true,
+    "gate14_healthRemainsDeferred": true,
+    "gate15_currentStateUpdatePurelyAdditive": true,
+    "gate16_opusNotInvoked": true,
+    "gate17_noProhibitedOperation": true
+  },
+
+  "nextExactOperation": "Reissue hash-bound governance for COMMIT 5R1-C37 based on the verified checkpoint-77 state, binding to parent ee664eab4529c636f34cb6d37d23a6a497886a17 and to the checkpoint-77 evidence hashes in COMMIT_5R1C37_CHECKPOINT_77_FINAL_EVIDENCE.sha256. The reissued prompt must carry a separate explicit decision on the deferred /health patch record, and must contain an explicit authorization clause if the independent Opus review is intended. Separately confirm at the next user logon that no tina-orchestrator gateway process appears. Do not begin C38, E2, A15 or Phase 10B. Do not consume the one-use Opus authorization outside such a prompt.",
+
+  "completionClaims": {
+    "phase10AClosed": false,
+    "r20Complete": false,
+    "c37Complete": false,
+    "healthChangeApproved": false,
+    "commitMade": false,
+    "pushMade": false,
+    "deploymentMade": false,
+    "repositoryClean": false,
+    "acceptanceOrClosureClaimed": false,
+    "opusReviewPerformed": false
+  }
+}

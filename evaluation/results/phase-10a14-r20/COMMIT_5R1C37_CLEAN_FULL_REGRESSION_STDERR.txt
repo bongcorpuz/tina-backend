@@ -1,0 +1,537 @@
+  ── output of failing suite tests\patch-07b-clarification-final-gate-1-track-closure.test.mjs ──
+  '- Candidate 6 trial result reached reason 3576/3,720 in isolation, but the candidate was semantically rejected; the accepted controlling result remains 3575/3,720 and its controlling metric delta is zero.\n' +
+  '- Governed replacement independent reviewer: Claude Code Opus 4.8, read-only, explicit decision **APPROVED_WITH_NONBLOCKING_OBSERVATIONS**.\n' +
+  '- Evidence manifest identity: `evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_EVIDENCE.sha256` (deterministic, self-excluding, sealed after exact reviewed-document installation).\n' +
+  '- Reviewed Git status: explicit staging/commit/push pending at document cutover. Actual commit and remote synchronization are recorded outside the self-referential commit in `COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json` and `COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json`.\n' +
+  '- Phase 10A: **OPEN**. R20: **IN PROGRESS**. C34: **TERMINAL**.\n' +
+  '- Next exact operation: obtain separate governance for the next Phase-10A14-R20 unit against the selected C34 runtime. C35 was not authorized or begun here.\n' +
+  '\n' +
+  '---\n' +
+  '\n' +
+  '## Historical Continuity Record\n' +
+  '\n' +
+  '## TINA Controlling Continuity Status\n' +
+  '\n' +
+  'Last updated: 2026-07-28T06:03:53.635Z (COMMIT 5R1-C33)\n' +
+  '\n' +
+  'PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS and not SATISFIED.\n' +
+  '\n' +
+  '### COMMIT 5R1-C33 - Replay Remediation and Governed R3 Revalidation\n' +
+  '\n' +
+  '- C33 executor: Codex. C32 Codex review is classified as an executor self-check, not an independent review. The post-commit GPT-5.6 Sol review validates C32 as immutable incomplete history with replay and review defects.\n' +
+  '- Exact C31 selected runtime R20-domain_campaign-r20_commit5r1c31_structural_reason_remediation-commit5r1c31-dev-05-ord05-2026-07-28T01-15-38-851Z was reconstructed before C33 work; repository HEAD services were never treated as the semantic candidate base.\n' +
+  '- Canonical candidate patches use only a/services/<file> and b/services/<file>; dual non-repository and clean-Git replay rejects skipped/no-op application and computes inherited-hunk exclusion.\n' +
+  '- Evidence controls were executed for query-level generalization, leave-family-out, sentinels, R3/reason/collision shuffles, row-level regressions, branch signatures, prior overrides and monotonic ablation.\n' +
+  '- M01R: **ACCEPTED_PROMOTED_CONTROLLING**. M02R: **REJECTED_GENERALIZATION_FAILURE**. M03 remains **SEMANTICALLY_REJECTED_AS_WRITTEN**; no unchanged M03 promotion run occurred.\n' +
+  '- M01R/M02R composition: **REJECTED_COMPOSITION_INTERFERENCE**, preserved as rejected evidence because M02R did not satisfy its construction generalization packet.\n' +
+  '- Selected runtime: **C33-M01R-direct-requested-tax-consequence-excluding-computation-is-treatment** in'... 112370 more characters
+
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:311:10
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:150:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:309:7
+  ── output of failing suite tests\patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs ──
+PASS required route/helper artifacts exist
+PASS ten helper chain artifact files exist
+PASS route helper exports remain available and narrow
+PASS Gemini Review 15 carry-forward is explicit
+PASS final closure files do not import live integration surfaces
+PASS ten-helper reasoning block closure is recognized
+PASS core route/helper contracts are preserved
+PASS future insertion point is preserved for later live design
+PASS deferred phase boundaries are not marked implemented
+PASS prohibited live implementation claims are absent
+PASS final report has required closure sections
+PASS no prohibited output phrases appear as affirmative recommendations
+PASS Phase 10 leakage is only deferred if mentioned
+
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 tests: 13 passed, 2 failed
+FAIL CURRENT_STATE carries final closure markers and non-live boundaries
+AssertionError [ERR_ASSERTION]: CURRENT_STATE missing: patch-07b-clarification-route-scaffold-1
+    at assertIncludesAll (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:99:5)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:126:3
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:71:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:124:7
+FAIL approved next step is design-only live integration review
+AssertionError [ERR_ASSERTION]: approved next step missing: no live route wiring yet
+    at assertIncludesAll (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:99:5)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:212:3
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:71:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:210:7
+  ── output of failing suite tests\phase-09-gate-closure-1.test.mjs ──
+PASS fixture phase equals 09
+PASS fixture baseCommit equals 444a11f
+PASS fixture decision equals PHASE 09 GATE CLOSURE PASS WITH STRICT RECOMMENDATIONS
+PASS runtimeGovernanceRecommendation equals PASS_WITH_RUNTIME_WIRING_DEFERRED
+PASS required completed patches list includes all of 09A-09I, 09R, 09L, 09M, 09N, 09O, 09P, 09Q, 09S
+PASS all required Phase 9 reports exist
+PASS all required Phase 9 tests exist
+PASS all required Phase 9 BIR audit-defense workflow modules exist
+PASS each required Phase 9 report contains its expected PASS decision
+PASS new gate report exists
+PASS gate report contains PHASE 09 GATE CLOSURE PASS WITH STRICT RECOMMENDATIONS
+PASS gate report states all required non-runtime/external-operation impact statements as None
+PASS gate report states LOA readiness, live /ask readiness, and runtime activation statements
+PASS LOA readiness matrix (fixture) includes all 13 required signals
+PASS static scan confirms no server/ask-handler/pipeline/route imports in new gate test
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls in new gate files
+PASS static scan confirms no external HTTP/fetch calls in new gate files
+PASS static scan confirms no process.env dependency in new gate files
+PASS static scan confirms no Authorization/INDEX_SECRET usage in new gate files
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation in new gate files
+PASS static scan confirms no runtime activation claim in gate report
+PASS static scan confirms no filing-ready document generation claim in gate report
+PASS static scan confirms no automatic submission claim in gate report
+PASS static scan confirms no prohibited final-legal-conclusion phrases in gate fixture/report
+PASS privacy scan confirms no private real-reference fragments leaked outside intentional blocklist declarations
+PASS git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+
+PHASE-09-GATE-CLOSURE-1 tests: 28 passed, 1 failed, 1878 assertions
+FAIL CURRENT_STATE.md contains Phase 9 closure entry and states Phase 10 as next phase
+  CURRENT_STATE.md references PHASE-09-GATE-CLOSURE-1
+  ── output of failing suite tests\phase-09-gate-closure-2.test.mjs ──
+PASS fixture exists and records closure identity
+PASS controlling final evidence is present
+PASS final matrix counts and statuses match closure contract
+PASS flags, blockers, pending mutation, rollback, and migration states are correct
+PASS known non-blocking debt is present and explicit
+PASS decision, phase status, next phase, and next task are final
+PASS report exists and documents final safety contract
+PASS no runtime, production, environment, or package file is modified
+PASS test source performs no production calls and mutates no environment
+PASS fixture and report contain no secrets or unrestricted response material
+
+PHASE-09-GATE-CLOSURE-2 tests: 10 passed, 1 failed, 74 assertions
+FAIL CURRENT_STATE records Phase 9 completion and Phase 10 handoff
+  CURRENT_STATE records closure completion
+  ── output of failing suite tests\phase-09x-controlled-loa-answer-runtime-wiring-design-1.test.mjs ──
+PASS fixture baseCommit equals 134678e
+PASS fixture decision equals expected PASS WITH STRICT RECOMMENDATIONS decision
+PASS fixture designType equals controlled runtime wiring design
+PASS fixture nextTask equals PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1
+PASS supportedFutureQueryIntents includes all required keyword categories
+PASS excludedFutureQueryIntents includes all required exclusion categories
+PASS futureRuntimeRoutingDesign includes all 10 required routing steps
+PASS futureSafeResponseTemplate includes all required content categories
+PASS futureResponseModes include all 7 required modes
+PASS futureSourceCardPolicy includes all required source categories and unverified-source-card statement
+PASS futureRuntimeSafetyGates include all required categories
+PASS screenshotEvidenceNote states current live fallback is expected and 09X does not change live behavior
+PASS new report exists
+PASS new report decision is PASS WITH STRICT RECOMMENDATIONS
+PASS new report states all required exact impact statements
+PASS static scan confirms no server/ask-handler/pipeline/route imports in new 09X files
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls in new 09X files
+PASS static scan confirms no external HTTP/fetch calls in new 09X files
+PASS static scan confirms no process.env dependency in new 09X files
+PASS static scan confirms no Authorization/INDEX_SECRET usage in new 09X files
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation in new 09X files
+PASS static scan confirms no runtime activation implementation
+PASS static scan confirms no filing-ready document generation implementation
+PASS static scan confirms no automatic submission implementation
+PASS static scan confirms no prohibited final-legal-conclusion phrases in 09X fixture/report
+PASS git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+
+PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1 tests: 29 passed, 1 failed, 178 assertions
+FAIL CURRENT_STATE.md contains 09X design entry and states 09Y as next task
+  CURRENT_STATE.md references PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1
+  ── output of failing suite tests\phase-09y-controlled-loa-answer-runtime-wiring-scaffold-1.test.mjs ──
+PASS fixture baseCommit equals 1324061
+PASS fixture decision equals expected PASS WITH STRICT RECOMMENDATIONS decision
+PASS fixture nextTask equals PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1
+PASS module exports expected constants/functions; version and mode id are correct
+PASS supported LOA intents include all required entries
+PASS excluded intents include all required entries
+PASS response modes include all required entries
+PASS safety gates include all required entries
+PASS missing input and missing userQuery are rejected
+PASS unsafe option flags are rejected
+PASS source card claiming final verification or final legal conclusion is rejected
+PASS real taxpayer/officer/ela/audit-case/amount fragments are rejected
+PASS intent classification is correct for all supported and excluded sample queries
+PASS supported LOA result is valid and includes all required controlled-answer content
+PASS phase9ScaffoldUsePlan flags all Phase 9 components true and runtimeWiredNow false
+PASS safetyGateResults has all final-conclusion and safety gates true
+PASS sourceCardPolicy is unverified/no-citation and includes all required authority categories
+PASS safeResponsePreview includes procedural-guidance-only and human review disclaimers and no final validity conclusion
+PASS result validator rejects missing sections and unsafe metadata/policy flags
+PASS result validator rejects prohibited legal conclusion phrases, filing-ready output, and automatic submission language
+PASS report exists and states required exact impact statements
+PASS module source has no forbidden usage patterns and is standalone
+PASS this test file itself has no forbidden usage patterns
+PASS static scan confirms no runtime activation, filing-ready document generation, or automatic submission implementation
+PASS no private real-reference fragments appear in fixture, report, or generated sample output
+PASS git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+
+PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1 tests: 29 passed, 1 failed, 627 assertions
+FAIL CURRENT_STATE.md contains 09Y scaffold entry and states 09Z as next task
+  CURRENT_STATE.md references PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1
+  ── output of failing suite tests\phase-09z-controlled-loa-answer-ask-wiring-gate-1.test.mjs ──
+PASS fixture exists and parses as JSON
+PASS fixture core fields match expected values
+PASS 09-GATE, 09X, and 09Y reports exist and contain their PASS decisions
+PASS 09Y test and module exist; module exports all required constants/functions with correct version and mode id
+PASS all sample safe LOA/eLA queries classify as supported with an expected response mode
+PASS all sample excluded queries classify as excluded with HUMAN_REVIEW_REQUIRED or AUTHORITY_FALLBACK_REQUIRED
+PASS safe LOA result is valid with runtimeActive/liveAskWired false and all metadata safety flags correct
+PASS safe LOA answer includes all required content concepts
+PASS safe response preview includes procedural-guidance-only and human tax/legal review phrases
+PASS source-card policy is unverified/no-citation and includes all required authority categories
+PASS 09Z report exists and states required exact gate-outcome statements
+PASS 09Z report states all required non-runtime/external-operation impact statements as None
+PASS static scan confirms no server/ask-handler/pipeline/route imports in new 09Z files
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls in new 09Z files
+PASS static scan confirms no external HTTP/fetch calls in new 09Z files
+PASS static scan confirms no process.env dependency in new 09Z files
+PASS static scan confirms no Authorization/INDEX_SECRET usage in new 09Z files
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation in new 09Z files
+PASS static scan confirms no runtime activation implementation
+PASS static scan confirms no filing-ready document generation implementation
+PASS static scan confirms no automatic submission implementation
+PASS static scan confirms no prohibited final-legal-conclusion phrases in 09Z fixture/report
+PASS no private real-reference fragments appear in 09Z fixture, report, or 09Y module/fixture/report/test
+PASS git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+
+PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1 tests: 24 passed, 1 failed, 318 assertions
+FAIL CURRENT_STATE.md contains 09Z gate entry and states 09ZA as next task
+  CURRENT_STATE.md references PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1
+  ── output of failing suite tests\phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs ──
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: 'db8031078c7e63aa',
+  pid: 17608,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and parses as JSON
+PASS fixture core fields match expected values
+PASS 09Y scaffold module exists and classifies basic LOA query as supported
+PASS pipeline.js references the 09Y scaffold and the gate is narrow (feature-flagged, off by default)
+PASS all 8 safe LOA/eLA sample queries return a controlled response when the gate is enabled
+PASS controlled response includes all required content concepts
+PASS excluded unsafe queries do not return controlled safe LOA guidance
+PASS controlled response metadata is safe: legalCitationAllowed false, sourceCardVerification not_performed, filingReadyDocumentGenerated false, automaticSubmission false, sourceCards empty
+PASS unrelated generic queries do not trigger the controlled LOA branch
+PASS existing auth/route/server behavior is unmodified; no route/server/package/env/DB/frontend/MCP files changed
+PASS pipeline.js changes are limited to the new narrow controlled-LOA gate (existing clarification gate test still passes)
+PASS static scan confirms no forbidden service/network/env/Authorization usage was ADDED to pipeline.js
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation was added
+PASS static scan confirms no filing-ready document generation or automatic submission implementation
+PASS static scan confirms no prohibited final-legal-conclusion phrases in generated controlled response, fixture, or report
+PASS no private real-reference fragments appear in fixture, report, or generated controlled response
+PASS report exists and states all required exact and conditional statements
+PASS git diff confirms only allowed files plus the single approved pipeline.js hook changed
+PASS this test file itself has no forbidden usage patterns
+
+PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1 tests: 19 passed, 1 failed, 271 assertions
+FAIL CURRENT_STATE.md contains 09ZA implementation entry and states 09ZB as next task
+  CURRENT_STATE.md references PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1
+  ── output of failing suite tests\phase-09zc-controlled-loa-answer-production-activation-gate-1.test.mjs ──
+PASS fixture exists, is valid JSON, and matches core metadata
+PASS production identity fields are recorded
+PASS controlled LOA and diagnostic flags are recorded with required diagnostic default
+PASS branch comparison, release strategy, and commit inventories are present
+PASS production readiness checks and rollback plan are present
+PASS activation/smoke execution flags are false during the plan stage
+PASS 09ZD is recorded as the separate next task
+PASS no production URL is called, no Render mutation, no main push, no env mutation by this test
+PASS no runtime code is modified by this patch (diff scope check)
+PASS report exists and contains required impact statements
+
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 tests: 10 passed, 1 failed, 82 assertions
+FAIL CURRENT_STATE.md contains 09ZC entry referencing 09ZD and the diagnostic flag requirement
+  CURRENT_STATE contains the 09ZC patch identifier
+  ── output of failing suite tests\phase-09zd-controlled-loa-answer-production-smoke-1.test.mjs ──
+PASS fixture exists, is valid JSON, and records final PASS metadata
+PASS prior blocked and failed chronology are preserved
+PASS production target and deploy verification are recorded
+PASS context-free outcome query contract is clarified as safe boundary rejection
+PASS tax-contextual outcome query contract requires restricted handling and human review
+PASS production smoke matrices record exact final PASS counts
+PASS runtime, frontend, source-card, and mutation statuses are recorded
+PASS rollback and next-task references are retained
+PASS no production URL is called and no production mutation command is embedded
+PASS no runtime, auth, deployment, or environment file is modified by this patch
+PASS fixture and report do not contain secrets or unrestricted response material
+
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 tests: 11 passed, 1 failed, 98 assertions
+FAIL report and current state record clarified contract and final 09ZD pass
+  artifact contains patch id
+  ── output of failing suite tests\phase-09ze-controlled-loa-domain-boundary-remediation-1.test.mjs ──
+  VECTOR_TABLE: 'tina_vector_store',
+  LOCK_TABLE: 'tina_reindex_locks',
+  vectorTableFromEnv: null,
+  vectorTableUsingDefault: true,
+  vectorTableMatchExpected: true,
+  NODE_ENV: null,
+  RENDER_SERVICE_NAME: null,
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: '04f0a4e8a0c8b40c',
+  pid: 24300,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and core metadata is correct
+PASS fixture lists all four previously failing safe queries
+PASS pipeline keeps Step 12.65 controlled LOA gate and feature flag markers
+PASS pipeline (or the shared audit-procedure boundary module) contains the chosen narrow signals
+PASS all safe queries are boundary-eligible and controlled-gate eligible
+PASS previously failing safe queries now pass boundary and controlled gate
+PASS excluded unsafe queries do not receive the controlled safe LOA answer
+PASS unrelated tax queries do not trigger the controlled LOA branch
+PASS source-card and legal-safety metadata remain locked down
+PASS static scan confirms no external operation implementation was added
+PASS no disallowed runtime, package, env, database, frontend, or production files changed
+PASS report exists and contains required impact statements
+
+PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1 tests: 12 passed, 1 failed, 130 assertions
+FAIL CURRENT_STATE.md contains 09ZE completion and 09ZB rerun next task
+  CURRENT_STATE contains 09ZE entry
+  ── output of failing suite tests\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs ──
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: '7c54d5b38d80ddf9',
+  pid: 23512,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and core metadata is correct
+PASS fixture lists all four previously failing safe queries
+PASS fixture safe/excluded/unrelated matrices are complete
+PASS pipeline.js retains required controlled LOA gate markers
+PASS static scan confirms Step 12.65 controlled LOA gate now runs before Step 12.6 clarification gate
+PASS all safe queries -- including previously failing ones -- match the controlled LOA gate
+PASS previously failing replacement eLA query is covered and matches
+PASS previously failing consolidated eLA query is covered and matches
+PASS previously failing notice for presentation/submission query is covered and matches
+PASS previously failing reminder before subpoena query is covered and matches
+PASS each excluded unsafe query individually remains excluded from the controlled safe LOA answer
+PASS unrelated tax queries do not trigger the controlled LOA branch
+PASS source-card and legal-safety metadata remain locked down on the controlled branch
+PASS static scan confirms no external operation, filing-ready, or automatic-submission implementation was added
+PASS report exists and contains required impact statements
+PASS git diff scope is reported (encoded via allowed-file check above)
+
+PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1 tests: 16 passed, 2 failed, 175 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+FAIL no disallowed runtime, package, env, database, frontend, or production files changed
+  changed file is allowed: evaluation/runner/phase-10a14-r20/commit5r1c36-baseline.mjs
+FAIL CURRENT_STATE.md contains 09ZF completion, 09ZB rerun next, and 09ZC blocked statements
+  CURRENT_STATE contains 09ZF completion entry
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+  ── output of failing suite tests\phase-09zg-controlled-loa-live-path-instrumentation-diagnostic-1.test.mjs ──
+  diagnosticId: '09zg-msa6icwj-59cb36ee',
+  phase: '09ZG',
+  correlationId: 'failing-corr',
+  event: 'FINAL_RESPONSE_SELECTED',
+  seq: 3,
+  atMs: 1785577111508,
+  finalBranch: 'clarificationRouteGate',
+  finalResponseType: 'clarification'
+}
+PASS trace collector records events and can distinguish baseline vs failing traces
+[TINA_09ZG_LOA_PATH] {
+  diagnosticId: '09zg-msa6icwl-451c3d1c',
+  phase: '09ZG',
+  correlationId: null,
+  event: 'REQUEST_RECEIVED',
+  seq: 0,
+  atMs: 1785577111509,
+  hook: '/ask'
+}
+PASS trace collector strips forbidden secret-shaped fields before logging
+PASS queryFingerprint is deterministic and does not require raw-body logging elsewhere
+PASS pipeline.js contains gated 09ZG trace checkpoints for all required events
+PASS diagnostic code is gated by the explicit flag and defaults false
+PASS diagnostic module does not persist, call external services, or write to a database
+PASS diagnostic instrumentation in pipeline.js does not alter gate results, response text, responseType, or query keywords
+PASS report exists and contains required impact statements
+
+PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1 tests: 14 passed, 1 failed, 116 assertions
+FAIL CURRENT_STATE.md contains a 09ZG entry
+  CURRENT_STATE contains the 09ZG patch identifier
+  ── output of failing suite tests\phase-09zh-controlled-loa-live-path-remediation-1.test.mjs ──
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: '83e914656746cebd',
+  pid: 23948,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists, is valid JSON, and matches core metadata
+PASS shared audit-procedure boundary module exists and is used by both ask-handler.js and pipeline.js
+PASS no separate duplicate audit-procedure keyword list remains in either file
+PASS ask-handler.js preserves the base domain-boundary rejection path and does not build a controlled answer
+PASS pipeline.js retains evaluateControlledLoaAskGate and Step 12.65 as the final gate
+PASS shared module: candidate detector recognizes the four previously-rejected phrasings upstream
+PASS shared module: baseline BIR-worded queries do not need the overlay to pass the base detector
+PASS shared module: overlay converts a rejecting base decision to ALLOW only for candidates, on /ask
+PASS all eight safe queries pass the boundary and match the controlled LOA gate
+PASS previously rejected queries are now boundary-eligible
+PASS each of the 12 excluded queries individually remains excluded from the safe controlled answer
+PASS unrelated tax queries do not become LOA candidates and do not trigger the controlled branch
+PASS truly unrelated non-tax query remains boundary-rejectable
+PASS no hardcoded answer text or exact full-query string switching for the four previously failing queries
+PASS no external operation, DB write, or model call introduced in the shared module or diffs
+PASS source-card and legal-safety metadata remain locked down on the controlled branch
+PASS 09ZG diagnostic flag remains default false and production activation is absent
+PASS report exists and contains required impact statements
+PASS no disallowed runtime, package, env, database, frontend, or production files changed
+
+PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1 tests: 19 passed, 1 failed, 189 assertions
+FAIL CURRENT_STATE.md contains 09ZH completion and states 09ZB rerun as next task
+  CURRENT_STATE contains 09ZH completion entry
+  ── output of failing suite tests\phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs ──
+  INSTANCE_ID: 'c85bb4a5d7293008',
+  pid: 5492,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists, is valid JSON, and matches core metadata
+PASS safety helper module exists and Step 12.65/12.66 both use it correctly
+PASS evaluateControlledLoaAskGate (Step 12.65) is unchanged in contract: still returns matched:true for safe queries
+PASS Step 12.66 does not fire for safe queries (Step 12.65 already exits first in the real pipeline)
+PASS isControlledLoaLegalConclusionRestrictedIntent reuses the existing exclusion signal with no new keyword list
+PASS assessment-finality query: no affirmative or negative finality conclusion, gate matched, safe responseType
+PASS FAN-voidness query: no affirmative voidness or validity conclusion
+PASS FDDA-appealability query: no affirmative or negative appealability conclusion
+PASS all 12 excluded queries remain non-conclusive and outside controlled_loa_answer
+PASS draft-protest and automatic-submission queries produce no filing-ready or submission action
+PASS final-legal-opinion query produces no final opinion
+PASS unrelated tax queries do not trigger either controlled LOA gate
+PASS non-tax boundary queries remain outside the controlled LOA gates and outside the base boundary allow
+PASS previously-failing (post-09ZH) audit-procedure queries remain passing safe queries
+PASS shared 09ZH boundary helper file is unmodified in this diff
+PASS no exact full-query string switch and no broad global legal-word replacement in added lines
+PASS no external operation, DB write, or model call introduced in the safety module or diffs
+PASS auth, routes, and server files are unchanged
+PASS 09ZG diagnostic flag remains default false and no production activation is present
+PASS report exists and contains required impact statements
+PASS no disallowed runtime, package, env, database, frontend, or production files changed
+
+PHASE-09ZI-CONTROLLED-LOA-UNSAFE-LEGAL-WORDING-REMEDIATION-1 tests: 21 passed, 1 failed, 277 assertions
+FAIL CURRENT_STATE.md contains 09ZI completion and states 09ZB rerun as next task
+  CURRENT_STATE contains 09ZI completion entry
+  ── output of failing suite tests\phase-09zj-context-free-outcome-query-safety-contract-clarification-1.test.mjs ──
+PASS fixture exists and records the 09ZJ PASS decision
+PASS investigation answers preserve the context-free/contextual distinction
+PASS targeted production evidence is sanitized and passes both categories
+PASS full 09ZD rerun is recorded as final pass
+PASS 09ZD artifacts were revised to use the clarified two-category contract
+PASS test source performs no live production calls
+PASS no runtime, auth, deployment, or environment file is modified by this patch
+PASS fixture and report do not contain secrets or unrestricted response material
+
+PHASE-09ZJ-CONTEXT-FREE-OUTCOME-QUERY-SAFETY-CONTRACT-CLARIFICATION-1 tests: 8 passed, 1 failed, 73 assertions
+FAIL report and current state preserve impact and next-task statements
+  artifact contains 09ZJ patch id
+  ── output of failing suite tests\phase-10a-trust-limitation-authority-confidence-release-gate-1.test.mjs ──
+PASS decision wording matches one of the four allowed final decisions
+
+PHASE-10A-TRUST-LIMITATION-AUTHORITY-CONFIDENCE-RELEASE-GATE-1 tests: 17 passed, 1 failed, 114 assertions
+[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED] {
+  saeStatus: 'AUTHORITY_FOUND',
+  mode: '',
+  route: '',
+  reason: 'unverified_citation_in_answer',
+  suppressedCitationCount: 1,
+  suppressedCitations: [ 'NIRC Section 999' ]
+}
+[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED] {
+  saeStatus: 'NO_INDEXED_SOURCE',
+  mode: '',
+  route: '',
+  removedSectionCount: 1,
+  suppressedCitationCount: 0,
+  suppressedCitations: [],
+  fallbackMessageUsed: true
+}
+[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED] {
+  saeStatus: 'AUTHORITY_FOUND',
+  mode: '',
+  route: '',
+  reason: 'unverified_citation_in_answer',
+  suppressedCitationCount: 1,
+  suppressedCitations: [ 'NIRC Section 999' ]
+}
+FAIL CURRENT_STATE.md records Phase 10A status and independent review requirement
+  CURRENT_STATE contains the 10A patch identifier
+  ── output of failing suite tests\phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs ──
+PASS fixture exists and is valid JSON with both required sections
+PASS contract shape: version, categorical allow-lists, real booleans, serializable limitations
+PASS all 15 material response paths produce the exact required contract
+PASS invariant edge cases hold under the defensive enforcement pass
+PASS verified-authority mapping: controlling vs related-only vs missing-cards-cannot-be-controlling
+PASS unsafe source states never yield a false verified-authority claim
+PASS restricted legal conclusions always force human review and forbid filing-ready/auto-submission output
+PASS controlled procedural responses never claim a restricted legal conclusion and forbid filing-ready/auto-submission output
+PASS conflict (corrected by PHASE-10A1-R1): raw upstream conflict signals alone never yield hasConflict:true; only renderer-complete metadata does; conflict never implies fully settled controlling authority
+PASS domain boundary: NOT_APPLICABLE everywhere, no invented tax authority confidence
+PASS legacy/missing fields: safe UNKNOWN/NOT_APPLICABLE defaults, never throws, never mutates input
+PASS API forwarding: ask-handler.js imports and calls the real, extractable buildResponseTrust builder at both response-construction locations
+PASS API forwarding: trust appears for controlled LOA procedural, restricted legal-conclusion, verified-authority, related-authority, no-authority, domain-boundary, and safe fallback response shapes
+PASS no secret appears in the fixture or report
+PASS diff scope: no frontend/timeout/route-ordering/conflict-engine/feature-flag/production runtime file was touched, and this task's own files are exactly the PHASE-10A1 set
+PASS corroborating existing regression suites are cited and exist
+PASS report exists and Phase 10A is not marked complete
+
+PHASE-10A1-CANONICAL-TRUST-CONTRACT-AND-API-FORWARDING-REMEDIATION-1 tests: 17 passed, 1 failed, 125 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+FAIL CURRENT_STATE.md records PHASE-10A1 without marking Phase 10A itself closed/complete
+  CURRENT_STATE contains the 10A1 patch identifier
+  ── output of failing suite tests\phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs ──
+PASS fixture exists and is valid JSON with conflict cases and the VERIFIED_SUPPORTING conclusion
+PASS root cause is proven directly: the real Step-9 conflict shape never satisfies the real conflictMetadataIsComplete()
+PASS all conflict fixture cases produce the exact required contract via real execution
+PASS A. verified/displayable conflict
+PASS B. potential/incomplete conflict
+PASS C. no conflict
+PASS D. unknown conflict (missing or malformed input, never throws)
+PASS E. domain boundary
+PASS F. contradictory inputs produce a safe categorical state, never a silent NO_CONFLICT or an overstated VERIFIED_CONFLICT
+PASS G. VERIFIED_SUPPORTING cannot be produced without a distinct authoritative supporting signal
+PASS H. mutation safety: input is not mutated, output is deterministic and serializable
+PASS I. response-construction behavior: buildResponseTrust (the real, extractable builder ask-handler.js calls) produces corrected trust for verified, potential, no-conflict, controlled LOA, restricted, and domain-boundary shapes
+PASS J. backward compatibility: trust.hasConflict remains present, trust.conflictState is additive, no existing top-level response field removed
+PASS classifyConflictState mirrors pipeline.js's exact renderTinaAnswer wiring (conflict: ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null)
+PASS conflict-trust-classifier.js does not modify conflict-engine.js, pipeline.js conflict generation, answer-renderer.js, or final-answer-compliance.js
+PASS no secret appears in the fixture or report
+PASS diff scope: only PHASE-10A1-R1's own files and the two already-authorized PHASE-10A1 files were touched
+PASS corroborating existing regression suites are cited and exist
+PASS report exists and Phase 10A / PHASE-10A2 status is correctly recorded
+
+PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1 tests: 19 passed, 1 failed, 107 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+FAIL CURRENT_STATE.md records PHASE-10A1-R1 without marking Phase 10A itself closed/complete
+  CURRENT_STATE contains the 10A1-R1 patch identifier
+  ── output of failing suite tests\phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs ──
+  INSTANCE_ID: '135c9d8948393765',
+  pid: 23676,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and is valid JSON with all required categories
+PASS A. restricted outcome prediction queries are deterministically classified excluded
+PASS B. validity and voidness queries are deterministically classified excluded
+PASS C. legal strategy / final opinion / definitive conclusion queries are excluded, never filing-ready
+PASS D. early-interception proof: the upstream gate module has zero I/O references and executes synchronously with no retrieval/model/DB call
+PASS E. defense in depth: Step 12.66 inside pipeline.js still restricts a query if the upstream gate is bypassed
+PASS F. jurisprudence questions are not falsely restricted (fixes the prior asksCta bare-mention false positive)
+PASS G. controlled LOA procedural preservation: safe procedural questions are never excluded
+PASS general tax control queries are never excluded
+PASS H. context-free outcome wording never triggers automatic Philippine-tax restricted classification (Invariant 8)
+PASS I. trust contract for the restricted path is fully consistent
+PASS J. timeout preservation: the gate's response never depends on route timeout machinery and is not a generic RETRIEVAL_TIMEOUT fallback
+PASS K. no prohibited language in the restricted answer text
+PASS mutation safety and determinism
+PASS hook and feature-flag scope: ask-handler.js restricts the upstream gate to /ask and the existing TINA_ENABLE_CONTROLLED_LOA_ASK_GATE flag
+PASS no secret appears in the fixture or report
+PASS diff scope: only PHASE-10A2's minimal runtime files and its own artifacts were touched
+PASS pipeline.js Step 12.65/12.66 ordering and RAG_TIMEOUT_MS value are unchanged
+PASS corroborating existing regression suites are cited and exist
+PASS report exists and PHASE-10A3/Phase 10B status is correctly recorded
+
+PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1 tests: 20 passed, 1 failed, 171 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+FAIL CURRENT_STATE.md records PHASE-10A2 without marking Phase 10A itself closed/complete
+  CURRENT_STATE contains the 10A2 patch identifier

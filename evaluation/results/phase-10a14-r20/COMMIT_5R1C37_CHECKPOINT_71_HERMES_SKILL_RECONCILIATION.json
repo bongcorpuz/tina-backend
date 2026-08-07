@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "EXTERNAL_NONREPOSITORY_ARTIFACT_NOT_LOADED",
+  "generatedUtc": "2026-08-03T13:29:25.573Z",
+  "reportedStatement": "Skill 'governed-external-invocations' created.",
+  "boundedMetadataOnlySearch": {
+    "repositoryRoot": "C:/Projects/tina-backend",
+    "repositoryExactNameHits": 0,
+    "configuredHermesHome": "C:/Users/USER/AppData/Local/hermes",
+    "configuredSkillRoot": "C:/Users/USER/AppData/Local/hermes/skills",
+    "exactNameHits": 1
+  },
+  "artifact": {
+    "path": "C:/Users/USER/AppData/Local/hermes/skills/software-development/governed-external-invocations",
+    "type": "directory",
+    "fileCount": 2,
+    "totalBytes": 10543,
+    "aggregateAlgorithm": "SHA256 UTF-8 concatenation of lexical relativePath NUL bytes NUL fileSha256 LF",
+    "aggregateSha256": "bafffd4dd28ea7d37ff4d3a17d0aa8510abfe0205ecfb92652ed4bd1743f5a42",
+    "files": [
+      {
+        "relativePath": "references/checkpointed-provider-invocation.md",
+        "bytes": 4188,
+        "sha256": "41ea134fc0d98c16e9ce6dbf8941cb93d2e492c207414014b53f9bda9eed2ab7"
+      },
+      {
+        "relativePath": "SKILL.md",
+        "bytes": 6355,
+        "sha256": "8929f1b713fee292ff77560b73906121bd982e04056d0f17354ed9e7ebdd7fe3"
+      }
+    ],
+    "contentLoaded": false,
+    "executed": false,
+    "installedByCurrentContinuation": false,
+    "editedMovedOrDeleted": false,
+    "staged": false
+  },
+  "nonImpactProof": {
+    "outsideRepository": true,
+    "repositoryArtifactAbsent": true,
+    "compatibleWrapperSha256": "6c85d355d46fe5808e7c21996e8ca44255d6b8933021eaf84fcdab7dd61e90bc",
+    "wrapperReferencesArtifactOrHermesHome": 0,
+    "wrapperDisablesSlashCommands": true,
+    "wrapperUsesOnlyReadTool": true,
+    "wrapperUsesStrictEmptyMcp": true,
+    "preparedPackageEntriesMatching": 57,
+    "preparedPackageAggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "trackedTreeClean": true,
+    "stagingEmpty": true,
+    "transportUnaffected": true,
+    "codexExecutionUnaffected": true
+  },
+  "blocking": false,
+  "pass": true
+}

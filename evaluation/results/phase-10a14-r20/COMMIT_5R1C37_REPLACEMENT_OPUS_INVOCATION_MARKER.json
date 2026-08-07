@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_REPLACEMENT_OPUS_INVOCATION_MARKER_SUBMISSION_IMMINENT",
+  "checkpoint": {
+    "ordinal": 66,
+    "sha256": "8348750e6fb07df633514d8170c2da9c9493980f96eb61d656f205e7f4631626"
+  },
+  "governingPromptSha256": "870a85330fb54c3c32871e67aebec0698d65e3aca61b1e0b51ea570ff2d632f1",
+  "authorization": {
+    "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "statusBeforeSubmission": "AUTHORIZED_UNUSED",
+    "invocationOrdinal": 1,
+    "maximumInvocations": 1,
+    "retryAuthorized": false
+  },
+  "cli": {
+    "path": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "version": "2.1.212 (Claude Code)"
+  },
+  "model": "claude-opus-4-8",
+  "config": {
+    "path": "C:\\tmp\\c37-replacement-checkpoint66-20260801T123200Z\\empty-mcp.json",
+    "bytes": 18,
+    "sha256": "e93fc8db2b1bd77107fe6c758bca9545fa864cf7cce8ab93a7b2b93a1d566a7b",
+    "strict": true
+  },
+  "package": {
+    "entries": 57,
+    "rawEvidenceBytes": 4109852,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08"
+  },
+  "wrappers": {
+    "checkpoint65JsonSha256": "1311ff53a80e93d5c7fe35fdbc5c2029ab789d68c2e5cb41dafb11f90554f712",
+    "checkpoint65MarkdownSha256": "ad8511245e2b4fecc7d12a0f53de560c62a3601b138be664bcfaa9c35a130ec8",
+    "checkpoint66JsonSha256": "7533999219d398cccba423ddd169b54437ef2a98be321888d96d6083e75d5c36",
+    "checkpoint66MarkdownSha256": "1ffdf578a00957b9bb2a7da520cd44c29e52059754977ac17cf29d6b15e1b9b6"
+  },
+  "finalPreflight": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_66_REPLACEMENT_OPUS_FINAL_PREFLIGHT.json",
+    "bytes": 3624,
+    "sha256": "3921f03993b07f305b7ec1b86fa8d01b65df47c5bf0037ec9df31a97e24108cb"
+  },
+  "driver": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_66_REPLACEMENT_OPUS_DRIVER.mjs",
+    "bytes": 27109,
+    "sha256": "5b82dc6ebbc927fbf16610d38fb54aac0fe6d9231aefc9439cdd6e7a06d7d1d5"
+  },
+  "stdin": {
+    "totalBytes": 4193594,
+    "sha256": "8f1f3d5f18cc18a004631d38236f5389d5891b2b757ac340b73f8e01732fdb6e",
+    "evidenceBytes": 4109852
+  },
+  "startedUtc": "2026-08-01T12:46:46.114Z"
+}

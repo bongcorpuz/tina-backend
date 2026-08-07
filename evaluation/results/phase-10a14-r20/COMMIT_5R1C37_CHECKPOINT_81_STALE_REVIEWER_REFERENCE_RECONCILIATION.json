@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 81",
+  "classification": "C37_CHECKPOINT_81_STALE_REVIEWER_REFERENCE_RECONCILIATION",
+  "generatedAtUtc": "2026-08-07T22:57:00Z",
+
+  "searchMethod": {
+    "pattern": "Opus 4\\.8|opus-4\\.8|claude-opus-4-8|claude-opus-4\\.8",
+    "scopeExact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_* (this unit's own evidence trail only)",
+    "scopeRationale": "The reviewer's Obs-6 named exactly three artifacts, all within COMMIT_5R1C37_*. A broader initial search (unscoped) matched ~100+ files across entirely separate, already-closed prior commit units (C4, C5, C6, C32, C33, C34, C35, C36) and C37's own frozen checkpoint-64-through-71 history. None of those are within this unit's authorized correction scope: they are HISTORICAL_VALID or SEALED_OR_RAW by construction, correcting them would rewrite history and would exceed the 10-active-file cap trivially, and blanket search-and-replace across them is explicitly prohibited.",
+    "totalMatchesInScopedSearch": 46,
+    "totalMatchesInUnscopedSearch": ">100 (search tool head-limited at 100)"
+  },
+
+  "classificationOfAllScopedMatches": {
+    "categoryBreakdown": {
+      "checkpoint78Through80OwnRecentArtifacts": {
+        "count": 4,
+        "examples": ["COMMIT_5R1C37_CHECKPOINT_80_FINAL_C37_ADJUDICATION.json", "COMMIT_5R1C37_CHECKPOINT_80_RAW_REVIEWER_RESPONSE_JSON.json", "COMMIT_5R1C37_CHECKPOINT_80_OUTPUT_SCHEMA_WRAPPER.json", "COMMIT_5R1C37_CHECKPOINT_80_OPUS_5_GOVERNANCE_AMENDMENT.json", "COMMIT_5R1C37_RECOVERY_CHECKPOINT_79_opus_4_8_unavailable_safe_pause.json", "COMMIT_5R1C37_CHECKPOINT_79_PREFLIGHT_AND_PACKAGE_VERIFICATION.json", "COMMIT_5R1C37_RECOVERY_CHECKPOINT_78_authorization_withheld_safe_pause.json", "COMMIT_5R1C37_CHECKPOINT_78_AUTHORIZATION_WITHHELD_ADJUDICATION.json"],
+        "classification": "A_HISTORICAL_VALID",
+        "reason": "These are the primary executor's OWN authored records, written specifically to accurately narrate the fact that Opus 4.8 was previously required and became unavailable. They do not claim Opus 4.8 is currently required going forward; they correctly document a resolved past state. No correction needed or appropriate.",
+        "action": "PRESERVE_UNCHANGED"
+      },
+      "checkpoint64Through71FrozenHistory": {
+        "count": 39,
+        "examples": ["COMMIT_5R1C37_CHECKPOINT_71_MANIFEST_INDEXED_OPUS_FINAL_PREFLIGHT.json", "COMMIT_5R1C37_REPLACEMENT_OPUS_CLI_CAPTURE.json", "COMMIT_5R1C37_FINAL_OPUS_REQUEST.md", "COMMIT_5R1C37_FINAL_OPUS_INVOCATION_MARKER.json", "COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json"],
+        "classification": "B_SEALED_OR_RAW",
+        "reason": "These are frozen records of the actual, historical checkpoint-64-through-71 attempts to invoke Opus 4.8, including genuine technical failures (checkpoints 65, 67), safe pauses, and raw CLI-invocation captures with real timestamps and exit codes. They correctly required Opus 4.8 AT THE TIME they were written, because that was the controlling authorization then in force. Rewriting them would falsify the historical record of what was actually attempted and why it failed.",
+        "action": "PRESERVE_UNCHANGED"
+      },
+      "recoveryCheckpointLogNdjson": {
+        "count": 1,
+        "path": "COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+        "classification": "B_SEALED_OR_RAW",
+        "reason": "An append-only historical log of checkpoint transitions. Editing a log to alter historical entries would falsify the record. New checkpoint-81 activity will be reflected by appending, not by rewriting existing lines, and this checkpoint's own creation does not require touching this file.",
+        "action": "PRESERVE_UNCHANGED"
+      },
+      "theThreeReviewerNamedArtifacts": {
+        "count": 3,
+        "paths": [
+          "COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json",
+          "COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json",
+          "COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json"
+        ],
+        "classification": "B_SEALED_OR_RAW",
+        "detail": [
+          {
+            "path": "COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json",
+            "sealedStatus": "SEALED — 57-entry package ordinal 36, evidenceClass SEMANTIC_CORE_DECISION",
+            "staleField": "exactProposedNextOperation",
+            "staleValue": "Invoke exactly one read-only Claude Code Opus 4.8 review of the complete no-runtime governance package.",
+            "reasonNotEdited": "Part of the immutable 57-entry package, hash-bound into checkpoint 80's Layer 1 evidence corpus (aggregateSha256 7fbc288b...). Editing it would invalidate an already-sealed, already-reviewed hash.",
+            "correctCurrentStatement": "This field is now historically accurate as a description of what WAS required before the checkpoint-80 governance amendment. It is superseded, not wrong at the time it was written."
+          },
+          {
+            "path": "COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json",
+            "sealedStatus": "SEALED — 57-entry package ordinal 45, evidenceClass SEMANTIC_CORE_STATUS_OR_DOCUMENTATION",
+            "staleField": "effectiveOnlyAfterOpusApproval",
+            "reasonNotEdited": "Same as above — sealed, hash-bound package member.",
+            "correctCurrentStatement": "The field's underlying gating logic (status becomes effective only after a valid independent Opus approval) remains TRUE; only the specific model identity behind 'Opus' has been amended by checkpoint 80 to claude-opus-5, and that approval has now in fact occurred."
+          },
+          {
+            "path": "COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json",
+            "sealedStatus": "NOT in the 57-entry package by name, but a frozen raw capture of an actual historical CLI invocation attempt (classification C37_FINAL_OPUS_REVIEW_CLI_CAPTURE_NOT_APPROVED, model claude-opus-4-8, startedUtc 2026-08-01T10:48:21.724Z, endedUtc 2026-08-01T10:48:23.130Z, exitCode 1, spawnError 'write EOF')",
+            "reasonNotEdited": "This is a raw, timestamped record of an actual failed technical event. It presupposes the Opus 4.8 CLI path because that IS literally the command that was run and failed. Editing it would falsify a historical technical-failure record.",
+            "correctCurrentStatement": "This capture correctly documents a real, dated, failed attempt. The eventual successful review used a different mechanism entirely (an agent-spawning tool invocation, not a bare CLI subprocess) and a different model (claude-opus-5), recorded separately in checkpoint 80."
+          }
+        ],
+        "action": "PRESERVE_ALL_THREE_UNCHANGED_ADDITIVE_ERRATUM_ONLY"
+      }
+    },
+    "totalActiveControllingStaleFound": 0,
+    "totalActiveNonControllingStaleFound": 0,
+    "totalAmbiguousFound": 0
+  },
+
+  "mutationAllowlist": {
+    "note": "Per Phase 3's requirement to create an exact mutation allowlist before changing any active file: this reconciliation found ZERO files in category C (ACTIVE_CONTROLLING_STALE) or D (ACTIVE_NONCONTROLLING_STALE). All matches are either the primary executor's own already-accurate recent records (A), or sealed/frozen/raw historical artifacts (B). The mutation allowlist is therefore EMPTY.",
+    "entries": [],
+    "activeFilesModifiedByThisPhase": 0,
+    "cappedAt10NonCurrentStateFiles": true,
+    "actualCountUsedOfCap": 0,
+    "blanketSearchAndReplacePerformed": false
+  },
+
+  "additiveErratumCreated": {
+    "coversAllThreeReviewerNamedArtifacts": true,
+    "erratumContent": "Effective checkpoint 80 (2026-08-07T18:14:00Z), the reviewer-model requirement for C37's independent review was amended from claude-opus-4-8 (unavailable in the execution environment) to claude-opus-5, via an explicit governance amendment that does not claim model equivalence. A valid claude-opus-5 review was subsequently obtained and is recorded in checkpoint 80. Any statement in this unit's evidence trail requiring, presupposing, or referencing 'Opus 4.8' as the CURRENT or FUTURE reviewer requirement should be read as historically accurate for the period before checkpoint 80, and as superseded by the checkpoint-80 amendment thereafter. No sealed, frozen, or raw artifact was edited to reflect this; this erratum is the correction mechanism.",
+    "bindsToOriginalPaths": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json (sha256 unchanged, ordinal 36)",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.json (sha256 unchanged, ordinal 45)",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_CLI_CAPTURE.json (sha256 unchanged)"
+    ],
+    "controllingDecisionChanged": false,
+    "explicitStatement": "This erratum clarifies documentation. It does not reopen, revise, or contradict any decision made in checkpoint 80."
+  }
+}

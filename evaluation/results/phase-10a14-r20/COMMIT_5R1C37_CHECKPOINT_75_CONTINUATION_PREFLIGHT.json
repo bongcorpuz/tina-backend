@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 75",
+  "classification": "C37_CHECKPOINT_75_FRESH_CONTINUITY_AND_GIT_PREFLIGHT",
+  "stage": "PREFLIGHT",
+  "status": "COMPLETE",
+  "generatedAtUtc": "2026-08-07T03:10:23Z",
+  "completedAtUtc": "2026-08-07T03:21:43Z",
+  "previousCheckpoint": 74,
+  "operationScope": "READ_ONLY_PREFLIGHT_AND_INDEPENDENT_REVIEW",
+
+  "repository": {
+    "windowsPath": "C:\\Projects\\tina-backend",
+    "shellPath": "/c/Projects/tina-backend",
+    "remoteUrl": "https://github.com/bongcorpuz/tina-backend.git"
+  },
+
+  "gitIdentity": {
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "origin/feature/source-availability-engine-v1",
+    "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "aheadOfUpstream": 0,
+    "behindUpstream": 0,
+    "headEqualsGovernedBaseline": true,
+    "parentEqualsGovernedBaseline": true,
+    "remoteTipEqualsGovernedBaseline": true,
+    "verificationMethod": "git rev-parse HEAD / HEAD^ / origin ref; git rev-list --left-right --count",
+    "reverifiedAtEndOfPreflightUtc": "2026-08-07T03:21:43Z",
+    "reverificationResult": "IDENTICAL_NO_DRIFT"
+  },
+
+  "workingTree": {
+    "totalTrackedFiles": 13975,
+    "stagedPaths": 0,
+    "stagedPathList": [],
+    "modifiedTrackedPaths": 4,
+    "modifiedTrackedPathList": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "untrackedPaths": 281,
+    "deletedPaths": 0,
+    "statusCommand": "git status --porcelain=v1 --untracked-files=all",
+    "diffStat": {
+      "knowledge/CURRENT_STATE.md": "+114 / -0",
+      "security/public-health.js": "+? / -? (semantic, see health governance record)",
+      "server.js": "+? / -? (semantic, see health governance record)",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs": "+? / -? (semantic, see health governance record)"
+    },
+    "cleanlinessAssertion": "REPOSITORY IS NOT CLEAN. 4 tracked modifications and 281 untracked paths are present. No claim of cleanliness is made."
+  },
+
+  "gitConfigurationFacts": {
+    "core.autocrlf": "true",
+    "core.filemode": "false",
+    "core.protectNTFS": "false",
+    "core.sparseCheckout": "true",
+    "repositoryGitattributes": "ABSENT",
+    "globalExcludesFile": "C:\\Users\\USER/.config/git/ignore",
+    "globalExcludesContent": "**/.claude/settings.local.json"
+  },
+
+  "locksAndWriters": {
+    "indexLockPresent": false,
+    "staleStashLocks": [
+      ".git/index.stash.15252.lock (2026-07-21)",
+      ".git/index.stash.16420.lock (2026-07-19)",
+      ".git/index.stash.24536.lock (2026-07-19)",
+      ".git/index.stash.26220.lock (2026-07-16)",
+      ".git/index.stash.59972.lock (2026-07-14)"
+    ],
+    "staleStashLockAssessment": "PRE_EXISTING_STALE_ARTIFACTS_FROM_JULY_2026. Not active locks. NOT REMOVED — removal requires human authorization.",
+    "rebaseInProgress": false,
+    "mergeInProgress": false,
+    "cherryPickInProgress": false,
+    "orig_head": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+    "rebase_head_stale": "ee7eca2c05063ac01137d3117af5fc731f316b80",
+    "fetch_head": "ee664eab4529c636f34cb6d37d23a6a497886a17"
+  },
+
+  "processObservations": {
+    "openclawProcessRunning": false,
+    "openclawWorkspaceStateFile": "openclaw-workspace-state.json",
+    "openclawSetupCompletedAtUtc": "2026-08-07T01:58:40.448Z",
+    "openclawStatus": "QUIESCENT",
+    "openclawFutureExecutionDisabled": "NOT_PROVEN",
+    "openclawAssessment": "No openclaw process observed. A completed one-shot initializer marker is NOT proof that future execution is disabled. Recorded as quiescent only.",
+    "hermesGatewayProcesses": [
+      { "pid": 21112, "name": "python.exe", "createdLocal": "2026-08-07T07:56:54+08:00", "commandLine": "hermes_cli.main --profile tina-orchestrator gateway run" },
+      { "pid": 4472, "name": "python.exe", "createdLocal": "2026-08-07T07:56:54+08:00", "commandLine": "hermes_cli.main --profile tina-orchestrator gateway run" }
+    ],
+    "hermesStatusRelativeToThisRepository": "RUNNING_BUT_QUIESCENT_TOWARD_THIS_REPOSITORY",
+    "hermesLastObservedRepositoryWriteLocal": "2026-08-04T23:50 (.hermes/plans/*)",
+    "observedNonMutatingWriterEvent": {
+      "detectedAtLocal": "2026-08-07T11:12:06+08:00",
+      "artifacts": [".git/FETCH_HEAD", ".git/objects"],
+      "probableOrigin": "IDE/editor background git autofetch",
+      "mutationAssessment": "NON_MUTATING. Remote tip, HEAD, refs, index and working tree were byte-identical before and after. ahead/behind remained 0/0.",
+      "safePauseTriggered": false,
+      "rationale": "A ref-advertisement fetch that changed no ref, no index entry and no working-tree byte is not a mutating writer. HEAD and remote tip were re-verified after the event and were unchanged."
+    },
+    "noProcessKilledDisabledOrModified": true
+  },
+
+  "indexStability": {
+    "gitIndexMtimeLocal": "2026-08-07T10:23:20.065681+08:00",
+    "gitIndexMtimePrecedesThisOperation": true,
+    "statusAtOperationStart": { "modified": 4, "untracked": 281 },
+    "statusAtOperationEnd": { "modified": 4, "untracked": 281 },
+    "currentStateSha256AtStart": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+    "currentStateSha256AtEndOfPreflight": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+    "stabilityConclusion": "NO_MUTATION_BY_ANY_WRITER_DURING_PREFLIGHT"
+  },
+
+  "checkpoint74Verification": {
+    "recoveryCheckpointPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json",
+    "recoveryCheckpointSha256Observed": "43f72ce65b7b3bf171f564c477af229148770f5490cfcc8311032ce793ebe724",
+    "recoveryCheckpointSha256Reported": "43f72ce65b7b3bf171f564c477af229148770f5490cfcc8311032ce793ebe724",
+    "recoveryCheckpointHashMatch": true,
+    "manifestReconciliationPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_MANIFEST_DOCUMENTATION_ENTRY_RECONCILIATION.json",
+    "manifestReconciliationSha256Observed": "64f548f00b651591108873760a3c9b0e8f75653eea6ae46498405f0f08652ee5",
+    "finalEvidencePath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256",
+    "finalEvidenceSha256Observed": "92770a4bfee37d13ff3e2d7eec5159541460b8c03cc530621cdd0dda3e1ae9f8",
+    "currentStateSha256Reported": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+    "currentStateSha256Observed": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+    "currentStateHashMatch": true,
+    "allCheckpoint74EvidenceEntriesVerified": true,
+    "workingTreeMatchesReportedCheckpoint74State": true
+  },
+
+  "authorizationLedger": {
+    "opusAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false,
+    "consumedByThisOperation": false,
+    "externalProviderInvocationPerformed": false,
+    "authorizationContinuityClear": true
+  },
+
+  "continuityFlags": {
+    "safeToResumeAtCheckpoint74": true,
+    "activeAttemptIdAtCheckpoint74": null,
+    "phase": "10A",
+    "workstream": "R20",
+    "commitUnit": "COMMIT 5R1-C37",
+    "phase10AStatus": "OPEN",
+    "phase10BAuthorized": false
+  },
+
+  "preservationRefsVerified": {
+    "refs/heads/governance/ungoverned-ff1bc2b1": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+    "refs/tags/governance/pre-remediation-ff1bc2b1": "707990bdd89c974c4e3ec6afa90e1365fcbb53a3",
+    "ungovernedCommitObjectPresent": true,
+    "ungovernedCommitReachable": true
+  },
+
+  "prohibitedOperationsNotPerformed": [
+    "git reset", "git checkout", "git merge", "git pull", "git commit", "git amend",
+    "git push", "git force-push", "git add / staging", "deployment",
+    "deletion of protected or unexplained files", "editing of sealed evidence",
+    "Opus external-provider invocation", "creation of a candidate runtime fix",
+    "full R20 regression", "reindexing", "migration", "production smoke test",
+    "external review transport", "termination or modification of any process or service"
+  ]
+}

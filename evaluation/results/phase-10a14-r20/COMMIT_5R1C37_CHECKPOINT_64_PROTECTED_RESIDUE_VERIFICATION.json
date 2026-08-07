@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_64_PROTECTED_RESIDUE_VERIFIED",
+  "generatedUtc": "2026-08-01T10:45:14.789Z",
+  "baseline": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROTECTED_RESIDUE_BASELINE.json",
+    "bytes": 8839,
+    "sha256": "8de6ed4d617a561fe0e3a1357d051c3e9aee343849fcb659636aab5059b38094"
+  },
+  "protectedBaselineRecords": [
+    {
+      "path": ".claude/settings.local.json",
+      "expectedBytes": 4466,
+      "expectedSha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+      "actualBytes": 4466,
+      "actualSha256": "9b3fd5a5c9361a737605b6738b76e486e1a2c7ca5479b65f39f35cb96778a9dc",
+      "pass": true
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "expectedBytes": 70,
+      "expectedSha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+      "actualBytes": 70,
+      "actualSha256": "377b93292332cf8f6ed00dcafa911a8ca2ee6d6c7957603578646c7518b7df09",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/hardest-philippine-tax-question.md",
+      "expectedBytes": 8064,
+      "expectedSha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+      "actualBytes": 8064,
+      "actualSha256": "6de089ebf3498d381e9818963a10c1b56b2d8bd34faed826432d5345f64b8df7",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/README.md",
+      "expectedBytes": 1890,
+      "expectedSha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+      "actualBytes": 1890,
+      "actualSha256": "2717268c74fdbd7d46ff064b2f2c0094bcb6ff7bff3194115104860d5363bd4a",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/TINA_Adversarial_Anti_Hallucination_Test_Set_PH_Tax_v2_0.md",
+      "expectedBytes": 35275,
+      "expectedSha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+      "actualBytes": 35275,
+      "actualSha256": "c3ec5c39679ed379113ce5345e513355405ff20c6456893d60fb54588033aa08",
+      "pass": true
+    },
+    {
+      "path": "evaluation/factcheck/TINA_Tax_FactCheck_Corrected_Validated_Master_v3_0.md",
+      "expectedBytes": 87771,
+      "expectedSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+      "actualBytes": 87771,
+      "actualSha256": "526106e594667705df227930dff3d9a4717ec99b171626bf708db43f4eac4bed",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_GIT_VERIFICATION.json",
+      "expectedBytes": 281280,
+      "expectedSha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+      "actualBytes": 281280,
+      "actualSha256": "05dada6e80fa6ded5c03261c4bc59043a2072e2431bb4ca84cc6c48690d1f856",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_REMOTE_VERIFICATION.json",
+      "expectedBytes": 982,
+      "expectedSha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+      "actualBytes": 982,
+      "actualSha256": "88edca1c993ddfbfe757ac21d54bd859b2adc33dcbb839c6f264419d4837863f",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT.json",
+      "expectedBytes": 6287,
+      "expectedSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "actualBytes": 6287,
+      "actualSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_60_two_hour_checkpoint_57_terminal_reconciliation.json",
+      "expectedBytes": 6287,
+      "expectedSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "actualBytes": 6287,
+      "actualSha256": "a2c58b82d05719738bbe6e5b8145a6a5b6a84b6357fe30f5fe51625cd9cfa75a",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "expectedBytes": 385974,
+      "expectedSha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "actualBytes": 385974,
+      "actualSha256": "091656f6c5cb188417bdce1bc799bd5328d4450365d3f51e5655a851239e7b2d",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_TWO_HOUR_OPUS_RECOVERY_TERMINAL_STATE.json",
+      "expectedBytes": 14572,
+      "expectedSha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee",
+      "actualBytes": 14572,
+      "actualSha256": "90b3dc2df48288c21995c06f4fa640e77363e54660d8516aca4d04bfeb4bfbee",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_GIT_VERIFICATION.json",
+      "expectedBytes": 1022,
+      "expectedSha256": "7782e02960bb7f8aac4d603bc8cca4dcf0a7def37636762d32fef033edd6b732",
+      "actualBytes": 1022,
+      "actualSha256": "7782e02960bb7f8aac4d603bc8cca4dcf0a7def37636762d32fef033edd6b732",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_REMOTE_VERIFICATION.json",
+      "expectedBytes": 1024,
+      "expectedSha256": "78bc3f1c312df6f4b415b03e0b8a11982808417ab8812e63a8c945f14fc325e0",
+      "actualBytes": 1024,
+      "actualSha256": "78bc3f1c312df6f4b415b03e0b8a11982808417ab8812e63a8c945f14fc325e0",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_POST_COMMIT_TERMINAL_STATE.json",
+      "expectedBytes": 3234,
+      "expectedSha256": "8d01a5b1faee52ab94249339317e0fba75305caeaf4047cfdc614a0e1177cc11",
+      "actualBytes": 3234,
+      "actualSha256": "8d01a5b1faee52ab94249339317e0fba75305caeaf4047cfdc614a0e1177cc11",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT.json",
+      "expectedBytes": 4212,
+      "expectedSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "actualBytes": 4212,
+      "actualSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT_62_four_hour_finalization_terminal_reconciliation.json",
+      "expectedBytes": 4212,
+      "expectedSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "actualBytes": 4212,
+      "actualSha256": "ff53f32ccb8fdfd037f04db655361c8a4c340b46570913a713806f200b6c06b7",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "expectedBytes": 10286,
+      "expectedSha256": "f756976c8569b53376e53141075eb374849660a10f595afeb0810a17686a2412",
+      "actualBytes": 10286,
+      "actualSha256": "f756976c8569b53376e53141075eb374849660a10f595afeb0810a17686a2412",
+      "pass": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Roadmap_v7.md",
+      "expectedBytes": 14842,
+      "expectedSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+      "actualBytes": 14842,
+      "actualSha256": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+      "pass": true
+    },
+    {
+      "path": "knowledge/TINA_Updated_Controlling_Roadmap_v8.md",
+      "expectedBytes": 29298,
+      "expectedSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+      "actualBytes": 29298,
+      "actualSha256": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_EVIDENCE.sha256",
+      "expectedBytes": 93862,
+      "expectedSha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764",
+      "actualBytes": 93862,
+      "actualSha256": "d1c4c9d7b3909eb8e1c997521dc0988f62e46ee3aa661027ecb8d183c2438764",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_EVIDENCE.sha256",
+      "expectedBytes": 17193,
+      "expectedSha256": "a21b4f6f2074631eb84751683178d533e0611218df9f3e440bd59e47fb15331d",
+      "actualBytes": 17193,
+      "actualSha256": "a21b4f6f2074631eb84751683178d533e0611218df9f3e440bd59e47fb15331d",
+      "pass": true
+    }
+  ],
+  "c36SafePauseInventory": {
+    "manifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 7228,
+      "sha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812"
+    },
+    "rows": 48,
+    "uniquePaths": 48,
+    "bad": [],
+    "pass": true
+  },
+  "c37Checkpoint64ProtectedInputs": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+      "bytes": 3800,
+      "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json",
+      "bytes": 3800,
+      "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_IDEMPOTENCE_REPLAY.json",
+      "bytes": 4859,
+      "sha256": "80ae4bff8d2671ad3261abff5ab3e1d16da3520c97dedebc2379eb203960bade"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+      "bytes": 3370,
+      "sha256": "f21f166d9ae4c79bfb152bcb4bc6705901e47ac799e43234f4031400783d3575"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_TERMINAL_STATE.json",
+      "bytes": 1573,
+      "sha256": "e66de65ef43e214e87d86bcb4a5d3a3d697dc30693a4bcb01ddef39c326db429"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_PENDING_OPUS_RECONCILIATION.json",
+      "bytes": 5249,
+      "sha256": "44c8d09fff5deefe5b8c7caf4b21152c5fcbf02ac557ab9e7ad19f5eeb24eaa4"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_SAFE_PAUSE_CHECKPOINT_DRIVER.mjs",
+      "bytes": 16054,
+      "sha256": "965f819647b1afa33258072efbf7a71b5c6232b4c25960f0e3c0347b67c92b04"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_READ_ONLY_DELEGATION_RECORD.json",
+      "bytes": 4747,
+      "sha256": "44451454062729d16fcf81b3367d8297b5e42433f2c32fc1d9fe6f409c4f3cc4"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-adjudicate.mjs",
+      "bytes": 75027,
+      "sha256": "3ccaec408c543d097dd0780385233a787621eef58eedfda4da09f7ffee8180dd"
+    },
+    {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c37-preflight.mjs",
+      "bytes": 19121,
+      "sha256": "8ee7a020324915f432094901adff4d449b363f8f7c30d64323c787e436e1b2c5"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.json",
+      "bytes": 8101,
+      "sha256": "abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    }
+  ],
+  "reconciliationBoundChecks": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.json",
+      "bytes": 8101,
+      "sha256": "abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79",
+      "expectedSha256": "abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79",
+      "pass": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+      "expectedSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+      "pass": true
+    }
+  ],
+  "existingJsonRequestPreservation": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.json",
+    "sha256": "abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79",
+    "protectedAndNotOverwritten": true,
+    "continuationConflictAdjudication": "The checkpoint-64 continuation requires a stricter request and also prohibits overwriting completed evidence. The immutable JSON remains preserved; the new Markdown request is the controlling checkpoint-64 overlay and removes the prohibited runtime-candidate token."
+  },
+  "mismatches": [],
+  "pass": true
+}

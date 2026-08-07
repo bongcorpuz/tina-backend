@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_66_PACKAGE_AND_REQUEST_CONTINUITY_PASS",
+  "generatedUtc": "2026-08-01T12:35:40.633Z",
+  "package": {
+    "entries": 57,
+    "uniquePaths": 57,
+    "uniqueOrdinals": 57,
+    "ordinalRange": "1-57",
+    "rawEvidenceBytes": 4109852,
+    "sourceManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+    },
+    "transmissionShaManifestByteIdentical": true,
+    "detailedManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+      "bytes": 45178,
+      "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+    },
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "memberHashesRecomputed": 57,
+    "memberHashMismatches": 0,
+    "pathOrSymlinkEscapes": 0,
+    "nonRegularFiles": 0,
+    "invalidUtf8Files": 0,
+    "nulContainingFiles": 0,
+    "packageRebuiltOrChanged": false
+  },
+  "scopeAndSensitiveValidation": {
+    "scopeValidationSha256": "b3d0f567a26f6c6d68dff913a1e3483680c56ec008af2c8e710ebc3e4a0e78f3",
+    "sensitiveScanSha256": "095882b65614515e29b5db0813db8adf39021c6fc9cf4b2ec7a1515c7609ebaf",
+    "findings": 0,
+    "pass": true
+  },
+  "existingRequest": {
+    "json": {"bytes":8101,"sha256":"abe554cbac877d63e1ea5438a7a12deb0449cc0990da060b4f883eb52a017e79"},
+    "markdown": {"bytes":8678,"sha256":"0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449"},
+    "unchanged": true
+  },
+  "replacementWrapper": {
+    "json": {"bytes":2906,"sha256":"1311ff53a80e93d5c7fe35fdbc5c2029ab789d68c2e5cb41dafb11f90554f712"},
+    "markdown": {"bytes":2598,"sha256":"ad8511245e2b4fecc7d12a0f53de560c62a3601b138be664bcfaa9c35a130ec8"},
+    "unchanged": true,
+    "submissionStatus": "NOT_SUBMITTED"
+  },
+  "authorization": {
+    "sha256": "72a6c3eb7cbefec17c8bd19062c4002ca7b9322533ddfef3cae605032985452e",
+    "status": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "remainingInvocations": 1,
+    "retryAuthorized": false
+  },
+  "replacementInvocationMarkerAbsent": true,
+  "replacementCaptureTransmissionReviewAbsent": true,
+  "providerRequestObserved": false,
+  "confirmedReplacementEvidenceBytesTransmitted": 0,
+  "pass": true
+}

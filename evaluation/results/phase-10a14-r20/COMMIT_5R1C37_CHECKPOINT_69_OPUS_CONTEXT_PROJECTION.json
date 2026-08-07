@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_69_OPUS_CONTEXT_PROJECTION_PASS",
+  "generatedUtc": "2026-08-01T16:32:37.022Z",
+  "providerContextLimitTokens": 1000000,
+  "capsuleTokens": 188684,
+  "bootstrap": {
+    "bytes": 6773,
+    "conservativeEstimatedTokens": 2823,
+    "maximumBytes": 65536,
+    "maximumEstimatedTokens": 24000,
+    "bytesPass": true,
+    "tokensPass": true
+  },
+  "requiredOriginalSpotChecks": {
+    "files": 9,
+    "bytes": 104915,
+    "conservativeEstimatedTokens": 43715,
+    "maximumTokens": 300000,
+    "pass": true
+  },
+  "reviewMetadataReads": {
+    "files": [
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ROLE_LEDGER.json",
+        "bytes": 81855,
+        "sha256": "34cd2c404033581643540ba98ebe67266487a049d8aeec216841854937e0d860"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+        "bytes": 30365,
+        "sha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+        "bytes": 8473,
+        "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json",
+        "bytes": 45178,
+        "sha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0"
+      }
+    ],
+    "bytes": 165871,
+    "conservativeEstimatedTokens": 69114
+  },
+  "systemAndToolOverheadReserveTokens": 150000,
+  "reviewOutputReserveTokens": 50000,
+  "projectedTotalTokens": 504336,
+  "maximumProjectedTokens": 750000,
+  "marginBelowProviderLimitTokens": 495664,
+  "minimumRequiredMarginTokens": 250000,
+  "pass": true
+}

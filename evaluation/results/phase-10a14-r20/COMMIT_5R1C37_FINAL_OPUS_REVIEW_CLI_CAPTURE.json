@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FINAL_OPUS_REVIEW_CLI_CAPTURE_NOT_APPROVED",
+  "commandWithoutCredentials": [
+    "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "--print",
+    "--model",
+    "claude-opus-4-8",
+    "--effort",
+    "max",
+    "--permission-mode",
+    "plan",
+    "--safe-mode",
+    "--no-session-persistence",
+    "--no-chrome",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{}",
+    "--disable-slash-commands",
+    "--tools",
+    "",
+    "--output-format",
+    "json",
+    "--json-schema",
+    "<JSON_SCHEMA_SHA256:c5ecd4ecedf65de68279bb01b30a00ab57b5432a10ee40166b4fe9098f6cd6b3>",
+    "--system-prompt",
+    "<SYSTEM_PROMPT_SHA256:6df2c470ba4d36c1f1aa42126f26236de616482ab7b44d104d0f6d8f0dac4df5>"
+  ],
+  "commandLineContainsEvidenceOrCredentials": false,
+  "reviewerTool": "Claude Code",
+  "model": "claude-opus-4-8",
+  "cliVersion": "2.1.212 (Claude Code)",
+  "startedUtc": "2026-08-01T10:48:21.724Z",
+  "endedUtc": "2026-08-01T10:48:23.130Z",
+  "exitCode": 1,
+  "signal": null,
+  "spawnError": "write EOF",
+  "submissionCompletedToChildStdin": true,
+  "authorizationConsumed": true,
+  "request": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "bytes": 8678,
+    "sha256": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449"
+  },
+  "package": {
+    "count": 57,
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "manifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "rawEvidenceBytes": 4109852
+  },
+  "stdin": {
+    "evidenceBytes": 4109852,
+    "requestMetadataBytes": 8678,
+    "packageManifestMetadataBytes": 45178,
+    "packageShaMetadataBytes": 8473,
+    "entryMetadataBytes": 15655,
+    "totalStdinBytes": 4188309,
+    "stdinSha256": "eb013eee8f50809d41fce9576ae8dd34f7329dad578cdbe0dbfbafb956db0de8",
+    "rawSubmissionBufferRetainedInCapture": false
+  },
+  "response": {
+    "stdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDOUT.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REVIEW_STDERR.txt",
+      "bytes": 97,
+      "sha256": "527402a1802b7997c67036cd7e8e596f497547ae44b649ce8a135201ebc6f59b"
+    },
+    "envelopeSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "parsed": false,
+    "parseError": "C37_TWO_HOUR_SAFE_PAUSE_OPUS_TECHNICAL_INCOMPLETE:CLI"
+  },
+  "firstDecisionToken": "INCOMPLETE_REVIEW",
+  "substantivePathToken": "MORE_EVIDENCE_REQUIRED",
+  "observations": [],
+  "repositorySnapshotAfterMarker": {
+    "trackedTreeClean": true,
+    "stagingEmpty": true,
+    "fileCount": 74,
+    "aggregateAlgorithm": "POSIX path + NUL + bytes + NUL + SHA256 + LF in lexical path order; SHA256 UTF-8 framing.",
+    "aggregateSha256": "962e9c6454547ccb63d8cabc02f68eb21b42c53a8c563de6715b1e6dfa255bb5"
+  },
+  "repositorySnapshotAfterInvocation": {
+    "trackedTreeClean": true,
+    "stagingEmpty": true,
+    "fileCount": 74,
+    "aggregateAlgorithm": "POSIX path + NUL + bytes + NUL + SHA256 + LF in lexical path order; SHA256 UTF-8 framing.",
+    "aggregateSha256": "962e9c6454547ccb63d8cabc02f68eb21b42c53a8c563de6715b1e6dfa255bb5"
+  },
+  "repositoryProtectedAndTrackedStateUnchanged": true,
+  "reviewGate": null,
+  "retryAuthorized": false,
+  "pass": false
+}

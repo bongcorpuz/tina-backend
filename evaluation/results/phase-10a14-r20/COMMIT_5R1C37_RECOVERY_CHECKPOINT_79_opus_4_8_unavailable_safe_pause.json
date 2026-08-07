@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "ordinal": 79,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T17:28:17Z",
+  "stage": "PRE_INVOCATION",
+  "status": "NONTERMINAL",
+  "classification": "C37_CHECKPOINT_79_OPUS_4_8_MODEL_UNAVAILABLE_NO_SUBSTITUTION_SAFE_PAUSE",
+  "disposition": "SAFE_PAUSE",
+  "dispositionOutcomeClass": "D_NO_INVOCATION_BECAUSE_OF_PREFLIGHT_OR_MODEL_MISMATCH",
+
+  "previousCheckpoint": 78,
+  "previousCheckpointPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_78_authorization_withheld_safe_pause.json",
+  "previousCheckpointSha256": "6c37573375af18c8dab75190c9bdbb2c57a54d032d488aafb9a446061b49e771",
+  "supersedes": [78],
+  "priorCheckpointsPreservedUnaltered": "61 through 78",
+
+  "safeToResume": true,
+  "activeAttemptId": null,
+
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "branch": "feature/source-availability-engine-v1",
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+  "remoteTipFreshlyVerified": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "aheadOfUpstream": 0,
+  "behindUpstream": 0,
+
+  "authorizationGranted": {
+    "source": "governing prompt of this operation",
+    "grantedScope": "Exactly one independent, read-only Claude Code Opus 4.8 review of the complete manifest-indexed C37 no-runtime governance package.",
+    "explicitProhibitions": [
+      "No Opus 5 substitution is authorized.",
+      "No second reviewer is authorized.",
+      "No local executor self-review may be represented as independent approval.",
+      "No other external model/provider operation is authorized."
+    ],
+    "explicitFallbackInstruction": "If Opus 4.8 is unavailable, the exact model identifier cannot be confirmed, the invocation contract cannot be satisfied, or the package cannot be transmitted exactly, do not substitute Opus 5, Sonnet 5, GPT-5.6 Sol, Terra, Luna, Haiku, or any other model. Stop safely, preserve the authorization according to its controlling consumption contract, create truthful evidence, and update CURRENT_STATE.md as allowed by the verified repository identity."
+  },
+
+  "modelAvailabilityDetermination": {
+    "requiredModel": "Claude Code Opus 4.8 (model identifier claude-opus-4-8)",
+    "availableModelsInThisExecutionEnvironment": [
+      "claude-opus-5 (Opus 5)",
+      "claude-sonnet-5 (Sonnet 5)",
+      "claude-fable-5 (Fable 5)",
+      "claude-haiku-4-5-20251001 (Haiku 4.5)"
+    ],
+    "sourceOfAvailabilityFact": "The primary executor's own system configuration, which enumerates the complete current model roster and explicitly states these are the most recent Claude models. The primary executor's agent-spawning tool accepts only the model tier names sonnet, opus, haiku, fable, none of which resolves to claude-opus-4-8 specifically; the 'opus' tier resolves to claude-opus-5.",
+    "claudeOpus48Present": false,
+    "exactModelIdentifierConfirmable": false,
+    "invocationContractSatisfiable": false,
+    "reasonUnsatisfiable": "There is no mechanism available to the primary executor for selecting or invoking a model identified specifically as claude-opus-4-8 (Opus 4.8). Only Opus 5 is available at the Opus tier.",
+    "attemptMadeToInvokeAnyway": false,
+    "reasonNoAttemptMade": "The governing prompt's own Phase 2 preamble requires stopping BEFORE invocation when the model identifier cannot be confirmed, and explicitly forbids treating an unavailable-model condition as something to test by attempting invocation. Determining unavailability from the executor's authoritative, already-known model roster satisfies this without wasting authorization or resources on a doomed attempt.",
+    "externalProviderContacted": false,
+    "networkCallsForInvocation": 0
+  },
+
+  "outcomeAdjudication": {
+    "outcomeClass": "D",
+    "outcomeClassLabel": "NO_INVOCATION_BECAUSE_OF_PREFLIGHT_OR_MODEL_MISMATCH",
+    "classifiedAsTechnicalReviewFailure": false,
+    "reasonNotClassifiedAsTechnicalFailure": "No invocation was attempted, so no invocation could fail technically. This is categorically distinct from checkpoints 65 and 67, which were genuine TECHNICAL_INCOMPLETE results arising from an attempted invocation that failed on CLI configuration and prompt length respectively. It is also distinct from a semantic rejection: C37 holds zero candidates, so there is nothing for a reviewer to accept or reject, and no reviewer was reached to render either verdict.",
+    "exactFailedPrecondition": "Required reviewer model identity (claude-opus-4-8 / Opus 4.8) is not present in the primary executor's available model roster, which is limited to claude-opus-5, claude-sonnet-5, claude-fable-5, and claude-haiku-4-5-20251001.",
+    "modelSubstitutionPerformed": false,
+    "localSelfReviewPerformedOrRepresentedAsIndependent": false,
+    "secondReviewerInvoked": false,
+    "candidateManufactured": false,
+    "completionClaimed": false
+  },
+
+  "authorizationConsumptionAdjudication": {
+    "consumptionRuleApplied": "Consumed only when the substantive manifest-indexed request is submitted.",
+    "substantiveRequestSubmitted": false,
+    "authorizationConsumedByThisOperation": false,
+    "authorizationStateAfter": {
+      "status": "AUTHORIZED_UNUSED",
+      "consumed": false,
+      "invocationCount": 0,
+      "remainingInvocationCount": 1,
+      "retryAuthorized": false
+    },
+    "preservationBasis": "Directly supported by the authorization contract's own consumption rule, which conditions consumption on submission of the substantive request. No request was submitted because it could not be bound to the required model identity."
+  },
+
+  "fiftySevenEntryPackageVerification": {
+    "verified": true,
+    "entriesTotal": 57,
+    "entriesOk": 57,
+    "packageUnchangedSinceCheckpoint78": true,
+    "detail": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_79_PREFLIGHT_AND_PACKAGE_VERIFICATION.json"
+  },
+
+  "registryAndWalReconciliation": {
+    "totalAttempts": 230,
+    "runningAttempts": 0,
+    "orphanAttempts": 0,
+    "danglingAttempts": 0,
+    "c37CandidateBudget": { "maximum": 1, "authorized": 0, "allocated": 0 },
+    "c37WalExists": false,
+    "registryOrWalModifiedByThisOperation": false,
+    "noRuntimeCandidateCreated": true,
+    "noC37RuntimeAttemptAdded": true
+  },
+
+  "writerPrecondition": {
+    "satisfied": true,
+    "pid21112": "NOT_RUNNING",
+    "pid4472": "NOT_RUNNING",
+    "startupEntryStillDisabled": true,
+    "startupEntryReEnabledOrModified": false,
+    "openClawGatewayTaskState": "Disabled",
+    "newTinaOrchestratorProcessAppeared": false
+  },
+
+  "b1LogonConfirmation": {
+    "qualifyingLogonOccurredSinceDisablement": false,
+    "disposition": "CLOSED_SUBJECT_TO_NEXT_LOGON_CONFIRMATION",
+    "fullClosureClaimed": false
+  },
+
+  "healthDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "touchedByThisOperation": false
+  },
+
+  "blockers": [
+    { "id": "B1", "status": "CLOSED_SUBJECT_TO_NEXT_LOGON_CONFIRMATION", "changeThisOperation": "NONE — re-verified; logon still has not occurred." },
+    { "id": "B2", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B3", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B4", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B5", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B6", "status": "OPEN", "changeThisOperation": "NONE" },
+    { "id": "B7", "status": "OPEN_REVISED", "severity": "HIGH", "blocker": "C37's sole remaining operation requires an independent review by a model (Claude Code Opus 4.8) that does not exist in the primary executor's environment. Authorization is no longer the obstruction (it was explicitly granted this operation); model availability now is. No substitution is permitted under the current authorization's own terms.", "ownerActionRequired": true, "revisionNote": "At checkpoint 78, B7 was 'authorization withheld'. At checkpoint 79, authorization was granted but the named model is unavailable. The blocker has changed nature, not closed." }
+  ],
+  "blockersOpen": 6,
+  "blockersClosedSubjectToConfirmation": 1,
+
+  "protectedArtifactPreservation": {
+    "IDEA.md": "unchanged",
+    "package.json": "unchanged",
+    "server.js": "unchanged",
+    "security/public-health.js": "unchanged",
+    "patch08sTest": "unchanged",
+    "taxEnginesCON": "unchanged, still skip-worktree",
+    "sealedFrozenOrPriorCheckpointArtifactsModified": 0,
+    "oracleTestValidatorOrSafetyGuardWeakened": false,
+    "registryOrWalModified": false
+  },
+
+  "currentStateDocumentation": {
+    "file": "knowledge/CURRENT_STATE.md",
+    "beforeSha256": "63653927a66926b80d8598c0351b9e5764a2f0d2479e0893bc9ccabfc829a856",
+    "afterSha256": "PENDING_COMPUTED_AFTER_WRITE",
+    "purelyAdditive": true,
+    "eolPreserved": "LF",
+    "checkpoint78BlockRetainedVerbatim": true,
+    "checkpoint77BlockRetained": true,
+    "checkpoint75BlockRetained": true,
+    "checkpoint73BlockRetained": true
+  },
+
+  "phase": "10A",
+  "workstream": "R20",
+  "phase10A": "OPEN",
+  "phase10AAdvanced": false,
+  "c37Advanced": false,
+  "reasonClosed": false,
+  "metricsChanged": false,
+
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "mergePerformed": false,
+  "pullPerformed": false,
+  "fetchPerformed": false,
+  "rebasePerformed": false,
+  "cherryPickPerformed": false,
+  "revertPerformed": false,
+  "stashPerformed": false,
+  "deploymentPerformed": false,
+  "migrationPerformed": false,
+  "reindexPerformed": false,
+  "modelMigrationPerformed": false,
+  "healthWorkPerformed": false,
+  "c38Started": false,
+  "e2Started": false,
+  "a15Started": false,
+  "phase10BStarted": false,
+  "runtimeCodeModified": false,
+  "testWeakened": false,
+  "validatorWeakened": false,
+  "oracleChanged": false,
+  "packageInstalled": false,
+  "dependencyUpdated": false,
+  "startupEntryReEnabledOrModified": false,
+  "untrackedFilesCleaned": false,
+  "unrelatedProcessOrServiceModified": false,
+  "secondModelProviderContacted": false,
+  "opusInvoked": false,
+  "sealedEvidenceEdited": false,
+  "sealedManifestEdited": false,
+  "historyRewritten": false,
+
+  "gateResults": {
+    "gate01_repositoryIdentityVerified": true,
+    "gate02_remoteTipFreshlyVerified": true,
+    "gate03_allFourBoundHashesMatched": true,
+    "gate04_checkpoint78ManifestVerified": true,
+    "gate05_fiftySevenEntryPackageIntegrityVerified": true,
+    "gate06_registryWalClean": true,
+    "gate07_noPriorAttemptRepeated": true,
+    "gate08_writerPreconditionHolds": true,
+    "gate09_startupEntryNotReEnabled": true,
+    "gate10_logonSinceDisablementCorrectlyAdjudicatedAsNotOccurred": true,
+    "gate11_authorizationStateRecordedBeforeInvocation": true,
+    "gate12_modelAvailabilityCorrectlyDetermined": true,
+    "gate13_noSubstitutionPerformed": true,
+    "gate14_noLocalSelfReviewRepresentedAsIndependent": true,
+    "gate15_authorizationPreservedPerContract": true,
+    "gate16_protectedArtifactsUnchanged": true,
+    "gate17_noRuntimeCandidateOrC37AttemptCreated": true,
+    "gate18_currentStateUpdatePurelyAdditive": "TO_BE_CONFIRMED_POST_WRITE",
+    "gate19_noProhibitedOperation": true
+  },
+
+  "nextExactOperation": "OWNER DECISION REQUIRED. C37's sole remaining operation requires an independent review by a model (Claude Code Opus 4.8) not present in this execution environment, and no substitution is permitted. Options: (1) run the review from an environment or tool that has genuine access to a model identified exactly as claude-opus-4-8, if one still exists anywhere the owner controls, and bring back a package-bound, schema-valid decision; or (2) reissue explicit authorization for a different, named model tier that this executor can actually invoke (this would need to explicitly permit what the current authorization explicitly forbids); or (3) govern an alternative C37 closure path that does not require external independent review, which itself requires a new governance decision since the current controlling evidence requires exactly this review and records that no local substitute is adequate. Separately, confirm at the next user logon that no tina-orchestrator gateway process appears, to fully close B1. Do not begin C38, E2, A15 or Phase 10B. Do not attempt to invoke Opus 4.8 again without first resolving how it would actually be reached.",
+
+  "completionClaims": {
+    "phase10AClosed": false,
+    "r20Complete": false,
+    "c37Complete": false,
+    "reasonClosed": false,
+    "healthChangeApproved": false,
+    "commitMade": false,
+    "pushMade": false,
+    "reviewPerformed": false,
+    "acceptanceOrClosureClaimed": false
+  }
+}

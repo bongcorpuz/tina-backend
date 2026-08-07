@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "ordinal": 73,
+  "commitUnit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "updatedAtUtc": "2026-08-07T02:08:12Z",
+  "stage": "ungoverned-HEAD remediation safe pause (Option B, Phases R1-R2 complete)",
+  "status": "C37_CHECKPOINT_73_UNGOVERNED_HEAD_PRE_INVOCATION_SAFE_PAUSE_AUTHORIZATION_UNUSED",
+  "governedBaseline": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "head": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "remoteTip": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "headIsGoverned": false,
+  "aheadOfUpstream": 1,
+  "behindUpstream": 0,
+  "branch": "feature/source-availability-engine-v1",
+  "governanceDecision": {
+    "option": "B",
+    "decision": "ff1bc2b1 classified as UNGOVERNED INTRUSION",
+    "decidedAtUtc": "2026-08-07T02:00:00Z",
+    "phasesExecuted": [
+      "R1 preservation",
+      "R2 adjudication"
+    ],
+    "phaseR3Authorized": false
+  },
+  "preservation": {
+    "branch": "refs/heads/governance/ungoverned-ff1bc2b1",
+    "tag": "refs/tags/governance/pre-remediation-ff1bc2b1",
+    "target": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+    "verified": true
+  },
+  "ungovernedCommit": {
+    "sha": "ff1bc2b18040706ef4a2e7002a1d349a76d7d709",
+    "author": "Tina Swarm <tina@local>",
+    "dateUtc": "2026-08-04T15:11:13Z",
+    "subject": "add /health endpoint + baseline",
+    "pushed": false,
+    "totalPaths": 864,
+    "semantic": 3,
+    "eolOnly": 595,
+    "addedEvidence": 259,
+    "addedUnexplained": 7,
+    "unexplainedPaths": [
+      ".claude/settings.local.json",
+      ".vscode/extensions.json",
+      "IDEA.md",
+      "__pycache__/hello_test.cpython-313.pyc",
+      "hello.py",
+      "hello_test.py",
+      "tests/health-endpoint.test.mjs"
+    ]
+  },
+  "evidenceIntegrity": {
+    "c35FinalEvidenceManifest": "117/117 PASS",
+    "c36SafePauseManifest": "48/48 PASS",
+    "c37Checkpoint72PreInvocationManifest": "34/34 PASS",
+    "c37Checkpoint72FinalManifest": "38/38 PASS",
+    "totalMismatches": 0,
+    "c35ImmutabilityPreserved": true
+  },
+  "registryWal": {
+    "registrySha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "registryBytes": 718108,
+    "registryAttempts": 230,
+    "attemptDirectories": 230,
+    "orphanDirectories": [],
+    "danglingRegistryRows": [],
+    "runningAttempts": [],
+    "c34WalSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+    "c34WalRows": 32,
+    "c35WalSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+    "c35WalRows": 6,
+    "c36WalAbsent": true,
+    "c37WalAbsent": true
+  },
+  "metrics": {
+    "decision": "3720/3720",
+    "relation": "3720/3720",
+    "reason": "3575/3720",
+    "reasonOnlyRowsRemaining": 145,
+    "unchangedFromCheckpoint72": true
+  },
+  "runtimeIdentity": {
+    "c35RuntimeHash": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "activeReasonBaseHash": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "protectedResidueAggregate": "980cd3b5f2a5b75104bc91c9e6f4391e80bf5f0d772f48b61c79497e3d2ebd0a"
+  },
+  "authorization": {
+    "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "invocationMarkerExists": false,
+    "providerSpawned": false,
+    "providerRequestObserved": false,
+    "modelReviewReached": false,
+    "retryAuthorized": false
+  },
+  "c37ExecutionBlocked": true,
+  "c37BlockingInvariants": [
+    "HEAD != ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead/behind != 0/0 (actual 1/0)",
+    "required C37 commit parent unreachable without re-parenting",
+    "19 governed evidence/runner files are TRACKED, prompt expects UNTRACKED"
+  ],
+  "concurrentWriterIncident": {
+    "detectedAtUtc": "2026-08-07T02:06:24Z",
+    "writerSetupCompletedAtUtc": "2026-08-07T01:58:40.448Z",
+    "classification": "THIRD_PARTY_UNGOVERNED_AGENT_SCAFFOLDING_WRITE_INTO_GOVERNED_REPOSITORY",
+    "pathsCreated": [
+      "AGENTS.md",
+      "HEARTBEAT.md",
+      "IDENTITY.md",
+      "SOUL.md",
+      "TOOLS.md",
+      "USER.md",
+      "openclaw-workspace-state.json"
+    ],
+    "trackedEvidenceAffected": false,
+    "trackedTreeModified": 0,
+    "stagedFiles": 0,
+    "c35ManifestRevalidatedAfterEvent": "117/117 PASS"
+  },
+  "newEvidence": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json",
+      "bytes": 187257,
+      "sha256": "f25fe43b65c60b3fb38561572cabebe48188404a83744467bff776c28b448e32"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch",
+      "bytes": 6057,
+      "sha256": "b6e5ddd975a04fd03c6ed786f6cd41b5bd8f3d88f622cfa98a0faa07d778d66d"
+    }
+  ],
+  "previousCheckpoint": {
+    "ordinal": 72,
+    "bytes": 10311,
+    "sha256": "70ca4f1e12f1ff705147d76a836ec9961dc68579f41c84f32f5b318244790a2a"
+  },
+  "untrackedInventoryAtCheckpoint": [
+    ".hermes/plans/2026-08-04_152644-api-rate-limiting-architecture.md",
+    ".hermes/plans/2026-08-04_154814-api-rate-limiting-design.md",
+    "AGENTS.md",
+    "HEARTBEAT.md",
+    "IDENTITY.md",
+    "SOUL.md",
+    "TOOLS.md",
+    "USER.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch",
+    "openclaw-workspace-state.json"
+  ],
+  "documentationUpdated": false,
+  "roadmapV9Updated": false,
+  "currentStateUpdated": false,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "resetPerformed": false,
+  "checkoutPerformed": false,
+  "amendPerformed": false,
+  "deploymentPerformed": false,
+  "reindexPerformed": false,
+  "migrationPerformed": false,
+  "modelMigrationPerformed": false,
+  "opusInvocationPerformed": false,
+  "c38Begun": false,
+  "e2Begun": false,
+  "a15Begun": false,
+  "phase10BImplementationBegun": false,
+  "phase10A": "OPEN",
+  "r20": "IN_PROGRESS",
+  "c37": "NONTERMINAL_BLOCKED_UNGOVERNED_HEAD",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "nextExactOperation": "Obtain owner authorization for Phase R3 restoration, selecting exactly one of: (R3-alpha) index-only rewind via git reset --mixed ee664eab restoring C36/C37 evidence to untracked and re-verifying checkpoint-72 preflight; or (R3-beta) accept-and-rebind retaining HEAD at ff1bc2b1 and reissuing C37 against the new parent. Separately: govern the three semantic /health changes under a new patch record (PATCH-08S-FOLLOWUP contract altered without governance), adjudicate the 7 unexplained added paths, and stop the concurrent third-party writer before any restoration. Do not invoke C37 or consume the Opus authorization."
+}

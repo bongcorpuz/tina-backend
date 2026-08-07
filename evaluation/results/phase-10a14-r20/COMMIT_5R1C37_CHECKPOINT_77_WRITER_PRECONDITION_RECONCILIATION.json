@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 77",
+  "classification": "WRITER_PRECONDITION_RECONCILIATION_AND_SCOPED_RE_ENTRY_PREVENTION",
+  "generatedAtUtc": "2026-08-07T06:38:29Z",
+  "operationStartedUtc": "2026-08-07T06:29:47Z",
+  "previousCheckpoint": 76,
+  "disposition": "PRECONDITION_SATISFIED",
+
+  "preflight": {
+    "verifiedAtUtc": "2026-08-07T06:29:47Z",
+    "repository": "C:\\Projects\\tina-backend",
+    "remote": "https://github.com/bongcorpuz/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "upstream": "origin/feature/source-availability-engine-v1",
+    "remoteTipReRead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "aheadOfUpstream": 0,
+    "behindUpstream": 0,
+    "headMatchesBaseline": true,
+    "parentMatchesBaseline": true,
+    "remoteTipMatchesHead": true,
+    "stagedPaths": 0,
+    "stagedPathList": [],
+    "modifiedTrackedPaths": 4,
+    "modifiedTrackedPathList": [
+      "knowledge/CURRENT_STATE.md",
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "untrackedPaths": 292,
+    "untrackedReconciliation": "290 at checkpoint-76 close + 2 files created by the checkpoint-76 operation itself were already counted; 292 is the carried inventory. Checkpoint 77 adds further evidence files, recounted in finalGitState.",
+    "indexLockPresent": false,
+    "staleStashLocks": 5,
+    "staleStashLockNote": "Pre-existing July 2026 artifacts. NOT removed (blocker B6).",
+    "rebaseMergeCherryPickInProgress": false
+  },
+
+  "hashBoundVerification": {
+    "allExpectedHashesMatched": true,
+    "computedCompleteHashes": {
+      "knowledge/CURRENT_STATE.md": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+      "package.json": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3",
+      "server.js": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_76_writer_precondition_unmet_safe_pause.json": "9f54fc3098318d88e6f99174df8fb8a8274b4f5c8d42900d183e318a66c22c79",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_76_SAFE_PAUSE_EVIDENCE.sha256": "b5064e1f31fa31706eac54536f345e1e258b26c093bd0b466031960bf59fe94b",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_75_continuity_reconciliation_and_health_governance.json": "1dda15b2899c8e3c1b7794830de8f458db5dcd77157a678cf1d8f9d9b97f4c31",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256": "4844e4b83652db8e13712c80b333bfd507eb0d9eeff48b3643bb2f52bf5cf39f"
+    },
+    "packageJsonExpected": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3",
+    "packageJsonMatch": true,
+    "serverJsExpected": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+    "serverJsMatch": true,
+    "manifestReverification": {
+      "checkpoint76Manifest": { "entriesTotal": 4, "entriesOk": 4, "entriesFailed": 0, "exitCode": 0 },
+      "checkpoint75Manifest": { "entriesTotal": 9, "entriesOk": 9, "entriesFailed": 0, "exitCode": 0 }
+    },
+    "abbreviatedHashesFromChatNotRelied": true
+  },
+
+  "processIdentityEvidence": {
+    "targetPids": [21112, 4472],
+    "checkedAtUtc": "2026-08-07T06:31:15Z",
+    "pid21112": {
+      "status": "NOT_RUNNING",
+      "method": "Get-CimInstance Win32_Process -Filter 'ProcessId=21112' returned no object",
+      "lastKnownStateUtc": "2026-08-07T04:42:47Z",
+      "lastKnownCommandLine": "C:\\Users\\USER\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe -m hermes_cli.main --profile tina-orchestrator gateway run",
+      "lastKnownCreationLocal": "2026-08-07T07:56:54+08:00"
+    },
+    "pid4472": {
+      "status": "NOT_RUNNING",
+      "method": "Get-CimInstance Win32_Process -Filter 'ProcessId=4472' returned no object",
+      "lastKnownStateUtc": "2026-08-07T04:42:47Z",
+      "lastKnownCommandLine": "C:\\Users\\USER\\AppData\\Roaming\\uv\\python\\cpython-3.11-windows-x86_64-none\\python.exe -m hermes_cli.main --profile tina-orchestrator gateway run",
+      "lastKnownCreationLocal": "2026-08-07T07:56:54+08:00"
+    },
+    "exitWindow": "Both processes exited between 2026-08-07T04:42:47Z (last confirmed alive, checkpoint 76) and 2026-08-07T06:29:47Z (first check of this operation).",
+    "exitCause": "NOT_DETERMINABLE_FROM_AVAILABLE_EVIDENCE",
+    "exitCauseNote": "Most plausibly owner action following the checkpoint-76 report, but this operation did not observe the termination and does not claim credit for it.",
+    "terminationPerformedByThisOperation": false,
+    "terminationRationale": "Owner authorization to terminate PIDs 21112 and 4472 was granted but was NOT EXERCISED because both processes were already absent at first inspection. Terminating a PID requires confirming its identity immediately before termination; no such PID existed, so no termination command was issued.",
+    "broadProcessNameTerminationUsed": false,
+    "anyProcessKilled": 0
+  },
+
+  "selfMatchArtifact": {
+    "observed": true,
+    "description": "A naive filter matching CommandLine against 'hermes_cli' returns 5 processes. All are the scanning shell processes themselves (bash.exe, powershell.exe) whose command line contains the literal search string.",
+    "resolution": "Filtering additionally on ExecutablePath -like '*hermes*' returns 0. Processes whose executable name is python.exe: 0. Processes named wscript/cscript: 0.",
+    "verifiedAtUtc": ["2026-08-07T06:31:15Z", "2026-08-07T06:35:00Z", "2026-08-07T06:38:20Z"],
+    "genuineHermesGatewayProcesses": 0,
+    "cautionRecorded": "The raw 'hermes_cli=5' column in the observation log is contaminated by this artifact and must NOT be read as five gateway processes. The authoritative columns are python=0 and vbshost=0."
+  },
+
+  "reEntryMechanismInvestigation": {
+    "scopeScanned": ["scheduled tasks (deep action scan)", "Win32_Service", "HKCU/HKLM Run and RunOnce keys", "user Startup folder", "all-users Startup folder"],
+    "mechanismsFound": [
+      {
+        "id": "M1",
+        "type": "USER_STARTUP_FOLDER_ENTRY",
+        "path": "C:\\Users\\USER\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Hermes_Gateway_tina-orchestrator.vbs",
+        "sizeBytes": 514,
+        "sha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+        "lastWriteLocal": "2026-08-04T05:29:17+08:00",
+        "attributionToTinaOrchestrator": "PROVEN",
+        "attributionEvidence": [
+          "Filename contains 'tina-orchestrator'",
+          "Script body targets C:\\Users\\USER\\AppData\\Local\\hermes\\profiles\\tina-orchestrator\\gateway-service\\Hermes_Gateway_tina-orchestrator.vbs",
+          "Every path segment is scoped to the tina-orchestrator profile"
+        ],
+        "launchChainProven": [
+          "Startup\\Hermes_Gateway_tina-orchestrator.vbs (514 B)",
+          "-> profiles\\tina-orchestrator\\gateway-service\\Hermes_Gateway_tina-orchestrator.vbs (924 B, sha256 1D116ED1E64612C56E6AB29E3034D55FBFA973D48A93CCBBAE5E81F6E4C5D1CA)",
+          "-> sh.Run \"C:\\Users\\USER\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe -m hermes_cli.main --profile tina-orchestrator gateway run\""
+        ],
+        "chainMatchesObservedProcessCommandLine": true,
+        "actionTaken": "DISABLED_BY_REVERSIBLE_RENAME",
+        "narrowlyAttributable": true
+      },
+      {
+        "id": "M2",
+        "type": "SCHEDULED_TASK",
+        "taskName": "OpenClaw Gateway",
+        "taskPath": "\\",
+        "stateAtInspection": "Disabled",
+        "action": "C:\\Users\\USER\\.openclaw\\gateway.vbs",
+        "actionSha256": "FA195C8B5BBBC10DDAFC1C42F3EADD468F44662D4C84CED9FE43C0FB9911A5AD",
+        "trigger": "MSFT_TaskLogonTrigger (Enabled=True, but task State=Disabled)",
+        "lastRunTimeLocal": "2026-08-07T07:54:43",
+        "lastTaskResult": 0,
+        "nextRunTime": "(none, task disabled)",
+        "attributionToTinaOrchestrator": "NOT_NARROWLY_ATTRIBUTABLE",
+        "attributionNote": "This is an OpenClaw-general gateway task, not scoped to the tina-orchestrator hermes profile.",
+        "actionTaken": "NONE_ALREADY_DISABLED_AND_NOT_MODIFIED",
+        "forensicNote": "Its LastRunTime 07:54:43 local precedes the observed hermes gateway process creation at 07:56:54 local by about two minutes, which is consistent with logon-time startup activity on 2026-08-07. It was already Disabled before this operation, indicating prior owner action."
+      }
+    ],
+    "servicesFound": 0,
+    "runKeyEntriesFound": 0,
+    "allUsersStartupEntriesFound": 0,
+    "otherStartupEntriesLeftUntouched": ["Ollama.lnk", "Vov Sticky Notes.lnk", "desktop.ini"]
+  },
+
+  "preventionAction": {
+    "authorizedBy": "Owner authorization item 3: disable ONLY the exact, identified tina-orchestrator re-entry mechanism if narrowly attributable to that profile.",
+    "identityReconfirmedImmediatelyBeforeMutation": true,
+    "reconfirmationChecks": {
+      "filenameTinaOrchestratorScoped": true,
+      "bodyTargetsTinaOrchestratorProfilePath": true,
+      "preMutationSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE"
+    },
+    "command": "Rename-Item -LiteralPath '<Startup>\\Hermes_Gateway_tina-orchestrator.vbs' -NewName 'Hermes_Gateway_tina-orchestrator.vbs.DISABLED-BY-C37-GOVERNANCE'",
+    "executedAtUtc": "2026-08-07T06:33:15Z",
+    "result": "SUCCESS",
+    "exitCode": 0,
+    "postMutationSha256": "427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE",
+    "contentPreservedUnchanged": true,
+    "deletionPerformed": false,
+    "reversible": true,
+    "reversalInstruction": "Rename the file back to 'Hermes_Gateway_tina-orchestrator.vbs' in the same Startup folder.",
+    "profileLauncherScriptsPreserved": [
+      "C:\\Users\\USER\\AppData\\Local\\hermes\\profiles\\tina-orchestrator\\gateway-service\\Hermes_Gateway_tina-orchestrator.vbs (924 B)",
+      "C:\\Users\\USER\\AppData\\Local\\hermes\\profiles\\tina-orchestrator\\gateway-service\\Hermes_Gateway_tina-orchestrator.cmd (577 B, sha256 2EBA16F53FCA3A69E175A1CF9E4B286521A504E7E460BC522D98BF1C84262C4B)"
+    ],
+    "profileLauncherScriptsIntentionallyNotRemoved": "Only the automatic re-entry trigger was disabled. The hermes tooling itself was left installed and functional so that the owner retains deliberate manual control.",
+    "unrelatedServicesTasksStartupOrProcessesModified": 0
+  },
+
+  "observationWindow": {
+    "startedUtc": "2026-08-07T06:33:36Z",
+    "endedUtc": "2026-08-07T06:38:29Z",
+    "durationSeconds": 293,
+    "sampleCount": 10,
+    "sampleIntervalSeconds": 30,
+    "samples": [
+      { "utc": "2026-08-07T06:33:36Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:34:09Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:34:41Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:35:14Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:35:46Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:36:19Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:36:51Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:37:24Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:37:56Z", "python": 0, "vbsHost": 0 },
+      { "utc": "2026-08-07T06:38:29Z", "python": 0, "vbsHost": 0 }
+    ],
+    "restartDetected": false,
+    "newPidsObserved": [],
+    "independentCleanChecks": [
+      { "utc": "2026-08-07T06:31:15Z", "genuineHermesProcesses": 0 },
+      { "utc": "2026-08-07T06:35:00Z", "genuineHermesProcesses": 0 },
+      { "utc": "2026-08-07T06:38:20Z", "genuineHermesProcesses": 0 }
+    ],
+    "result": "NO_RESTART_OBSERVED"
+  },
+
+  "preconditionAssessment": {
+    "disposition": "PRECONDITION_SATISFIED",
+    "processAbsence": "VERIFIED",
+    "automaticReEntryPrevented": "VERIFIED_BY_DISABLED_SCOPED_STARTUP_ENTRY",
+    "preventionEvidenceStandardMet": true,
+    "preventionEvidenceStandardQuote": "Prevention requires concrete evidence: disabled scoped scheduled task/service/startup entry, or another narrowly scoped mechanism.",
+    "howMet": "The sole active tina-orchestrator auto-start trigger, a user Startup-folder entry whose launch chain was proven to produce the exact observed gateway command line, is now disabled. No scheduled task, service, or Run-key entry for the tina-orchestrator profile exists.",
+    "claimedMerelyBecauseProcessAbsent": false,
+    "residualCaveats": [
+      "The hermes profile launcher scripts remain installed, so a deliberate manual launch by a human or another tool remains possible. Automatic re-entry at user logon is what has been prevented.",
+      "Enumeration covered scheduled tasks, services, HKCU/HKLM Run and RunOnce keys, and both Startup folders. A launcher outside these standard Windows autostart vectors, for example one embedded in an IDE extension or a third-party supervisor, would not have been detected.",
+      "The observation window was 4 minutes 53 seconds and covers immediate restart only. It cannot evidence behaviour at the next user logon, which is the trigger the disabled entry used.",
+      "The cause of the two processes' exit was not observed by this operation and is not claimed."
+    ],
+    "recommendedConfirmation": "Confirm at the next user logon that no tina-orchestrator gateway process appears."
+  },
+
+  "protectedArtifactPreservation": {
+    "verifiedAtUtc": "2026-08-07T06:34:18Z",
+    "IDEA.md": { "sha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0", "unchanged": true, "modified": false },
+    "taxEnginesCON": { "paths": ["tax-engines/CON/domain-config.js", "tax-engines/CON/subclassifier.js"], "indexFlag": "S (skip-worktree)", "unchanged": true, "modified": false },
+    "deferredHealthFiles": {
+      "server.js": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "security/public-health.js": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35",
+      "unchanged": true,
+      "modifiedRevertedStagedOrTestFixed": false
+    },
+    "otherAdjudicatedPathsPresent": [
+      "hello.py", "hello_test.py", "__pycache__/hello_test.cpython-313.pyc",
+      ".claude/settings.local.json", "openclaw-workspace-state.json",
+      "tests/health-endpoint.test.mjs", ".vscode/extensions.json"
+    ],
+    "allPresent": true,
+    "anyDeletedQuarantinedOrOverwritten": false,
+    "existingEvidenceRewritten": 0
+  },
+
+  "healthDisposition": {
+    "decision": "DEFERRED_PENDING_GOVERNED_REVIEW",
+    "authorized": false,
+    "unchangedByThisOperation": true,
+    "newAuthorizationProvided": false
+  },
+
+  "authorization": {
+    "manifestIndexedAuthorizationStatus": "AUTHORIZED_UNUSED",
+    "consumed": false,
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "externalProviderInvocationPerformed": false,
+    "opusAuthorizedInThisPrompt": false,
+    "opusInvoked": false
+  },
+
+  "phaseAdvancement": {
+    "phase10A": "OPEN",
+    "phase10AAdvanced": false,
+    "c37Status": "NONTERMINAL_PRE_INVOCATION",
+    "c37Advanced": false,
+    "metricsChanged": false,
+    "note": "This was a bounded recovery operation. No evaluation, regression, candidate or phase work was performed."
+  }
+}

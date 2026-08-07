@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_64_CONTINUATION_PREFLIGHT_PASS",
+  "generatedUtc": "2026-08-01T10:45:14.860Z",
+  "authorizationPrompt": {
+    "path": "C:/Projects/tina-execution-prompts/PHASE-10A14-R20-COMMIT-5R1-C37-TWO-HOUR-OPUS-REVIEW-AND-FINALIZATION-FROM-CHECKPOINT-64.md",
+    "bytes": 25764,
+    "sha256": "144d55fc96403292eae094363723d14a2eada55d8442e1fd20db596ccbe8312b"
+  },
+  "git": {
+    "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "parent": "d5b25e676f623fbc1888608ff250824fcd34af99",
+    "branch": "feature/source-availability-engine-v1",
+    "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "remoteTracking": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "ahead": 0,
+    "behind": 0,
+    "stagingEmpty": true,
+    "trackedTreeClean": true
+  },
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "bytes": 3800,
+    "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+  },
+  "numberedCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_64_external_opus_transmission_authorization_safe_pause.json",
+    "bytes": 3800,
+    "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9"
+  },
+  "checkpointReplay": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_IDEMPOTENCE_REPLAY.json",
+    "bytes": 4859,
+    "sha256": "80ae4bff8d2671ad3261abff5ab3e1d16da3520c97dedebc2379eb203960bade"
+  },
+  "checkpointState": {
+    "ordinal": 64,
+    "eventSha256": "853ae993a069fd9f677f62b20d90ebaed155384c4cdb7416a6aace76db93af15",
+    "safeToResume": true,
+    "activeAttemptId": null,
+    "idempotencePass": true
+  },
+  "priorReviewerState": {
+    "invocationMarkerAbsent": true,
+    "requestNotSubmitted": true,
+    "transmittedEvidenceBytes": 0,
+    "invocationCount": 0,
+    "reviewBudgetConsumed": false
+  },
+  "frozenC37Result": {
+    "rowAdjudication": "145/145",
+    "generalizedRuntimeDefects": 0,
+    "decision": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED",
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "reason": "3575/3720",
+    "decisionMetric": "3720/3720",
+    "relationMetric": "3720/3720",
+    "runtimeChanges": 0,
+    "oracleChanges": 0,
+    "documentationCutoverPerformed": false,
+    "stagingCommitPushPerformed": false,
+    "preReviewClassification": "C37_SAFE_PAUSE_NO_RUNTIME_CANDIDATE_PENDING_OPUS"
+  },
+  "regression": {
+    "suites": "197/217",
+    "groups": "5429/5451",
+    "classificationCounts": {
+      "STATE": 21,
+      "SCOPE": 1
+    },
+    "newRuntimeBehaviorFailures": 0
+  },
+  "c35": {
+    "components": [
+      {
+        "path": "ask-handler.js",
+        "bytes": 147494,
+        "sha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602"
+      },
+      {
+        "path": "conflict-engine.js",
+        "bytes": 40905,
+        "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+      },
+      {
+        "path": "services/answer-support-evidence.js",
+        "bytes": 9507,
+        "sha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37"
+      },
+      {
+        "path": "services/answer-support-validator.js",
+        "bytes": 142463,
+        "sha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+      }
+    ],
+    "compositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "expectedCompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "pass": true
+  },
+  "selectedC34ReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+  "liveTrackedReasonScaffoldSha256": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+  "registryWalAttempts": {
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 718108,
+      "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073"
+    },
+    "registryAttempts": 230,
+    "uniqueAttemptIds": 230,
+    "attemptDirectories": 230,
+    "orphan": [],
+    "dangling": [],
+    "running": [],
+    "activeAttemptId": null,
+    "c34Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 12143,
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2",
+      "rows": 32
+    },
+    "c35Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "bytes": 2165,
+      "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f",
+      "rows": 6
+    },
+    "c36Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "exists": false,
+      "rows": 0
+    },
+    "c37Wal": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_ATTEMPT_ALLOCATION_WAL.ndjson",
+      "exists": false,
+      "rows": 0
+    },
+    "c36RowsOrDirectories": [],
+    "c37RowsOrDirectories": [],
+    "pass": true
+  },
+  "hygiene": {
+    "observedUtc": "2026-08-01T10:45:14.423Z",
+    "currentExecutor": {
+      "imageName": "node.exe",
+      "pid": 24140,
+      "excludedFromExternalNodeCount": true
+    },
+    "nodeProcessesExcludingCurrentExecutor": [],
+    "preExistingClaudeProcesses": [
+      {
+        "imageName": "claude.exe",
+        "pid": 24136
+      }
+    ],
+    "preExistingClaudeProcessAdjudication": {
+      "relatedToC37Invocation": false,
+      "basis": "Observed before any C37 invocation marker existed. The only identified process is the user-owned VS Code Claude Code extension stream service; this continuation did not create, control, or terminate it.",
+      "identifiedExecutable": "C:/Users/USER/.vscode/extensions/anthropic.claude-code-2.1.220-win32-x64/resources/native-binary/claude.exe",
+      "c37ReviewCliExecutable": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe"
+    },
+    "port5173Listeners": [],
+    "temporaryRuntimes": [],
+    "locks": [],
+    "stagingEmpty": true,
+    "trackedTreeClean": true,
+    "c37InvocationMarkerAbsent": true,
+    "c37ReviewCaptureAbsent": true,
+    "pass": true
+  },
+  "prohibitedMutationCounts": {
+    "runtime": 0,
+    "oracle": 0,
+    "registry": 0,
+    "wal": 0,
+    "candidate": 0
+  },
+  "pass": true
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_68_IDEMPOTENCE_REPLAY_PASS",
+  "generatedUtc": "2026-08-01T13:20:43.883Z",
+  "checkpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "bytes": 5237,
+    "sha256": "42e585b08a2d31958a8b3f44238196c20188ca41069ea22e68cb0a190b59c603"
+  },
+  "numberedCheckpoint": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_68_manifest_indexed_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 5237,
+    "sha256": "42e585b08a2d31958a8b3f44238196c20188ca41069ea22e68cb0a190b59c603"
+  },
+  "checkpointLog": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_LOG.ndjson",
+    "bytes": 22981,
+    "sha256": "688f447af122e1bf2db8c49b133273bda0d02a0fad3c442de52060e98cd1f477"
+  },
+  "eventSha256": "a2443e3d2e9ad98a517d1533f9ffda078d8b43a254b8fc99976530dfbcb0613c",
+  "checkpointOrdinals": [
+    64,
+    65,
+    66,
+    67,
+    68
+  ],
+  "pointerEqualsNumberedCheckpoint": true,
+  "previousCheckpoint67Preserved": true,
+  "noDuplicateCheckpoint": true,
+  "manifestIndexedAuthorizationUnused": true,
+  "noManifestIndexedInvocationMarker": true,
+  "noCapsuleBootstrapDocsStagingCommit": true,
+  "noTaskOwnedActiveProcessTempLockPort": true,
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

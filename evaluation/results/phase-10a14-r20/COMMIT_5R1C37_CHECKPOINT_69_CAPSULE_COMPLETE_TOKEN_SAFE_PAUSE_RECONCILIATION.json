@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FOUR_HOUR_TOKEN_RESERVE_SAFE_PAUSE_PRE_INVOCATION",
+  "generatedUtc": "2026-08-01T14:19:51.821Z",
+  "startingCheckpoint": {
+    "ordinal": 68,
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_68_manifest_indexed_token_reserve_safe_pause_pre_invocation.json",
+    "bytes": 5237,
+    "sha256": "42e585b08a2d31958a8b3f44238196c20188ca41069ea22e68cb0a190b59c603",
+    "eventSha256": "a2443e3d2e9ad98a517d1533f9ffda078d8b43a254b8fc99976530dfbcb0613c"
+  },
+  "endingCheckpoint": 69,
+  "freshSessionGate": {
+    "remainingAtStart": 204539,
+    "required": 200000,
+    "pass": true
+  },
+  "postCapsuleTokenGate": {
+    "ledgerSequence": 13,
+    "effectiveWindow": 258400,
+    "active": 187380,
+    "remaining": 71020,
+    "preSubmissionRequired": 120000,
+    "shortfall": 48980,
+    "reserve": 54400,
+    "headroomAboveReserve": 16620
+  },
+  "capsule": {
+    "roleLedger": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ROLE_LEDGER.json",
+      "bytes": 81855,
+      "sha256": "34cd2c404033581643540ba98ebe67266487a049d8aeec216841854937e0d860"
+    },
+    "allowlist": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json",
+      "bytes": 30365,
+      "sha256": "069a873a90f5d339bd7c37b41e96b7fb07c1b2bb0fecfdc3b1b5d1ce5523469e"
+    },
+    "builder": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_BUILDER.mjs",
+      "bytes": 57301,
+      "sha256": "5f852c0d141252cfac7aa3a602c81790b54ddd610302045deff7ba75b846e160"
+    },
+    "json": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+      "bytes": 437230,
+      "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f"
+    },
+    "markdown": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md",
+      "bytes": 15610,
+      "sha256": "02e154c75e6aaa6863fdd55e99723741cd353e036694e04c71f22271267b0af6"
+    },
+    "coverage": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_COVERAGE_VALIDATION.json",
+      "bytes": 4073,
+      "sha256": "c96fc58d459118dcc84a6492feb439e16e4677d8c34962e4450db3824e464799"
+    },
+    "tokenEstimate": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE_TOKEN_ESTIMATE.json",
+      "bytes": 918,
+      "sha256": "95d71733a98f249c5841c78de17112b78dc2fe1854fea7c5191dc02fc2be988c"
+    },
+    "integrity": "57/57",
+    "semanticCoveragePercent": 100,
+    "deterministicRepeat": true,
+    "conservativeEstimatedTokens": 188684
+  },
+  "authorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json",
+    "bytes": 3216,
+    "sha256": "5261030505f27dbd9a1450b16d75876aa2141cf741bd83957ed50e8746bf5d44",
+    "status": "AUTHORIZED_UNUSED",
+    "invocationCount": 0,
+    "remainingInvocationCount": 1,
+    "retryAuthorized": false
+  },
+  "invocationMarkerExists": false,
+  "providerRequestObserved": false,
+  "modelRequestSubmitted": false,
+  "reviewerObjectReceived": false,
+  "bootstrapCreated": false,
+  "toolBoundaryValidated": false,
+  "providerContextPlanCreated": false,
+  "transportPreflightCreated": false,
+  "runtimeOracleRegistryWalDocsGitMutations": 0,
+  "stagingPerformed": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "head": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "upstream": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "fetchHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "ahead": 0,
+  "behind": 0,
+  "stagingEmpty": true,
+  "trackedWorktreeClean": true,
+  "blocker": "CODEX_PRE_SUBMISSION_120000_TOKEN_GATE_NOT_MET_AFTER_CAPSULE_BUILD",
+  "nextExactOperation": "Start a brand-new governed session from checkpoint 69; measure fresh Codex context, reverify checkpoint/Git/protected/package/authorization and the completed capsule, then create and validate the read-only Opus tool plan, bootstrap, provider-context plan, transport preflight, and final preflight. Invoke exactly once only if fresh remaining context is at least 120,000 tokens and every gate passes.",
+  "safeToResume": true,
+  "activeAttemptId": null,
+  "pass": true
+}

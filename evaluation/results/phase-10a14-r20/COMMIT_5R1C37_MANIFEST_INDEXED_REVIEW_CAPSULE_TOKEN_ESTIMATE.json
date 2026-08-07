@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_MANIFEST_INDEXED_REVIEW_CAPSULE_TOKEN_ESTIMATE_PASS",
+  "generatedUtc": "2026-08-01T13:49:09.2032306Z",
+  "capsuleJson": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.json",
+    "bytes": 437230,
+    "sha256": "7f223fe8386fcb23d1f2ecec4254ca44ee753fb2479fefb9c1d897ee767cf30f"
+  },
+  "capsuleMarkdown": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md",
+    "bytes": 15610,
+    "sha256": "02e154c75e6aaa6863fdd55e99723741cd353e036694e04c71f22271267b0af6"
+  },
+  "combinedUtf8Bytes": 452840,
+  "method": "ceil(combined UTF-8 bytes / 3), then add 25 percent safety margin",
+  "baseEstimatedTokens": 150947,
+  "conservativeEstimatedTokens": 188684,
+  "maximumEstimatedTokens": 200000,
+  "headroomTokens": 11316,
+  "pass": true
+}

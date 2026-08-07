@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_FINAL_OPUS_INVOCATION_MARKER_SUBMISSION_IMMINENT",
+  "checkpoint": {
+    "ordinal": 64,
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT.json",
+    "sha256": "c2041ad4b9d437aa801752e10dcf58bffedcc5b638013d6079b4fce672acd6e9",
+    "eventSha256": "853ae993a069fd9f677f62b20d90ebaed155384c4cdb7416a6aace76db93af15"
+  },
+  "committedHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "package": {
+    "count": 57,
+    "sourceManifestSha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+    "detailedManifestSha256": "b0f270906c4ca406ac475d51d48286c55d93ab7ab5af71815c8e165a23d7e6e0",
+    "aggregateSha256": "7fbc288baf7738e1c9c8d57b56aafe05b66c6dbabcbfe6074d4eb38568f41a08",
+    "rawEvidenceBytes": 4109852
+  },
+  "finalRequest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "bytes": 8678,
+    "sha256": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449"
+  },
+  "externalTransmissionAuthorization": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_AUTHORIZATION.json",
+    "bytes": 2017,
+    "sha256": "57fc53266e3965fac7e402f90be17d8596bdd439eb6a938a0cd975c98703e2a4"
+  },
+  "cli": {
+    "executablePath": "C:/Users/USER/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+    "bytes": 255334560,
+    "sha256": "fe639693fd7e9a881c799867711abb7666dec2a5fefbaba41af6a09e71bcbefa",
+    "version": "2.1.212 (Claude Code)"
+  },
+  "model": "claude-opus-4-8",
+  "mode": "read-only",
+  "invocationOrdinal": 1,
+  "maximumInvocations": 1,
+  "retryAuthorized": false,
+  "startedUtc": "2026-08-01T10:48:21.724Z",
+  "stdinBytes": 4188309,
+  "stdinSha256": "eb013eee8f50809d41fce9576ae8dd34f7329dad578cdbe0dbfbafb956db0de8",
+  "isolatedWorkingDirectoryCreated": true,
+  "toolsExposedToReviewer": [],
+  "preExistingNonC37ClaudeProcesses": [
+    {
+      "imageName": "claude.exe",
+      "pid": 24136
+    }
+  ],
+  "repositorySnapshotBeforeMarker": {
+    "trackedTreeClean": true,
+    "stagingEmpty": true,
+    "fileCount": 74,
+    "aggregateAlgorithm": "POSIX path + NUL + bytes + NUL + SHA256 + LF in lexical path order; SHA256 UTF-8 framing.",
+    "aggregateSha256": "962e9c6454547ccb63d8cabc02f68eb21b42c53a8c563de6715b1e6dfa255bb5"
+  }
+}

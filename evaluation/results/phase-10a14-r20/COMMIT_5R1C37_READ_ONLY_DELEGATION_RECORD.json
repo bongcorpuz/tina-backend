@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_BOUNDED_READ_ONLY_DIAGNOSTIC_DELEGATION",
+  "recordedUtc": "2026-08-01T09:09:47.1446477Z",
+  "delegations": [
+    {
+      "taskName": "contract_code_audit",
+      "scope": "Derive the operative reason-layer contract from committed code, frozen fixtures, accepted C33/C34 signatures and precedence, Roadmap v9, CURRENT_STATE.md, and the terminally rejected C34-CP01 attempt; identify only evidence-supported contract rules and non-duplication constraints.",
+      "inputs": [
+        "services/philippine-tax-boundary-patterns.js",
+        "services/philippine-tax-domain-boundary.js",
+        "services/philippine-tax-intent-analyzer.js",
+        "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACCEPTED_RULE_CHAIN.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_FINAL_ACTIVE_BASE_IDENTITY.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_CANDIDATE_1_RESULT.json and all accepted/rejected C34 reason attempt evidence relevant to the operative rules",
+        "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md",
+        "knowledge/CURRENT_STATE.md"
+      ],
+      "output": "A read-only message to the primary executor listing contract clauses, rule/precedence paths, evidence paths, and any unresolved ambiguity; no filesystem output.",
+      "mutationProhibition": true
+    },
+    {
+      "taskName": "row_cluster_audit",
+      "scope": "Consume, without regenerating, the complete C36 145-row inventory, eight-cluster analysis, and hypothesis ledger; independently evaluate which C37 primary adjudication categories are supportable and whether any genuinely new generalized runtime defect is evidenced.",
+      "inputs": [
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_INVENTORY.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_INVENTORY.md",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_CLUSTER_ANALYSIS.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_CLUSTER_ANALYSIS.md",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CANDIDATE_HYPOTHESIS_LEDGER.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_REASON_METRICS.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_RESIDUAL_INVENTORY.json"
+      ],
+      "output": "A read-only message to the primary executor with row/cluster category recommendations, evidence limitations, counts where defensible, and candidate-necessity reasoning; no filesystem output.",
+      "mutationProhibition": true
+    },
+    {
+      "taskName": "regression_reuse_audit",
+      "scope": "Audit C36 clean full-regression raw captures, adjudication, command, environment, tracked/runtime/dependency/harness identities, and preservation evidence against the C37 reuse rule; identify the exact identity checks needed for reuse and final no-candidate gates.",
+      "inputs": [
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDOUT.txt",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_STDERR.txt",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CLEAN_POSTCOMMIT_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_FINAL_PRESERVATION_RESULT.json",
+        "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256"
+      ],
+      "output": "A read-only message to the primary executor with a reuse eligibility decision framework, verified capture facts, and any blocker; no filesystem output.",
+      "mutationProhibition": true
+    }
+  ],
+  "globalMutationProhibition": [
+    "No delegated agent may create, edit, overwrite, rename, move, or delete any file.",
+    "No delegated agent may allocate or terminalize an attempt, alter the canonical registry, create or alter any WAL, or start a runtime/service.",
+    "No delegated agent may modify an oracle, fixture, runtime, harness, dependency, Roadmap, CURRENT_STATE, manifest, staging area, commit, branch, remote, deployment, index, database, or model configuration.",
+    "No delegated agent may invoke Claude Code Opus or approve C37.",
+    "All commands must be read-only and all conclusions must be returned only to the primary executor."
+  ],
+  "pass": true
+}

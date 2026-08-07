@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37",
+  "classification": "C37_CHECKPOINT_68_PROTECTED_RESIDUE_VERIFICATION_PASS",
+  "generatedUtc": "2026-08-01T13:49:09.2032306Z",
+  "baseline": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROTECTED_RESIDUE_BASELINE.json",
+    "bytes": 8839,
+    "sha256": "8de6ed4d617a561fe0e3a1357d051c3e9aee343849fcb659636aab5059b38094",
+    "protectedUntrackedRecords": 18,
+    "protectedTrackedControls": 4,
+    "recordsChecked": 22,
+    "missing": 0,
+    "byteMismatches": 0,
+    "hashMismatches": 0,
+    "aggregateSha256": "980cd3b5f2a5b75104bc91c9e6f4391e80bf5f0d772f48b61c79497e3d2ebd0a",
+    "pass": true
+  },
+  "priorVerification": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_66_PROTECTED_RESIDUE_VERIFICATION.json",
+    "bytes": 3629,
+    "sha256": "429e87896bb6a057f5c3f2ad320c156874468449364aae68e7ad512cf538f70a"
+  },
+  "runtime": {
+    "components": {
+      "ask-handler.js": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602",
+      "conflict-engine.js": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+      "services/answer-support-evidence.js": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37",
+      "services/answer-support-validator.js": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+    },
+    "c35CompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+    "selectedC34ReasonRuntimeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "liveTrackedReasonRuntimeSha256": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201",
+    "componentMismatchCount": 0,
+    "runtimeOracleFixtureMutationCount": 0,
+    "pass": true
+  },
+  "registryWalAttempts": {
+    "registry": {
+      "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+      "bytes": 718108,
+      "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+      "attempts": 230,
+      "activeAttemptId": null
+    },
+    "attemptDirectories": 230,
+    "orphan": 0,
+    "dangling": 0,
+    "running": 0,
+    "c36RegistryRows": 0,
+    "c37RegistryRows": 0,
+    "c34Wal": {
+      "bytes": 12143,
+      "rows": 32,
+      "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2"
+    },
+    "c35Wal": {
+      "bytes": 2165,
+      "rows": 6,
+      "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f"
+    },
+    "c36WalAbsent": true,
+    "c37WalAbsent": true,
+    "pass": true
+  },
+  "historicalControls": {
+    "knowledge/TINA_Updated_Roadmap_v7.md": "235cc3366b018b74fa252d8c5f7546b5ed3abd4b43b2be3a0a9e1cbf8cfb6daa",
+    "knowledge/TINA_Updated_Controlling_Roadmap_v8.md": "54c0d97a13fe8bf097b5e7b0913d1b4e1fe8b5584c5c8f0d683fe52c3745f422",
+    "unchanged": true
+  },
+  "priorEvidenceManifests": {
+    "c36SafePause": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256",
+      "bytes": 7228,
+      "sha256": "188eb3f90e3b3863a99d44e0c57eb3c41e487377c3d00fdc868026e532ed6812",
+      "rows": 48,
+      "bad": 0
+    },
+    "c37OriginalReviewPackage": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+      "bytes": 8473,
+      "sha256": "e317b2dabce69c32bcfbeb88c3c4541d37fd82e3e914b9ffc81a385bf60c97fb",
+      "rows": 57,
+      "bad": 0
+    }
+  },
+  "checkpoint68EvidenceManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_68_TOKEN_SAFE_PAUSE_EVIDENCE.sha256",
+    "bytes": 1499,
+    "sha256": "ef6ccb612d28b2dacae732802f38f60fab3e2aa6f5da7126b2c3c1cd494e0b7c",
+    "rows": 9,
+    "badBeforeAuthorizedLedgerAppend": 0,
+    "ledgerExpectedPrefixSha256": "9d175aaf17166e51ce5d96e255b14bf3528ea6b8fc1bbce3dcc64a28dbd6944c",
+    "ledgerPriorTenLinesBytePreserved": true,
+    "ledgerSequenceNow": 11,
+    "ledgerCurrentAppendOnlySha256": "86370b2f3bc91d6611a67e9c6ff011278aa6bca14739e9270f4ed7bc5a55b021"
+  },
+  "persistentClaudeVsCodeProjectGlobalConfigurationMutations": 0,
+  "runtimeOracleFixtureRegistryWalMutations": 0,
+  "protectedResiduePreserved": true,
+  "pass": true
+}

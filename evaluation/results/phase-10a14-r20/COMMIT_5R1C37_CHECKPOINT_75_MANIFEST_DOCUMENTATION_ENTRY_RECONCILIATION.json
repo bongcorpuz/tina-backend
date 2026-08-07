@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 75",
+  "classification": "DOCUMENTATION_CUTOVER_MANIFEST_ENTRY_RECONCILIATION_EXPECTED_NOT_AN_INTEGRITY_DEFECT",
+  "generatedAtUtc": "2026-08-07T03:21:43Z",
+  "purpose": "Record the expected, intended documentation-hash divergence caused by the checkpoint-75 update to knowledge/CURRENT_STATE.md, without editing any sealed historical manifest and without concealing the mismatch.",
+
+  "sealedManifestsNotEdited": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_MANIFEST_DOCUMENTATION_ENTRY_RECONCILIATION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_EVIDENCE.sha256",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_73_ungoverned_head_remediation_safe_pause.json"
+  ],
+  "sealedManifestEditCount": 0,
+  "historyRewritten": false,
+  "mismatchConcealed": false,
+
+  "documentationCutover": {
+    "file": "knowledge/CURRENT_STATE.md",
+    "beforeSha256": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+    "afterSha256": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+    "beforeBytes": 131015,
+    "afterBytes": 146279,
+    "afterLines": 3232,
+    "linesAddedRelativeToHead": 311,
+    "linesDeletedRelativeToHead": 0,
+    "purelyAdditive": true,
+    "purelyAdditiveVerification": "git diff HEAD -- knowledge/CURRENT_STATE.md reports 311 insertions and 0 deletions; a count of removal lines in the diff returns 0.",
+    "eolPreserved": "LF",
+    "eolVerification": "git ls-files --eol reports i/lf w/lf both before and after.",
+    "historicalRecordPreserved": true,
+    "supersededSectionsFlaggedNotDeleted": [
+      "Checkpoint 73 controlling-checkpoint block (now under the heading 'HISTORICAL RECORD — CHECKPOINT 73 (superseded by checkpoint 75, retained verbatim)')",
+      "Current Evidence Registry",
+      "Next Exact Task",
+      "Remaining Phase 10A Sequence"
+    ]
+  },
+
+  "invalidatedHistoricalManifestEntries": [
+    {
+      "manifest": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256",
+      "entry": "knowledge/CURRENT_STATE.md",
+      "recordedSha256": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+      "currentSha256": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+      "divergence": "EXPECTED",
+      "divergenceCause": "Intentional checkpoint-75 governed documentation update.",
+      "integrityDefect": false,
+      "remediation": "None required. The checkpoint-74 manifest remains sealed and correct AS AT CHECKPOINT 74. This artifact is the forward reconciliation record.",
+      "verificationGuidance": "When re-verifying COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256, the knowledge/CURRENT_STATE.md entry WILL fail and MUST be treated as expected divergence documented here. All six other entries in that manifest MUST still verify."
+    },
+    {
+      "manifest": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json",
+      "entry": "documentationCutover.afterSha256",
+      "recordedSha256": "70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849",
+      "currentSha256": "43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04",
+      "divergence": "EXPECTED",
+      "integrityDefect": false,
+      "note": "Checkpoint 74's recorded afterSha256 was correct at the moment checkpoint 74 was written and was verified as such by this operation before any edit was made."
+    }
+  ],
+
+  "checkpoint74EntriesStillValid": [
+    { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json", "sha256": "43f72ce65b7b3bf171f564c477af229148770f5490cfcc8311032ce793ebe724" },
+    { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_74_MANIFEST_DOCUMENTATION_ENTRY_RECONCILIATION.json", "sha256": "64f548f00b651591108873760a3c9b0e8f75653eea6ae46498405f0f08652ee5" },
+    { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_73_ungoverned_head_remediation_safe_pause.json", "sha256": "f8cd07ee49dcb8f01b5998db2fe4a6d069110b81c2acb1169fc75a689070188f" },
+    { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json", "sha256": "f25fe43b65c60b3fb38561572cabebe48188404a83744467bff776c28b448e32" },
+    { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch", "sha256": "b6e5ddd975a04fd03c6ed786f6cd41b5bd8f3d88f622cfa98a0faa07d778d66d" },
+    { "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_73_EVIDENCE.sha256", "sha256": "7c2da94348b223f342fa523f29b2ed0acd40adb8a3f681b8a8cc9e8fdf6994ee" }
+  ],
+  "checkpoint74EntriesStillValidCount": 6,
+  "checkpoint74EntriesInvalidatedCount": 1,
+  "checkpoint74EntryTotal": 7
+}

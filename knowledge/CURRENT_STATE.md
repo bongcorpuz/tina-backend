@@ -2,6 +2,885 @@
 
 ## TINA Controlling Continuity Status
 
+Last updated: 2026-08-07T23:03:00.000Z (COMMIT 5R1-C37 checkpoint 81 — post-review reconciliation, all 10 observations dispositioned, exact staging plan prepared, C37 remains nonterminal pending commit/push)
+
+PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS and not SATISFIED. COMMIT 5R1-C37 is **NONTERMINAL**. **No model was invoked in this operation. No staging, commit, or push occurred. C38 was not begun.**
+
+---
+
+## CHECKPOINT 81 — CONTROLLING STATE
+
+Checkpoint **81** supersedes checkpoint 80 as the resume point. Checkpoints 61 through 80 are preserved unaltered, and the checkpoint-80 block below is **retained verbatim**.
+
+Classification: `C37_CHECKPOINT_81_POST_REVIEW_RECONCILIATION_NONTERMINAL_PENDING_COMMIT`. This is a **deterministic reconciliation unit** — no reviewer, subagent, or model of any kind was invoked. `safeToResume=true`; `activeAttemptId=null`.
+
+### Fail-closed preflight — every gate passed
+
+Repository identity, remote tip (fresh `git ls-remote`, exit 0, matched HEAD), checkpoint-80 manifest (**14/14 OK, exit 0**), CURRENT_STATE.md starting hash (matched exactly), checkpoint-79 forward reconciliation (**7 OK + 1 expected divergence on CURRENT_STATE.md only**), 57-entry package (**57/57**, aggregate re-derived and matched), registry/WAL (230 attempts, 0 running/orphan/dangling, `candidateBudget: {authorized:0, allocated:0}`, hash `a0261acf…` unchanged), and protected artifacts — all confirmed exactly as required, with every hash recomputed fresh rather than trusted from the prior report's abbreviated forms.
+
+### B1 — full-date timestamp resolution (not time-of-day inference)
+
+The prior report's shorthand "23:54:21Z → 18:26:41Z" could be misread as ambiguous without dates. Resolved with full ISO-8601 values: disablement `2026-08-07T06:33:15Z`; prior session boot `2026-08-06T23:54:21.5Z`; new boot `2026-08-07T18:26:41.5Z`; `explorer.exe` `2026-08-07T18:27:03.6Z`. Elapsed from disablement to new boot: **42,806 seconds = 11.89 hours**, computed and compared programmatically (`.NET` `DateTime` `-gt` comparison, not visual inspection) — confirmed **True**. Gateway still absent, disabled-marker hash unchanged, OpenClaw task still `Disabled`. **B1 remains fully CLOSED**, now on stronger, date-explicit evidence.
+
+### Ten-observation register — fully dispositioned, zero blocking
+
+All 10 nonblocking observations from the checkpoint-80 review were extracted verbatim and individually dispositioned in `COMMIT_5R1C37_CHECKPOINT_81_NONBLOCKING_OBSERVATION_REGISTER.json`:
+
+| Disposition | Count | Observations |
+|---|---|---|
+| Already resolved at checkpoint 80 (independently re-verified) | 1 | OBS-1 (tool-boundary deviation) |
+| Informational only, no action | 4 | OBS-2, OBS-8, OBS-9 (reviewer scope disclosures) |
+| Reconciled via additive erratum, zero source files edited | 3 | OBS-3, OBS-4, OBS-7 (sealed/frozen artifacts) |
+| Reconciled via separate adjudication artifact, zero source files edited | 2 | OBS-5 (commit message), OBS-6 (stale references) |
+| Addressed as a precondition within this checkpoint | 1 (OBS-10 overlaps OBS-5/6) | commit not performed; preconditions satisfied |
+
+**Zero observations were converted into blocking findings.** `APPROVED_WITH_NONBLOCKING_OBSERVATIONS` is preserved exactly — not upgraded to `APPROVED`.
+
+### Stale Opus-4.8 reference inventory — zero active files corrected
+
+A scoped search across `COMMIT_5R1C37_*` (not the >100-file unscoped match spanning unrelated, already-closed prior commit units, which correctly remain untouched) found 46 matches. Classification: 4 are the executor's own recent, already-accurate records (Category A); 39 are checkpoint-64-through-71 frozen history of the actual failed Opus-4.8 attempts (Category B — rewriting them would falsify history); 1 is an append-only log (Category B); the reviewer's exact **3 named artifacts** (`FINAL_CLOSURE_DECISION_DRAFT.json`, `PHASE_10A_STATUS_ASSESSMENT_DRAFT.json`, `FINAL_OPUS_REVIEW_CLI_CAPTURE.json`) are **all sealed or raw** — two are members of the immutable 57-entry package, the third is a timestamped raw capture of a real failed CLI invocation (`spawnError: "write EOF"`, 2026-08-01T10:48:21Z). **Zero files fell into Category C (active-controlling-stale).** The mutation allowlist is empty. All three are covered by a single additive erratum instead of any edit. Full detail: `COMMIT_5R1C37_CHECKPOINT_81_STALE_REVIEWER_REFERENCE_RECONCILIATION.json`.
+
+### Commit-message divergence — reconciled, neither draft used verbatim
+
+Both named drafts predate the review-gate and B1 incident entirely, so neither is a complete description of what happened. A new canonical subject was composed on the same repository convention (`PHASE-10A14-R20 COMMIT 5R1-C<N> <state> - <clause>`, confirmed via `git log`), deliberately using **"nonterminal"** rather than "complete":
+
+> `PHASE-10A14-R20 COMMIT 5R1-C37 nonterminal - no-runtime closure approved with observations, reviewer amended to Opus 5`
+
+Full body and rationale, plus the explicit overclaim checklist it passes, in `COMMIT_5R1C37_CHECKPOINT_81_COMMIT_MESSAGE_RECONCILIATION.json`. **Not committed. Ready only for a separately authorized future unit.**
+
+### Label-polarity bug — additive erratum, source frozen and hash-locked
+
+`COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_CAPSULE.md` line 53 (`OPUS_NOT_YET_INVOKED_AT_DRAFT: false`) displays the opposite of its true meaning — cosmetic, and the underlying sealed field (`opusInvoked: false`) is itself correct. The capsule is write-once by construction (`fs.openSync(..., 'wx')`) **and** hash-locked into checkpoint 80's own sealed Layer-1 manifest — editing it now would invalidate an already-sealed reference. Rule B applied: not edited; erratum created identifying the correct polarity and confirming zero downstream decisions were computed from the mislabeled line. Full detail: `COMMIT_5R1C37_CHECKPOINT_81_LABEL_POLARITY_ADJUDICATION.json`.
+
+### Untracked-count baseline label — chat-report artifact, not a repository defect
+
+Neither `"post-CP77"` nor the literal value `302` appears anywhere in repository evidence — confirmed by direct search. The true chain, from real recorded fields: CP78-start `295` → CP79-start `299` → **CP79-end/CP80-start `302`** (299 + CP79's own 3 files) → **current `313`** (302 + CP80's 11 files). The prior label should have read "post-CP79," not "post-CP77." Category A: external reporting typo, zero repository correction required or performed. The arithmetic itself was never wrong. Full detail: `COMMIT_5R1C37_CHECKPOINT_81_UNTRACKED_BASELINE_LABEL_ADJUDICATION.json`.
+
+### C37 closure-readiness — NONTERMINAL, exact missing operation identified
+
+The controlling closure contract (`COMMIT_5R1C37_FINAL_OPUS_REQUEST.md`) states: *"C37 becomes terminal only after its exact commit and normal push are verified."* The checkpoint-80 amendment supersedes the **reviewer-identity** requirement only — it does **not** touch this commit/push requirement. Every reconciliation checklist item in Phase 8 passed except terminality itself:
+
+```text
+candidatesAuthorized:     0
+candidatesAllocated:      0
+C37 runtime attempts:     0
+B1:                       CLOSED
+B7:                       CLOSED (narrowly, unchanged from checkpoint 80 — not broadened)
+B2–B6:                    OPEN (unchanged)
+Phase 10A:                OPEN
+R20:                      IN PROGRESS
+C37:                      NONTERMINAL — missing: staging, commit, push, post-push remote verification
+```
+
+No stronger project-defined status was invented. B7 was not reopened (no genuine blocking inconsistency was found) and not broadened beyond its checkpoint-80 scope. B1 was not reopened. B2–B6 were not closed without separate evidence. Phase 10A was not claimed complete. C38 was not begun.
+
+### Exact future staging allowlist — 238 paths, zero staged
+
+`COMMIT_5R1C37_CHECKPOINT_81_EXACT_FUTURE_STAGING_ALLOWLIST.json` enumerates **238 exact paths** (237 untracked `COMMIT_5R1C37_*` evidence files + `knowledge/CURRENT_STATE.md`), each with tracked status, purpose, originating checkpoint, SHA-256, sealed-status, and inclusion rationale. **76 of the 313 untracked files are explicitly excluded** by category (unrelated agent scaffolding, quarantined `/health` test, tool configuration, other commit units' evidence, the shared registry). Twelve `git add -- <exact-paths>` command groups are recorded as **inert evidence only** — no wildcard, no directory staging, no `git add .` or `-A`, nothing executed. A push command is intentionally omitted; push remains a separate future authorization.
+
+### Authorization state — unchanged, no model contacted
+
+```text
+Opus 5:   AUTHORIZED_CONSUMED / consumed=true / remaining=0 / invocationCount=1  (unchanged)
+Opus 4.8: SUPERSEDED_UNUSED / consumed=false / remainingPermittedInvocations=0   (unchanged)
+```
+
+**No model, subagent, or provider of any kind was invoked in this checkpoint.** This was confirmed as a precondition of the unit, not merely as an outcome.
+
+### What did NOT occur
+
+No staging, commit, amend, push, force-push, tag, reset, checkout, merge, pull, fetch, rebase, cherry-pick, revert, or stash. No deletion, quarantine, or broad cleanup of the untracked files. No runtime-code, test, validator, oracle, or safety-guard modification. No registry or WAL change. No startup-entry re-enablement. No second review, no model/subagent invocation of any kind. No C38, E2, A15, or Phase 10B. No `/health` work.
+
+### Next exact authorized operation
+
+Owner decision required to **separately authorize** the staging/commit/push sequence prepared by this checkpoint (the 238-path allowlist and the canonical `nonterminal` commit message), or to defer it further. No other operation is authorized until then.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 80 (superseded by checkpoint 81, retained verbatim)
+
+## CHECKPOINT 80 — CONTROLLING STATE (as recorded at checkpoint 80)
+
+Checkpoint **80** supersedes checkpoint 79 as the resume point. Checkpoints 61 through 79 are preserved unaltered, and the checkpoint-79 block below is **retained verbatim**.
+
+Classification: `C37_CHECKPOINT_80_OPUS5_GOVERNANCE_AMENDMENT_VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS`.
+
+Disposition: **Outcome B — VALID_APPROVAL_WITH_NONBLOCKING_OBSERVATIONS.** `safeToResume=true`; `activeAttemptId=null`.
+
+### Primary executor for this unit
+
+Claude Sonnet 5, thinking very high, effort very high (set by explicit `/model` command). Sonnet 5 was not used as, and is not represented as, the independent reviewer.
+
+### The governance amendment — a deliberate decision, not a model-equivalence claim
+
+Checkpoint 79 found that the required reviewer model, Claude Opus 4.8, does not exist in this execution environment. The owner responded not by overriding that finding, but by issuing an explicit governance amendment: **the former Opus 4.8 authorization is superseded**, recorded and preserved exactly as:
+
+```text
+status:                        SUPERSEDED_UNUSED
+consumed:                      false
+remainingPermittedInvocations: 0
+```
+
+It is not combined with any new counter and must not be reused later even if an environment exposing Opus 4.8 is found, absent a fresh governance decision. A **new, separate, one-use authorization** was issued for `claude-opus-5` via selector `opus`. This amendment explicitly states — and this document repeats — that it is **not** a claim that Opus 4.8 and Opus 5 are equivalent; it is a deliberate substitution of reviewer, tracked with its own counter.
+
+### Fail-closed preflight — every gate passed
+
+Repository identity: branch `feature/source-availability-engine-v1`, HEAD `ee664eab4529c636f34cb6d37d23a6a497886a17`, full parent `d5b25e676f623fbc1888608ff250824fcd34af99` (resolved via `git rev-parse HEAD^`), remote tip freshly verified via a single `git ls-remote` network query: `ee664eab4529c636f34cb6d37d23a6a497886a17`. Ahead/behind 0/0, staged 0, modified 4 (unchanged set). All checkpoint-79 bound hashes recomputed and matched; checkpoint-79 manifest re-ran **8/8 OK**; checkpoint-78 manifest re-ran with the sole expected divergence on `CURRENT_STATE.md`. The 57-entry package re-verified **57/57**. Registry/WAL reconciled: 230 attempts, 0 running/orphan/dangling, `candidateBudget: {authorized:0, allocated:0}`, `c37WalExists=false`, `activeAttemptId=null` — registry hash unchanged (`a0261acf…`). Writer precondition still holds; no qualifying logon has yet occurred since the checkpoint-77 disablement, so **B1 remains closed-subject-to-confirmation**. Model resolution for `claude-opus-5` was confirmed from the executor's own authoritative configuration, not tested via a live request, per instruction.
+
+### Manifest-hash provenance — corrected, not merely re-asserted
+
+Checkpoint 79 had claimed `sourceManifestSha256` and `detailedManifestSha256` corresponded to no standalone file. **That claim is withdrawn here, in the open.** Reading the actual capsule-builder script revealed the two exact source files (`COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256` and `COMMIT_5R1C37_OPUS_EXTERNAL_TRANSMISSION_PACKAGE_MANIFEST.json`); both reproduce their target hashes exactly, cross-validate 57/57 against the allowlist, and independently re-derive the package aggregate hash `7fbc288b…`. Both hashes are adjudicated **REPRODUCED**. The prior claim was an incomplete search, not evidence of tampering — corrected rather than silently overwritten.
+
+### Output schema — wrapped, not edited
+
+The historical review contract (`COMMIT_5R1C37_FINAL_OPUS_REQUEST.md`) hard-codes `reviewerModel: "claude-opus-4-8"` in its output schema. Per the governing prompt's Phase 4, that file was **not edited**. An additive wrapper schema was created that changes only the reviewer-identity constant (and preserves the full 19-field verification object, all enums, and all other constants unchanged), documented field-by-field. The wrapper's stale prose prerequisites (a specific commit message, a "normal push") were explicitly reframed for the reviewer as forward-looking judgments, since no commit or push is authorized in this operation.
+
+### The independent review — genuinely adversarial, not a rubber stamp
+
+`claude-opus-5` was invoked exactly once, read-only by instruction (see tool-boundary note below), given the Layer 1 evidence corpus (the 437KB/~189K-token deterministic capsule, role ledger, and 57-entry allowlist — the raw 4.1MB package was deliberately **not** inlined, per the authorization's own prohibition) and the Layer 2 governing addendum (the amendment, checkpoint-79 evidence, provenance adjudication, schema wrapper, and closure/ledger artifacts).
+
+The reviewer did not defer to the executor's framing. It independently:
+- Spot-checked **27 of the 57 originals** directly (required minimum: 8), covering all 8 evidence classes.
+- Recomputed the 145-row cluster arithmetic **by hand** and cross-checked it against three independent artifacts.
+- Verified the regression summary against **raw stdout**, not the self-reported adjudication.
+- **Adversarially pursued** an apparent ~152KB unexplained size divergence between a "selected" and "live" runtime file as a candidate hidden mutation, before resolving it as disclosed, corroborated design (an attempt snapshot vs. a restored scaffold) rather than concealment.
+- Surfaced three genuinely new findings the executor's own preflight had **not** caught: stale Opus-4.8 reviewer-identity references still present in other draft artifacts, a commit-message text divergence between two drafts, and a label-polarity documentation ambiguity.
+- **Disclosed, unprompted**, that it used one read-only Bash `tail` call in violation of its stated Read/Glob/Grep-only instruction.
+
+That disclosed deviation was **independently verified, not just trusted**: the target file's hash is unchanged (matches the value already recorded in the allowlist before the reviewer ran), the untracked-file count is identical before and after (306 = 306), and the one unexplained-looking untracked file found in the diff (`auth.json`) has a filesystem timestamp that predates the invocation entirely. **No mutation occurred.** This is recorded as a tooling limitation — the agent-spawning tool provides no way to technically sandbox a general-purpose subagent to Read/Glob/Grep only, so the "read-only" requirement was enforced by instruction plus independent post-hoc verification, not by a technical guarantee.
+
+The reviewer's output is **schema-valid with zero deviations**: all 11 wrapper-level required fields present, all 17 `originalDecisionPayload` fields present, all 19 verification booleans present and boolean-typed (all true), zero extra undeclared properties, every const and enum matched exactly, and the reviewer correctly self-identified as `claude-opus-5` in both required locations.
+
+### Reviewer's decision — preserved exactly, not upgraded
+
+```text
+decision:                  APPROVED_WITH_NONBLOCKING_OBSERVATIONS
+substantivePathDecision:   NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED
+blockingFindings:          [] (none)
+nonblockingObservations:   10 (all preserved verbatim in the evidence artifact)
+provenanceAdjudicationAcceptable: ACCEPTABLE_NON_BLOCKING
+b7ClosureDetermination:    CLOSE_B7
+c37TerminalDetermination:  C37_MAY_BECOME_TERMINAL — but explicitly "is NOT terminal now"
+furtherGovernanceDecisionRequired: true
+```
+
+This is **not** rewritten as an unconditional approval. `APPROVED_WITH_NONBLOCKING_OBSERVATIONS` stays exactly that.
+
+### Authorization consumption
+
+The substantive package-bound request was submitted at 2026-08-07T18:00:59Z. Per the amendment's own consumption rule, the new Opus 5 authorization is now:
+
+```text
+status:          AUTHORIZED_CONSUMED
+consumed:        true
+remaining:       0
+invocationCount: 1
+```
+
+The former, superseded Opus 4.8 authorization remains untouched at `SUPERSEDED_UNUSED / consumed=false / remaining=0`. The two counters were never combined.
+
+### C37 / B7 / Phase 10A adjudication — narrow and precise
+
+**B7 is CLOSED** — narrowly, as to the specific requirement that a valid, independent, package-bound, schema-conformant review be obtained. It was.
+
+**C37 remains NONTERMINAL.** The reviewer's own words: "C37 may become terminal on the substantive merits but is NOT terminal now, and this review authorizes no publication." Becoming terminal requires separately-authorized documentation finalization, exact commit-message reconciliation, staging, commit, and push — **none of which occurred or is authorized here.**
+
+**Phase 10A remains OPEN. R20 remains IN PROGRESS.** No claim is made that Phase 10A, R20, or the overall project passed. `candidatesAuthorized=0`, `candidatesAllocated=0`, and zero C37 runtime attempts are all independently confirmed by the reviewer, not merely re-asserted by the executor.
+
+### Outstanding governance decisions before any future termination
+
+1. Documentation finalization order, explicit staging, commit, and push — not authorized by this operation.
+2. Commit-message text divergence between two draft artifacts — moot until a commit is separately authorized.
+3. Stale Opus-4.8 reviewer-identity references in other draft artifacts (`FINAL_CLOSURE_DECISION_DRAFT.json`, `PHASE_10A_STATUS_ASSESSMENT_DRAFT.json`, CLI-capture entries) — need reconciling to this amendment.
+4. C38 reason-oracle governance — the next unit, separately governed, not begun.
+
+### Blocker status after checkpoint 80
+
+**B1 fully closed during this checkpoint's final-verification pass**, after the rest of this section was already drafted. Between the review invocation and final verification, a genuine system reboot occurred: `LastBootUpTime` advanced from `2026-08-06T23:54:21Z` (the session active throughout checkpoints 76–80's preflights) to `2026-08-07T18:26:41Z`, with `explorer.exe` restarting at `18:27:03Z` — 22 seconds later, consistent with a real boot-to-logon sequence, not merely an explorer restart. That reboot occurred roughly 15 minutes after the Opus 5 reviewer invocation ended and about 11.9 hours after the checkpoint-77 disablement. **After that reboot, PIDs 21112/4472 did not reappear, 0 python.exe processes exist, the active startup trigger remains absent, and the disabled marker's hash is unchanged** (`427A2554…F94AE`). This is the exact evidence the governing criteria required — a qualifying logon with no gateway re-entry — discovered and incorporated before this checkpoint's manifest was sealed, not left stale. Full detail: `COMMIT_5R1C37_CHECKPOINT_80_B1_LOGON_CONFIRMATION_EVIDENCE.json`.
+
+| ID | Blocker | Status |
+|---|---|---|
+| B1 | Concurrent third-party writer | **CLOSED** — a real reboot occurred with no gateway re-entry; no longer merely pending |
+| B2 | Three semantic /health changes deferred | OPEN — unchanged |
+| B3 | tests/health-endpoint.test.mjs quarantined | OPEN — unchanged |
+| B4 | IDEA.md duplicate of CURRENT_STATE.md | OPEN — unchanged |
+| B5 | tax-engines/CON/* unmaterialisable on Windows | OPEN — unchanged |
+| B6 | Five stale .git/index.stash.*.lock files | OPEN — unchanged |
+| B7 | Independent review requirement | **CLOSED** — narrowly, as described above |
+
+### Protected artifacts, /health — unchanged
+
+`/health` remains **DEFERRED and NOT AUTHORIZED**, untouched. `IDEA.md`, `package.json`, `server.js`, `security/public-health.js`, the PATCH-08S test, `tax-engines/CON/*`, and the canonical attempt registry are all byte-identical before and after this entire operation, independently reverified after the reviewer invocation specifically because of the disclosed tool-boundary deviation.
+
+### What did NOT occur
+
+No commit, push, staging, reset, checkout, merge, pull, fetch, rebase, cherry-pick, revert, or stash. No deletion, quarantine, or broad cleanup. No runtime-code modification, test/validator/oracle/safety-guard change. No startup-entry re-enablement. No second reviewer, no other model contacted, no retry of the reviewer invocation. No C38, E2, A15, Phase 10B, deployment, migration, reindex, or model migration.
+
+### Next exact authorized operation
+
+Owner decision required on the four outstanding governance items above (documentation/staging/commit/push order; commit-message reconciliation; stale Opus-4.8 reference cleanup; whether/when to begin C38). None of these is authorized by the current governing prompt. B1's next-logon confirmation is now satisfied (see above) and requires no further action.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 79 (superseded by checkpoint 80, retained verbatim)
+
+## CHECKPOINT 79 — CONTROLLING STATE (as recorded at checkpoint 79)
+
+Checkpoint **79** supersedes checkpoint 78 as the resume point. Checkpoints 61 through 78 are preserved unaltered, and the checkpoint-78 block below is **retained verbatim**.
+
+Classification: `C37_CHECKPOINT_79_OPUS_4_8_MODEL_UNAVAILABLE_NO_SUBSTITUTION_SAFE_PAUSE`.
+
+Disposition: **SAFE_PAUSE — Outcome D, no invocation because of model mismatch.** `safeToResume=true`; `activeAttemptId=null`.
+
+### Primary executor for this unit
+
+Claude Sonnet 5 (set by explicit `/model` command at the start of this unit). Sonnet 5 was not used as, and is not represented as, the independent reviewer.
+
+### Authorization was granted. Model availability is the new obstruction.
+
+The governing prompt for this unit **explicitly authorized** exactly one independent, read-only Claude Code Opus 4.8 review of the 57-entry manifest-indexed C37 package — superseding checkpoint 78's authorization-withheld state. **B7 as recorded at checkpoint 78 is therefore resolved as originally framed.** But the same prompt anticipated the case actually encountered here, in its own words: *"If Opus 4.8 is unavailable... do not substitute Opus 5, Sonnet 5, GPT-5.6 Sol, Terra, Luna, Haiku, or any other model. Stop safely, preserve the authorization according to its controlling consumption contract, create truthful evidence."*
+
+**Model availability determination.** The primary executor's own system configuration enumerates the complete current model roster: `claude-opus-5`, `claude-sonnet-5`, `claude-fable-5`, `claude-haiku-4-5-20251001`. **There is no `claude-opus-4-8`.** The executor's agent-spawning tool accepts only the tier names `sonnet | opus | haiku | fable`, and `opus` resolves to Opus 5, not 4.8. No mechanism exists for this executor to select or invoke a model identified specifically as Opus 4.8.
+
+**No invocation was attempted.** The governing prompt requires stopping *before* invocation when the model identity cannot be confirmed, rather than treating unavailability as something to test by trying anyway. Determining unavailability from the executor's own authoritative, already-known roster satisfies that requirement without spending the one-use authorization or any external-provider resources on a doomed attempt. Zero network calls were made for invocation purposes; the only network call this operation made was the mandatory read-only remote-tip check.
+
+### Outcome adjudication — Outcome D, not technical failure, not semantic rejection
+
+This is **not** classified as a technical review failure: no invocation was attempted, so nothing could fail technically. It is categorically distinct from checkpoints 65 and 67, which were genuine `TECHNICAL_INCOMPLETE` results from an *attempted* invocation that failed on CLI configuration and prompt length respectively — conflating the two would misrepresent the record. It is likewise **not** a semantic rejection: C37 holds zero candidates (`candidatesAuthorized=0`, `candidatesAllocated=0`, re-confirmed below), so there is nothing for a reviewer to accept or reject, and no reviewer was reached to render either verdict.
+
+**Exact failed precondition:** the required reviewer model identity (`claude-opus-4-8`) is not present in the primary executor's available model roster.
+
+No model substitution was performed. No local self-review was performed or represented as independent. No second reviewer was invoked. No candidate was manufactured. No completion is claimed.
+
+### Authorization consumption — preserved as unused
+
+The authorization's own consumption rule states: *"Consumed only when the substantive manifest-indexed request is submitted."* No request was submitted, because it could not be bound to the required model identity. Per that rule, the authorization is **preserved as unused**:
+
+```text
+status:                    AUTHORIZED_UNUSED
+consumed:                  false
+invocationCount:           0
+remainingInvocationCount:  1
+retryAuthorized:           false
+```
+
+### Fail-closed preflight — every gate passed before the model-availability gate
+
+**Repository identity, freshly verified:**
+
+```text
+branch          feature/source-availability-engine-v1
+HEAD            ee664eab4529c636f34cb6d37d23a6a497886a17
+full parent     d5b25e676f623fbc1888608ff250824fcd34af99   (resolved via git rev-parse HEAD^, not expanded from the abbreviated form)
+origin          https://github.com/bongcorpuz/tina-backend.git
+remote tip      ee664eab4529c636f34cb6d37d23a6a497886a17   (git ls-remote --heads origin, live network read, exit 0 — not the local tracking ref)
+ahead/behind    0 / 0
+staged paths    0
+modified        4  (CURRENT_STATE.md + the 3 deferred /health paths)
+untracked       299
+```
+
+**All four bound hashes recomputed locally and matched exactly** (checkpoint-78 recovery checkpoint, adjudication, manifest, and pre-update CURRENT_STATE.md). Checkpoint-78 manifest re-run: **8/8 OK, exit 0**.
+
+**57-entry package integrity — verified 57/57.** The canonical enumeration is `COMMIT_5R1C37_MANIFEST_INDEXED_REVIEW_ALLOWLIST.json` (sha256 `069a873a…523469e`), `exactOriginalEntryCount=57`. Every one of the 57 listed files was read from the live working tree and its SHA-256 compared against the allowlist's recorded value: **57 existing, 57 hash-matched, 0 missing, 0 mismatched, 0 extra files silently added.** The package is unchanged since checkpoint 78.
+
+One discrepancy is recorded rather than concealed: the authorization's `sourceManifestSha256` and `detailedManifestSha256` fields don't correspond to any standalone file currently in the repository. This is assessed as **not an integrity defect** — those fields most plausibly covered an ephemeral byte-framing produced during a prior invocation attempt, not a persisted artifact. The canonical, directly-verifiable allowlist achieved full 57/57 coverage against live content.
+
+**Registry and WAL reconciliation:** `CANONICAL_ATTEMPT_REGISTRY.json` — 230 attempts, **0 running**, 0 orphan, 0 dangling, `historicalRegistryClean=true`. `COMMIT_5R1C37_FINAL_ATTEMPT_LEDGER.json` — `candidateBudget: {maximum:1, authorized:0, allocated:0, accepted:0, rejected:0, technicalIncomplete:0}`, `c37WalExists=false`, `activeAttemptId=null`. **No accepted, rejected, consumed, terminal, superseded, or technical attempt was repeated.**
+
+**Writer precondition — still holds.** PIDs 21112 and 4472 not running; 0 hermes-path, python, and VBS-host processes; the disabled startup marker is present with **unchanged hash** `427A2554…F94AE`; the OpenClaw task remains `Disabled`. The startup entry was **not** re-enabled or modified.
+
+**Logon-since-disablement — still has not occurred.** `explorer.exe` (created 2026-08-06T23:54:44Z) and system boot (2026-08-06T23:54:21Z) both **predate** the disablement (2026-08-07T06:33:15Z). No qualifying logon has happened yet, so **B1 remains closed-subject-to-confirmation, not fully closed.**
+
+### Blocker status after checkpoint 79
+
+| ID | Blocker | Status |
+|---|---|---|
+| B1 | Concurrent third-party writer | CLOSED — subject to next-logon confirmation, **still pending** |
+| B2 | Three semantic /health changes deferred | OPEN — unchanged |
+| B3 | tests/health-endpoint.test.mjs quarantined | OPEN — unchanged |
+| B4 | IDEA.md duplicate of CURRENT_STATE.md | OPEN — unchanged |
+| B5 | tax-engines/CON/* unmaterialisable on Windows | OPEN — unchanged |
+| B6 | Five stale .git/index.stash.*.lock files | OPEN — unchanged |
+| **B7** | **Revised.** C37's sole remaining operation requires a review by a model (Opus 4.8) absent from this executor's environment; authorization is no longer the obstruction, model availability now is | **OPEN — REVISED, not closed** |
+
+### /health, protected artifacts — unchanged
+
+`/health` remains **DEFERRED and NOT AUTHORIZED**, untouched by this operation. `IDEA.md`, `package.json`, `server.js`, `security/public-health.js`, the PATCH-08S test, and both `tax-engines/CON/*` paths are all unchanged. **0 sealed, frozen, or prior-checkpoint artifacts modified. No oracle, test, validator, or safety guard weakened.** Registry and WAL untouched. No runtime candidate or C37 runtime attempt created.
+
+### What did NOT occur
+
+No C38, E2, A15 or Phase 10B work. No deployment, migration, reindexing, or model migration. No commit, push, amend, force-push, reset, checkout, merge, pull, fetch, rebase, cherry-pick, revert, stash, or staging. No deletion, quarantine, or broad cleanup of the ~299 untracked files. No package installation or dependency update. No unrelated process or service modification. No second model or provider contacted. **Opus was not invoked — no substitution, no local self-review represented as independent, no second reviewer.**
+
+### Next exact authorized operation
+
+**Owner decision required.** C37's sole remaining operation needs a model this executor cannot reach. Options: (1) run the review from an environment with genuine access to a model identified exactly as `claude-opus-4-8`, if the owner controls one, and bring back a package-bound, schema-valid decision; (2) reissue explicit authorization naming a model tier this executor can actually invoke — which would need to explicitly permit what the current authorization explicitly forbids; or (3) govern an alternative C37 closure path not requiring external independent review, itself a new governance decision since current evidence requires exactly this review and records no adequate local substitute. Separately, confirm at next user logon that no tina-orchestrator gateway process appears, to fully close B1. Do not begin C38, E2, A15, or Phase 10B. Do not attempt Opus 4.8 again without first resolving how it would actually be reached.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 78 (superseded by checkpoint 79, retained verbatim)
+
+## CHECKPOINT 78 — CONTROLLING STATE (as recorded at checkpoint 78)
+
+Checkpoint **78** supersedes checkpoint 77 as the resume point. Checkpoints 61 through 77 are preserved unaltered, and the checkpoint-77 block below is **retained verbatim**.
+
+Classification: `C37_CHECKPOINT_78_CONTINUATION_PREFLIGHT_AUTHORIZATION_WITHHELD_SAFE_PAUSE`.
+
+Disposition: **SAFE_PAUSE** — authorization withheld. `safeToResume=true`; `activeAttemptId=null`.
+
+### Why this is a safe pause and not a result
+
+The C37 continuation preflight passed **every** gate. The operation then stopped because the one operation C37 has left is the one this prompt forbids.
+
+The controlling repository evidence is **unambiguous**, not vague:
+
+- `COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json` — `C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED`, `candidatesAuthorized=0`, `candidatesAllocated=0`. Zero rows prove a new generalized runtime defect.
+- `COMMIT_5R1C37_FINAL_ATTEMPT_LEDGER.json` — `C37_FINAL_ATTEMPT_LEDGER_ZERO_CANDIDATES`.
+- `COMMIT_5R1C37_FINAL_CLOSURE_DECISION_DRAFT.json` — `reasonClosed=false`, `opusRequired=true`, `opusInvoked=false`, and `exactProposedNextOperation` = *"Invoke exactly one read-only Claude Code Opus 4.8 review of the complete no-runtime governance package."*
+
+C37 therefore has **no runtime work of any kind remaining**. Its sole defined next operation is the external Opus review. The governing prompt states plainly: *"External Opus review: NOT AUTHORIZED; do not invoke it."* — and lists external review among prohibited operations.
+
+**The obstruction is authorization, not specification.** There is no ambiguity to resolve and no alternative operation to substitute.
+
+This disposition is **categorically distinct** from the prior technical failures and must not be conflated with them:
+
+| | This checkpoint | Checkpoints 65 / 67 |
+|---|---|---|
+| Cause | Authorization withheld | Technical failure |
+| Attempted? | Nothing attempted | Attempted and failed |
+| Classification | SAFE_PAUSE | TECHNICAL_INCOMPLETE |
+
+It is likewise **not** a semantic rejection: nothing was evaluated and found wanting, because C37 holds zero candidates.
+
+**A local self-review was considered and refused.** `COMMIT_5R1C37_PRE_OPUS_EXTERNAL_REVIEW_AUTHORIZATION_BLOCKER.json` records `saferAlternativeAdequateForPrompt = false` and states that a local self-review would not satisfy independent approval. Performing one would manufacture a false equivalent of the governed review. **No candidate was manufactured and no completion is claimed.**
+
+### Verified Git state (checkpoint 78)
+
+```text
+branch          feature/source-availability-engine-v1
+HEAD            ee664eab4529c636f34cb6d37d23a6a497886a17
+parent          d5b25e676f623fbc1888608ff250824fcd34af99
+upstream        origin/feature/source-availability-engine-v1
+remote tip      ee664eab4529c636f34cb6d37d23a6a497886a17
+ahead/behind    0 / 0
+staged paths    0
+modified        4  (CURRENT_STATE.md + the 3 deferred /health paths)
+untracked       295
+```
+
+The remote tip was **freshly verified over the network** with `git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1` (exit 0) — not read from the local remote-tracking ref. No index lock; no rebase, merge, cherry-pick or revert in progress. The working tree is **not clean** and no cleanliness is claimed.
+
+### Hash-bound preflight — all four matched
+
+Computed locally; no abbreviated hash from conversation was relied upon.
+
+```text
+bf9b0a7ef177c02b4cc819f19ad8931cbcd99a31f63acf6e806923b1820a337c  COMMIT_5R1C37_RECOVERY_CHECKPOINT_77_writer_precondition_satisfied.json
+ddf84e6b162ab36f31e448646182c8817f99a384f51c83cc31ccb6933006d107  COMMIT_5R1C37_CHECKPOINT_77_WRITER_PRECONDITION_RECONCILIATION.json
+e7771ad2081fb6231824a60e561ea2be32a5942c59ba6ade65fccbb65fd28056  COMMIT_5R1C37_CHECKPOINT_77_FINAL_EVIDENCE.sha256
+57368584a0e80ec1f28f27589319162faf4387c44234c3cc2672eaf15ca2a779  knowledge/CURRENT_STATE.md (before this update)
+```
+
+Checkpoint-77 manifest re-verified **8/8 OK, exit 0**.
+
+### Writer precondition — still satisfied
+
+```text
+PID 21112                      NOT RUNNING
+PID 4472                       NOT RUNNING
+hermes-path processes          0
+python.exe processes           0
+wscript/cscript processes      0
+active tina-orchestrator .vbs  ABSENT
+disabled marker                PRESENT, sha256 427A2554…F94AE (unchanged)
+OpenClaw Gateway task          Disabled (not modified)
+```
+
+The startup entry was **not re-enabled and not modified**. No new tina-orchestrator process appeared. **B1 remains CLOSED subject to the next-logon confirmation, which is still pending** — no user logon has occurred since the checkpoint-77 disablement.
+
+### Session continuity
+
+This checkpoint resumes work begun in a prior Codex session that terminated on a usage limit. That session **wrote no evidence and mutated nothing**. Its conclusion was **independently re-derived from source here**, not accepted: every hash was recomputed, the remote tip was re-read over the network, and the controlling C37 artifacts were read directly. The prior finding was confirmed.
+
+### Registry and attempt reconciliation
+
+`CANONICAL_ATTEMPT_REGISTRY.json`: 230 attempts, **0 running**, 0 orphan, 0 dangling, 227 controlling, `historicalRegistryClean=true`. C37 runtime candidate attempts: **0**. The registry was not modified.
+
+No accepted, rejected, terminal, consumed or superseded attempt was repeated. Two prior Opus authorizations are recorded `CONSUMED_NO_RETRY_AUTHORIZED`; neither was re-used.
+
+### Authorization continuity
+
+`COMMIT_5R1C37_MANIFEST_INDEXED_OPUS_EXTERNAL_AUTHORIZATION.json` remains **AUTHORIZED_UNUSED**, `authorizationConsumed=false`, `maximumInvocations=1`, `retryAuthorized=false`. **No Opus invocation was attempted, prepared or transmitted; no external provider was contacted; the one-use authorization was not consumed.** Invocation count remains 0.
+
+### /health — unchanged and still DEFERRED
+
+**DEFERRED and NOT AUTHORIZED.** Not touched by this operation. No new authorization provided.
+
+```text
+beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da  server.js
+3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0  security/public-health.js
+8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35  tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
+```
+
+### Protected-artifact preservation
+
+`IDEA.md` `f53cf577…6d6aa0`, `package.json` `e5a35391…3cbfd3`, `server.js`, `security/public-health.js`, the PATCH-08S test, and both `tax-engines/CON/*` paths (still flagged `S`) are all unchanged. **0 sealed, frozen or prior-checkpoint artifacts modified. No oracle, test, validator or safety guard was weakened.** No deletions, quarantines or overwrites.
+
+### Blocker status after checkpoint 78
+
+| ID | Blocker | Status |
+|---|---|---|
+| B1 | Concurrent third-party writer | CLOSED — subject to next-logon confirmation, **still pending** |
+| B2 | Three semantic /health changes deferred | OPEN — unchanged |
+| B3 | tests/health-endpoint.test.mjs quarantined | OPEN — unchanged |
+| B4 | IDEA.md duplicate of CURRENT_STATE.md | OPEN — unchanged |
+| B5 | tax-engines/CON/* unmaterialisable on Windows | OPEN — unchanged |
+| B6 | Five stale .git/index.stash.*.lock files | OPEN — unchanged |
+| **B7** | **C37 cannot advance without an explicit one-use external Opus review authorization; the controlling evidence defines no alternative operation** | **OPEN — NEW** |
+
+### What did NOT occur
+
+No C38, E2, A15 or Phase 10B work. No deployment, migration, reindexing or model change. No commit, push, amend, force-push, reset, checkout, merge, pull, rebase, stash or staging. No deletion, quarantine or broad cleanup. No unrelated service or process modification. No /health work. No external review. No runtime code modification. No candidate manufactured.
+
+### Next exact authorized operation
+
+**Owner decision required — C37 is blocked on exactly one thing.** Either:
+
+1. **Issue a prompt that explicitly authorizes** the single one-use read-only Claude Code Opus 4.8 manifest-indexed review of the 57-entry C36/C37 no-runtime governance package, binding to parent `ee664eab4529c636f34cb6d37d23a6a497886a17` and the checkpoint-78 evidence hashes; **or**
+2. **Govern an alternative closure path** for C37 that does not require external independent review — which would itself need a new governance decision, since the current controlling evidence requires the Opus review and records that no local substitute is adequate.
+
+Separately, confirm at the next user logon that no tina-orchestrator gateway process appears, to fully close B1.
+
+Do not begin C38, E2, A15 or Phase 10B. Do not consume the one-use Opus authorization outside a prompt that explicitly governs its use.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 77 (superseded by checkpoint 78, retained verbatim)
+
+## CHECKPOINT 77 — CONTROLLING STATE (as recorded at checkpoint 77)
+
+Checkpoint **77** supersedes checkpoint 76 as the resume point. Checkpoint **76** was the prior controlling safe pause (`C37_CHECKPOINT_76_OWNER_PRECONDITION_UNMET_WRITER_STILL_RUNNING_SAFE_PAUSE`, SHA-256 `9f54fc3098318d88e6f99174df8fb8a8274b4f5c8d42900d183e318a66c22c79`). Checkpoints 61 through 76 are preserved unaltered.
+
+Classification: `C37_CHECKPOINT_77_WRITER_PRECONDITION_SATISFIED_SCOPED_RE_ENTRY_DISABLED_PRE_INVOCATION_AUTHORIZATION_UNUSED`.
+
+Disposition: **PRECONDITION_SATISFIED**. `safeToResume=true`; `activeAttemptId=null`.
+
+### Verified Git state (checkpoint 77)
+
+```text
+branch          feature/source-availability-engine-v1
+HEAD            ee664eab4529c636f34cb6d37d23a6a497886a17
+parent          d5b25e676f623fbc1888608ff250824fcd34af99
+upstream        origin/feature/source-availability-engine-v1
+remote tip      ee664eab4529c636f34cb6d37d23a6a497886a17   (re-read this operation)
+ahead/behind    0 / 0
+staged paths    0
+```
+
+### Hash-bound preflight — all matched
+
+Complete SHA-256 values were computed directly; no abbreviated hash from conversation was relied upon.
+
+```text
+43502a1052f811bb1f8ca7187d72ac0fbb9717f57af2b1834a7b26af52e79e04  knowledge/CURRENT_STATE.md (before this update)
+e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3  package.json
+beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da  server.js
+9f54fc3098318d88e6f99174df8fb8a8274b4f5c8d42900d183e318a66c22c79  COMMIT_5R1C37_RECOVERY_CHECKPOINT_76_writer_precondition_unmet_safe_pause.json
+b5064e1f31fa31706eac54536f345e1e258b26c093bd0b466031960bf59fe94b  COMMIT_5R1C37_CHECKPOINT_76_SAFE_PAUSE_EVIDENCE.sha256
+1dda15b2899c8e3c1b7794830de8f458db5dcd77157a678cf1d8f9d9b97f4c31  COMMIT_5R1C37_RECOVERY_CHECKPOINT_75_continuity_reconciliation_and_health_governance.json
+4844e4b83652db8e13712c80b333bfd507eb0d9eeff48b3643bb2f52bf5cf39f  COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256
+```
+
+Checkpoint-76 manifest re-verified **4/4 OK**; checkpoint-75 manifest re-verified **9/9 OK**. `package.json` and `server.js` matched the values bound in the governing prompt exactly.
+
+### Writer precondition — SATISFIED
+
+**Verified fact — processes absent.** PIDs 21112 and 4472 were **NOT RUNNING** at first inspection (2026-08-07T06:31:15Z). They exited between 04:42:47Z, when checkpoint 76 last confirmed them alive, and 06:29:47Z. **No termination was performed by this operation** — owner authorization to terminate those two PIDs was granted but not exercised, because identity must be confirmed immediately before termination and no such PID existed. **Inference, labelled as such:** the exit was most plausibly owner action following the checkpoint-76 report; this operation did not observe it and claims no credit for it.
+
+**Verified fact — measurement artifact.** A naive `CommandLine -match 'hermes_cli'` filter returns 5 processes. All five are the scanning shells themselves, echoing the search string. Filtering on `ExecutablePath -like '*hermes*'` returns **0**. Genuine hermes gateway processes: **0**, confirmed independently at 06:31:15Z, 06:35:00Z and 06:38:20Z.
+
+**Verified fact — the re-entry mechanism, and its proven attribution.** A single active auto-start trigger existed:
+
+```text
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Hermes_Gateway_tina-orchestrator.vbs
+  sha256 427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE  (514 bytes)
+    -> profiles\tina-orchestrator\gateway-service\Hermes_Gateway_tina-orchestrator.vbs (924 bytes)
+       sha256 1D116ED1E64612C56E6AB29E3034D55FBFA973D48A93CCBBAE5E81F6E4C5D1CA
+      -> python.exe -m hermes_cli.main --profile tina-orchestrator gateway run
+```
+
+The terminal command in that chain is **byte-for-byte the command line observed on PID 21112**. Every path segment is scoped to the `tina-orchestrator` profile, so the entry is narrowly attributable to that profile alone.
+
+**Authorized action taken.** Under owner authorization item 3, and after re-confirming identity immediately before mutation, the startup entry was disabled by reversible rename at 2026-08-07T06:33:15Z, exit code 0:
+
+```text
+Rename-Item '<Startup>\Hermes_Gateway_tina-orchestrator.vbs'
+         -> 'Hermes_Gateway_tina-orchestrator.vbs.DISABLED-BY-C37-GOVERNANCE'
+post-rename sha256 427A255492472E695DF40D08A8769F7A76FCAB038CA82A7C9864A2BB600F94AE  (content UNCHANGED)
+```
+
+Nothing was deleted. The rename is reversible. The hermes profile launcher scripts were **deliberately preserved** so the owner retains manual control — only the automatic trigger was disabled.
+
+**Not modified.** The `OpenClaw Gateway` scheduled task was already `Disabled` before this operation and was **not** touched; it is OpenClaw-general, not narrowly attributable to `tina-orchestrator`. Its `LastRunTime` of 07:54:43 local on 2026-08-07, about two minutes before the gateway processes appeared at 07:56:54, is recorded as forensic context. `Ollama.lnk`, `Vov Sticky Notes.lnk` and `desktop.ini` were untouched. No service, Run-key, IDE, Git or user process was modified. Zero processes were killed.
+
+**Observation window — no restart.** 10 samples at 30-second intervals from 06:33:36Z to 06:38:29Z, plus a post-window check at 06:40:53Z: `python.exe = 0`, VBS hosts = 0, hermes-path executables = 0 throughout.
+
+**Scan coverage:** scheduled tasks (deep action scan), Win32_Service, HKCU/HKLM Run and RunOnce, and both user and all-users Startup folders. Services found: 0. Run-key entries: 0. All-users startup entries: 0.
+
+### Residual caveats — prevention is of automatic re-entry, not of deliberate launch
+
+- The profile launcher scripts remain installed; a deliberate manual launch remains possible by design.
+- Enumeration covered the standard Windows autostart vectors listed above. A launcher embedded elsewhere — an IDE extension or third-party supervisor, for example — would not have been detected.
+- The observation window evidences **immediate** restart only. It cannot evidence behaviour at the **next user logon**, which is precisely the trigger that was disabled. **Recommended confirmation:** verify at next logon that no tina-orchestrator gateway process appears.
+
+### Blocker status after checkpoint 77
+
+| ID | Blocker | Status |
+|---|---|---|
+| **B1** | Concurrent third-party writer | **CLOSED** — processes absent, sole autostart trigger disabled with proven attribution, no restart observed |
+| B2 | Three semantic /health changes deferred | OPEN — unchanged |
+| B3 | tests/health-endpoint.test.mjs quarantined | OPEN — unchanged |
+| B4 | IDEA.md duplicate of CURRENT_STATE.md | OPEN — unchanged |
+| B5 | tax-engines/CON/* unmaterialisable on Windows | OPEN — unchanged |
+| B6 | Five stale .git/index.stash.*.lock files | OPEN — unchanged |
+
+Five blockers remain open. B1 is closed subject to the next-logon confirmation noted above.
+
+### /health — unchanged and still DEFERRED
+
+**DEFERRED and NOT AUTHORIZED.** No new authorization was provided. All three files verified byte-identical and were not modified, reverted, staged or test-fixed:
+
+```text
+beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da  server.js
+3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0  security/public-health.js
+8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35  tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
+```
+
+### Protected-artifact preservation
+
+`IDEA.md` unchanged at `f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0`. `tax-engines/CON/*` unchanged, both still flagged `S` (skip-worktree). All seven other adjudicated paths present. Nothing deleted, quarantined, overwritten or rewritten; zero existing evidence artifacts modified.
+
+### Authorization
+
+Opus: **AUTHORIZED_UNUSED**, `consumed=false`, `count=0`, `remaining=1`. **No Opus invocation was authorized in the governing prompt and none was performed.**
+
+### Prohibited operations NOT performed in checkpoint 77
+
+`git reset`, `checkout`, `merge`, `pull`, `rebase`, `stash`, `commit`, `amend`, `push`, `force-push`, deployment, staging; deletion, quarantine, overwrite or rewriting of existing evidence; modification of `IDEA.md`, `tax-engines/CON/*` or the deferred `/health` files; runtime code fix; migration, reindex, model change, external review; broad cleanup; broad process-name termination; modification of any unrelated service, scheduled task, startup entry, IDE process, Git process or user process; modification outside the authorized evidence files and this document.
+
+### Next exact authorized operation
+
+Reissue hash-bound governance for COMMIT 5R1-C37 based on the verified checkpoint-77 state, binding to parent `ee664eab4529c636f34cb6d37d23a6a497886a17` and to the checkpoint-77 evidence hashes in `COMMIT_5R1C37_CHECKPOINT_77_FINAL_EVIDENCE.sha256`. The reissued prompt must carry a separate explicit decision on the deferred `/health` patch record, and must contain an explicit authorization clause if the independent Opus review is intended. Confirm at next user logon that no tina-orchestrator gateway process appears. Do not begin C38, E2, A15 or Phase 10B. Do not consume the one-use Opus authorization outside such a prompt.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 75 (superseded by checkpoint 77, retained verbatim)
+
+## CHECKPOINT 75 — CONTROLLING STATE (as recorded at checkpoint 75)
+
+Checkpoint **75** supersedes checkpoints 73 and 74 as the resume point. Checkpoints 61 through 74 are preserved unaltered. The checkpoint-73 block that follows this section is **retained verbatim as historical record**.
+
+Controlling checkpoint file: `evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_75_continuity_reconciliation_and_health_governance.json`.
+
+Classification: `C37_CHECKPOINT_75_CONTINUITY_RECONCILED_HEALTH_DEFERRED_PRE_INVOCATION_AUTHORIZATION_UNUSED`.
+
+### Verified Git state (checkpoint 75)
+
+Verified twice — at 2026-08-07T03:10:23Z and again at 2026-08-07T03:21:43Z — with no drift between readings.
+
+```text
+branch          feature/source-availability-engine-v1
+HEAD            ee664eab4529c636f34cb6d37d23a6a497886a17
+parent          d5b25e676f623fbc1888608ff250824fcd34af99
+upstream        origin/feature/source-availability-engine-v1
+remote tip      ee664eab4529c636f34cb6d37d23a6a497886a17
+ahead/behind    0 / 0
+staged paths    0
+```
+
+`safeToResume=true`; `activeAttemptId=null`.
+
+Opus authorization: **AUTHORIZED_UNUSED**, `consumed=false`, `count=0`, `remaining=1`. **Not consumed by this operation.** No external-provider invocation was performed.
+
+### Working tree — NOT CLEAN
+
+No claim of cleanliness is made. Git evidence shows:
+
+```text
+total tracked files      13,975
+tracked modifications         4
+tracked deletions             0
+staged paths                  0
+untracked paths             281
+```
+
+The four modified tracked paths are `knowledge/CURRENT_STATE.md` (this governed documentation update), plus the three preserved ungoverned `/health` paths.
+
+### Checkpoint 74 — verified, and its documentation gap corrected
+
+Checkpoint 74 is **verified accurate**. Both reported hashes match observation exactly:
+
+```text
+43f72ce65b7b3bf171f564c477af229148770f5490cfcc8311032ce793ebe724
+  COMMIT_5R1C37_RECOVERY_CHECKPOINT_74_r3alpha_remediation_and_documentation_cutover.json
+70c96a604d89953fabcb2f5e665faff4b32eed4a70026ad1480b254f79f40849
+  knowledge/CURRENT_STATE.md (pre-checkpoint-75 state)
+```
+
+All seven entries of `COMMIT_5R1C37_CHECKPOINT_74_FINAL_EVIDENCE.sha256` were verified. The preservation refs, the modified-path list, the authorization ledger and the "no staging / no commit / no push / no amend / no force-push" assertions were all independently confirmed.
+
+**Documentation gap (finding R1, now corrected):** before this operation, CURRENT_STATE.md named checkpoint **73** as controlling and contained **zero** occurrences of "checkpoint 74". Checkpoint 74's `documentationCutover` block describes the checkpoint-73 cutover, which the file already reflected; checkpoint 74 never amended this document. Checkpoint 74's own content was verified — only its reflection here was missing. That is corrected by this section.
+
+### Working-tree continuity conflict — CONCLUSIVELY RECONCILED
+
+Two prior reports appeared to conflict. **Both are correct observations of the same unchanged repository**, taken at different index-refresh states. Neither was assumed correct; both were tested.
+
+**The prior report is confirmed accurate.** Independent re-derivation of the `ee664eab..ff1bc2b1` delta — performed before consulting the sealed checkpoint-73 manifest — agreed with it exactly:
+
+```text
+864 paths = 266 ADDED + 598 MODIFIED
+598 MODIFIED = 595 EOL_ONLY + 3 SEMANTIC
+266 ADDED    = 259 ADDED_EVIDENCE + 7 ADDED_UNEXPLAINED
+```
+
+- *"three semantic /health files"* — **confirmed**; a CRLF-insensitive diff leaves exactly 3 modified paths.
+- *"265 of 266"* — **confirmed and explained**. `.claude/settings.local.json` is the single excluded path: it exists on disk but is suppressed by the user-global excludes file `C:\Users\USER/.config/git/ignore` (`**/.claude/settings.local.json`). It is ignored, not missing.
+- *"working-tree bytes preserved"* — **confirmed**; the three semantic files are byte-identical to their content in the preserved ungoverned commit.
+
+**The 13,973 / 282 snapshot is an index-state measurement artifact, not content divergence.** A Git index was materialised from HEAD with no stat cache into a temporary index file **outside the repository** (the real `.git/index` was never touched). `git diff-files` against it reported:
+
+```text
+13,973 M + 2 D = 13,975 = total tracked files
+```
+
+The two deletions are `tax-engines/CON/domain-config.js` and `tax-engines/CON/subclassifier.js`, which carry **skip-worktree** bits under `core.sparseCheckout=true` because `CON` is a reserved Windows device name and cannot be materialised on this filesystem. Reconstructing an index without preserving those bits surfaces them as deletions — which is precisely why the figure is 13,973 and not 13,975.
+
+Mechanism: immediately after an index-rewriting operation such as the authorized `git reset --mixed`, index entries carry no valid stat data, so a status taken before the stat cache is repopulated reports the entire tracked tree as modified.
+
+Hypotheses tested and **refuted**: `core.autocrlf` renormalisation (4 modifications under `true`, `false` and `input` alike) and real content divergence (4 modifications, stable across both readings).
+
+The 282-versus-281 untracked delta is a **single identified path**: 281 enumerated + `.claude/settings.local.json` = 282. Confidence high; the exact enumeration environment of that snapshot was not recoverable from repository evidence, but the one-path delta is fully identified by name and status and involves no governed or evidence content.
+
+Full untracked reconciliation: `265` from the ungoverned added-set + `16` others (7 checkpoint-73/74 evidence artifacts, 6 agent scaffolding identity files, 2 hermes plan artifacts, 1 openclaw initialiser marker) = **281**.
+
+**Verdict: no content loss, no evidence corruption, governed baseline intact, safe-pause not triggered.**
+
+### Concurrent writer status — QUIESCENT, NOT DISABLED
+
+```text
+openclaw process observed        none
+openclaw status                  QUIESCENT
+openclaw future execution        NOT PROVEN DISABLED
+hermes gateway PIDs 21112, 4472  RUNNING (profile tina-orchestrator)
+hermes last write to this repo   2026-08-04 (.hermes/plans/*)
+```
+
+`openclaw-workspace-state.json` records `setupCompletedAt = 2026-08-07T01:58:40.448Z` — the same day as this operation and **after** the checkpoint-73/74 remediation. **A completed one-shot initializer marker is not proof that future execution is disabled.**
+
+A **non-mutating** writer event was observed at 2026-08-07T11:12:06+08:00: `.git/FETCH_HEAD` and `.git/objects` were touched by a background fetch, probably IDE autofetch. No ref, index entry or working-tree byte changed; HEAD and remote tip were re-verified identical afterwards, `ahead/behind` remained 0/0. This did not trigger safe-pause.
+
+**No process was killed, deleted, disabled or modified.** Quiescence was verified only. Checkpoint 74's `concurrentWriterIncident.mustBeStoppedByOwnerBeforeNextGovernedOperation = true` **remains an open blocker requiring owner action**.
+
+### Seven-path adjudication — nothing deleted
+
+Full record: `COMMIT_5R1C37_CHECKPOINT_75_SEVEN_PATH_ADJUDICATION.json`.
+
+**Eight** paths were adjudicated, because the operator-supplied list and the sealed checkpoint-73 manifest differ by one entry: the operator list contains `openclaw-workspace-state.json`, the manifest contains `.vscode/extensions.json`. Both were adjudicated so neither list is silently narrowed. The sealed manifest was **not** edited.
+
+| Path | Status | Origin | Disposition |
+|---|---|---|---|
+| `IDEA.md` | untracked | ff1bc2b1 | **RETAIN + QUARANTINE FLAG** |
+| `hello.py` | untracked | ff1bc2b1 | RETAIN |
+| `hello_test.py` | untracked | ff1bc2b1 | RETAIN |
+| `__pycache__/hello_test.cpython-313.pyc` | untracked | ff1bc2b1 | RETAIN |
+| `.claude/settings.local.json` | untracked, globally ignored | ff1bc2b1 | RETAIN |
+| `tests/health-endpoint.test.mjs` | untracked | ff1bc2b1 | **QUARANTINE pending /health adjudication** |
+| `.vscode/extensions.json` | untracked | ff1bc2b1 | RETAIN |
+| `openclaw-workspace-state.json` | untracked | **NOT ff1bc2b1** — created 2026-08-07 | **RETAIN AS FORENSIC EVIDENCE** |
+
+Origin was **proven for all eight**. Nothing was deleted, modified, overwritten, staged or executed. All eight require human authorization for removal.
+
+Three findings carry weight beyond housekeeping:
+
+- **`IDEA.md` is a byte-identical copy of `knowledge/CURRENT_STATE.md` at the governed baseline** — verified by identical SHA-256 (`f53cf577…`), identical size (122,561 bytes) and a byte-level `cmp`. It is not an ideas file; it is an unlabelled shadow duplicate of TINA's controlling continuity document, now frozen at the pre-cutover state and drifting further with every cutover. This is a **Source-of-Truth integrity hazard**.
+- **`tests/health-endpoint.test.mjs`** is an ungoverned test that encodes the unadjudicated `/health` contract and performs real socket binding and HTTP, which the governed PATCH-08S suite explicitly forbids of itself. It was **not executed** and must never enter the governed corpus independently.
+- **`openclaw-workspace-state.json`** is the timestamped forensic evidence of third-party agent activity in this governed tree on 2026-08-07. Destroying it would destroy that evidence.
+
+### `/health` semantic changes — DEFERRED, NOT AUTHORIZED
+
+Records: `COMMIT_5R1C37_CHECKPOINT_75_HEALTH_SEMANTIC_CHANGE_GOVERNANCE_RECORD.md` and `.json`.
+
+The three paths, hash-bound:
+
+```text
+security/public-health.js
+  HEAD 289f2dcb64b8621bc8a09d075fd977d39faccc67ae280fd84ba1253d5cfca2d3
+  WORK 3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0
+server.js
+  HEAD 3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73
+  WORK beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da
+tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
+  HEAD cc6acaacd01f2a0cf0ae3210eda4eb3d495ba90ef72f79d6968676678261fff2
+  WORK 8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35
+```
+
+Origin: ungoverned commit `ff1bc2b1` ("add /health endpoint + baseline", `Tina Swarm <tina@local>`, 2026-08-04T15:11:13Z), never pushed, preserved at `refs/heads/governance/ungoverned-ff1bc2b1` and `refs/tags/governance/pre-remediation-ff1bc2b1`.
+
+**Test evidence.** The modified suite passes 19/19 (77 assertions) — but the same ungoverned commit authored **both the implementation and its own governing test**, so a green suite is not independent evidence. Running the **governed HEAD test** against the modified implementation, in an isolated sandbox mirror outside the repository, produced **17 passed / 2 failed** (exit 1):
+
+```text
+FAIL helper: buildPublicHealth is minimal and excludes all forbidden fields  -> service tina-backend
+FAIL source: server.js public /health returns minimal buildPublicHealth ...  -> buildPublicHealth used
+```
+
+**The ungoverned change breaks the governed PATCH-08S-FOLLOWUP contract as written.**
+
+Findings: **G1** implementation and its own guard changed together (CRITICAL); **G2** governed baseline test fails (CRITICAL); **G3** the readiness touch `await getVectorStoreStats()` was removed, so `/health` can report `200 ok` while the data layer is unreachable (HIGH); **G4** the disclosure-scan window narrowed from 800 to 300 characters, weakening the guard against re-introducing `commitSha`, `openaiModel`, `adaptiveStack`, `routeModes`, `indexSecretEnabled` (HIGH); **G5** the governed policy comment was deleted (MEDIUM); **G6** removing `service` is a breaking public response-contract change, though no in-repo importer breaks and `getVectorStoreStats` remains used at lines 529 and 677 (MEDIUM); **G7** dropping `service` does reduce the disclosure surface, which is directionally consistent with minimization intent, but does not cure G1–G6 (INFORMATIONAL).
+
+**Disposition: DEFERRED PENDING GOVERNED REVIEW. Not authorized, not reverted, not modified, not staged.** No candidate runtime fix was created. The bytes remain exactly as found.
+
+### Distinguishing verified facts from prior reports and inference
+
+- **Verified by direct Git/filesystem evidence:** HEAD, parent, branch, upstream, remote tip, ahead/behind, staged/modified/untracked counts, all checkpoint-74 hashes, the CURRENT_STATE.md pre-update hash, preservation refs, the 864/598/266/595/3/259/7 path arithmetic, the 13,973 + 2 = 13,975 reproduction, skip-worktree bits, `IDEA.md` byte-identity, both test outcomes, and the absence of dangling importers.
+- **Prior report, now independently confirmed:** three semantic `/health` files; 265 of 266 untracked; working-tree bytes preserved.
+- **Inference, labelled as such:** the 282-untracked figure is attributed to `.claude/settings.local.json` being enumerated without the global excludes file in effect. Confidence high, but the originating environment was not recoverable. A `core.excludesFile=/dev/null` test returned 0 untracked, is invalid on Git-for-Windows, and was **discarded**, not used as evidence.
+- **Not proven:** that future execution of openclaw or any third-party agent is disabled.
+
+### Unresolved blockers
+
+1. **Concurrent third-party writer not proven disabled** — owner action required (carried forward from checkpoint 74).
+2. **`/health` semantic changes deferred** — owner decisions required on the readiness-touch removal, the `service` contract break, and restoration of the 800-character disclosure guard.
+3. **`tests/health-endpoint.test.mjs` quarantined** — must be adjudicated with the three semantic paths.
+4. **`IDEA.md` duplication hazard** — owner decision on deletion or explicit non-authoritative renaming.
+5. **`tax-engines/CON/*`** — two tracked paths that can never be materialised on Windows; owner decision pending.
+6. **Five stale `.git/index.stash.*.lock` files** from July 2026 — observed only, not removed.
+
+### Prohibited operations NOT performed in checkpoint 75
+
+`git reset`, `checkout`, `merge`, `pull`, `commit`, `amend`, `push`, `force-push`, staging, deployment; deletion or modification of any protected or unexplained file; editing of any sealed evidence or sealed historical manifest; Opus external-provider invocation or consumption of the one-use authorization; creation of a candidate runtime fix; full R20 regression, reindexing, migration, production smoke test, or external review transport; termination, disabling or modification of any process or service.
+
+### Next exact authorized operation
+
+**Owner action first:** stop the concurrent third-party writer and confirm it cannot re-enter this working tree.
+
+**Then, and only then:** reissue hash-bound governance for COMMIT 5R1-C37 based on the verified checkpoint-75 state, binding to parent `ee664eab4529c636f34cb6d37d23a6a497886a17` and to the checkpoint-75 evidence hashes recorded in `COMMIT_5R1C37_CHECKPOINT_75_FINAL_EVIDENCE.sha256`. The reissued prompt must carry a separate decision on the deferred `/health` patch record.
+
+Do **not** begin C38, E2, A15 or Phase 10B. Do **not** consume the one-use Opus authorization outside a reissued C37 prompt.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 73 (superseded by checkpoint 75, retained verbatim)
+
+### Controlling checkpoint
+
+Checkpoint **73** — `evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RECOVERY_CHECKPOINT_73_ungoverned_head_remediation_safe_pause.json`, SHA-256 `f8cd07ee49dcb8f01b5998db2fe4a6d069110b81c2acb1169fc75a689070188f`.
+
+Classification: `C37_CHECKPOINT_73_UNGOVERNED_HEAD_PRE_INVOCATION_SAFE_PAUSE_AUTHORIZATION_UNUSED`. `safeToResume=true`; `activeAttemptId=null`.
+
+This supersedes checkpoint 72 as the resume point. Checkpoints 61 through 72 are preserved unaltered.
+
+### Metrics — unchanged from checkpoint 72
+
+- decision **3720/3720** (locked); relation **3720/3720** (locked); reason **3575/3720**.
+- **145 reason-only rows** remain: explicit_non_tax_task=45, explicit_tax_task_relation=16, no_tax_relation=81, tax_compliance_task=1, tax_treatment_of_ordinary_object=2.
+- C36 closed with **zero delta** (`C36_FINAL_REASON_METRICS_UNCHANGED_NO_GENERALIZED_CANDIDATE`). C37 has authorized and allocated **0/0** candidates.
+- C35 runtime composite `5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c`; C34 selected reason runtime `73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775`; protected-residue aggregate `980cd3b5f2a5b75104bc91c9e6f4391e80bf5f0d772f48b61c79497e3d2ebd0a`.
+- Registry `a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073`: 230 attempts / 230 directories; orphan 0; dangling 0; running 0. C34 WAL 32 rows; C35 WAL 6 rows; C36 and C37 WALs absent.
+
+### Ungoverned commit ff1bc2b1 — classified and preserved
+
+Commit `ff1bc2b18040706ef4a2e7002a1d349a76d7d709` ("add /health endpoint + baseline", author `Tina Swarm <tina@local>`, 2026-08-04T15:11:13Z) was created **outside R20 governance**, was never pushed, and briefly stood as local HEAD above the governed C35 baseline.
+
+Classification: **UNGOVERNED INTRUSION** (Option B, decided 2026-08-07). It is preserved permanently and non-destructively by named refs:
+
+```text
+refs/heads/governance/ungoverned-ff1bc2b1
+refs/tags/governance/pre-remediation-ff1bc2b1
+```
+
+Forensic path manifest: `COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_COMMIT_PATH_MANIFEST.json`, SHA-256 `f25fe43b65c60b3fb38561572cabebe48188404a83744467bff776c28b448e32` — 864 paths classified as 3 SEMANTIC, 595 EOL_ONLY, 259 ADDED_EVIDENCE, 7 ADDED_UNEXPLAINED.
+
+### R3-alpha remediation — completed
+
+`git reset --mixed ee664eab4529c636f34cb6d37d23a6a497886a17` was executed under explicit owner authorization, after the preservation refs were created and verified.
+
+- HEAD restored to the governed C35 baseline `ee664eab4529c636f34cb6d37d23a6a497886a17`; local/upstream synchronization is **0/0**.
+- Working-tree bytes are **unchanged**: the 865-file pre-reset and post-reset aggregate is identical at `0a25975a284d98b09978e6137e18f2af7323602a11cd7cff6f066ca2b2630106`, with zero byte-changed files.
+- The C36/C37 evidence corpus is restored to **untracked** status, as checkpoint 72 and the C37 execution prompt require.
+- Untracked reconciliation is exact: 265 of the 266 ff1bc2b1-added paths are untracked and 1 (`.claude/settings.local.json`) is gitignored; 13 further untracked paths pre-existed. No file was lost or deleted.
+- The 595 EOL-only paths resolve clean against C35 under `core.autocrlf=true`; only the 3 semantic paths remain as working-tree modifications.
+- `core.longpaths=true` was set as local Git configuration. Attempt paths exceed the Win32 `MAX_PATH` limit of 260 characters; without it, `git status`, `git diff` and `git hash-object` return false results in both directions over attempt directories. All attempt-directory verification must use `\\?\` extended-length paths or `core.longpaths=true`.
+
+### Evidence integrity
+
+All manifests were re-verified after the reset, with **zero mismatches**:
+
+```text
+COMMIT_5R1C35_FINAL_EVIDENCE.sha256                             117 / 117  PASS
+COMMIT_5R1C36_SAFE_PAUSE_EVIDENCE.sha256                         48 /  48  PASS
+COMMIT_5R1C37_CHECKPOINT_72_FINAL_EVIDENCE.sha256                38 /  38  PASS
+COMMIT_5R1C37_CHECKPOINT_72_PRE_INVOCATION_SAFE_PAUSE_EVIDENCE   34 /  34  PASS
+COMMIT_5R1C37_CHECKPOINT_73_EVIDENCE.sha256                       3 /   3  PASS
+```
+
+C33 and C35 preserved attempt evidence is byte-for-byte intact. C35 immutability is preserved.
+
+### Three /health semantic changes — NOT governed
+
+`ff1bc2b1` altered three paths semantically. They remain **unadjudicated working-tree modifications**, preserved as a patch at `COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch`, SHA-256 `b6e5ddd975a04fd03c6ed786f6cd41b5bd8f3d88f622cfa98a0faa07d778d66d`:
+
+```text
+security/public-health.js
+server.js
+tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs
+```
+
+The change deletes the `PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1` governance annotation, narrows `PUBLIC_HEALTH_ALLOWED_FIELDS` from `["status","service"]` to `["status"]`, and removes the readiness touch. On its merits the payload is strictly more minimizing and is not a disclosure regression, but it modifies a patch-governed security contract with no corresponding patch record. **It requires its own separately governed patch and must not be silently absorbed into any baseline.**
+
+### Seven unexplained committed paths
+
+```text
+.claude/settings.local.json
+.vscode/extensions.json
+IDEA.md
+__pycache__/hello_test.cpython-313.pyc
+hello.py
+hello_test.py
+tests/health-endpoint.test.mjs
+```
+
+`IDEA.md` is byte-identical to this file (`knowledge/CURRENT_STATE.md`) and is explicitly excluded from staging by the C37 execution prompt. `hello.py`, `hello_test.py` and the committed `__pycache__` bytecode are scratch artifacts that no governed process produces. All seven are preserved untouched pending adjudication.
+
+### Concurrent writer incident
+
+At 2026-08-07T01:58:40.448Z an "openclaw" workspace initializer wrote seven scaffolding files into the repository root during a governed remediation session: `AGENTS.md`, `HEARTBEAT.md`, `IDENTITY.md`, `SOUL.md`, `TOOLS.md`, `USER.md`, `openclaw-workspace-state.json`. Classification: `THIRD_PARTY_UNGOVERNED_AGENT_SCAFFOLDING_WRITE_INTO_GOVERNED_REPOSITORY`.
+
+Containment status: **contained**. No tracked evidence was touched, and the C35 manifest re-verified 117/117 after the event. The writer is a one-shot initializer, remained quiescent for the rest of the session, and no persistent process or Git lock was found. All seven files are preserved untouched. This is the same class of ungoverned repository access that produced `ff1bc2b1`; the writer must be stopped by the owner or operator before any further governed operation.
+
+### External review authorization
+
+The one-use manifest-indexed Opus authorization remains **AUTHORIZED_UNUSED**: consumed `false`, invocation count `0`, remaining `1`, invocation marker absent, provider contact absent, retry not authorized. The two prior C37 authorizations remain `CONSUMED_NO_RETRY_AUTHORIZED` with their markers preserved.
+
+**No Opus review, C37 execution, staging, commit, push, deployment, reindexing, migration, or model migration occurred.** No C38, E2, A15, or Phase 10B work began. Phase 10B remains **unauthorized**.
+
+### Next exact operation
+
+Separately reissue hash-bound governance for C37 based on the verified post-R3-alpha state at checkpoint 73. The reissued prompt must bind to parent `ee664eab4529c636f34cb6d37d23a6a497886a17` and to the checkpoint-73 evidence hashes recorded above.
+
+Independently, and before that: stop the concurrent third-party writer; adjudicate the three `/health` semantic changes under a new patch record; and adjudicate the seven unexplained paths.
+
+Do not claim C37 execution, Opus review, commit, push, or closure without direct evidence.
+
+### Superseded sections in this document
+
+The later sections **"Current Evidence Registry"**, **"Next Exact Task"** (which still names COMMIT 5R1-C22) and **"Remaining Phase 10A Sequence"** are **stale historical text retained for the record**. They are superseded by this block and by checkpoint 73. Where they conflict with committed evidence or checkpoint 73, committed evidence and checkpoint 73 control.
+
+---
+
+## Historical Continuity Record
+
+## TINA Controlling Continuity Status
+
 Last updated: 2026-07-31T06:40:00.000Z (COMMIT 5R1-C35 precommit reviewed cutover)
 
 PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS and not SATISFIED. COMMIT 5R1-C35 is terminal.
