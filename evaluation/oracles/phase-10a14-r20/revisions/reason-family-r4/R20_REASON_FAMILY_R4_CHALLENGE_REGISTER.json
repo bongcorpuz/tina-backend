@@ -1,0 +1,1169 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "totalChallenges": 145,
+  "unresolvedChallenges": 0,
+  "challenges": [
+    {
+      "oracleId": "S1-IR19-1007",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1014",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1026",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1028",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1030",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1032",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1033",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1034",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1036",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1038",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1040",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1047",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1054",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1066",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1068",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1070",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1072",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1074",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1076",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1078",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1080",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1087",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1094",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1106",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1108",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1110",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1112",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1114",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1116",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1118",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S1-IR19-1120",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-021",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "sealedC37ActualReason": "explicit_tax_task_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-059",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-061",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-062",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "sealedC37ActualReason": "explicit_tax_task_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-072",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-073",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-113",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-115",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-120",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-121",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-134",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-159",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-160",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-166",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-192",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-199",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-204",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-214",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-221",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-228",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-229",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-233",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-240",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-243",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-244",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-247",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-251",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-254",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-258",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-265",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-268",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-269",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-272",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-276",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-279",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-283",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-290",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-293",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-294",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-297",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-301",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-304",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-308",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-315",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-318",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-319",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-322",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-326",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-329",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-348",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-368",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-388",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-408",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-412",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-432",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-452",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-475",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-493",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-503",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-506",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-515",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-533",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-541",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-543",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-545",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-549",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S2-IR18-DOM-565",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-032",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "sealedC37ActualReason": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-073",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "tax_compliance_task",
+      "sealedC37ActualReason": "explicit_tax_task_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-081",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-095",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-099",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-127",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-132",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-134",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-136",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-139",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-181",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-186",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-188",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "S3-IR17-208",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "sealedC37ActualReason": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0521",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0526",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0531",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0536",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0546",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0551",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0556",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0561",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0566",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0576",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0601",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0606",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0616",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0621",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0626",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0631",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0636",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0641",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0646",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0651",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0661",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0666",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0671",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0681",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0686",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0691",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0706",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    },
+    {
+      "oracleId": "R20N-ENT-0716",
+      "challenge": "R3 expectedReasonCodeFamily differs from the reason produced in sealed C37 development evidence under the accepted reason contract.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "sealedC37ActualReason": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "status": "RESOLVED_BY_APPEND_ONLY_R4_GOVERNANCE"
+    }
+  ]
+}

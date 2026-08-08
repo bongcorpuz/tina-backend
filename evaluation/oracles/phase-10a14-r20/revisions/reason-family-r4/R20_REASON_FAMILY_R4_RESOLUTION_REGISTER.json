@@ -1,0 +1,1171 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "totalChallenges": 145,
+  "resolved": 145,
+  "unresolved": 0,
+  "resolutions": [
+    {
+      "oracleId": "S1-IR19-1007",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1014",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1026",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1028",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1030",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1032",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1033",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1034",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1036",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1038",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1040",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1047",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1054",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1066",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1068",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1070",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1072",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1073",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1074",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1076",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1078",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1080",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1087",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1094",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1106",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1108",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1110",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1112",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1113",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1114",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1116",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1118",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S1-IR19-1120",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-007",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-021",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "revisedExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-059",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-061",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-062",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "revisedExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-072",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-073",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-113",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-115",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-120",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-121",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-134",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-159",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-160",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-166",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-192",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-199",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-204",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-214",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-221",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-228",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-229",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-233",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-240",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-243",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-244",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-247",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-251",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-254",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-258",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-265",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-268",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-269",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-272",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-276",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-279",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-283",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-290",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-293",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-294",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-297",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-301",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-304",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-308",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-315",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-318",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-319",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-322",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-326",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-329",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-348",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-368",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-388",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-408",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-412",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-432",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-452",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-475",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-493",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-503",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-506",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-515",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-533",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-541",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-543",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-545",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-549",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S2-IR18-DOM-565",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-032",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-073",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "tax_compliance_task",
+      "revisedExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-081",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-095",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-099",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-127",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-132",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-134",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-136",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-139",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-181",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-186",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-188",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "S3-IR17-208",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0521",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0526",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0531",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0536",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0541",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0546",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0551",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0556",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0561",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0566",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0576",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0591",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0601",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0606",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0616",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0621",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0626",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0631",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0636",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0641",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0646",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0651",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0661",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0666",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0671",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0681",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0686",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0691",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0706",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    },
+    {
+      "oracleId": "R20N-ENT-0716",
+      "resolution": "Replace only expectedReasonCodeFamily with the sealed C37 actual.reason; preserve every other R3 row value.",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "authority": "SEALED_C37_REASON_CONTRACT_AND_145_ROW_ADJUDICATION",
+      "runtimeCandidateAllocated": false
+    }
+  ],
+  "pass": true
+}

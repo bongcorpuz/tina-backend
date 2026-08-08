@@ -1,0 +1,959 @@
+  ── output of failing suite tests\patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs ──
+PASS required audit-risk helper and core Phase 7B helper files exist
+PASS required audit-risk and context reports exist
+PASS required audit-risk focused tests exist
+PASS prohibited future runtime helper files do not exist
+PASS audit-risk helper chain remains route and prompt unwired
+PASS final gate metadata is local-only and requires no network, DB, secrets, or indexing
+
+PATCH-07B-AUDIT-RISK-FINAL-GATE-1 workstream final gate tests: 6 passed, 1 failed
+FAIL current patch diff allows only authorized clarification live wiring and protected production files remain blocked
+AssertionError [ERR_ASSERTION]: unexpected changed file: security/public-health.js
+    at file:///C:/Projects/tina-backend/tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs:143:5
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs:87:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs:140:7
+  ── output of failing suite tests\patch-07b-clarification-final-gate-1-track-closure.test.mjs ──
+  '### Evidence hashes (checkpoint-85 files, six new + this document; none staged)\n' +
+  '\n' +
+  '```text\n' +
+  '6550e7f6b5176429d1722b2f56c984925b07215baa9a76e68aa5d83fe7ea9aab  .agents/skills/swarm-coder/SKILL.md\n' +
+  'd1e379d66922c0e8b7ff411bc029c3227a0c54dcbeff60ac8ae1f9414297b6ea  .agents/skills/swarm-coder/coder.prompt\n' +
+  'c5d8524bf74c9d80080fb7e878a192bb0201fcd38e22b2879959f44c2381b715  .agents/skills/swarm-coder/planner.prompt\n' +
+  'adeeaacf87307a8184b4d5a86622748cad9fd5d75b9201b2c230d831706bf076  .agents/skills/swarm-coder/reviewer.prompt\n' +
+  'b8f5c53a88174f1142e41a37a8779000421002909db91307901acc2d6908603d  .agents/skills/swarm-coder/agents/openai.yaml\n' +
+  '\n' +
+  '51e8a48ecf618bf486f0bb189cf23fa93025fbba2f29ff4344107d3d0e95f147  COMMIT_5R1_POST_C37_CHECKPOINT_85_PREFLIGHT_AND_TERMINAL_STATE_VERIFICATION.json\n' +
+  '205c4f4af472a079daaf4c8a2de079f296c682e1e2b7f9c5347f22a2b7025170  COMMIT_5R1_POST_C37_CHECKPOINT_85_FETCH_DEVIATION_ADJUDICATION.json\n' +
+  'bcd3489d0c60d9efd59c4d7d587bd071b2bd455aee610f6d9c23ded0d124a9dd  COMMIT_5R1_POST_C37_CHECKPOINT_85_TOOLING_DELTA_ADJUDICATION.json\n' +
+  '36ec05d3f7c88c261db92851d798a78c3e8cc1cc014bf73c5e52acbb5c82eebe  COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_SPECIFICATION_REGISTER.json\n' +
+  'cb95fd0caaf37925d2d4503e515b28bde69dcc5dec3d1442c149c9f72b9ac94b  COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_READINESS_ADJUDICATION.json\n' +
+  '77e961ddb2a3186a0b6063beedc5a516522178b9e6f79216cad01789b299203e  COMMIT_5R1_POST_C37_RECOVERY_CHECKPOINT_85_phase_transition.json\n' +
+  '```\n' +
+  '\n' +
+  'The checkpoint-85 final manifest (`COMMIT_5R1_POST_C37_CHECKPOINT_85_FINAL_EVIDENCE.sha256`) self-excludingly hashes the six files above plus this `CURRENT_STATE.md` at its post-update hash; all seven checkpoint-85 files remain local, untracked, and unstaged, exactly as the swarm-coder five remain local, untracked, and unstaged.\n' +
+  '\n' +
+  '---\n' +
+  '\n' +
+  '## HISTORICAL RECORD — CHECKPOINT 84 (superseded by checkpoint 85, retained verbatim)\n' +
+  '\n' +
+  '## CHECKPOINT 84 — CONTROLLING STATE — C37 IS TERMINAL\n' +
+  '\n' +
+  'Checkpoint **84** supersedes checkpoint 83 as the resume point. Checkpoints 61 through 83 are'... 219972 more characters
+
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:311:10
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:150:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs:309:7
+  ── output of failing suite tests\patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs ──
+PASS required route/helper artifacts exist
+PASS ten helper chain artifact files exist
+PASS route helper exports remain available and narrow
+PASS Gemini Review 15 carry-forward is explicit
+PASS final closure files do not import live integration surfaces
+PASS ten-helper reasoning block closure is recognized
+PASS core route/helper contracts are preserved
+PASS future insertion point is preserved for later live design
+PASS deferred phase boundaries are not marked implemented
+PASS prohibited live implementation claims are absent
+PASS final report has required closure sections
+PASS no prohibited output phrases appear as affirmative recommendations
+PASS Phase 10 leakage is only deferred if mentioned
+
+PATCH-07B-CLARIFICATION-FINAL-GATE-2 tests: 13 passed, 2 failed
+FAIL CURRENT_STATE carries final closure markers and non-live boundaries
+AssertionError [ERR_ASSERTION]: CURRENT_STATE missing: patch-07b-clarification-route-scaffold-1
+    at assertIncludesAll (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:99:5)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:126:3
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:71:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:124:7
+FAIL approved next step is design-only live integration review
+AssertionError [ERR_ASSERTION]: approved next step missing: no live route wiring yet
+    at assertIncludesAll (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:99:5)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:212:3
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:71:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-final-gate-2-route-helper-workstream-closure.test.mjs:210:7
+  ── output of failing suite tests\patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs ──
+PASS fixture metadata correctness
+PASS insertion point contract is exact
+PASS feature flag contract is OFF by default and strict
+PASS OFF-state baseline cases do not invoke route chain or add response fields
+PASS ON-state blocking cases require clarification-only early exit
+PASS non-blocking source limitation preserves answer path and does not outsource law search
+PASS non-blocking Phase 10 deferral preserves answer path without Phase 10 execution
+PASS document request, cautious follow-up, and no-clarification cases continue generation
+PASS helper-chain error contract is fail-open
+PASS no structured fact extraction contract biases toward clarification
+PASS source-card and authority preservation contract is explicit
+PASS frontend remains deferred
+PASS Phase 10 remains deferred
+PASS response type taxonomy contains all required values
+PASS report and CURRENT_STATE continuity markers are present when updated
+PASS static no-live-import guard for scaffold test source
+PASS no phase leakage is marked implemented in fixture report or current state
+
+PATCH-07B-CLARIFICATION-LIVE-WIRING-SCAFFOLD-1 contract fixture tests: 17 passed, 1 failed
+FAIL current patch diff allows only authorized flagged live wiring and deferred surfaces remain protected
+AssertionError [ERR_ASSERTION]: unexpected changed file: security/public-health.js
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs:416:5
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs:128:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs:413:7
+  ── output of failing suite tests\patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs ──
+PASS fixture loads and has correct top-level metadata
+PASS future insertion point is encoded before prompt and generation
+PASS future answer blocking rule is encoded
+PASS required response types exist
+PASS future object contract includes required helper output slots and compact retrieval metadata
+PASS fixture includes at least 16 route/prompt integration cases
+PASS answerAllowed false cases block full prompt construction and answer generation
+PASS non-blocking cases allow full answer prompt and generation where appropriate
+PASS /ask cases preserve question caps and conversational clarification expectations
+PASS /tax cases expect senior memo clarification and no final tax opinion
+PASS /audit cases expect procedural-first clarification and no strategy runtime
+PASS source limitation cases preserve wording and do not outsource legal-source questions
+PASS Phase 10 deferral cases preserve deferral wording and do not outsource metadata review
+PASS prompt constraint object case requires structured object and required fields
+PASS Phase 7A preservation case protects mode formatting, source cards, and terminal gate
+PASS feature flag cases preserve OFF baseline and constrain future ON behavior
+PASS frontend contract case anticipates responseType but keeps frontend deferred
+PASS stop conditions and deferred items are explicitly listed
+PASS fixture confirms no route, prompt, response generation, pipeline, or orchestrator implementation
+PASS expected integration outputs contain no prohibited conclusion, strategy, or source-outsourcing text
+
+PATCH-07B-CLARIFICATION-ROUTE-SCAFFOLD-1 integration fixture tests: 20 passed, 1 failed
+FAIL current patch diff allows only authorized flagged live wiring and deferred files remain protected
+AssertionError [ERR_ASSERTION]: unexpected changed file: security/public-health.js
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs:428:5
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs:144:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs:425:7
+  ── output of failing suite tests\patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs ──
+PASS required Phase 7B helper files exist
+PASS required Phase 7B gate and report files exist
+PASS required Phase 7B focused tests exist
+PASS prohibited broad runtime helper files do not exist
+PASS current helper chain remains test-only and route-unwired
+PASS gate metadata is local-only and requires no network, DB, secrets, or indexing
+
+PATCH-07B-FINAL-GATE-1 analytical/adversarial final gate tests: 6 passed, 1 failed
+FAIL current patch diff allows only authorized clarification live wiring and protected production files remain blocked
+AssertionError [ERR_ASSERTION]: unexpected changed file: security/public-health.js
+    at file:///C:/Projects/tina-backend/tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs:141:5
+    at test (file:///C:/Projects/tina-backend/tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs:88:11)
+    at file:///C:/Projects/tina-backend/tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs:138:7
+  ── output of failing suite tests\patch-08j-memory-governance-gate-1.test.mjs ──
+PASS read and write contracts disallow persistence and runtime implementation
+PASS read and write flags are default OFF, production OFF, and strict boolean true only
+PASS runtime side-effect assurances stay false for DB, Supabase, pipeline, retrieval, and source-card paths
+PASS authority separation prohibits SAE, sourceAvailability, retrieval, source-card, citation, currentness, case-status, and Phase 10 mutation
+PASS deny, session_only, and ask_later consent responses remain hard no-write outcomes
+PASS revoked, expired, and invalid consent block both reads and writes
+PASS source_derived memory remains provenance-only and cannot assert currentness, case status, or citation authority
+PASS client and matter isolation reject unrelated scopes
+PASS deferred boundaries remain implementationAllowedHere false, including Phase 7B tuning and Phase 10/11 work
+PASS structured memory context stays non-authority and uses only permitted phrasing
+PASS Phase 7B boundary tuning remains excluded from the memory gate
+
+PATCH-08J-MEMORY-GOVERNANCE-GATE-1 tests: 11 passed, 1 failed, 119 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no protected runtime, DB, migration, frontend, package, or dependency files are changed
+  changed file is allowed by PATCH-08J scope: security/public-health.js
+  ── output of failing suite tests\patch-08l-phase-8-final-closure-gate-1.test.mjs ──
+PASS Phase 8 read/write contracts remain non-persistent
+PASS memory flags remain default OFF and production OFF
+PASS read/write helper enablement requires strict boolean true from caller-provided flag object
+PASS flag OFF disables read selection and write planning
+PASS runtime side-effect assurances remain false for DB, Supabase, pipeline, retrieval, and source-card paths
+PASS deny, session_only, and ask_later block writes
+PASS revoked, expired, and invalid consent block reads and writes
+PASS source_derived memory remains provenance-only
+PASS client/matter isolation rejects unrelated scope
+PASS authority separation rejects currentness, case-status, citation, and Phase 10 bypass claims
+PASS deferred boundaries remain implementationAllowedHere false
+PASS Phase 7B boundary tuning remains excluded and Phase 10/11 remain deferred
+PASS Phase 9 roadmap remains Professional Workflow Co-Pilot
+PASS memory context remains non-authority and uses only permitted phrasing
+
+PATCH-08L-PHASE-8-FINAL-CLOSURE-GATE-1 tests: 14 passed, 1 failed, 132 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no protected runtime files are changed or imported into memory scaffolds
+  changed file is allowed by PATCH-08L scope: security/public-health.js
+  ── output of failing suite tests\patch-08s-followup-index-secret-query-removal-1.test.mjs ──
+PASS query secret policy: rejected, aliases recorded, no echo
+PASS header auth policy supports X-TINA-INDEX-SECRET; bearer recorded if implemented
+PASS protected routes list exists and is non-empty
+PASS rejection behavior is safe and does not echo secret
+PASS preserved hardening includes /health minimal and /routes not_found
+PASS limitations include live staging smoke and internal caller migration
+PASS prohibited claims include production fully hardened and Phase 9 started
+PASS source inspection: no authorization accept path from req.query.secret/indexSecret/token/key
+PASS source inspection: query secret used only for rejection detection
+PASS source inspection: X-TINA-INDEX-SECRET (or equivalent) header used
+PASS source inspection: no TINA_ENABLE_MEMORY_* introduced
+PASS source inspection: /routes minimization still referenced
+PASS source inspection: security headers / rate-limit helpers still referenced
+PASS QUERY_SECRET_ALIASES and PREFERRED_HEADER exported with expected values
+PASS hasQueryStringSecret detects any recognized alias
+PASS getIndexSecretFromHeaders reads X-TINA-INDEX-SECRET, then Authorization: Bearer
+PASS timingSafeEqualStrings handles equal, mismatched, and empty inputs safely
+PASS validateIndexSecretRequest: correct X-TINA-INDEX-SECRET authorizes
+PASS validateIndexSecretRequest: correct Authorization Bearer authorizes
+PASS validateIndexSecretRequest: correct query-string secret is rejected
+PASS validateIndexSecretRequest: missing secret rejected
+PASS validateIndexSecretRequest: wrong header rejected
+PASS validateIndexSecretRequest: alias query params rejected regardless of header
+PASS sanitizeIndexAuthFailure never echoes a submitted secret
+PASS requireIndexSecret middleware: authorizes on correct header, rejects otherwise via mock res
+PASS test file performs no HTTP, no live env reads, no server start
+
+PATCH-08S-FOLLOWUP-INDEX-SECRET-QUERY-REMOVAL-1 tests: 31 passed, 1 failed, 105 assertions
+FAIL source inspection: /health minimal helper still referenced
+  server.js still references buildPublicHealth
+  ── output of failing suite tests\patch-08s-security-route-inventory-1.test.mjs ──
+PASS inventory fixture exists and is valid JSON
+PASS each route entry has all required fields
+PASS route IDs are unique
+PASS method + path pairs are unique
+PASS every route has a valid classification and guardType
+PASS public routes are explicitly marked publicExposure true
+PASS authenticated/mode/admin routes are not marked publicExposure true
+PASS mode routes are marked expensiveOperation true and require rate_limit + log_redaction
+PASS model/retrieval routes require rate_limit and log_redaction future policies
+PASS admin/index routes require admin_guard and rate_limit future policies
+PASS debug/diagnostic routes require debug_guard and error_sanitization future policies
+PASS routes that may touch user/client/matter data require tenant_isolation policy
+PASS no route entry claims security hardening is already implemented
+PASS Phase 8 memory remains inactive and no memory runtime routes are inventoried
+PASS Phase 9 routes are not present and Phase 10/11 are not introduced
+PASS PATCH-08X chat-context diagnostic is not included as a Phase 8S route/security item
+PASS static extraction: every server.js route has a matching inventory entry
+PASS static extraction: every mode route has an authenticate-guarded inventory entry
+PASS no unexpected extra actual routes exist without an inventory entry
+PASS this test imports no runtime/server modules and requires no env vars
+
+PATCH-08S-SECURITY-ROUTE-INVENTORY-1 tests: 20 passed, 1 failed, 1188 assertions
+FAIL static guard checks: public routes have no route-level guard; admin routes use allowAuthenticatedOrIndexSecret
+  GET /health is unguarded (public)
+  ── output of failing suite tests\phase-09-gate-closure-1.test.mjs ──
+PASS required completed patches list includes all of 09A-09I, 09R, 09L, 09M, 09N, 09O, 09P, 09Q, 09S
+PASS all required Phase 9 reports exist
+PASS all required Phase 9 tests exist
+PASS all required Phase 9 BIR audit-defense workflow modules exist
+PASS each required Phase 9 report contains its expected PASS decision
+PASS new gate report exists
+PASS gate report contains PHASE 09 GATE CLOSURE PASS WITH STRICT RECOMMENDATIONS
+PASS gate report states all required non-runtime/external-operation impact statements as None
+PASS gate report states LOA readiness, live /ask readiness, and runtime activation statements
+PASS LOA readiness matrix (fixture) includes all 13 required signals
+PASS static scan confirms no server/ask-handler/pipeline/route imports in new gate test
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls in new gate files
+PASS static scan confirms no external HTTP/fetch calls in new gate files
+PASS static scan confirms no process.env dependency in new gate files
+PASS static scan confirms no Authorization/INDEX_SECRET usage in new gate files
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation in new gate files
+PASS static scan confirms no runtime activation claim in gate report
+PASS static scan confirms no filing-ready document generation claim in gate report
+PASS static scan confirms no automatic submission claim in gate report
+PASS static scan confirms no prohibited final-legal-conclusion phrases in gate fixture/report
+PASS privacy scan confirms no private real-reference fragments leaked outside intentional blocklist declarations
+
+PHASE-09-GATE-CLOSURE-1 tests: 27 passed, 2 failed, 1866 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this gate's scope: security/public-health.js
+FAIL CURRENT_STATE.md contains Phase 9 closure entry and states Phase 10 as next phase
+  CURRENT_STATE.md references PHASE-09-GATE-CLOSURE-1
+  ── output of failing suite tests\phase-09-gate-closure-2.test.mjs ──
+PASS fixture exists and records closure identity
+PASS controlling final evidence is present
+PASS final matrix counts and statuses match closure contract
+PASS flags, blockers, pending mutation, rollback, and migration states are correct
+PASS known non-blocking debt is present and explicit
+PASS decision, phase status, next phase, and next task are final
+PASS report exists and documents final safety contract
+PASS test source performs no production calls and mutates no environment
+PASS fixture and report contain no secrets or unrestricted response material
+
+PHASE-09-GATE-CLOSURE-2 tests: 9 passed, 2 failed, 61 assertions
+FAIL CURRENT_STATE records Phase 9 completion and Phase 10 handoff
+  CURRENT_STATE records closure completion
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no runtime, production, environment, or package file is modified
+  changed file is approved closure file: security/public-health.js
+  ── output of failing suite tests\phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs ──
+PASS checklist fallback includes controlled-submission, transmittal, proof-of-receipt, and additional-document limitation guidance
+PASS unavailable document fallback creates a valid result
+PASS unavailable document fallback includes no-fabrication, substitute-proof, affidavit/certification/AFS-note, and without-prejudice guidance
+PASS pre-subpoena fallback creates a valid result
+PASS pre-subpoena fallback identifies escalation risk and recommends itemized response with proof of prior submission
+PASS PAN fallback creates a valid result
+PASS PAN fallback includes 15-day reply period, issue-by-issue defense matrix, and do-not-ignore-PAN warning
+PASS FAN/FLD fallback creates a valid result
+PASS FAN/FLD fallback includes 30-day protest period, distinguishes reconsideration/reinvestigation, and warns of finality risk
+PASS action-on-protest fallback creates a valid result
+PASS action-on-protest fallback states acceptance does not automatically mean cancellation and never claims the assessment is cancelled
+PASS termination-letter fallback creates a valid result
+PASS termination-letter fallback scopes closure to covered LOA/period/tax types, warns without prejudice, and never claims permanent immunity
+PASS validateAuthoritySafeProceduralFallbackResult rejects missing/invalid required fields and metadata violations
+PASS source cards never claim final authority verification is complete
+PASS fixture sample inputs use only synthetic taxpayer names and no known real reference-corpus labels
+PASS fixture does not include real (non-placeholder) LOA numbers
+PASS fixture sample outputs contain no real taxpayer names or BIR officer names
+PASS module source has no imports and no forbidden usage patterns
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS report exists and states runtime and /ask impact none
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09L-AUTHORITY-SAFE-PROCEDURAL-FALLBACK-SCAFFOLD-1 tests: 32 passed, 1 failed, 166 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs ──
+PASS FAN triage creates a valid result with stage FINAL_ASSESSMENT and sets fanFldProtest30DayPotential
+PASS Consolidated FAN triage creates a valid result and sets freshProtestPeriodPotential, properServiceRequired, noRegressionRulePotential
+PASS FDDA triage creates a valid result with stage APPEAL_WATCH, routes to FDDA_CTA_APPEAL_WATCH, and sets consolidationProhibited
+PASS Request for reconsideration and reinvestigation both create valid results; reinvestigation sets reinvestigation60DayPotential
+PASS Action-on-protest triage creates a valid result and never says the assessment is cancelled
+PASS Termination letter triage creates a valid result, routes to AUDIT_TERMINATION_REVIEW, and never says permanent clearance
+PASS VAT non-consolidation request creates a valid result and sets vatNonConsolidationPotential
+PASS Written conformity to consolidation creates a valid result, sets writtenConformityNeeded, and preserves no-admission/no-waiver concept without a prohibited-phrase bug
+PASS Waiver of prescription creates a valid result and sets waiverOfPrescriptionPresent
+PASS VATAS/LTVAU transition notice creates a valid result and sets vatasLtvauTransitionRelevant
+PASS VAT refund transition notice creates a valid result and routes to RMO_6_2026_CONSOLIDATION_REVIEW
+PASS validateBirNoticeLoaTriageResult rejects missing/unsupported triage fields and missing top-level sections
+PASS validateBirNoticeLoaTriageResult rejects runtimeActive true and every unsafe metadata flag
+PASS validateBirNoticeLoaTriageResult rejects prohibited phrases
+PASS source cards never claim completed authority verification across all supported notice types
+PASS fixture sample inputs use only synthetic taxpayer names and no known real reference-corpus names
+PASS fixture sample inputs do not include real LOA/eLA numbers or audit case numbers from uploaded materials
+PASS fixture sample outputs contain no real taxpayer names or BIR officer names
+PASS module source has no imports and no forbidden usage patterns
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS report exists and states runtime and /ask impact none
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09M-BIR-NOTICE-LOA-TRIAGE-INTENT-SCAFFOLD-1 tests: 46 passed, 1 failed, 379 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs ──
+PASS FAN workflow creates a valid result with stage FAN_FLD_PROTEST_STAGE and all required deadline signals
+PASS FAN workflow includes reconsideration/reinvestigation decision guidance
+PASS FLD and FAN_FLD workflows both create valid results and provide no final legal conclusion
+PASS Consolidated FAN creates a valid result and sets freshFanProtestPeriodPotential, noRegressionRuleCheckNeeded, consolidatedNoticeCheckNeeded
+PASS FDDA creates a valid result with stage FDDA_RECEIVED_STAGE, path FDDA_CTA_APPEAL_WATCH, sets fddaAppeal30DayPotential, and does not compute a final appeal deadline
+PASS Request for reconsideration creates a valid result with path REQUEST_FOR_RECONSIDERATION and references existing records/legal arguments
+PASS Request for reinvestigation creates a valid result with path REQUEST_FOR_REINVESTIGATION, sets reinvestigation60DayPotential, and references additional evidence
+PASS Action-on-protest creates a valid result, path POST_PROTEST_REEVALUATION_MONITORING, distinguishes procedural acceptance, and never says the assessment is cancelled
+PASS CTA inaction scenario creates a valid result and sets inaction180DayPotential and ctaInactionAppealPotential
+PASS Assessment issue matrix is created from provided issues and defaults to an UNKNOWN_ISSUE placeholder when none are provided
+PASS issue-specific guidance is present for each required assessment issue type
+PASS validatePanFanFldProtestWorkflowResult rejects missing/unsupported fields and missing top-level sections
+PASS validatePanFanFldProtestWorkflowResult rejects runtimeActive true and every unsafe metadata flag
+PASS validatePanFanFldProtestWorkflowResult rejects prohibited phrases
+PASS source cards never claim completed authority verification across all supported notice types
+PASS fixture sample inputs use only synthetic taxpayer names and no known real reference-corpus data
+PASS fixture sample outputs contain no real taxpayer names or BIR officer names
+PASS module source has no imports and no forbidden usage patterns
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS no filing-ready protest document is generated for any supported notice type
+PASS report exists and states runtime and /ask impact none
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09N-PAN-FAN-FLD-PROTEST-WORKFLOW-SCAFFOLD-1 tests: 34 passed, 1 failed, 316 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs ──
+PASS empty findings default to a single UNKNOWN_ISSUE placeholder without fabricating facts
+PASS evidence plan, procedural defense plan, substantive defense plan, and authority needs are populated
+PASS VAT_EXEMPT_VS_ZERO_RATED / PEZA_ZERO_RATING rule creates valid output with required authority/document/warning guidance
+PASS CWT_SUBSTANTIATION rule includes BIR Form 2307/SAWT documentary guidance
+PASS WITHHOLDING_TAX_DEDUCTIBILITY / EXPANDED_WITHHOLDING_TAX rule includes withholding/deductibility authority needs
+PASS INPUT_VAT_SUBSTANTIATION rule includes VAT invoice/input VAT support
+PASS DIVIDEND_FWT rule includes dividend/FWT documents
+PASS LOA_OR_ELA_AUTHORITY / REPLACEMENT_ELA rule includes RMC/RMO authority needs and never concludes invalidity
+PASS CONSOLIDATED_NOTICE rule includes RMO No. 1-2026/6-2026 and requires proper-service/stage/prior-notice/no-regression checks
+PASS DOCUMENT_REQUEST_SCOPE rule includes standardized-checklist/request-limit review and sets documentRequestScopeCheckNeeded
+PASS PAN_REPLY rule includes 15-day reply period and prior NOD/DOD consistency review
+PASS FAN_FLD_PROTEST rule includes 30-day protest, reconsideration/reinvestigation, 60/180-day, and FDDA/CTA watch guidance
+PASS FDDA_APPEAL_WATCH rule includes CTA appeal-watch, proper service, and jurisdictional deadline review
+PASS TERMINATION_LETTER_SCOPE rule matches closure to LOA/eLA/period/tax-types and never claims blanket clearance
+PASS validateBirAuditDefenseMatrixResult rejects missing sections, unsupported values, empty source cards, and unsafe metadata
+PASS no filing-ready document or final legal conclusion is generated for any supported issue type
+PASS source cards never claim completed authority verification and are never empty across all supported issue types
+PASS fixture sample inputs/outputs use only synthetic taxpayer names and no known real reference-corpus data
+PASS module source has no imports and no forbidden usage patterns
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS report exists and states runtime and /ask impact none
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09O-BIR-AUDIT-DEFENSE-MATRIX-SCAFFOLD-1 tests: 32 passed, 1 failed, 584 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs ──
+PASS PAN/FAN-FLD/reinvestigation/termination supporting-document results are all valid
+PASS provided item sets receivingProofNeeded true
+PASS to-follow item sets explanationType to_follow
+PASS not-applicable item sets explanationType not_applicable and without-prejudice flag
+PASS unavailable item sets explanationType unavailable
+PASS non-existent item sets explanationType non_existent and populates substitute proof plan
+PASS substitute-proof item populates substituteProofPlan
+PASS reconciliation item sets reconciliationNeeded true
+PASS certified-copy item sets certifiedCopyNeeded true
+PASS on-premise item sets onPremiseReviewNeeded true and voluminousRecordsCheckNeeded
+PASS clarification item sets birClarificationNeeded and clarificationRequestNeeded true
+PASS transmittal plan includes itemized schedule and receiving proof requirement
+PASS receiving proof tracker exists and reports a proof gap warning when no receiving proof is confirmed
+PASS scope and authority checks include standardized checklist check for checklist-family request types
+PASS source cards include all required RMO/RMC design references and uploaded reference patterns
+PASS source cards never claim completed authority verification across all supported request types
+PASS validateBirDocumentComplianceTransmittalResult rejects missing sections, empty/unsupported document matrix, empty source cards, and unsafe metadata
+PASS fixture sample inputs/outputs use only synthetic taxpayer names and no known real reference-corpus data
+PASS module source has no imports and no forbidden usage patterns
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS report exists and states runtime, /ask, filing-ready document, and automatic submission impact none
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09P-BIR-DOCUMENT-COMPLIANCE-TRANSMITTAL-SCAFFOLD-1 tests: 35 passed, 1 failed, 311 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09q-bir-authority-corpus-research-design-1.test.mjs ──
+PASS validateBirAuthorityCorpusResearchDesignInput rejects requests to scrape/download/search/ingest/embed/store authorities
+PASS validateBirAuthorityCorpusResearchDesignInput rejects claims of completed verification or final legal conclusion
+PASS validateBirAuthorityCorpusResearchDesignInput rejects known real names/numbers/amounts
+PASS baseline design result (no target topics supplied) is valid and covers the default topic set
+PASS officialSourcePriority includes all 10 official domains with correct allowed-use categories and a secondary-lead-only entry
+PASS authorityTopicMap includes required baseline topics with required fields and always requires human review
+PASS candidate authority matching a topic's required type narrows missingAuthorityGaps
+PASS authorityMetadataSchema, researchWorkflowDesign, verificationRules, conflictResolutionPolicy, futureIngestionPlan, and citationPolicyDesign are fully shaped
+PASS corpusDesignSummary always reports no live retrieval, ingestion, database write, or legal conclusion
+PASS required baseline source cards are present with exact labels and authority tiers
+PASS source cards never claim completed authority verification
+PASS detectProhibitedAuthorityCorpusClaims flags all documented prohibited phrases
+PASS validateBirAuthorityCorpusResearchDesignResult rejects missing sections, unsafe metadata, and prohibited claims
+PASS validateBirAuthorityCorpusResearchDesignResult rejects every unsafe metadata flag
+PASS validateBirAuthorityCorpusResearchDesignResult rejects prohibited claims and real data leaks embedded in result text
+PASS normalizeBirAuthorityCorpusResearchDesignInput forces all safety flags and never marks candidates live-verified
+PASS fixture sample inputs/outputs all validate and use only synthetic/public authority names
+PASS fixture sample inputs/outputs contain no known real reference-corpus data
+PASS module source has no imports and no forbidden usage patterns
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS report exists and states runtime, /ask, live-retrieval/scraping/ingestion, database/embedding, filing-ready, and automatic submission impact none
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09Q-BIR-AUTHORITY-CORPUS-RESEARCH-DESIGN-1 tests: 29 passed, 1 failed, 444 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs ──
+PASS result validator rejects missing proceduralSafeguards
+PASS result validator rejects missing integrationRoutes
+PASS result validator rejects unsafe metadata
+PASS result validator rejects prohibited claims and real data leaks
+PASS fixture sample inputs use only synthetic taxpayer names or public authority names
+PASS fixture sample outputs do not include real taxpayer fragments
+PASS static scan confirms no server/ask-handler/pipeline/route imports
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls
+PASS static scan confirms no external HTTP/fetch calls
+PASS static scan confirms no process.env dependency
+PASS static scan confirms no Authorization/INDEX_SECRET usage
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation
+PASS report exists
+PASS report states Runtime impact: None.
+PASS report states /ask impact: None.
+PASS report states Live retrieval impact: None.
+PASS report states Scraping/download/ingestion impact: None.
+PASS report states Database/embedding impact: None.
+PASS normalizeBir2026AuditBaselineIntegrationInput forces all safety flags and derives topics from scenario facts
+PASS fixture sample inputs/outputs all validate via the module
+PASS fixture and report content have no forbidden usage patterns
+PASS this test file itself has no forbidden usage patterns
+PASS if decision FAIL or BLOCKED: a reason is recorded
+
+PHASE-09S-2026-BIR-AUDIT-BASELINE-INTEGRATION-SCAFFOLD-1 tests: 75 passed, 1 failed, 339 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+  ── output of failing suite tests\phase-09x-controlled-loa-answer-runtime-wiring-design-1.test.mjs ──
+PASS supportedFutureQueryIntents includes all required keyword categories
+PASS excludedFutureQueryIntents includes all required exclusion categories
+PASS futureRuntimeRoutingDesign includes all 10 required routing steps
+PASS futureSafeResponseTemplate includes all required content categories
+PASS futureResponseModes include all 7 required modes
+PASS futureSourceCardPolicy includes all required source categories and unverified-source-card statement
+PASS futureRuntimeSafetyGates include all required categories
+PASS screenshotEvidenceNote states current live fallback is expected and 09X does not change live behavior
+PASS new report exists
+PASS new report decision is PASS WITH STRICT RECOMMENDATIONS
+PASS new report states all required exact impact statements
+PASS static scan confirms no server/ask-handler/pipeline/route imports in new 09X files
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls in new 09X files
+PASS static scan confirms no external HTTP/fetch calls in new 09X files
+PASS static scan confirms no process.env dependency in new 09X files
+PASS static scan confirms no Authorization/INDEX_SECRET usage in new 09X files
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation in new 09X files
+PASS static scan confirms no runtime activation implementation
+PASS static scan confirms no filing-ready document generation implementation
+PASS static scan confirms no automatic submission implementation
+PASS static scan confirms no prohibited final-legal-conclusion phrases in 09X fixture/report
+
+PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1 tests: 28 passed, 2 failed, 166 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+FAIL CURRENT_STATE.md contains 09X design entry and states 09Y as next task
+  CURRENT_STATE.md references PHASE-09X-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-DESIGN-1
+  ── output of failing suite tests\phase-09y-controlled-loa-answer-runtime-wiring-scaffold-1.test.mjs ──
+PASS supported LOA intents include all required entries
+PASS excluded intents include all required entries
+PASS response modes include all required entries
+PASS safety gates include all required entries
+PASS missing input and missing userQuery are rejected
+PASS unsafe option flags are rejected
+PASS source card claiming final verification or final legal conclusion is rejected
+PASS real taxpayer/officer/ela/audit-case/amount fragments are rejected
+PASS intent classification is correct for all supported and excluded sample queries
+PASS supported LOA result is valid and includes all required controlled-answer content
+PASS phase9ScaffoldUsePlan flags all Phase 9 components true and runtimeWiredNow false
+PASS safetyGateResults has all final-conclusion and safety gates true
+PASS sourceCardPolicy is unverified/no-citation and includes all required authority categories
+PASS safeResponsePreview includes procedural-guidance-only and human review disclaimers and no final validity conclusion
+PASS result validator rejects missing sections and unsafe metadata/policy flags
+PASS result validator rejects prohibited legal conclusion phrases, filing-ready output, and automatic submission language
+PASS report exists and states required exact impact statements
+PASS module source has no forbidden usage patterns and is standalone
+PASS this test file itself has no forbidden usage patterns
+PASS static scan confirms no runtime activation, filing-ready document generation, or automatic submission implementation
+PASS no private real-reference fragments appear in fixture, report, or generated sample output
+
+PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1 tests: 28 passed, 2 failed, 615 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this patch's scope: security/public-health.js
+FAIL CURRENT_STATE.md contains 09Y scaffold entry and states 09Z as next task
+  CURRENT_STATE.md references PHASE-09Y-CONTROLLED-LOA-ANSWER-RUNTIME-WIRING-SCAFFOLD-1
+  ── output of failing suite tests\phase-09z-controlled-loa-answer-ask-wiring-gate-1.test.mjs ──
+PASS 09-GATE, 09X, and 09Y reports exist and contain their PASS decisions
+PASS 09Y test and module exist; module exports all required constants/functions with correct version and mode id
+PASS all sample safe LOA/eLA queries classify as supported with an expected response mode
+PASS all sample excluded queries classify as excluded with HUMAN_REVIEW_REQUIRED or AUTHORITY_FALLBACK_REQUIRED
+PASS safe LOA result is valid with runtimeActive/liveAskWired false and all metadata safety flags correct
+PASS safe LOA answer includes all required content concepts
+PASS safe response preview includes procedural-guidance-only and human tax/legal review phrases
+PASS source-card policy is unverified/no-citation and includes all required authority categories
+PASS 09Z report exists and states required exact gate-outcome statements
+PASS 09Z report states all required non-runtime/external-operation impact statements as None
+PASS static scan confirms no server/ask-handler/pipeline/route imports in new 09Z files
+PASS static scan confirms no OpenAI/Supabase/Google Drive/n8n/Firecrawl/Crawlee/MCP/OCR calls in new 09Z files
+PASS static scan confirms no external HTTP/fetch calls in new 09Z files
+PASS static scan confirms no process.env dependency in new 09Z files
+PASS static scan confirms no Authorization/INDEX_SECRET usage in new 09Z files
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation in new 09Z files
+PASS static scan confirms no runtime activation implementation
+PASS static scan confirms no filing-ready document generation implementation
+PASS static scan confirms no automatic submission implementation
+PASS static scan confirms no prohibited final-legal-conclusion phrases in 09Z fixture/report
+PASS no private real-reference fragments appear in 09Z fixture, report, or 09Y module/fixture/report/test
+
+PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1 tests: 23 passed, 2 failed, 312 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes
+  changed file is allowed by this gate's scope: security/public-health.js
+FAIL CURRENT_STATE.md contains 09Z gate entry and states 09ZA as next task
+  CURRENT_STATE.md references PHASE-09Z-CONTROLLED-LOA-ANSWER-ASK-WIRING-GATE-1
+  ── output of failing suite tests\phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs ──
+PASS fixture core fields match expected values
+PASS 09Y scaffold module exists and classifies basic LOA query as supported
+PASS pipeline.js references the 09Y scaffold and the gate is narrow (feature-flagged, off by default)
+PASS all 8 safe LOA/eLA sample queries return a controlled response when the gate is enabled
+PASS controlled response includes all required content concepts
+PASS excluded unsafe queries do not return controlled safe LOA guidance
+PASS controlled response metadata is safe: legalCitationAllowed false, sourceCardVerification not_performed, filingReadyDocumentGenerated false, automaticSubmission false, sourceCards empty
+PASS unrelated generic queries do not trigger the controlled LOA branch
+PASS pipeline.js changes are limited to the new narrow controlled-LOA gate (existing clarification gate test still passes)
+PASS static scan confirms no forbidden service/network/env/Authorization usage was ADDED to pipeline.js
+PASS static scan confirms no live retrieval/scraping/download/ingestion/embedding/database write implementation was added
+PASS static scan confirms no filing-ready document generation or automatic submission implementation
+PASS static scan confirms no prohibited final-legal-conclusion phrases in generated controlled response, fixture, or report
+PASS no private real-reference fragments appear in fixture, report, or generated controlled response
+PASS report exists and states all required exact and conditional statements
+PASS this test file itself has no forbidden usage patterns
+
+PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1 tests: 17 passed, 3 failed, 263 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL existing auth/route/server behavior is unmodified; no route/server/package/env/DB/frontend/MCP files changed
+  server.js not changed (no justification required since untouched)
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL git diff confirms only allowed files plus the single approved pipeline.js hook changed
+  changed file is allowed by this patch's scope: security/public-health.js
+FAIL CURRENT_STATE.md contains 09ZA implementation entry and states 09ZB as next task
+  CURRENT_STATE.md references PHASE-09ZA-CONTROLLED-LOA-ANSWER-ASK-WIRING-IMPLEMENTATION-1
+  ── output of failing suite tests\phase-09zc-controlled-loa-answer-production-activation-gate-1.test.mjs ──
+PASS fixture exists, is valid JSON, and matches core metadata
+PASS production identity fields are recorded
+PASS controlled LOA and diagnostic flags are recorded with required diagnostic default
+PASS branch comparison, release strategy, and commit inventories are present
+PASS production readiness checks and rollback plan are present
+PASS activation/smoke execution flags are false during the plan stage
+PASS 09ZD is recorded as the separate next task
+PASS no production URL is called, no Render mutation, no main push, no env mutation by this test
+PASS report exists and contains required impact statements
+
+PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1 tests: 9 passed, 2 failed, 75 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no runtime code is modified by this patch (diff scope check)
+  runtime/protected file not modified: server.js
+FAIL CURRENT_STATE.md contains 09ZC entry referencing 09ZD and the diagnostic flag requirement
+  CURRENT_STATE contains the 09ZC patch identifier
+  ── output of failing suite tests\phase-09zd-controlled-loa-answer-production-smoke-1.test.mjs ──
+PASS fixture exists, is valid JSON, and records final PASS metadata
+PASS prior blocked and failed chronology are preserved
+PASS production target and deploy verification are recorded
+PASS context-free outcome query contract is clarified as safe boundary rejection
+PASS tax-contextual outcome query contract requires restricted handling and human review
+PASS production smoke matrices record exact final PASS counts
+PASS runtime, frontend, source-card, and mutation statuses are recorded
+PASS rollback and next-task references are retained
+PASS no production URL is called and no production mutation command is embedded
+PASS fixture and report do not contain secrets or unrestricted response material
+
+PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 tests: 10 passed, 2 failed, 89 assertions
+FAIL report and current state record clarified contract and final 09ZD pass
+  artifact contains patch id
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no runtime, auth, deployment, or environment file is modified by this patch
+  protected file not modified: server.js
+  ── output of failing suite tests\phase-09ze-controlled-loa-domain-boundary-remediation-1.test.mjs ──
+  vectorTableMatchExpected: true,
+  NODE_ENV: null,
+  RENDER_SERVICE_NAME: null,
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: 'c1d38cb53807ed14',
+  pid: 28492,
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and core metadata is correct
+PASS fixture lists all four previously failing safe queries
+PASS pipeline keeps Step 12.65 controlled LOA gate and feature flag markers
+PASS pipeline (or the shared audit-procedure boundary module) contains the chosen narrow signals
+PASS all safe queries are boundary-eligible and controlled-gate eligible
+PASS previously failing safe queries now pass boundary and controlled gate
+PASS excluded unsafe queries do not receive the controlled safe LOA answer
+PASS unrelated tax queries do not trigger the controlled LOA branch
+PASS source-card and legal-safety metadata remain locked down
+PASS static scan confirms no external operation implementation was added
+PASS report exists and contains required impact statements
+
+PHASE-09ZE-CONTROLLED-LOA-DOMAIN-BOUNDARY-REMEDIATION-1 tests: 11 passed, 2 failed, 122 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no disallowed runtime, package, env, database, frontend, or production files changed
+  changed file is allowed: security/public-health.js
+FAIL CURRENT_STATE.md contains 09ZE completion and 09ZB rerun next task
+  CURRENT_STATE contains 09ZE entry
+  ── output of failing suite tests\phase-09zf-controlled-loa-gate-ordering-remediation-1.test.mjs ──
+PASS fixture exists and core metadata is correct
+PASS fixture lists all four previously failing safe queries
+PASS fixture safe/excluded/unrelated matrices are complete
+PASS pipeline.js retains required controlled LOA gate markers
+PASS static scan confirms Step 12.65 controlled LOA gate now runs before Step 12.6 clarification gate
+PASS all safe queries -- including previously failing ones -- match the controlled LOA gate
+PASS previously failing replacement eLA query is covered and matches
+PASS previously failing consolidated eLA query is covered and matches
+PASS previously failing notice for presentation/submission query is covered and matches
+PASS previously failing reminder before subpoena query is covered and matches
+PASS each excluded unsafe query individually remains excluded from the controlled safe LOA answer
+PASS unrelated tax queries do not trigger the controlled LOA branch
+PASS source-card and legal-safety metadata remain locked down on the controlled branch
+PASS static scan confirms no external operation, filing-ready, or automatic-submission implementation was added
+PASS report exists and contains required impact statements
+PASS git diff scope is reported (encoded via allowed-file check above)
+
+PHASE-09ZF-CONTROLLED-LOA-GATE-ORDERING-REMEDIATION-1 tests: 16 passed, 2 failed, 175 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+FAIL no disallowed runtime, package, env, database, frontend, or production files changed
+  changed file is allowed: security/public-health.js
+FAIL CURRENT_STATE.md contains 09ZF completion, 09ZB rerun next, and 09ZC blocked statements
+  CURRENT_STATE contains 09ZF completion entry
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+  ── output of failing suite tests\phase-09zg-controlled-loa-live-path-instrumentation-diagnostic-1.test.mjs ──
+  diagnosticId: '09zg-msjx4gon-acf3dd35',
+  phase: '09ZG',
+  correlationId: 'failing-corr',
+  event: 'FINAL_RESPONSE_SELECTED',
+  seq: 3,
+  atMs: 1786166008441,
+  finalBranch: 'clarificationRouteGate',
+  finalResponseType: 'clarification'
+}
+PASS trace collector records events and can distinguish baseline vs failing traces
+[TINA_09ZG_LOA_PATH] {
+  diagnosticId: '09zg-msjx4gor-37406fbe',
+  phase: '09ZG',
+  correlationId: null,
+  event: 'REQUEST_RECEIVED',
+  seq: 0,
+  atMs: 1786166008443,
+  hook: '/ask'
+}
+PASS trace collector strips forbidden secret-shaped fields before logging
+PASS queryFingerprint is deterministic and does not require raw-body logging elsewhere
+PASS pipeline.js contains gated 09ZG trace checkpoints for all required events
+PASS diagnostic code is gated by the explicit flag and defaults false
+PASS diagnostic module does not persist, call external services, or write to a database
+PASS diagnostic instrumentation in pipeline.js does not alter gate results, response text, responseType, or query keywords
+PASS report exists and contains required impact statements
+
+PHASE-09ZG-CONTROLLED-LOA-LIVE-PATH-INSTRUMENTATION-DIAGNOSTIC-1 tests: 14 passed, 1 failed, 116 assertions
+FAIL CURRENT_STATE.md contains a 09ZG entry
+  CURRENT_STATE contains the 09ZG patch identifier
+  ── output of failing suite tests\phase-09zh-controlled-loa-live-path-remediation-1.test.mjs ──
+  engineVersion: '3.0.0'
+}
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists, is valid JSON, and matches core metadata
+PASS shared audit-procedure boundary module exists and is used by both ask-handler.js and pipeline.js
+PASS no separate duplicate audit-procedure keyword list remains in either file
+PASS ask-handler.js preserves the base domain-boundary rejection path and does not build a controlled answer
+PASS pipeline.js retains evaluateControlledLoaAskGate and Step 12.65 as the final gate
+PASS shared module: candidate detector recognizes the four previously-rejected phrasings upstream
+PASS shared module: baseline BIR-worded queries do not need the overlay to pass the base detector
+PASS shared module: overlay converts a rejecting base decision to ALLOW only for candidates, on /ask
+PASS all eight safe queries pass the boundary and match the controlled LOA gate
+PASS previously rejected queries are now boundary-eligible
+PASS each of the 12 excluded queries individually remains excluded from the safe controlled answer
+PASS unrelated tax queries do not become LOA candidates and do not trigger the controlled branch
+PASS truly unrelated non-tax query remains boundary-rejectable
+PASS no hardcoded answer text or exact full-query string switching for the four previously failing queries
+PASS no external operation, DB write, or model call introduced in the shared module or diffs
+PASS source-card and legal-safety metadata remain locked down on the controlled branch
+PASS 09ZG diagnostic flag remains default false and production activation is absent
+PASS report exists and contains required impact statements
+
+PHASE-09ZH-CONTROLLED-LOA-LIVE-PATH-REMEDIATION-1 tests: 18 passed, 2 failed, 181 assertions
+FAIL CURRENT_STATE.md contains 09ZH completion and states 09ZB rerun as next task
+  CURRENT_STATE contains 09ZH completion entry
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no disallowed runtime, package, env, database, frontend, or production files changed
+  changed file is allowed: security/public-health.js
+  ── output of failing suite tests\phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs ──
+PASS FAN-voidness query: no affirmative voidness or validity conclusion
+PASS FDDA-appealability query: no affirmative or negative appealability conclusion
+PASS all 12 excluded queries remain non-conclusive and outside controlled_loa_answer
+PASS draft-protest and automatic-submission queries produce no filing-ready or submission action
+PASS final-legal-opinion query produces no final opinion
+PASS unrelated tax queries do not trigger either controlled LOA gate
+PASS non-tax boundary queries remain outside the controlled LOA gates and outside the base boundary allow
+PASS previously-failing (post-09ZH) audit-procedure queries remain passing safe queries
+PASS shared 09ZH boundary helper file is unmodified in this diff
+PASS no exact full-query string switch and no broad global legal-word replacement in added lines
+PASS no external operation, DB write, or model call introduced in the safety module or diffs
+PASS 09ZG diagnostic flag remains default false and no production activation is present
+PASS report exists and contains required impact statements
+
+PHASE-09ZI-CONTROLLED-LOA-UNSAFE-LEGAL-WORDING-REMEDIATION-1 tests: 19 passed, 3 failed, 265 assertions
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL auth, routes, and server files are unchanged
+  server.js unchanged
+FAIL CURRENT_STATE.md contains 09ZI completion and states 09ZB rerun as next task
+  CURRENT_STATE contains 09ZI completion entry
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no disallowed runtime, package, env, database, frontend, or production files changed
+  changed file is allowed: security/public-health.js
+  ── output of failing suite tests\phase-09zj-context-free-outcome-query-safety-contract-clarification-1.test.mjs ──
+PASS fixture exists and records the 09ZJ PASS decision
+PASS investigation answers preserve the context-free/contextual distinction
+PASS targeted production evidence is sanitized and passes both categories
+PASS full 09ZD rerun is recorded as final pass
+PASS 09ZD artifacts were revised to use the clarified two-category contract
+PASS test source performs no live production calls
+PASS fixture and report do not contain secrets or unrestricted response material
+
+PHASE-09ZJ-CONTEXT-FREE-OUTCOME-QUERY-SAFETY-CONTRACT-CLARIFICATION-1 tests: 7 passed, 2 failed, 66 assertions
+FAIL report and current state preserve impact and next-task statements
+  artifact contains 09ZJ patch id
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no runtime, auth, deployment, or environment file is modified by this patch
+  changed file is allowed for 09ZJ: security/public-health.js
+  ── output of failing suite tests\phase-10a-trust-limitation-authority-confidence-release-gate-1.test.mjs ──
+  mode: '',
+  route: '',
+  reason: 'unverified_citation_in_answer',
+  suppressedCitationCount: 1,
+  suppressedCitations: [ 'NIRC Section 999' ]
+}
+[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED] {
+  saeStatus: 'NO_INDEXED_SOURCE',
+  mode: '',
+  route: '',
+  removedSectionCount: 1,
+  suppressedCitationCount: 0,
+  suppressedCitations: [],
+  fallbackMessageUsed: true
+}
+[PATCH_019A_AUTHORITY_LEAKAGE_BLOCKED] {
+  saeStatus: 'AUTHORITY_FOUND',
+  mode: '',
+  route: '',
+  reason: 'unverified_citation_in_answer',
+  suppressedCitationCount: 1,
+  suppressedCitations: [ 'NIRC Section 999' ]
+}
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL no runtime or frontend remediation was implemented by this patch (diff scope check)
+  runtime file not modified: server.js
+FAIL CURRENT_STATE.md records Phase 10A status and independent review requirement
+  CURRENT_STATE contains the 10A patch identifier
+  ── output of failing suite tests\phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs ──
+PASS fixture exists and is valid JSON with both required sections
+PASS contract shape: version, categorical allow-lists, real booleans, serializable limitations
+PASS all 15 material response paths produce the exact required contract
+PASS invariant edge cases hold under the defensive enforcement pass
+PASS verified-authority mapping: controlling vs related-only vs missing-cards-cannot-be-controlling
+PASS unsafe source states never yield a false verified-authority claim
+PASS restricted legal conclusions always force human review and forbid filing-ready/auto-submission output
+PASS controlled procedural responses never claim a restricted legal conclusion and forbid filing-ready/auto-submission output
+PASS conflict (corrected by PHASE-10A1-R1): raw upstream conflict signals alone never yield hasConflict:true; only renderer-complete metadata does; conflict never implies fully settled controlling authority
+PASS domain boundary: NOT_APPLICABLE everywhere, no invented tax authority confidence
+PASS legacy/missing fields: safe UNKNOWN/NOT_APPLICABLE defaults, never throws, never mutates input
+PASS API forwarding: ask-handler.js imports and calls the real, extractable buildResponseTrust builder at both response-construction locations
+PASS API forwarding: trust appears for controlled LOA procedural, restricted legal-conclusion, verified-authority, related-authority, no-authority, domain-boundary, and safe fallback response shapes
+PASS no secret appears in the fixture or report
+PASS corroborating existing regression suites are cited and exist
+PASS report exists and Phase 10A is not marked complete
+
+PHASE-10A1-CANONICAL-TRUST-CONTRACT-AND-API-FORWARDING-REMEDIATION-1 tests: 16 passed, 2 failed, 108 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL diff scope: no frontend/timeout/route-ordering/conflict-engine/feature-flag/production runtime file was touched, and this task's own files are exactly the PHASE-10A1 set
+  runtime file not modified: server.js
+FAIL CURRENT_STATE.md records PHASE-10A1 without marking Phase 10A itself closed/complete
+  CURRENT_STATE contains the 10A1 patch identifier
+  ── output of failing suite tests\phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs ──
+PASS all conflict fixture cases produce the exact required contract via real execution
+PASS A. verified/displayable conflict
+PASS B. potential/incomplete conflict
+PASS C. no conflict
+PASS D. unknown conflict (missing or malformed input, never throws)
+PASS E. domain boundary
+PASS F. contradictory inputs produce a safe categorical state, never a silent NO_CONFLICT or an overstated VERIFIED_CONFLICT
+PASS G. VERIFIED_SUPPORTING cannot be produced without a distinct authoritative supporting signal
+PASS H. mutation safety: input is not mutated, output is deterministic and serializable
+PASS I. response-construction behavior: buildResponseTrust (the real, extractable builder ask-handler.js calls) produces corrected trust for verified, potential, no-conflict, controlled LOA, restricted, and domain-boundary shapes
+PASS J. backward compatibility: trust.hasConflict remains present, trust.conflictState is additive, no existing top-level response field removed
+PASS classifyConflictState mirrors pipeline.js's exact renderTinaAnswer wiring (conflict: ctx.conflictAnalysis?.hasConflict ? ctx.conflictAnalysis : null)
+PASS conflict-trust-classifier.js does not modify conflict-engine.js, pipeline.js conflict generation, answer-renderer.js, or final-answer-compliance.js
+PASS no secret appears in the fixture or report
+PASS corroborating existing regression suites are cited and exist
+PASS report exists and Phase 10A / PHASE-10A2 status is correctly recorded
+
+PHASE-10A1-R1-CONFLICT-TRUST-CONTRACT-CORRECTION-1 tests: 18 passed, 2 failed, 91 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL diff scope: only PHASE-10A1-R1's own files and the two already-authorized PHASE-10A1 files were touched
+  runtime file not modified: server.js
+FAIL CURRENT_STATE.md records PHASE-10A1-R1 without marking Phase 10A itself closed/complete
+  CURRENT_STATE contains the 10A1-R1 patch identifier
+  ── output of failing suite tests\phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs ──
+[TINA OBSERVABILITY] Langfuse enabled — traces will be sent.
+PASS fixture exists and is valid JSON with all required categories
+PASS A. restricted outcome prediction queries are deterministically classified excluded
+PASS B. validity and voidness queries are deterministically classified excluded
+PASS C. legal strategy / final opinion / definitive conclusion queries are excluded, never filing-ready
+PASS D. early-interception proof: the upstream gate module has zero I/O references and executes synchronously with no retrieval/model/DB call
+PASS E. defense in depth: Step 12.66 inside pipeline.js still restricts a query if the upstream gate is bypassed
+PASS F. jurisprudence questions are not falsely restricted (fixes the prior asksCta bare-mention false positive)
+PASS G. controlled LOA procedural preservation: safe procedural questions are never excluded
+PASS general tax control queries are never excluded
+PASS H. context-free outcome wording never triggers automatic Philippine-tax restricted classification (Invariant 8)
+PASS I. trust contract for the restricted path is fully consistent
+PASS J. timeout preservation: the gate's response never depends on route timeout machinery and is not a generic RETRIEVAL_TIMEOUT fallback
+PASS K. no prohibited language in the restricted answer text
+PASS mutation safety and determinism
+PASS hook and feature-flag scope: ask-handler.js restricts the upstream gate to /ask and the existing TINA_ENABLE_CONTROLLED_LOA_ASK_GATE flag
+PASS no secret appears in the fixture or report
+PASS pipeline.js Step 12.65/12.66 ordering and RAG_TIMEOUT_MS value are unchanged
+PASS corroborating existing regression suites are cited and exist
+PASS report exists and PHASE-10A3/Phase 10B status is correctly recorded
+
+PHASE-10A2-RESTRICTED-LEGAL-CONCLUSION-TIMEOUT-GATE-REMEDIATION-1 tests: 19 passed, 2 failed, 159 assertions
+warning: unable to access 'C:\Users\USER/.config/git/ignore': Permission denied
+warning: in the working copy of 'security/public-health.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs', LF will be replaced by CRLF the next time Git touches it
+FAIL diff scope: only PHASE-10A2's minimal runtime files and its own artifacts were touched
+  runtime file not modified: server.js
+FAIL CURRENT_STATE.md records PHASE-10A2 without marking Phase 10A itself closed/complete
+  CURRENT_STATE contains the 10A2 patch identifier

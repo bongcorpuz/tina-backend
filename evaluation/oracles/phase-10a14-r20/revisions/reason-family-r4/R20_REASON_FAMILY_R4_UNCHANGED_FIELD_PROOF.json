@@ -1,0 +1,22 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "rowCountEqual": true,
+  "rowOrderEqual": true,
+  "oracleIdsEqual": true,
+  "queriesEqual": true,
+  "expectedDecisionsEqual": true,
+  "expectedRelationsEqual": true,
+  "sourceIdentityAndProvenanceEqual": true,
+  "categoriesEqual": true,
+  "metamorphicFieldsEqual": true,
+  "rowsCompared": 3720,
+  "targetedRows": 145,
+  "unchangedRows": 3575,
+  "unchangedRowsJsonValueEquivalent": 3575,
+  "rowsChanged": 145,
+  "onlyAuthorizedField": "expectedReasonCodeFamily",
+  "unauthorizedFieldDifferences": 0,
+  "pass": true
+}

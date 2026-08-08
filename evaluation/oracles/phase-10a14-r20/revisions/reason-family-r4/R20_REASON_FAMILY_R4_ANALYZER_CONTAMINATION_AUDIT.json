@@ -1,0 +1,20 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "analyzerImported": false,
+  "analyzerExecuted": false,
+  "productionBoundaryImported": false,
+  "productionBoundaryExecuted": false,
+  "liveRuntimeExecuted": false,
+  "liveRuntimeOutputUsed": false,
+  "sealedC37ActualReasonEvidenceUsed": true,
+  "runtimeOutputUsed": true,
+  "runtimeOutputUseScope": "SEALED_C37_ACTUAL_REASON_EVIDENCE_ONLY; NO_LIVE_ANALYZER_OR_RUNTIME EXECUTION",
+  "networkUsed": false,
+  "modelUsedByBuilder": false,
+  "independent": false,
+  "holdout": false,
+  "blind": false,
+  "pass": true
+}

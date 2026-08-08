@@ -1,0 +1,1105 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "classification": "C38_FINAL_FULL_REGRESSION_EXACT_HISTORICAL_FAILURE_MULTISET_ADJUDICATED",
+  "generatedUtc": "2026-08-08T05:16:39.000Z",
+  "inputs": {
+    "c37FinalAdjudication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+      "bytes": 2928,
+      "sha256": "fd58900dd03a66bc02f426a44ed741a97ad00875abb7ad9e4ed5ad70d5edc8c9"
+    },
+    "c38Capture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION.json",
+      "bytes": 72562,
+      "sha256": "1bb7e95dad0bc3fa3c01bf3d932146e83816e3795694172531c44702d1142f90"
+    },
+    "postprocessing": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_POSTPROCESSING.json",
+      "bytes": 1906,
+      "sha256": "4602c87d73772dd4a0b2588b0c13a6f09320a29c4738393aafe12617d69856c7"
+    }
+  },
+  "execution": {
+    "canonicalCommand": "npm.cmd test",
+    "resolvedCommand": "node scripts/run-regressions.mjs",
+    "captureInstrumentation": "evaluation/runner/phase-10a14-r20/commit5r1c36-regression-capture-hook.mjs",
+    "invocationCount": 1,
+    "recoveredFromIntactRawCaptureAfterPostprocessingParserFailure": true,
+    "exitCodeProvenance": "derived from 20 captured failing suites and canonical run-regressions nonzero contract; the original parent status was not persisted before the inherited parser failed",
+    "startedUtc": "2026-08-08T05:11:43.475Z",
+    "completedUtc": "2026-08-08T05:16:39.000Z",
+    "elapsedMilliseconds": 295525,
+    "exitCode": 1,
+    "signal": null,
+    "timedOut": false,
+    "error": null
+  },
+  "rawCapture": {
+    "stdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_STDOUT.txt",
+      "bytes": 19177,
+      "sha256": "fa47c893b39e92a2e1fd0e6b5ca813faeb1995ee1b1e5eb293fe1194be11de0d"
+    },
+    "stderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_STDERR.txt",
+      "bytes": 78354,
+      "sha256": "0372cd4d97c469f2276bde3b75b3737fcefba2adc19de2a7af691a76d4ec0e4f"
+    },
+    "childCapture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+      "bytes": 625412,
+      "sha256": "c66638561fa68804d690a3212fe484eb871b7b9870e03a47d46fe0a128894bb9"
+    },
+    "childProcesses": 228
+  },
+  "syntax": {
+    "run": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "suites": {
+    "run": 218,
+    "passed": 183,
+    "failed": 35
+  },
+  "groups": {
+    "passed": 5396,
+    "failed": 56,
+    "total": 5452
+  },
+  "baselineComparison": {
+    "sealed": {
+      "syntax": {
+        "run": 10,
+        "passed": 10,
+        "failed": 0
+      },
+      "suites": {
+        "run": 217,
+        "passed": 197,
+        "failed": 20
+      },
+      "groups": {
+        "passed": 5429,
+        "failed": 22,
+        "total": 5451
+      }
+    },
+    "current": {
+      "syntax": {
+        "run": 10,
+        "passed": 10,
+        "failed": 0
+      },
+      "suites": {
+        "run": 218,
+        "passed": 183,
+        "failed": 35
+      },
+      "groups": {
+        "passed": 5396,
+        "failed": 56,
+        "total": 5452
+      }
+    },
+    "missingBaselineSuites": [],
+    "additivePassingSuites": [
+      {
+        "suite": "tests/health-endpoint.test.mjs",
+        "groups": {
+          "passed": 1,
+          "failed": 0,
+          "reportedAssertionsAndChecks": null,
+          "parser": "simple_pass_fail_lines"
+        },
+        "exitCode": 0
+      }
+    ],
+    "allAddedSuitesPass": true,
+    "exactHistoricalFailureMultiset": true,
+    "inheritedExcludedResidueFailures": [
+      {
+        "suite": "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
+        "label": "current patch diff allows only authorized clarification live wiring and protected production files remain blocked",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 560,
+          "sha256": "3ad88ab05e88b09a34909928db5ca58a2622121d98f8d1041e156d792ce23da9"
+        }
+      },
+      {
+        "suite": "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+        "label": "current patch diff allows only authorized flagged live wiring and protected surfaces remain blocked",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 532,
+          "sha256": "9c691bfac0fb1d95fbf971951ea1f4e901868926018a45c4a36f85758fb06f3f"
+        }
+      },
+      {
+        "suite": "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
+        "label": "current patch diff allows only authorized flagged live wiring and deferred surfaces remain protected",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 572,
+          "sha256": "d8d816dc5ee5116f58f2b9ac01f6a46c233e59b4d6b29ee0668e9e4200c94675"
+        }
+      },
+      {
+        "suite": "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
+        "label": "current patch diff allows only authorized flagged live wiring and deferred files remain protected",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 560,
+          "sha256": "0eade6ed220a2d086bd86155b36abcb2606fc56c6c6cbcc9f6ee458f8f71df3f"
+        }
+      },
+      {
+        "suite": "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
+        "label": "current patch diff allows only authorized clarification live wiring and protected production files remain blocked",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 563,
+          "sha256": "fcaac0af2caabf7327c58e4fb7d76543df8397e5d3b1c18d1c20790e15d2c10f"
+        }
+      },
+      {
+        "suite": "tests/patch-08j-memory-governance-gate-1.test.mjs",
+        "label": "no protected runtime, DB, migration, frontend, package, or dependency files are changed",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 165,
+          "sha256": "44730a24eef7b91970a7e1de64c956ebeb487dbc8cdc4464380f93a0616dbef7"
+        }
+      },
+      {
+        "suite": "tests/patch-08l-phase-8-final-closure-gate-1.test.mjs",
+        "label": "no protected runtime files are changed or imported into memory scaffolds",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 150,
+          "sha256": "256e77ff07d158e60453e9439801e65bdca396106855edaef27fe22d548bc4ec"
+        }
+      },
+      {
+        "suite": "tests/patch-08s-followup-index-secret-query-removal-1.test.mjs",
+        "label": "source inspection: /health minimal helper still referenced",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [
+          "/health",
+          "buildPublicHealth",
+          "health minimal helper"
+        ],
+        "evidence": {
+          "bytes": 111,
+          "sha256": "eb49b8bbd9359247b378e6ccef616a111090d9eef05982d9a0a2167d041684a1"
+        }
+      },
+      {
+        "suite": "tests/patch-08s-security-route-inventory-1.test.mjs",
+        "label": "static guard checks: public routes have no route-level guard; admin routes use allowAuthenticatedOrIndexSecret",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [],
+        "exactCausalMarkers": [
+          "/health",
+          "GET /health"
+        ],
+        "evidence": {
+          "bytes": 152,
+          "sha256": "34c5e299fe397bca93b4252b95809f7875ab73e03294c0f97af54e7c62efa539"
+        }
+      },
+      {
+        "suite": "tests/phase-09-gate-closure-1.test.mjs",
+        "label": "git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 189,
+          "sha256": "4a3d6902d02dd0f7241f22bb5de912600fed0d015c3ddc4aca957b49dd6ead66"
+        }
+      },
+      {
+        "suite": "tests/phase-09-gate-closure-2.test.mjs",
+        "label": "no runtime, production, environment, or package file is modified",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 137,
+          "sha256": "9857bc7dc88112fb31d2bda46a1dd2a6001393cc81f70deef053168db203713a"
+        }
+      },
+      {
+        "suite": "tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09x-controlled-loa-answer-runtime-wiring-design-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09y-controlled-loa-answer-runtime-wiring-scaffold-1.test.mjs",
+        "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 191,
+          "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+        }
+      },
+      {
+        "suite": "tests/phase-09z-controlled-loa-answer-ask-wiring-gate-1.test.mjs",
+        "label": "git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 189,
+          "sha256": "4a3d6902d02dd0f7241f22bb5de912600fed0d015c3ddc4aca957b49dd6ead66"
+        }
+      },
+      {
+        "suite": "tests/phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs",
+        "label": "existing auth/route/server behavior is unmodified; no route/server/package/env/DB/frontend/MCP files changed",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js",
+          "server.js",
+          "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 565,
+          "sha256": "d1f4299a2ebe42ebfa65ebdb058ea790f7618fd0ff2979129e01a161599d3275"
+        }
+      },
+      {
+        "suite": "tests/phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs",
+        "label": "git diff confirms only allowed files plus the single approved pipeline.js hook changed",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 167,
+          "sha256": "53d20ab1c42f5f595f34e5347e1a994252cb40c83c8313b1e85ee259a452dae3"
+        }
+      },
+      {
+        "suite": "tests/phase-09zc-controlled-loa-answer-production-activation-gate-1.test.mjs",
+        "label": "no runtime code is modified by this patch (diff scope check)",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 115,
+          "sha256": "9b5e58f35ea9922ab8353d2e74517ca2bd022d7f9e5b0f96cd5cd59bebe4a363"
+        }
+      },
+      {
+        "suite": "tests/phase-09zd-controlled-loa-answer-production-smoke-1.test.mjs",
+        "label": "no runtime, auth, deployment, or environment file is modified by this patch",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 122,
+          "sha256": "5edfc4e3f4434952c5a6cb1da371321d137b02cd1faa643f9a024d1b511e9bd6"
+        }
+      },
+      {
+        "suite": "tests/phase-09ze-controlled-loa-domain-boundary-remediation-1.test.mjs",
+        "label": "no disallowed runtime, package, env, database, frontend, or production files changed",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 143,
+          "sha256": "81e80840f56f7d545a90590b95104a485d1581c04135986112afa60853797f53"
+        }
+      },
+      {
+        "suite": "tests/phase-09zh-controlled-loa-live-path-remediation-1.test.mjs",
+        "label": "no disallowed runtime, package, env, database, frontend, or production files changed",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 143,
+          "sha256": "81e80840f56f7d545a90590b95104a485d1581c04135986112afa60853797f53"
+        }
+      },
+      {
+        "suite": "tests/phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs",
+        "label": "auth, routes, and server files are unchanged",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 72,
+          "sha256": "eb2499951896c831ec4ec42b61ace1115267794db1c4a4234bded9b9cad4d153"
+        }
+      },
+      {
+        "suite": "tests/phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs",
+        "label": "no disallowed runtime, package, env, database, frontend, or production files changed",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 143,
+          "sha256": "81e80840f56f7d545a90590b95104a485d1581c04135986112afa60853797f53"
+        }
+      },
+      {
+        "suite": "tests/phase-09zj-context-free-outcome-query-safety-contract-clarification-1.test.mjs",
+        "label": "no runtime, auth, deployment, or environment file is modified by this patch",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "security/public-health.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 143,
+          "sha256": "27cdc5d5683a8b080261311ada826c6e2d89ab34de540e72d5c1e307ca4e451a"
+        }
+      },
+      {
+        "suite": "tests/phase-10a-trust-limitation-authority-confidence-release-gate-1.test.mjs",
+        "label": "no runtime or frontend remediation was implemented by this patch (diff scope check)",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 128,
+          "sha256": "07d5f8550338078a42bf5ae4179b2189d3af47512f6bec510cd28d2a3b7ffd1a"
+        }
+      },
+      {
+        "suite": "tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs",
+        "label": "diff scope: no frontend/timeout/route-ordering/conflict-engine/feature-flag/production runtime file was touched, and this task's own files are exactly the PHASE-10A1 set",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 214,
+          "sha256": "d7fe0710c961b64c771c9ff2f1cb268c78b5dfe36f5e93ecaf3ef6c64c78da74"
+        }
+      },
+      {
+        "suite": "tests/phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs",
+        "label": "diff scope: only PHASE-10A1-R1's own files and the two already-authorized PHASE-10A1 files were touched",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 148,
+          "sha256": "ca0f9ed6f7d9bbd2a125967b521c682d83b860559753d57e50a16b821e921cea"
+        }
+      },
+      {
+        "suite": "tests/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs",
+        "label": "diff scope: only PHASE-10A2's minimal runtime files and its own artifacts were touched",
+        "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+        "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+        "exactCausalPaths": [
+          "server.js"
+        ],
+        "exactCausalMarkers": [],
+        "evidence": {
+          "bytes": 131,
+          "sha256": "e347f50a7680ee307637ec6f6f9ca92cabc40a6d79d8b45ab29b565d2b4320bc"
+        }
+      }
+    ],
+    "allNonHistoricalFailuresAttributedToInheritedExcludedResidue": true
+  },
+  "classificationCounts": {
+    "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE": 34,
+    "STATE": 21,
+    "SCOPE": 1
+  },
+  "exactHistoricalFailureMultiset": true,
+  "nominalNonzeroExitPreserved": true,
+  "runtimeBehaviorFailures": 0,
+  "allowlistExpanded": false,
+  "inheritedExcludedResidueFailures": [
+    {
+      "suite": "tests/patch-07b-audit-risk-final-gate-1-workstream-final-gate.test.mjs",
+      "label": "current patch diff allows only authorized clarification live wiring and protected production files remain blocked",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 560,
+        "sha256": "3ad88ab05e88b09a34909928db5ca58a2622121d98f8d1041e156d792ce23da9"
+      }
+    },
+    {
+      "suite": "tests/patch-07b-clarification-final-gate-1-track-closure.test.mjs",
+      "label": "current patch diff allows only authorized flagged live wiring and protected surfaces remain blocked",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 532,
+        "sha256": "9c691bfac0fb1d95fbf971951ea1f4e901868926018a45c4a36f85758fb06f3f"
+      }
+    },
+    {
+      "suite": "tests/patch-07b-clarification-live-wiring-scaffold-1-contract-fixture.test.mjs",
+      "label": "current patch diff allows only authorized flagged live wiring and deferred surfaces remain protected",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 572,
+        "sha256": "d8d816dc5ee5116f58f2b9ac01f6a46c233e59b4d6b29ee0668e9e4200c94675"
+      }
+    },
+    {
+      "suite": "tests/patch-07b-clarification-route-scaffold-1-integration-fixture.test.mjs",
+      "label": "current patch diff allows only authorized flagged live wiring and deferred files remain protected",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 560,
+        "sha256": "0eade6ed220a2d086bd86155b36abcb2606fc56c6c6cbcc9f6ee458f8f71df3f"
+      }
+    },
+    {
+      "suite": "tests/patch-07b-final-gate-1-analytical-adversarial-final-gate.test.mjs",
+      "label": "current patch diff allows only authorized clarification live wiring and protected production files remain blocked",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 563,
+        "sha256": "fcaac0af2caabf7327c58e4fb7d76543df8397e5d3b1c18d1c20790e15d2c10f"
+      }
+    },
+    {
+      "suite": "tests/patch-08j-memory-governance-gate-1.test.mjs",
+      "label": "no protected runtime, DB, migration, frontend, package, or dependency files are changed",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 165,
+        "sha256": "44730a24eef7b91970a7e1de64c956ebeb487dbc8cdc4464380f93a0616dbef7"
+      }
+    },
+    {
+      "suite": "tests/patch-08l-phase-8-final-closure-gate-1.test.mjs",
+      "label": "no protected runtime files are changed or imported into memory scaffolds",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 150,
+        "sha256": "256e77ff07d158e60453e9439801e65bdca396106855edaef27fe22d548bc4ec"
+      }
+    },
+    {
+      "suite": "tests/patch-08s-followup-index-secret-query-removal-1.test.mjs",
+      "label": "source inspection: /health minimal helper still referenced",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [
+        "/health",
+        "buildPublicHealth",
+        "health minimal helper"
+      ],
+      "evidence": {
+        "bytes": 111,
+        "sha256": "eb49b8bbd9359247b378e6ccef616a111090d9eef05982d9a0a2167d041684a1"
+      }
+    },
+    {
+      "suite": "tests/patch-08s-security-route-inventory-1.test.mjs",
+      "label": "static guard checks: public routes have no route-level guard; admin routes use allowAuthenticatedOrIndexSecret",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [],
+      "exactCausalMarkers": [
+        "/health",
+        "GET /health"
+      ],
+      "evidence": {
+        "bytes": 152,
+        "sha256": "34c5e299fe397bca93b4252b95809f7875ab73e03294c0f97af54e7c62efa539"
+      }
+    },
+    {
+      "suite": "tests/phase-09-gate-closure-1.test.mjs",
+      "label": "git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 189,
+        "sha256": "4a3d6902d02dd0f7241f22bb5de912600fed0d015c3ddc4aca957b49dd6ead66"
+      }
+    },
+    {
+      "suite": "tests/phase-09-gate-closure-2.test.mjs",
+      "label": "no runtime, production, environment, or package file is modified",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 137,
+        "sha256": "9857bc7dc88112fb31d2bda46a1dd2a6001393cc81f70deef053168db203713a"
+      }
+    },
+    {
+      "suite": "tests/phase-09l-authority-safe-procedural-fallback-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09m-bir-notice-loa-triage-intent-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09n-pan-fan-fld-protest-workflow-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09o-bir-audit-defense-matrix-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09p-bir-document-compliance-transmittal-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09q-bir-authority-corpus-research-design-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09s-2026-bir-audit-baseline-integration-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09x-controlled-loa-answer-runtime-wiring-design-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09y-controlled-loa-answer-runtime-wiring-scaffold-1.test.mjs",
+      "label": "git diff confirms only this patch's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 191,
+        "sha256": "a310c6c97f308787d919528657689e8d24d8e6e3d508edea31fc436da96d7546"
+      }
+    },
+    {
+      "suite": "tests/phase-09z-controlled-loa-answer-ask-wiring-gate-1.test.mjs",
+      "label": "git diff confirms only this gate's allowed files changed, with no runtime/package/env/DB/frontend/MCP changes",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 189,
+        "sha256": "4a3d6902d02dd0f7241f22bb5de912600fed0d015c3ddc4aca957b49dd6ead66"
+      }
+    },
+    {
+      "suite": "tests/phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs",
+      "label": "existing auth/route/server behavior is unmodified; no route/server/package/env/DB/frontend/MCP files changed",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js",
+        "server.js",
+        "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 565,
+        "sha256": "d1f4299a2ebe42ebfa65ebdb058ea790f7618fd0ff2979129e01a161599d3275"
+      }
+    },
+    {
+      "suite": "tests/phase-09za-controlled-loa-answer-ask-wiring-implementation-1.test.mjs",
+      "label": "git diff confirms only allowed files plus the single approved pipeline.js hook changed",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 167,
+        "sha256": "53d20ab1c42f5f595f34e5347e1a994252cb40c83c8313b1e85ee259a452dae3"
+      }
+    },
+    {
+      "suite": "tests/phase-09zc-controlled-loa-answer-production-activation-gate-1.test.mjs",
+      "label": "no runtime code is modified by this patch (diff scope check)",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 115,
+        "sha256": "9b5e58f35ea9922ab8353d2e74517ca2bd022d7f9e5b0f96cd5cd59bebe4a363"
+      }
+    },
+    {
+      "suite": "tests/phase-09zd-controlled-loa-answer-production-smoke-1.test.mjs",
+      "label": "no runtime, auth, deployment, or environment file is modified by this patch",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 122,
+        "sha256": "5edfc4e3f4434952c5a6cb1da371321d137b02cd1faa643f9a024d1b511e9bd6"
+      }
+    },
+    {
+      "suite": "tests/phase-09ze-controlled-loa-domain-boundary-remediation-1.test.mjs",
+      "label": "no disallowed runtime, package, env, database, frontend, or production files changed",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 143,
+        "sha256": "81e80840f56f7d545a90590b95104a485d1581c04135986112afa60853797f53"
+      }
+    },
+    {
+      "suite": "tests/phase-09zh-controlled-loa-live-path-remediation-1.test.mjs",
+      "label": "no disallowed runtime, package, env, database, frontend, or production files changed",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 143,
+        "sha256": "81e80840f56f7d545a90590b95104a485d1581c04135986112afa60853797f53"
+      }
+    },
+    {
+      "suite": "tests/phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs",
+      "label": "auth, routes, and server files are unchanged",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 72,
+        "sha256": "eb2499951896c831ec4ec42b61ace1115267794db1c4a4234bded9b9cad4d153"
+      }
+    },
+    {
+      "suite": "tests/phase-09zi-controlled-loa-unsafe-legal-wording-remediation-1.test.mjs",
+      "label": "no disallowed runtime, package, env, database, frontend, or production files changed",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 143,
+        "sha256": "81e80840f56f7d545a90590b95104a485d1581c04135986112afa60853797f53"
+      }
+    },
+    {
+      "suite": "tests/phase-09zj-context-free-outcome-query-safety-contract-clarification-1.test.mjs",
+      "label": "no runtime, auth, deployment, or environment file is modified by this patch",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "security/public-health.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 143,
+        "sha256": "27cdc5d5683a8b080261311ada826c6e2d89ab34de540e72d5c1e307ca4e451a"
+      }
+    },
+    {
+      "suite": "tests/phase-10a-trust-limitation-authority-confidence-release-gate-1.test.mjs",
+      "label": "no runtime or frontend remediation was implemented by this patch (diff scope check)",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 128,
+        "sha256": "07d5f8550338078a42bf5ae4179b2189d3af47512f6bec510cd28d2a3b7ffd1a"
+      }
+    },
+    {
+      "suite": "tests/phase-10a1-canonical-trust-contract-and-api-forwarding-remediation-1.test.mjs",
+      "label": "diff scope: no frontend/timeout/route-ordering/conflict-engine/feature-flag/production runtime file was touched, and this task's own files are exactly the PHASE-10A1 set",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 214,
+        "sha256": "d7fe0710c961b64c771c9ff2f1cb268c78b5dfe36f5e93ecaf3ef6c64c78da74"
+      }
+    },
+    {
+      "suite": "tests/phase-10a1-r1-conflict-trust-contract-correction-1.test.mjs",
+      "label": "diff scope: only PHASE-10A1-R1's own files and the two already-authorized PHASE-10A1 files were touched",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 148,
+        "sha256": "ca0f9ed6f7d9bbd2a125967b521c682d83b860559753d57e50a16b821e921cea"
+      }
+    },
+    {
+      "suite": "tests/phase-10a2-restricted-legal-conclusion-timeout-gate-remediation-1.test.mjs",
+      "label": "diff scope: only PHASE-10A2's minimal runtime files and its own artifacts were touched",
+      "classification": "B2_B3_INHERITED_EXCLUDED_RESIDUE_SCOPE",
+      "controllingDisposition": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "exactCausalPaths": [
+        "server.js"
+      ],
+      "exactCausalMarkers": [],
+      "evidence": {
+        "bytes": 131,
+        "sha256": "e347f50a7680ee307637ec6f6f9ca92cabc40a6d79d8b45ab29b565d2b4320bc"
+      }
+    }
+  ],
+  "inheritedExcludedResidueDisposition": "The additional scope-only failures are exactly and deterministically caused by the three pre-existing deferred /health paths governed as B2/B3 OPEN_UNCHANGED_NONBLOCKING_TO_C38. They are excluded residue, not an allowlist expansion.",
+  "adjudication": "The nominal nonzero exit is accepted only because the exact sealed C37 failure multiset remains: 21 STATE and one already-allowlisted SCOPE failure. All 34 additional failure groups are exact B2/B3 deferred-/health scope assertions, with zero C38/runtime-behavior failures, no missing baseline suites, no allowlist expansion, and 1 additive passing suite(s).",
+  "pass": true
+}

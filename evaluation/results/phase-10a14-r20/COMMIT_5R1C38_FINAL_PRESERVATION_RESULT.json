@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "generatedUtc": "2026-08-08T05:11:17.701Z",
+  "classification": "C38_FINAL_PRESERVATION_PASS_ORACLE_ONLY_ZERO_RUNTIME_CANDIDATE",
+  "inputs": {
+    "c37ActiveBase": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ACTIVE_BASE_IDENTITY.json",
+      "bytes": 3853,
+      "sha256": "00976a12874308f7b4511b1350e02fc239e66247a3316113d8d7d20ace419c52",
+      "expectedSha256": "00976a12874308f7b4511b1350e02fc239e66247a3316113d8d7d20ace419c52",
+      "exactMatch": true
+    },
+    "c37Preservation": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json",
+      "bytes": 3993,
+      "sha256": "c0bc4d8028bd41e08781eedc1439eb33a7c9af2341663674ba146de315db6c90",
+      "expectedSha256": "c0bc4d8028bd41e08781eedc1439eb33a7c9af2341663674ba146de315db6c90",
+      "exactMatch": true
+    }
+  },
+  "proofs": {
+    "selectedC34ReasonRuntime": {
+      "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot",
+      "identity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 183191,
+          "rawSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+          "normalizedLfSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 12192,
+          "rawSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 65451,
+          "rawSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+      },
+      "expectedCompositeSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775"
+    },
+    "liveTrackedReasonRuntime": {
+      "path": "services",
+      "identity": {
+        "services/philippine-tax-intent-analyzer.js": {
+          "bytes": 31045,
+          "rawSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308",
+          "normalizedLfSha256": "8c984f17a83e94b7e4eed5401070b3b40097ac5bcb914caf53f1d33f0ea6b308"
+        },
+        "services/philippine-tax-domain-boundary.js": {
+          "bytes": 11976,
+          "rawSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+          "normalizedLfSha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039"
+        },
+        "services/philippine-tax-boundary-patterns.js": {
+          "bytes": 64424,
+          "rawSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+          "normalizedLfSha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa"
+        },
+        "servicesTreeDigest": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+      },
+      "expectedCompositeSha256": "7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201"
+    },
+    "c35Runtime": {
+      "identity": {
+        "algorithm": "For each POSIX path in lexical order: path + NUL + raw-byte-length + NUL + SHA256(raw bytes) + LF; SHA256 the UTF-8 concatenation.",
+        "components": [
+          {
+            "path": "ask-handler.js",
+            "bytes": 147494,
+            "sha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602"
+          },
+          {
+            "path": "conflict-engine.js",
+            "bytes": 40905,
+            "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
+          },
+          {
+            "path": "services/answer-support-evidence.js",
+            "bytes": 9507,
+            "sha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37"
+          },
+          {
+            "path": "services/answer-support-validator.js",
+            "bytes": 142463,
+            "sha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e"
+          }
+        ],
+        "compositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+      },
+      "expectedCompositeSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c"
+    },
+    "attemptState": {
+      "registry": {
+        "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+        "bytes": 718108,
+        "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073"
+      },
+      "c34Wal": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson",
+        "bytes": 12143,
+        "sha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2"
+      },
+      "c35Wal": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson",
+        "bytes": 2165,
+        "sha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f"
+      },
+      "c38WalExists": false,
+      "c38AttemptDirectories": [],
+      "candidatesAllocated": 0
+    },
+    "runtimeChanged": false,
+    "registryOrWalChanged": false,
+    "pass": true
+  },
+  "prohibitedOperations": {
+    "runtimeCandidate": false,
+    "registryMutation": false,
+    "walMutation": false,
+    "deployment": false,
+    "reindex": false,
+    "migration": false,
+    "phase10B": false
+  },
+  "pass": true
+}

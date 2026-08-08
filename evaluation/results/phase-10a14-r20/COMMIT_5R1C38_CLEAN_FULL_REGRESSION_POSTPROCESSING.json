@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "classification": "C38_FULL_REGRESSION_RAW_CAPTURE_POSTPROCESSING",
+  "generatedUtc": "2026-08-08T05:16:39.000Z",
+  "inputs": {
+    "c37Baseline": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLEAN_FULL_REGRESSION.json",
+      "bytes": 8949,
+      "sha256": "43bfec0d2227ba6d8572190340a38967ded5b79e935a6df15c77ccbd57c755b0"
+    },
+    "rawStdout": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_STDOUT.txt",
+      "bytes": 19177,
+      "sha256": "fa47c893b39e92a2e1fd0e6b5ca813faeb1995ee1b1e5eb293fe1194be11de0d"
+    },
+    "rawStderr": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_STDERR.txt",
+      "bytes": 78354,
+      "sha256": "0372cd4d97c469f2276bde3b75b3737fcefba2adc19de2a7af691a76d4ec0e4f"
+    },
+    "childCapture": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION_CHILD_CAPTURE.ndjson",
+      "bytes": 625412,
+      "sha256": "c66638561fa68804d690a3212fe484eb871b7b9870e03a47d46fe0a128894bb9"
+    }
+  },
+  "regressionInvocations": 1,
+  "rawCaptureMutated": false,
+  "childrenParsed": 228,
+  "syntaxChildren": 10,
+  "suiteChildren": 218,
+  "exactHistoricalFailureMultiset": true,
+  "zeroNewRuntimeBehaviorFailures": true,
+  "noAllowlistExpansion": true,
+  "inheritedExcludedResidueFailureCount": 34,
+  "inheritedExcludedResidueDisposition": "B2/B3 OPEN_UNCHANGED_NONBLOCKING_TO_C38; separately classified, not added to the historical allowlist",
+  "additivePassingSuites": [
+    "tests/health-endpoint.test.mjs"
+  ],
+  "missingBaselineSuites": [],
+  "regression": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_CLEAN_FULL_REGRESSION.json",
+    "bytes": 72562,
+    "sha256": "1bb7e95dad0bc3fa3c01bf3d932146e83816e3795694172531c44702d1142f90"
+  },
+  "pass": true
+}

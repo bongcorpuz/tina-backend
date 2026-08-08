@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "taskId": "PHASE-10A14-R20",
+  "workUnit": "C38",
+  "classification": "C38_CONTROLLING_INPUT_HASHES_EXACT_MATCH",
+  "generatedAtUtc": "2026-08-08T04:58:27.685Z",
+  "algorithm": "SHA-256 over exact raw file bytes unless an entry explicitly declares a composite algorithm",
+  "provenanceGroups": {
+    "ORACLE_V1_FREEZE": [
+      "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_FREEZE.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_4_EVIDENCE_MANIFEST.sha256"
+    ],
+    "ORACLE_R1_LINEAGE": [
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/R20_DEVELOPMENT_ORACLE_R1_FREEZE.json",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/R20_DEVELOPMENT_ORACLE_R1_INDEX.json",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/R20_DEVELOPMENT_ORACLE_R1_SUPERSESSION_RECORD.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_4R1_EVIDENCE_MANIFEST.sha256"
+    ],
+    "ORACLE_R2_LINEAGE": [
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r2/R20_DEVELOPMENT_ORACLE_R2_FREEZE.json",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r2/R20_DEVELOPMENT_ORACLE_R2_INDEX.json",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r2/R20_DEVELOPMENT_ORACLE_R2_SUPERSESSION_RECORD.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_4R2_EVIDENCE_MANIFEST.sha256"
+    ],
+    "ORACLE_R3_LINEAGE": [
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_R3_FREEZE.json",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_R3_INDEX.json",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_R3_SUPERSESSION_RECORD.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_4R3_EVIDENCE_MANIFEST.sha256"
+    ],
+    "C37_SEALED_SEMANTIC_INPUTS": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256"
+    ],
+    "C37_REASON_CONTRACT_MD_LOCK": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_71_PRE_EXECUTION_UNTRACKED_INVENTORY.sha256"
+    ],
+    "C37_RUNTIME_IDENTITY": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ACTIVE_BASE_IDENTITY.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json"
+    ],
+    "REGISTRY_WAL_CONTINUITY": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_63_CONTINUATION_PREFLIGHT.json"
+    ],
+    "CHECKPOINT_85_GOVERNANCE": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_FINAL_EVIDENCE.sha256"
+    ],
+    "OWNER_AND_PLANNER": [
+      "C:/Users/USER/.codex/attachments/92f8b055-2854-44e5-94d6-acdb0023aa13/pasted-text.txt",
+      "immutable C38 Planner handoff resolved under owner hierarchy"
+    ]
+  },
+  "fileLocks": [
+    { "label": "V1 frozen oracle", "path": "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_FROZEN.json", "expectedSha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263", "observedSha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263", "provenanceGroup": "ORACLE_V1_FREEZE", "match": true },
+    { "label": "R1 frozen oracle", "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/R20_DEVELOPMENT_ORACLE_FROZEN_R1.json", "expectedSha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f", "observedSha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f", "provenanceGroup": "ORACLE_R1_LINEAGE", "match": true },
+    { "label": "R2 frozen oracle", "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r2/R20_DEVELOPMENT_ORACLE_FROZEN_R2.json", "expectedSha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd", "observedSha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd", "provenanceGroup": "ORACLE_R2_LINEAGE", "match": true },
+    { "label": "R3 frozen oracle", "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json", "expectedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54", "observedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54", "provenanceGroup": "ORACLE_R3_LINEAGE", "match": true },
+    { "label": "compositional source", "path": "evaluation/oracles/phase-10a14-r20/R20_NEW_COMPOSITIONAL_SOURCE.json", "expectedSha256": "cb9100c3babd241d2d1a1681eecac8341078d66d5290d69b4adb26a2246dcfcb", "observedSha256": "cb9100c3babd241d2d1a1681eecac8341078d66d5290d69b4adb26a2246dcfcb", "provenanceGroup": "ORACLE_V1_FREEZE", "match": true },
+    { "label": "C37 reason contract JSON", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.json", "expectedSha256": "41d185be42aacca00fdc67cd13b075ef1348cf0c46c12b157c0d9fc8ad72ca93", "observedSha256": "41d185be42aacca00fdc67cd13b075ef1348cf0c46c12b157c0d9fc8ad72ca93", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 reason contract Markdown", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.md", "expectedSha256": "fed6d189b2548fbf3b6b2f07a8e4fddf6ec9b2a544191116d5df9cfb1d8b8570", "observedSha256": "fed6d189b2548fbf3b6b2f07a8e4fddf6ec9b2a544191116d5df9cfb1d8b8570", "provenanceGroup": "C37_REASON_CONTRACT_MD_LOCK", "match": true },
+    { "label": "C37 145-row adjudication", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json", "expectedSha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d", "observedSha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 cluster disposition matrix", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CLUSTER_DISPOSITION_MATRIX.json", "expectedSha256": "a75afb1bc5f75b2cd7310dd064b3bb078913b94017025c0e90818d174d1990d0", "observedSha256": "a75afb1bc5f75b2cd7310dd064b3bb078913b94017025c0e90818d174d1990d0", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 candidate necessity", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json", "expectedSha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983", "observedSha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final reason metrics", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_REASON_METRICS.json", "expectedSha256": "2d8bed8906119579fbe5f4d7680aff4ce389ff92986caf8ed052bb82c47236f8", "observedSha256": "2d8bed8906119579fbe5f4d7680aff4ce389ff92986caf8ed052bb82c47236f8", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final residual disposition", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_RESIDUAL_DISPOSITION.json", "expectedSha256": "c1d91cd7ba98473ebadc0d8f7dd525dd33b53999b34542b72e1acb01cd42b0ae", "observedSha256": "c1d91cd7ba98473ebadc0d8f7dd525dd33b53999b34542b72e1acb01cd42b0ae", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final accepted rule chain", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ACCEPTED_RULE_CHAIN.json", "expectedSha256": "da89559d8e7b48e42cf17819d7b0a509c6741c4c033bca88adb265543dfe8c2b", "observedSha256": "da89559d8e7b48e42cf17819d7b0a509c6741c4c033bca88adb265543dfe8c2b", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final active base identity", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ACTIVE_BASE_IDENTITY.json", "expectedSha256": "00976a12874308f7b4511b1350e02fc239e66247a3316113d8d7d20ace419c52", "observedSha256": "00976a12874308f7b4511b1350e02fc239e66247a3316113d8d7d20ace419c52", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final attempt ledger", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_ATTEMPT_LEDGER.json", "expectedSha256": "78a27ee0d5dcbe877db73a0e23f10f82ac3d4c69f3621f6471ab21f1f46a13ca", "observedSha256": "78a27ee0d5dcbe877db73a0e23f10f82ac3d4c69f3621f6471ab21f1f46a13ca", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final frozen gate", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FROZEN_GATE_RESULT.json", "expectedSha256": "5f2ab27d0b4f838729d5fd74010fc1cc272fa61d791dacb0cf9fe60214d12dff", "observedSha256": "5f2ab27d0b4f838729d5fd74010fc1cc272fa61d791dacb0cf9fe60214d12dff", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final preservation", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_PRESERVATION_RESULT.json", "expectedSha256": "c0bc4d8028bd41e08781eedc1439eb33a7c9af2341663674ba146de315db6c90", "observedSha256": "c0bc4d8028bd41e08781eedc1439eb33a7c9af2341663674ba146de315db6c90", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 final replay", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_REPLAY_RESULT.json", "expectedSha256": "1b2337e1d11ae2e7eefbf9e664bc8c9b1831acb5f214301a0f7dca75cbbaf68c", "observedSha256": "1b2337e1d11ae2e7eefbf9e664bc8c9b1831acb5f214301a0f7dca75cbbaf68c", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C37 full regression adjudication", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_FULL_REGRESSION_ADJUDICATION.json", "expectedSha256": "fd58900dd03a66bc02f426a44ed741a97ad00875abb7ad9e4ed5ad70d5edc8c9", "observedSha256": "fd58900dd03a66bc02f426a44ed741a97ad00875abb7ad9e4ed5ad70d5edc8c9", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C36 candidate hypothesis ledger", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_CANDIDATE_HYPOTHESIS_LEDGER.json", "expectedSha256": "a4a2bb68c9c0cd5421a9a27674a88ca5243d43297b03a6bc9a2ae0f09a559481", "observedSha256": "a4a2bb68c9c0cd5421a9a27674a88ca5243d43297b03a6bc9a2ae0f09a559481", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "C36 residual cluster analysis", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C36_REASON_RESIDUAL_CLUSTER_ANALYSIS.json", "expectedSha256": "f4a4f40dbad6c278bb75ff3189309b41a9fb053a78b05f2d1a5cf2bb045b6510", "observedSha256": "f4a4f40dbad6c278bb75ff3189309b41a9fb053a78b05f2d1a5cf2bb045b6510", "provenanceGroup": "C37_SEALED_SEMANTIC_INPUTS", "match": true },
+    { "label": "selected C34 analyzer snapshot", "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-intent-analyzer.js", "logicalPath": "services/philippine-tax-intent-analyzer.js", "expectedSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456", "observedSha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "selected C34 domain-boundary snapshot", "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-domain-boundary.js", "logicalPath": "services/philippine-tax-domain-boundary.js", "expectedSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9", "observedSha256": "145954db84c07acb029d67082419a8ff2885201d93de65c313f08241c13cebb9", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "selected C34 boundary-patterns snapshot", "path": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-boundary-patterns.js", "logicalPath": "services/philippine-tax-boundary-patterns.js", "expectedSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465", "observedSha256": "5d427c65ed4b35776fe9050ce918f9d1f9b20f3329cfa5899ff9b7285f413465", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "C35 ask handler", "path": "ask-handler.js", "expectedSha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602", "observedSha256": "c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "C35 conflict engine", "path": "conflict-engine.js", "expectedSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d", "observedSha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "C35 answer-support evidence", "path": "services/answer-support-evidence.js", "expectedSha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37", "observedSha256": "ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "C35 answer-support validator", "path": "services/answer-support-validator.js", "expectedSha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e", "observedSha256": "885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e", "provenanceGroup": "C37_RUNTIME_IDENTITY", "match": true },
+    { "label": "canonical attempt registry", "path": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json", "expectedSha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073", "observedSha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073", "provenanceGroup": "REGISTRY_WAL_CONTINUITY", "match": true },
+    { "label": "C34 allocation WAL", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C34_ATTEMPT_ALLOCATION_WAL.ndjson", "expectedSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2", "observedSha256": "2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2", "provenanceGroup": "REGISTRY_WAL_CONTINUITY", "match": true },
+    { "label": "C35 allocation WAL", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_ATTEMPT_ALLOCATION_WAL.ndjson", "expectedSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f", "observedSha256": "d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f", "provenanceGroup": "REGISTRY_WAL_CONTINUITY", "match": true },
+    { "label": "C38 specification register", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_SPECIFICATION_REGISTER.json", "expectedSha256": "36ec05d3f7c88c261db92851d798a78c3e8cc1cc014bf73c5e52acbb5c82eebe", "observedSha256": "36ec05d3f7c88c261db92851d798a78c3e8cc1cc014bf73c5e52acbb5c82eebe", "provenanceGroup": "CHECKPOINT_85_GOVERNANCE", "match": true },
+    { "label": "C38 readiness adjudication", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_READINESS_ADJUDICATION.json", "expectedSha256": "cb95fd0caaf37925d2d4503e515b28bde69dcc5dec3d1442c149c9f72b9ac94b", "observedSha256": "cb95fd0caaf37925d2d4503e515b28bde69dcc5dec3d1442c149c9f72b9ac94b", "provenanceGroup": "CHECKPOINT_85_GOVERNANCE", "match": true },
+    { "label": "Checkpoint 85 recovery state", "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_RECOVERY_CHECKPOINT_85_phase_transition.json", "expectedSha256": "77e961ddb2a3186a0b6063beedc5a516522178b9e6f79216cad01789b299203e", "observedSha256": "77e961ddb2a3186a0b6063beedc5a516522178b9e6f79216cad01789b299203e", "provenanceGroup": "CHECKPOINT_85_GOVERNANCE", "match": true },
+    { "label": "Roadmap v9", "path": "knowledge/TINA_Updated_Controlling_Roadmap_v9_Research_First_V1_2026.md", "expectedSha256": "3a829e69216addfdcad0f45e975475c3b4b006bfc2481e6745157585bfeeec54", "observedSha256": "3a829e69216addfdcad0f45e975475c3b4b006bfc2481e6745157585bfeeec54", "provenanceGroup": "OWNER_AND_PLANNER", "match": true },
+    { "label": "CURRENT_STATE", "path": "knowledge/CURRENT_STATE.md", "expectedSha256": "f6a41be89960dfb34d2945b7bc3f9a3c0399bddefb9366233b8922d889676390", "observedSha256": "f6a41be89960dfb34d2945b7bc3f9a3c0399bddefb9366233b8922d889676390", "provenanceGroup": "OWNER_AND_PLANNER", "match": true },
+    { "label": "owner C38 authorization", "path": "C:/Users/USER/.codex/attachments/92f8b055-2854-44e5-94d6-acdb0023aa13/pasted-text.txt", "expectedSha256": "9903bd811beb32c3788c3bc35e34b2ea4e592c973873975861ee27f31ed7736e", "observedSha256": "9903bd811beb32c3788c3bc35e34b2ea4e592c973873975861ee27f31ed7736e", "provenanceGroup": "OWNER_AND_PLANNER", "match": true }
+  ],
+  "compositeLocks": [
+    {
+      "label": "selected C34 reason-runtime tree",
+      "paths": [
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-intent-analyzer.js",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-domain-boundary.js",
+        "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot/philippine-tax-boundary-patterns.js"
+      ],
+      "algorithm": "SHA256 of concatenated CRLF-to-LF-normalized raw bytes in analyzer, domain-boundary, boundary-patterns order",
+      "expectedSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "observedSha256": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+      "provenanceGroup": "C37_RUNTIME_IDENTITY",
+      "match": true
+    },
+    {
+      "label": "C35 runtime component tree",
+      "paths": [
+        "ask-handler.js",
+        "conflict-engine.js",
+        "services/answer-support-evidence.js",
+        "services/answer-support-validator.js"
+      ],
+      "algorithm": "For each POSIX path in lexical order: path + NUL + raw-byte-length + NUL + SHA256(raw bytes) + LF; SHA256 the UTF-8 concatenation",
+      "expectedSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+      "observedSha256": "5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c",
+      "provenanceGroup": "C37_RUNTIME_IDENTITY",
+      "match": true
+    }
+  ],
+  "verificationSummary": {
+    "fileLockCount": 37,
+    "fileLocksMatched": 37,
+    "compositeLockCount": 2,
+    "compositeLocksMatched": 2,
+    "missingPaths": [],
+    "mismatches": [],
+    "safePauseRequired": false
+  },
+  "pass": true
+}

@@ -2,6 +2,52 @@
 
 ## TINA Controlling Continuity Status
 
+## C38 POST-INTERNAL-REVIEW CONTROLLING STATE - TERMINAL
+
+Last updated: 2026-08-08T05:49:14.976Z (PHASE-10A14-R20 COMMIT 5R1-C38 post-internal-review finalization at starting HEAD `9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88`, checkpoint 85).
+
+This additive block is the current resume point and supersedes the older status sentences retained below as history. **C38 is TERMINAL under no-candidate terminality. Phase 10A remains OPEN and PHASE-10A14-R20 remains IN PROGRESS.** The required internal Reviewer returned `APPROVED_WITH_NONBLOCKING_FINDINGS`; C38 requires no external reviewer. The separate Roadmap requirement for independent external Phase 10A closure review remains unsatisfied.
+
+### Accepted C38 result
+
+- Candidate ceiling was 3; runtime candidates authorized/allocated were **0/0**. The sealed C37 corpus contains zero generalized runtime defects, so no runtime attempt, registry allocation, or new WAL was created.
+- Append-only R4 is frozen at `evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json`, SHA-256 `d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566`. R3 remains byte-identical at `ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54`.
+- R4 preserves 3,720 rows and their order. Exactly the sealed 145 C37 residual identities change, only in `expectedReasonCodeFamily`, and every replacement equals the sealed C37 `actual.reason`; all other 3,575 rows and protected fields are unchanged.
+- Development-governance algebra is now decision **3720/3720**, relation **3720/3720**, and reason **3720/3720**, identical in forward and reverse proofs. This is analyzer-informed expectation governance derived from sealed C37 evidence; it is not independent, holdout, unseen, or blind closure evidence.
+- Runtime is preserved and `runtimeChanged=false`: selected C34 reason runtime `73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775`; live tracked reason services `7737603844a1af11c2997ba50ecd3226ecd8e635b8adbfd4ea8984f5af6d0201`; C35 runtime `5c94e610f46c32d9c14c233ddfae31f1e22deeed1fd68a06946ce9fa37b4622c`; registry `a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073`; C34 WAL `2dfbc7ad99467ceb7b1eb9b264fa70ed8408767f574b8cdca6636ed4f98b60b2`; C35 WAL `d86f6fb331fa6010365debc13b7417704e4c71402af8803775744f00eef9260f`.
+- C38 QA, exact-delta proof, forward/reverse replay, preservation, file guard, regression adjudication, and security all pass. Regression syntax is **10/10**; suites **183/218**; groups **5396/5452**. Failures are the exact sealed C37 historical multiset (**21 STATE + 1 already-allowlisted SCOPE**) plus **34** independently confirmed B2/B3 inherited deferred-`/health` scope failures. There are zero C38/runtime-behavior failures, no missing baseline suite, and no allowlist expansion.
+- Security result is `PASS_NO_EXPLOITABLE_C38_SECURITY_DEFECTS_FOUND`, with no critical, high, or medium finding and no C38 blocker.
+
+### Internal-review findings retained as limitations
+
+- **R1 LOW:** raw regression capture was recovered after correction of an inherited postprocessing parser failure. `harnessUnchangedDuringCapture=null`, and no pre-capture harness digest was sealed. The intact raw captures support this C38 adjudication, but no pre/post harness-identity claim is made.
+- **R2 LOW:** the B2/B3 classifier used bounded causal-path and marker heuristics. The Reviewer independently confirmed all 34 current classifications. A future rerun must seal and compare the exact 34-failure identity multiset.
+- **R3 LOW:** the append-only writer can leave partial output after a mid-write technical failure. The current output is complete and hash-consistent; any partial-write recovery requires a separate governed operation, never an ad hoc overwrite or cleanup.
+
+### Phase 10A gates re-resolved after R4
+
+| Gate | Current disposition |
+|---|---|
+| R4 development-oracle decision/relation/reason | `SATISFIED_3720_OF_3720` within analyzer-informed development governance |
+| Runtime preservation and C38 regression | `SATISFIED`; zero runtime change and zero C38/runtime-behavior failure |
+| Post-R4 independent external Phase 10A review | `UNSATISFIED` |
+| E2 | `UNSATISFIED_NOT_RUN` |
+| A15 | `UNSATISFIED_NOT_RUN` |
+| Deterministic clean/staging closure | `NOT_CLAIMED` |
+| B2, B3, B4, B5, B6 | `OPEN_UNCHANGED`; nonblocking to terminal C38, still relevant to broader closure |
+
+Therefore C38 terminality does **not** close Phase 10A. No Phase 10B, deployment, migration, reindex, model change, or deferred `/health` remediation occurred.
+
+### Git, publication, and next operation
+
+Staged paths remain zero. No C38 commit, push, fetch, pull, merge, rebase, checkout, reset, restore, clean, stash, or network operation occurred; no publication is authorized by this unit. The three inherited modified `/health` paths remain preserved unchanged.
+
+Status: `C37=TERMINAL`, `C38=TERMINAL_NO_CANDIDATE`, `B2-B6=OPEN_UNCHANGED`, `Phase 10A=OPEN`, `R20=IN_PROGRESS`, `Phase 10B=NOT_STARTED`.
+
+Next exact operation: `SEPARATELY_GOVERNED_PHASE10A_POST_R4_CLOSURE_RECONCILIATION_AND_INDEPENDENT_EXTERNAL_REVIEW`. Do not infer Phase 10A closure until the remaining gates are actually satisfied and evidenced.
+
+---
+
 Last updated: 2026-08-07T23:03:00.000Z (COMMIT 5R1-C37 checkpoint 81 — post-review reconciliation, all 10 observations dispositioned, exact staging plan prepared, C37 remains nonterminal pending commit/push)
 
 PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS and not SATISFIED. COMMIT 5R1-C37 is **NONTERMINAL**. **No model was invoked in this operation. No staging, commit, or push occurred. C38 was not begun.**

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "generatedUtc": "2026-08-08T05:11:17.701Z",
+  "classification": "C38_FINAL_REASON_METRICS_R4_DEVELOPMENT_ORACLE_CLOSED",
+  "inputs": {
+    "c37Metrics": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_REASON_METRICS.json",
+      "bytes": 787,
+      "sha256": "2d8bed8906119579fbe5f4d7680aff4ce389ff92986caf8ed052bb82c47236f8",
+      "expectedSha256": "2d8bed8906119579fbe5f4d7680aff4ce389ff92986caf8ed052bb82c47236f8",
+      "exactMatch": true
+    },
+    "r3": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "bytes": 6737848,
+      "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "expectedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "exactMatch": true
+    },
+    "r4": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+      "bytes": 6738864,
+      "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+      "expectedSha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+      "exactMatch": true
+    },
+    "diffProof": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_R3_R4_DIFF_PROOF.json",
+      "bytes": 6362,
+      "sha256": "fb07feb2adf45872e7f071eae4c09f60e397d6a73fa2b14701d37a40f850c049"
+    }
+  },
+  "scoreBeforeC38": {
+    "decision": 3720,
+    "relation": 3720,
+    "reason": 3575,
+    "total": 3720,
+    "residuals": 145
+  },
+  "scoreAfterC38": {
+    "decision": 3720,
+    "relation": 3720,
+    "reason": 3720,
+    "total": 3720,
+    "residuals": 0
+  },
+  "delta": {
+    "decision": 0,
+    "relation": 0,
+    "reason": 145
+  },
+  "algebra": {
+    "forward": {
+      "r3Reason": 3575,
+      "revisedMatches": 145,
+      "r4Reason": 3720,
+      "total": 3720
+    },
+    "reverse": {
+      "r4Reason": 3720,
+      "revertedRows": 145,
+      "r3Reason": 3575,
+      "total": 3720
+    },
+    "decisionFrozen": {
+      "before": 3720,
+      "after": 3720
+    },
+    "relationFrozen": {
+      "before": 3720,
+      "after": 3720
+    }
+  },
+  "scope": "R4 development-governance oracle expectation closure; no runtime behavior change and no claim of independent, holdout, unseen, or blind evidence",
+  "phase10AStatus": "OPEN_PENDING_REMAINING_SEPARATELY_GOVERNED_GATES",
+  "pass": true
+}

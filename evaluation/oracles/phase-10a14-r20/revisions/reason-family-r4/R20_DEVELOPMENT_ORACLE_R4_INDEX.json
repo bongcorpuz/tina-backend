@@ -1,0 +1,14 @@
+{
+  "canonicalEntryPoint": "R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+  "r4Sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+  "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
+  "v1Sha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263",
+  "rowCount": 3720,
+  "changedRowsFromR3": 145,
+  "nature": "development_governance_evidence",
+  "independent": false,
+  "holdout": false,
+  "blind": false
+}

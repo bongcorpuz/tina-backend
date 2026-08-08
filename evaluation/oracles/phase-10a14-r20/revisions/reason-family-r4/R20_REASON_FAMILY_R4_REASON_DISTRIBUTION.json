@@ -1,0 +1,58 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "r3All": {
+    "ambiguous_tax_acronym": 220,
+    "explicit_non_tax_task": 897,
+    "explicit_tax_task_relation": 451,
+    "no_tax_relation": 563,
+    "non_tax_expansion": 88,
+    "non_tax_label_or_name": 201,
+    "quoted_tax_term_only": 120,
+    "tax_compliance_task": 291,
+    "tax_definition_with_context": 79,
+    "tax_negation_but_tax_review_requested": 26,
+    "tax_treatment_of_ordinary_object": 784
+  },
+  "r4All": {
+    "ambiguous_tax_acronym": 220,
+    "explicit_non_tax_task": 906,
+    "explicit_tax_task_relation": 438,
+    "no_tax_relation": 524,
+    "non_tax_expansion": 113,
+    "non_tax_label_or_name": 206,
+    "quoted_tax_term_only": 120,
+    "tax_compliance_task": 290,
+    "tax_definition_with_context": 79,
+    "tax_negation_but_tax_review_requested": 26,
+    "tax_treatment_of_ordinary_object": 798
+  },
+  "changedRowsBefore": {
+    "explicit_non_tax_task": 45,
+    "explicit_tax_task_relation": 16,
+    "no_tax_relation": 81,
+    "tax_compliance_task": 1,
+    "tax_treatment_of_ordinary_object": 2
+  },
+  "changedRowsAfter": {
+    "explicit_non_tax_task": 54,
+    "explicit_tax_task_relation": 3,
+    "no_tax_relation": 42,
+    "non_tax_expansion": 25,
+    "non_tax_label_or_name": 5,
+    "tax_treatment_of_ordinary_object": 16
+  },
+  "transitionCounts": {
+    "explicit_non_tax_task -> no_tax_relation": 42,
+    "explicit_non_tax_task -> non_tax_expansion": 3,
+    "explicit_tax_task_relation -> tax_treatment_of_ordinary_object": 16,
+    "no_tax_relation -> explicit_non_tax_task": 54,
+    "no_tax_relation -> non_tax_expansion": 22,
+    "no_tax_relation -> non_tax_label_or_name": 5,
+    "tax_compliance_task -> explicit_tax_task_relation": 1,
+    "tax_treatment_of_ordinary_object -> explicit_tax_task_relation": 2
+  },
+  "totalRows": 3720,
+  "changedRows": 145
+}

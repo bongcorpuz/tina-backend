@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "classification": "C38_APPEND_ONLY_R4_ORACLE_REVISION_COMPLETE",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "controllingBranch": "feature/source-availability-engine-v1",
+  "controllingHead": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88",
+  "decision": "C38_EXECUTABLE_ZERO_RUNTIME_CANDIDATE_WITH_APPEND_ONLY_R4_ORACLE_GOVERNANCE",
+  "candidateBudgetMaximum": 3,
+  "candidatesAuthorized": 0,
+  "candidatesAllocated": 0,
+  "runtimeChanged": false,
+  "oracleChanged": true,
+  "inputLocks": {
+    "v1": {
+      "path": "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_FROZEN.json",
+      "bytes": 5765822,
+      "sha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263"
+    },
+    "r1": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/R20_DEVELOPMENT_ORACLE_FROZEN_R1.json",
+      "bytes": 6630166,
+      "sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f"
+    },
+    "r2": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r2/R20_DEVELOPMENT_ORACLE_FROZEN_R2.json",
+      "bytes": 6675372,
+      "sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd"
+    },
+    "r3": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "bytes": 6737848,
+      "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54"
+    },
+    "reasonContract": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.json",
+      "bytes": 8996,
+      "sha256": "41d185be42aacca00fdc67cd13b075ef1348cf0c46c12b157c0d9fc8ad72ca93"
+    },
+    "rowAdjudication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+      "bytes": 1203438,
+      "sha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d"
+    },
+    "necessityDecision": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+      "bytes": 2289,
+      "sha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983"
+    }
+  },
+  "outputs": {
+    "R20_DEVELOPMENT_ORACLE_FROZEN_R4.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+      "bytes": 6738864,
+      "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566"
+    },
+    "R20_DEVELOPMENT_ORACLE_R4_FREEZE.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_R4_FREEZE.json",
+      "bytes": 2600,
+      "sha256": "4baa0748a6d329e7671d25abbc3d3697455426a3d5a0384c2261c2c28ff07b3e"
+    },
+    "R20_DEVELOPMENT_ORACLE_R4_INDEX.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_R4_INDEX.json",
+      "bytes": 636,
+      "sha256": "846b6a91a79ea0cb648499fc1cf4985b17872d06462083d86bf44aa9df5d696a"
+    },
+    "R20_DEVELOPMENT_ORACLE_R4_SUPERSESSION_RECORD.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_R4_SUPERSESSION_RECORD.json",
+      "bytes": 1936,
+      "sha256": "9f996c878905a337c84b4d1a9000ee657f7666aa20de6a84ca588f578135c928"
+    },
+    "R20_REASON_FAMILY_R4_SOURCE_LOCK.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_SOURCE_LOCK.json",
+      "bytes": 1846,
+      "sha256": "28e7c52444629b7ac163c65fd2c4c6edb820fb7eb333012e9cb74b420ea28478"
+    },
+    "R20_REASON_FAMILY_R4_CHANGESET.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_CHANGESET.json",
+      "bytes": 118239,
+      "sha256": "3bfdd601960f0d66d653fbc0cbf2c8bb5bf179bb3887dbbca10bc2a64d179f32"
+    },
+    "R20_REASON_FAMILY_R4_ADJUDICATION.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_ADJUDICATION.json",
+      "bytes": 114826,
+      "sha256": "610cf516d2177822edb69662bfd297bcdd73a50bfac0805e8cb84a7ddf49774a"
+    },
+    "R20_REASON_FAMILY_R4_CHALLENGE_REGISTER.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_CHALLENGE_REGISTER.json",
+      "bytes": 64243,
+      "sha256": "bae26eec447a4373ba8a79882b06135c1660a963971708dfedfe8f87993cb998"
+    },
+    "R20_REASON_FAMILY_R4_RESOLUTION_REGISTER.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_RESOLUTION_REGISTER.json",
+      "bytes": 61658,
+      "sha256": "200e4c3d94523a84616b00811bb2f0408f282cde4fec7b6d9c66393c590cc85a"
+    },
+    "R20_REASON_FAMILY_R4_ANALYZER_CONTAMINATION_AUDIT.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_ANALYZER_CONTAMINATION_AUDIT.json",
+      "bytes": 629,
+      "sha256": "3c24b2334063e150208df93bbe66f6da93c7237701b35001aa8117d079f1e822"
+    },
+    "R20_REASON_FAMILY_R4_UNCHANGED_FIELD_PROOF.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_UNCHANGED_FIELD_PROOF.json",
+      "bytes": 629,
+      "sha256": "bda2f154258d2fd547fe7dd3c835c6d59bea07b38d57736c8af1afeb22128d3b"
+    },
+    "R20_REASON_FAMILY_R4_REASON_DISTRIBUTION.json": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_REASON_FAMILY_R4_REASON_DISTRIBUTION.json",
+      "bytes": 1903,
+      "sha256": "4c5605a6b646ecc5900657f1de3a7ae772cd7196f45f0fac13e4c2c1d248ffc0"
+    }
+  },
+  "proofs": {
+    "r3ByteSha256Before": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "r3ByteSha256After": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+    "r3ByteUnchanged": true,
+    "r4RowCount": 3720,
+    "exactChangedRowCount": 145,
+    "exactUnchangedRowCount": 3575,
+    "onlyExpectedReasonCodeFamilyChanged": true,
+    "everyNewReasonEqualsSealedC37ActualReason": true,
+    "queryChanges": 0,
+    "decisionChanges": 0,
+    "relationChanges": 0,
+    "sourceChanges": 0,
+    "categoryChanges": 0,
+    "metamorphicChanges": 0,
+    "rowOrderChanges": 0,
+    "unauthorizedFieldDifferences": 0,
+    "liveAnalyzerImported": false,
+    "liveAnalyzerExecuted": false,
+    "liveRuntimeExecuted": false,
+    "sealedC37ActualReasonEvidenceUsed": true
+  },
+  "evidenceNature": {
+    "developmentGovernanceEvidence": true,
+    "independent": false,
+    "holdout": false,
+    "unseen": false,
+    "blind": false
+  },
+  "canonicalForNextStep": "C38_POST_R4_CLOSURE_RECONCILIATION",
+  "pass": true
+}

@@ -1,0 +1,2495 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "from": {
+    "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+    "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54"
+  },
+  "to": {
+    "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+    "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566"
+  },
+  "changedRows": 145,
+  "unchangedRows": 3575,
+  "onlyChangedField": "expectedReasonCodeFamily",
+  "changedOracleIds": [
+    "S1-IR19-1007",
+    "S1-IR19-1014",
+    "S1-IR19-1026",
+    "S1-IR19-1028",
+    "S1-IR19-1030",
+    "S1-IR19-1032",
+    "S1-IR19-1033",
+    "S1-IR19-1034",
+    "S1-IR19-1036",
+    "S1-IR19-1038",
+    "S1-IR19-1040",
+    "S1-IR19-1047",
+    "S1-IR19-1054",
+    "S1-IR19-1066",
+    "S1-IR19-1068",
+    "S1-IR19-1070",
+    "S1-IR19-1072",
+    "S1-IR19-1073",
+    "S1-IR19-1074",
+    "S1-IR19-1076",
+    "S1-IR19-1078",
+    "S1-IR19-1080",
+    "S1-IR19-1087",
+    "S1-IR19-1094",
+    "S1-IR19-1106",
+    "S1-IR19-1108",
+    "S1-IR19-1110",
+    "S1-IR19-1112",
+    "S1-IR19-1113",
+    "S1-IR19-1114",
+    "S1-IR19-1116",
+    "S1-IR19-1118",
+    "S1-IR19-1120",
+    "S2-IR18-DOM-007",
+    "S2-IR18-DOM-021",
+    "S2-IR18-DOM-059",
+    "S2-IR18-DOM-061",
+    "S2-IR18-DOM-062",
+    "S2-IR18-DOM-072",
+    "S2-IR18-DOM-073",
+    "S2-IR18-DOM-113",
+    "S2-IR18-DOM-115",
+    "S2-IR18-DOM-120",
+    "S2-IR18-DOM-121",
+    "S2-IR18-DOM-134",
+    "S2-IR18-DOM-159",
+    "S2-IR18-DOM-160",
+    "S2-IR18-DOM-166",
+    "S2-IR18-DOM-192",
+    "S2-IR18-DOM-199",
+    "S2-IR18-DOM-204",
+    "S2-IR18-DOM-214",
+    "S2-IR18-DOM-221",
+    "S2-IR18-DOM-228",
+    "S2-IR18-DOM-229",
+    "S2-IR18-DOM-233",
+    "S2-IR18-DOM-240",
+    "S2-IR18-DOM-243",
+    "S2-IR18-DOM-244",
+    "S2-IR18-DOM-247",
+    "S2-IR18-DOM-251",
+    "S2-IR18-DOM-254",
+    "S2-IR18-DOM-258",
+    "S2-IR18-DOM-265",
+    "S2-IR18-DOM-268",
+    "S2-IR18-DOM-269",
+    "S2-IR18-DOM-272",
+    "S2-IR18-DOM-276",
+    "S2-IR18-DOM-279",
+    "S2-IR18-DOM-283",
+    "S2-IR18-DOM-290",
+    "S2-IR18-DOM-293",
+    "S2-IR18-DOM-294",
+    "S2-IR18-DOM-297",
+    "S2-IR18-DOM-301",
+    "S2-IR18-DOM-304",
+    "S2-IR18-DOM-308",
+    "S2-IR18-DOM-315",
+    "S2-IR18-DOM-318",
+    "S2-IR18-DOM-319",
+    "S2-IR18-DOM-322",
+    "S2-IR18-DOM-326",
+    "S2-IR18-DOM-329",
+    "S2-IR18-DOM-348",
+    "S2-IR18-DOM-368",
+    "S2-IR18-DOM-388",
+    "S2-IR18-DOM-408",
+    "S2-IR18-DOM-412",
+    "S2-IR18-DOM-432",
+    "S2-IR18-DOM-452",
+    "S2-IR18-DOM-475",
+    "S2-IR18-DOM-493",
+    "S2-IR18-DOM-503",
+    "S2-IR18-DOM-506",
+    "S2-IR18-DOM-515",
+    "S2-IR18-DOM-533",
+    "S2-IR18-DOM-541",
+    "S2-IR18-DOM-543",
+    "S2-IR18-DOM-545",
+    "S2-IR18-DOM-549",
+    "S2-IR18-DOM-565",
+    "S3-IR17-032",
+    "S3-IR17-073",
+    "S3-IR17-081",
+    "S3-IR17-095",
+    "S3-IR17-099",
+    "S3-IR17-127",
+    "S3-IR17-132",
+    "S3-IR17-134",
+    "S3-IR17-136",
+    "S3-IR17-139",
+    "S3-IR17-181",
+    "S3-IR17-186",
+    "S3-IR17-188",
+    "S3-IR17-208",
+    "R20N-ENT-0521",
+    "R20N-ENT-0526",
+    "R20N-ENT-0531",
+    "R20N-ENT-0536",
+    "R20N-ENT-0541",
+    "R20N-ENT-0546",
+    "R20N-ENT-0551",
+    "R20N-ENT-0556",
+    "R20N-ENT-0561",
+    "R20N-ENT-0566",
+    "R20N-ENT-0576",
+    "R20N-ENT-0591",
+    "R20N-ENT-0601",
+    "R20N-ENT-0606",
+    "R20N-ENT-0616",
+    "R20N-ENT-0621",
+    "R20N-ENT-0626",
+    "R20N-ENT-0631",
+    "R20N-ENT-0636",
+    "R20N-ENT-0641",
+    "R20N-ENT-0646",
+    "R20N-ENT-0651",
+    "R20N-ENT-0661",
+    "R20N-ENT-0666",
+    "R20N-ENT-0671",
+    "R20N-ENT-0681",
+    "R20N-ENT-0686",
+    "R20N-ENT-0691",
+    "R20N-ENT-0706",
+    "R20N-ENT-0716"
+  ],
+  "transitions": {
+    "explicit_non_tax_task -> no_tax_relation": 42,
+    "explicit_non_tax_task -> non_tax_expansion": 3,
+    "explicit_tax_task_relation -> tax_treatment_of_ordinary_object": 16,
+    "no_tax_relation -> explicit_non_tax_task": 54,
+    "no_tax_relation -> non_tax_expansion": 22,
+    "no_tax_relation -> non_tax_label_or_name": 5,
+    "tax_compliance_task -> explicit_tax_task_relation": 1,
+    "tax_treatment_of_ordinary_object -> explicit_tax_task_relation": 2
+  },
+  "changes": [
+    {
+      "inventoryOrdinal": 1,
+      "oracleId": "S1-IR19-1007",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 2,
+      "oracleId": "S1-IR19-1014",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 3,
+      "oracleId": "S1-IR19-1026",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 4,
+      "oracleId": "S1-IR19-1028",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 5,
+      "oracleId": "S1-IR19-1030",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 6,
+      "oracleId": "S1-IR19-1032",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 7,
+      "oracleId": "S1-IR19-1033",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 8,
+      "oracleId": "S1-IR19-1034",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 9,
+      "oracleId": "S1-IR19-1036",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 10,
+      "oracleId": "S1-IR19-1038",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 11,
+      "oracleId": "S1-IR19-1040",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 12,
+      "oracleId": "S1-IR19-1047",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 13,
+      "oracleId": "S1-IR19-1054",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 14,
+      "oracleId": "S1-IR19-1066",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 15,
+      "oracleId": "S1-IR19-1068",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 16,
+      "oracleId": "S1-IR19-1070",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 17,
+      "oracleId": "S1-IR19-1072",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 18,
+      "oracleId": "S1-IR19-1073",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 19,
+      "oracleId": "S1-IR19-1074",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 20,
+      "oracleId": "S1-IR19-1076",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 21,
+      "oracleId": "S1-IR19-1078",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 22,
+      "oracleId": "S1-IR19-1080",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 23,
+      "oracleId": "S1-IR19-1087",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 24,
+      "oracleId": "S1-IR19-1094",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 25,
+      "oracleId": "S1-IR19-1106",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 26,
+      "oracleId": "S1-IR19-1108",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 27,
+      "oracleId": "S1-IR19-1110",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 28,
+      "oracleId": "S1-IR19-1112",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 29,
+      "oracleId": "S1-IR19-1113",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 30,
+      "oracleId": "S1-IR19-1114",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 31,
+      "oracleId": "S1-IR19-1116",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 32,
+      "oracleId": "S1-IR19-1118",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 33,
+      "oracleId": "S1-IR19-1120",
+      "sourceSet": "r19_1120",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 34,
+      "oracleId": "S2-IR18-DOM-007",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 35,
+      "oracleId": "S2-IR18-DOM-021",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "revisedExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 36,
+      "oracleId": "S2-IR18-DOM-059",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 37,
+      "oracleId": "S2-IR18-DOM-061",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 38,
+      "oracleId": "S2-IR18-DOM-062",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "revisedExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 39,
+      "oracleId": "S2-IR18-DOM-072",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 40,
+      "oracleId": "S2-IR18-DOM-073",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_tax",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 41,
+      "oracleId": "S2-IR18-DOM-113",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 42,
+      "oracleId": "S2-IR18-DOM-115",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 43,
+      "oracleId": "S2-IR18-DOM-120",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 44,
+      "oracleId": "S2-IR18-DOM-121",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 45,
+      "oracleId": "S2-IR18-DOM-134",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 46,
+      "oracleId": "S2-IR18-DOM-159",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 47,
+      "oracleId": "S2-IR18-DOM-160",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 48,
+      "oracleId": "S2-IR18-DOM-166",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 49,
+      "oracleId": "S2-IR18-DOM-192",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 50,
+      "oracleId": "S2-IR18-DOM-199",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 51,
+      "oracleId": "S2-IR18-DOM-204",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 52,
+      "oracleId": "S2-IR18-DOM-214",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 53,
+      "oracleId": "S2-IR18-DOM-221",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 54,
+      "oracleId": "S2-IR18-DOM-228",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 55,
+      "oracleId": "S2-IR18-DOM-229",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "explicit_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 56,
+      "oracleId": "S2-IR18-DOM-233",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 57,
+      "oracleId": "S2-IR18-DOM-240",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 58,
+      "oracleId": "S2-IR18-DOM-243",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 59,
+      "oracleId": "S2-IR18-DOM-244",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 60,
+      "oracleId": "S2-IR18-DOM-247",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 61,
+      "oracleId": "S2-IR18-DOM-251",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 62,
+      "oracleId": "S2-IR18-DOM-254",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 63,
+      "oracleId": "S2-IR18-DOM-258",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 64,
+      "oracleId": "S2-IR18-DOM-265",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 65,
+      "oracleId": "S2-IR18-DOM-268",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 66,
+      "oracleId": "S2-IR18-DOM-269",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 67,
+      "oracleId": "S2-IR18-DOM-272",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 68,
+      "oracleId": "S2-IR18-DOM-276",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 69,
+      "oracleId": "S2-IR18-DOM-279",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 70,
+      "oracleId": "S2-IR18-DOM-283",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 71,
+      "oracleId": "S2-IR18-DOM-290",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 72,
+      "oracleId": "S2-IR18-DOM-293",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 73,
+      "oracleId": "S2-IR18-DOM-294",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 74,
+      "oracleId": "S2-IR18-DOM-297",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 75,
+      "oracleId": "S2-IR18-DOM-301",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 76,
+      "oracleId": "S2-IR18-DOM-304",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 77,
+      "oracleId": "S2-IR18-DOM-308",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 78,
+      "oracleId": "S2-IR18-DOM-315",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 79,
+      "oracleId": "S2-IR18-DOM-318",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 80,
+      "oracleId": "S2-IR18-DOM-319",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 81,
+      "oracleId": "S2-IR18-DOM-322",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 82,
+      "oracleId": "S2-IR18-DOM-326",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 83,
+      "oracleId": "S2-IR18-DOM-329",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "substring_homograph_trap",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 84,
+      "oracleId": "S2-IR18-DOM-348",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 85,
+      "oracleId": "S2-IR18-DOM-368",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 86,
+      "oracleId": "S2-IR18-DOM-388",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 87,
+      "oracleId": "S2-IR18-DOM-408",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "ambiguous",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 88,
+      "oracleId": "S2-IR18-DOM-412",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "filipino_taglish",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "c37SecondaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 89,
+      "oracleId": "S2-IR18-DOM-432",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "filipino_taglish",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "c37SecondaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 90,
+      "oracleId": "S2-IR18-DOM-452",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "filipino_taglish",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "c37SecondaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 91,
+      "oracleId": "S2-IR18-DOM-475",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 92,
+      "oracleId": "S2-IR18-DOM-493",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 93,
+      "oracleId": "S2-IR18-DOM-503",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 94,
+      "oracleId": "S2-IR18-DOM-506",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 95,
+      "oracleId": "S2-IR18-DOM-515",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "metamorphic",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 96,
+      "oracleId": "S2-IR18-DOM-533",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_label_or_name",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 97,
+      "oracleId": "S2-IR18-DOM-541",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 98,
+      "oracleId": "S2-IR18-DOM-543",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 99,
+      "oracleId": "S2-IR18-DOM-545",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 100,
+      "oracleId": "S2-IR18-DOM-549",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "non_tax_expansion",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 101,
+      "oracleId": "S2-IR18-DOM-565",
+      "sourceSet": "r18_corrected_567",
+      "primaryCategory": "acronym_context",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 102,
+      "oracleId": "S3-IR17-032",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "capital_gain_tax",
+      "previousExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "revisedExpectedReasonCodeFamily": "tax_treatment_of_ordinary_object",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 103,
+      "oracleId": "S3-IR17-073",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "bir_enforcement_tax",
+      "previousExpectedReasonCodeFamily": "tax_compliance_task",
+      "revisedExpectedReasonCodeFamily": "explicit_tax_task_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 104,
+      "oracleId": "S3-IR17-081",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "private_contract_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 105,
+      "oracleId": "S3-IR17-095",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "private_contract_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 106,
+      "oracleId": "S3-IR17-099",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "private_contract_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 107,
+      "oracleId": "S3-IR17-127",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 108,
+      "oracleId": "S3-IR17-132",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 109,
+      "oracleId": "S3-IR17-134",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 110,
+      "oracleId": "S3-IR17-136",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 111,
+      "oracleId": "S3-IR17-139",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "court_labor_sec_non_tax",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_CONTRACT_INCONSISTENCY",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 112,
+      "oracleId": "S3-IR17-181",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "filipino_taglish_mixed",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 113,
+      "oracleId": "S3-IR17-186",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "filipino_taglish_mixed",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 114,
+      "oracleId": "S3-IR17-188",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "filipino_taglish_mixed",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "c37SecondaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 115,
+      "oracleId": "S3-IR17-208",
+      "sourceSet": "r17_accepted_control",
+      "primaryCategory": "substring_traps",
+      "previousExpectedReasonCodeFamily": "no_tax_relation",
+      "revisedExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "c37PrimaryCategory": "ORACLE_EXPECTATION_NOT_UNIQUELY_ENTAILED",
+      "c37SecondaryCategory": "SEMANTICALLY_EQUIVALENT_REASON",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 116,
+      "oracleId": "R20N-ENT-0521",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 117,
+      "oracleId": "R20N-ENT-0526",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 118,
+      "oracleId": "R20N-ENT-0531",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 119,
+      "oracleId": "R20N-ENT-0536",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 120,
+      "oracleId": "R20N-ENT-0541",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 121,
+      "oracleId": "R20N-ENT-0546",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 122,
+      "oracleId": "R20N-ENT-0551",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 123,
+      "oracleId": "R20N-ENT-0556",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 124,
+      "oracleId": "R20N-ENT-0561",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 125,
+      "oracleId": "R20N-ENT-0566",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 126,
+      "oracleId": "R20N-ENT-0576",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 127,
+      "oracleId": "R20N-ENT-0591",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 128,
+      "oracleId": "R20N-ENT-0601",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 129,
+      "oracleId": "R20N-ENT-0606",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 130,
+      "oracleId": "R20N-ENT-0616",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 131,
+      "oracleId": "R20N-ENT-0621",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 132,
+      "oracleId": "R20N-ENT-0626",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 133,
+      "oracleId": "R20N-ENT-0631",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 134,
+      "oracleId": "R20N-ENT-0636",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 135,
+      "oracleId": "R20N-ENT-0641",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 136,
+      "oracleId": "R20N-ENT-0646",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 137,
+      "oracleId": "R20N-ENT-0651",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 138,
+      "oracleId": "R20N-ENT-0661",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 139,
+      "oracleId": "R20N-ENT-0666",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 140,
+      "oracleId": "R20N-ENT-0671",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 141,
+      "oracleId": "R20N-ENT-0681",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 142,
+      "oracleId": "R20N-ENT-0686",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 143,
+      "oracleId": "R20N-ENT-0691",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 144,
+      "oracleId": "R20N-ENT-0706",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    },
+    {
+      "inventoryOrdinal": 145,
+      "oracleId": "R20N-ENT-0716",
+      "sourceSet": "r20_new",
+      "primaryCategory": "explicit_non_tax_task",
+      "previousExpectedReasonCodeFamily": "explicit_non_tax_task",
+      "revisedExpectedReasonCodeFamily": "no_tax_relation",
+      "c37PrimaryCategory": "ACCEPTED_FAIL_CLOSED_BEHAVIOR",
+      "c37SecondaryCategory": "UNDERDETERMINED_WITHOUT_CONTEXT",
+      "expectedReasonUniquelyEntailedByQueryAndContract": false,
+      "runtimeCausalDistinguishability": {
+        "canCausallyDistinguish": false,
+        "benchmarkIdentityRequired": true,
+        "rationale": "C36 proved no new observable separator with monotonic ablation, cross-paraphrase coverage, low collision risk, and accepted-rule compatibility."
+      }
+    }
+  ]
+}

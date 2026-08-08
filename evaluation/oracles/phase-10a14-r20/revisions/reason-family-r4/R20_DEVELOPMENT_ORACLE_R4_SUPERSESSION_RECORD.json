@@ -1,0 +1,25 @@
+{
+  "task": "PHASE-10A14-R20",
+  "revision": "reason-family-r4",
+  "generatedUtc": "2026-08-08T04:55:21.424Z",
+  "statement": [
+    "V1, R1, R2, and R3 remain immutable historical development evidence.",
+    "R4 supersedes R3 only as the canonical development oracle for C38 post-R4 closure reconciliation.",
+    "R4 changes only expectedReasonCodeFamily on the exact 145 identities sealed by C37 adjudication.",
+    "Every R4 revised reason equals the corresponding sealed C37 actual.reason value.",
+    "R4 changes no query, decision, expected relation, source identity/provenance, category, metamorphic field, row order, or non-target row value.",
+    "No runtime candidate is allocated and no live analyzer or runtime is imported or executed.",
+    "R4 uses sealed C37 actual reason evidence and is development governance evidence, not unseen, blind, independent, or holdout evidence."
+  ],
+  "v1Sha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263",
+  "r1Sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f",
+  "r2Sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd",
+  "r3Sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+  "r4Sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+  "reasonContractPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.json",
+  "reasonContractSha256": "41d185be42aacca00fdc67cd13b075ef1348cf0c46c12b157c0d9fc8ad72ca93",
+  "rowAdjudicationPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+  "rowAdjudicationSha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d",
+  "necessityDecisionPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.json",
+  "necessityDecisionSha256": "b661a2e5bef88e2aa539e5a701ec0832550b8d2660a10a155db1b85f4856e983"
+}

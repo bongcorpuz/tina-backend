@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "generatedUtc": "2026-08-08T05:11:17.701Z",
+  "classification": "C38_FINAL_APPEND_ONLY_ORACLE_REPLAY_FORWARD_AND_REVERSE_PASS",
+  "inputs": {
+    "r3": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "bytes": 6737848,
+      "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "expectedSha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "exactMatch": true
+    },
+    "r4": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+      "bytes": 6738864,
+      "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+      "expectedSha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+      "exactMatch": true
+    },
+    "c37Adjudication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+      "bytes": 1203438,
+      "sha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d",
+      "expectedSha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d",
+      "exactMatch": true
+    }
+  },
+  "forward": {
+    "r3Reason": 3575,
+    "revisedMatches": 145,
+    "r4Reason": 3720,
+    "total": 3720
+  },
+  "reverse": {
+    "r4Reason": 3720,
+    "revertedRows": 145,
+    "r3Reason": 3575,
+    "total": 3720
+  },
+  "rowIdentityForward": true,
+  "rowIdentityReverse": true,
+  "changedIdentitySetExact": true,
+  "runtimeReplay": "NOT_INVOKED_ZERO_RUNTIME_CANDIDATE",
+  "runtimeMutation": false,
+  "oracleAppendOnly": true,
+  "r3Mutation": false,
+  "pass": true
+}

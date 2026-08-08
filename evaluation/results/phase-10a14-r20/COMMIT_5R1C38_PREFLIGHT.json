@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "taskId": "PHASE-10A14-R20",
+  "workUnit": "C38",
+  "classification": "C38_PREFLIGHT_PASS_PRE_R4_WRITE_BASELINE",
+  "generatedAtUtc": "2026-08-08T04:58:27.685Z",
+  "authorization": {
+    "ownerAttachmentPath": "C:/Users/USER/.codex/attachments/92f8b055-2854-44e5-94d6-acdb0023aa13/pasted-text.txt",
+    "ownerAttachmentSha256": "9903bd811beb32c3788c3bc35e34b2ea4e592c973873975861ee27f31ed7736e",
+    "plannerDecision": "C38_EXECUTABLE_ZERO_RUNTIME_CANDIDATE_WITH_APPEND_ONLY_R4_ORACLE_GOVERNANCE",
+    "controllingCheckpoint": 85
+  },
+  "repositoryIdentity": {
+    "root": "C:/Projects/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "startingHead": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88",
+    "headParent": "3af273e15db2c113c003e970c22645881efdd2da",
+    "upstreamAhead": 0,
+    "upstreamBehind": 0,
+    "rootMatched": true,
+    "branchMatched": true,
+    "headMatched": true
+  },
+  "preC38WorkspaceBaseline": {
+    "observationOrder": 1,
+    "capturedBeforeAnyAuthorizedC38PathWasCreated": true,
+    "stagedCount": 0,
+    "stagedPaths": [],
+    "modifiedTrackedCount": 3,
+    "modifiedTrackedPaths": [
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "modifiedTrackedSetMatchedExactly": true,
+    "classification": "PREVIOUSLY_GOVERNED_DEFERRED_HEALTH_RESIDUE_PRESERVE_UNCHANGED",
+    "untrackedCount": 82,
+    "untrackedSwarmToolingCount": 5,
+    "untrackedOtherCount": 77,
+    "untrackedSortedPosixPathsLfSha256": "054807e8449f5c175f73e4fbd1ac4bddbcc0d1b7ec6e33b7d38550cbd5ca5d87",
+    "untrackedCountAndSetDigestVerified": true,
+    "claudeSettingsClassification": "PREVIOUSLY_GOVERNED_EXCLUDED_RESIDUE_RETAIN",
+    "claudeSettingsManipulated": false
+  },
+  "gitOperationState": {
+    "mergeHead": false,
+    "rebaseMergeDirectory": false,
+    "rebaseApplyDirectory": false,
+    "cherryPickHead": false,
+    "revertHead": false,
+    "sequencerDirectory": false,
+    "indexLock": false,
+    "activeGitOperation": false,
+    "rebaseHeadResidue": {
+      "exists": true,
+      "bytes": 41,
+      "lastWriteUtc": "2026-06-09T06:43:33.1612401Z",
+      "classification": "STALE_MARKER_WITHOUT_ACTIVE_REBASE_DIRECTORY",
+      "manipulated": false
+    },
+    "otherZeroByteLockLikeResidue": [
+      "index.stash.15252.lock",
+      "index.stash.16420.lock",
+      "index.stash.24536.lock",
+      "index.stash.26220.lock",
+      "index.stash.59972.lock"
+    ],
+    "note": "The stop condition is .git/index.lock or an active Git operation. Neither exists. Other pre-existing zero-byte index.stash.*.lock residue was observed and left untouched."
+  },
+  "orderedAuthorizedPostBaselineObservation": {
+    "observationOrder": 2,
+    "currentUntrackedCountBeforeCoder4EvidenceWrites": 96,
+    "authorizedCoder1C38PathsAddedAfterBaseline": 14,
+    "reconstructedPreC38Count": 82,
+    "stagedCountStillZero": true,
+    "modifiedTrackedSetStillExact": true,
+    "classification": "EXPECTED_AUTHORIZED_C38_OUTPUT_NOT_EXTERNAL_DRIFT"
+  },
+  "scopeChecks": {
+    "r4PathCollisionAtPreC38Baseline": false,
+    "productionRuntimeWriteAuthorized": false,
+    "healthWriteAuthorized": false,
+    "registryOrWalWriteAuthorized": false,
+    "gitMutationAuthorized": false,
+    "b2ThroughB6": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+    "phase10A": "OPEN",
+    "c38TerminalAtPreflight": false
+  },
+  "stopConditionsTriggered": [],
+  "pass": true
+}

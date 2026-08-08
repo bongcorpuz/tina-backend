@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C38",
+  "classification": "C38_SECURITY_AND_SCOPE_PASS_WITH_NONBLOCKING_GOVERNANCE_OBSERVATIONS",
+  "generatedUtc": "2026-08-08T05:02:46.254Z",
+  "role": "CODER_3_SECURITY_ANALYSIS_AND_SECURITY_TESTS",
+  "scope": {
+    "controllingBranch": "feature/source-availability-engine-v1",
+    "controllingHead": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88",
+    "candidateBudgetMaximum": 3,
+    "candidatesAllocated": 0,
+    "runtimeChanged": false,
+    "oracleChanged": true,
+    "authorizedImplementation": [
+      "evaluation/runner/phase-10a14-r20/commit5r1c38-oracle-governance.mjs",
+      "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/*",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_ORACLE_REVISION_RESULT.json"
+    ],
+    "authorizedSecurityOutput": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_SECURITY_AND_SCOPE.json",
+    "prohibitedAreasTouchedByC38": [],
+    "productionRuntimeOrServiceFilesTouchedByC38": [],
+    "validatorAuthenticationAuthorizationOrSecurityControlsTouchedByC38": [],
+    "preExistingDeferredDirtyTrackedPathsObservedAndExcluded": [
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "stagedPathsObserved": [],
+    "b2ThroughB6": {
+      "status": "OPEN_UNCHANGED_NONBLOCKING_TO_C38",
+      "modifiedByC38": false
+    }
+  },
+  "reviewedArtifacts": {
+    "runner": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c38-oracle-governance.mjs",
+      "bytes": 27587,
+      "sha256": "3c230c1befb26f344242f02201e63294d69294db1912717e9d97e91345442b5b"
+    },
+    "result": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_ORACLE_REVISION_RESULT.json",
+      "bytes": 6716,
+      "sha256": "6f2fd992d5e21f2b11180abde799bbff81899f53e1bebfd7cb47ca04f7953935"
+    },
+    "r3": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54"
+    },
+    "r4": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+      "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566"
+    },
+    "r4ArtifactCount": 12
+  },
+  "threats": [
+    {
+      "id": "C38-T01",
+      "threat": "Oracle poisoning or unauthorized expectation mutation",
+      "mitigationsVerified": [
+        "All governed inputs are pinned to exact SHA-256 values before artifact construction.",
+        "The changed identity set exactly equals the 145 identities in sealed C37 adjudication.",
+        "Every revised value equals the corresponding sealed C37 actual.reason value.",
+        "All 3,720 rows were independently compared and no field other than expectedReasonCodeFamily changed on the 145 authorized rows."
+      ],
+      "residualRisk": "R4 intentionally incorporates sealed development analyzer output and therefore must remain development governance evidence, not independent, unseen, blind, or holdout evidence."
+    },
+    {
+      "id": "C38-T02",
+      "threat": "Benchmark-identity or exact-input special casing",
+      "mitigationsVerified": [
+        "The runner contains no hard-coded oracle IDs, row IDs, fixture IDs, queries, expected reason values, or test IDs.",
+        "Target identities and replacement values are derived only from the complete hash-locked C37 adjudication input.",
+        "No production implementation imports or runtime candidates are present."
+      ],
+      "residualRisk": "The revision is not suitable as independent generalization evidence because its purpose is governed development-oracle reconciliation."
+    },
+    {
+      "id": "C38-T03",
+      "threat": "Live analyzer contamination or runtime feedback during R4 construction",
+      "mitigationsVerified": [
+        "Runner imports are limited to node:crypto, node:fs, node:path, and node:child_process.",
+        "The only child process is fixed-argument read-only Git inspection.",
+        "No analyzer, production boundary, network client, fetch call, model, or live runtime is imported or executed."
+      ],
+      "residualRisk": "Sealed C37 analyzer output is an explicit input and is truthfully identified as such."
+    },
+    {
+      "id": "C38-T04",
+      "threat": "Path traversal, arbitrary overwrite, partial publication, or unauthorized staging",
+      "mitigationsVerified": [
+        "All output paths are fixed repository-relative constants and receive lexical repository-containment checks.",
+        "R4 directory creation requires absence and uses recursive:false; file creation uses exclusive wx mode.",
+        "Branch, HEAD, staged state, input hashes, and output path collisions are checked before the first write.",
+        "A post-build rerun failed closed on the existing R4 directory before writes and left the R4 hash unchanged.",
+        "The runner has no add, commit, push, reset, checkout, clean, stash, merge, rebase, deployment, migration, reindex, provider, or network action."
+      ],
+      "residualRisk": "A technical failure after the first write can leave append-only partial artifacts; the runner labels that state TECHNICAL_FAILURE_AFTER_WRITE and collision checks prevent silent overwrite. Recovery must remain separately governed."
+    },
+    {
+      "id": "C38-T05",
+      "threat": "Secret exposure or sensitive logging",
+      "mitigationsVerified": [
+        "No environment variables, credentials, authentication material, request headers, or user records are read or logged.",
+        "A high-confidence credential-pattern scan across the runner, result, and 12 R4 artifacts found zero matches.",
+        "Error output is limited to governed paths, hashes, invariant failures, and fixed Git inspection failures."
+      ],
+      "residualRisk": "None identified within C38 scope."
+    }
+  ],
+  "findings": {
+    "severityCounts": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 1,
+      "informational": 2
+    },
+    "items": [
+      {
+        "id": "C38-S01",
+        "severity": "LOW",
+        "type": "DEFENSE_IN_DEPTH_OPERATIONAL_INTEGRITY",
+        "title": "Partial append-only output requires governed recovery after a mid-write technical failure",
+        "exploitableDefect": false,
+        "blockingToC38": false,
+        "evidence": "The runner writes 12 files and then the result sequentially. It uses exclusive creation and explicitly reports TECHNICAL_FAILURE_AFTER_WRITE, but it does not transactionally roll back a partial directory.",
+        "disposition": "Accept for this one-shot append-only governed builder; do not publish or recover a partial run outside separate governance. Current output set is complete, exactly 12 files, JSON-parseable, and hash-consistent."
+      },
+      {
+        "id": "C38-S02",
+        "severity": "INFORMATIONAL",
+        "type": "BENCHMARK_GOVERNANCE_LIMITATION",
+        "title": "R4 is analyzer-informed development evidence",
+        "exploitableDefect": false,
+        "blockingToC38": false,
+        "evidence": "R4 revisions intentionally use sealed C37 actual.reason values. The generated oracle, freeze, supersession record, adjudication, and contamination audit consistently mark the evidence non-independent, non-holdout, non-unseen, and non-blind.",
+        "disposition": "R4 may support C38 development-oracle governance only; it must not be represented as independent Phase-10A closure evidence."
+      },
+      {
+        "id": "C38-S03",
+        "severity": "INFORMATIONAL",
+        "type": "PHASE_GATE_REMAINS_OPEN",
+        "title": "Independent external Phase-10A review remains unsatisfied",
+        "exploitableDefect": false,
+        "blockingToC38": false,
+        "blockingToPhase10AClosure": true,
+        "disposition": "C38 requires internal Reviewer approval only. Do not infer Phase-10A closure from this C38 security pass."
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "C38-SEC-CHECK-01",
+      "command": "node --check evaluation/runner/phase-10a14-r20/commit5r1c38-oracle-governance.mjs",
+      "exit": 0,
+      "status": "PASS"
+    },
+    {
+      "id": "C38-SEC-CHECK-02",
+      "description": "Independent full R3/R4/C37 comparison and input/output manifest verification",
+      "status": "PASS",
+      "observed": {
+        "r3Rows": 3720,
+        "r4Rows": 3720,
+        "c37AdjudicationRows": 145,
+        "changedRows": 145,
+        "unchangedRows": 3575,
+        "reasonOnlyChanges": 145,
+        "unauthorizedFieldChanges": 0,
+        "changedIdentitySetExact": true,
+        "replacementReasonMismatches": 0,
+        "inputHashMismatches": 0,
+        "outputHashMismatches": 0
+      }
+    },
+    {
+      "id": "C38-SEC-CHECK-03",
+      "description": "Repository scope, filesystem boundary, and staging inspection",
+      "status": "PASS",
+      "observed": {
+        "repositoryRoot": "C:/Projects/tina-backend",
+        "branchMatched": true,
+        "headMatched": true,
+        "stagedPathCount": 0,
+        "outputParentReparsePoints": 0,
+        "c38UntrackedImplementationPathCount": 14,
+        "unexpectedC38ImplementationPaths": 0
+      }
+    },
+    {
+      "id": "C38-SEC-CHECK-04",
+      "description": "Post-build path-collision fail-closed replay",
+      "exit": 1,
+      "expectedExit": 1,
+      "status": "PASS",
+      "observed": {
+        "classification": "SAFE_PAUSE_BEFORE_WRITE",
+        "reason": "path collision: evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4",
+        "r4Sha256Before": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+        "r4Sha256After": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+        "outputUnchanged": true
+      }
+    },
+    {
+      "id": "C38-SEC-CHECK-05",
+      "description": "High-confidence credential pattern scan of 14 C38 implementation artifacts",
+      "status": "PASS",
+      "observed": {
+        "filesScanned": 14,
+        "matches": 0
+      }
+    }
+  ],
+  "blockers": {
+    "c38": [],
+    "phase10AClosureStillUnsatisfied": [
+      "INDEPENDENT_EXTERNAL_PHASE10A_REVIEW"
+    ]
+  },
+  "securityDecision": "PASS_NO_EXPLOITABLE_C38_SECURITY_DEFECTS_FOUND",
+  "terminalityEligibleFromSecurity": true,
+  "internalReviewerStillRequired": true,
+  "externalC38ReviewRequired": false,
+  "phase10AClosureAuthorized": false,
+  "pass": true
+}
