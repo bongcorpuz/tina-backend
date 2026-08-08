@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 84",
+  "classification": "C37_CHECKPOINT_84_PERMISSION_AND_PUSH_INVOCATION_EVIDENCE_SUCCESSFUL",
+  "generatedAtUtc": "2026-08-08T00:55:24Z",
+
+  "permissionControlState": {
+    "priorCheckpointOutcome": "At checkpoint 83, the identical push tool call was blocked by the Claude Code auto-mode classifier before any Git subprocess started (invocationCount 0).",
+    "ownerAction": "Reported out-of-band change to permission control (Manual mode, or a scoped permissions.ask rule covering only this exact push command) so a human approval prompt would appear for this specific command.",
+    "thisUnitDidNotInspectOrModifyPermissionConfiguration": true,
+    "thisUnitDidNotModifyGitConfigCredentialsOrClaudeSettingsFiles": true,
+    "observedBehaviorThisTime": "The identical tool request was accepted and a Git subprocess actually started -- a directly observable behavioral difference from checkpoint 83, consistent with the owner's reported permission-mode change, though this unit cannot directly inspect Claude Code's internal permission state."
+  },
+
+  "toolRequestAcceptanceResult": "ACCEPTED",
+  "gitSubprocessStarted": true,
+  "pushInvocationCount": 1,
+  "secondToolRequestMade": false,
+  "retryOccurred": false,
+  "workaroundUsed": false,
+  "commandAlteredBetweenAuthorizationAndExecution": false,
+
+  "prePushRemoteTipQuery": {
+    "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+    "utcStart": "2026-08-08T00:54:49Z",
+    "utcEnd": "2026-08-08T00:54:50Z",
+    "exitCode": 0,
+    "stdout": "ee664eab4529c636f34cb6d37d23a6a497886a17\trefs/heads/feature/source-availability-engine-v1",
+    "stderr": "",
+    "returnedSha": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "classification": "A_EXPECTED_OLD_TIP"
+  },
+
+  "pushInvocation": {
+    "exactCommand": "git push --porcelain origin 7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1",
+    "utcRequestTimestamp": "2026-08-08T00:55:02Z",
+    "utcSubprocessStartTimestamp": "2026-08-08T00:55:02Z",
+    "utcCompletionTimestamp": "2026-08-08T00:55:09Z",
+    "exitCode": 0,
+    "stdout": "To https://github.com/bongcorpuz/tina-backend.git\n \t7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1\tee664eab..7aac3305\nDone",
+    "stderr": "(none captured beyond the porcelain stdout above)",
+    "porcelainLineParsed": {
+      "flag": "(empty -- indicates successful fast-forward, not '!' rejection or '=' up-to-date)",
+      "fromTo": "7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1",
+      "summary": "ee664eab..7aac3305"
+    },
+    "authenticationResult": "SUCCEEDED (implicit -- no authentication error surfaced; push completed)",
+    "serverResponse": "Accepted (porcelain 'Done' terminator with no '!' rejection line)",
+    "oldShaReportedByGit": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "newShaReportedByGit": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "wasFastForward": true,
+    "localRemoteTrackingRefAutoUpdated": "presumed per normal git push behavior; NOT used as publication proof -- see independent post-operation query below",
+    "forceOptionsUsed": [],
+    "tagsPushed": false,
+    "upstreamConfigChanged": false,
+    "secondRefspecUsed": false,
+    "secondRemoteUsed": false,
+    "secondPushAttempted": false
+  },
+
+  "commandExactlyAsAuthorized": {
+    "sourceCommit": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "destinationRemote": "origin",
+    "destinationRef": "refs/heads/feature/source-availability-engine-v1",
+    "matchesAuthorization": true
+  },
+
+  "noRetryAuthorizedOrPerformed": true,
+  "invocationCountFinal": 1,
+  "remainingPushAuthorization": 0
+}

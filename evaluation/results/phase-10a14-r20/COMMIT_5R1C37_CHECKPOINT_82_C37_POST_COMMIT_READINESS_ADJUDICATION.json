@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 82",
+  "classification": "C37_CHECKPOINT_82_POST_COMMIT_READINESS_ADJUDICATION_NONTERMINAL",
+  "generatedAtUtc": "2026-08-07T23:33:00Z",
+
+  "expectedSuccessfulPath": {
+    "validLocalCommitExists": true,
+    "commitSha": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "containsExactC37CorpusThroughCheckpoint81": true,
+    "isPushed": false,
+    "checkpoint82PostCommitEvidenceInThatCommit": false,
+    "c37Status": "NONTERMINAL",
+    "phase10AStatus": "OPEN",
+    "b1Status": "CLOSED",
+    "b2ThroughB6Status": "OPEN_UNCHANGED",
+    "b7Status": "CLOSED_NARROWLY",
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37RuntimeAttempts": 0,
+    "registryAndWalUnchanged": true,
+    "activeAttemptId": null
+  },
+
+  "terminalityRuleApplied": {
+    "rule": "A local commit existing does NOT, by itself, mark C37 terminal.",
+    "controllingContractClause": "C37 becomes terminal only after its exact commit and normal push are verified.",
+    "commitPortionNowSatisfied": true,
+    "pushPortionNotSatisfied": true,
+    "conclusion": "C37 REMAINS NONTERMINAL. The local commit satisfies exactly one of the two controlling preconditions (commit); the second (verified normal push) has not occurred and is not authorized in this unit."
+  },
+
+  "fourDistinctRemainingWorkItems": {
+    "item1_publicationOfLocalCommit": {
+      "description": "Push the local commit (7aac3305c7cc4219bceb549af640469953c3b590) to origin/feature/source-availability-engine-v1.",
+      "authorizedInThisUnit": false,
+      "status": "PENDING_SEPARATE_AUTHORIZATION"
+    },
+    "item2_checkpoint82EvidenceTreatment": {
+      "description": "Checkpoint-82 post-commit evidence (this artifact and its siblings) plus the new CURRENT_STATE.md continuity block were deliberately created AFTER the commit and remain untracked/unstaged/uncommitted, by design. They form the publication delta for a future, separately governed unit -- not an accident or drift.",
+      "authorizedInThisUnit": "creation only, not staging or committing",
+      "status": "CREATED_UNSTAGED_AS_INTENDED"
+    },
+    "item3_postPushRemoteVerification": {
+      "description": "Once a push is separately authorized and performed, a fresh remote-tip query must confirm the remote ref advanced to exactly 7aac3305c7cc4219bceb549af640469953c3b590 (or its eventual descendant) before any downstream unit treats the work as published.",
+      "authorizedInThisUnit": false,
+      "status": "NOT_YET_APPLICABLE_NO_PUSH_OCCURRED"
+    },
+    "item4_separateTerminalityAdjudication": {
+      "description": "After a verified push, a SEPARATE governed unit must adjudicate whether the controlling closure contract's full terminality bar is now met, and must decide whether/how the checkpoint-82 (and any later) evidence delta is folded into a subsequent publication.",
+      "authorizedInThisUnit": false,
+      "status": "NOT_YET_APPLICABLE"
+    }
+  },
+
+  "explicitProhibitionsRespected": {
+    "pushNotPerformed": true,
+    "secondCommitNotPerformed": true,
+    "c38NotAuthorizedOrBegun": true,
+    "e2NotBegun": true,
+    "a15NotBegun": true,
+    "phase10BNotBegun": true,
+    "runtimeWorkNotPerformed": true,
+    "registryOrWalNotMutated": true,
+    "modelOrSubagentNotInvoked": true
+  },
+
+  "c37MarkedTerminal": false,
+  "dispositionNoStrongerThanEvidence": true
+}

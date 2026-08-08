@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 82",
+  "classification": "C37_CHECKPOINT_82_LOCAL_COMMIT_CONTENT_VERIFICATION",
+  "generatedAtUtc": "2026-08-07T23:32:46Z",
+
+  "newCommitSha": "7aac3305c7cc4219bceb549af640469953c3b590",
+  "newCommitParent": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "parentMatchesStartingHead": true,
+  "parentCount": 1,
+  "isMergeCommit": false,
+  "exactlyOneNewLocalCommitExists": {
+    "verificationCommand": "git log ee664eab4529c636f34cb6d37d23a6a497886a17..HEAD --oneline | wc -l",
+    "result": 1
+  },
+
+  "commitSubjectAndBodyVerification": {
+    "subject": "PHASE-10A14-R20 COMMIT 5R1-C37 nonterminal - no-runtime closure approved with observations, reviewer amended to Opus 5",
+    "bodyMatchesCanonicalMessage": true,
+    "sourcedFrom": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_81_COMMIT_MESSAGE_RECONCILIATION.json"
+  },
+
+  "commitTreePathSetVerification": {
+    "method": "git diff-tree --no-commit-id --name-only -r HEAD, sorted, diffed against the sorted FINAL_SET derived in COMMIT_5R1C37_CHECKPOINT_82_PUBLICATION_SET_RECONCILIATION.json",
+    "result": "IDENTICAL (diff exit 0)",
+    "committedPathCount": 248,
+    "committedAdditions": 247,
+    "committedTrackedModifications": 1,
+    "committedDeletions": 0
+  },
+
+  "commitDoesNotContain": {
+    "anyOfThe76Exclusions": { "checked": true, "found": 0 },
+    "anyOtherPathOutsideFinalSet": { "checked": true, "found": 0 },
+    "anyUnauthorizedModifiedTrackedFile": { "checked": ["security/public-health.js", "server.js", "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"], "found": 0 },
+    "anyDeletion": { "checked": true, "found": 0 },
+    "anyUnauthorizedModeChange": { "checked": true, "found": 0 },
+    "anySubmoduleUpdate": { "checked": true, "found": 0 }
+  },
+
+  "sampleExclusionSpotCheck": [
+    { "path": "IDEA.md", "inCommit": false },
+    { "path": "tests/health-endpoint.test.mjs", "inCommit": false },
+    { "path": "auth.json", "inCommit": false },
+    { "path": ".claude/settings.local.json", "inCommit": false },
+    { "path": "hello.py", "inCommit": false }
+  ],
+
+  "postCommitGitState": {
+    "stagedCount": 0,
+    "modifiedTrackedCount": 3,
+    "modifiedTrackedPathList": ["security/public-health.js", "server.js", "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"],
+    "untrackedCount": 76,
+    "currentStateMdCleanAtCommittedContent": true,
+    "currentStateMdSha256": "383a8e09295894837194cec7a3285c8f948f1ef9ad1a32cf29287fd7c65857f4",
+    "matchesCheckpoint81FinalHash": true
+  },
+
+  "protectedArtifactPreservation": {
+    "IDEA.md": { "sha256": "f53cf577c7b4a979b563f6a22b96b9f30164608a79de5054ead05c63016d6aa0", "unchanged": true },
+    "package.json": { "sha256": "e5a3539128f845eca2f0ab8df4c40e372ad8d125571c646c000980f3db3cbfd3", "unchanged": true },
+    "server.js": { "sha256": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da", "unchanged": true },
+    "security/public-health.js": { "sha256": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0", "unchanged": true },
+    "patch08sTest": { "sha256": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35", "unchanged": true },
+    "taxEnginesCON": { "indexFlag": "S (both paths)", "unchanged": true },
+    "registryAndWal": { "sha256": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073", "unchanged": true },
+    "sealedFrozenArtifactsCommittedByteIdentically": true,
+    "immutable57EntryPackageCommittedByteIdentically": true
+  },
+
+  "candidateAndRegistryReconfirmation": {
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37RuntimeAttempts": 0,
+    "activeAttemptId": null,
+    "registryUnchanged": true,
+    "walUnchanged": true
+  },
+
+  "localAheadBehind": {
+    "method": "git rev-list --count against the captured pre-staging remote tip commit, not a stale tracking ref",
+    "ahead": 1,
+    "behind": 0,
+    "matchesExpected": true
+  },
+
+  "secondAuthorizedRemoteTipQuery": {
+    "purpose": "post-commit",
+    "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+    "result": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "unchangedFromPreStagingQuery": true,
+    "exitCode": 0,
+    "noPushOccurred": true,
+    "externalDivergenceDetected": false
+  },
+
+  "modelOrSubagentInvokedInThisUnit": false,
+  "allContentVerificationsPassed": true
+}

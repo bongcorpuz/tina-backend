@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 84",
+  "classification": "C37_CHECKPOINT_84_REMOTE_PUBLICATION_VERIFICATION_A_PUSH_VERIFIED",
+  "generatedAtUtc": "2026-08-08T00:55:24Z",
+
+  "postOperationRemoteTipQuery": {
+    "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+    "utcStart": "2026-08-08T00:55:23Z",
+    "utcEnd": "2026-08-08T00:55:24Z",
+    "exitCode": 0,
+    "stdout": "7aac3305c7cc4219bceb549af640469953c3b590\trefs/heads/feature/source-availability-engine-v1",
+    "stderr": "",
+    "returnedRef": "refs/heads/feature/source-availability-engine-v1",
+    "returnedSha": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "retried": false,
+    "secondNetworkQueryIssuedAfterThis": false
+  },
+
+  "comparisonAgainstTarget": {
+    "targetCommit": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "postOperationSha": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "exactMatch": true
+  },
+
+  "comparisonAgainstPrePushTip": {
+    "prePushSha": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "postOperationSha": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "changed": true,
+    "changeIsExactlyTheAuthorizedTransition": true
+  },
+
+  "publicationClassification": "A_PUSH_VERIFIED",
+  "classificationRequirementsCheck": {
+    "gitPushInvocationCountEqualsOne": true,
+    "remoteTipEqualsTargetCommit": true,
+    "requirementsMet": true
+  },
+
+  "notInferredFromPushOutputAlone": {
+    "explicitStatement": "This classification rests on the independent, empirical post-operation git ls-remote query result above, not on the push command's own reported success (exit 0, porcelain 'Done', ee664eab..7aac3305 summary). Both signals agree, but the network query is the authoritative proof per the governing instruction 'do not infer remote publication solely from local push output'.",
+    "pushOutputAndNetworkQueryAgree": true
+  },
+
+  "targetCommitRemotePresenceCheck": {
+    "targetCommit": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "isPresentOnRemoteBranchTipExactly": true
+  },
+
+  "noAdditionalNetworkCommandIssued": true
+}

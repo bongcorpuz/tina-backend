@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 83",
+  "classification": "C37_CHECKPOINT_83_PUSH_INVOCATION_EVIDENCE_PRECONDITION_BLOCKED_ZERO_GIT_PROCESS_LAUNCHED",
+  "generatedAtUtc": "2026-08-07T23:56:00Z",
+
+  "prePushRemoteTipQuery": {
+    "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+    "utcStart": "2026-08-07T23:55:48Z",
+    "utcEnd": "2026-08-07T23:55:50Z",
+    "exitCode": 0,
+    "stdout": "ee664eab4529c636f34cb6d37d23a6a497886a17\trefs/heads/feature/source-availability-engine-v1",
+    "stderr": "",
+    "returnedRef": "refs/heads/feature/source-availability-engine-v1",
+    "returnedSha": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "classification": "A_EXPECTED_OLD_TIP",
+    "matchesRequiredPrePushTip": true,
+    "actionPerClassification": "Proceed to the single push, subject to all other gates -- all other gates (identity policy: NO_BINDING_IDENTITY_POLICY_FOUND, commit object verification, path-set verification, manifest verification) had already passed."
+  },
+
+  "pushInvocationAttempted": {
+    "intendedCommand": "git push --porcelain origin 7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1",
+    "sourceIsFullCommitSha": true,
+    "destinationIsFullRefName": true,
+    "forcedFlagsUsed": [],
+    "flagsExplicitlyNotUsed": ["--all", "--mirror", "--tags", "--follow-tags", "--force", "--force-with-lease", "--delete", "--set-upstream"],
+    "secondRefspecUsed": false,
+    "secondRemoteUsed": false,
+
+    "result": "BLOCKED_BEFORE_EXECUTION",
+    "blockingLayer": "Claude Code auto-mode tool-permission classifier (client-side, pre-execution)",
+    "exactToolErrorMessage": "Permission for this action was denied by the Claude Code auto mode classifier. Reason: Blocked by classifier.",
+    "gitProcessLaunched": false,
+    "networkCallMade": false,
+    "credentialsPresented": false,
+    "serverContacted": false,
+    "authenticationOutcome": "N/A -- no authentication attempt occurred; the command never reached the network layer",
+    "serverResponse": "N/A -- server was never contacted",
+    "refUpdateStatus": "N/A -- no ref update was ever attempted against the remote",
+    "oldRemoteShaReportedByGit": "N/A -- git never ran, so it reported nothing",
+    "newRemoteShaReportedByGit": "N/A",
+    "wasFastForward": "N/A",
+    "localRemoteTrackingRefChangedAutomatically": false
+  },
+
+  "invocationCount": {
+    "value": 0,
+    "reasoning": "The tool-permission classifier intercepted the request before any git subprocess was spawned. From the perspective of Git and the network, zero push invocations occurred. This is distinct from a git-level failure (nonzero exit after actually running) -- here, git itself was never given the opportunity to run."
+  },
+
+  "retryPolicy": {
+    "retryAttempted": false,
+    "retryAuthorized": false,
+    "reasonNoRetry": "The governing prompt prohibits retry for any reason, and additionally the tool's own denial message explicitly instructs: 'If you believe this capability is essential to complete the user's request, STOP and explain to the user what you were trying to do and why you need this permission. Let the user decide how to proceed.' Attempting an alternative mechanism to achieve the same push (e.g. a different CLI, a wrapped script, gh CLI) would circumvent the intent of the denial rather than honor it, and was not attempted."
+  },
+
+  "workaroundsConsideredAndRejected": [
+    "Using `gh` (GitHub CLI) to push or create the ref -- rejected: same underlying network-write action the classifier denied, would circumvent intent.",
+    "Wrapping the git push in a different shell invocation to see if the classifier pattern-matches differently -- rejected: this is exactly the 'attempt to work around this denial' behavior the tool explicitly asked not to be done.",
+    "Retrying the identical command -- rejected: governing prompt explicitly prohibits push retry for any reason."
+  ],
+
+  "exactReasonNoPushOccurred": "The push was not withheld due to any repository-identity, commit-identity-policy, or remote-state precondition -- all of those were independently verified and cleared before the push was attempted. It was withheld because the execution environment's own tool-permission layer (external to Git and to this governed evidence process) denied the action outright, before Git could run. This is a NEW category of precondition not previously encountered in this session's checkpoint chain: an agent-runtime permission boundary, not a Git, identity, or repository-content boundary."
+}

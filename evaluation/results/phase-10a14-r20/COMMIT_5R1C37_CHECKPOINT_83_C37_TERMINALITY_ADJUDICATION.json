@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 83",
+  "classification": "C37_CHECKPOINT_83_TERMINALITY_ADJUDICATION_NONTERMINAL_PUSH_NOT_PERFORMED",
+  "generatedAtUtc": "2026-08-07T23:58:00Z",
+
+  "controllingContractTextReadDirectly": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "exactClause": "C37 becomes terminal only after its exact commit and normal push are verified.",
+    "supportingClause": "Commit SHA/push/checkpoint-65 facts must be recorded in post-commit attestations rather than invented in a self-referential commit.",
+    "interpretation": "The controlling contract requires exactly two things for terminality: (1) the exact commit exists, and (2) the normal push is verified. It affirmatively supports treating post-commit/post-push attestations (i.e. checkpoint evidence, including this one) as SEPARATE artifacts that need not themselves be committed or pushed for terminality to be reached -- the phrase 'rather than invented in a self-referential commit' exists precisely because the commit cannot contain facts about its own future publication, and the contract resolves that by deferring those facts to subsequent, uncommitted attestations."
+  },
+
+  "sevenAdjudicationDimensions": {
+    "1_independentReview": {
+      "validOpus5ApprovalWithNonblockingObservations": true,
+      "zeroBlockingObservations": true,
+      "b7NarrowlyClosed": true,
+      "satisfied": true
+    },
+    "2_observationReconciliation": {
+      "allTenObservationsDispositioned": true,
+      "activeCorrectionCountRemainedZero": true,
+      "requiredErrataAndReconciliationsCreated": true,
+      "satisfied": true
+    },
+    "3_candidateAndRuntimeState": {
+      "candidatesAuthorized": 0,
+      "candidatesAllocated": 0,
+      "c37RuntimeAttempts": 0,
+      "noRuntimeCandidateManufactured": true,
+      "satisfied": true
+    },
+    "4_commitState": {
+      "exactCommitExists": true,
+      "commitSha": "7aac3305c7cc4219bceb549af640469953c3b590",
+      "exact248PathCorpusCommitted": true,
+      "commitContentVerified": true,
+      "noExclusionsLeakedIntoCommit": true,
+      "satisfied": true
+    },
+    "5_publicationState": {
+      "remoteBranchPointsExactlyToTheCommit": false,
+      "publicationVerifiedOverTheNetwork": false,
+      "pushHadAnUnresolvedTechnicalAnomaly": false,
+      "pushWasNeverAttemptedAtTheGitOrNetworkLevel": true,
+      "exactCause": "Blocked by the Claude Code auto-mode tool-permission classifier before any git subprocess ran. No repository, identity, or Git-level obstacle existed -- this was an agent-runtime permission boundary.",
+      "satisfied": false
+    },
+    "6_evidenceState": {
+      "checkpoint82ArtifactsRemainLocalAndUncommitted": true,
+      "checkpoint83ArtifactsWillAlsoRemainLocalAndUncommitted": true,
+      "currentStateMdContainsUnstagedCheckpoint82UpdateAndWillReceiveUnstagedCheckpoint83Update": true,
+      "doesControllingContractRequireThesePostCommitArtifactsToBeCommittedOrPublishedBeforeTerminality": false,
+      "basisForThisConclusion": "Direct reading of the controlling contract's own text (above): it explicitly contemplates post-commit attestations as separate, uncommitted artifacts."
+    },
+    "7_blockers": {
+      "b1": "CLOSED",
+      "b2ThroughB6": "OPEN_UNCHANGED",
+      "b7": "CLOSED_NARROWLY",
+      "doB2ThroughB6BelongToC37TerminalityOrToBroaderPhase10AContinuation": "BROADER_PHASE_10A_CONTINUATION",
+      "reasoning": "B2 (/health deferred), B3 (health-endpoint test quarantine), B4 (IDEA.md duplicate), B5 (tax-engines/CON/* Windows limitation), and B6 (stale stash locks) all originated from the ungoverned-commit remediation work at checkpoints 73-77 -- a repository-wide governance/hygiene concern entirely separate from C37's own no-runtime-candidate closure question. The controlling C37 contract (COMMIT_5R1C37_FINAL_OPUS_REQUEST.md) never mentions /health, IDEA.md, tax-engines/CON, or stash locks. These are correctly scoped to Phase 10A's broader continuation, not to C37's specific terminality bar."
+    }
+  },
+
+  "projectScope": {
+    "c37StatusBeforeThisAdjudication": "NONTERMINAL",
+    "r20Status": "IN_PROGRESS",
+    "phase10AStatus": "OPEN",
+    "c38AuthorizationState": "NOT_AUTHORIZED"
+  },
+
+  "adjudicationSelected": "C37_NONTERMINAL_PUSH_FAILED",
+  "adjudicationSelectionNote": "Of the five permitted categories (C37_TERMINAL, C37_NONTERMINAL_EVIDENCE_PUBLICATION_PENDING, C37_NONTERMINAL_PUSH_FAILED, C37_NONTERMINAL_POLICY_BLOCKED, C37_SAFE_PAUSE_REMOTE_DIVERGENCE), C37_NONTERMINAL_PUSH_FAILED is the closest fit by its own stated test ('use if the remote branch does not contain the target commit' -- true here). It is applied with an explicit caveat: 'failed' should not be read as a Git-level or server-level rejection. No push was attempted at that level at all; the block occurred one layer higher, in the agent's own tool-permission system. C37_NONTERMINAL_POLICY_BLOCKED was considered and rejected as a label because that category is specifically for identity/signature/repository policy, none of which blocked this push -- the commit identity gate independently cleared as NO_BINDING_IDENTITY_POLICY_FOUND. The remote-observable outcome (commit absent from remote) is identical either way; only the internal cause differs, and that cause is recorded precisely above rather than mislabeled.",
+
+  "explicitRuleCompliance": {
+    "notMarkedTerminalMerelyBecausePushReturnedZero": "N/A -- push never ran, so this scenario did not arise, but the rule was honored in spirit by requiring actual remote verification rather than trusting any local signal.",
+    "notMarkedTerminalMerelyBecauseRemoteContainsCommit": "N/A -- remote does not contain the commit.",
+    "completeControllingTerminalityContractApplied": true,
+    "b1NotReopenedWithoutContradictoryEvidence": true,
+    "b1Status": "CLOSED (unchanged, reconfirmed with fresh full-timestamp evidence this checkpoint)",
+    "b7NotReopenedWithoutGenuineInvalidation": true,
+    "b7Status": "CLOSED_NARROWLY (unchanged; nothing in this checkpoint invalidates the independent review or its governance amendment)",
+    "b2ThroughB6NotClosedWithoutSeparateEvidence": true,
+    "b2ThroughB6Status": "OPEN (unchanged)",
+    "phase10ANotClaimedComplete": true,
+    "c38NotAuthorized": true
+  },
+
+  "finalDisposition": {
+    "c37Status": "NONTERMINAL",
+    "exactReason": "The controlling contract's two-part terminality test is satisfied only as to its first part (exact commit exists and is verified). Its second part (normal push verified) is not satisfied: the push was never executed at the Git/network level, having been blocked by the agent's own tool-permission layer before any git process ran. The post-operation remote query independently confirms the remote branch still points to ee664eab4529c636f34cb6d37d23a6a497886a17, not to 7aac3305c7cc4219bceb549af640469953c3b590.",
+    "phase10AStatus": "OPEN",
+    "r20Status": "IN_PROGRESS",
+    "c38Authorized": false,
+    "dispositionNoStrongerThanEvidence": true
+  }
+}

@@ -8,6 +8,227 @@ PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS an
 
 ---
 
+## CHECKPOINT 84 — CONTROLLING STATE — C37 IS TERMINAL
+
+Checkpoint **84** supersedes checkpoint 83 as the resume point. Checkpoints 61 through 83 are preserved unaltered, byte-for-byte, at their original positions below — the "## CHECKPOINT 83 — CONTROLLING STATE" heading immediately following this section is untouched original committed text.
+
+Classification: `C37_CHECKPOINT_84_REMOTE_PUBLICATION_VERIFIED_C37_TERMINAL`. Primary executor: Claude Sonnet 5, thinking max, effort max. **No model or subagent was invoked.** `safeToResume=true`; `activeAttemptId=null`.
+
+### Permission control — owner-approved, one clean invocation
+
+At checkpoint 83, the identical push tool call was blocked by the Claude Code auto-mode classifier before any Git subprocess started. The owner reported an out-of-band permission-control change (Manual mode, or a scoped `permissions.ask` rule covering only this exact push command) made specifically so this command would receive a human approval prompt. **This unit did not inspect or modify any Claude Code settings, permission files, auto-mode rules, Git configuration, or credentials.** The identical command was requested unaltered; this time the tool request was accepted and a Git subprocess actually started.
+
+### Fail-closed preflight — every gate passed
+
+Repository identity (local HEAD `7aac3305c7cc4219bceb549af640469953c3b590`, parent `ee664eab4529c636f34cb6d37d23a6a497886a17`, tree `f7e29c15fe401441ead65b2e2e0c0f2c54c134d5`, unchanged), commit object re-verified unchanged (single parent, correct tree, author/committer `Tina Swarm <tina@local>` unchanged, no replace refs, no grafts), committed path set re-confirmed (248: 247 additions + 1 modification, 0 deletions), checkpoint-83 manifest (**8/8 OK**), checkpoint-82 forward reconciliation (expected single divergence on `CURRENT_STATE.md` only), `CURRENT_STATE.md` starting hash matched, 57-entry package (57/57), registry/WAL (`a0261acf…` unchanged, `candidateBudget: {authorized:0, allocated:0}`), and B1/B7 reconfirmed.
+
+### Pre-push remote query, push, post-operation query — all three, exactly once each
+
+```text
+git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1
+→ ee664eab4529c636f34cb6d37d23a6a497886a17   (exit 0)   Classification A — EXPECTED_OLD_TIP
+
+git push --porcelain origin 7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1
+→ exit 0, porcelain summary "ee664eab..7aac3305", "Done"   invocationCount = 1, no retry
+
+git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1
+→ 7aac3305c7cc4219bceb549af640469953c3b590   (exit 0)   Classification A — PUSH_VERIFIED
+```
+
+**Publication is not inferred from the push command's own success message.** The post-operation query is an independent, second empirical network read that confirms the remote branch tip now exactly equals the target commit. Both signals agree. Full detail: `COMMIT_5R1C37_CHECKPOINT_84_PERMISSION_AND_PUSH_INVOCATION_EVIDENCE.json` and `COMMIT_5R1C37_CHECKPOINT_84_REMOTE_PUBLICATION_VERIFICATION.json`.
+
+### Local preservation — fully intact, ahead/behind now zero
+
+Local HEAD, parent, tree, author, and committer all unchanged. No new commit, no amend, no tag. Staged `0`. All 4 modified tracked files and all 91 untracked files byte-identical to pre-push. Registry and every protected artifact unchanged. **Local ahead of remote: 0. Local behind: 0** — derived directly from the two exact SHA values (both now `7aac3305…`), not from a local tracking ref.
+
+### C37 terminality — TERMINAL
+
+The controlling contract (`COMMIT_5R1C37_FINAL_OPUS_REQUEST.md`, re-read directly this checkpoint, hash-confirmed unchanged) states: *"C37 becomes terminal only after its exact commit and normal push are verified."* **Both halves are now independently satisfied:**
+
+```text
+Part 1 — exact commit exists:      SATISFIED (unchanged since checkpoint 82, re-verified)
+Part 2 — normal push verified:     SATISFIED (independent post-operation network query, not push output alone)
+
+candidatesAuthorized:  0        B1:  CLOSED
+candidatesAllocated:   0        B7:  CLOSED (narrowly)
+C37 runtime attempts:  0        B2–B6:  OPEN (unchanged)
+
+⇒ C37 STATUS: TERMINAL
+```
+
+Checkpoint 83's `NONTERMINAL_PUSH_FAILED` disposition was correct for the evidence available at that time — it is **superseded by new evidence**, not overridden. The controlling contract's supporting clause — *"Commit SHA/push/checkpoint-65 facts must be recorded in post-commit attestations rather than invented in a self-referential commit"* — confirms checkpoint 82/83/84 evidence and this `CURRENT_STATE.md` update correctly remain separate, local, uncommitted attestations; nothing in the contract requires publishing them for C37 to be terminal.
+
+**What C37_TERMINAL does *not* mean, stated explicitly:** Phase 10A is **not** complete (remains OPEN). R20 is **not** complete (remains IN PROGRESS). B2–B6 are **not** closed (remain OPEN, unchanged — they trace to the checkpoint-73–77 ungoverned-commit remediation, a broader Phase 10A concern, not a C37-specific one). C38 is **not** authorized and was **not** begun. Full detail: `COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json`.
+
+### What did NOT occur
+
+No second push, force push, force-with-lease, amend, new commit, tag, staging, checkout, merge, pull, fetch, rebase, cherry-pick, revert, stash, reset, or restore. No Git identity, signing, credential-helper, or permission-configuration change by this unit. No deletion, quarantine, or cleanup. No runtime-code, test, validator, oracle, or safety-guard modification. No registry or WAL mutation. No model or subagent invocation. No C38, E2, A15, or Phase 10B. No staging, committing, or pushing of any checkpoint-82, checkpoint-83, or checkpoint-84 artifact.
+
+### Next exact authorized operation
+
+C37 is terminal. No further C37-specific operation is required. Checkpoint-82 through 84 evidence and this `CURRENT_STATE.md` update remain local and uncommitted by design; a future, separately authorized unit may decide whether/how to commit and publish that evidence delta. **Do not begin C38, E2, A15, or Phase 10B without separate, explicit authorization.**
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 83 (superseded by checkpoint 84, retained verbatim)
+
+## CHECKPOINT 83 — CONTROLLING STATE
+
+Checkpoint **83** supersedes checkpoint 82 as the resume point. Checkpoints 61 through 82 are preserved unaltered, byte-for-byte, at their original positions below — the "## CHECKPOINT 82 — CONTROLLING STATE" heading immediately following this section is untouched original committed text, not renamed or rewritten.
+
+Classification: `C37_CHECKPOINT_83_PRECONDITION_NO_PUSH_REMOTE_UNCHANGED`. Primary executor: Claude Sonnet 5, thinking max, effort max. **No model or subagent was invoked.** `safeToResume=true`; `activeAttemptId=null`.
+
+### Fail-closed preflight — every gate passed
+
+Repository identity (branch, local HEAD `7aac3305c7cc4219bceb549af640469953c3b590`, parent `ee664eab4529c636f34cb6d37d23a6a497886a17`), origin fetch/push URLs (both `https://github.com/bongcorpuz/tina-backend.git`, correct owner/repo, HTTPS), the local commit object (type `commit`, single parent, tree `f7e29c15fe401441ead65b2e2e0c0f2c54c134d5`, author/committer `Tina Swarm <tina@local>`, unsigned, no replace refs, no grafts), the committed path set (248 paths: 247 additions + 1 modification, re-derived directly via `git diff` against the parent — matches checkpoint 82 exactly), checkpoint-82 manifest (**9/9 OK, exit 0**), checkpoint-81 forward reconciliation (expected single divergence on `CURRENT_STATE.md` only), the 57-entry package (57/57), registry/WAL (hash `a0261acf…` unchanged, `candidateBudget: {authorized:0, allocated:0}`), and B1 writer safety (reboot-after-disablement reconfirmed programmatically `True`) — all confirmed fresh.
+
+### Commit identity policy — no binding policy found, proceed
+
+The commit's identity (`Tina Swarm <tina@local>`) differs from 9 of the last 10 repository commits (`Bong Corpuz <bong.corpuz@gmail.com>`). Searched for `CONTRIBUTING.md`, `CODEOWNERS`, `SECURITY.md`, `GOVERNANCE.md`, and any tracked file matching contribution/authorship/signing-policy keywords — **zero formal identity policy documents exist anywhere in the tracked tree.** The "governance" matches found are all TINA's own AI-evidence documentation, unrelated to repository contribution policy. Per explicit instruction not to infer a binding prohibition from historical identity frequency alone, this is classified **`B_NO_BINDING_IDENTITY_POLICY_FOUND`** — recorded as a nonblocking provenance observation, not a block. No commit amend, recreation, identity change, or Git config change occurred. Full detail: `COMMIT_5R1C37_CHECKPOINT_83_COMMIT_IDENTITY_POLICY_ADJUDICATION.json`.
+
+### Pre-push remote query — expected old tip
+
+```text
+git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1
+→ ee664eab4529c636f34cb6d37d23a6a497886a17   (exit 0)
+```
+
+Classification **A — EXPECTED_OLD_TIP.** All other gates had already passed. Proceeded to the single authorized push.
+
+### The push was blocked before it ran — not a Git or repository problem
+
+```text
+git push --porcelain origin 7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1
+```
+
+**This command never executed.** The Claude Code auto-mode tool-permission classifier denied it before any `git` subprocess was spawned: *"Permission for this action was denied by the Claude Code auto mode classifier."* No network call was made, no credentials were presented, no server was contacted. **Push invocation count: 0** — this is meaningfully different from a Git-level or server-level rejection (which would count as 1 invocation with a nonzero exit); here Git itself was never given the chance to run.
+
+Per the tool's own explicit instruction — *"You should not attempt to work around this denial... STOP and explain to the user what you were trying to do and why you need this permission. Let the user decide how to proceed"* — **no workaround was attempted.** Considered and rejected: using `gh` CLI (same underlying network-write action), a different shell wrapping (exactly the discouraged pattern-matching evasion), and retrying the identical command (explicitly prohibited regardless). Full detail: `COMMIT_5R1C37_CHECKPOINT_83_PUSH_INVOCATION_EVIDENCE.json`.
+
+### Post-operation remote query — confirms nothing changed
+
+```text
+git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1
+→ ee664eab4529c636f34cb6d37d23a6a497886a17   (exit 0, identical to the pre-push query)
+```
+
+**Classification: `E — PRECONDITION_NO_PUSH_REMOTE_UNCHANGED`.** The remote branch does not contain the target commit. Not inferred from the absence of push output — proven by two independent, empirical `git ls-remote` queries that agree exactly. Full detail: `COMMIT_5R1C37_CHECKPOINT_83_REMOTE_PUBLICATION_VERIFICATION.json`.
+
+### Local preservation — fully intact
+
+Local HEAD unchanged (`7aac3305…c3b590`), parent unchanged, staged `0`, all 4 modified tracked files and all 84 untracked files byte-identical to pre-operation. No new commit, no amend, no tag. Registry hash `a0261acf…` unchanged. All protected artifacts unchanged. Local ahead of the captured remote tip: **1**; behind: **0** — computed directly from the two SHA values, not a local tracking ref.
+
+### C37 terminality — NONTERMINAL, precise reason
+
+The controlling contract (`COMMIT_5R1C37_FINAL_OPUS_REQUEST.md`) states: *"C37 becomes terminal only after its exact commit and normal push are verified."* It also affirmatively supports treating post-commit attestations (checkpoint evidence like this one) as separate, uncommitted artifacts that need not themselves be published for terminality — *"Commit SHA/push/checkpoint-65 facts must be recorded in post-commit attestations rather than invented in a self-referential commit."* **Had the push succeeded and been verified, C37_TERMINAL would have been the contract-supported adjudication.** It did not succeed. The commit half of the test is satisfied; the push half is not — the remote independently confirms the target commit is absent.
+
+**Adjudication: `C37_NONTERMINAL_PUSH_FAILED`** (the closest of the five permitted categories by its own test — "remote branch does not contain the target commit" — applied with the explicit caveat that "failed" here means *never attempted at the Git/network level*, not rejected by the server). `C37_NONTERMINAL_POLICY_BLOCKED` was considered and correctly rejected: that category is for identity/signature/repository policy specifically, all of which independently cleared. **B1 remains CLOSED** (not reopened; reconfirmed with fresh evidence). **B7 remains CLOSED narrowly** (nothing invalidates the independent review or its governance amendment). **B2–B6 remain OPEN, unchanged** — and are explicitly scoped to Phase 10A's broader continuation, not to C37: all five originated from the checkpoint-73–77 ungoverned-commit remediation, and the controlling C37 contract never mentions `/health`, `IDEA.md`, `tax-engines/CON`, or stash locks. **Phase 10A remains OPEN. R20 remains IN PROGRESS. C38 remains unauthorized.** Full detail: `COMMIT_5R1C37_CHECKPOINT_83_C37_TERMINALITY_ADJUDICATION.json`.
+
+### What did NOT occur
+
+No `git add`, staging, commit, amend, commit recreation, author/committer/timestamp/message rewrite, checkout, switch, merge, pull, fetch, rebase, cherry-pick, revert, stash, reset, restore, force push, force-with-lease, second push, tag creation or push, remote or branch deletion, branch creation, upstream configuration change, Git identity change, signing configuration change, or credential-helper change. No deletion, quarantine, or broad cleanup. No runtime-code, test, validator, oracle, or safety-guard modification. No registry or WAL mutation. No startup-entry re-enablement. No unrelated process termination. No model or subagent invocation of any kind. No C38, E2, A15, or Phase 10B. No staging, committing, or pushing of any checkpoint-82 or checkpoint-83 artifact.
+
+### Next exact authorized operation
+
+**Owner action required.** This is not a repository, identity, or remote-state problem — every one of those was independently cleared before the push was attempted. To publish `7aac3305c7cc4219bceb549af640469953c3b590` to `origin/feature/source-availability-engine-v1`, the owner must either (1) grant a Bash permission rule allowing this exact push command and re-authorize a fresh single-push attempt bound to the same commit and ref, or (2) run the push manually: `git push origin 7aac3305c7cc4219bceb549af640469953c3b590:refs/heads/feature/source-availability-engine-v1`. After a successful push by either path, a separate unit must run exactly one post-push remote-tip query and complete the terminality adjudication this checkpoint could not reach. Do not retry the push from this execution context without a permission change. Do not begin C38, E2, A15, or Phase 10B.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 82 (superseded by checkpoint 83, retained verbatim)
+
+## CHECKPOINT 82 — CONTROLLING STATE
+
+Checkpoint **82** supersedes checkpoint 81 as the resume point. Checkpoints 61 through 81 are preserved unaltered, byte-for-byte, at their original positions below, starting with the unedited "## CHECKPOINT 81 — CONTROLLING STATE" heading itself.
+
+Classification: `C37_CHECKPOINT_82_LOCAL_COMMIT_CREATED_NOT_PUSHED_NONTERMINAL`. Primary executor: Claude Sonnet 5, thinking max, effort max. **No model or subagent was invoked** — confirmed as a precondition of this unit, not merely an outcome. `safeToResume=true`; `activeAttemptId=null`.
+
+### Fail-closed preflight — every gate passed
+
+Repository identity (branch, starting HEAD `ee664eab4529c636f34cb6d37d23a6a497886a17`, full parent `d5b25e676f623fbc1888608ff250824fcd34af99`), first remote-tip query (fresh `git ls-remote`, exit 0, matched starting HEAD), checkpoint-81 manifest (**13/13 OK**), CURRENT_STATE.md starting hash (matched exactly), checkpoint-80 and checkpoint-79 forward reconciliation (expected single divergence on CURRENT_STATE.md only, both), 57-entry package (57/57), registry/WAL (hash `a0261acf…` unchanged, `candidateBudget: {authorized:0, allocated:0}`), B1 writer safety (reboot confirmed after disablement, gateway absent) — all confirmed fresh.
+
+**Hooks and signing:** only `.sample` (inactive) hooks exist in `.git/hooks`; no active `pre-commit`, `prepare-commit-msg`, `commit-msg`, or `post-commit`. `commit.gpgSign` unset; no signing in force. One observation carried forward without action: the configured commit identity (`Tina Swarm <tina@local>`) differs from the identity on every prior visible commit (`Bong Corpuz <bong.corpuz@gmail.com>`), and is the same identity that authored the ungoverned commit `ff1bc2b1` remediated earlier in this session. No git config change was authorized or made; the existing configuration was used as-is.
+
+### Publication-set boundary — verified from evidence, not assumed
+
+The governing prompt raised a real concern: might the checkpoint-81 base allowlist (238 paths) have already swept up some of checkpoint 81's own evidence files mid-creation, breaking the clean `237 + 10 = 247` arithmetic? **Investigated directly** — read the sealed allowlist and checked whether any of the 10 checkpoint-81 delta files appear inside it. **Result: zero overlap.** The base allowlist and the 10-file delta are cleanly disjoint. The full closing equation was independently verified against live `git status`, not assumed:
+
+```text
+SET A (checkpoint-81 base allowlist)     238 paths (237 untracked + 1 tracked: CURRENT_STATE.md)
+SET B (checkpoint-81 self-sealing delta)  10 paths (all untracked, zero overlap with A)
+FINAL_SET = A ∪ B                        248 paths (247 untracked + 1 tracked)
+
+247 (staged-intended untracked) + 76 (excluded untracked) = 323 (live untracked at preflight)   ✓ verified
+```
+
+Full path-level validation passed: 0 missing files, 0 duplicates, 0 case collisions, 0 wildcards/absolute paths/traversal components, 0 directories, 0 symlinks, 176/176 JSON files syntactically valid, 0 protected files present, 0 of the other 3 modified tracked files present. Full detail: `COMMIT_5R1C37_CHECKPOINT_82_PUBLICATION_SET_RECONCILIATION.json`.
+
+### Staging — exact, verified, zero drift
+
+13 `git add -- <exact-quoted-paths>` command groups, generated and stored **outside the repository**, executed with zero wildcard/`-A`/`.`/`-u`/directory-wide staging. Post-staging: **248 staged (247 additions, 1 modification, 0 deletions)**, verified as a **set equality** (not just count) against FINAL_SET — identical. `git diff` (index-vs-worktree) showed exactly the 3 pre-existing, deliberately-excluded `/health` files as differing — confirming every one of the 248 staged blobs exactly matched the approved working-tree content. `git diff --cached --check` returned advisory whitespace-only warnings (trailing whitespace inside a preserved `.patch` file's literal diff-hunk content, plus two blank-line-at-EOF notices) — not conflict markers, not blocking, and no active hook exists to gate on them. Full detail: `COMMIT_5R1C37_CHECKPOINT_82_STAGED_INDEX_VERIFICATION.json`.
+
+### The single local commit
+
+```text
+git commit -F <canonical-message-file-outside-repo>
+
+subject:  PHASE-10A14-R20 COMMIT 5R1-C37 nonterminal - no-runtime closure approved
+          with observations, reviewer amended to Opus 5
+UTC:      2026-08-07T23:31:41Z → 2026-08-07T23:31:42Z
+exit:     0
+resulting HEAD:   7aac3305c7cc4219bceb549af640469953c3b590
+resulting parent: ee664eab4529c636f34cb6d37d23a6a497886a17  (single parent, not a merge)
+files changed:    248 (247 insertions-only additions, 1 modification, 0 deletions)
+```
+
+No `--amend`, `--no-verify`, `--no-gpg-sign`, `-a`, path arguments, interactive mode, fixup, squash, or reused message. **Exactly one commit invocation, exit 0 on the first attempt — the rollback mechanism was never exercised.** Full detail: `COMMIT_5R1C37_CHECKPOINT_82_LOCAL_COMMIT_INVOCATION_EVIDENCE.json`.
+
+### Post-commit verification — committed tree exactly equals FINAL_SET
+
+`git diff-tree --no-commit-id --name-only -r HEAD`, sorted and diffed against FINAL_SET: **identical, diff exit 0.** Zero of the 76 exclusions present in the commit (spot-checked: `IDEA.md`, `tests/health-endpoint.test.mjs`, `auth.json`, `.claude/settings.local.json`, `hello.py` — all correctly absent). Zero unauthorized modified tracked files, deletions, mode changes, or submodule updates. Post-commit state: staged `0`, modified tracked `3` (exactly the expected `/health` files), untracked `76`. `knowledge/CURRENT_STATE.md` was clean at its checkpoint-81 committed hash immediately after the commit (`383a8e09…5857f4`) — this present update comes after that clean point. All protected artifacts (including the registry, `a0261acf…`, and the raw Opus-5 response) byte-identical. Local ahead **1**, behind **0**, computed via commit graph against the captured pre-staging remote tip, not a stale tracking ref. **Second authorized remote-tip query, post-commit:** `ee664eab4529c636f34cb6d37d23a6a497886a17` — unchanged from the pre-staging query, confirming no external change and no push. Full detail: `COMMIT_5R1C37_CHECKPOINT_82_LOCAL_COMMIT_CONTENT_VERIFICATION.json`.
+
+### C37 post-commit adjudication — NONTERMINAL, four distinct remaining items
+
+A local commit existing does **not**, by itself, mark C37 terminal. The controlling clause — *"C37 becomes terminal only after its exact commit and normal push are verified"* — has its commit half satisfied now; its push half has not occurred and is not authorized here. Four distinct remaining items, kept separate rather than conflated:
+
+1. **Publication** of the local commit (`7aac3305…c3b590`) via push — not authorized in this unit.
+2. **Checkpoint-82 evidence treatment** — this record and its siblings, plus this CURRENT_STATE.md block, were created *after* the commit and remain deliberately untracked/unstaged — the publication delta for a future unit, not accidental drift.
+3. **Post-push remote verification** — not yet applicable; no push has occurred.
+4. **Separate terminality adjudication** — required after a verified push, not performed or authorized here.
+
+Full detail: `COMMIT_5R1C37_CHECKPOINT_82_C37_POST_COMMIT_READINESS_ADJUDICATION.json`.
+
+### State summary
+
+```text
+candidatesAuthorized:  0
+candidatesAllocated:   0
+C37 runtime attempts:  0
+registry/WAL:          unchanged (hash a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073)
+B1:                    CLOSED
+B2–B6:                 OPEN (unchanged)
+B7:                    CLOSED (narrowly, unchanged from checkpoint 80)
+C37:                   NONTERMINAL — missing: push, post-push remote verification, separate terminality adjudication
+Phase 10A:             OPEN
+R20:                   IN PROGRESS
+Opus 5:                AUTHORIZED_CONSUMED / consumed=true / remaining=0 / invocationCount=1 (unchanged)
+Opus 4.8:               SUPERSEDED_UNUSED / consumed=false / remainingPermittedInvocations=0 (unchanged)
+staged:                0
+modified (tracked):    4 (this CURRENT_STATE.md update + the 3 pre-existing /health files)
+untracked:             76 + this checkpoint's own new evidence files
+```
+
+### What did NOT occur
+
+No push, force-push, amend, second commit, tag, reset, checkout, switch, merge, pull, fetch, rebase, cherry-pick, revert, or stash (the only `git restore` authorized — the exact-path failure rollback — was never exercised, since the commit succeeded on its first and only invocation). No deletion, quarantine, or broad cleanup. No runtime-code, test, validator, oracle, or safety-guard modification. No registry or WAL mutation. No startup-entry re-enablement. No unrelated process termination. No model or subagent invocation of any kind. No C38, E2, A15, or Phase 10B. No `/health` work. No staging of any checkpoint-82 artifact.
+
+### Next exact authorized operation
+
+Owner decision required to **separately authorize** pushing commit `7aac3305c7cc4219bceb549af640469953c3b590` to `origin/feature/source-availability-engine-v1`, followed by post-push remote verification and a separate terminality adjudication for C37. No other operation is authorized until then.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 81 (superseded by checkpoint 82, retained verbatim)
+
 ## CHECKPOINT 81 — CONTROLLING STATE
 
 Checkpoint **81** supersedes checkpoint 80 as the resume point. Checkpoints 61 through 80 are preserved unaltered, and the checkpoint-80 block below is **retained verbatim**.

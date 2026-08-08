@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 84",
+  "classification": "C37_CHECKPOINT_84_TERMINALITY_ADJUDICATION_C37_TERMINAL",
+  "generatedAtUtc": "2026-08-08T00:56:00Z",
+
+  "controllingContractReReadDirectlyThisCheckpoint": {
+    "artifact": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+    "artifactSha256ReconfirmedUnchanged": "0551f3cc2dbe899ca5d8f495ff6cd15462623017fd13017596a3c9d747f60449",
+    "exactClause": "C37 becomes terminal only after its exact commit and normal push are verified.",
+    "supportingClause": "Commit SHA/push/checkpoint-65 facts must be recorded in post-commit attestations rather than invented in a self-referential commit.",
+    "contractDoesNotContradictTheReportedTerminalityRule": true
+  },
+
+  "twoPartTestEvaluation": {
+    "part1_exactCommitExists": {
+      "satisfied": true,
+      "evidence": "Commit 7aac3305c7cc4219bceb549af640469953c3b590 verified: object type commit, single parent ee664eab4529c636f34cb6d37d23a6a497886a17, tree f7e29c15fe401441ead65b2e2e0c0f2c54c134d5, 248-path committed corpus (247 additions + 1 modification, 0 deletions), author/committer unchanged, no replace refs, no grafts."
+    },
+    "part2_normalPushVerified": {
+      "satisfied": true,
+      "evidence": "Pre-push git ls-remote returned the expected old tip (ee664eab...). A single git push subprocess (invocationCount=1) completed with exit 0, porcelain summary ee664eab..7aac3305. An INDEPENDENT post-operation git ls-remote query -- not the push output -- returned 7aac3305c7cc4219bceb549af640469953c3b590 exactly, on refs/heads/feature/source-availability-engine-v1. Both signals agree; the network query, not the push output, is treated as authoritative proof."
+    },
+    "bothPartsSatisfied": true
+  },
+
+  "requiredAccompanyingStateChecklist": {
+    "exactC37CommitRemotelyPublished": true,
+    "remoteTipExactlyEqualsTarget": true,
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37RuntimeAttempts": 0,
+    "b1Status": "CLOSED",
+    "b7Status": "CLOSED_NARROWLY",
+    "b2ThroughB6Status": "OPEN_UNCHANGED",
+    "phase10AStatus": "OPEN",
+    "c38Authorized": false,
+    "additionalReviewRequired": false,
+    "additionalReviewRequiredBasis": "The one-use claude-opus-5 authorization was already validly consumed at checkpoint 80 with outcome APPROVED_WITH_NONBLOCKING_OBSERVATIONS, 0 blocking findings. Nothing in checkpoints 81-84 invalidated that review.",
+    "checkpoint82Through84AttestationsRemainSeparateLocalPostPublicationEvidence": true,
+    "noOtherContractRequiresTheirPublication": true,
+    "allChecklistItemsSatisfied": true
+  },
+
+  "explicitNonOverstatements": {
+    "phase10ADeclaredComplete": false,
+    "r20DeclaredComplete": false,
+    "b2ThroughB6DeclaredClosed": false,
+    "c38DeclaredAuthorized": false,
+    "statement": "C37_TERMINAL is adjudicated strictly as a status of the C37 commit unit itself. It does not extend to, and this record does not claim, completion of Phase 10A, completion of R20, closure of B2 through B6, or authorization of C38. Those remain exactly as they were: Phase 10A OPEN, R20 IN PROGRESS, B2-B6 OPEN, C38 unauthorized."
+  },
+
+  "priorNonterminalDispositionsSuperseded": {
+    "checkpoint81": "NONTERMINAL (pre-commit)",
+    "checkpoint82": "NONTERMINAL (committed, not pushed)",
+    "checkpoint83": "NONTERMINAL_PUSH_FAILED (push blocked by tool permission, remote unchanged)",
+    "checkpoint84": "TERMINAL (commit verified + push verified, both independently confirmed)",
+    "explicitStatement": "Checkpoint 83's NONTERMINAL disposition was correct for the evidence available at that time -- the push had not occurred. It is superseded here by new evidence (a successful, independently-verified push), not overridden or contradicted."
+  },
+
+  "finalDisposition": {
+    "c37Status": "TERMINAL",
+    "exactBasis": "Both parts of the controlling contract's exclusive terminality test are now independently verified: the exact commit exists and is unchanged, and the normal push is verified via a network query that did not rely on local push output alone.",
+    "phase10AStatus": "OPEN",
+    "r20Status": "IN_PROGRESS",
+    "c38Authorized": false,
+    "dispositionNoStrongerThanEvidence": true
+  }
+}

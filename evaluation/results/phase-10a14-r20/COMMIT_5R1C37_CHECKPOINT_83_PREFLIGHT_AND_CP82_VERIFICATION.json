@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 83",
+  "classification": "C37_CHECKPOINT_83_PREFLIGHT_AND_CP82_VERIFICATION",
+  "generatedAtUtc": "2026-08-07T23:53:16Z",
+
+  "repositoryIdentity": {
+    "root": "C:\\Projects\\tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "startingHead": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "startingHeadParent": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "originFetchUrl": "https://github.com/bongcorpuz/tina-backend.git",
+    "originPushUrl": "https://github.com/bongcorpuz/tina-backend.git",
+    "originIdentifiesIntendedRepository": true,
+    "transport": "HTTPS",
+    "gitOperationInProgress": "NONE",
+    "indexLockPresent": false,
+    "stagedCountAtPreflight": 0,
+    "modifiedCountAtPreflight": 4,
+    "untrackedCountAtPreflight": 84
+  },
+
+  "localCommitObjectVerification": {
+    "sha": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "objectType": "commit",
+    "parentCount": 1,
+    "parent": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "isMergeCommit": false,
+    "headPointsExactlyToIt": true,
+    "replaceRefsFound": 0,
+    "graftsFileFound": false,
+    "treeSha": "f7e29c15fe401441ead65b2e2e0c0f2c54c134d5",
+    "author": "Tina Swarm <tina@local>",
+    "authorTimestamp": "1786145502 +0800",
+    "committer": "Tina Swarm <tina@local>",
+    "committerTimestamp": "1786145502 +0800",
+    "subject": "PHASE-10A14-R20 COMMIT 5R1-C37 nonterminal - no-runtime closure approved with observations, reviewer amended to Opus 5",
+    "bodySourcedFromGitDirectlyNotReconstructedFromPrompt": true,
+    "encoding": "(unset, default UTF-8)",
+    "signatureState": "UNSIGNED (no gpg: lines in git log --show-signature; consistent with commit.gpgSign unset at every prior checkpoint)"
+  },
+
+  "committedPathSetReverification": {
+    "method": "git diff --name-status ee664eab4529c636f34cb6d37d23a6a497886a17 7aac3305c7cc4219bceb549af640469953c3b590",
+    "totalPaths": 248,
+    "additions": 247,
+    "modifications": 1,
+    "deletions": 0,
+    "renames": 0,
+    "submoduleChanges": 0,
+    "unauthorizedModeChanges": 0,
+    "matchesCheckpoint82FinalSet": true
+  },
+
+  "checkpoint82ManifestVerification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_82_FINAL_EVIDENCE.sha256",
+    "manifestSelfSha256": "69a0ae3cfb98896896f299ef3b14d7121f83c0f731876d77d180d1496ca871f6",
+    "entryCount": 9,
+    "verifiedCount": 9,
+    "mismatchCount": 0,
+    "exitCode": 0,
+    "entriesNotInferredFromFileCountAloneButReadFromManifest": true
+  },
+
+  "currentStateMdVerification": {
+    "requiredStartingSha256": "d25055be5e0736ee9f3a65f694fdf9136817b5d96dafc90d33abf16247c1f049",
+    "observedSha256": "d25055be5e0736ee9f3a65f694fdf9136817b5d96dafc90d33abf16247c1f049",
+    "match": true
+  },
+
+  "checkpoint81ForwardReconciliation": {
+    "entriesOk": 9,
+    "entriesFailed": 1,
+    "failedEntry": "knowledge/CURRENT_STATE.md",
+    "explainedByCheckpoint82Only": true,
+    "noUnexpectedDivergence": true
+  },
+
+  "fiftySevenEntryPackageReverification": {
+    "entriesTotal": 57,
+    "entriesOk": 57,
+    "entriesMismatched": 0,
+    "entriesMissing": 0,
+    "noPackageContentChanged": true
+  },
+
+  "registryWalReconciliation": {
+    "registryHash": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "match": true,
+    "totalAttempts": 230,
+    "running": 0,
+    "orphan": 0,
+    "dangling": 0,
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37WalExists": false,
+    "activeAttemptId": null
+  },
+
+  "b1WriterSafetyReverification": {
+    "disablementUtc": "2026-08-07T06:33:15Z",
+    "qualifyingRebootUtc": "2026-08-07T18:26:41.5Z",
+    "currentLastBootUpTimeUtc": "2026-08-07T18:26:41.5Z",
+    "rebootAfterDisablementStillHoldsProgrammatically": true,
+    "gatewayProcessesRunning": 0,
+    "disabledMarkerHashValid": true,
+    "openClawGatewayTaskState": "Disabled",
+    "unauthorizedWriterActive": false,
+    "b1Status": "CLOSED"
+  },
+
+  "blockerStateConfirmation": { "b1": "CLOSED", "b2ThroughB6": "OPEN_UNCHANGED", "b7": "CLOSED_NARROWLY" },
+  "authorizationStateConfirmation": {
+    "opus5": { "status": "AUTHORIZED_CONSUMED", "consumed": true, "remaining": 0, "invocationCount": 1 },
+    "opus48": { "status": "SUPERSEDED_UNUSED", "consumed": false, "remainingPermittedInvocations": 0 },
+    "noReviewerOrModelAuthorizationExistsForThisUnit": true
+  },
+
+  "checkpoint83NumberCheck": { "highestExistingCheckpointBeforeThisUnit": 82, "checkpoint83PreviouslyUnused": true, "checkpointNumberSelected": 83 },
+
+  "preflightPassResult": "ALL_GATES_PASSED_SAFE_TO_PROCEED_TO_IDENTITY_GATE_AND_PRE_PUSH_QUERY"
+}

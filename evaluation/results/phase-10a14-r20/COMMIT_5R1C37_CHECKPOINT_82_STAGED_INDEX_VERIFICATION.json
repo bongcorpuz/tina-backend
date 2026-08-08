@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 82",
+  "classification": "C37_CHECKPOINT_82_STAGED_INDEX_VERIFICATION",
+  "generatedAtUtc": "2026-08-07T23:30:38Z",
+
+  "stagingCommandsExecuted": {
+    "location": "temporary file outside the repository (scratchpad), never committed",
+    "totalGroups": 13,
+    "pathsPerGroupMax": 20,
+    "totalPathsStaged": 248,
+    "commandForm": "git add -- <exact-quoted-path-1> <exact-quoted-path-2> ...",
+    "wildcardUsed": false,
+    "gitAddDotUsed": false,
+    "gitAddDashAUsed": false,
+    "gitAddAllUsed": false,
+    "gitAddDashUUsed": false,
+    "directoryWideStagingUsed": false,
+    "checkpoint82ArtifactStaged": false
+  },
+
+  "postStagingInspection": {
+    "stagedPathCount": 248,
+    "stagedStatusBreakdown": { "additions": 247, "modifications": 1, "deletions": 0, "renames": 0, "modeOnlyChanges": 0, "submoduleChanges": 0 },
+    "requiredResult": { "totalPaths": 248, "additions": 247, "modifications": 1, "deletions": 0 },
+    "match": true
+  },
+
+  "setEqualityCheck": {
+    "method": "Full set comparison (sorted staged-path list vs sorted FINAL_SET list), not count equality alone",
+    "result": "IDENTICAL",
+    "inStagedNotFinalSet": 0,
+    "inFinalSetNotStaged": 0
+  },
+
+  "blobContentVerification": {
+    "method": "git diff (unstaged, index-vs-worktree) after staging",
+    "result": "Exactly 3 paths reported as differing between index and working tree: security/public-health.js, server.js, tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs -- these are precisely the three pre-existing, deliberately-EXCLUDED /health modifications that were never staged in this operation. Zero of the 248 staged paths showed any residual index-vs-worktree difference, confirming every staged blob is byte-identical to the current approved working-tree content.",
+    "allStagedBlobsMatchWorkingTree": true
+  },
+
+  "gitDiffCachedCheck": {
+    "command": "git diff --cached --check",
+    "exitCode": 2,
+    "findingsNature": "ADVISORY_WHITESPACE_ONLY",
+    "findings": [
+      "COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md:26 -- new blank line at EOF",
+      "COMMIT_5R1C37_CHECKPOINT_73_UNGOVERNED_SEMANTIC_CHANGES.patch -- multiple 'trailing whitespace' warnings on lines 6,8,14,32,50,72,74,80,92",
+      "COMMIT_5R1C37_TECHNICAL_INCOMPLETE_CHECKPOINT_DRIVER.mjs:545 -- new blank line at EOF"
+    ],
+    "assessment": "None of these are conflict markers or corruption. The .patch file's trailing-whitespace lines are literal, load-bearing diff-hunk content (the exact bytes of a preserved patch describing an ungoverned change) and must not be altered. This exit code is purely advisory from `git diff --check`; it does not gate `git commit` in the absence of an active pre-commit hook, and no active hook exists (confirmed at preflight). Not treated as a blocking condition.",
+    "blockedStaging": false,
+    "blockedCommit": false
+  },
+
+  "exclusionPreservationCheck": {
+    "excludedPathCount": 76,
+    "excludedPathsRemainUntrackedAndUnstaged": true,
+    "verificationMethod": "Confirmed all 76 remained absent from `git diff --cached --name-only` output"
+  },
+
+  "otherThreeModifiedTrackedFilesRemainUnstaged": {
+    "files": ["security/public-health.js", "server.js", "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"],
+    "confirmedUnstaged": true
+  },
+
+  "indexContainsNoPathOutsideFinalSet": true,
+  "stagingValidationResult": "PASS_PROCEED_TO_COMMIT",
+  "rollbackInvoked": false
+}

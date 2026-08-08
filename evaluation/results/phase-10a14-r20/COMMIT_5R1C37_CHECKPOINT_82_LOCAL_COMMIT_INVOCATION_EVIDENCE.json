@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 82",
+  "classification": "C37_CHECKPOINT_82_LOCAL_COMMIT_INVOCATION_EVIDENCE",
+  "generatedAtUtc": "2026-08-07T23:32:02Z",
+
+  "commandInvoked": "git commit -F \"<scratchpad-path>/commit_msg_v3.txt\"",
+  "flagsUsed": ["-F <file>"],
+  "flagsExplicitlyNotUsed": ["--amend", "--no-verify", "--no-gpg-sign", "-a", "path arguments", "interactive mode", "--fixup", "--squash", "--reuse-message"],
+
+  "utcStart": "2026-08-07T23:31:41Z",
+  "utcEnd": "2026-08-07T23:31:42Z",
+  "exitCode": 0,
+
+  "startingHead": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+  "resultingHead": "7aac3305c7cc4219bceb549af640469953c3b590",
+  "headChanged": true,
+
+  "stdoutSummary": {
+    "branchAndShortHash": "[feature/source-availability-engine-v1 7aac3305]",
+    "subjectEcho": "PHASE-10A14-R20 COMMIT 5R1-C37 nonterminal - no-runtime closure approved with observations, reviewer amended to Opus 5",
+    "filesChanged": 248,
+    "insertions": 72125,
+    "deletions": 0,
+    "createModeLineCount": 247
+  },
+  "stderr": "(none; only pre-staging autocrlf LF/CRLF advisory warnings emitted earlier during `git add`, not during commit itself)",
+
+  "configuredAuthorIdentity": "Tina Swarm <tina@local>",
+  "configuredCommitterIdentity": "Tina Swarm <tina@local>",
+  "identityObservationCarriedForward": "This is the pre-existing repository git config; not changed by this unit. Differs from the identity on all prior visible commits (Bong Corpuz <bong.corpuz@gmail.com>). Recorded as an observation in COMMIT_5R1C37_CHECKPOINT_82_PREFLIGHT_AND_CP81_VERIFICATION.json.",
+
+  "hookExecutionResult": {
+    "preCommitRan": false,
+    "prepareCommitMsgRan": false,
+    "commitMsgRan": false,
+    "postCommitRan": false,
+    "reason": "No active (non-.sample) hooks exist in .git/hooks; confirmed at preflight and unchanged."
+  },
+
+  "signingResult": {
+    "signingAttempted": false,
+    "signingRequired": false,
+    "reason": "commit.gpgSign is unset; no signing configuration in force."
+  },
+
+  "commitObjectCreated": true,
+  "retryOccurred": false,
+  "secondCommitInvocationOccurred": false,
+
+  "rollbackScenario": {
+    "applicable": false,
+    "reason": "Exit code was 0 and HEAD changed successfully on the first and only invocation. The limited failure-rollback authorization was never exercised."
+  }
+}

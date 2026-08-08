@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 COMMIT 5R1-C37 CHECKPOINT 84",
+  "classification": "C37_CHECKPOINT_84_PREFLIGHT_AND_CP83_VERIFICATION",
+  "generatedAtUtc": "2026-08-08T00:53:57Z",
+
+  "repositoryIdentity": {
+    "root": "C:\\Projects\\tina-backend",
+    "originFetchUrl": "https://github.com/bongcorpuz/tina-backend.git",
+    "originPushUrl": "https://github.com/bongcorpuz/tina-backend.git",
+    "branch": "feature/source-availability-engine-v1",
+    "startingHead": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "startingHeadParent": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "completeCommitTreeSha": "f7e29c15fe401441ead65b2e2e0c0f2c54c134d5",
+    "stagedCountAtPreflight": 0,
+    "modifiedCountAtPreflight": 4,
+    "untrackedCountAtPreflight": 91,
+    "gitOperationInProgress": "NONE",
+    "indexLockPresent": false,
+    "replaceRefsCount": 0,
+    "graftsFilePresent": false
+  },
+
+  "commitUnchangedVerification": {
+    "objectType": "commit",
+    "parentCount": 1,
+    "parentCorrect": true,
+    "treeMatchesCheckpoint82VerifiedTree": true,
+    "committedPathSet": { "total": 248, "additions": 247, "modifications": 1, "deletions": 0 },
+    "all76ExclusionsOutsideCommit": true,
+    "allCheckpoint82And83FilesOutsideCommit": true
+  },
+
+  "checkpoint83ManifestVerification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_83_FINAL_EVIDENCE.sha256",
+    "manifestSelfSha256": "0194d7c4ddac23cabfce7463a10b931b5e6bf117d4096c95ca619d861d2952cb",
+    "entryCount": 8,
+    "verifiedCount": 8,
+    "mismatchCount": 0,
+    "exitCode": 0
+  },
+
+  "checkpoint82ManifestVerification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_82_FINAL_EVIDENCE.sha256",
+    "entryCount": 9,
+    "verifiedCount": 8,
+    "mismatchCount": 1,
+    "mismatchedEntry": "knowledge/CURRENT_STATE.md",
+    "mismatchExpected": true,
+    "explainedByCheckpoint83AdditiveUpdate": true,
+    "exitCode": 1
+  },
+
+  "earlierCheckpointReconciliation": {
+    "onlyExpectedAdditiveCurrentStateEvolutionDiverges": true,
+    "noSealedFrozenRawPackageRegistryOrProtectedArtifactDiffers": true
+  },
+
+  "currentStateMdVerification": {
+    "requiredStartingSha256": "ab7e162fb5b857bc157eb939c884ff582cf221a0f2086d1ee64969a0bd5b7b45",
+    "observedSha256": "ab7e162fb5b857bc157eb939c884ff582cf221a0f2086d1ee64969a0bd5b7b45",
+    "match": true
+  },
+
+  "fiftySevenEntryPackage": { "entriesTotal": 57, "entriesOk": 57 },
+  "registryWalReconciliation": {
+    "registryHash": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "match": true,
+    "totalAttempts": 230,
+    "running": 0,
+    "orphan": 0,
+    "dangling": 0,
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37WalExists": false,
+    "activeAttemptId": null
+  },
+
+  "b1B7Reconfirmation": {
+    "pid21112": "NOT_RUNNING",
+    "pid4472": "NOT_RUNNING",
+    "activeStartupTriggerPresent": false,
+    "disabledMarkerHashValid": true,
+    "openClawGatewayTaskState": "Disabled",
+    "unauthorizedWriterActive": false,
+    "b1Status": "CLOSED",
+    "b2ThroughB6Status": "OPEN_UNCHANGED",
+    "b7Status": "CLOSED_NARROWLY"
+  },
+
+  "checkpoint84NumberCheck": { "highestExistingCheckpointBeforeThisUnit": 83, "checkpoint84PreviouslyUnused": true, "checkpointNumberSelected": 84 },
+
+  "permissionControlObservation": {
+    "note": "The owner reported an out-of-band permission-control change (Manual mode or a scoped permissions.ask rule) made solely so the authorized push would receive a human approval prompt. This unit did not inspect or modify any Claude Code settings, permission files, or auto-mode rules -- only the resulting behavior of the push request was observed."
+  },
+
+  "allPreflightGatesPassed": true
+}
