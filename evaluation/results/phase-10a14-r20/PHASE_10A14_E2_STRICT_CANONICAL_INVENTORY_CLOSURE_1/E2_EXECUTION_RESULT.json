@@ -1,0 +1,316 @@
+{
+  "identity": "PHASE-10A14-E2-STRICT-CANONICAL-PRIOR-PROBE-INVENTORY-CLOSURE-1",
+  "status": "PASS",
+  "pass": true,
+  "resultCode": "E2_STRICT_CANONICAL_INVENTORY_CLOSURE_PASS",
+  "startingHead": "ae01a08b0faffd95ee52096c53d2199270d7dccc",
+  "inputSet": {
+    "count": 340,
+    "sha256": "4ea3c00a58f119336a938cc43e81659f924116eb1487e06220cb2d8f4cd4ea0f"
+  },
+  "checks": {
+    "legacyRecordCount": 319,
+    "uniqueOriginalProbeIdCount": 319,
+    "exactEvidenceMappingCount": 319,
+    "normalizedQuestionMatchCount": 319,
+    "unresolvedMaterialFieldCount": 0,
+    "deterministicSuiteCount": 13,
+    "deterministicSuitePassedCount": 13,
+    "deterministicSuiteFailedCount": 0,
+    "individualTestEncodedProbeCount": 268,
+    "reportedAssertionCountWhereAvailable": 297,
+    "protectedFileCount": 3,
+    "protectedFileMismatchCount": 0,
+    "secretLikeOutputFindingCount": 0
+  },
+  "protectedFiles": [
+    {
+      "path": "security/public-health.js",
+      "expectedSha256": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "actualSha256": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+      "pass": true
+    },
+    {
+      "path": "server.js",
+      "expectedSha256": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "actualSha256": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+      "pass": true
+    },
+    {
+      "path": "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+      "expectedSha256": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35",
+      "actualSha256": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35",
+      "pass": true
+    }
+  ],
+  "testExecutions": [
+    {
+      "command": "node tests/phase-10a12-validator-competence-remediation-1.test.mjs",
+      "source": {
+        "path": "tests/phase-10a12-validator-competence-remediation-1.test.mjs",
+        "sha256": "6d472bb6e29f143884de7470ad7238f226b7501c890115a3dad8ec7f4ce594c2",
+        "headGitBlobOid": "541747ccab4e0efe70581a2d1e652ecbd2d57873",
+        "bytes": 14081,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 19,
+      "failed": 0,
+      "assertions": 42,
+      "individualPassLabelCount": 19,
+      "stdoutSha256": "d8c43bad786e23b42c4b2ec3fab76c836a72c0f15a623e9a4f7d69e34c0e3e81",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "d8c43bad786e23b42c4b2ec3fab76c836a72c0f15a623e9a4f7d69e34c0e3e81",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a12-r2-validator-competence-remediation-2.test.mjs",
+      "source": {
+        "path": "tests/phase-10a12-r2-validator-competence-remediation-2.test.mjs",
+        "sha256": "d9b00ed4250f4a71156ac4b0db5110ca6b5c33972692489dad0645fdcf53646f",
+        "headGitBlobOid": "a748f6e56a1f39419202346640a7ff09c61a03dc",
+        "bytes": 7589,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 10,
+      "failed": 0,
+      "assertions": 31,
+      "individualPassLabelCount": 10,
+      "stdoutSha256": "3a44d19676d871ff9b68d6118f8d2bc5f22e6c0fbae70d8bde3c2d40d80e7804",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "3a44d19676d871ff9b68d6118f8d2bc5f22e6c0fbae70d8bde3c2d40d80e7804",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a12-r3-validator-competence-remediation-3.test.mjs",
+      "source": {
+        "path": "tests/phase-10a12-r3-validator-competence-remediation-3.test.mjs",
+        "sha256": "e62213e2086a15db73c2773591c1755616f3d53a40ee91aab70121793e22d211",
+        "headGitBlobOid": "9465e1ece0b0fc1579311b62dae7de03ad203468",
+        "bytes": 16894,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 20,
+      "failed": 0,
+      "assertions": 46,
+      "individualPassLabelCount": 20,
+      "stdoutSha256": "889f841b6653f8593fb8ce49218a0f80476dd02c24f0fa97111861feb3d5bb68",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "889f841b6653f8593fb8ce49218a0f80476dd02c24f0fa97111861feb3d5bb68",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs",
+      "source": {
+        "path": "tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs",
+        "sha256": "efa5180c6264df6e8c18ff0066cbad53f34580a24f40b518a82c4427ee01785c",
+        "headGitBlobOid": "473c6cb3b8461b72d094edc92c7410eb22a5af32",
+        "bytes": 10996,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 18,
+      "failed": 0,
+      "assertions": 32,
+      "individualPassLabelCount": 18,
+      "stdoutSha256": "63103a821e262122a2a0080f590602e6d25454eebeb50754fcdd8593417ed3e9",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "63103a821e262122a2a0080f590602e6d25454eebeb50754fcdd8593417ed3e9",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs",
+      "source": {
+        "path": "tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs",
+        "sha256": "47abc798c981b71cd2fccdd17950054ccb212a301922a56c86b5e2c90287b1a6",
+        "headGitBlobOid": "aab63b81fa8c1d09602f7a19e669422c9efe069e",
+        "bytes": 9045,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 17,
+      "failed": 0,
+      "assertions": 21,
+      "individualPassLabelCount": 17,
+      "stdoutSha256": "c03fdfc5a328aa34a78d903a4eb95f42ca004c36459247568a32c5a5829f859f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "c03fdfc5a328aa34a78d903a4eb95f42ca004c36459247568a32c5a5829f859f",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r1-filing-deadline-taxbase-source-sufficiency.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r1-filing-deadline-taxbase-source-sufficiency.test.mjs",
+        "sha256": "77c6ac41ca62c3c29d2a30b94b1a2a09529a846963d410ca78d2f84840bb0010",
+        "headGitBlobOid": "346c3f0fde07d8dce454615a4e9c281450f2ebe0",
+        "bytes": 9898,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 16,
+      "failed": 0,
+      "assertions": 24,
+      "individualPassLabelCount": 16,
+      "stdoutSha256": "defc5a69688087575c4295cc6896c2a6b32e3c37cbd4e7f307736ee30e9122cd",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "defc5a69688087575c4295cc6896c2a6b32e3c37cbd4e7f307736ee30e9122cd",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs",
+        "sha256": "945d661486b4473afe6a04183556c34777464c1bd779b148aca1eda1f1564331",
+        "headGitBlobOid": "adbf02513ec1138c6742d7eca8d8f99bbfcee0b1",
+        "bytes": 11305,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 33,
+      "failed": 0,
+      "assertions": 38,
+      "individualPassLabelCount": 33,
+      "stdoutSha256": "c6755d38fef6451f01fea443a127a9209a605c8303901e5b165e9dc300467176",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "c6755d38fef6451f01fea443a127a9209a605c8303901e5b165e9dc300467176",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs",
+        "sha256": "021b9841ae6a2cf32bc834edc944051ab4730e970d2be5131f04bb15fe1fe67c",
+        "headGitBlobOid": "d6a33167264d561685c08c00e4da3f6ccf816b9a",
+        "bytes": 17109,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 35,
+      "failed": 0,
+      "assertions": 63,
+      "individualPassLabelCount": 35,
+      "stdoutSha256": "e5eba0c591157463509f4a4dd19719ca01e405531b87f78a529ea62c3b735334",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "e5eba0c591157463509f4a4dd19719ca01e405531b87f78a529ea62c3b735334",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r4-sec51-filing-authority-bridge.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r4-sec51-filing-authority-bridge.test.mjs",
+        "sha256": "35c84bd499ae5b448e7c435f27564d7e31aec20db4f0986c07fb0614cd36cd62",
+        "headGitBlobOid": "80d0e8485c073493da1886d1e78df3775f620cb1",
+        "bytes": 12269,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 20,
+      "failed": 0,
+      "assertions": "NOT_REPORTED",
+      "individualPassLabelCount": 20,
+      "stdoutSha256": "4948afdf798d7b883a9481e170dcbc2ac61d5ffb1932dfd3dde69b72653fd13b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "4948afdf798d7b883a9481e170dcbc2ac61d5ffb1932dfd3dde69b72653fd13b",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r5-section51-current-law-chain-and-imperative-filing.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r5-section51-current-law-chain-and-imperative-filing.test.mjs",
+        "sha256": "9b3cd66bba62687f0f0f1d101dabca58237c9c45b6605be949092b87a2892426",
+        "headGitBlobOid": "a1c0b9e89c2694f96de947e48773f26c1ba41c66",
+        "bytes": 9260,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 25,
+      "failed": 0,
+      "assertions": "NOT_REPORTED",
+      "individualPassLabelCount": 25,
+      "stdoutSha256": "45be89d85cb7db6cb1c984e196d1a4dbc0bf5adfb3c465bb71e79f1300decd55",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "45be89d85cb7db6cb1c984e196d1a4dbc0bf5adfb3c465bb71e79f1300decd55",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs",
+        "sha256": "291f95298d8a4919fb0950547281430a2b4f411478c7cd92cd40a8069ee2128f",
+        "headGitBlobOid": "35caa6484c7f2942717ed2668aaa817a0f3d6d15",
+        "bytes": 7114,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 15,
+      "failed": 0,
+      "assertions": "NOT_REPORTED",
+      "individualPassLabelCount": 15,
+      "stdoutSha256": "5f1471963006fc5de33f1a1794afc153f67c4f253ced593e4fecad9a7c82a831",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "5f1471963006fc5de33f1a1794afc153f67c4f253ced593e4fecad9a7c82a831",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs",
+        "sha256": "0d112c8490cfc5d30dde69ebbd2dac6772fc711ca6a02f15819341a4ce15cccb",
+        "headGitBlobOid": "04db172c21c926c9e07eaa95e98936669ac76356",
+        "bytes": 7318,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 14,
+      "failed": 0,
+      "assertions": "NOT_REPORTED",
+      "individualPassLabelCount": 14,
+      "stdoutSha256": "31832c5821bbead9c36820f2a30f4215b34498dd733f0600dadebdbcf15fab53",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "31832c5821bbead9c36820f2a30f4215b34498dd733f0600dadebdbcf15fab53",
+      "pass": true
+    },
+    {
+      "command": "node tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs",
+      "source": {
+        "path": "tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs",
+        "sha256": "1c6bc1cf7aeed39cd901e439fa4a053ff8e265141a0f0d47c1ef5904969fba0e",
+        "headGitBlobOid": "1f69fadc39384b8ad1445a43e53948641100488f",
+        "bytes": 13078,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "exitCode": 0,
+      "signal": "NONE",
+      "passed": 26,
+      "failed": 0,
+      "assertions": "NOT_REPORTED",
+      "individualPassLabelCount": 26,
+      "stdoutSha256": "ec2692234dae721e0e1d3145bd092ed7be127c54e7135623bf925b968f48a050",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "combinedOutputSha256": "ec2692234dae721e0e1d3145bd092ed7be127c54e7135623bf925b968f48a050",
+      "pass": true
+    }
+  ],
+  "governance": {
+    "productionOrRuntimeChanged": false,
+    "currentStateUpdated": false,
+    "b2ThroughB6Changed": false,
+    "externalReviewRequired": false,
+    "internalReviewRequired": true,
+    "publicationDeferred": true
+  }
+}

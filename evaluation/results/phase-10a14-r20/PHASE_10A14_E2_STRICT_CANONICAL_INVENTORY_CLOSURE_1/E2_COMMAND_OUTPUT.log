@@ -1,0 +1,568 @@
+COMMAND node tests/phase-10a12-validator-competence-remediation-1.test.mjs
+EXIT 0
+SOURCE_SHA256 6d472bb6e29f143884de7470ad7238f226b7501c890115a3dad8ec7f4ce594c2
+STDOUT_SHA256 d8c43bad786e23b42c4b2ec3fab76c836a72c0f15a623e9a4f7d69e34c0e3e81
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 d8c43bad786e23b42c4b2ec3fab76c836a72c0f15a623e9a4f7d69e34c0e3e81
+STDOUT_BEGIN
+PASS C1: Q8 reversed answer + valid schema + LLM-approved -> guard overrides, not verified
+PASS C2: Q8 correct exempt answer -> verified reachable
+PASS C3-C4: aggregate-threshold substitution / general-rule reversal detected
+PASS C5: foundational-only sources -> not verified
+PASS C6: answerContradictsControllingSource true -> not verified
+PASS C7: treatmentDirectionMatches false -> not verified
+PASS C8: thresholdDimensionMatches false -> not verified
+PASS C9: sourcePropositionAligned false -> not verified
+PASS C7b-C9b: missing a new mandatory field -> schema invalid, not verified
+PASS C10: accessor getter on schemaValid returns true -> not verified
+PASS C11: throwing getter -> safe downgrade, no exception
+PASS C12: plain data-property attestation -> verified reachable
+PASS C13-C14: malformed / unavailable validator -> not verified
+PASS C15-C17: Q5/Q35/Q41 shapes -> not verified
+PASS C18-C21: restricted / conflict / missing-authority / source-failure preserved
+PASS Cimport-1: export-mfg import-VAT answer omitting CREATE MORE exemption -> guard overrides, not verified
+PASS Cimport-2: import-VAT answer covering CREATE MORE -> verified reachable
+PASS Cimport-3: import-VAT guard no false-positive on unrelated import / correct answer
+PASS polarity detector: no false-positive on unrelated / commercial / correct-exempt
+
+PHASE-10A12 validator-competence tests: 19 passed, 0 failed, 42 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a12-r2-validator-competence-remediation-2.test.mjs
+EXIT 0
+SOURCE_SHA256 d9b00ed4250f4a71156ac4b0db5110ca6b5c33972692489dad0645fdcf53646f
+STDOUT_SHA256 3a44d19676d871ff9b68d6118f8d2bc5f22e6c0fbae70d8bde3c2d40d80e7804
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 3a44d19676d871ff9b68d6118f8d2bc5f22e6c0fbae70d8bde3c2d40d80e7804
+STDOUT_BEGIN
+PASS R2-1: direct validateVerdictSchema does not execute a getter, and fails closed
+PASS R2-2: getter returning false is rejected without execution
+PASS R2-3: throwing getter -> no exception propagates, not verified
+PASS R2-4: proxy throwing in getOwnPropertyDescriptor -> safe, not verified
+PASS R2-5: proxy returning accessor descriptor -> rejected
+PASS R2-6: plain JSON-parsed full verdict -> verified eligible
+PASS R2-7: frozen ok; null-proto ok (data props); Date/array/class rejected
+PASS R2-8: isVerifiedAnswerSupport rejects accessor without execution
+PASS R2-9: Q8 residential-lease paraphrases now ALLOW (not domain-boundary)
+PASS R2-10: outcome-prediction/guarantee questions cannot verify (non-LOA)
+
+PHASE-10A12-R2 tests: 10 passed, 0 failed, 31 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a12-r3-validator-competence-remediation-3.test.mjs
+EXIT 0
+SOURCE_SHA256 e62213e2086a15db73c2773591c1755616f3d53a40ee91aab70121793e22d211
+STDOUT_SHA256 889f841b6653f8593fb8ce49218a0f80476dd02c24f0fa97111861feb3d5bb68
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 889f841b6653f8593fb8ce49218a0f80476dd02c24f0fa97111861feb3d5bb68
+STDOUT_BEGIN
+PASS R3-1: Q5-p1 exact invalid answer does not verify
+PASS R3-2: reordered invalid answer does not verify
+PASS R3-3: zero-rating claim on generic authority does not verify
+PASS R3-4: exemption claim on generic authority does not verify
+PASS R3-5: generic Sec 107 only with incentive claim does not verify
+PASS R3-6: RA 12066 cited but condition omitted does not verify
+PASS R3-7: qualified CREATE MORE treatment passes the gate (reaches LLM stage)
+PASS R3-8: qualified denial (non-registered taxpayer) passes the gate
+PASS R3-9: incentive claim with generic authority and wrong period does not verify
+PASS R3-10: mixed incentive law definitive grant without condition does not verify
+PASS R3-11: real but non-supportive generic provision does not verify
+PASS R3-12: universal 12% omitting exemption does not verify
+PASS R3-13: universal exemption on generic authority does not verify
+PASS R3-14: correct official-source qualified answer is not blocked by any deterministic gate
+PASS R3-15: no specific authority anywhere fails closed
+PASS R3-17: qualified-incentive question on generic authority does not verify
+PASS R3-18: prose CREATE MORE mention with generic source cards does not verify
+PASS R3-19: non-qualifying framing general-rule answer is not blocked
+PASS R3-16: non-import question is not applicable (no false refusal from this gate)
+PASS R3-20: outcome-prediction guard catches guarantee/bare-cancel forms, no false positive
+
+20 passed, 0 failed, 46 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs
+EXIT 0
+SOURCE_SHA256 efa5180c6264df6e8c18ff0066cbad53f34580a24f40b518a82c4427ee01785c
+STDOUT_SHA256 63103a821e262122a2a0080f590602e6d25454eebeb50754fcdd8593417ed3e9
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 63103a821e262122a2a0080f590602e6d25454eebeb50754fcdd8593417ed3e9
+STDOUT_BEGIN
+PASS A1: M-Q36 exact — penalty on generic VAT authority fails closed
+PASS A2: generic income-tax authority supporting a penalty claim fails closed
+PASS A3: missing penalty-specific authority (no sources) fails closed
+PASS A4: correct penalty authority (Sec 248/249) is sufficient
+PASS A5: EOPT/RA 11976 penalty relief authority is sufficient
+PASS A6: surcharge-vs-interest one-time-vs-periodic — still requires penalty authority
+PASS A7: late filing vs late payment both classify as penalty propositions
+PASS B1: M-Q25 exact — EWT on VAT registration/invoicing authority fails closed
+PASS B2: EWT paraphrases on VAT authority fail closed
+PASS B3: valid EWT answer with withholding authority is sufficient (reachable)
+PASS B4: near-miss — EWT answer citing only VAT + income sections fails closed
+PASS B5: FINAL withholding tax on passive income is NOT the EWT class (no false refusal)
+PASS C1: substantive out-of-scope questions are not applicable
+PASS C1c: a correctly-stated estate rate and an estate-return deadline with proper authority remain reachable
+PASS C1b: a registration question with proper registration authority (Sec 236) is applicable and sufficient (reachable)
+PASS C2: penalty mentioned incidentally in a registration answer is NOT classified as a penalty proposition (question-led)
+PASS C3: withholding-tax assessment procedure question without EWT answer claim not over-blocked
+PASS D1: gate only withholds — a sufficient result does not force verification
+
+18 passed, 0 failed, 32 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs
+EXIT 0
+SOURCE_SHA256 47abc798c981b71cd2fccdd17950054ccb212a301922a56c86b5e2c90287b1a6
+STDOUT_SHA256 c03fdfc5a328aa34a78d903a4eb95f42ca004c36459247568a32c5a5829f859f
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 c03fdfc5a328aa34a78d903a4eb95f42ca004c36459247568a32c5a5829f859f
+STDOUT_BEGIN
+PASS R1: Q38 exact — registration answer on withholding + foundational authority fails closed
+PASS R2: employee form used for a business, foundational authority only, fails closed
+PASS R3: business registration supported only by withholding authority fails closed
+PASS R4: correct form + correct registration authority (Sec 236) is reachable
+PASS R5: registration amendment/closure proposition on generic authority fails closed
+PASS R6: a tax-RETURN-form question is NOT a registration proposition (no over-fire)
+PASS V1: Q46 exact — 'not subject to VAT' on general VAT authority fails closed
+PASS V2: VAT-exempt claim on general VAT authority fails closed
+PASS V3: zero-rated claim on general VAT authority fails closed
+PASS V4: exemption with Sec 109 / specific exception authority is reachable
+PASS V5: valid Q5-style zero-rating/exemption with incentive authority (RA 12066) is reachable
+PASS V6: general 12% VAT rule (not an exception) is not applicable (no over-fire)
+PASS V7: income-tax exemption is not misclassified as a VAT exception
+PASS X1: foundational-authority laundering (registration) fails closed
+PASS X2: same-tax-type but wrong-proposition authority (VAT imposition for a VAT exception) fails closed
+PASS X3: no blanket suppression — a valid registration and a valid VAT-exception both verify-reachable
+PASS X4: gate never upgrades trust — a sufficient result does not force verification
+
+17 passed, 0 failed, 21 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r1-filing-deadline-taxbase-source-sufficiency.test.mjs
+EXIT 0
+SOURCE_SHA256 77c6ac41ca62c3c29d2a30b94b1a2a09529a846963d410ca78d2f84840bb0010
+STDOUT_SHA256 defc5a69688087575c4295cc6896c2a6b32e3c37cbd4e7f307736ee30e9122cd
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 defc5a69688087575c4295cc6896c2a6b32e3c37cbd4e7f307736ee30e9122cd
+STDOUT_BEGIN
+PASS F1: Q12 exact — no-filing conclusion on rate/residency authority fails closed
+PASS F2: no-tax-due laundered into no-filing without filing authority fails closed
+PASS F3: substituted-filing claim without filing authority fails closed
+PASS F4: valid filing-required conclusion with Sec 51 is reachable
+PASS F5: valid substituted-filing conclusion with filing authority is reachable
+PASS F6: a refund / rate question that merely mentions filing is NOT a filing_obligation (no over-fire)
+PASS D1: Q34 exact — ITR deadline on rate/residency authority fails closed
+PASS D2: annual deadline supported only by rate provisions fails closed
+PASS D3: valid individual-ITR deadline with Sec 51 is reachable
+PASS D4: valid estate-return deadline with estate-return authority (Sec 90/91) is reachable (Q32 class)
+PASS E1: Q30 exact — 6% on estate value exceeding an amount (base misstatement) fails closed
+PASS E2: gross-estate base misstatement fails closed
+PASS E3: correctly-stated estate computation on the NET estate is reachable
+PASS E4: donor's tax 6% over ₱250,000 (a real threshold) is NOT an estate misstatement (no over-fire)
+PASS X1: gate never upgrades trust — a sufficient filing/deadline/estate result does not force verification
+PASS X2: no blanket suppression — valid filing, deadline, and estate computations all reachable
+
+16 passed, 0 failed, 24 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs
+EXIT 0
+SOURCE_SHA256 945d661486b4473afe6a04183556c34777464c1bd779b148aca1eda1f1564331
+STDOUT_SHA256 c6755d38fef6451f01fea443a127a9209a605c8303901e5b165e9dc300467176
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 c6755d38fef6451f01fea443a127a9209a605c8303901e5b165e9dc300467176
+STDOUT_BEGIN
+PASS A: filing_obligation paraphrase fails closed on rate authority — "Do I still need an ITR?"
+PASS A: filing_obligation paraphrase fails closed on rate authority — "Am I obliged to lodge an annual re"
+PASS A: filing_obligation paraphrase fails closed on rate authority — "Does a minimum-wage earner have to"
+PASS A: filing_obligation paraphrase fails closed on rate authority — "Kailangan ko pa bang mag-file ng I"
+PASS B1: bare statement 'No return is required' fails closed even with an empty question
+PASS B2: answer-introduced no-filing conclusion (question was about liability) fails closed
+PASS B3: short follow-up 'How about filing?' with a no-filing answer fails closed
+PASS B4: 'not required to submit an income tax return' (submit synonym) fails closed
+PASS C: filing_deadline temporal-variant fails closed on rate authority — "What is the last day to submit?"
+PASS C: filing_deadline temporal-variant fails closed on rate authority — "Must be filed by what date?"
+PASS C: filing_deadline temporal-variant fails closed on rate authority — "Is May 15 already late for the ann"
+PASS C: filing_deadline temporal-variant fails closed on rate authority — "How many days do I have to file th"
+PASS C: filing_deadline temporal-variant fails closed on rate authority — "Hanggang kailan ang filing ng annu"
+PASS D: estate base misstatement fails closed — "Estate tax is 6% on the excess over 5,00"
+PASS D: estate base misstatement fails closed — "The first 5,000,000 of the estate is tax"
+PASS D: estate base misstatement fails closed — "There is a 5,000,000 estate-tax threshol"
+PASS D: estate base misstatement fails closed — "Estate tax is 6% of the gross estate les"
+PASS D: estate base misstatement fails closed — "The rate is 6% on the value of the estat"
+PASS E1: detector expands ITR and maps 'mag-file' to a filing concept
+PASS E2: detector recognizes an estate base misstatement paraphrase without any exact phrase
+PASS F1: refund-claim filing is not a filing_obligation (no over-fire)
+PASS F2: protest deadline is not a filing_deadline (different object)
+PASS F3: assessment/prescriptive period is not a filing_deadline (past-tense 'filed')
+PASS F4: estate-tax PAYMENT deadline is not the return filing_deadline (payment object)
+PASS F5: 'no tax is due' liability answer is filing_obligation, not filing_deadline (bare 'due' not temporal)
+PASS F6: a penalty question mentioning 'late filing' is not a filing_deadline (penalty object)
+PASS F7: donor's-tax 6% over a real threshold is not an estate base misstatement
+PASS G1: filing-required conclusion with Sec 51 remains reachable
+PASS G2: substituted-filing conclusion with filing authority remains reachable
+PASS G3: individual-ITR deadline with Sec 51 remains reachable
+PASS G4: estate-return deadline with Sec 90/91 remains reachable (Q32 class preserved)
+PASS G5: correctly-stated net-estate computation remains reachable
+PASS H1: a sufficient filing/deadline/estate result is not forced to verification
+
+33 passed, 0 failed, 38 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs
+EXIT 0
+SOURCE_SHA256 021b9841ae6a2cf32bc834edc944051ab4730e970d2be5131f04bb15fe1fe67c
+STDOUT_SHA256 e5eba0c591157463509f4a4dd19719ca01e405531b87f78a529ea62c3b735334
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 e5eba0c591157463509f4a4dd19719ca01e405531b87f78a529ea62c3b735334
+STDOUT_BEGIN
+PASS A1: ITR + documents — filing_obligation is not suppressed by the document clause
+PASS A2: protest + no annual return — the return proposition survives the protest clause
+PASS A3: refund claim + ITR obligation — both objects represented, ITR gated
+PASS A4: ITR + financial statements in one answer — filing_obligation detected
+PASS A5: a mixed answer WITH matching individual filing authority remains reachable (no over-fire)
+PASS B1: 'Can I still file today?' with an until-date answer is a filing_deadline
+PASS B2: Taglish 'Pwede pa bang mag-file?' is a filing_deadline
+PASS B3: 'already late for the return' is a filing_deadline; 'Was the return due yesterday?' too
+PASS B4: answer-introduced deadline (vague question) is detected
+PASS B5: 'No tax is due' is a liability statement, not a filing_deadline
+PASS C1: individual ITR deadline citing only estate authority (Sec 90/91) fails closed
+PASS C2: estate-return deadline citing only individual authority (Sec 51) fails closed
+PASS C3: donor-return deadline citing only VAT authority fails closed
+PASS C4: VAT-return deadline citing only corporate authority fails closed
+PASS C5: corporate ITR obligation citing only individual authority fails closed
+PASS C6: substituted filing citing a generic return provision alone is insufficient
+PASS C7: correct matching controls — each return type with its own authority is reachable
+PASS D1: correct estate answer with foundational-only authority fails closed
+PASS D2: correct estate answer with rate authority only (no deduction authority) fails closed
+PASS D3: correct estate answer with deduction authority only (no rate authority) fails closed
+PASS D4: correct estate answer with full rate+base+deduction authority is reachable
+PASS D5: an estate answer asserting only a rate is sufficient with rate authority (Sec 84)
+PASS E: estate relationship error — "amount above the standard deduction"
+PASS E: estate relationship error — "taxable portion begins after the standard deduction"
+PASS E: estate relationship error — "only the excess over the basic deduction"
+PASS E: estate relationship error — "standard deduction is the estate-tax threshold"
+PASS E: estate relationship error — "first five million is outside the tax base"
+PASS E: estate relationship error — "gross estate less the standard deduction equals the taxable estate"
+PASS E: estate relationship error — "subtract the basic deduction and apply the rate to the balance"
+PASS E-valid: correct net-estate computations (no fixed amount / one preferred phrase) remain reachable
+PASS E-donor: a donor's-tax answer with a real 250k threshold that mentions 'estate planning' is NOT an estate misstatement
+PASS F: non-tax 'return' senses are not filing propositions
+PASS G1: one supported + one unsupported proposition — unsupported fails closed, both in ledger
+PASS G2: diagnostics preserve all detected propositions even after an early failure
+PASS G3: the gate never UPGRADES trust — a sufficient result is not forced to verification
+
+35 passed, 0 failed, 63 assertions
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r4-sec51-filing-authority-bridge.test.mjs
+EXIT 0
+SOURCE_SHA256 35c84bd499ae5b448e7c435f27564d7e31aec20db4f0986c07fb0614cd36cd62
+STDOUT_SHA256 4948afdf798d7b883a9481e170dcbc2ac61d5ffb1932dfd3dde69b72653fd13b
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 4948afdf798d7b883a9481e170dcbc2ac61d5ffb1932dfd3dde69b72653fd13b
+STDOUT_BEGIN
+[VECTOR INSERT CONFIG] { batchSize: 3, batchDelayMs: 750 }
+[DB IDENTITY] {
+  supabaseUrlHost: 'kjvrgkvooivmtxxkurth.supabase.co',
+  supabaseProjectRef: 'kjvrgkvooivmtxxkurth',
+  VECTOR_TABLE: 'tina_vector_store',
+  LOCK_TABLE: 'tina_reindex_locks',
+  vectorTableFromEnv: null,
+  vectorTableUsingDefault: true,
+  vectorTableMatchExpected: true,
+  NODE_ENV: null,
+  RENDER_SERVICE_NAME: null,
+  RENDER_GIT_COMMIT: null,
+  RENDER_INSTANCE_ID: null,
+  INSTANCE_ID: '83c7d0130c782f36',
+  pid: 28344,
+  engineVersion: '3.0.0'
+}
+PASS intent: explicit Section 51 fires
+PASS intent: explicit Section 51-A fires
+PASS intent: natural substituted filing fires
+PASS intent: natural self-employed obligation fires
+PASS intent: natural individual deadline fires
+PASS intent OVERFIRE: corporate return does NOT fire
+PASS intent OVERFIRE: estate return does NOT fire
+PASS intent OVERFIRE: donor return does NOT fire
+PASS intent OVERFIRE: VAT return does NOT fire
+PASS intent: bare rate question does NOT fire
+PASS label: obligation chunk -> Sec. 51
+PASS label: deadline chunk -> Sec. 51(C)
+PASS label: substituted chunk -> Sec. 51-A
+[SEC_51_FILING_AUTHORITY_BRIDGE HIT] {
+  found: 5,
+  reserved: 3,
+  returned: 5,
+  refs: [ 'NIRC Sec. 51', 'NIRC Sec. 51(C)', 'NIRC Sec. 51-A' ]
+}
+[EXACT AUTHORITY NO BROAD FALLBACK] {
+  refsQueried: 5,
+  explicitAuthorityGroups: 0,
+  perAuthorityFound: 0,
+  found: 5,
+  needed: 8,
+  note: 'returning equality results only — ILIKE fallback removed to prevent 57014 timeout'
+}
+PASS explicit Section 51 surfaces Sec. 51 + 51(C) + 51-A, Tier-1 exact
+[SEC_51_FILING_AUTHORITY_BRIDGE HIT] {
+  found: 5,
+  reserved: 3,
+  returned: 5,
+  refs: [ 'NIRC Sec. 51', 'NIRC Sec. 51(C)', 'NIRC Sec. 51-A' ]
+}
+[EXACT AUTHORITY NO BROAD FALLBACK] {
+  refsQueried: 6,
+  explicitAuthorityGroups: 0,
+  perAuthorityFound: 0,
+  found: 5,
+  needed: 8,
+  note: 'returning equality results only — ILIKE fallback removed to prevent 57014 timeout'
+}
+PASS explicit Section 51-A surfaces substituted-filing authority
+[SEC_51_FILING_AUTHORITY_BRIDGE HIT] {
+  found: 5,
+  reserved: 3,
+  returned: 5,
+  refs: [ 'NIRC Sec. 51', 'NIRC Sec. 51(C)', 'NIRC Sec. 51-A' ]
+}
+[EXACT AUTHORITY NO BROAD FALLBACK] {
+  refsQueried: 4,
+  explicitAuthorityGroups: 0,
+  perAuthorityFound: 0,
+  found: 5,
+  needed: 8,
+  note: 'returning equality results only — ILIKE fallback removed to prevent 57014 timeout'
+}
+PASS natural substituted-filing question surfaces Sec. 51-A
+[SEC_51_FILING_AUTHORITY_BRIDGE HIT] {
+  found: 5,
+  reserved: 3,
+  returned: 5,
+  refs: [ 'NIRC Sec. 51', 'NIRC Sec. 51(C)', 'NIRC Sec. 51-A' ]
+}
+[EXACT AUTHORITY NO BROAD FALLBACK] {
+  refsQueried: 4,
+  explicitAuthorityGroups: 0,
+  perAuthorityFound: 0,
+  found: 5,
+  needed: 8,
+  note: 'returning equality results only — ILIKE fallback removed to prevent 57014 timeout'
+}
+PASS natural self-employed obligation surfaces Sec. 51
+[EXACT AUTHORITY NO BROAD FALLBACK] {
+  refsQueried: 4,
+  explicitAuthorityGroups: 0,
+  perAuthorityFound: 0,
+  found: 0,
+  needed: 8,
+  note: 'returning equality results only — ILIKE fallback removed to prevent 57014 timeout'
+}
+PASS OVERFIRE: corporate return question surfaces NO Sec. 51 bridge card
+[EXACT AUTHORITY NO BROAD FALLBACK] {
+  refsQueried: 4,
+  explicitAuthorityGroups: 0,
+  perAuthorityFound: 0,
+  found: 0,
+  needed: 8,
+  note: 'returning equality results only — ILIKE fallback removed to prevent 57014 timeout'
+}
+PASS OVERFIRE: estate return question surfaces NO Sec. 51 bridge card
+[PATCH_027S_EXPLICIT_AUTHORITY_ALLOCATION_HIT] {
+  authority: 'NIRC Sec. 23',
+  refsQueried: 4,
+  allocatedLimit: 6,
+  found: 4
+}
+[PATCH_027S_EXPLICIT_AUTHORITY_ALLOCATION_HIT] {
+  authority: 'NIRC Sec. 24',
+  refsQueried: 4,
+  allocatedLimit: 6,
+  found: 4
+}
+[PATCH_027S_EXPLICIT_AUTHORITY_ALLOCATION_HIT] {
+  authority: 'NIRC Sec. 27',
+  refsQueried: 4,
+  allocatedLimit: 6,
+  found: 4
+}
+[SEC_51_FILING_AUTHORITY_BRIDGE HIT] {
+  found: 5,
+  reserved: 3,
+  returned: 8,
+  refs: [ 'NIRC Sec. 51', 'NIRC Sec. 51(C)', 'NIRC Sec. 51-A' ]
+}
+[EXACT AUTHORITY FAST RETURN] {
+  refsQueried: 20,
+  explicitAuthorityGroups: 4,
+  perAuthorityFound: 12,
+  found: 8
+}
+PASS slot reservation: Sec 51/51(C)/51-A survive alongside many Sec 24/23/27 chunks
+
+phase-10a14-r4-sec51-filing-authority-bridge: 20 passed, 0 failed
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r5-section51-current-law-chain-and-imperative-filing.test.mjs
+EXIT 0
+SOURCE_SHA256 9b3cd66bba62687f0f0f1d101dabca58237c9c45b6605be949092b87a2892426
+STDOUT_SHA256 45be89d85cb7db6cb1c984e196d1a4dbc0bf5adfb3c465bb71e79f1300decd55
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 45be89d85cb7db6cb1c984e196d1a4dbc0bf5adfb3c465bb71e79f1300decd55
+STDOUT_BEGIN
+PASS resolver: obligation -> chain reviewed, base unchanged
+PASS resolver: ordinary deadline -> current complete chain
+PASS resolver: substituted -> current complete chain
+PASS resolver: transaction timing with no material date -> fail closed (no RA 12214)
+PASS resolver: transaction timing pre-effectivity date -> historical complete chain
+PASS resolver: transaction timing post-effectivity date -> later amendment required, applicable
+PASS official laws carry canonical URLs + effectivity
+PASS card metadata: Sec 51 records reviewed chain incl RA 11976/12214, not RA10963-only
+PASS imperative -> filing_obligation: File the annual income-tax return.
+PASS imperative -> filing_obligation: Submit the ITR.
+PASS imperative -> filing_obligation: Lodge the annual return.
+PASS imperative -> filing_obligation: Accomplish and file BIR Form 1701.
+PASS imperative -> filing_obligation: You must file the annual return.
+PASS imperative -> filing_obligation: The taxpayer should file Form 1701.
+PASS overfire guard -> NO filing_obligation: File a protest with the BIR.
+PASS overfire guard -> NO filing_obligation: Lodge a refund claim.
+PASS overfire guard -> NO filing_obligation: Submit the invoices and official receipts.
+PASS overfire guard -> NO filing_obligation: Register the business with the BIR.
+PASS overfire guard -> NO filing_obligation: This is a return of capital, not income.
+PASS overfire guard -> NO filing_obligation: Compute the rate of return on the investment.
+PASS ordinary annual deadline verifies on Sec 51 (chain unchanged) — no temporal fail
+PASS substituted filing verifies on Sec 51-A (chain unchanged)
+PASS CGT transaction-specific timing WITHOUT RA 12214 -> fails closed (later amendment missing)
+PASS CGT transaction-specific timing WITH RA 12214 -> temporal gate does NOT block
+PASS CGT transaction-specific timing for an explicit pre-2025 period -> temporal gate does NOT block
+
+phase-10a14-r5: 25 passed, 0 failed
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs
+EXIT 0
+SOURCE_SHA256 291f95298d8a4919fb0950547281430a2b4f411478c7cd92cd40a8069ee2128f
+STDOUT_SHA256 5f1471963006fc5de33f1a1794afc153f67c4f253ced593e4fecad9a7c82a831
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 5f1471963006fc5de33f1a1794afc153f67c4f253ced593e4fecad9a7c82a831
+STDOUT_BEGIN
+PASS Sec 51-A originating law is RA 10963 (created 51-A), base code RA 8424
+PASS Sec 51-A card metadata: originatingLaw RA 10963, not RA 8424
+PASS Sec 51 obligation originating law is RA 8424 (existed since 1997)
+PASS 2023 ordinary obligation: RA 11976/12214 not-yet-effective, not amending
+PASS 2024 ordinary obligation: RA 11976 effective, RA 12214 not-yet-effective
+PASS current ordinary obligation: all reviewed laws effective
+PASS transaction 51(C)(2): pre-effectivity historical, post-effectivity later-amendment, no-date fails closed
+PASS filing-event date drives resolution when no taxableYear
+PASS public card: Sec 51 carries chainReviewed=true + status
+PASS public card: Sec 51-A carries originatingLaw RA 10963
+PASS public card: non-Section-51 card carries NO amendment chain (no false claim)
+PASS public card: no internal identifiers / filenames leak into chain summary
+PASS imperative 'File the annual income-tax return.' -> filing_obligation preserved
+PASS non-return imperative 'File a protest.' does NOT overfire
+PASS descriptive 'late filing may incur penalties' remains non-imperative
+
+phase-10a14-r6: 15 passed, 0 failed
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs
+EXIT 0
+SOURCE_SHA256 0d112c8490cfc5d30dde69ebbd2dac6772fc711ca6a02f15819341a4ce15cccb
+STDOUT_SHA256 31832c5821bbead9c36820f2a30f4215b34498dd733f0600dadebdbcf15fab53
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 31832c5821bbead9c36820f2a30f4215b34498dd733f0600dadebdbcf15fab53
+STDOUT_BEGIN
+PASS parse rejects invalid calendar dates
+PASS compareLegalDates full year-month-day, no year-only collapse
+PASS before/on-or-after effectivity boundary (exclusive/inclusive)
+PASS addLegalCalendarDays crosses month/year/leap boundaries
+PASS 2025-01-15 transaction -> PRE_EFFECTIVITY, RA 12214 NOT applicable
+PASS 2025-06-01 transaction -> PRE_EFFECTIVITY, RA 12214 NOT applicable (was the defect)
+PASS effectivity-earliest minus one day -> PRE_EFFECTIVITY
+PASS former ambiguous-window dates now adjudicate against firm effectivity 2025-06-19
+PASS post-established -> RA 12214 applicable
+PASS taxableYear alone does NOT resolve 51(C)(2) applicability (fail closed)
+PASS 2025 with no exact date -> transaction date required (fail closed)
+PASS July 1 is modeled as the Section 28 financial-instrument transitory (not the 51(C)(2) cutover)
+PASS Section 51-A originatingLaw remains RA 10963 (R6 closure)
+PASS 2023 ordinary obligation stays HISTORICAL, RA 11976/12214 not applied (R6 closure)
+
+phase-10a14-r7: 14 passed, 0 failed
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+
+COMMAND node tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs
+EXIT 0
+SOURCE_SHA256 1c6bc1cf7aeed39cd901e439fa4a053ff8e265141a0f0d47c1ef5904969fba0e
+STDOUT_SHA256 ec2692234dae721e0e1d3145bd092ed7be127c54e7135623bf925b968f48a050
+STDERR_SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+COMBINED_OUTPUT_SHA256 ec2692234dae721e0e1d3145bd092ed7be127c54e7135623bf925b968f48a050
+STDOUT_BEGIN
+PASS A1: RA 12214 official effectivity is 2025-06-19 (publication + 15 days)
+PASS A2: resolver surfaces qualifying-publication + transitory metadata
+PASS B1: publication 2025-06-04 + 15 days = 2025-06-19
+PASS B2: firm-lower-bound approval + 15 days = 2025-06-13 (< effectivity)
+PASS C1: strictMaterialDate accepts only strict ISO calendar dates
+PASS C2: strictMaterialDate rejects slash / free-text / non-string
+PASS D1: every malformed/impossible material date fails closed (INVALID_DATE)
+PASS D2: blank / null / undefined -> PERIOD_UNRESOLVED fail closed
+PASS D3 (P1-R7-IR-002 core): malformed date can no longer reach POST_EFFECTIVITY
+PASS E1: missing required date -> PERIOD_UNRESOLVED even with other fields present
+PASS E2: dispositionDate is an accepted material date where the rule uses disposition
+PASS F1: taxableYear alone never resolves 51(C)(2) applicability
+PASS G1: legalAsOfDate and filingEventDate never substitute for transactionDate
+PASS H1: effectivity minus one day -> PRE_EFFECTIVITY (RA 12214 not applicable)
+PASS H2: exact effectivity date -> POST_EFFECTIVITY (inclusive, applicable)
+PASS H3: effectivity plus one day -> POST_EFFECTIVITY applicable
+PASS H4: sampled boundary dates classify correctly
+PASS H5: July 1 (Section 28 transitory) does not sweep in pre-effectivity June dates
+PASS I1: unresolved / invalid / pre-effectivity never expose RA 12214 as applicable/current
+PASS I2: fail-closed result buckets are internally consistent
+PASS J1: 51(C)(2) public card with no date is fail-closed clean
+PASS J2: 51(C)(2) card with post-effectivity txn date carries applicable RA 12214
+PASS K1: Section 51-A originatingLaw remains RA 10963; base RA 8424 (R5/R6)
+PASS K2: 2023 ordinary obligation stays HISTORICAL; RA 11976/12214 not applied (R6)
+PASS K3: ordinary filing_deadline unchanged through chain (no RA 12214 leak)
+PASS K4: no year-only comparison path — 2025 ordinary filing_obligation resolves by year, 51(C)(2) does not
+
+phase-10a14-r8: 26 passed, 0 failed
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

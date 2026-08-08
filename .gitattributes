@@ -1,0 +1,8 @@
+# Preserve raw-byte identity for hash-bound Phase 10A14 E2 evidence.
+evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure.mjs -text
+evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure-2.mjs -text
+evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure-3.mjs -text
+evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_1/** -text
+evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_2/** -text
+evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3/** -text
+evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3_INTERNAL_REVIEW.md -text

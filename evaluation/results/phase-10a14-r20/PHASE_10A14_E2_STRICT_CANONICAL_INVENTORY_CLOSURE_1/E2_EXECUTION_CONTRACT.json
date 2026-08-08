@@ -1,0 +1,323 @@
+{
+  "identity": "PHASE-10A14-E2-STRICT-CANONICAL-PRIOR-PROBE-INVENTORY-CLOSURE-1",
+  "semanticPurpose": "Evidence-only closure of P1-R9-IR-002: preserve and individually enumerate the strict canonical historic prior-probe inventory, map each record to exact immutable final evidence, and resolve material nulls without fabricating legal or trust classifications.",
+  "semanticSources": [
+    {
+      "path": "PHASE-10A14-R9-CALENDAR-RELATIVE-DEADLINE-FILING-RATIONALE-ALIGNMENT-AND-CANONICAL-INVENTORY-CLOSURE-REMEDIATION-1-INDEPENDENT-REVIEW-1_REPORT.md",
+      "sha256": "10ab54c056f168582fe26933b1a35ed0528baed67356869fbca7c54b596e098a",
+      "headGitBlobOid": "91588a8b9666d28e11cd353e455d9f6c4c7263eb",
+      "bytes": 11716,
+      "contentIdenticalToStartingHeadUnderGitAttributes": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r9-independent-review-1/strict-319-probe-inventory-audit.md",
+      "sha256": "8647fc1c94a72bcdf7da8b0a7b1b4b4cf06c0dc2de1c9a0aeb7dc555c618d2be",
+      "headGitBlobOid": "e0b866df9ae15376e92238da92001f25b016e527",
+      "bytes": 819,
+      "contentIdenticalToStartingHeadUnderGitAttributes": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r9/CANONICAL_A12_R8_INVENTORY.json",
+      "sha256": "24577df5e4354147cffb1520acd5bca0edf7d5d66968fb0f25ae612d362eaf98",
+      "headGitBlobOid": "e442ef1654aa2c75828050a5b807b397f2849c06",
+      "bytes": 124568,
+      "contentIdenticalToStartingHeadUnderGitAttributes": true
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r9/WS10_A12_A13_R4R8_TESTMAP.md",
+      "sha256": "24419924ef9f0e5175988e404844b67b38597e70230730fddbac16d3340e5ca1",
+      "headGitBlobOid": "6b38451dbdb3bbea4ae723475a40da83aa41f4a9",
+      "bytes": 1835,
+      "contentIdenticalToStartingHeadUnderGitAttributes": true
+    },
+    {
+      "path": "PHASE-10A14-R10-CALENDAR-RELATIVE-PUBLIC-ANSWER-REPLACEMENT-AND-PERSISTENCE-SAFETY-REMEDIATION-1_REPORT.md",
+      "sha256": "7c1b41d0672714102ee033e1926a3e165cb08c33fe3cc1e713fb4795732b551e",
+      "headGitBlobOid": "34ab7641edd4e16a24f99e548043110f3a29005f",
+      "bytes": 4090,
+      "contentIdenticalToStartingHeadUnderGitAttributes": true
+    }
+  ],
+  "startingHead": {
+    "branch": "feature/source-availability-engine-v1",
+    "commit": "ae01a08b0faffd95ee52096c53d2199270d7dccc",
+    "verified": true
+  },
+  "prerequisites": [
+    {
+      "claim": "C37 terminal",
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json",
+      "evidence": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json",
+        "sha256": "b6038a507652b6ad30a132089f28588aeec68c95209df5b641f914249a398e25",
+        "headGitBlobOid": "425380052c1dfdea2873698d37592aade02dc039",
+        "bytes": 4269,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "classification": "PREREQUISITE_CLAIM_RECORDED_NOT_READJUDICATED_BY_E2"
+    },
+    {
+      "claim": "C38 terminal",
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_OUTPUT.json",
+      "evidence": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_OUTPUT.json",
+        "sha256": "8cbcc89608884275dcd909f65795eabae7b8a166a0ea623d4896b8167248c8ce",
+        "headGitBlobOid": "168cd024dde568e67f40ebf43a966fd69ca24b3d",
+        "bytes": 17522,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "classification": "PREREQUISITE_CLAIM_RECORDED_NOT_READJUDICATED_BY_E2"
+    },
+    {
+      "claim": "post-C38 external review gate SATISFIED",
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_EXTERNAL_REVIEW_RESULT.json",
+      "evidence": {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_EXTERNAL_REVIEW_RESULT.json",
+        "sha256": "0233ae327950fba1d81fc4256fb69592fdad21bff3523c6952f32df863494661",
+        "headGitBlobOid": "4beb52fd8e29f7ed203f6d0114be7eb5ec1b69fd",
+        "bytes": 3834,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      "classification": "PREREQUISITE_CLAIM_RECORDED_NOT_READJUDICATED_BY_E2"
+    }
+  ],
+  "inputsAndHashes": {
+    "aggregate": {
+      "count": 340,
+      "sha256": "4ea3c00a58f119336a938cc43e81659f924116eb1487e06220cb2d8f4cd4ea0f"
+    },
+    "semanticAndPrerequisiteInputs": [
+      {
+        "path": "PHASE-10A14-R9-CALENDAR-RELATIVE-DEADLINE-FILING-RATIONALE-ALIGNMENT-AND-CANONICAL-INVENTORY-CLOSURE-REMEDIATION-1-INDEPENDENT-REVIEW-1_REPORT.md",
+        "sha256": "10ab54c056f168582fe26933b1a35ed0528baed67356869fbca7c54b596e098a",
+        "headGitBlobOid": "91588a8b9666d28e11cd353e455d9f6c4c7263eb",
+        "bytes": 11716,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r9-independent-review-1/strict-319-probe-inventory-audit.md",
+        "sha256": "8647fc1c94a72bcdf7da8b0a7b1b4b4cf06c0dc2de1c9a0aeb7dc555c618d2be",
+        "headGitBlobOid": "e0b866df9ae15376e92238da92001f25b016e527",
+        "bytes": 819,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r9/CANONICAL_A12_R8_INVENTORY.json",
+        "sha256": "24577df5e4354147cffb1520acd5bca0edf7d5d66968fb0f25ae612d362eaf98",
+        "headGitBlobOid": "e442ef1654aa2c75828050a5b807b397f2849c06",
+        "bytes": 124568,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r9/WS10_A12_A13_R4R8_TESTMAP.md",
+        "sha256": "24419924ef9f0e5175988e404844b67b38597e70230730fddbac16d3340e5ca1",
+        "headGitBlobOid": "6b38451dbdb3bbea4ae723475a40da83aa41f4a9",
+        "bytes": 1835,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "PHASE-10A14-R10-CALENDAR-RELATIVE-PUBLIC-ANSWER-REPLACEMENT-AND-PERSISTENCE-SAFETY-REMEDIATION-1_REPORT.md",
+        "sha256": "7c1b41d0672714102ee033e1926a3e165cb08c33fe3cc1e713fb4795732b551e",
+        "headGitBlobOid": "34ab7641edd4e16a24f99e548043110f3a29005f",
+        "bytes": 4090,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json",
+        "sha256": "b6038a507652b6ad30a132089f28588aeec68c95209df5b641f914249a398e25",
+        "headGitBlobOid": "425380052c1dfdea2873698d37592aade02dc039",
+        "bytes": 4269,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_OUTPUT.json",
+        "sha256": "8cbcc89608884275dcd909f65795eabae7b8a166a0ea623d4896b8167248c8ce",
+        "headGitBlobOid": "168cd024dde568e67f40ebf43a966fd69ca24b3d",
+        "bytes": 17522,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_EXTERNAL_REVIEW_RESULT.json",
+        "sha256": "0233ae327950fba1d81fc4256fb69592fdad21bff3523c6952f32df863494661",
+        "headGitBlobOid": "4beb52fd8e29f7ed203f6d0114be7eb5ec1b69fd",
+        "bytes": 3834,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      }
+    ],
+    "payloadInputs": {
+      "count": 319,
+      "exactPathAndHashRecordedPerLegacyRecord": true
+    },
+    "deterministicTestSources": [
+      {
+        "path": "tests/phase-10a12-validator-competence-remediation-1.test.mjs",
+        "sha256": "6d472bb6e29f143884de7470ad7238f226b7501c890115a3dad8ec7f4ce594c2",
+        "headGitBlobOid": "541747ccab4e0efe70581a2d1e652ecbd2d57873",
+        "bytes": 14081,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a12-r2-validator-competence-remediation-2.test.mjs",
+        "sha256": "d9b00ed4250f4a71156ac4b0db5110ca6b5c33972692489dad0645fdcf53646f",
+        "headGitBlobOid": "a748f6e56a1f39419202346640a7ff09c61a03dc",
+        "bytes": 7589,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a12-r3-validator-competence-remediation-3.test.mjs",
+        "sha256": "e62213e2086a15db73c2773591c1755616f3d53a40ee91aab70121793e22d211",
+        "headGitBlobOid": "9465e1ece0b0fc1579311b62dae7de03ad203468",
+        "bytes": 16894,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs",
+        "sha256": "efa5180c6264df6e8c18ff0066cbad53f34580a24f40b518a82c4427ee01785c",
+        "headGitBlobOid": "473c6cb3b8461b72d094edc92c7410eb22a5af32",
+        "bytes": 10996,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs",
+        "sha256": "47abc798c981b71cd2fccdd17950054ccb212a301922a56c86b5e2c90287b1a6",
+        "headGitBlobOid": "aab63b81fa8c1d09602f7a19e669422c9efe069e",
+        "bytes": 9045,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r1-filing-deadline-taxbase-source-sufficiency.test.mjs",
+        "sha256": "77c6ac41ca62c3c29d2a30b94b1a2a09529a846963d410ca78d2f84840bb0010",
+        "headGitBlobOid": "346c3f0fde07d8dce454615a4e9c281450f2ebe0",
+        "bytes": 9898,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs",
+        "sha256": "945d661486b4473afe6a04183556c34777464c1bd779b148aca1eda1f1564331",
+        "headGitBlobOid": "adbf02513ec1138c6742d7eca8d8f99bbfcee0b1",
+        "bytes": 11305,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs",
+        "sha256": "021b9841ae6a2cf32bc834edc944051ab4730e970d2be5131f04bb15fe1fe67c",
+        "headGitBlobOid": "d6a33167264d561685c08c00e4da3f6ccf816b9a",
+        "bytes": 17109,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r4-sec51-filing-authority-bridge.test.mjs",
+        "sha256": "35c84bd499ae5b448e7c435f27564d7e31aec20db4f0986c07fb0614cd36cd62",
+        "headGitBlobOid": "80d0e8485c073493da1886d1e78df3775f620cb1",
+        "bytes": 12269,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r5-section51-current-law-chain-and-imperative-filing.test.mjs",
+        "sha256": "9b3cd66bba62687f0f0f1d101dabca58237c9c45b6605be949092b87a2892426",
+        "headGitBlobOid": "a1c0b9e89c2694f96de947e48773f26c1ba41c66",
+        "bytes": 9260,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs",
+        "sha256": "291f95298d8a4919fb0950547281430a2b4f411478c7cd92cd40a8069ee2128f",
+        "headGitBlobOid": "35caa6484c7f2942717ed2668aaa817a0f3d6d15",
+        "bytes": 7114,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs",
+        "sha256": "0d112c8490cfc5d30dde69ebbd2dac6772fc711ca6a02f15819341a4ce15cccb",
+        "headGitBlobOid": "04db172c21c926c9e07eaa95e98936669ac76356",
+        "bytes": 7318,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      },
+      {
+        "path": "tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs",
+        "sha256": "1c6bc1cf7aeed39cd901e439fa4a053ff8e265141a0f0d47c1ef5904969fba0e",
+        "headGitBlobOid": "1f69fadc39384b8ad1445a43e53948641100488f",
+        "bytes": 13078,
+        "contentIdenticalToStartingHeadUnderGitAttributes": true
+      }
+    ]
+  },
+  "allowedPaths": [
+    "evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure.mjs",
+    "evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_1/**"
+  ],
+  "prohibitedPaths": [
+    "security/public-health.js",
+    "server.js",
+    "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+    "knowledge/CURRENT_STATE.md",
+    "production/runtime paths",
+    "B2-B6 artifacts",
+    "existing evidence"
+  ],
+  "commandsAndTests": {
+    "verifyOnly": "node evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure.mjs --verify-only",
+    "output": "node evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure.mjs --out evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_1",
+    "exactFocusedTests": [
+      "node tests/phase-10a12-validator-competence-remediation-1.test.mjs",
+      "node tests/phase-10a12-r2-validator-competence-remediation-2.test.mjs",
+      "node tests/phase-10a12-r3-validator-competence-remediation-3.test.mjs",
+      "node tests/phase-10a12-r6-proposition-source-sufficiency.test.mjs",
+      "node tests/phase-10a13-r1-proposition-source-sufficiency.test.mjs",
+      "node tests/phase-10a14-r1-filing-deadline-taxbase-source-sufficiency.test.mjs",
+      "node tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs",
+      "node tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs",
+      "node tests/phase-10a14-r4-sec51-filing-authority-bridge.test.mjs",
+      "node tests/phase-10a14-r5-section51-current-law-chain-and-imperative-filing.test.mjs",
+      "node tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs",
+      "node tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs",
+      "node tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs"
+    ],
+    "genericNpmTestAuthorized": false,
+    "networkCallsAuthorized": false
+  },
+  "expectedOutputs": [
+    "E2_EXECUTION_CONTRACT.json",
+    "E2_STRICT_CANONICAL_INVENTORY.json",
+    "E2_EXECUTION_RESULT.json",
+    "E2_COMMAND_OUTPUT.log",
+    "E2_EVIDENCE_MANIFEST.sha256"
+  ],
+  "passCriteria": [
+    "starting branch and HEAD exactly match the authorized identity and no paths are staged",
+    "319 legacy probes and 319 unique original IDs are preserved",
+    "all 319 probes map to an immutable payload with normalized exact-question equality",
+    "every material legacy null has an explicit non-null resolution without invented semantics",
+    "all 13 focused deterministic source suites exit 0, report zero failures, and expose individual literal PASS labels",
+    "all governed inputs normalize through repository Git attributes to their exact starting-HEAD blobs, with raw working-tree SHA-256 recorded",
+    "all three protected files match the authorized byte hashes",
+    "captured output contains no recognized secret-like material"
+  ],
+  "failureCriteria": [
+    "identity, branch, HEAD, staging, path, input, hash, schema, uniqueness, mapping, question, test, protected-file, secret-scan, or output-collision assertion fails"
+  ],
+  "evidence": {
+    "schema": "minimal exact-current-result JSON plus complete inventory, command log, and self-excluded SHA-256 manifest",
+    "historicalClaimsReAdjudicated": false
+  },
+  "review": {
+    "internalReviewRequired": true,
+    "internalReviewStatus": "PENDING_PLANNER_REVIEWER",
+    "externalReviewRequired": false,
+    "externalReviewReason": "No exact E2 external-review contract exists; owner default applies."
+  },
+  "currentState": {
+    "updateAuthorizedForThisRunner": false,
+    "updated": false
+  },
+  "gitAndPublication": {
+    "stageCommitPushAuthorizedForThisRunner": false,
+    "status": "DEFERRED_TO_PLANNER_AFTER_INTERNAL_REVIEW"
+  },
+  "b2ThroughB6": {
+    "disposition": "OWNER_ADJUDICATED_NONBLOCKING_AND_OUT_OF_SCOPE",
+    "modified": false
+  },
+  "rollback": "The runner never overwrites. If an output-mode write is interrupted, remove only the newly created exact E2 output directory after preserving diagnostic evidence; no runtime rollback is applicable because E2 is evidence-only.",
+  "invocationMode": "OUTPUT"
+}
