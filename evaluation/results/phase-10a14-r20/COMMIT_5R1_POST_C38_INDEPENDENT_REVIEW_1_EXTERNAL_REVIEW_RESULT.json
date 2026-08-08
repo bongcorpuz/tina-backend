@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "classification": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1_OWNER_PROVIDED_RESULT_CAPTURE",
+  "reviewId": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1",
+  "provenance": {
+    "source": "direct owner-provided task attachment",
+    "ownerHandoffAttachmentSha256": "660beb92dd6047b6bda43c4bfbff002d09c10aa028c1dd9b33e1e5528579b025",
+    "rawTranscriptProvided": false,
+    "captureLimitation": "The owner supplied a completed-review result summary for capture and reconciliation. This record does not represent or fabricate a raw reviewer transcript.",
+    "independenceEvidence": "owner-provided host/session evidence",
+    "modelSelfAttestationRequired": false
+  },
+  "reviewer": {
+    "requirement": "Codex 5.5 Independent Review 1",
+    "hostModelSelection": "GPT-5.5",
+    "hostReasoningSelection": "Extra High / xhigh",
+    "independenceConfirmedByOwner": true
+  },
+  "sealedPackage": {
+    "sealingCommit": "81c39a0a8d2a002cad0a1cc6ee639822474ee0be",
+    "reviewedC38Commit": "f71a7222ed921d69e2669431f6d068badacd2070",
+    "packageManifestPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE_MANIFEST.sha256",
+    "packageManifestSha256": "0a78ca9df9fbcb20da58b05a3cff88e61d5bab475c80cc83df51d354b58d8500",
+    "packagePayloadVerification": "PASS — 5 / 5",
+    "c38ManifestVerificationAtReviewedCommit": "PASS — 33 / 33"
+  },
+  "r4": {
+    "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+    "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+    "integrity": "ACCEPTED",
+    "reasonOnlyRevisions": 145,
+    "decisionClosure": "ACCEPTED — 3720 / 3720",
+    "relationClosure": "ACCEPTED — 3720 / 3720",
+    "reasonClosure": "ACCEPTED — 3720 / 3720 under governed development-oracle algebra",
+    "evidenceCharacter": "Analyzer-informed development-governance evidence; not blind, holdout, unseen, or independent semantic evidence."
+  },
+  "adjudication": {
+    "c37Terminality": "ACCEPTED",
+    "c38Terminality": "ACCEPTED",
+    "runtimePreservation": "ACCEPTED",
+    "registryPreservation": "ACCEPTED",
+    "walPreservation": "ACCEPTED",
+    "oracleTestValidatorIntegrity": "ACCEPTED",
+    "blockingFindings": [],
+    "decision": "APPROVED_WITH_NONBLOCKING_FINDINGS",
+    "externalReviewGate": "SATISFIED",
+    "phase10A": "OPEN"
+  },
+  "nonblockingFindings": [
+    {
+      "id": "NB1",
+      "finding": "R4 is analyzer-informed development-governance evidence and must not be represented as blind, holdout, unseen, or independent semantic evidence."
+    },
+    {
+      "id": "NB2",
+      "finding": "The 37/37 input-lock result uses a temporal/raw-byte provenance model including current raw worktree bytes, starting-head CURRENT_STATE, and one explicitly referenced owner handoff attachment; it is not solely a reviewed-commit property."
+    },
+    {
+      "id": "NB3-R1",
+      "finding": "The regression-harness interval identity is not completely sealed."
+    },
+    {
+      "id": "NB3-R2",
+      "finding": "Any future B2/B3 rerun should seal and compare the exact 34-failure multiset."
+    },
+    {
+      "id": "NB3-R3",
+      "finding": "Partial append-only recovery requires separate governance."
+    }
+  ],
+  "priorTechnicalHistory": {
+    "classification": "TECHNICAL_INCOMPLETE_REVIEW_INVOCATION",
+    "reason": "REQUIRED_GPT_5_5_MODEL_IDENTITY_NOT_PROVEN",
+    "semanticRejection": false,
+    "relationship": "The owner-provided completed GPT-5.5 / Extra High review is the controlling semantic review result; no additional external-review invocation is authorized."
+  },
+  "nonOverstatement": {
+    "e2Closed": false,
+    "a15Closed": false,
+    "deterministicCleanStagingClosureProven": false,
+    "phase10AClosed": false,
+    "phase10BStarted": false
+  }
+}

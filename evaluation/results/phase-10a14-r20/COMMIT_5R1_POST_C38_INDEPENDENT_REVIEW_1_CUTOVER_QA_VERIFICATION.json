@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "classification": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1_CUTOVER_QA_VERIFICATION",
+  "role": "CODER_2_QA_AND_AUTOMATED_TESTING",
+  "verificationScope": "External-review result capture and continuity cutover only; no production behavior, test, oracle, or runtime execution was authorized.",
+  "repositoryIdentity": {
+    "root": "C:/Projects/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "head": "81c39a0a8d2a002cad0a1cc6ee639822474ee0be",
+    "reviewedC38Commit": "f71a7222ed921d69e2669431f6d068badacd2070",
+    "freshRemoteTip": "81c39a0a8d2a002cad0a1cc6ee639822474ee0be"
+  },
+  "hashVerification": {
+    "packageManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE_MANIFEST.sha256",
+      "sha256": "0a78ca9df9fbcb20da58b05a3cff88e61d5bab475c80cc83df51d354b58d8500",
+      "entriesExpected": 5,
+      "entriesVerified": 5,
+      "lexicalPosixOrder": true,
+      "selfExcluded": true,
+      "pass": true
+    },
+    "c38ManifestAtReviewedCommit": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_EVIDENCE.sha256",
+      "entriesExpected": 33,
+      "entriesVerified": 33,
+      "verificationBasis": "SHA-256 over raw blob bytes obtained from reviewed commit f71a7222ed921d69e2669431f6d068badacd2070; the modified working CURRENT_STATE was not substituted for that committed payload.",
+      "pass": true
+    },
+    "r4": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+      "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+      "pass": true
+    }
+  },
+  "captureTruthfulness": {
+    "resultPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_EXTERNAL_REVIEW_RESULT.json",
+    "ownerHandoffProvenanceExplicit": true,
+    "rawTranscriptFabricated": false,
+    "ownerAttachmentSha256": "660beb92dd6047b6bda43c4bfbff002d09c10aa028c1dd9b33e1e5528579b025",
+    "reviewScopeCaptured": {
+      "c37AndC38Terminality": true,
+      "r4IntegrityAnd145ReasonOnlyRevisions": true,
+      "decisionRelationReason3720": true,
+      "runtimeRegistryWalAndOracleTestValidatorPreservation": true,
+      "blockingFindings": 0,
+      "decision": "APPROVED_WITH_NONBLOCKING_FINDINGS",
+      "externalReviewGate": "SATISFIED"
+    },
+    "nonblockingFindingsPreserved": [
+      "R4 evidence character is bounded as analyzer-informed development-governance evidence.",
+      "The 37/37 input-lock provenance is temporal/raw-byte and includes the owner handoff.",
+      "C38 R1-R3 limitations remain nonblocking and accurately stated."
+    ],
+    "nonOverstatement": {
+      "e2": "UNSATISFIED",
+      "a15": "UNSATISFIED",
+      "deterministicCleanStagingClosure": "UNSATISFIED",
+      "phase10A": "OPEN",
+      "phase10B": "NOT_STARTED"
+    },
+    "pass": true
+  },
+  "scopeAndProtectedResidue": {
+    "stagedPaths": [],
+    "protectedPathsExcluded": [
+      "security/public-health.js",
+      "server.js",
+      "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+    ],
+    "protectedPathWorkingHashesUnchangedByThisUnit": true,
+    "currentStateAppendOnly": true,
+    "pass": true
+  },
+  "commandsAndResults": [
+    {
+      "command": "git cat-file -e 81c39a0a8d2a002cad0a1cc6ee639822474ee0be^{commit}; git cat-file -e f71a7222ed921d69e2669431f6d068badacd2070^{commit}",
+      "exit": 0,
+      "result": "Both required commits exist."
+    },
+    {
+      "command": "git ls-remote --heads origin refs/heads/feature/source-availability-engine-v1",
+      "exit": 0,
+      "result": "Fresh remote tip equals 81c39a0a8d2a002cad0a1cc6ee639822474ee0be."
+    },
+    {
+      "command": "SHA-256 verification of the five package-manifest payloads, the 33 C38-manifest payloads at f71a7222ed921d69e2669431f6d068badacd2070, and R4",
+      "exit": 0,
+      "result": "5/5, 33/33, and R4 respectively matched their sealed digests."
+    }
+  ],
+  "qaDecision": "PASS_FOR_EXTERNAL_REVIEW_CUTOVER_CAPTURE",
+  "limitations": [
+    "This evidence verifies the bounded capture and continuity cutover only. It does not execute, satisfy, or define E2, A15, deterministic clean/staging closure, B2-B6, Phase 10A closure, or Phase 10B work."
+  ]
+}
