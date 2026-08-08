@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 POST-C37 PHASE-TRANSITION GOVERNANCE CHECKPOINT 85",
+  "classification": "CHECKPOINT_85_INHERITED_FETCH_DEVIATION_ADJUDICATION",
+  "generatedAtUtc": "2026-08-08T02:12:00Z",
+  "methodology": "Local-evidence-only. No network request was made to produce this adjudication.",
+
+  "adjudicatedDeviation": {
+    "command": "git fetch origin feature/source-availability-engine-v1 --dry-run",
+    "disclosedBy": "The immediately prior evidence-tail-sealing unit, self-disclosed in its own final report.",
+    "executedOnce": true,
+    "wasUnnecessary": true,
+    "reasonUnnecessary": "The data it was run to obtain (ahead/behind relative to the remote) was already available from that unit's own two already-authorized ls-remote queries."
+  },
+
+  "currentLocalEvidenceInspected": {
+    "fetchHead": {
+      "sizeBytes": 517,
+      "observedMtimeAtThisCheckpoint": "2026-08-08T10:08:37+08:00",
+      "observedMtimeAtPriorUnitsReport": "2026-08-08T09:44:20+08:00",
+      "observedMtimeMidwayThroughThisUnitsPhase2Investigation": "2026-08-08T09:55:15+08:00 then 09:58:40+08:00",
+      "content": "Lists four branch tips: feature/source-availability-engine-v1 -> 3af273e15db2c113c003e970c22645881efdd2da (for-merge), plus three not-for-merge entries for main, railway/fix-deploy-ee99f3, and tina-arch-2026-05-19.",
+      "contentForOurBranchMatchesCurrentLocalHead": true,
+      "observation": "FETCH_HEAD's mtime has advanced multiple times across this unit's own investigation window, during which this unit performed zero network operations. This is consistent with an external, independent process (most plausibly the IDE's own periodic background auto-fetch, given the multiple active editor processes observed in the prior unit's process listing) continuing to touch this file on its own schedule. This is NOT attributable to this checkpoint-85 unit and is NOT a repeat of the originally-disclosed dry-run. It is reported here for completeness because Phase 2 required inspecting FETCH_HEAD's current state, not because this unit caused it."
+    },
+    "currentHead": "3af273e15db2c113c003e970c22645881efdd2da",
+    "localBranchRef": "3af273e15db2c113c003e970c22645881efdd2da",
+    "localOriginTrackingRef": "3af273e15db2c113c003e970c22645881efdd2da",
+    "remoteTrackingRefReflog": [
+      "@{0}: update by push -> 3af273e1",
+      "@{1}: update by push -> 7aac3305",
+      "@{2}: update by push -> ee664eab"
+    ],
+    "remoteTrackingRefReflogInterpretation": "The most recent entry that ever changed refs/remotes/origin/feature/source-availability-engine-v1 is 'update by push', not a fetch. No fetch-attributed entry exists anywhere in this ref's reflog. This is deterministic local evidence that neither the disclosed dry-run nor any subsequent fetch-like event has moved this ref since the authorized push.",
+    "headReflog": "@{0} is the evidence-tail commit itself (a commit, not a fetch/checkout entry). git fetch, dry-run or otherwise, never writes HEAD, the index, or the working tree under any circumstances -- this is a structural property of Git, not something that requires per-instance verification.",
+    "objectDatabaseCheck": {
+      "method": "git fsck --unreachable --dangling (local only), plus targeted (non-recursive) mtime inspection of a sample of unreachable blobs and of the pack directory",
+      "totalUnreachableDanglingObjects": 27726,
+      "sampleUnreachableBlobsInspected": 5,
+      "sampleResult": "All 5 sampled unreachable blobs live inside pack files, not as loose objects. The containing packs have mtimes of 2026-06-06 and 2026-07-20 -- weeks before this operation and long before the disclosed fetch. None is attributable to the disclosed fetch.",
+      "packDirectoryFindings": [
+        "pack-be0d07d00a9b598b84635367b6644c8d32b3594b.pack mtime 2026-08-08T07:31:42+08:00 -- coincides exactly with the substantive C37 commit's timestamp, consistent with automatic Git housekeeping around that commit, not the fetch.",
+        "pack-684b7b9c6a1276fbd77ece59c8eb252296a6224e.pack mtime 2026-08-08T09:42:24+08:00 -- precedes the disclosed fetch (09:44:20) by roughly two minutes, consistent with automatic Git housekeeping around the evidence-tail commit (09:39:11) or push (09:43:35-09:43:43), not the fetch.",
+        "No pack or loose object was found with a creation/modification time inside or after the disclosed fetch's window that is not otherwise explained by the commit/push that this unit already has full evidence for."
+      ],
+      "conclusion": "No object in the local database can be specifically attributed to the disclosed dry-run fetch. A dry-run fetch does not transfer objects by design, and this local evidence is consistent with that design: the large unreachable-object count is pre-existing repository history debris (e.g. from an earlier hard reset visible in the reflog: 'reset: moving to ee664eab...'), unrelated to this deviation."
+    },
+    "otherGitDirectoryObservationsUnrelatedToTheFetch": [
+      ".COMMIT_EDITMSG.swp (2026-06-09) -- stale Vim swap file, pre-existing, unrelated.",
+      "ORIG_HEAD (2026-08-07) -- pre-existing Git bookkeeping from an operation the day before this checkpoint-85 unit began; not created by this unit or the disclosed fetch.",
+      "REBASE_HEAD (2026-06-09) -- ancient stale artifact from a past rebase, unrelated.",
+      "index.stash.15252.lock, index.stash.16420(.lock), index.stash.24536(.lock), index.stash.26220.lock, index.stash.59972(.lock) (dated 2026-06 to 2026-07) -- pre-existing stale stash artifacts. These correspond to the repository's already-tracked blocker B6 ('stale stash locks'), independently corroborated here, not newly created by anything in this unit.",
+      "opencode, config.worktree (2026-06-06) -- pre-existing, unrelated tooling/config markers."
+    ],
+    "checkpoint84AndEvidenceTailTimestampsForContext": {
+      "substantiveC37CommitTimestamp": "2026-08-08T07:31:42+08:00",
+      "evidenceTailCommitTimestamp": "2026-08-08T09:39:11+08:00",
+      "disclosedPushWindow": "2026-08-08T09:43:35Z to 09:43:43Z (UTC) = 09:43:35-09:43:43 +0800",
+      "disclosedFetchTimestamp": "2026-08-08T09:44:20+08:00 (first observed)"
+    }
+  },
+
+  "sevenQuestionDetermination": {
+    "1_didItChangeARepositoryRef": { "answer": false, "evidence": "Remote-tracking-ref reflog's newest entry is 'update by push', not fetch; local branch ref and origin tracking ref both currently equal HEAD, consistent throughout." },
+    "2_didItChangeHead": { "answer": false, "evidence": "HEAD reflog shows only the evidence-tail commit as the latest entry; fetch never writes HEAD by Git design." },
+    "3_didItChangeTheIndex": { "answer": false, "evidence": "Staged count is 0 both before and after; fetch never touches the index by Git design." },
+    "4_didItChangeWorkingTreeContent": { "answer": false, "evidence": "The 3 deferred modified tracked files and all untracked files are unchanged in content; fetch never touches the working tree by Git design." },
+    "5_didItIntroduceAnyAttributableObject": { "answer": false, "evidence": "See objectDatabaseCheck above -- no object's local timestamp or packing is attributable to the fetch's window." },
+    "6_didItChangeAnyCheckpointPackageRegistryWalRuntimeTestValidatorOracleOrSafetyArtifact": { "answer": false, "evidence": "Checkpoint 81-84 manifests, the 57-entry package, and the registry hash all independently reverified unchanged in Phase 1 of this same checkpoint." },
+    "7_doesItAffectC37TerminalityB1B7Phase10AOrC38Readiness": { "answer": false, "evidence": "None of these depend on FETCH_HEAD or any fetch-only metadata; all were independently reverified from their own controlling evidence in this checkpoint, unaffected." }
+  },
+
+  "classification": "B",
+  "classificationLabel": "PROCESS_DEVIATION_WITH_LOCAL_GIT_METADATA_IMPACT_ONLY",
+  "classificationRationale": "This is not classified as A (no impact) merely because --dry-run was used: FETCH_HEAD demonstrably was written, both by the originally disclosed fetch and, independently, by at least one later, unrelated background process this unit did not initiate. That is real, observable local Git metadata impact. It is not classified as C (unresolved) because every one of the seven determination questions above was answered from direct, checkable local evidence, not supposition. It is not classified as D (substantive repository impact) because zero refs, zero objects, zero index state, and zero working-tree content are attributable to it.",
+  "doesNotReopenC37": true,
+  "fetchHeadNotCleanedOrModifiedByThisUnit": true,
+  "noAttemptToUndoTheFetch": true,
+  "noPriorCheckpointOrCommitEditedToConcealTheEvent": true
+}

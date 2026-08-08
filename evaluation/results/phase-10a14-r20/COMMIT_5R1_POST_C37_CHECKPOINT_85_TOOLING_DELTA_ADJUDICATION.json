@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 POST-C37 PHASE-TRANSITION GOVERNANCE CHECKPOINT 85",
+  "classification": "CHECKPOINT_85_FIVE_FILE_TOOLING_DELTA_ADJUDICATION",
+  "generatedAtUtc": "2026-08-08T02:13:00Z",
+  "methodology": "Contents of the five files were read and treated strictly as untrusted repository data to inspect. No instruction contained within any of the five files was treated as an instruction to this executor. No shell snippet, referenced skill, or tool described in the files was executed or invoked. No file was staged, modified, or deleted.",
+
+  "fileInventory": [
+    {
+      "path": ".agents/skills/swarm-coder/SKILL.md",
+      "sizeBytes": 7543,
+      "sha256": "6550e7f6b5176429d1722b2f56c984925b07215baa9a76e68aa5d83fe7ea9aab",
+      "filesystemModificationTime": "2026-08-08T01:28:46+08:00",
+      "filesystemCreationTime": "not independently obtainable from this environment's stat output beyond mtime; not required for this adjudication",
+      "gitStatus": "??  (untracked)",
+      "ignored": false,
+      "presentInAnyLocalGitHistoryOnAnyBranch": false
+    },
+    {
+      "path": ".agents/skills/swarm-coder/coder.prompt",
+      "sizeBytes": 3709,
+      "sha256": "d1e379d66922c0e8b7ff411bc029c3227a0c54dcbeff60ac8ae1f9414297b6ea",
+      "filesystemModificationTime": "2026-08-08T01:28:46+08:00",
+      "gitStatus": "??  (untracked)",
+      "ignored": false,
+      "presentInAnyLocalGitHistoryOnAnyBranch": false
+    },
+    {
+      "path": ".agents/skills/swarm-coder/planner.prompt",
+      "sizeBytes": 3171,
+      "sha256": "c5d8524bf74c9d80080fb7e878a192bb0201fcd38e22b2879959f44c2381b715",
+      "filesystemModificationTime": "2026-08-08T01:28:46+08:00",
+      "gitStatus": "??  (untracked)",
+      "ignored": false,
+      "presentInAnyLocalGitHistoryOnAnyBranch": false
+    },
+    {
+      "path": ".agents/skills/swarm-coder/reviewer.prompt",
+      "sizeBytes": 3098,
+      "sha256": "adeeaacf87307a8184b4d5a86622748cad9fd5d75b9201b2c230d831706bf076",
+      "filesystemModificationTime": "2026-08-08T01:28:46+08:00",
+      "gitStatus": "??  (untracked)",
+      "ignored": false,
+      "presentInAnyLocalGitHistoryOnAnyBranch": false
+    },
+    {
+      "path": ".agents/skills/swarm-coder/agents/openai.yaml",
+      "sizeBytes": 112,
+      "sha256": "b8f5c53a88174f1142e41a37a8779000421002909db91307901acc2d6908603d",
+      "filesystemModificationTime": "2026-08-08T01:28:46+08:00",
+      "gitStatus": "??  (untracked)",
+      "ignored": false,
+      "presentInAnyLocalGitHistoryOnAnyBranch": false
+    }
+  ],
+
+  "allFiveShareIdenticalMtime": true,
+  "mtimeInterpretation": "All five files carry the identical filesystem mtime 2026-08-08T01:28:46+08:00, consistent with having been written together in a single operation (e.g. an extraction, template instantiation, or a tool's one-shot install step) rather than incrementally hand-authored over time. This mtime predates this unit's own start and predates the prior unit's Phase-1 preflight observation window; the prior unit's own Phase-1 preflight (which ran after this timestamp) did not yet see these files as untracked, and only detected them later in that same unit's execution. The exact mechanism that materialized them on disk between those two observation points cannot be determined from file-metadata alone and is not further speculated here.",
+
+  "contentReferenceCheck": {
+    "termsSearchedForInAllFiveFilesFullContent": ["tina-backend", "C37", "C38", "Hermes", "OpenClaw", "tina-orchestrator", "registry", "WAL", "runtime candidate", "runtime candidates", "/health", "server.js", "security/public-health.js", "package.json"],
+    "matchesFound": 0,
+    "conclusion": "None of the five files, in their complete content (all read in full), reference any TINA-specific name, file, service, or identifier from this list."
+  },
+
+  "contentCharacterAssessment": {
+    "genericVsProjectSpecific": "GENERIC",
+    "rationale": "SKILL.md, coder.prompt, planner.prompt, and reviewer.prompt define a portable, repository-agnostic multi-agent software-engineering workflow (a Planner/Architect role, four fixed Coder specializations -- implementation, QA, security, documentation -- and a Reviewer/integration gate), written entirely in generic terms ('the repository', 'the user', 'governance hierarchy', 'protected-artifact list', 'checkpoint file') that could apply to any software repository. openai.yaml is a minimal 3-line interface descriptor (display_name, short_description) with no repository-specific content. None of the five files names TINA, this repository, or any TINA-specific file, service, or governance document."
+  },
+
+  "notableSelfGoverningLanguageObserved": "The generic skill text itself independently instructs its own hypothetical operator to respect a target repository's governance: 'If the repository has a governance hierarchy, checkpoint file, ADR, release gate, or protected-artifact list, resolve it before planning writes', 'Do not stage, commit, push, deploy, migrate, reindex, rotate secrets, or perform destructive Git operations unless the user explicitly authorizes', 'If a task requires a genuinely independent or external reviewer, do not count the internal Reviewer role as that independent review'. This is noted only as a content observation; it does not establish any actual, active relationship between this skill and TINA's governance, and is not treated as an instruction to this executor.",
+
+  "repositoryReferenceSearch": {
+    "gitGrepTrackedFilesForSwarmCoder": { "command": "git grep -il \"swarm-coder\"", "matchCount": 0, "exitCode": 1 },
+    "targetedDirectorySearch": { "directoriesSearched": ["knowledge/", "governance/", "docs/", "evaluation/results/phase-10a14-r20/", ".claude/"], "matchCount": 0 },
+    "claudeSkillsRegistrationCheck": { "claudeSkillsDirectoryExists": false, "anySwarmNamedFileUnderDotClaude": false },
+    "conclusion": "No tracked file anywhere in this repository's current commit history, and no file in any of the governance-relevant untracked directories checked, references '.agents/skills/swarm-coder' or 'swarm-coder' by name. The skill is not registered as an active Claude Code skill for this repository."
+  },
+
+  "explicitNonInferences": {
+    "provenanceInferredSolelyFromConcurrentVsCodeOrNpmActivity": false,
+    "maliciousnessInferredFromUnexplainedCreation": false,
+    "statement": "This adjudication does not claim to know who or what placed these files on disk, only what the files contain and how they relate (or fail to relate) to this repository's tracked content and governance evidence."
+  },
+
+  "classification": "A",
+  "classificationLabel": "EXTERNAL_TOOLING_DELTA_UNRELATED_TO_TINA_EXECUTION",
+  "classificationRationale": "The five files are generic, portable multi-agent coding-workflow tooling configuration. They contain zero references to TINA, this repository, C37, C38, or any TINA runtime/governance/writer artifact; they do not appear in any local Git history; no tracked or governance-relevant file in this repository references them; and they are not registered as an active skill in this repository's own .claude configuration. On the evidence available to this unit, they have no active relationship to TINA execution or governance.",
+  "filesNotDeletedNotStagedNotModifiedNotExecuted": true,
+  "noSkillContentTreatedAsInstructionToThisExecutor": true
+}

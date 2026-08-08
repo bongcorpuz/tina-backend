@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 POST-C37 PHASE-TRANSITION GOVERNANCE CHECKPOINT 85",
+  "classification": "CHECKPOINT_85_PREFLIGHT_AND_TERMINAL_STATE_VERIFICATION",
+  "generatedAtUtc": "2026-08-08T02:11:00Z",
+  "executor": { "model": "claude-sonnet-5", "thinking": "max", "effort": "max", "modelOrSubagentInvoked": false, "networkOperationPerformed": false },
+
+  "repositoryIdentity": {
+    "root": "C:/Projects/tina-backend",
+    "branch": "feature/source-availability-engine-v1",
+    "originUrlFromLocalConfigOnly": "https://github.com/bongcorpuz/tina-backend.git",
+    "head": "3af273e15db2c113c003e970c22645881efdd2da",
+    "headParent": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "headTree": "c0054639c270440c6366b6093fd295bc101590c6",
+    "noMerge": true, "noRebase": true, "noCherryPick": true, "noRevert": true, "noBisect": true, "noIndexLock": true,
+    "replaceRefs": "none", "grafts": "none",
+    "staged": 0,
+    "modifiedTracked": 3,
+    "modifiedTrackedPaths": ["security/public-health.js", "server.js", "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"],
+    "untracked": 81,
+    "allExpectedValuesMatched": true
+  },
+
+  "evidenceTailCommitVerification": {
+    "sha": "3af273e15db2c113c003e970c22645881efdd2da",
+    "objectType": "commit",
+    "parentCount": 1,
+    "parent": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "parentEqualsSubstantiveC37Commit": true,
+    "subject": "PHASE-10A14-R20 C37 terminal - publish checkpoints 82-84 attestations",
+    "subjectMatchesRequired": true,
+    "changedPathsVsParent": 22,
+    "additions": 21,
+    "modifications": 1,
+    "deletions": 0,
+    "allCheckpoint82Through84FilesPresent": true,
+    "currentStateMdPresent": true,
+    "noExcludedC37FilesLeaked": true
+  },
+
+  "currentStateMdPreUpdateVerification": {
+    "requiredSha256": "efb9540fd342b218c4ac39011c506617319a48eb7b6eace10c56cb1dcb0ff1bc",
+    "observedSha256": "efb9540fd342b218c4ac39011c506617319a48eb7b6eace10c56cb1dcb0ff1bc",
+    "matched": true,
+    "lfEndingsConfirmed": true
+  },
+
+  "checkpoint84Reverification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_84_FINAL_EVIDENCE.sha256",
+    "entries": 7,
+    "verifiedOk": 7,
+    "failed": 0,
+    "exit": 0,
+    "note": "All entries, including the CURRENT_STATE.md entry, verify cleanly because CURRENT_STATE.md has not changed since checkpoint 84 sealed it."
+  },
+
+  "checkpoint83Reverification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_83_FINAL_EVIDENCE.sha256",
+    "promptAuthoringDiscrepancyCarriedForward": "A prior prompt described this manifest as 7 entries. The actual manifest contains 8 entries: 6 CP83-owned files, 1 cross-referenced CP82 recovery file used for hash-chain continuity, and CURRENT_STATE.md. This was followed from the actual file, not edited.",
+    "entries": 8,
+    "verifiedOk": 7,
+    "failed": 1,
+    "failedEntry": "knowledge/CURRENT_STATE.md",
+    "failureExpected": true,
+    "failureReason": "CURRENT_STATE.md was additively updated again at checkpoint 84, after checkpoint 83 sealed its own snapshot of it. This is expected forward-divergence, not corruption.",
+    "unexpectedMismatches": 0
+  },
+
+  "checkpoint82Reverification": {
+    "manifest": "COMMIT_5R1C37_CHECKPOINT_82_FINAL_EVIDENCE.sha256",
+    "entries": 9,
+    "verifiedOk": 8,
+    "failed": 1,
+    "failedEntry": "knowledge/CURRENT_STATE.md",
+    "failureExpected": true,
+    "unexpectedMismatches": 0
+  },
+
+  "checkpoint81AndEarlierReconciliation": {
+    "checkpoint81Manifest": "COMMIT_5R1C37_CHECKPOINT_81_FINAL_EVIDENCE.sha256",
+    "entries": 13,
+    "verifiedOk": 12,
+    "failed": 1,
+    "failedEntry": "knowledge/CURRENT_STATE.md",
+    "failureExpected": true,
+    "packageJsonByteIdentical": true,
+    "serverJsByteIdenticalToItsCheckpoint81EraSealedHash": true,
+    "note": "server.js verifies against its checkpoint-81-sealed hash, confirming the long-standing deferred /health modification (blocker B2) has remained frozen and unmodified this entire session. This is a different fact than server.js's current working-tree state matching HEAD -- server.js is still modified-unstaged relative to HEAD, exactly as it has been since checkpoint 75.",
+    "noSealedOrFrozenOrRawReviewerArtifactChanged": true
+  },
+
+  "fiftySevenEntryPackageReverification": {
+    "manifest": "COMMIT_5R1C37_OPUS_REVIEW_EVIDENCE.sha256",
+    "entries": 57,
+    "verifiedOk": 57,
+    "failed": 0
+  },
+
+  "registryWalReconciliation": {
+    "registryFile": "evaluation/results/phase-10a14-r20/CANONICAL_ATTEMPT_REGISTRY.json",
+    "registryHash": "a0261acfcc4cc69615794fe6f26117c00789d42862a75fae3e978b2e17a1e073",
+    "unchanged": true,
+    "attempts": 230,
+    "running": 0,
+    "orphan": 0,
+    "dangling": 0,
+    "candidatesAuthorized": 0,
+    "candidatesAllocated": 0,
+    "c37RuntimeAttempts": 0,
+    "activeAttemptId": null,
+    "noC37Wal": true
+  },
+
+  "b1WriterStateLocalReverification": {
+    "startupTrigger": "Hermes_Gateway_tina-orchestrator.vbs.DISABLED-BY-C37-GOVERNANCE",
+    "startupTriggerDisabled": true,
+    "disabledMarkerPresent": true,
+    "openClawScheduledTask": { "taskName": "OpenClaw Gateway", "state": "Disabled", "taskPath": "\\" },
+    "tinaOrchestratorGatewayProcessExists": false,
+    "unauthorizedWriterProcessExists": false,
+    "processCheckMethod": "Get-CimInstance Win32_Process filtered for wscript/cscript names and hermes_gateway/openclaw/tina-swarm/tina-orchestrator command-line substrings",
+    "processCheckResult": "Only self-match: the PowerShell process running this exact check, whose own command-line text contains the search terms. No genuine writer process found."
+  },
+
+  "statusReconfirmation": {
+    "b1": "CLOSED",
+    "b2ThroughB6": "OPEN_UNCHANGED",
+    "b7": "CLOSED_NARROWLY",
+    "c37": "TERMINAL",
+    "phase10A": "OPEN",
+    "c38": "NOT_YET_STARTED"
+  },
+
+  "checkpoint85UnusedVerification": {
+    "searchPattern": "*CHECKPOINT_85* and *checkpoint-85* (case-insensitive) under evaluation/results/phase-10a14-r20/",
+    "matchesFound": 0,
+    "confirmed": true
+  },
+
+  "materialPreconditionFailures": 0,
+  "safeToResume": true,
+  "proceedToPhase2": true
+}

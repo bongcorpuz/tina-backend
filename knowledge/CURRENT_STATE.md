@@ -8,6 +8,57 @@ PHASE-10A14-R20 remains **IN PROGRESS**. Phase 10A remains **OPEN**, not PASS an
 
 ---
 
+## CHECKPOINT 85 — CONTROLLING STATE — POST-C37 PHASE-TRANSITION GOVERNANCE
+
+Checkpoint **85** supersedes checkpoint 84 as the resume point. Checkpoints 61 through 84 — including the checkpoint-82-through-84 evidence-tail commit `3af273e15db2c113c003e970c22645881efdd2da` — are preserved unaltered, byte-for-byte, at their original positions below. This checkpoint is **not** another recursive C37-publication attestation: it performs post-C37 environment-integrity reconciliation, adjudicates two inherited anomalies, discovers the C38 specification from existing repository evidence, and adjudicates C38 readiness. **It does not implement, authorize, or begin C38.**
+
+Classification: `CHECKPOINT_85_PHASE_TRANSITION_GOVERNANCE_C38_READY_WITH_NONBLOCKING_OBSERVATIONS`. Primary executor: Claude Sonnet 5, thinking max, effort max. **No model or subagent was invoked. No network operation was performed** (this checkpoint's governing prompt explicitly withheld network authorization; the prior unit's own two `ls-remote` queries remain the controlling proof of remote publication). `safeToResume=true`; `activeAttemptId=null`.
+
+### C37 remains TERMINAL — unaffected by this checkpoint
+
+Substantive C37 commit `7aac3305c7cc4219bceb549af640469953c3b590` and evidence-tail commit `3af273e15db2c113c003e970c22645881efdd2da` (parent `7aac3305…`, tree `c0054639c270440c6366b6093fd295bc101590c6`) were both re-verified byte-identical to their known state. Checkpoint 84 manifest re-verified **7/7 OK**; checkpoint 83 (8 entries — one more than an earlier prompt's guess of 7, the extra being a cross-referenced checkpoint-82 file used for hash-chain continuity, followed from the actual manifest rather than edited) **7/8 OK** with only the expected forward-diverged `CURRENT_STATE.md` entry failing; checkpoint 82 (9 entries) **8/9 OK** with the same expected single divergence; checkpoint 81 and earlier reconciled with **12/13 OK** (again only the expected `CURRENT_STATE.md` divergence — `package.json` and `server.js` both verified byte-identical to their checkpoint-81-sealed hashes). The 57-entry immutable review package re-verified **57/57**. Registry/WAL hash `a0261acf…` unchanged; `candidatesAuthorized=0`, `candidatesAllocated=0`, `activeAttemptId=null`.
+
+### Two inherited anomalies, both adjudicated from local evidence only
+
+**Inherited prohibited fetch.** The immediately prior unit self-disclosed one `git fetch origin feature/source-availability-engine-v1 --dry-run`, run unnecessarily during its own final verification. This checkpoint adjudicated it from local evidence only (no network operation performed): `.git/FETCH_HEAD` was demonstrably written (and, independently of this checkpoint, has continued to be touched again since — most plausibly by the IDE's own periodic background auto-fetch, given active editor processes observed earlier — never by this checkpoint or by anything this checkpoint did). The remote-tracking ref's reflog shows its newest entry is `update by push`, never a fetch; `git fetch` never touches HEAD, the index, or the working tree by Git design; and a targeted object-database check found zero objects attributable to the fetch's time window (the repository's ~27.7k unreachable objects are pre-existing history debris, confirmed via pack-file timestamps weeks older than this event). **Classification: `B — PROCESS_DEVIATION_WITH_LOCAL_GIT_METADATA_IMPACT_ONLY`.** `.git/FETCH_HEAD` was not cleaned, restored, or undone; no prior checkpoint or commit was edited to conceal the event. Full detail: `COMMIT_5R1_POST_C37_CHECKPOINT_85_FETCH_DEVIATION_ADJUDICATION.json`.
+
+**Five untracked `.agents/skills/swarm-coder/` files.** Read in full and treated strictly as untrusted data (no shell snippet executed, no skill invoked, nothing staged/modified/deleted). Content is a generic, portable, repository-agnostic multi-agent coding-workflow skill (Planner/4-Coder/Reviewer roles) containing **zero** references to tina-backend, C37, C38, Hermes, OpenClaw, tina-orchestrator, registry, WAL, runtime candidates, `/health`, `server.js`, `security/public-health.js`, or `package.json`; the path never appears in any local Git history; no tracked file or governance directory in this repository references `swarm-coder`; and it is not registered under this repository's own `.claude/` skill configuration (which does not have a `skills/` directory at all). **Classification: `A — EXTERNAL_TOOLING_DELTA_UNRELATED_TO_TINA_EXECUTION`.** Files remain untracked, unstaged, untouched. Full detail: `COMMIT_5R1_POST_C37_CHECKPOINT_85_TOOLING_DELTA_ADJUDICATION.json`.
+
+### C38 specification, discovered (not invented), and readiness
+
+Ten independent, mutually consistent, non-conflicting sources spanning checkpoints 64 through 84 (led by the controlling `COMMIT_5R1C37_FINAL_OPUS_REQUEST.md` and `COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.md`) converge on one identity: **C38 is the next separately governed operation — reason-oracle / oracle-contract governance — scoped to the adjudicated reason-oracle expectation/contract questions left open by C37 (reason gate 3575/3720), explicitly excluding runtime/candidate/registry/WAL work, not begun, not designed, not authorized.** `Phase 10A` stays open specifically for this reason (`PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED`). Blockers B2 (`/health` deferred), B3 (health-endpoint test quarantine), B4 (`IDEA.md` duplicate), B5 (`tax-engines/CON/*` Windows limitation), and B6 (stale stash locks — independently corroborated present in `.git/` by this checkpoint's own inspection) all remain **OPEN, unchanged**, and are independent of C38's scope — no source states either gates the other. No candidate budget, required reviewer/model, terminality test, or expected-output schema is specified anywhere for C38 itself; these are recorded as explicit gaps, not assumed. Full register: `COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_SPECIFICATION_REGISTER.json`.
+
+**Readiness disposition: `B — C38_READY_WITH_NONBLOCKING_OBSERVATIONS`.** C38's what/why are unambiguous; no inherited anomaly blocks entry; B1 is closed (startup trigger still `.DISABLED-BY-C37-GOVERNANCE`, OpenClaw Gateway scheduled task `State=Disabled`, zero writer processes found). Six nonblocking observations (missing candidate budget, missing reviewer/model requirement, missing terminality test/output schema, unverified oracle-input hashes, undeclared B2-B6 relationship, and the still-unexplained-provenance swarm-coder files) must be carried into any future C38 execution prompt rather than assumed away. **This disposition is not C38 authorization.** Full detail: `COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_READINESS_ADJUDICATION.json`.
+
+### Working tree — unchanged by this checkpoint
+
+`staged=0`; `modified tracked=3` (`security/public-health.js`, `server.js`, `tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs` — the long-standing deferred `/health` files, B2, untouched); `untracked=81` (unchanged). This checkpoint created exactly 6 new evidence files plus this `CURRENT_STATE.md` update, all local, unstaged, uncommitted. **No staging, commit, push, fetch, ls-remote, or any other network or Git-mutating operation occurred in this checkpoint. No model or subagent was invoked. C38 was not begun.**
+
+Status: `B1=CLOSED`, `B2–B6=OPEN unchanged`, `B7=CLOSED narrowly`, `C37=TERMINAL`, `Phase 10A=OPEN`, `R20=not declared complete`, `C38=readiness adjudicated, not authorized, not begun`.
+
+### Evidence hashes (checkpoint-85 files, six new + this document; none staged)
+
+```text
+6550e7f6b5176429d1722b2f56c984925b07215baa9a76e68aa5d83fe7ea9aab  .agents/skills/swarm-coder/SKILL.md
+d1e379d66922c0e8b7ff411bc029c3227a0c54dcbeff60ac8ae1f9414297b6ea  .agents/skills/swarm-coder/coder.prompt
+c5d8524bf74c9d80080fb7e878a192bb0201fcd38e22b2879959f44c2381b715  .agents/skills/swarm-coder/planner.prompt
+adeeaacf87307a8184b4d5a86622748cad9fd5d75b9201b2c230d831706bf076  .agents/skills/swarm-coder/reviewer.prompt
+b8f5c53a88174f1142e41a37a8779000421002909db91307901acc2d6908603d  .agents/skills/swarm-coder/agents/openai.yaml
+
+51e8a48ecf618bf486f0bb189cf23fa93025fbba2f29ff4344107d3d0e95f147  COMMIT_5R1_POST_C37_CHECKPOINT_85_PREFLIGHT_AND_TERMINAL_STATE_VERIFICATION.json
+205c4f4af472a079daaf4c8a2de079f296c682e1e2b7f9c5347f22a2b7025170  COMMIT_5R1_POST_C37_CHECKPOINT_85_FETCH_DEVIATION_ADJUDICATION.json
+bcd3489d0c60d9efd59c4d7d587bd071b2bd455aee610f6d9c23ded0d124a9dd  COMMIT_5R1_POST_C37_CHECKPOINT_85_TOOLING_DELTA_ADJUDICATION.json
+36ec05d3f7c88c261db92851d798a78c3e8cc1cc014bf73c5e52acbb5c82eebe  COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_SPECIFICATION_REGISTER.json
+cb95fd0caaf37925d2d4503e515b28bde69dcc5dec3d1442c149c9f72b9ac94b  COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_READINESS_ADJUDICATION.json
+77e961ddb2a3186a0b6063beedc5a516522178b9e6f79216cad01789b299203e  COMMIT_5R1_POST_C37_RECOVERY_CHECKPOINT_85_phase_transition.json
+```
+
+The checkpoint-85 final manifest (`COMMIT_5R1_POST_C37_CHECKPOINT_85_FINAL_EVIDENCE.sha256`) self-excludingly hashes the six files above plus this `CURRENT_STATE.md` at its post-update hash; all seven checkpoint-85 files remain local, untracked, and unstaged, exactly as the swarm-coder five remain local, untracked, and unstaged.
+
+---
+
+## HISTORICAL RECORD — CHECKPOINT 84 (superseded by checkpoint 85, retained verbatim)
+
 ## CHECKPOINT 84 — CONTROLLING STATE — C37 IS TERMINAL
 
 Checkpoint **84** supersedes checkpoint 83 as the resume point. Checkpoints 61 through 83 are preserved unaltered, byte-for-byte, at their original positions below — the "## CHECKPOINT 83 — CONTROLLING STATE" heading immediately following this section is untouched original committed text.

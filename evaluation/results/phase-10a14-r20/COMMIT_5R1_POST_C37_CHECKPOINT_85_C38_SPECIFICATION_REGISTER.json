@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A14-R20 POST-C37 PHASE-TRANSITION GOVERNANCE CHECKPOINT 85",
+  "classification": "CHECKPOINT_85_C38_SPECIFICATION_SOURCE_REGISTER",
+  "generatedAtUtc": "2026-08-08T02:15:00Z",
+  "methodology": "Repository-wide search for C38 / 5R1-C38 / exactProposedNextOperation / nextAuthorizedOperation / successor / next-commit-unit / Phase-10A-continuation / B2-B6 references, restricted to a precise word-bounded pattern after an initial broad case-insensitive pass produced overwhelming false-positive noise from unrelated hash/journal-ID substrings (e.g. 'c38a073b8145', 'G38') inside other phases' evaluation data. This register does not invent C38's meaning; every entry below is a direct quotation or paraphrase with an exact source citation.",
+
+  "sourceRegister": [
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_RUNTIME_CANDIDATE_NECESSITY_DECISION.md",
+      "artifactClass": "sealed, 57-entry review package member",
+      "status": "controlling",
+      "sha256": "computed at read-time in this checkpoint's Phase 4; unchanged from the 57-entry package verification in Phase 1 of this same checkpoint",
+      "exactWording": "C37_NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_REQUIRED. No row proves a new generalized causal runtime feature. No candidate, attempt, registry row, or C37 WAL is authorized. Phase 10A remains open; any oracle/contract change requires a separately governed C38 operation."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_FINAL_OPUS_REQUEST.md",
+      "artifactClass": "sealed, controlling terminality contract (hash-reconfirmed unchanged at checkpoint 84 and again in this checkpoint's Phase 1)",
+      "status": "controlling",
+      "exactSectionPath": "body text plus JSON schema field 'c38NextSeparateOperation'",
+      "exactWording": "Phase 10A must remain OPEN. The only proposed approving substantive token is NO_RUNTIME_CANDIDATE_ORACLE_GOVERNANCE_NEXT_APPROVED, with separately governed C38 reason-oracle governance next. Do not authorize or request a runtime candidate in C37."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PHASE_10A_STATUS_ASSESSMENT_DRAFT.md / .json",
+      "artifactClass": "proposed/draft (not itself a sealed checkpoint, but consistent with and cited by the sealed package's capsule builder)",
+      "status": "informational, consistent with controlling sources",
+      "exactSectionPath": "/exactNextSeparatelyGovernedOperation",
+      "exactWording": "Proposed status after independent approval: PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED. Reason remains 3575/3720; Phase 10A cannot close. The exact next separately governed operation is C38 reason-oracle governance. E2 and A15 remain pending."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_ROADMAP_V9_CHANGE.md",
+      "artifactClass": "proposed/draft",
+      "status": "informational, consistent",
+      "exactWording": "Phase 10A remains OPEN with status PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED. The exact next operation is a separately governed C38 reason-oracle governance task limited to the adjudicated expectation/contract questions. E2 and A15 remain pending; Phase 10B, deployment, reindexing, and model migration were not authorized or performed."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_PROPOSED_CURRENT_STATE_CHANGE.md",
+      "artifactClass": "proposed/draft",
+      "status": "informational, consistent",
+      "exactWording": "Phase 10A: PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED. Exact next separately governed operation: C38 reason-oracle governance. E2 and A15 remain pending. Phase 10B/deploy/reindex/model migration not performed."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_80_FINAL_C37_ADJUDICATION.json",
+      "artifactClass": "historical checkpoint, superseded by checkpoint 84 for current C37 status but not contradicted",
+      "status": "historical, consistent",
+      "exactWording": "C38 reason-oracle governance remains a separately governed, currently unauthorized operation. Not begun."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_69_OPUS_BOOTSTRAP.md",
+      "artifactClass": "historical, superseded procedural document from the review-authorization lifecycle",
+      "status": "historical, consistent",
+      "exactWording": "C38 is only the next separately governed operation; do not begin or design it."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_64_CONTINUATION_DRIVER.mjs",
+      "artifactClass": "historical, superseded driver script",
+      "status": "historical, consistent",
+      "exactWording": "excludedWork: ['runtime or oracle change', 'candidate allocation', 'C38', 'E2', 'A15', 'Phase 10B', 'deployment', 'reindexing', 'model migration', 'second invocation or retry']"
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json",
+      "artifactClass": "most recent prior checkpoint; now committed inside the evidence-tail commit; controlling for current C37 status",
+      "status": "controlling, most current",
+      "exactWording": "C37_TERMINAL is adjudicated strictly as a status of the C37 commit unit itself. It does not extend to ... authorization of C38. C38 unauthorized."
+    },
+    {
+      "file": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_81_C37_CLOSURE_READINESS_ADJUDICATION.json",
+      "artifactClass": "historical checkpoint",
+      "status": "controlling for the definitions of B2-B6 (unchanged since)",
+      "exactWording": "No new evidence was produced in this checkpoint bearing on B2 (/health deferred), B3 (health-endpoint test quarantine), B4 (IDEA.md duplicate), B5 (tax-engines/CON/* Windows limitation), or B6 (stale stash locks). All five remain open, unchanged, not closed by assumption."
+    }
+  ],
+
+  "conflictAnalysis": {
+    "conflictsFound": false,
+    "statement": "All ten sources above describe C38 identically in substance: a separately governed 'reason-oracle governance' operation, scoped to the adjudicated oracle/contract/expectation questions, explicitly excluding runtime code/candidate/registry/WAL work, explicitly not begun, not designed, and not authorized by C37. No conflicting or contradictory definition of C38 was found anywhere searched. No conflict table is therefore required, and no source-of-truth tie-break was needed.",
+    "b2ThroughB6RelationshipToC38": "B2 (/health deferred), B3 (health-endpoint test quarantine), B4 (IDEA.md duplicate), B5 (tax-engines/CON/* Windows limitation), and B6 (stale stash locks) are independent, parallel blockers to Phase 10A's overall closure. No source found states that C38 is gated on B2-B6's closure, or vice versa; they are on separate tracks."
+  },
+
+  "synthesizedC38Specification": {
+    "identity": "C38 = the next separately governed operation after C37, concerned with reason-oracle / oracle-contract governance.",
+    "scope": "Limited to the adjudicated reason-oracle expectation/contract questions identified during C37's investigation (the open reason gate at 3575/3720). Explicitly must NOT modify the oracle within C37 itself.",
+    "purpose": "Phase 10A's open status is explicitly tied to this: status token PHASE_10A_OPEN_REASON_ORACLE_GOVERNANCE_REQUIRED names C38-type work as the reason Phase 10A cannot yet close.",
+    "explicitProhibitions": ["runtime or oracle change within C37", "candidate allocation", "C38 itself beginning or being designed before separate authorization", "treating any roadmap objective as authorization"],
+    "requiresFreshOwnerAuthorization": true,
+    "notAuthorizedByAnyC37OrPost-C37EvidenceToDate": true,
+
+    "operationalParametersFoundExplicitlySpecified": {
+      "candidateBudget": null,
+      "requiredReviewerOrModel": null,
+      "terminalityCriteria": null,
+      "expectedOutputSchema": null
+    },
+    "operationalParametersGapStatement": "No source found anywhere in this repository specifies a candidate/runtime budget, a required independent reviewer or model, an exact terminality test, or an expected-output schema for C38 itself. C37's own candidateBudget structure (maximum 1, all zero) and C33/C34/C35's 'Claude Code Opus 4.8'/'Opus' reviewer requirements are precedents from prior, different commit units; none is stated to carry forward to C38 automatically, and this register does not assume that it does. These parameters are unresolved gaps, not blockers to recognizing C38's scope and purpose, and would need to be defined in whatever future prompt actually authorizes and executes C38."
+  },
+
+  "requiredInputsExistenceCheck": {
+    "reasonOracleRelatedFilesFoundToExist": [
+      "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_FROZEN.json",
+      "evaluation/oracles/phase-10a14-r20/R20_NEW_COMPOSITIONAL_SOURCE.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.md"
+    ],
+    "hashVerificationOfTheseSpecificFilesPerformedInThisCheckpoint": false,
+    "note": "Their existence was confirmed by search. This checkpoint's Phase 1 hash-verification scope was the checkpoint-81-through-84 manifests and the 57-entry package, as explicitly required by the governing prompt; it did not extend to a full hash audit of every reason-oracle file. This is recorded here as a nonblocking observation for whatever unit eventually authors C38's own preflight."
+  }
+}
