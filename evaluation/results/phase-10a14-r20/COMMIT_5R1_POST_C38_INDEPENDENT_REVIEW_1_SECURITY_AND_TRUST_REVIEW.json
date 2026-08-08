@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "classification": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1_SECURITY_AND_TRUST_PASS",
+  "generatedUtc": "2026-08-08T07:36:40.0046543Z",
+  "role": "CODER_3_SECURITY_ANALYSIS_AND_SECURITY_TESTS",
+  "repository": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedCommit": "f71a7222ed921d69e2669431f6d068badacd2070",
+  "reviewedCommitParent": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88",
+  "inputs": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE.json",
+      "sha256": "3761a2a7d1e3c0601b2ca6f23f04f6a77d3c1c4b70db5cb19b98c25453c2188c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_REVIEW_PROMPT.md",
+      "sha256": "e090c21b8df407575c13f4ceccfd06cca9e1ddc2ded0cd7df440b078906cf743"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_OUTPUT_SCHEMA.json",
+      "sha256": "ee5eb1d1d3fc5e97a885317ce49bf6de38dbe2ce2305972581238a0299285343"
+    }
+  ],
+  "trustBoundary": {
+    "requiredReviewer": "Codex 5.5 Independent Review 1",
+    "reviewerSubstitutionAllowed": false,
+    "freshIsolatedContextRequired": true,
+    "independenceRequired": true,
+    "packageAndCommittedEvidenceOnly": true,
+    "readOnly": true,
+    "externalSystemMutationAllowed": false,
+    "maximumExternalInvocations": 1,
+    "retryAllowed": false,
+    "accessMustBeProvenBeforeEvidenceTransmission": true,
+    "independenceMustBeProvenBeforeInvocation": true,
+    "gpt5_6SubstitutionAllowed": false
+  },
+  "checks": [
+    {
+      "id": "POST-C38-SEC-01",
+      "description": "Canonical repository, branch, reviewed commit, parent, and local upstream identity",
+      "status": "PASS",
+      "observed": {
+        "repositoryRoot": "C:/Projects/tina-backend",
+        "branch": "feature/source-availability-engine-v1",
+        "head": "f71a7222ed921d69e2669431f6d068badacd2070",
+        "upstream": "f71a7222ed921d69e2669431f6d068badacd2070",
+        "parent": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88"
+      }
+    },
+    {
+      "id": "POST-C38-SEC-02",
+      "description": "Committed-reference integrity",
+      "status": "PASS",
+      "observed": {
+        "descriptorReferencesChecked": 15,
+        "descriptorReferenceHashMismatches": 0,
+        "c38ManifestSha256": "86559e22c2687529e10eda7111813e84bd98fcb6f6fcf5c6072bdaa9c6130b40",
+        "c38ManifestEntries": 33,
+        "c38ManifestEntriesVerified": 33,
+        "c38ManifestSelfExcluded": true,
+        "c38ManifestOrdinalPosixPathOrder": true,
+        "c38PublicationCommitPathCount": 34,
+        "c38PublicationCommitExactPathSet": true,
+        "r4Sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566"
+      }
+    },
+    {
+      "id": "POST-C38-SEC-03",
+      "description": "Exact reviewer identity, independence, substitution, invocation, and retry controls",
+      "status": "PASS",
+      "observed": {
+        "exactCodex5_5Required": true,
+        "differentModelAliasOrVersionProhibited": true,
+        "freshIsolatedContextRequired": true,
+        "implementerPlannerCoderOrInternalReviewerDisallowed": true,
+        "actualReviewerAndModelMustBeReported": true,
+        "independenceMustBeConfirmed": true,
+        "maximumInvocations": 1,
+        "retryAllowed": false,
+        "technicalIncompleteConsumesInvocation": true
+      }
+    },
+    {
+      "id": "POST-C38-SEC-04",
+      "description": "Read-only package boundary and authority-escalation resistance",
+      "status": "PASS",
+      "observed": {
+        "packageAndContentAddressedCommittedEvidenceOnly": true,
+        "repositoryMutationProhibited": true,
+        "runtimeDeploymentMigrationReindexAndCleanupProhibited": true,
+        "gitMutationProhibited": true,
+        "externalSystemMutationProhibited": true,
+        "requiredOutputBoundedToExactJsonSchema": true,
+        "controlFilePromptInjectionMarkersFound": 0,
+        "artifactContentCannotExpandGrantedAuthority": true
+      }
+    },
+    {
+      "id": "POST-C38-SEC-05",
+      "description": "Secret and unsafe-disclosure scan of descriptor, prompt, and schema",
+      "status": "PASS",
+      "observed": {
+        "filesScanned": 3,
+        "highConfidenceCredentialMatches": 0,
+        "privateKeyMatches": 0,
+        "bearerCredentialMatches": 0,
+        "jwtMatches": 0,
+        "unsafeAuthorityOrExternalWriteInstructions": 0,
+        "intentionalProvenance": [
+          "canonical repository path",
+          "repository-relative evidence paths",
+          "commit identifiers",
+          "SHA-256 values"
+        ]
+      }
+    },
+    {
+      "id": "POST-C38-SEC-06",
+      "description": "Decision semantics and technical-failure mapping",
+      "status": "PASS",
+      "observed": {
+        "validDecisionValuesExact": true,
+        "conditionalPassAllowed": false,
+        "semanticRejectionMapsToRevisionsRequired": true,
+        "technicalIncompleteIsNotSemanticRejectionOrPass": true,
+        "identityIndependenceOrHashFailureCannotProduceSemanticDecision": true
+      }
+    },
+    {
+      "id": "POST-C38-SEC-07",
+      "description": "Protected exclusions and Phase 10A truthfulness",
+      "status": "PASS",
+      "observed": {
+        "protectedHealthPathsExcluded": [
+          "security/public-health.js",
+          "server.js",
+          "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+        ],
+        "otherResidueExcluded": ".claude/settings.local.json",
+        "r4RepresentedAsIndependentHoldoutUnseenOrBlind": false,
+        "E2ClaimedClosed": false,
+        "A15ClaimedClosed": false,
+        "deterministicCleanStagingClosureClaimed": false,
+        "phase10AClaimedClosed": false,
+        "phase10BClaimedStarted": false,
+        "phase10AStatus": "OPEN",
+        "phase10BStatus": "NOT_STARTED"
+      }
+    },
+    {
+      "id": "POST-C38-SEC-08",
+      "description": "Output schema shape",
+      "status": "PASS",
+      "observed": {
+        "topLevelFieldSetExact": true,
+        "packageHashVerificationFieldSetExact": true,
+        "reviewerIdentityAndIndependenceFieldsPresent": true,
+        "blockingAndNonblockingFindingArraysPresent": true,
+        "nextRequiredGateFieldPresent": true
+      }
+    }
+  ],
+  "findings": {
+    "severityCounts": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "informational": 1
+    },
+    "items": [
+      {
+        "id": "POST-C38-S01",
+        "severity": "INFORMATIONAL",
+        "type": "PROMPT_INJECTION_DEFENSE_IN_DEPTH",
+        "exploitableDefect": false,
+        "blocking": false,
+        "observation": "The control files contain no common prompt-injection markers. The external reviewer must continue to treat all hash-locked evidence contents as adjudication data, never as authority to alter the sealed identity, scope, output schema, invocation ceiling, or read-only boundary.",
+        "mitigation": "Fresh isolated execution, package-only content addressing, exact output schema, and the explicit no-write/no-substitution boundary contain the impact of any instruction-like text inside committed artifacts."
+      }
+    ]
+  },
+  "blockers": [],
+  "securityDecision": "PASS_NO_EXPLOITABLE_PACKAGE_SECURITY_OR_TRUST_DEFECTS_FOUND",
+  "packageSealingEligibleFromSecurity": true,
+  "externalInvocationAuthorizedByThisReport": false,
+  "accessAndIndependenceProofStillRequiredBeforeInvocation": true,
+  "reviewerGateSupport": "READY_FOR_CODEX_5_5_INDEPENDENT_REVIEW",
+  "pass": true
+}

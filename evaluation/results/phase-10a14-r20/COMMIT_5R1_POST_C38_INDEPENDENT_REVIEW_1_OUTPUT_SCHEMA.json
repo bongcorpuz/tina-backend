@@ -1,0 +1,24 @@
+{
+  "reviewId": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1",
+  "reviewerRequirement": "Codex 5.5 Independent Review 1",
+  "actualReviewer": "",
+  "actualModel": "",
+  "independenceConfirmed": false,
+  "repository": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedCommit": "",
+  "packageManifestSha256": "",
+  "packageHashVerification": {
+    "passed": false,
+    "entriesExpected": 0,
+    "entriesVerified": 0
+  },
+  "c37TerminalityAccepted": false,
+  "c38TerminalityAccepted": false,
+  "r4IntegrityAccepted": false,
+  "phase10AReasonClosureAccepted": false,
+  "blockingFindings": [],
+  "nonblockingFindings": [],
+  "decision": "",
+  "nextRequiredGate": ""
+}

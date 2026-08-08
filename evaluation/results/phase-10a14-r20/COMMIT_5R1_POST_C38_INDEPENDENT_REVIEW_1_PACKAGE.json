@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "classification": "PHASE10A_POST_R4_CODEX_5_5_INDEPENDENT_REVIEW_1_IMMUTABLE_PACKAGE",
+  "reviewId": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1",
+  "reviewerRequirement": "Codex 5.5 Independent Review 1",
+  "reviewerSubstitutionAllowed": false,
+  "repository": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedCommit": "f71a7222ed921d69e2669431f6d068badacd2070",
+  "reviewedCommitParent": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88",
+  "reviewedCommitPublication": {
+    "localTipVerified": true,
+    "remoteTipVerified": true,
+    "normalNonForcePush": true,
+    "subject": "evidence(phase-10a14-r20): publish terminal C38 evidence"
+  },
+  "reviewBoundary": {
+    "mode": "READ_ONLY_PACKAGE_AND_COMMITTED_EVIDENCE_ONLY",
+    "freshIsolatedContextRequired": true,
+    "independenceRequired": true,
+    "requiredIndependenceFacts": [
+      "The reviewer did not implement C38.",
+      "The reviewer did not plan C38.",
+      "The reviewer did not code C38.",
+      "The reviewer did not perform C38 internal review.",
+      "The reviewer receives only this sealed package and the committed evidence it identifies."
+    ],
+    "writeOperationsAllowed": false,
+    "runtimeOrModelSubstitutionAllowed": false,
+    "maximumExternalInvocations": 1,
+    "retryAllowed": false
+  },
+  "governingContracts": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/FROZEN_PLAN.md",
+      "sha256": "0953aa00fdccbd6c24120e620ec5d56069f2d8f0bc8ebabecc3027c58c2e2dfc",
+      "controllingRequirement": "Codex 5.5 R20 Independent Review 1 is the only independent review; R20 remains prospective and Phase 10A remains open until the governing review and all gates are satisfied."
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/DECISION_AND_STOP_RULES.md",
+      "sha256": "49ad590b52b07b2e74945ab282b63764939bb4fd3ea971f2682102bd3819814a",
+      "controllingRequirement": "Repository semantic decisions are PASS or REVISIONS REQUIRED, with no conditional PASS; PASS requires every listed predicate."
+    }
+  ],
+  "c37TerminalEvidence": {
+    "statusPresentedForReview": "TERMINAL",
+    "substantiveCommit": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "evidenceTailCommit": "3af273e15db2c113c003e970c22645881efdd2da",
+    "artifacts": [
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json",
+        "sha256": "b6038a507652b6ad30a132089f28588aeec68c95209df5b641f914249a398e25",
+        "claim": "The exact C37 commit exists and its normal push was independently verified."
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_REMOTE_PUBLICATION_VERIFICATION.json",
+        "sha256": "bdee255e7fc498fc2ca0b14c1a5aeac4c8685d5ff39a18638fa0475f0a89dadb",
+        "claim": "The remote branch tip exactly matched the substantive C37 commit after one push invocation."
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_PREFLIGHT_AND_TERMINAL_STATE_VERIFICATION.json",
+        "sha256": "51e8a48ecf618bf486f0bb189cf23fa93025fbba2f29ff4344107d3d0e95f147",
+        "claim": "C37 terminality and the evidence tail were reverified; C37 registry/WAL state remained preserved."
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_READINESS_ADJUDICATION.json",
+        "sha256": "cb95fd0caaf37925d2d4503e515b28bde69dcc5dec3d1442c149c9f72b9ac94b",
+        "claim": "C38 was ready with nonblocking observations but was not yet authorized by checkpoint 85."
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_RECOVERY_CHECKPOINT_85_phase_transition.json",
+        "sha256": "77e961ddb2a3186a0b6063beedc5a516522178b9e6f79216cad01789b299203e",
+        "claim": "C37 remained terminal, Phase 10A remained open, and C38 had not begun at checkpoint 85."
+      }
+    ]
+  },
+  "c38PublicationEvidence": {
+    "statusPresentedForReview": "TERMINAL_NO_RUNTIME_CANDIDATE_INTERNAL_REVIEW_APPROVED_WITH_NONBLOCKING_FINDINGS",
+    "publicationCommit": "f71a7222ed921d69e2669431f6d068badacd2070",
+    "publicationSetPathCount": 34,
+    "evidenceManifest": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_EVIDENCE.sha256",
+      "sha256": "86559e22c2687529e10eda7111813e84bd98fcb6f6fcf5c6072bdaa9c6130b40",
+      "entries": 33,
+      "entriesVerifiedBeforePublication": 33,
+      "selfExcluded": true,
+      "coverage": "The 33 entries are the complete committed C38/R4 evidence payload, including knowledge/CURRENT_STATE.md. The publication commit adds this self-excluded manifest as the thirty-fourth path."
+    },
+    "primaryArtifacts": [
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_OUTPUT.json",
+        "sha256": "8cbcc89608884275dcd909f65795eabae7b8a166a0ea623d4896b8167248c8ce"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_R3_R4_DIFF_PROOF.json",
+        "sha256": "fb07feb2adf45872e7f071eae4c09f60e397d6a73fa2b14701d37a40f850c049"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_QA_ORACLE_REVISION_VERIFICATION.json",
+        "sha256": "8d067f09b53950284f98267a3d67bb282145d16849bb4074087d0540103ad43b"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_PRESERVATION_RESULT.json",
+        "sha256": "af913eccbb1c11c2c376644b11ac837e6d3703c1a6e29e4dccc00cb747fbaf40"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+        "sha256": "5d5f5b84406f010747e3b8f535666a636dd1a05b2f315d679f1e3a2114030e0f"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_SECURITY_AND_SCOPE.json",
+        "sha256": "9d57928afbd24d55b1797e2c08c9a49ec3d7cbc21ba3a335dd1e6cb8fe1d8d41"
+      }
+    ],
+    "allEvidenceAuthority": "The C38 final evidence manifest, not the abbreviated primary-artifact list, defines the complete C38/R4 evidence set."
+  },
+  "r4IntegrityClaimsForIndependentAdjudication": {
+    "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+    "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+    "rowCount": 3720,
+    "changedRowsFromR3": 145,
+    "unchangedRowsFromR3": 3575,
+    "onlyChangedField": "expectedReasonCodeFamily",
+    "changedIdentitySetEqualsSealedC37Adjudication": true,
+    "everyReplacementEqualsSealedC37ActualReason": true,
+    "decisionScoreBeforeAndAfter": "3720/3720",
+    "relationScoreBeforeAndAfter": "3720/3720",
+    "reasonScoreBefore": "3575/3720",
+    "reasonScoreAfter": "3720/3720",
+    "developmentEvidenceOnly": true,
+    "independent": false,
+    "holdout": false,
+    "unseen": false,
+    "blind": false
+  },
+  "preservationClaimsForIndependentAdjudication": {
+    "runtimeChanged": false,
+    "runtimeCandidatesAuthorized": 0,
+    "runtimeCandidatesAllocated": 0,
+    "registryChanged": false,
+    "walChanged": false,
+    "c38WalExists": false,
+    "c38AttemptDirectories": 0,
+    "controllingInputLocks": "37/37 files and 2/2 composites matched",
+    "forwardReverseReplay": "PASS",
+    "guardFiles": "PASS_EXIT_0"
+  },
+  "regressionClaimsForIndependentAdjudication": {
+    "canonicalCommand": "npm.cmd test",
+    "nominalExitCode": 1,
+    "adjudicatedPass": true,
+    "syntax": "10/10",
+    "suites": "183/218 passed, 35 failed",
+    "groups": "5396/5452 passed, 56 failed",
+    "sealedC37HistoricalFailureMultiset": "21 STATE plus 1 SCOPE_ALREADY_ALLOWLISTED",
+    "inheritedExcludedResidueFailureGroups": 34,
+    "c38RuntimeBehaviorFailures": 0,
+    "missingBaselineSuites": 0,
+    "additivePassingSuites": 1,
+    "allowlistExpanded": false
+  },
+  "c38InternalReviewLimitations": [
+    {
+      "id": "R1",
+      "severity": "LOW",
+      "blocking": false,
+      "limitation": "The regression raw capture was recovered after the inherited postprocessing parser failed; harnessUnchangedDuringCapture is null and no pre-capture harness digest was sealed. The package does not claim proven pre/post harness identity for the capture interval."
+    },
+    {
+      "id": "R2",
+      "severity": "LOW",
+      "blocking": false,
+      "limitation": "The B2/B3 inherited-scope classifier used bounded causal-path and marker heuristics. A future rerun must seal and compare the exact 34-failure identity multiset."
+    },
+    {
+      "id": "R3",
+      "severity": "LOW",
+      "blocking": false,
+      "limitation": "The append-only writer can leave partial output after a mid-write technical failure. The current output is complete and hash-consistent; any recovery requires separate governance."
+    }
+  ],
+  "phase10AGateStatePresentedForReview": {
+    "c37": "TERMINAL",
+    "c38": "TERMINAL_INTERNAL_REVIEW_APPROVED_WITH_NONBLOCKING_FINDINGS",
+    "r4DevelopmentOracleDecision": "SATISFIED_3720_OF_3720",
+    "r4DevelopmentOracleRelation": "SATISFIED_3720_OF_3720",
+    "r4DevelopmentOracleReason": "SATISFIED_3720_OF_3720_BY_ANALYZER_INFORMED_GOVERNANCE_ALGEBRA",
+    "runtimePreservation": "SATISFIED_NO_RUNTIME_CHANGE",
+    "postR4IndependentExternalReview": "UNSATISFIED",
+    "E2": "UNSATISFIED_NOT_RUN",
+    "A15": "UNSATISFIED_NOT_RUN",
+    "deterministicCleanStagingClosure": "NOT_CLAIMED",
+    "B2ThroughB6": "OPEN_UNCHANGED",
+    "phase10A": "OPEN",
+    "phase10B": "NOT_STARTED"
+  },
+  "scope": {
+    "included": [
+      "Verify this package's five-entry manifest and every committed C38 manifest entry at reviewedCommit.",
+      "Adjudicate C37 terminality from its committed terminal and publication records.",
+      "Adjudicate C38 terminality, R4 exact-delta integrity, runtime/registry/WAL preservation, regression disposition, security scope, and R1-R3 limitations.",
+      "Decide whether the Phase 10A reason-oracle gate is independently acceptable and identify every remaining Phase 10A blocker."
+    ],
+    "excluded": [
+      "Production or runtime mutation",
+      "Oracle, validator, test, evidence, manifest, or continuity mutation",
+      "Deployment, migration, reindexing, cleanup, stash, reset, checkout, merge, rebase, or force push",
+      "E2 execution or closure",
+      "A15 execution or closure",
+      "Deterministic clean-staging closure",
+      "Phase 10A closure absent every governing predicate",
+      "Phase 10B start",
+      "Any reviewer or model substitution for Codex 5.5 Independent Review 1"
+    ]
+  },
+  "protectedExcludedWorkingTreePaths": [
+    "security/public-health.js",
+    "server.js",
+    "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs"
+  ],
+  "protectedExcludedWorkingTreeDisposition": "Pre-existing deferred /health modifications governed under B2/B3; keep modified, unstaged, uncommitted, and outside both package and review mutation scope.",
+  "otherExcludedResidue": {
+    "classification": "PREVIOUSLY_GOVERNED_EXCLUDED_RESIDUE_AND_UNRELATED_TOOLING",
+    "mustNotBeStagedModifiedOrCleaned": true,
+    "explicitExample": ".claude/settings.local.json"
+  },
+  "packageFiles": [
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_OUTPUT_SCHEMA.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_QA_VERIFICATION.json",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_REVIEW_PROMPT.md",
+    "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_SECURITY_AND_TRUST_REVIEW.json"
+  ],
+  "packageManifest": {
+    "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE_MANIFEST.sha256",
+    "entriesExpected": 5,
+    "selfExcluded": true,
+    "entryOrder": "LEXICOGRAPHIC_BY_POSIX_REPOSITORY_RELATIVE_PATH",
+    "lineFormat": "lowercase_sha256 two_spaces repository_relative_posix_path LF",
+    "coverage": "Exactly the five packageFiles entries and no other path."
+  },
+  "outputSchemaPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_OUTPUT_SCHEMA.json",
+  "decisionContract": {
+    "validFinalDecisionValues": [
+      "APPROVED",
+      "APPROVED_WITH_NONBLOCKING_FINDINGS",
+      "SEMANTIC_REJECTION",
+      "TECHNICAL_INCOMPLETE_REVIEW_INVOCATION"
+    ],
+    "repositorySemanticMapping": {
+      "APPROVED": "PASS only if every DECISION_AND_STOP_RULES.md PASS predicate relevant to this review is independently accepted and there are no blocking findings.",
+      "APPROVED_WITH_NONBLOCKING_FINDINGS": "PASS only if every DECISION_AND_STOP_RULES.md PASS predicate relevant to this review is independently accepted, there are no blocking findings, and all findings are explicitly nonblocking.",
+      "SEMANTIC_REJECTION": "REVISIONS REQUIRED.",
+      "TECHNICAL_INCOMPLETE_REVIEW_INVOCATION": "No semantic decision; the invocation was technically incomplete, consumes the one authorized invocation, does not satisfy the independent-review gate, and permits no retry under this package."
+    },
+    "conditionalPassAllowed": false
+  },
+  "sealingSemantics": {
+    "descriptorPromptSchemaQaAndSecurityAreSealedByTheSelfExcludedFiveEntryManifest": true,
+    "packageManifestSha256MustBeComputedAndVerifiedBeforeInvocation": true,
+    "packageSealingCommitIsRecordedOutOfBandAfterCommitCreation": true,
+    "sealingCommitNotEmbeddedInSealedPackageBytes": true,
+    "reason": "Embedding the commit that contains the package or the manifest hash inside a manifest-covered file would create a circular self-reference."
+  },
+  "nonOverstatement": {
+    "c38PublicationAloneClosesPhase10A": false,
+    "r4IsIndependentEvidence": false,
+    "E2Closed": false,
+    "A15Closed": false,
+    "deterministicCleanStagingClosureProven": false,
+    "phase10AClosed": false,
+    "phase10BStarted": false
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "classification": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1_PACKAGE_QA_PASS",
+  "generatedAtUtc": "2026-08-08T07:36:18.171Z",
+  "reviewId": "PHASE10A_POST_R4_INDEPENDENT_REVIEW_1",
+  "reviewerRequirement": "Codex 5.5 Independent Review 1",
+  "repository": "C:/Projects/tina-backend",
+  "branch": "feature/source-availability-engine-v1",
+  "reviewedCommit": "f71a7222ed921d69e2669431f6d068badacd2070",
+  "inputs": [
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE.json",
+      "sha256": "3761a2a7d1e3c0601b2ca6f23f04f6a77d3c1c4b70db5cb19b98c25453c2188c"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_REVIEW_PROMPT.md",
+      "sha256": "e090c21b8df407575c13f4ceccfd06cca9e1ddc2ded0cd7df440b078906cf743"
+    },
+    {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_OUTPUT_SCHEMA.json",
+      "sha256": "ee5eb1d1d3fc5e97a885317ce49bf6de38dbe2ce2305972581238a0299285343"
+    }
+  ],
+  "reviewedPublicationCommitVerification": {
+    "objectType": "commit",
+    "parent": "9b44d7e01249671eeb272e27f6eb3ba2b8c2ab88",
+    "subject": "evidence(phase-10a14-r20): publish terminal C38 evidence",
+    "changedPathCount": 34,
+    "changedPathSetEqualsC38ManifestEntriesPlusManifest": true,
+    "pass": true
+  },
+  "outputSchemaVerification": {
+    "topLevelFieldCountExpected": 18,
+    "topLevelFieldCountObserved": 18,
+    "exactTopLevelFields": [
+      "reviewId",
+      "reviewerRequirement",
+      "actualReviewer",
+      "actualModel",
+      "independenceConfirmed",
+      "repository",
+      "branch",
+      "reviewedCommit",
+      "packageManifestSha256",
+      "packageHashVerification",
+      "c37TerminalityAccepted",
+      "c38TerminalityAccepted",
+      "r4IntegrityAccepted",
+      "phase10AReasonClosureAccepted",
+      "blockingFindings",
+      "nonblockingFindings",
+      "decision",
+      "nextRequiredGate"
+    ],
+    "packageHashVerificationFields": [
+      "passed",
+      "entriesExpected",
+      "entriesVerified"
+    ],
+    "identityAndDefaultValuesExact": true,
+    "pass": true
+  },
+  "reviewPromptVerification": {
+    "exactCodex55ReviewerRequired": true,
+    "freshIsolatedIndependentContextRequired": true,
+    "sealedPackageAndCommittedEvidenceOnly": true,
+    "readOnlyBoundaryRequired": true,
+    "packageAndC38HashGatesRequired": true,
+    "c37TerminalityAdjudicationRequired": true,
+    "c38TerminalityAdjudicationRequired": true,
+    "r4IntegrityAdjudicationRequired": true,
+    "runtimeRegistryWalPreservationRequired": true,
+    "regressionAndSecurityAdjudicationRequired": true,
+    "r1ThroughR3LimitationsRequired": true,
+    "boundedPhase10AReasonGateRequired": true,
+    "remainingGatesAndBlockersRequired": true,
+    "phaseAndEvidenceOverstatementProhibited": true,
+    "exactJsonOnlyOutputRequired": true,
+    "allFourDecisionValuesExact": true,
+    "singleInvocationNoRetryRulePresent": true,
+    "pass": true
+  },
+  "evidenceReferenceVerification": {
+    "algorithm": "SHA-256 over exact bytes read from reviewedCommit",
+    "referencesExpected": 15,
+    "referencesVerified": 15,
+    "mismatches": [],
+    "entries": [
+      {
+        "path": "evaluation/results/phase-10a14-r20/FROZEN_PLAN.md",
+        "sha256": "0953aa00fdccbd6c24120e620ec5d56069f2d8f0bc8ebabecc3027c58c2e2dfc"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/DECISION_AND_STOP_RULES.md",
+        "sha256": "49ad590b52b07b2e74945ab282b63764939bb4fd3ea971f2682102bd3819814a"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_C37_TERMINALITY_ADJUDICATION.json",
+        "sha256": "b6038a507652b6ad30a132089f28588aeec68c95209df5b641f914249a398e25"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_CHECKPOINT_84_REMOTE_PUBLICATION_VERIFICATION.json",
+        "sha256": "bdee255e7fc498fc2ca0b14c1a5aeac4c8685d5ff39a18638fa0475f0a89dadb"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_PREFLIGHT_AND_TERMINAL_STATE_VERIFICATION.json",
+        "sha256": "51e8a48ecf618bf486f0bb189cf23fa93025fbba2f29ff4344107d3d0e95f147"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_CHECKPOINT_85_C38_READINESS_ADJUDICATION.json",
+        "sha256": "cb95fd0caaf37925d2d4503e515b28bde69dcc5dec3d1442c149c9f72b9ac94b"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C37_RECOVERY_CHECKPOINT_85_phase_transition.json",
+        "sha256": "77e961ddb2a3186a0b6063beedc5a516522178b9e6f79216cad01789b299203e"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_EVIDENCE.sha256",
+        "sha256": "86559e22c2687529e10eda7111813e84bd98fcb6f6fcf5c6072bdaa9c6130b40"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_OUTPUT.json",
+        "sha256": "8cbcc89608884275dcd909f65795eabae7b8a166a0ea623d4896b8167248c8ce"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_R3_R4_DIFF_PROOF.json",
+        "sha256": "fb07feb2adf45872e7f071eae4c09f60e397d6a73fa2b14701d37a40f850c049"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_QA_ORACLE_REVISION_VERIFICATION.json",
+        "sha256": "8d067f09b53950284f98267a3d67bb282145d16849bb4074087d0540103ad43b"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_PRESERVATION_RESULT.json",
+        "sha256": "af913eccbb1c11c2c376644b11ac837e6d3703c1a6e29e4dccc00cb747fbaf40"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_FINAL_FULL_REGRESSION_ADJUDICATION.json",
+        "sha256": "5d5f5b84406f010747e3b8f535666a636dd1a05b2f315d679f1e3a2114030e0f"
+      },
+      {
+        "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C38_SECURITY_AND_SCOPE.json",
+        "sha256": "9d57928afbd24d55b1797e2c08c9a49ec3d7cbc21ba3a335dd1e6cb8fe1d8d41"
+      },
+      {
+        "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+        "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566"
+      }
+    ],
+    "pass": true
+  },
+  "c38EvidenceManifestVerification": {
+    "entriesExpected": 33,
+    "entriesObserved": 33,
+    "entriesVerified": 33,
+    "uniqueEntries": 33,
+    "sortedLexicographically": true,
+    "validLineFormat": true,
+    "selfExcluded": true,
+    "manifestPlusEntriesPathCount": 34,
+    "mismatches": [],
+    "pass": true
+  },
+  "c37TerminalityVerification": {
+    "substantiveCommit": "7aac3305c7cc4219bceb549af640469953c3b590",
+    "substantiveCommitObjectExists": true,
+    "evidenceTailCommit": "3af273e15db2c113c003e970c22645881efdd2da",
+    "evidenceTailCommitObjectExists": true,
+    "checkpoint84TerminalityClassificationPresent": true,
+    "checkpoint84NormalRemotePublicationExactTipPresent": true,
+    "checkpoint85TerminalReverificationPresent": true,
+    "phase10ARemainedOpen": true,
+    "pass": true
+  },
+  "c38AndR4Verification": {
+    "c38Terminal": true,
+    "c38InternalReviewApprovedWithNonblockingFindings": true,
+    "runtimeChanged": false,
+    "runtimeCandidatesAuthorized": 0,
+    "runtimeCandidatesAllocated": 0,
+    "registryOrWalChanged": false,
+    "c38WalExists": false,
+    "c38AttemptDirectoryCount": 0,
+    "inputFileLocks": "37/37",
+    "compositeLocks": "2/2",
+    "r3Rows": 3720,
+    "r4Rows": 3720,
+    "orderedIdentityPreserved": true,
+    "changedRows": 145,
+    "unchangedRows": 3575,
+    "onlyChangedField": "expectedReasonCodeFamily",
+    "changedIdentitySetEqualsC37Adjudication": true,
+    "replacementMatchesC37ActualReason": "145/145",
+    "decisionScoreBeforeAndAfter": "3720/3720",
+    "relationScoreBeforeAndAfter": "3720/3720",
+    "reasonScoreBefore": "3575/3720",
+    "reasonScoreAfter": "3720/3720",
+    "r4Independent": false,
+    "r4Holdout": false,
+    "r4Unseen": false,
+    "r4Blind": false,
+    "pass": true
+  },
+  "regressionAndSecurityClaimVerification": {
+    "nominalRegressionExitCode": 1,
+    "adjudicatedPass": true,
+    "syntax": "10/10",
+    "suites": "183/218 passed, 35 failed",
+    "groups": "5396/5452 passed, 56 failed",
+    "exactC37HistoricalFailureMultiset": true,
+    "inheritedExcludedResidueFailureGroups": 34,
+    "c38RuntimeBehaviorFailures": 0,
+    "allowlistExpanded": false,
+    "securityBlockingFindings": 0,
+    "pass": true
+  },
+  "phase10AGateAndNonOverstatementVerification": {
+    "postR4IndependentExternalReview": "UNSATISFIED",
+    "E2": "UNSATISFIED_NOT_RUN",
+    "A15": "UNSATISFIED_NOT_RUN",
+    "deterministicCleanStagingClosure": "NOT_CLAIMED",
+    "B2ThroughB6": "OPEN_UNCHANGED",
+    "phase10A": "OPEN",
+    "phase10B": "NOT_STARTED",
+    "packageDoesNotOverstateClosureOrIndependence": true,
+    "pass": true
+  },
+  "packageManifestContractVerification": {
+    "manifestPath": "evaluation/results/phase-10a14-r20/COMMIT_5R1_POST_C38_INDEPENDENT_REVIEW_1_PACKAGE_MANIFEST.sha256",
+    "entriesExpected": 5,
+    "packageFilesObserved": 5,
+    "packageFilesUnique": 5,
+    "packageFilesLexicographicallyOrdered": true,
+    "qaPathIncluded": true,
+    "manifestSelfExcluded": true,
+    "lineFormatSpecified": "lowercase_sha256 two_spaces repository_relative_posix_path LF",
+    "actualManifestVerificationStatus": "PENDING_AUTHORIZED_ASSEMBLY_AFTER_QA_AND_SECURITY",
+    "contractReady": true
+  },
+  "protectedExcludedWorkingTreeVerification": {
+    "allRemainModified": true,
+    "allRemainUnstaged": true,
+    "allExcludedFromPackageFiles": true,
+    "paths": [
+      {
+        "path": "security/public-health.js",
+        "headSha256": "289f2dcb64b8621bc8a09d075fd977d39faccc67ae280fd84ba1253d5cfca2d3",
+        "workingSha256": "3c870d309a66fb1f36cc8c16fb759e1e7a9887c3d2fd80800cd8062608c528f0",
+        "status": "MODIFIED_UNSTAGED"
+      },
+      {
+        "path": "server.js",
+        "headSha256": "3d03febdf78ffb3531f86a99e801e7abf2047145c2ca5cd15d87fd2e8621fa73",
+        "workingSha256": "beb3ab375892fac74557f1b0e5b6c633abb2edea25b3ee68e47d44a45971f4da",
+        "status": "MODIFIED_UNSTAGED"
+      },
+      {
+        "path": "tests/patch-08s-followup-backend-routes-health-minimization-1.test.mjs",
+        "headSha256": "cc6acaacd01f2a0cf0ae3210eda4eb3d495ba90ef72f79d6968676678261fff2",
+        "workingSha256": "8ceed37b6023119760bef7c96435d06042d837f2ac69cb562f02cd1c60cded35",
+        "status": "MODIFIED_UNSTAGED"
+      }
+    ],
+    "pass": true
+  },
+  "gitScopeVerification": {
+    "stagedPathCount": 0,
+    "indexEmpty": true,
+    "qaWriteRestrictedToAuthorizedPath": true,
+    "networkOperationPerformed": false,
+    "externalModelInvoked": false,
+    "pass": true
+  },
+  "blockingFindings": [],
+  "nonblockingFindings": [],
+  "supportsReadyForCodex55IndependentReviewGate": true,
+  "pass": true
+}
