@@ -1,5 +1,61 @@
 ## TINA Controlling Continuity Status
 
+## E2 PUBLICATION-GOVERNANCE FINALIZATION — OWNER AUTHORIZATION INDEPENDENTLY VERIFIED CANONICAL
+
+Last updated: 2026-08-17 (independent verification of owner-authorization push, PR #4, and canonical merge; git-plumbing-only continuity update; no working-tree or runtime change).
+
+This additive block finalizes the E2 publication-governance sequence begun by the "EXPLICIT OWNER AUTHORIZATION RECORDED" block below. That block recorded authorization as `AUTHORIZED_BY_OWNER` but could not push it (execution-environment network constraint) and so described its own push status as pending. This block records, from independently verified live evidence, that the push, PR, and canonical merge subsequently completed.
+
+### Independently verified facts
+
+- Authorization commit `71dbf1068dca1d58c0780fb6d356d630dded177e` (subject: "docs(current-state): record explicit owner authorization for E2 publication") was independently confirmed pushed to `refs/heads/docs/e2-publication-authorization-v1` via a fresh remote query (not taken on the owner's statement alone).
+- PR #4 (`bongcorpuz/docs/e2-publication-authorization-v1` → `feature/source-availability-engine-v1`) was independently confirmed via `refs/pull/4/head` resolving to exactly `71dbf1068dca1d58c0780fb6d356d630dded177e`.
+- The merge commit `761dc1d4ad0e1daa1c917ee6613a7778b820d0d5` was independently fetched and inspected directly (not inferred from the owner's report): subject "Merge pull request #4 from bongcorpuz/docs/e2-publication-authorization-v1", parents exactly `98140676f2914ab82d0f78512335fc16deb7f829` and `71dbf1068dca1d58c0780fb6d356d630dded177e`, GitHub-signed.
+- `origin/feature/source-availability-engine-v1` independently re-queried live and confirmed to resolve to `761dc1d4ad0e1daa1c917ee6613a7778b820d0d5`.
+- The merge introduced no changes beyond PR #4's own commit: the merge commit's tree (`f0bf5c0692e305a30bcc18cae1a588fb7449d5ba`) is identical to authorization commit `71dbf106`'s tree. `git diff 98140676 761dc1d4` shows exactly `knowledge/CURRENT_STATE.md | 64 insertions(+)`, no deletions, no other file. `git diff --check` is clean.
+- The canonical committed `knowledge/CURRENT_STATE.md` was independently read at `761dc1d4` and confirmed to contain the "EXPLICIT OWNER AUTHORIZATION RECORDED" block in full, unaltered.
+- `71dbf1068dca1d58c0780fb6d356d630dded177e` is a direct parent of the canonical tip, so it is trivially and independently confirmed an ancestor of `origin/feature/source-availability-engine-v1`.
+- E2 evidence commit `b1efd275e3c4bfbd0d04977af2428c85c257daea` remains canonical and reachable: the Git tree object for `evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3` at the new canonical tip (`e68ec4b4998d359c8048340a902a0bd0a8be4426`) is byte-identical to that path's tree at `b1efd275`, and to the value re-verified in the prior authorization block. No historical E2 evidence or the internal-review artifact was altered, rewritten, or re-committed by this sequence.
+
+### Disposition: is `gitPublication.status: DEFERRED_UNTIL_SEPARATELY_GOVERNED_AFTER_INTERNAL_REVIEW` now satisfied?
+
+Yes. The condition required a *distinct, separately governed* authorization issued after the internal-review verdict, followed by that authorization actually being carried out (staged, committed, pushed, merged) and independently verified — as opposed to treating the original evidence commit's mere reachability as sufficient (which an earlier unit in this history explicitly declined to do, for good reason: no distinct authorization existed at that time). That distinct authorization now exists (`AUTHORIZED_BY_OWNER`, commit `71dbf106`), and every step of carrying it out has been independently confirmed against live remote state rather than taken on report alone. **Separately governed E2 publication operation: `SATISFIED`.**
+
+### E2 disposition (contract-supported terminology only)
+
+The controlling E2 contract and runner source define no `PUBLISHED` or `CLOSED` terminal state; none is used here.
+
+| Aspect | Disposition |
+|---|---|
+| E2 internal review | `ACCEPTED_FOR_E2_PUBLICATION` (unchanged, immutable, re-verified) |
+| E2 publication authorization | `AUTHORIZED_BY_OWNER` (unchanged; commit `71dbf106`) |
+| Separately governed publication operation | `SATISFIED` (new — push, PR #4, merge, and canonical ancestry all independently verified) |
+| Canonical verification | `INDEPENDENTLY_VERIFIED` (new — via live remote queries, not report alone) |
+| E2 evidence bundle (`b1efd275`) | `CANONICAL_AND_REACHABLE` (unchanged, re-verified byte-identical) |
+
+### Current gate state (unchanged except as noted above)
+
+| Gate | Disposition |
+|---|---|
+| C37 | `TERMINAL` |
+| C38 | `TERMINAL` |
+| R4 bounded development-governance review | `ACCEPTED` |
+| Post-R4 external-review gate | `SATISFIED` |
+| A15 | `BLOCKED_NO_EXECUTABLE_CONTRACT_FOUND` (unchanged) |
+| Deterministic clean/staging closure | `UNSATISFIED` (unchanged) |
+| B2, B3, B4, B5, B6 | `OPEN` (unchanged) |
+| Phase 10A | `OPEN` (unchanged) |
+| Phase 10B | `NOT_STARTED` (unchanged) |
+| Production/release gate | `NOT GREEN` (unchanged) |
+
+No production, runtime, test, `/health`, validator, oracle, safety-guard, registry, WAL, deployment, migration, reindexing, A15, or model-invocation action occurred in this unit. No historical E2 evidence or internal-review artifact was rewritten. This is the sole finalization record for this sequence; no further self-verification record is warranted absent new drift.
+
+Next exact authorized operation: none required for E2 publication-governance closure itself. A15 remains blocked pending an owner-supplied or authored-and-authorized execution contract (separate, larger unit). Deterministic clean/staging closure and Phase 10A closure remain separately gated and untouched by this sequence.
+
+---
+
+## TINA Controlling Continuity Status
+
 ## EXPLICIT OWNER AUTHORIZATION RECORDED — E2 PUBLICATION GATE AUTHORIZED; PUSH EXECUTION PENDING AN ENVIRONMENT WITH REPOSITORY NETWORK ACCESS
 
 Last updated: 2026-08-17 (owner-issued explicit post-internal-review E2 publication authorization, recorded via git-plumbing-only continuity update; no working-tree or runtime change; push not yet executed — see below).
