@@ -9,7 +9,7 @@ import OpenAI from "openai";
 import { buildCorsOptionsDelegate } from "./security/cors-policy.js";
 import { createSecurityHeadersMiddleware } from "./security/security-headers.js";
 import { createRateLimitMiddleware } from "./security/rate-limit.js";
-import { buildPublicHealth } from "./security/public-health.js";
+import { healthHandler } from "./security/public-health.js";
 import { buildRouteNotFound, ROUTE_NOT_FOUND_STATUS } from "./security/route-disclosure.js";
 import {
   hasQueryStringSecret,
@@ -260,26 +260,7 @@ app.get("/routes", (req, res) => {
   return res.status(ROUTE_NOT_FOUND_STATUS).json(buildRouteNotFound());
 });
 
-// PATCH-08S-FOLLOWUP-BACKEND-ROUTES-HEALTH-MINIMIZATION-1: public /health is now
-// LIVENESS ONLY. It returns a minimal {status:"ok", service:"tina-backend"} and
-// NO longer discloses commitSha, version, environment, model name, config flags,
-// vector-store counts, adaptive-stack internals, or which secrets are configured.
-// It performs a resilient readiness touch (getVectorStoreStats) but never fails
-// liveness on a DB error and never surfaces the result, so the endpoint cannot
-// leak internal state. It stays unauthenticated and rate-limit exempt so Render
-// health polling works. Detailed readiness/diagnostics (including deployment
-// commitSha) are intentionally NOT re-exposed here; a dedicated authenticated
-// diagnostic-health endpoint is deferred to a follow-up patch (see report).
-app.get("/health", async (req, res) => {
-  try {
-    // Readiness touch only; the result is deliberately not included in the
-    // public response and a failure must not break liveness.
-    await getVectorStoreStats();
-  } catch (error) {
-    console.error("Health readiness touch error:", error.message || error);
-  }
-  return res.status(200).json(buildPublicHealth());
-});
+app.get("/health", healthHandler);
 
 /* ================= AUTH ROUTES ================= */
 

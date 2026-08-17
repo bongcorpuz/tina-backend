@@ -138,8 +138,7 @@ await test("prohibited claims include production fully hardened and Phase 9 star
 
 await test("helper: buildPublicHealth is minimal and excludes all forbidden fields", () => {
   const ph = buildPublicHealth();
-  check(ph.status === "ok", "status ok");
-  check(ph.service === "tina-backend", "service tina-backend");
+  check(JSON.stringify(ph) === '{"status":"ok"}', "exact public health payload");
   check(isPublicHealthMinimal(ph) === true, "isPublicHealthMinimal true");
   for (const f of PUBLIC_HEALTH_FORBIDDEN_FIELDS) {
     check(!Object.prototype.hasOwnProperty.call(ph, f), `public health excludes ${f}`);
@@ -156,13 +155,13 @@ await test("helper: buildRouteNotFound is minimal and discloses no inventory", (
   check(isRouteResponseMinimal({ routes: ["GET /ask"] }) === false, "inventory response not minimal");
 });
 
-await test("source: server.js public /health returns minimal buildPublicHealth and discloses nothing", () => {
-  check(/buildPublicHealth\s*\(/.test(serverSrc), "buildPublicHealth used");
-  // The public /health handler returns the minimal payload.
-  check(/app\.get\(\s*["']\/health["']\s*,\s*async\s*\(req,\s*res\)\s*=>\s*\{[\s\S]{0,600}buildPublicHealth/.test(serverSrc), "public /health returns buildPublicHealth");
+await test("source: server.js public /health returns the exact minimal payload", () => {
+  check(/healthHandler/.test(serverSrc), "health handler used");
+  check(/app\.get\(\s*["']\/health["']\s*,\s*healthHandler\s*\)/.test(serverSrc), "public /health route registered");
   // The old disclosure fields must be gone from the /health handler region.
-  const healthRegion = serverSrc.slice(serverSrc.indexOf('app.get("/health"'), serverSrc.indexOf('app.get("/health"') + 800);
+  const healthRegion = serverSrc.slice(serverSrc.indexOf('app.get("/health"'), serverSrc.indexOf('app.get("/health"') + 300);
   check(!/adaptiveStack|routeModes|openaiModel|indexSecretEnabled|commitSha/.test(healthRegion), "no disclosure fields in /health handler");
+  check(/return res\.status\(200\)\.json\(buildPublicHealth\(\)\)/.test(readFileSync(resolve("security/public-health.js"), "utf8")), "public /health returns the minimal health payload");
   // No separate /health/details route is introduced (avoids route-inventory drift).
   check(!/app\.get\(\s*["']\/health\/details["']/.test(serverSrc), "no /health/details route added");
 });

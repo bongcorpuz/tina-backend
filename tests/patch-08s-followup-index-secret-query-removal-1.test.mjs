@@ -195,8 +195,11 @@ await test("source inspection: no TINA_ENABLE_MEMORY_* introduced", () => {
   check(!/TINA_ENABLE_MEMORY_/.test(helperSrc), "helper introduces no memory flags");
 });
 
-await test("source inspection: /health minimal helper still referenced", () => {
-  check(/buildPublicHealth/.test(serverSrc), "server.js still references buildPublicHealth");
+await test("source inspection: /health minimal handler still referenced", () => {
+  check(
+    /app\.get\(\s*["']\/health["']\s*,\s*healthHandler\s*\)/.test(serverSrc),
+    "server.js still registers /health with healthHandler"
+  );
 });
 
 await test("source inspection: /routes minimization still referenced", () => {

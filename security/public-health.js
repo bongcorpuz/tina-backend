@@ -10,10 +10,8 @@
 
 "use strict";
 
-export const PUBLIC_HEALTH_SERVICE = "tina-backend";
-
 // Only these keys are permitted in the PUBLIC health payload.
-export const PUBLIC_HEALTH_ALLOWED_FIELDS = Object.freeze(["status", "service"]);
+export const PUBLIC_HEALTH_ALLOWED_FIELDS = Object.freeze(["status"]);
 
 // Fields that must NEVER appear in the public health payload (they are the
 // disclosure surface removed by this patch).
@@ -38,10 +36,14 @@ export const PUBLIC_HEALTH_FORBIDDEN_FIELDS = Object.freeze([
  * The minimal public liveness payload. Liveness only — it discloses no internal
  * configuration and is safe to return unauthenticated to Render health polling.
  *
- * @returns {{status:"ok", service:string}} frozen minimal payload
+ * @returns {{status:"ok"}} frozen minimal payload
  */
 export function buildPublicHealth() {
-  return Object.freeze({ status: "ok", service: PUBLIC_HEALTH_SERVICE });
+  return Object.freeze({ status: "ok" });
+}
+
+export function healthHandler(req, res) {
+  return res.status(200).json(buildPublicHealth());
 }
 
 /**

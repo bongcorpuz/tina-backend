@@ -230,7 +230,10 @@ await test("no unexpected extra actual routes exist without an inventory entry",
 
 await test("static guard checks: public routes have no route-level guard; admin routes use allowAuthenticatedOrIndexSecret", () => {
   check(/app\.get\("\/",\s*\(req, res\)/.test(serverSrc) || /app\.get\("\/", \(req/.test(serverSrc), "GET / is unguarded (public)");
-  check(/app\.get\("\/health",\s*async \(req/.test(serverSrc), "GET /health is unguarded (public)");
+  check(
+    /app\.get\(\s*["']\/health["']\s*,\s*healthHandler\s*\)/.test(serverSrc),
+    "GET /health is unguarded (public)"
+  );
   check(/app\.post\("\/register",\s*async \(req/.test(serverSrc), "POST /register is unguarded (public)");
   check(/app\.post\("\/login",\s*async \(req/.test(serverSrc), "POST /login is unguarded (public)");
   check(/app\.post\("\/conversations",\s*authenticate/.test(serverSrc), "POST /conversations is authenticate-guarded");
