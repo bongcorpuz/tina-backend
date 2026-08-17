@@ -1,5 +1,69 @@
 ## TINA Controlling Continuity Status
 
+## EXPLICIT OWNER AUTHORIZATION RECORDED — E2 PUBLICATION GATE AUTHORIZED; PUSH EXECUTION PENDING AN ENVIRONMENT WITH REPOSITORY NETWORK ACCESS
+
+Last updated: 2026-08-17 (owner-issued explicit post-internal-review E2 publication authorization, recorded via git-plumbing-only continuity update; no working-tree or runtime change; push not yet executed — see below).
+
+This additive block follows the "CONTINUITY-DOCUMENTATION RECONCILIATION" block below, which established disposition `E2_PUBLICATION_REQUIRES_NEW_EXPLICIT_AUTHORIZATION` (Reviewer verdict `APPROVED_WITH_NONBLOCKING_FINDINGS`) after finding no distinct, separately governed post-internal-review E2 publication authorization existed anywhere in committed evidence, and that Git reachability of commit `b1efd275e3c4bfbd0d04977af2428c85c257daea` alone did not constitute that authorization.
+
+### Owner authorization, as issued
+
+In this session, the repository owner explicitly issued the distinct, post-internal-review E2 publication authorization that was previously absent. The owner's authorization:
+
+- explicitly authorizes "the governed E2 publication transition, including the repository operations necessary to record and publish that transition: creation of an isolated task branch if required, narrowly scoped documentation/evidence changes, exact-path staging, commit, and non-force push";
+- states this authorization "applies only to E2 publication closure work";
+- explicitly excludes: production deployment; Phase 10A closure unless independently supported by all remaining gates; Phase 10B; A15 execution or creation of an A15 contract; runtime changes; test changes; `/health` changes; governance weakening; dependency installation merely to make staging green; force push; destructive Git operations; and modification of unrelated user work.
+
+This resolves the `gitPublication.status: DEFERRED_UNTIL_SEPARATELY_GOVERNED_AFTER_INTERNAL_REVIEW` condition recorded in `E2_EXECUTION_CONTRACT.json` (all three closure revisions): the separately governed authorization that condition was waiting on has now been issued, explicitly, by the repository owner, in writing, after the internal review verdict (`ACCEPTED_FOR_E2_PUBLICATION`) already existed. **Authorization status: `AUTHORIZED_BY_OWNER`.**
+
+### Evidence integrity re-verified before acting on this authorization
+
+Before recording this authorization, the E2 revision-3 evidence and internal-review artifact were re-verified byte-identical to their originally committed state: the Git tree object for `evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3` at commit `b1efd275` (`e68ec4b4998d359c8048340a902a0bd0a8be4426`) is identical to that same path's tree object at the current canonical tip. No mutation occurred. The governance baseline (`2931bc31bf3508c2c876e20575d6cf8008889775` as an ancestor of the `tina-dev-factory` canonical ref) was re-verified valid. The canonical backend remote tip was re-verified live (no drift: `origin/feature/source-availability-engine-v1` = `98140676f2914ab82d0f78512335fc16deb7f829`, matching the previously verified state exactly).
+
+### What this record does NOT yet claim
+
+This record does **not** claim that a push of this authorization record has occurred or been independently verified, and it does **not** upgrade E2 to `PUBLISHED` or `CLOSED`. Two separate reasons:
+
+1. **Push not executed.** This authorization record was prepared and committed locally, on an isolated branch built from the canonical remote tip, via the same git-plumbing method used for the prior reconciliation units (no working tree touched). The actual non-force push to `origin` could not be executed from this session: the execution surface with repository access and stored credentials (the device shell operating on `C:\Projects\tina-backend`) has no outbound network access (tested this turn — an HTTPS request and `git ls-remote origin` both failed with the proxy rejecting the connection), and the execution surface with outbound network access (the cloud sandbox shell) does not hold this repository's push credentials and only has anonymous read access to the public remote. Completing the push requires an environment with both network access and this repository's write credentials — in practice, the owner's own machine, run outside this sandbox, or an explicitly authorized CI/agent context.
+2. **Terminology.** Independently of the push question, the controlling E2 contract and runner source (`evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure-3.mjs`) do not define or use the terms `PUBLISHED` or `CLOSED` anywhere. The only status vocabulary the contract defines is `PASS`/`FAIL` (execution result), the internal-review verdict values (e.g. `ACCEPTED_FOR_E2_PUBLICATION`), and the single `gitPublication.status` value `DEFERRED_UNTIL_SEPARATELY_GOVERNED_AFTER_INTERNAL_REVIEW`. Per the owner's own instruction ("upgrade to `PUBLISHED` or `CLOSED` only if the repository's controlling contract supports that exact terminology"), and since it does not, this record does not use either term even after a successful push. The accurate description of E2's state, once the push below is independently verified, is: internal review `ACCEPTED_FOR_E2_PUBLICATION` (unchanged) plus git-publication authorization `AUTHORIZED_BY_OWNER` (new) plus git-publication operation `EVIDENCE_ALREADY_COMMITTED_AND_REACHABLE_ON_CANONICAL_REMOTE_SINCE_b1efd275` (unchanged, re-verified this turn) plus this authorization record's own push status (below).
+
+### This record's own publication status
+
+- Branch: `docs/e2-publication-authorization-v1`
+- Base: `origin/feature/source-availability-engine-v1` at `98140676f2914ab82d0f78512335fc16deb7f829` (verified live, no drift)
+- Local commit: prepared via git-plumbing (blob/tree/commit-tree), touching only `knowledge/CURRENT_STATE.md`
+- Push status: **`LOCAL_COMMIT_PREPARED_PUSH_NOT_YET_EXECUTED_ENVIRONMENT_NETWORK_CONSTRAINT`**
+- Independent post-push remote-tip verification: not applicable yet — no push occurred
+
+### Current gate state (updated)
+
+| Gate | Disposition |
+|---|---|
+| C37 | `TERMINAL` |
+| C38 | `TERMINAL` |
+| R4 bounded development-governance review | `ACCEPTED` |
+| Post-R4 external-review gate | `SATISFIED` |
+| E2 internal review | `ACCEPTED_FOR_E2_PUBLICATION` (unchanged) |
+| E2 git-publication authorization | `AUTHORIZED_BY_OWNER` (new, this record) |
+| E2 git-publication operation (evidence bundle `b1efd275`) | `EVIDENCE_ALREADY_COMMITTED_AND_REACHABLE_ON_CANONICAL_REMOTE` (unchanged, re-verified) |
+| E2 overall | not `PUBLISHED`/`CLOSED` — those terms are not contract-supported; see above |
+| This authorization record's push | `NOT_YET_EXECUTED` (environment network constraint) |
+| Inherited three-path `/health` working-tree residue | `RESOLVED` (commit `68969f75`; working-tree/commit-state only; no `/health` work performed in this unit) |
+| A15 | `BLOCKED_NO_EXECUTABLE_CONTRACT_FOUND` (unchanged) |
+| Deterministic clean/staging closure | `UNSATISFIED` (unchanged) |
+| B2, B3, B4, B5, B6 | `OPEN` (unchanged) |
+| Phase 10A | `OPEN` (unchanged) |
+| Phase 10B | `NOT_STARTED` (unchanged) |
+| Production/release gate | `NOT GREEN` (unchanged) |
+
+No production, runtime, test, `/health`, validator, oracle, safety-guard, registry, WAL, deployment, migration, reindexing, A15, or model-invocation action occurred in this unit. No dependency was installed. No force push, destructive Git operation, or unrelated user work was touched.
+
+Next exact authorized operation: from an environment with `origin` push credentials and network access, run a plain non-force push of this exact prepared commit to a new remote branch, e.g. `git push origin docs/e2-publication-authorization-v1:refs/heads/docs/e2-publication-authorization-v1` (commit SHA recorded in the handoff for this unit). Then independently verify via `git ls-remote origin docs/e2-publication-authorization-v1` (or an equivalent fetch) that the remote ref equals the exact pushed SHA before treating the push as verified. Only after that independent verification should a follow-up unit record the verified push and finalize E2's disposition using contract-supported vocabulary only (not `PUBLISHED`/`CLOSED`). If the repository's established governance requires a PR/merge to make this effective on the canonical branch (as with PR #2 and PR #3 for the prior two units), follow that same process; this authorization covers that PR/merge as part of "the repository operations necessary to record and publish that transition," but the merge itself remains a separate, later-verified step, not to be claimed before it happens.
+
+---
+
+## TINA Controlling Continuity Status
+
 ## CONTINUITY-DOCUMENTATION RECONCILIATION — E2 EVIDENCE-STATUS CORRECTION AND A15 CONTRACT-GAP FINDING
 
 Last updated: 2026-08-17 (read-only preflight and evidence reconciliation; git-plumbing-only continuity update, no working-tree or runtime change).
