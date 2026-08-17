@@ -1,3 +1,57 @@
+## TINA Controlling Continuity Status
+
+## CONTINUITY-DOCUMENTATION RECONCILIATION — E2 EVIDENCE-STATUS CORRECTION AND A15 CONTRACT-GAP FINDING
+
+Last updated: 2026-08-17 (read-only preflight and evidence reconciliation; git-plumbing-only continuity update, no working-tree or runtime change).
+
+This additive block is the latest controlling resume point. It corrects a factual staleness in the immediately following "POST-C38 EXTERNAL-REVIEW CUTOVER" block's gate-state table (which still reads E2 as `UNSATISFIED`) and adds one new finding (the A15 contract gap, below). It does not reopen, weaken, or reinterpret any prior terminal disposition (C37 `TERMINAL`, C38 `TERMINAL`, R4 `ACCEPTED`, post-R4 external-review gate `SATISFIED`). It does not claim Phase 10A closure, E2 publication/closure, A15 execution, deterministic clean/staging closure, or any Phase 10B authorization.
+
+### E2 evidence-status correction
+
+Committed Git evidence postdating the "POST-C38 EXTERNAL-REVIEW CUTOVER" block establishes that E2 (strict canonical inventory closure) has already run, been reviewed, and been accepted at the internal-review stage:
+
+- Evidence commit `b1efd275e3c4bfbd0d04977af2428c85c257daea` ("evidence(phase-10a14-r20): close E2 canonical inventory", 2026-08-08T21:41:07+08:00) publishes three closure revisions under `evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_{1,2,3}/`.
+- Revision 1 (`E2_STRICT_CANONICAL_INVENTORY_CLOSURE_1`) is preserved as nonterminal provenance (`status: PASS` on its own narrower scope, superseded by later revisions).
+- Revision 2 (`E2_STRICT_CANONICAL_INVENTORY_CLOSURE_2`) is preserved as `NONTERMINAL_REPLAY_VERIFICATION_FAILURE_SUPERSEDED_BY_BOUNDED_REVISION_3`, per the closure-3 internal review; its failure is attributed to per-process DB-identity (`INSTANCE_ID`/PID) diagnostics, not a semantic inventory failure.
+- Revision 3 (`E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3`) reports `status: PASS`, `resultCode: E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3_PASS`, 854 canonical closure records, 954 exact evidence mappings, 13/13 deterministic suites passing, zero unresolved material fields, and unchanged protected files/predecessor identities.
+- The required internal review, `evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3_INTERNAL_REVIEW.md`, returns verdict `ACCEPTED_FOR_E2_PUBLICATION` after an independent post-output replay, and states explicitly: "No external E2 review is required by the governing evidence contract. E2 publication may proceed under the separately governed staging/commit/push checks. A15 must still be re-resolved before any live execution."
+
+Corrected disposition: E2 is `ACCEPTED_FOR_E2_PUBLICATION` (internal review satisfied). This is **not** the same as E2 `PUBLISHED`/`CLOSED` — the internal review itself defers formal publication to a "separately governed staging/commit/push" step not evidenced as having occurred, and this reconciliation performs no staging, commit-of-evidence, or push action toward that step.
+
+### Inherited three-path `/health` working-tree residue — resolved
+
+Commit `68969f75111050a3184080053267eb0ceec95e2b` ("harden public health endpoint payload", 2026-08-17T10:46:02+08:00) modifies exactly `security/public-health.js`, `server.js`, and three associated test files. This resolves the three inherited deferred `/health` working-tree paths that the earlier "POST-C38 EVIDENCE PUBLICATION" block recorded as "modified, unstaged, and uncommitted... outside both publication units and untouched by this cutover." That specific working-tree residue is no longer outstanding as of this reconciliation. This is a working-tree/commit-state resolution only; it does not constitute, evidence, or imply `/health` staging validation, and deterministic clean/staging closure remains `UNSATISFIED` below.
+
+### New finding: A15 has no discoverable executable contract
+
+This reconciliation searched the canonical committed trees of this repository (`tina-backend-adapters`/`tina-backend` at `HEAD`) and the canonical governance repository (`tina-dev-factory` at `origin/feature/source-availability-engine-v1`: `governance/`, `standards/`, `tina_harness/RELEASE_GATE.md`) for an A15 execution contract, specification, or runner analogous to E2's (`evaluation/runner/phase-10a14-r20/phase10a-e2-strict-canonical-inventory-closure-3.mjs` plus `E2_EXECUTION_CONTRACT.json`). It also reviewed this file's own append-only history (`knowledge/CURRENT_STATE.md`) for any embedded A15 definition.
+
+No committed definition was found in the canonical committed trees searched. A15 is referenced only as a named exit criterion ("A15 final Phase 10A closure gate", `knowledge/TINA_Updated_Roadmap_v7.md`) and as a gate-state table row (`UNSATISFIED` / `UNSATISFIED_NOT_RUN`), with no definition of its inputs, procedure, pass/fail criteria, or evidence schema found in the trees searched. This search did not exhaustively walk the full commit history (e.g. via `git log -S`/`git log --all`) of either repository; it is possible a contract exists in non-canonical branches, superseded history, or outside committed Git evidence entirely, and that possibility has not been ruled out.
+
+This is recorded as a blocker, not a defect to be silently worked around: A15 cannot be planned, scoped, or attempted until either (a) an existing A15 contract is supplied by the owner from outside committed Git evidence, or (b) a new A15 contract is authored, following the E2 pattern, and separately reviewed/authorized before any execution. Inventing A15 pass/fail criteria unilaterally would violate RULE 13 (admit uncertainty) and RULE 16 (patches require discipline: investigation before implementation) of `governance/AGENT_RULES.md`.
+
+### Current gate state (corrected)
+
+| Gate | Disposition |
+|---|---|
+| C37 | `TERMINAL` |
+| C38 | `TERMINAL` |
+| R4 bounded development-governance review | `ACCEPTED` |
+| Post-R4 external-review gate | `SATISFIED` |
+| E2 | `ACCEPTED_FOR_E2_PUBLICATION` (internal review satisfied; formal publication step not evidenced) |
+| Inherited three-path `/health` working-tree residue | `RESOLVED` (commit `68969f75`; working-tree/commit-state only) |
+| A15 | `BLOCKED_NO_EXECUTABLE_CONTRACT_FOUND` (contract must be supplied or authored and authorized before any attempt) |
+| Deterministic clean/staging closure | `UNSATISFIED` |
+| B2, B3, B4, B5, B6 | `OPEN` |
+| Phase 10A | `OPEN` |
+| Phase 10B | `NOT_STARTED` |
+
+No production, runtime, test, validator, oracle, safety-guard, registry, WAL, staging, deployment, migration, reindexing, or model-invocation action occurred in this unit. This unit made a single git-plumbing content change (this block prepended to `knowledge/CURRENT_STATE.md` only) on a new task branch created from `origin/feature/source-availability-engine-v1` at `67d2322b7f47b7f04521dcc0b56285a80003b47c`; it did not check out or modify the working tree of any existing branch, and it has not been pushed.
+
+Next exact authorized operation: obtain or author (and get separately reviewed and authorized) an A15 execution contract before any A15 attempt; in parallel, resolve the "separately governed staging/commit/push checks" the E2 internal review defers to, so E2 publication can be formally closed. Do not execute A15, claim E2 publication/closure, claim deterministic clean/staging closure, or begin Phase 10B from this reconciliation alone.
+
+---
+
 # CURRENT_STATE.md
 
 ## TINA Controlling Continuity Status
