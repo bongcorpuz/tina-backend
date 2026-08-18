@@ -4,9 +4,12 @@
 // repository access, NO writes outside a per-test temp directory under
 // os.tmpdir(). This test suite never points the runner at the real
 // tina-backend working tree and never executes A15 against real evidence.
+//
+// All fixture roots are created and torn down through withFixtureRoot(), whose
+// try/finally guarantees cleanup even when an assertion throws (F6).
 
 import assert from "node:assert/strict";
-import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, readdirSync, rmSync } from "node:fs";
+import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, readdirSync, rmSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
@@ -19,6 +22,8 @@ import {
   evaluateCheck,
   aggregate,
   assertWritePathAllowed,
+  isContained,
+  computePassReachability,
   evaluate
 } from "../evaluation/runner/phase-10a-a15-closure-gate/phase10a-a15-closure-gate.mjs";
 
@@ -46,7 +51,9 @@ function check(condition, message) {
   assert.ok(condition, message);
 }
 
-function makeFixtureRoot() {
+// F6: every fixture root is torn down in a finally block, so a failing
+// assertion cannot leak a temp directory.
+function withFixtureRoot(fn) {
   const root = mkdtempSync(path.join(tmpdir(), "a15-fixture-"));
   mkdirSync(path.join(root, "knowledge"), { recursive: true });
   mkdirSync(path.join(root, "evaluation/oracles/phase-10a14-r20"), { recursive: true });
@@ -54,7 +61,11 @@ function makeFixtureRoot() {
     path.join(root, "evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3"),
     { recursive: true }
   );
-  return root;
+  try {
+    return fn(root);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 }
 
 function writeSatisfiedCurrentState(root, overrides = {}) {
@@ -92,7 +103,14 @@ function writeE2Evidence(root, verdict) {
   );
 }
 
-// --- 1. valid contract parsing/validation ---
+function fullySatisfiedFixture(root) {
+  writeSatisfiedCurrentState(root);
+  writeOracleCounts(root, 3720);
+  writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
+}
+
+// ─── 1. Contract identity and shape ──────────────────────────────────────────
+
 test("contract is embedded (single source) and exposes required top-level fields", () => {
   const contract = loadContract();
   check(contract === CONTRACT, "loadContract() must return the same embedded singleton, not a re-parsed copy");
@@ -104,10 +122,7 @@ test("contract is embedded (single source) and exposes required top-level fields
 });
 
 test("contract preserves exactly the 11 canonical top-level roadmap exit items", () => {
-  check(
-    CONTRACT.exitItems.length === 11,
-    `expected 11 top-level items, found ${CONTRACT.exitItems.length}`
-  );
+  check(CONTRACT.exitItems.length === 11, `expected 11 top-level items, found ${CONTRACT.exitItems.length}`);
   const ids = CONTRACT.exitItems.map((i) => i.id);
   check(
     ids.includes("standaloneAndIntegratedExactGates") &&
@@ -117,7 +132,7 @@ test("contract preserves exactly the 11 canonical top-level roadmap exit items",
   );
   check(
     ids.includes("deterministicCleanCycles") && ids.includes("stagingCleanCycles"),
-    "deterministic clean cycles and staging clean cycles remain two separate top-level items (roadmap lists them separately)"
+    "deterministic and staging clean cycles remain two separate top-level items"
   );
 });
 
@@ -128,132 +143,238 @@ test("standaloneAndIntegratedExactGates carries two subordinate deterministic ch
   check(item.subChecks.map((s) => s.id).sort().join(",") === "integrated,standalone", "subCheck ids must be standalone/integrated");
 });
 
-test("no A15_EXECUTION_CONTRACT.json is pre-committed beside the runner (E2 convention: snapshot only, generated at execution time)", () => {
+test("no A15_EXECUTION_CONTRACT.json is pre-committed beside the runner (E2 convention: snapshot only)", () => {
   const files = readdirSync(path.dirname(RUNNER_SOURCE_PATH));
+  check(!files.includes("A15_EXECUTION_CONTRACT.json"), "a pre-committed contract JSON would create two independently editable contracts");
+});
+
+// ─── 2. F1: PASS reachability truthfulness ───────────────────────────────────
+
+test("F1: contract truthfully declares PASS is NOT currently reachable end-to-end", () => {
+  const pr = CONTRACT.passReachability;
+  check(pr.status === "REQUIRES_FUTURE_CONTRACT_REVISION", "status must be REQUIRES_FUTURE_CONTRACT_REVISION");
+  check(pr.aggregationLogicCanRepresentPass === true, "aggregation logic can represent PASS");
+  check(pr.currentCheckCatalogueCanProducePass === false, "current catalogue must NOT claim PASS capability");
+  check(pr.itemsThatCannotCurrentlyProducePass.length === 6, "exactly 6 items cannot currently produce PASS");
+});
+
+test("F1: declared pass-reachability matches what the live check catalogue actually supports (drift guard)", () => {
+  const derived = computePassReachability();
+  const declared = CONTRACT.passReachability;
   check(
-    !files.includes("A15_EXECUTION_CONTRACT.json"),
-    "a pre-committed contract JSON would create two independently editable execution contracts"
+    derived.currentCheckCatalogueCanProducePass === declared.currentCheckCatalogueCanProducePass,
+    "declared catalogue PASS-capability must match derived"
+  );
+  check(
+    derived.itemsThatCannotCurrentlyProducePass.slice().sort().join(",") ===
+      declared.itemsThatCannotCurrentlyProducePass.slice().sort().join(","),
+    `derived [${derived.itemsThatCannotCurrentlyProducePass}] must equal declared [${declared.itemsThatCannotCurrentlyProducePass}]`
   );
 });
 
-test("--out mode writes a hash-pinned contract snapshot identical to the embedded CONTRACT", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root);
-  writeOracleCounts(root, 3720);
-  writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
-
-  const outDir = path.join(
-    "evaluation/results/phase-10a-a15-closure-gate",
-    `test-tmp-${process.pid}-${Date.now()}`
-  );
-  try {
-    try {
-      execFileSync(
-        process.execPath,
-        [RUNNER_SOURCE_PATH, "--root", root, "--out", outDir],
-        { cwd: process.cwd(), stdio: ["ignore", "ignore", "pipe"] }
-      );
-    } catch (err) {
-      // This fixture's reasonClosure is intentionally FAIL (STATIC_NOT_SATISFIED),
-      // so the runner correctly exits non-zero (see main()'s FAIL -> exitCode=1).
-      // The evidence files are still written to disk before exit; only a
-      // non-zero exit itself is expected and tolerated here.
-      if (!("status" in err)) throw err;
-    }
-    const snapshotRaw = readFileSync(path.join(outDir, "A15_EXECUTION_CONTRACT.json"), "utf8");
-    const embeddedRaw = JSON.stringify(CONTRACT, null, 2) + "\n";
-    check(snapshotRaw === embeddedRaw, "generated snapshot must be byte-identical to the embedded CONTRACT");
-
-    const manifest = readFileSync(path.join(outDir, "A15_EVIDENCE_MANIFEST.sha256"), "utf8");
-    const expectedHash = createHash("sha256").update(snapshotRaw).digest("hex");
-    check(manifest.includes(expectedHash), "manifest must record the exact hash of the contract snapshot it wrote");
-  } finally {
-    rmSync(outDir, { recursive: true, force: true });
-    rmSync(root, { recursive: true, force: true });
-  }
+test("F1: even with maximally favourable evidence, the real catalogue cannot reach end-to-end PASS", () => {
+  withFixtureRoot((root) => {
+    fullySatisfiedFixture(root);
+    const result = evaluate(root);
+    check(result.executionStatus !== "PASS", "V1 must not be able to reach PASS end-to-end");
+    check(result.passReachability === "REQUIRES_FUTURE_CONTRACT_REVISION", "result must carry the reachability disposition");
+  });
 });
 
-// --- 2. PASS path via synthetic/fixture evidence (aggregation logic) ---
-test("aggregate() reports PASS when every evaluated item is satisfied", () => {
-  const allPass = [
+test("F1: READ_JSON_FIELD_EQUALS has no PASS branch even on an exact evidence match", () => {
+  withFixtureRoot((root) => {
+    writeOracleCounts(root, 3720); // exactly the expected value
+    const item = CONTRACT.exitItems.find((i) => i.id === "decisionClosure");
+    const result = evaluateItem(item, root);
+    check(result.status === "BLOCKED_MISSING_EVIDENCE", `exact match must still block (no per-row manifest); got ${result.status}`);
+  });
+});
+
+test("F1: aggregation logic alone CAN represent PASS (this proves the aggregator only, not the gate)", () => {
+  const synthetic = [
     { id: "a", status: "PASS" },
     { id: "b", status: "PASS" },
     { id: "c", status: "NOT_APPLICABLE" }
   ];
-  const result = aggregate(allPass);
-  check(result.executionStatus === "PASS", "expected PASS, got " + result.executionStatus);
+  check(aggregate(synthetic).executionStatus === "PASS", "aggregator must be capable of PASS given all-PASS inputs");
 });
 
-test("evaluateItem PRECONDITION_GATE returns PASS when satisfied", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root);
-  const item = { id: "deterministicCleanCycles", checkMethod: "PRECONDITION_GATE" };
-  const result = evaluateItem(item, root);
-  check(result.status === "PASS", "expected PASS for satisfied precondition, got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+// ─── 3. F2/F4: write-boundary security ───────────────────────────────────────
+
+const CWD = process.cwd();
+const ALLOWED = "evaluation/results/phase-10a-a15-closure-gate";
+
+function writeAllowed(relOrAbs) {
+  try {
+    assertWritePathAllowed(path.resolve(CWD, relOrAbs), CWD);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+test("F2/F4: exact allowlisted output directory is accepted", () => {
+  check(writeAllowed(ALLOWED), "the exact governed directory must be writable");
 });
 
-// --- 3. missing evidence -> item BLOCKED_MISSING_EVIDENCE ---
-test("READ_JSON_FIELD_EQUALS returns BLOCKED_MISSING_EVIDENCE when file absent", () => {
-  const root = makeFixtureRoot();
-  const item = {
-    id: "decisionClosure",
-    checkMethod: "READ_JSON_FIELD_EQUALS",
-    evidenceSource: "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_COUNTS.json",
-    evidenceField: "total",
-    expectedValue: 3720
-  };
-  const result = evaluateItem(item, root);
-  check(result.status === "BLOCKED_MISSING_EVIDENCE", "expected BLOCKED_MISSING_EVIDENCE, got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+test("F2/F4: descendants of the allowlisted directory are accepted", () => {
+  check(writeAllowed(`${ALLOWED}/run-1`), "descendant directory must be writable");
+  check(writeAllowed(`${ALLOWED}/run-1/nested`), "nested descendant must be writable");
 });
 
-test("READ_JSON_FIELD_EQUALS returns BLOCKED_MISSING_EVIDENCE (not PASS) even when the total count matches, per the documented per-row-manifest gap", () => {
-  const root = makeFixtureRoot();
-  writeOracleCounts(root, 3720);
-  const item = {
-    id: "decisionClosure",
-    checkMethod: "READ_JSON_FIELD_EQUALS",
-    evidenceSource: "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_COUNTS.json",
-    evidenceField: "total",
-    expectedValue: 3720
-  };
-  const result = evaluateItem(item, root);
-  check(result.status === "BLOCKED_MISSING_EVIDENCE", "matching total count is not sufficient for PASS; got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+test("F2/F4: textual-prefix sibling 'phase-10a-a15-closure-gate-EVIL' is REJECTED", () => {
+  check(!writeAllowed(`${ALLOWED}-EVIL`), "a sibling sharing the text prefix must be rejected");
 });
 
-// --- missing definition -> item BLOCKED_MISSING_DEFINITION ---
-test("STATIC_BLOCKED_NO_DEFINITION always returns BLOCKED_MISSING_DEFINITION", () => {
-  const root = makeFixtureRoot();
-  const item = { id: "frozenRuntime", checkMethod: "STATIC_BLOCKED_NO_DEFINITION", statusNote: "no definition" };
-  const result = evaluateItem(item, root);
-  check(result.status === "BLOCKED_MISSING_DEFINITION", "expected BLOCKED_MISSING_DEFINITION, got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+test("F2/F4: unrelated sibling directories are rejected", () => {
+  check(!writeAllowed("evaluation/results/phase-10a14-r20"), "historical evidence tree must be rejected");
+  check(!writeAllowed("evaluation/results/other"), "unrelated sibling must be rejected");
 });
 
-test("MULTI_SUBCHECK combines two BLOCKED_MISSING_DEFINITION subchecks into an item-level BLOCKED_MISSING_DEFINITION, preserving both subCheckResults", () => {
-  const root = makeFixtureRoot();
-  const item = CONTRACT.exitItems.find((i) => i.id === "standaloneAndIntegratedExactGates");
-  const result = evaluateItem(item, root);
-  check(result.status === "BLOCKED_MISSING_DEFINITION", "expected combined BLOCKED_MISSING_DEFINITION");
-  check(result.subCheckResults.length === 2, "both subcheck results must be preserved");
+test("F2/F4: parent traversal out of the allowlisted directory is rejected", () => {
+  check(!writeAllowed(`${ALLOWED}/../../../knowledge`), "traversal escape must be rejected");
+  check(!writeAllowed(`${ALLOWED}/..`), "parent of allowed dir must be rejected");
+});
+
+test("F2/F4: normalized path aliases resolving back inside are accepted", () => {
+  check(writeAllowed(`${ALLOWED}/x/../y`), "alias resolving to a descendant must be accepted");
+});
+
+test("F2/F4: absolute paths outside the repository are rejected", () => {
+  check(!writeAllowed(path.resolve(tmpdir(), "a15-escape")), "absolute outside path must be rejected");
+});
+
+test("F2/F4: protected governance and runtime locations are rejected by the real mechanism (containment)", () => {
+  for (const p of ["knowledge", "knowledge/CURRENT_STATE.md", "server.js", "security/public-health.js", "evaluation/runner/phase-10a14-r20"]) {
+    check(!writeAllowed(p), `${p} must be rejected`);
+  }
+});
+
+// ─── 4. F5: read-boundary security ───────────────────────────────────────────
+
+test("F5: a textual sibling of the repository root is NOT considered inside it", () => {
   check(
-    result.subCheckResults.every((r) => r.status === "BLOCKED_MISSING_DEFINITION"),
-    "both subchecks must individually report BLOCKED_MISSING_DEFINITION"
+    isContained("C:/Projects/tina-backend", "C:/Projects/tina-backend/knowledge/x.md") === true,
+    "true descendant must be contained"
   );
-  rmSync(root, { recursive: true, force: true });
+  check(
+    isContained("C:/Projects/tina-backend", "C:/Projects/tina-backend-a15-v1/knowledge/x.md") === false,
+    "textual sibling of root must NOT be contained"
+  );
 });
 
-// --- 4. D1 prerequisite unsatisfied -> item BLOCKED_PRECONDITION, dominates overall aggregation ---
-test("PRECONDITION_GATE returns BLOCKED_PRECONDITION when unsatisfied", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root, { "Deterministic clean/staging closure": "UNSATISFIED" });
-  const item = { id: "deterministicCleanCycles", checkMethod: "PRECONDITION_GATE" };
-  const result = evaluateItem(item, root);
-  check(result.status === "BLOCKED_PRECONDITION", "expected BLOCKED_PRECONDITION, got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+test("F5: base itself is contained; parent and traversal are not", () => {
+  check(isContained("/a/b", "/a/b") === true, "base itself is contained");
+  check(isContained("/a/b", "/a") === false, "parent is not contained");
+  check(isContained("/a/b", "/a/c") === false, "sibling is not contained");
 });
+
+// ─── 5. Symlink handling ─────────────────────────────────────────────────────
+
+test("symlink escape out of a governed root is rejected (skips if unprivileged)", () => {
+  withFixtureRoot((base) => {
+    const root = path.join(base, "sym-root");
+    const outside = path.join(base, "sym-outside");
+    mkdirSync(root, { recursive: true });
+    mkdirSync(outside, { recursive: true });
+    writeFileSync(path.join(outside, "secret.txt"), "escaped");
+    const link = path.join(root, "link");
+    let linked = true;
+    try {
+      symlinkSync(outside, link, "junction");
+    } catch {
+      try {
+        symlinkSync(outside, link, "dir");
+      } catch {
+        linked = false;
+      }
+    }
+    if (!linked) {
+      check(true, "symlink creation unavailable in this environment; escape case not exercised");
+      return;
+    }
+    check(isContained(root, path.join(link, "secret.txt")) === false, "symlinked escape must be rejected");
+  });
+});
+
+// ─── 6. Item semantics ───────────────────────────────────────────────────────
+
+test("PRECONDITION_GATE returns PASS when the gate row is SATISFIED", () => {
+  withFixtureRoot((root) => {
+    writeSatisfiedCurrentState(root);
+    const result = evaluateItem({ id: "deterministicCleanCycles", checkMethod: "PRECONDITION_GATE" }, root);
+    check(result.status === "PASS", `expected PASS, got ${result.status}`);
+  });
+});
+
+test("PRECONDITION_GATE returns BLOCKED_PRECONDITION when unsatisfied", () => {
+  withFixtureRoot((root) => {
+    writeSatisfiedCurrentState(root, { "Deterministic clean/staging closure": "UNSATISFIED" });
+    const result = evaluateItem({ id: "deterministicCleanCycles", checkMethod: "PRECONDITION_GATE" }, root);
+    check(result.status === "BLOCKED_PRECONDITION", `expected BLOCKED_PRECONDITION, got ${result.status}`);
+  });
+});
+
+test("READ_JSON_FIELD_EQUALS returns BLOCKED_MISSING_EVIDENCE when the file is absent", () => {
+  withFixtureRoot((root) => {
+    const item = CONTRACT.exitItems.find((i) => i.id === "decisionClosure");
+    check(evaluateItem(item, root).status === "BLOCKED_MISSING_EVIDENCE", "absent evidence must block");
+  });
+});
+
+test("READ_JSON_FIELD_EQUALS returns FAIL on value drift", () => {
+  withFixtureRoot((root) => {
+    writeOracleCounts(root, 1234);
+    const item = CONTRACT.exitItems.find((i) => i.id === "decisionClosure");
+    check(evaluateItem(item, root).status === "FAIL", "drifted evidence must FAIL");
+  });
+});
+
+test("STATIC_BLOCKED_NO_DEFINITION always returns BLOCKED_MISSING_DEFINITION", () => {
+  withFixtureRoot((root) => {
+    const item = CONTRACT.exitItems.find((i) => i.id === "frozenRuntime");
+    check(evaluateItem(item, root).status === "BLOCKED_MISSING_DEFINITION", "undefined criteria must block");
+  });
+});
+
+test("MULTI_SUBCHECK combines subchecks and preserves both subCheckResults", () => {
+  withFixtureRoot((root) => {
+    const item = CONTRACT.exitItems.find((i) => i.id === "standaloneAndIntegratedExactGates");
+    const result = evaluateItem(item, root);
+    check(result.status === "BLOCKED_MISSING_DEFINITION", "combined status must be BLOCKED_MISSING_DEFINITION");
+    check(result.subCheckResults.length === 2, "both subcheck results preserved");
+    check(result.subCheckResults.every((r) => r.status === "BLOCKED_MISSING_DEFINITION"), "each subcheck blocks");
+  });
+});
+
+test("STATIC_NOT_SATISFIED (reasonClosure) reports FAIL, not BLOCKED", () => {
+  withFixtureRoot((root) => {
+    const item = CONTRACT.exitItems.find((i) => i.id === "reasonClosure");
+    check(evaluateItem(item, root).status === "FAIL", "evidenced-unsatisfied is FAIL, not missing/undefined");
+  });
+});
+
+test("READ_MANIFEST_AND_VERDICT returns FAIL when the verdict does not match", () => {
+  withFixtureRoot((root) => {
+    writeE2Evidence(root, "SOMETHING_ELSE");
+    const item = CONTRACT.exitItems.find((i) => i.id === "e2");
+    check(evaluateItem(item, root).status === "FAIL", "verdict mismatch must FAIL");
+  });
+});
+
+test("evaluateCheck throws on an unknown checkMethod rather than guessing a status", () => {
+  withFixtureRoot((root) => {
+    let threw = false;
+    try {
+      evaluateCheck({ id: "bogus", checkMethod: "NOT_A_REAL_METHOD" }, root);
+    } catch {
+      threw = true;
+    }
+    check(threw, "unknown checkMethod must throw");
+  });
+});
+
+// ─── 7. Aggregation and visibility ───────────────────────────────────────────
 
 test("aggregate() forces overall BLOCKED/PRECONDITION_UNSATISFIED even if other items PASS or FAIL", () => {
   const mixed = [
@@ -262,173 +383,87 @@ test("aggregate() forces overall BLOCKED/PRECONDITION_UNSATISFIED even if other 
     { id: "c", status: "BLOCKED_PRECONDITION" }
   ];
   const result = aggregate(mixed);
-  check(result.executionStatus === "BLOCKED", "expected BLOCKED overall");
-  check(result.blockedReason === "PRECONDITION_UNSATISFIED", "expected PRECONDITION_UNSATISFIED reason");
+  check(result.executionStatus === "BLOCKED", "expected overall BLOCKED");
+  check(result.blockedReason === "PRECONDITION_UNSATISFIED", "expected PRECONDITION_UNSATISFIED");
 });
 
-// --- All per-item findings remain visible even though overall precedence produces BLOCKED ---
-test("evaluate() itemResults always contains all 11 items, even when overall executionStatus is BLOCKED", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root, { "Deterministic clean/staging closure": "UNSATISFIED" }); // forces overall BLOCKED
-  writeOracleCounts(root, 3720);
-  writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
-  const result = evaluate(root);
-  check(result.executionStatus === "BLOCKED", "expected overall BLOCKED due to unsatisfied precondition");
-  check(result.itemResults.length === 11, "all 11 item findings must remain present, got " + result.itemResults.length);
-  const reasonItem = result.itemResults.find((r) => r.id === "reasonClosure");
-  check(reasonItem && reasonItem.status === "FAIL", "reasonClosure's own FAIL must still be visible, not hidden by the precondition BLOCK");
-  const e2Item = result.itemResults.find((r) => r.id === "e2");
-  check(e2Item && e2Item.status === "PASS", "e2's own PASS must still be visible even though overall is BLOCKED");
-  rmSync(root, { recursive: true, force: true });
+test("all 11 item findings remain visible even when overall executionStatus is BLOCKED", () => {
+  withFixtureRoot((root) => {
+    writeSatisfiedCurrentState(root, { "Deterministic clean/staging closure": "UNSATISFIED" });
+    writeOracleCounts(root, 3720);
+    writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
+    const result = evaluate(root);
+    check(result.executionStatus === "BLOCKED", "overall must be BLOCKED");
+    check(result.itemResults.length === 11, `all 11 findings must remain, got ${result.itemResults.length}`);
+    check(result.itemResults.find((r) => r.id === "reasonClosure").status === "FAIL", "reasonClosure FAIL still visible");
+    check(result.itemResults.find((r) => r.id === "e2").status === "PASS", "e2 PASS still visible");
+  });
 });
 
-// --- 5. evidence hash/content drift -> item FAIL ---
-test("READ_JSON_FIELD_EQUALS returns FAIL on value drift", () => {
-  const root = makeFixtureRoot();
-  writeOracleCounts(root, 1234); // drifted value, expected 3720
-  const item = {
-    id: "decisionClosure",
-    checkMethod: "READ_JSON_FIELD_EQUALS",
-    evidenceSource: "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_COUNTS.json",
-    evidenceField: "total",
-    expectedValue: 3720
-  };
-  const result = evaluateItem(item, root);
-  check(result.status === "FAIL", "expected FAIL on drift, got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+test("evaluate() disclaims Phase 10A closure and Phase 10B authorization", () => {
+  withFixtureRoot((root) => {
+    fullySatisfiedFixture(root);
+    const result = evaluate(root);
+    check(result.phase10AClosure === "NOT_CLAIMED", "must not claim Phase 10A closure");
+    check(result.phase10BAuthorization === "NOT_CLAIMED", "must not claim Phase 10B authorization");
+    check(result.reviewDisposition === "PENDING_INTERNAL_REVIEW", "runner must never self-assign ACCEPTED_FOR_A15_CLOSURE");
+  });
 });
 
-test("READ_MANIFEST_AND_VERDICT returns FAIL when verdict text does not match", () => {
-  const root = makeFixtureRoot();
-  writeE2Evidence(root, "SOMETHING_ELSE");
-  const item = CONTRACT.exitItems.find((i) => i.id === "e2");
-  const result = evaluateItem(item, root);
-  check(result.status === "FAIL", "expected FAIL on verdict mismatch, got " + result.status);
-  rmSync(root, { recursive: true, force: true });
+test("evaluate() is byte-identical across repeated runs against the same fixture root", () => {
+  withFixtureRoot((root) => {
+    fullySatisfiedFixture(root);
+    const a = JSON.stringify(evaluate(root));
+    const b = JSON.stringify(evaluate(root));
+    const c = JSON.stringify(evaluate(root));
+    check(a === b && b === c, "evaluate() must be deterministic");
+  });
 });
 
-test("STATIC_NOT_SATISFIED (reasonClosure) always reports item-level FAIL, not BLOCKED", () => {
-  const root = makeFixtureRoot();
-  const item = CONTRACT.exitItems.find((i) => i.id === "reasonClosure");
-  const result = evaluateItem(item, root);
-  check(result.status === "FAIL", "reasonClosure is evidenced-unsatisfied, which is FAIL, not an undefined/missing BLOCKED state");
-  rmSync(root, { recursive: true, force: true });
-});
+// ─── 8. B2-B6 and network posture ────────────────────────────────────────────
 
-// --- 6. prohibited path mutation detection ---
-test("assertWritePathAllowed rejects writes outside the allowlisted output directory", () => {
-  check(
-    (() => {
-      try {
-        assertWritePathAllowed(path.resolve(process.cwd(), "knowledge"));
-        return false;
-      } catch {
-        return true;
-      }
-    })(),
-    "expected rejection for a write under knowledge/"
-  );
-});
-
-test("assertWritePathAllowed rejects writes into the unrelated 10A14-R20 evidence tree", () => {
-  check(
-    (() => {
-      try {
-        assertWritePathAllowed(path.resolve(process.cwd(), "evaluation/results/phase-10a14-r20/some-dir"));
-        return false;
-      } catch {
-        return true;
-      }
-    })(),
-    "expected rejection for a write under evaluation/results/phase-10a14-r20"
-  );
-});
-
-test("assertWritePathAllowed accepts the allowlisted output directory", () => {
-  assertWritePathAllowed(path.resolve(process.cwd(), "evaluation/results/phase-10a-a15-closure-gate/tmp-test"));
-  check(true, "no exception expected");
-});
-
-// --- 7. B2-B6 remain out of scope ---
 test("contract declares B2-B6 out of scope and never evaluated/modified", () => {
   check(CONTRACT.b2ThroughB6.evaluatedByA15 === false, "B2-B6 must never be evaluated");
   check(CONTRACT.b2ThroughB6.modifiedByA15 === false, "B2-B6 must never be modified");
-  const ids = CONTRACT.exitItems.map((i) => i.id);
-  check(!ids.some((id) => /b[2-6]/i.test(id)), "B2-B6 must not appear as an exitItem at all");
+  check(!CONTRACT.exitItems.some((i) => /b[2-6]/i.test(i.id)), "B2-B6 must not appear as an exitItem");
 });
 
-// --- 8. no network behavior ---
 test("runner source contains no network-capable imports or calls", () => {
   const source = readFileSync(RUNNER_SOURCE_PATH, "utf8");
-  const forbidden = ["node:http", "node:https", "node:net", "node:dgram", "node:dns", "fetch(", "XMLHttpRequest", "child_process"];
-  for (const token of forbidden) {
+  for (const token of ["node:http", "node:https", "node:net", "node:dgram", "node:dns", "fetch(", "XMLHttpRequest", "child_process"]) {
     check(!source.includes(token), `runner source must not reference ${token}`);
   }
 });
 
-// --- 9. A15 PASS does not claim Phase 10A closed ---
-test("evaluate() output always disclaims Phase 10A closure and Phase 10B authorization", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root);
-  writeOracleCounts(root, 3720);
-  writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
-  const result = evaluate(root);
-  check(result.phase10AClosure === "NOT_CLAIMED", "must not claim Phase 10A closure");
-  check(result.phase10BAuthorization === "NOT_CLAIMED", "must not claim Phase 10B authorization");
-  check(result.reviewDisposition === "PENDING_INTERNAL_REVIEW", "runner must never self-assign ACCEPTED_FOR_A15_CLOSURE");
-  rmSync(root, { recursive: true, force: true });
+test("runner no longer carries unreachable prohibited-write patterns (F3)", () => {
+  const source = readFileSync(RUNNER_SOURCE_PATH, "utf8");
+  check(!source.includes("PROHIBITED_WRITE_PATTERNS ="), "the dead prohibited-pattern list must be gone");
 });
 
-test("full-repo evaluate() today is not PASS, by design (undefined/unsatisfied roadmap items)", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root);
-  writeOracleCounts(root, 3720);
-  writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
-  const result = evaluate(root);
-  check(result.executionStatus !== "PASS", "must not PASS while undefined/unsatisfied items remain");
-  const reasonItem = result.itemResults.find((r) => r.id === "reasonClosure");
-  check(reasonItem.status === "FAIL", "reasonClosure must surface as FAIL, not silently pass");
-  const gatesItem = result.itemResults.find((r) => r.id === "standaloneAndIntegratedExactGates");
-  check(gatesItem.status === "BLOCKED_MISSING_DEFINITION", "standalone/integrated exact gates must surface as BLOCKED_MISSING_DEFINITION");
-});
+// ─── 9. Execution-time contract snapshot ─────────────────────────────────────
 
-// --- PASS is mathematically reachable once every item is actually satisfiable ---
-test("aggregate() proves PASS is reachable in principle once every item resolves favorably", () => {
-  const everythingResolved = CONTRACT.exitItems
-    .filter((i) => i.checkMethod !== "NOT_APPLICABLE")
-    .map((i) => ({ id: i.id, status: "PASS" }));
-  const result = aggregate(everythingResolved);
-  check(result.executionStatus === "PASS", "aggregation logic itself must be capable of PASS, not permanently broken");
-});
-
-// --- 10. invalid/ambiguous status handling ---
-test("evaluateCheck throws on an unknown checkMethod rather than guessing a status", () => {
-  const root = makeFixtureRoot();
-  check(
-    (() => {
+test("--out mode writes a hash-pinned contract snapshot identical to the embedded CONTRACT", () => {
+  withFixtureRoot((root) => {
+    fullySatisfiedFixture(root);
+    const outDir = path.join(ALLOWED, `test-tmp-${process.pid}-${Date.now()}`);
+    try {
       try {
-        evaluateCheck({ id: "bogus", checkMethod: "NOT_A_REAL_METHOD" }, root);
-        return false;
-      } catch {
-        return true;
+        execFileSync(process.execPath, [RUNNER_SOURCE_PATH, "--root", root, "--out", outDir], {
+          cwd: process.cwd(),
+          stdio: ["ignore", "ignore", "pipe"]
+        });
+      } catch (err) {
+        // reasonClosure is intentionally FAIL, so a non-zero exit is expected.
+        if (!("status" in err)) throw err;
       }
-    })(),
-    "expected evaluateCheck to throw on an unrecognized checkMethod"
-  );
-  rmSync(root, { recursive: true, force: true });
-});
-
-// --- 11. deterministic rerun behavior ---
-test("evaluate() is byte-identical across repeated runs against the same fixture root", () => {
-  const root = makeFixtureRoot();
-  writeSatisfiedCurrentState(root);
-  writeOracleCounts(root, 3720);
-  writeE2Evidence(root, "ACCEPTED_FOR_E2_PUBLICATION");
-  const first = JSON.stringify(evaluate(root));
-  const second = JSON.stringify(evaluate(root));
-  const third = JSON.stringify(evaluate(root));
-  check(first === second && second === third, "evaluate() must be deterministic across reruns");
-  rmSync(root, { recursive: true, force: true });
+      const snapshotRaw = readFileSync(path.join(outDir, "A15_EXECUTION_CONTRACT.json"), "utf8");
+      check(snapshotRaw === JSON.stringify(CONTRACT, null, 2) + "\n", "snapshot must be byte-identical to embedded CONTRACT");
+      const manifest = readFileSync(path.join(outDir, "A15_EVIDENCE_MANIFEST.sha256"), "utf8");
+      check(manifest.includes(createHash("sha256").update(snapshotRaw).digest("hex")), "manifest must hash-pin the snapshot");
+    } finally {
+      rmSync(outDir, { recursive: true, force: true });
+    }
+  });
 });
 
 console.log(`\nPHASE-10A-A15-FINAL-CLOSURE-GATE-V1 tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);

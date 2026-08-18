@@ -20,6 +20,13 @@
  * It evaluates already-produced evidence only; it does not rerun, adjudicate,
  * or invent pass criteria for any of the items it checks. A PASS execution
  * status does not by itself close Phase 10A (see CONTRACT.phase10AClosure).
+ *
+ * PASS reachability (see CONTRACT.passReachability): A15 V1 CANNOT currently
+ * produce an end-to-end PASS. The aggregation logic can represent PASS, but
+ * six of the eleven roadmap items are evaluated by check methods that have no
+ * PASS branch, because their canonical definitions/evidence do not exist.
+ * That gap is reported, never engineered away; becoming pass-capable requires
+ * a future, separately governed contract revision.
  */
 "use strict";
 
@@ -32,13 +39,70 @@ import { fileURLToPath } from "node:url";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_ROOT = path.resolve(HERE, "../../..");
 const ALLOWED_OUTPUT_PARENT = "evaluation/results/phase-10a-a15-closure-gate";
-const PROHIBITED_WRITE_PATTERNS = [
-  /^knowledge\/CURRENT_STATE\.md$/,
-  /^server\.js$/,
-  /^security\/public-health\.js$/,
-  /^evaluation\/runner\/phase-10a14-r20\//,
-  /^evaluation\/results\/phase-10a14-r20\//
-];
+
+// F3 remediation: the single exact allowlisted output directory below is the
+// ONE controlling write defense. A previous revision also carried a list of
+// "prohibited write patterns" (knowledge/CURRENT_STATE.md, server.js,
+// security/public-health.js, evaluation/{runner,results}/phase-10a14-r20/).
+// Those patterns were unreachable dead code: they were only ever evaluated
+// after a path had already been required to sit inside the allowlisted
+// directory, and no such path can match any of them. They provided zero
+// actual protection while appearing to provide defense in depth, so they have
+// been removed rather than retained as security theatre. Those locations are
+// protected — but by containment in assertWritePathAllowed(), not by a
+// pattern list. Tests assert the real mechanism.
+
+// ── Path containment (F2 + F5 remediation) ───────────────────────────────────
+//
+// A bare `startsWith` on path TEXT is not a containment test: "…/gate-EVIL"
+// textually starts with "…/gate", and "C:/Projects/tina-backend-a15-v1"
+// textually starts with "C:/Projects/tina-backend". Containment is decided
+// structurally with path.relative() instead, and symlinks are resolved first
+// so a symlinked component cannot alias a path out of its governed root.
+
+/**
+ * Resolve `targetAbs` through symlinks. Paths that do not exist yet (a
+ * not-yet-created output directory) are resolved via their nearest existing
+ * ancestor, so a symlinked ancestor still cannot alias the target outside its
+ * root. Falls back to the lexical resolution when nothing on the path exists.
+ */
+function resolveThroughSymlinks(targetAbs) {
+  const resolved = path.resolve(targetAbs);
+  const missingSegments = [];
+  let cursor = resolved;
+  for (;;) {
+    try {
+      const real = fs.realpathSync(cursor);
+      return missingSegments.length ? path.join(real, ...missingSegments.reverse()) : real;
+    } catch {
+      const parent = path.dirname(cursor);
+      if (parent === cursor) return resolved;
+      missingSegments.push(path.basename(cursor));
+      cursor = parent;
+    }
+  }
+}
+
+/**
+ * True only when `candidateAbs` is `baseAbs` itself or a descendant of it,
+ * after symlink resolution. Rejects textual-prefix siblings, `..` traversal,
+ * and absolute paths outside the base.
+ */
+export function isContained(baseAbs, candidateAbs) {
+  const realBase = resolveThroughSymlinks(baseAbs);
+  const realCandidate = resolveThroughSymlinks(candidateAbs);
+  const rel = path.relative(realBase, realCandidate);
+  if (rel === "") return true;
+  if (path.isAbsolute(rel)) return false;
+  if (rel === "..") return false;
+  return !rel.startsWith(`..${path.sep}`) && !rel.startsWith("../");
+}
+
+function assertContained(baseAbs, candidateAbs, what) {
+  if (!isContained(baseAbs, candidateAbs)) {
+    throw new Error(`${what} escapes its governed root: ${candidateAbs}`);
+  }
+}
 
 // Per-item granular status vocabulary (Review Issue 2). Distinct from the
 // coarse overall executionStatus (PASS | FAIL | BLOCKED).
@@ -61,6 +125,40 @@ const STATUS_PRECEDENCE = [
   ITEM_STATUS.BLOCKED_MISSING_DEFINITION,
   ITEM_STATUS.PASS
 ];
+
+// F1 remediation. Exactly the check methods whose implementation contains a
+// reachable ITEM_STATUS.PASS return. Any check method NOT listed here can
+// never yield PASS for its item under ANY evidence — not because evidence is
+// missing today, but because the method has no PASS branch at all. That is
+// deliberate: the corresponding roadmap criteria have no canonical definition
+// or no per-row evidence artifact in the repository, and inventing one merely
+// to make the gate pass-capable is forbidden.
+const CHECK_METHODS_WITH_PASS_PATH = Object.freeze([
+  "PRECONDITION_GATE",
+  "STATIC_SATISFIED",
+  "READ_MANIFEST_AND_VERDICT"
+]);
+
+function effectiveCheckMethod(item) {
+  return item.checkMethod === "MULTI_SUBCHECK" ? item.subChecks.map((s) => s.checkMethod) : [item.checkMethod];
+}
+
+/**
+ * Derive, from the live check catalogue, whether A15 V1 could ever produce an
+ * end-to-end PASS. Exported so a test can assert the CONTRACT's static
+ * declaration matches the code, preventing the two from silently diverging.
+ */
+export function computePassReachability() {
+  const blocking = CONTRACT.exitItems
+    .filter((item) => item.checkMethod !== "NOT_APPLICABLE")
+    .filter((item) => !effectiveCheckMethod(item).every((cm) => CHECK_METHODS_WITH_PASS_PATH.includes(cm)))
+    .map((item) => item.id);
+  return {
+    aggregationLogicCanRepresentPass: true,
+    currentCheckCatalogueCanProducePass: blocking.length === 0,
+    itemsThatCannotCurrentlyProducePass: blocking
+  };
+}
 
 export const CONTRACT = Object.freeze({
   identity: "PHASE-10A-A15-FINAL-CLOSURE-GATE-V1",
@@ -253,6 +351,29 @@ export const CONTRACT = Object.freeze({
     ownerAuthorizationRequiredBeforeExecution: true
   },
 
+  // F1 remediation: the honest, machine-readable statement of what A15 V1 can
+  // and cannot currently produce. These two facts are deliberately separated
+  // because conflating them is what produced the earlier false claim that
+  // "A15 V1 is capable of PASS".
+  passReachability: {
+    status: "REQUIRES_FUTURE_CONTRACT_REVISION",
+    aggregationLogicCanRepresentPass: true,
+    currentCheckCatalogueCanProducePass: false,
+    itemsThatCannotCurrentlyProducePass: [
+      "decisionClosure",
+      "relationClosure",
+      "reasonClosure",
+      "standaloneAndIntegratedExactGates",
+      "frozenRuntime",
+      "postFreezeEvidence"
+    ],
+    checkMethodsWithNoPassPath: ["READ_JSON_FIELD_EQUALS", "STATIC_NOT_SATISFIED", "STATIC_BLOCKED_NO_DEFINITION"],
+    statement:
+      "A15 V1 is intentionally fail-closed against the currently defined canonical evidence model. It can truthfully return FAIL/BLOCKED and enumerate closure gaps, but it CANNOT return an end-to-end PASS: six of the eleven roadmap items are evaluated by check methods that contain no PASS branch, because those criteria have no canonical definition (standalone/integrated exact gates, frozen runtime, post-freeze evidence), are evidenced as not satisfied (reason closure), or have only aggregate-count evidence with no per-row resolution manifest (decision closure, relation closure). This is a contract capability limitation and a future-version requirement, NOT a defect in fail-closed behavior and NOT a licence to invent definitions, paths, thresholds, manifests, or pass criteria to make the gate passable. A15 may become pass-capable only in a future, separately governed contract revision, and only after the missing canonical definitions and evidence actually exist.",
+    doNotInventCriteria:
+      "The absence of canonical definitions/evidence is real governance information and must be reported as such, never engineered away."
+  },
+
   phase10AClosure: {
     autoClose: false,
     statement:
@@ -274,9 +395,7 @@ export function loadContract() {
 
 function readJsonUnderRoot(root, relPath) {
   const abs = path.join(root, ...relPath.split("/"));
-  if (!abs.startsWith(path.resolve(root))) {
-    throw new Error(`path traversal rejected: ${relPath}`);
-  }
+  assertContained(root, abs, `evidence read path '${relPath}'`);
   if (!fs.existsSync(abs)) return { present: false, value: null };
   const raw = fs.readFileSync(abs, "utf8");
   return { present: true, value: JSON.parse(raw), raw };
@@ -284,9 +403,7 @@ function readJsonUnderRoot(root, relPath) {
 
 function readTextUnderRoot(root, relPath) {
   const abs = path.join(root, ...relPath.split("/"));
-  if (!abs.startsWith(path.resolve(root))) {
-    throw new Error(`path traversal rejected: ${relPath}`);
-  }
+  assertContained(root, abs, `evidence read path '${relPath}'`);
   if (!fs.existsSync(abs)) return { present: false, text: null };
   return { present: true, text: fs.readFileSync(abs, "utf8") };
 }
@@ -437,6 +554,7 @@ export function evaluate(root) {
     contractVersion: CONTRACT.version,
     executionStatus,
     blockedReason,
+    passReachability: CONTRACT.passReachability.status,
     reviewDisposition: "PENDING_INTERNAL_REVIEW",
     b2ThroughB6: CONTRACT.b2ThroughB6.disposition,
     phase10AClosure: "NOT_CLAIMED",
@@ -445,15 +563,19 @@ export function evaluate(root) {
   };
 }
 
-export function assertWritePathAllowed(outDir) {
-  const rel = path.relative(process.cwd(), outDir).split(path.sep).join("/");
-  if (!rel.startsWith(ALLOWED_OUTPUT_PARENT)) {
-    throw new Error(`refusing to write outside allowlisted output directory: ${rel}`);
-  }
-  for (const pattern of PROHIBITED_WRITE_PATTERNS) {
-    if (pattern.test(rel)) {
-      throw new Error(`refusing to write to prohibited path: ${rel}`);
-    }
+/**
+ * The controlling write defense: the output directory must be the exact
+ * allowlisted directory or a descendant of it, decided structurally after
+ * symlink resolution. Textual-prefix siblings (…-EVIL), `..` traversal,
+ * absolute outside paths, and symlink aliases are all rejected.
+ */
+export function assertWritePathAllowed(outDir, cwd = process.cwd()) {
+  const allowedBase = path.resolve(cwd, ALLOWED_OUTPUT_PARENT);
+  if (!isContained(allowedBase, path.resolve(outDir))) {
+    throw new Error(
+      `refusing to write outside the exact allowlisted output directory ` +
+        `(${ALLOWED_OUTPUT_PARENT}): ${outDir}`
+    );
   }
 }
 
