@@ -324,14 +324,47 @@ await test("static scan confirms allowed file scope and no new external-operatio
   check(!/this loa is invalid|this ela is void|you can ignore the loa|you will win|this protest will succeed|ready for filing/i.test(evidenceText), "no prohibited final legal conclusion phrases in report/fixture");
 });
 
-// 43-44. CURRENT_STATE.
-await test("CURRENT_STATE contains 09ZB entry and next/rerun state", () => {
+// 43-44. Continuity state (GOVERNED CORRECTION -- stale assertion realignment).
+//
+// These assertions previously required a PHASE-09ZB continuity / next-rerun block
+// inside knowledge/CURRENT_STATE.md. Commit 14a9e14c ("PHASE-10A14-R20 COMMIT 4R3")
+// deliberately replaced that append-only Phase-6-through-9 log (blob 146c9a61,
+// 9,960 lines) with a forward-only controlling continuity document (blob 5c15e4e2,
+// 194 lines), stating "Phase 6-9 history remains in Git" and proving the
+// replacement in evaluation/results/phase-10a14-r20/COMMIT_4R3_CURRENT_STATE_UPDATE_PROOF.json
+// (startingBlob 146c9a61, noStalePhase7B true, updated true). CURRENT_STATE.md is
+// now additive/forward-only and its own Source of Truth ranks committed Git
+// evidence and frozen artifacts ABOVE itself.
+//
+// No controlling document in the canonical governance ref requires the deleted
+// block, and TINA_ENGINEERING.md forbids rewriting CURRENT_STATE.md merely to make
+// a historical assertion test pass. The same five continuity facts are therefore
+// asserted against their CURRENT canonical carriers -- the frozen fixture and the
+// 09ZB report -- plus a drift guard on CURRENT_STATE.md. Historical text is not
+// restored and no replacement history is invented.
+await test("09ZB continuity state is canonical and CURRENT_STATE remains forward-only controlling", () => {
   const currentState = read(CURRENT_STATE_PATH);
-  check(/PHASE-09ZB-CONTROLLED-LOA-ANSWER-STAGING-SMOKE-1/.test(currentState), "CURRENT_STATE.md contains 09ZB staging smoke entry");
-  check(/PHASE 09ZB CONTROLLED LOA ANSWER STAGING SMOKE PASS WITH STRICT RECOMMENDATIONS/.test(currentState), "CURRENT_STATE.md contains final 09ZB PASS decision");
-  check(/rerun after 09ZI completed/i.test(currentState), "CURRENT_STATE.md contains post-09ZI completed rerun entry");
-  check(/PHASE-09ZC-CONTROLLED-LOA-ANSWER-PRODUCTION-ACTIVATION-GATE-1/.test(currentState), "CURRENT_STATE.md states 09ZC next");
-  check(/PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1/.test(currentState), "CURRENT_STATE.md keeps production smoke separate");
+  const report = read(REPORT_PATH);
+
+  // CURRENT_STATE.md must remain the controlling continuity document whose own
+  // precedence rule is what makes the frozen 09ZB artifacts canonical here.
+  check(/^##\s*TINA Controlling Continuity Status/m.test(currentState), "CURRENT_STATE.md is the TINA controlling continuity document");
+  check(/^1\.\s*committed Git evidence and frozen artifacts$/m.test(currentState), "CURRENT_STATE.md ranks committed Git evidence and frozen artifacts first in Source of Truth");
+  check(/When CURRENT_STATE\.md conflicts with committed evidence, committed evidence controls\./.test(currentState), "CURRENT_STATE.md defers to committed evidence on conflict");
+
+  // The five 09ZB continuity facts, anchored to their canonical carriers.
+  check(fx.patch === EXPECTED_PATCH && report.includes(EXPECTED_PATCH), "canonical evidence carries the 09ZB staging smoke entry");
+  check(fx.decision === PASS_DECISION && report.includes(PASS_DECISION), "canonical evidence carries the final 09ZB PASS decision");
+  check(fx.rerunAfter09ZI === true && fx["09ziCommit"] === "13fec28" && /Post-09ZI complete staging smoke\./.test(report), "canonical evidence carries the post-09ZI completed rerun state");
+  check(fx.nextTask === EXPECTED_PASS_NEXT_TASK && report.includes(EXPECTED_PASS_NEXT_TASK), "canonical evidence states 09ZC next");
+  check(fx.productionSmokeTask === "PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1" && /PHASE-09ZD-CONTROLLED-LOA-ANSWER-PRODUCTION-SMOKE-1 remains separate\./.test(report), "canonical evidence keeps production smoke separate");
+
+  // Drift guard: CURRENT_STATE.md is not required to carry 09ZB history, but a
+  // future governed append that reintroduces it must agree with the canonical
+  // record rather than assert a superseded outcome.
+  if (currentState.includes(EXPECTED_PATCH)) {
+    check(currentState.includes(PASS_DECISION), "any reintroduced CURRENT_STATE 09ZB entry states the canonical final PASS decision");
+  }
 });
 
 // Optional live staging smoke, assertions 45-75 when enabled.
