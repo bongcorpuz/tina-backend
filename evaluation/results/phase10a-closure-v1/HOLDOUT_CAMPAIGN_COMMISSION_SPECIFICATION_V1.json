@@ -1,0 +1,261 @@
+{
+  "artifact": "HOLDOUT_CAMPAIGN_COMMISSION_SPECIFICATION_V1",
+  "version": 1,
+  "immutable": true,
+  "phase": "PHASE_10A",
+  "workUnit": "PHASE-10A-CLOSURE-V1",
+  "branch": "feature/phase10a-closure-v1",
+  "canonicalBaseCommit": "0de779cd529271b9235eba3a1e4a8b051bf4c987",
+  "recordedUtcDate": "2026-08-19",
+  "authorizedBy": "Owner ruling Decision 3 (D8 holdout commission authorized, SPECIFICATION ONLY).",
+
+  "role": "Commissioning specification for the genuinely unseen / holdout / blind post-freeze campaign that owner decision D8 makes a precondition of roadmap item 6. This artifact specifies WHAT must be produced, BY WHOM, UNDER WHAT ISOLATION, and HOW IT WILL BE EVALUATED. It is not the campaign, it contains no holdout questions, no holdout inputs, no expected answers, and no results.",
+
+  "artifactClass": "COMMISSION_SPECIFICATION",
+  "isHoldoutDataset": false,
+  "containsHoldoutQuestions": false,
+  "containsHoldoutExpectedAnswers": false,
+  "containsHoldoutResults": false,
+  "confersNoPass": true,
+  "satisfiesD8": false,
+  "satisfiesD8Note": "Authoring this specification does not satisfy D8. D8 is satisfied only by an executed campaign that conforms to this specification and is admitted by the successor gate. Until then item 6 remains unevidenced.",
+
+  "authoringSessionContaminationDeclaration": {
+    "contaminatedForHoldoutAuthorship": true,
+    "actor": "PHASE-10A-CLOSURE-V1 authoring session (the session that produced this specification)",
+    "whyContaminated": "This session has read information that would make any dataset it authored analyzer-informed by construction, and therefore inadmissible under D8 no matter how it were labelled.",
+    "informationThisSessionHasSeen": [
+      "the analyzer service source and its decision/relation/reason derivation lineage",
+      "the R20 development oracle and its source map and row counts",
+      "the R3 and R4 per-row expectation sets, including which expectations changed between them",
+      "the population of previously changed row identities",
+      "existing campaign evidence, its verdicts, and its failure modes"
+    ],
+    "consequence": "This session MUST NOT author the holdout questions, the holdout inputs, the holdout expected answers, or the holdout results. Any dataset authored by this session would be expectation-fitted to observed analyzer behaviour and would violate D3 and D8.",
+    "requiredActorForTheCampaignItself": "A FRESH, ISOLATED actor commissioned after runtime freeze, satisfying isolationRequirements below. Not this session, not a continuation of this session, and not any actor supplied with this session's transcript or working notes."
+  },
+
+  "sequencing": {
+    "mustHappenBeforeCommission": [
+      "The governed runtime set is frozen and the freeze manifest is sealed and digest-verified.",
+      "The freeze digest and frozen commit are published as immutable facts the holdout author can pin to WITHOUT being told anything about expected outputs."
+    ],
+    "orderOfOperations": [
+      "1. Freeze the runtime; seal FREEZE_MANIFEST_V1.json.",
+      "2. Commission the isolated holdout author under this specification.",
+      "3. The holdout author authors and SEALS the holdout set (inputs only, plus independently derived expected outputs) and pre-registers it.",
+      "4. The sealed pre-registration digest is recorded BEFORE any execution against the frozen runtime.",
+      "5. Execute the sealed holdout set against the frozen runtime exactly once.",
+      "6. Record results, rehash, and admit or reject via the successor gate.",
+      "7. Any re-authoring after step 5 starts a NEW campaign with a new seal; it never amends the executed one."
+    ],
+    "prohibitedOrdering": "Authoring or amending the holdout set after observing any frozen-runtime output for that set. Executing before the pre-registration digest is recorded. Both are disqualifying, not remediable."
+  },
+
+  "requiredSampleSizeAndCoverageBasis": {
+    "minimumAdmissibleRowCount": 300,
+    "statisticalBasis": "Rule of three. With n independent holdout rows and zero observed mismatches, the one-sided 95% upper confidence bound on the true per-row error rate is approximately 3/n. n = 300 with zero mismatches bounds the undetected per-row error rate at approximately 1% (95%). n = 300 is therefore the minimum at which a clean holdout result carries a stated, non-trivial guarantee.",
+    "sampleSizeIsAFloorNotATarget": "300 is a floor for the ZERO-MISMATCH case only. If the campaign observes k > 0 mismatches, the campaign does not pass, and a larger n does not repair it. Enlarging n after seeing results is prohibited (see prohibitedOrdering).",
+    "statedGuaranteeMustBePublished": "The campaign result must state its own n and the resulting 3/n bound explicitly, so that no reader can mistake a small clean sample for exhaustive proof.",
+    "coverageBasis": {
+      "principle": "Coverage is specified by PUBLIC RUNTIME CONTRACT vocabulary, never by disclosing oracle contents. Every class listed below is readable from committed non-oracle source, so publishing this coverage requirement leaks nothing about expected answers.",
+      "publicSourceOfClasses": [
+        "services/trust-contract.js: AUTHORITY_SUPPORT_VALUES, SOURCE_STATE_VALUES, LEGAL_CONCLUSION_VALUES, RESPONSE_KIND_VALUES",
+        "services/conflict-trust-classifier.js: CONFLICT_STATE_VALUES"
+      ],
+      "requiredCoverage": [
+        "Every value of RESPONSE_KIND_VALUES that is reachable for an admissible input must be represented by at least 10 rows.",
+        "Every value of LEGAL_CONCLUSION_VALUES must be represented by at least 10 rows.",
+        "Every value of CONFLICT_STATE_VALUES must be represented by at least 10 rows.",
+        "Every value of AUTHORITY_SUPPORT_VALUES must be represented by at least 10 rows.",
+        "Every value of SOURCE_STATE_VALUES that is reachable without inducing a fault must be represented by at least 5 rows.",
+        "At least 20% of rows must be adversarial-by-construction with respect to the decision boundary (near-miss inputs), authored WITHOUT reference to any known analyzer behaviour."
+      ],
+      "unreachableClassHandling": "If the holdout author judges a class unreachable for admissible inputs, that judgement must be recorded WITH ITS REASON in the pre-registration, before execution. It must not be discovered to be unreachable by running the analyzer.",
+      "coverageIsPerClassNotAggregate": "Meeting n >= 300 does not waive any per-class minimum. A campaign that meets the total but misses a per-class minimum is incomplete, not passing."
+    }
+  },
+
+  "admissibleSourceDomain": {
+    "mustBe": [
+      "Philippine tax authority material within the deployed system's declared domain scope.",
+      "Sourced from primary or officially published authority text, or from real practitioner-formulated questions.",
+      "Traceable: every row must cite the origin of its input and the independent basis for its expected output."
+    ],
+    "mustNotBe": [
+      "Any row, question, input, or expectation drawn from evaluation/oracles/** (any revision).",
+      "Any row drawn from PER_ROW_EVIDENCE_R3.json or PER_ROW_EVIDENCE_R4.json, or from any Rn campaign artifact.",
+      "Any row drawn from this repository's tests/** fixtures.",
+      "Any row whose expected output was obtained by running the analyzer, any prior analyzer revision, or any other component of this system.",
+      "Any row paraphrased, mutated, translated, or metamorphically derived from a row in any of the above."
+    ],
+    "derivationProhibition": "Metamorphic or paraphrase derivation from a seen row does not make it unseen. Provenance is inherited by derivation.",
+    "expectedOutputDerivation": "Expected outputs must be derived from authority text and stated decision rules by the holdout author, independently of the implementation. The implementation is not an oracle for its own evaluation."
+  },
+
+  "prohibitedInformationForHoldoutAuthor": {
+    "principle": "The holdout author must be able to author a correct expectation from authority and the published decision vocabulary alone. Anything that reveals how THIS implementation behaves is prohibited.",
+    "prohibited": [
+      "The analyzer implementation source, its diffs, or its revision history (conflict-engine.js, services/answer-support-*.js, services/*-classifier.js, and the remainder of the governed runtime set).",
+      "Any oracle file under evaluation/oracles/** and any file derived from one.",
+      "PER_ROW_EVIDENCE_R3.json, PER_ROW_EVIDENCE_R4.json, and any per-row expectation set.",
+      "The identities, count, or nature of expectations that changed between any two revisions (including the R3-to-R4 change population).",
+      "Any prior campaign's results, verdicts, mismatch lists, failure modes, or review findings.",
+      "Any prior campaign's inputs, even where its expectations are withheld.",
+      "This specification's own authoring session transcript, notes, or intermediate artifacts.",
+      "Any statement of the form 'the analyzer tends to', 'watch out for', or 'the known weak spot is'.",
+      "The pass thresholds' expected outcome, i.e. any hint that a clean result is desired or expected."
+    ],
+    "permitted": [
+      "This specification, minus nothing (it is designed to be safely readable by the holdout author).",
+      "The public runtime contract vocabularies enumerated in coverageBasis.publicSourceOfClasses, as VALUE LISTS only.",
+      "The public input interface required to submit a row.",
+      "The sealed freeze digest and frozen commit identifier, as opaque identifiers.",
+      "Authority text and public practitioner material."
+    ],
+    "permittedNote": "The permitted set is deliberately minimal and contains no behavioural information. Reading the vocabulary value lists tells the author what the output SLOTS are, not what this implementation puts in them.",
+    "commissioningChannelRequirement": "The commissioning brief handed to the holdout author must be recorded verbatim and hashed, so that what the author was told is auditable and can be checked against the prohibited list."
+  },
+
+  "isolationRequirements": {
+    "actorMustBe": "An actor with no read access to the prohibited set for the duration of authorship.",
+    "freshContext": "No shared conversation, transcript, memory, or working directory with any session that has read the prohibited set.",
+    "attestationRequired": true,
+    "attestationContent": [
+      "the actor's identity and role",
+      "an explicit statement that the actor did not access any item in prohibitedInformationForHoldoutAuthor",
+      "the verbatim commissioning brief digest",
+      "the date and ordering of authorship relative to the freeze"
+    ],
+    "attestationIsNotSelfCertificationOfIndependence": "The attestation records a claim. Admissibility also requires the mechanical anti-leakage checks below to pass. An attestation alone never establishes independence."
+  },
+
+  "analyzerInformedFalseRequirement": {
+    "requiredField": "campaign.analyzerInformed",
+    "requiredValue": false,
+    "meaning": "No input, expectation, or selection decision in this campaign was influenced by observed behaviour of this implementation or any of its revisions.",
+    "relabellingProhibition": "Declaring analyzerInformed === false while any part of the campaign was analyzer-informed is an evidence-integrity violation under D8, not a documentation choice.",
+    "gateBehaviour": "The successor gate FAILS any campaign declared UNSEEN, HOLDOUT or BLIND while analyzerInformed === true. It does not warn and continue."
+  },
+
+  "unseenHoldoutBlindDeclaration": {
+    "requiredField": "campaign.kind",
+    "admissibleValues": ["UNSEEN", "HOLDOUT", "BLIND"],
+    "definitions": {
+      "UNSEEN": "Neither the inputs nor the expectations existed in any form accessible to this system or its developers before the freeze.",
+      "HOLDOUT": "The rows were authored before execution and sealed, and were withheld from every actor who could influence the runtime, until after the freeze.",
+      "BLIND": "The executing actor cannot see the expectations, and the authoring actor cannot see the outputs, until both are sealed."
+    },
+    "exactlyOneKind": "A campaign declares exactly one kind and must satisfy that kind's definition literally. Declaring the strongest-sounding label is prohibited; declare the one that is true.",
+    "evidenceClass": "INDEPENDENT_CLOSURE",
+    "evidenceClassNote": "Only a campaign conforming to this specification may be classified INDEPENDENT_CLOSURE. Development-governance campaigns remain DEVELOPMENT_GOVERNANCE (D11) and can never be reclassified."
+  },
+
+  "sealingAndHashRequirements": {
+    "sealUnit": "The complete holdout set: inputs, expected outputs, coverage map, and the authorship attestation.",
+    "algorithm": "sha256",
+    "canonicalisation": "Bytes are hashed as written. Because this repository has mixed-EOL history, holdout artifacts MUST be authored LF-only and MUST be covered by a `-text` .gitattributes rule so that the checked-out bytes equal the committed bytes on every platform. The digest of record is the committed blob digest.",
+    "requiredManifest": "A .sha256 manifest listing every sealed file as `<digest>  <repo-relative-path>`, sorted by path.",
+    "manifestMustRehash": "Admission requires independently rehashing every manifest entry and finding equality. A manifest that cannot be reproduced by rehash is inadmissible.",
+    "sealImmutability": "Once the pre-registration digest is recorded, the sealed bytes are immutable. Corrections create a new campaign with a new seal; they never rewrite the sealed one.",
+    "noPartialSeal": "Sealing a subset, or sealing inputs while leaving expectations editable, does not satisfy this requirement."
+  },
+
+  "preRegistrationBeforeExecution": {
+    "required": true,
+    "artifact": "HOLDOUT_PRE_REGISTRATION_V1.json (authored by the holdout author, sealed, committed BEFORE execution)",
+    "mustRecord": [
+      "the sealed holdout set digest and its manifest digest",
+      "n, and the per-class coverage map with counts",
+      "the declared campaign kind and analyzerInformed === false",
+      "the freeze digest and frozen commit the campaign will execute against",
+      "the evaluation procedure and pass condition, stated in advance",
+      "any class declared unreachable, with its reason",
+      "the authorship attestation digest and the commissioning brief digest",
+      "an explicit statement that no execution against the frozen runtime has occurred for this set"
+    ],
+    "commitOrderingProof": "The pre-registration must be committed, and its commit must be an ancestor of the commit recording the results. Ordering asserted in prose without commit-graph proof is inadmissible (D7).",
+    "singleExecution": "The sealed set is executed once. Repeated execution to obtain a better result is prohibited and voids the campaign."
+  },
+
+  "frozenRuntimeIdentityRequirement": {
+    "mustExecuteAgainst": "The frozen governed runtime set, identified by exact committed blob digests recorded in the sealed freeze manifest.",
+    "requiredFields": {
+      "campaign.producedAfterFreeze": true,
+      "campaign.freezeDigestAtProduction": "must equal the digest verified from the freeze manifest bytes at admission time",
+      "campaign.expectationRevisionsSinceFreeze": 0
+    },
+    "expectationRevisionProhibition": "Zero expectation revisions between the freeze and campaign production. Any revision in that window disqualifies the campaign under D14.",
+    "stagingCampaigns": "A staging-based campaign must record stagingDeployment.attributedCommit === the frozen commit, verified against the deployed identity rather than asserted.",
+    "productionProhibited": "Production is out of scope and must not be contacted, deployed to, or accepted as a campaign target (D6).",
+    "runtimeMutationVoidsCampaign": "Any change to a frozen governed runtime file invalidates the freeze and every campaign pinned to it. A new freeze and a new campaign are required."
+  },
+
+  "evaluationProcedure": {
+    "executor": "May differ from the holdout author. Under BLIND, it must.",
+    "steps": [
+      "1. Verify the frozen runtime identity by rehashing every governed file against the sealed freeze manifest.",
+      "2. Verify the sealed holdout set by rehashing every manifest entry.",
+      "3. Verify that the pre-registration commit precedes the execution in the commit graph.",
+      "4. Execute every sealed row against the frozen runtime exactly once, recording the raw output per row.",
+      "5. Compare per row against the sealed expected output using the semantics the criteria artifact declares for the item under evaluation (EXACT_MATCH_PER_ROW for decision and reason, EXACT_SET_EQUALITY for relations).",
+      "6. Record per-row detail, not aggregates alone. Aggregate counts must be recomputable from the per-row detail and must agree.",
+      "7. Record the campaign in POST_FREEZE_CAMPAIGN_LEDGER_V1 with all required fields, seal it, and rehash.",
+      "8. Admit or reject via PHASE-10A-A15-SUCCESSOR-CLOSURE-GATE-V1. The gate's verdict is the disposition; a narrative summary is not."
+    ],
+    "passCondition": "Zero mismatches across all n rows, with every per-class coverage minimum met, every hash verifying, and the ordering proof intact.",
+    "failureIsInformative": "A campaign that finds mismatches has succeeded as an experiment and failed as closure evidence. Its findings are recorded, the runtime is corrected, and closure requires a NEW freeze and a NEW holdout campaign. Repairing the runtime and re-running the same sealed set is expectation-fitting and is prohibited as closure evidence.",
+    "antiCircularityClauseRequired": "Expectation-fitting to previously observed analyzer behavior is development evidence only and cannot establish closure.",
+    "antiCircularityClauseNote": "The clause above must appear verbatim on the campaign's closure-evidence artifact (D3). The gate checks it byte-for-byte."
+  },
+
+  "antiLeakageChecks": {
+    "principle": "Independence is verified mechanically, not accepted on attestation.",
+    "checks": [
+      "OVERLAP: no sealed holdout input has an exact-normalised match in evaluation/oracles/**, PER_ROW_EVIDENCE_R3.json, PER_ROW_EVIDENCE_R4.json, any Rn campaign artifact, or tests/** fixtures. Normalisation: lowercase, collapse whitespace, strip punctuation.",
+      "NEAR_DUPLICATE: no sealed holdout input exceeds a declared similarity threshold against any row in the sets above. The threshold, the similarity function, and the full comparison result must be published. A near-duplicate is treated as seen.",
+      "EXPECTATION_INDEPENDENCE: for every row, the recorded expected-output derivation cites authority text or a stated decision rule, never an observed system output.",
+      "BRIEF_AUDIT: the verbatim commissioning brief contains no item from prohibitedInformationForHoldoutAuthor.",
+      "ACCESS_AUDIT: the holdout author's access record shows no read of the prohibited set during authorship.",
+      "ORDERING: pre-registration commit is an ancestor of the results commit; freeze commit precedes both.",
+      "NO_POST_HOC_EDIT: the sealed digests recorded at pre-registration equal the digests at admission.",
+      "CLASS_BALANCE_NOT_OUTCOME_DRIVEN: the coverage map was fixed at pre-registration and is unchanged at admission, so coverage cannot have been tuned to observed results."
+    ],
+    "leakageCheckOwnership": "The anti-leakage checks may be run by an actor with access to the prohibited set (that access is required to compare against it), PROVIDED that actor has no channel back to the holdout author before execution. Running the checks does not make the campaign analyzer-informed; feeding their results back into authoring would.",
+    "failedCheckDisposition": "Any failed anti-leakage check makes the campaign inadmissible as INDEPENDENT_CLOSURE. It may be retained as DEVELOPMENT_GOVERNANCE. It must not be relabelled."
+  },
+
+  "minimumOwnerOrDataActionRequired": {
+    "statedBecause": "D8 bindingEffect requires that, absent an admissible holdout source, the correct outcome is to report the minimum owner/data action required rather than substitute an available campaign.",
+    "currentFinding": "No admissible holdout source exists in the repository as of this artifact's authoring. No committed artifact declares kind UNSEEN, HOLDOUT or BLIND with analyzerInformed === false. The 3720-row R20 development oracle is either pre-freeze-consumed or harness-generated, and the R19 independence audit already recorded governance NOT SATISFIED for unseen-campaign independence.",
+    "minimumAction": [
+      "1. Owner freezes the governed runtime set and seals the freeze manifest.",
+      "2. Owner supplies or commissions an isolated holdout author satisfying isolationRequirements.",
+      "3. Owner supplies at least 300 admissible holdout rows meeting requiredSampleSizeAndCoverageBasis, authored per admissibleSourceDomain, from data not previously exposed to this system.",
+      "4. Pre-register, execute once, and admit via the successor gate."
+    ],
+    "whatCannotSubstitute": [
+      "R3 or R4 per-row evidence (D11, D14).",
+      "Any subset or resampling of the existing 3720-row oracle.",
+      "Metamorphic expansion of seen rows.",
+      "A campaign authored by this session or by any actor holding its context."
+    ]
+  },
+
+  "boundaries": {
+    "modifiesA15V1": false,
+    "rewritesHistoricalEvidence": false,
+    "authorizesPhase10AClosure": false,
+    "authorizesPhase10BClosure": false,
+    "authorizesProductionAccess": false,
+    "authorizesHoldoutDataAuthoringInThisSession": false
+  },
+
+  "recordedState": {
+    "specificationAuthored": true,
+    "holdoutDatasetAuthored": false,
+    "holdoutCampaignExecuted": false,
+    "item6Evidenced": false,
+    "d8Satisfied": false
+  }
+}

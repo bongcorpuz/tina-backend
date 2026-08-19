@@ -1,0 +1,325 @@
+{
+  "artifact": "OWNER_AUTHORIZATION_D1_D15_V1",
+  "version": 1,
+  "immutable": true,
+  "phase": "PHASE_10A",
+  "workUnit": "PHASE-10A-CLOSURE-V1",
+  "canonicalBaseCommit": "0de779cd529271b9235eba3a1e4a8b051bf4c987",
+  "branch": "feature/phase10a-closure-v1",
+  "supersedes": null,
+  "modifiesA15V1": false,
+  "authorizationSource": {
+    "channel": "OWNER_WORK_ORDER",
+    "title": "TINA PHASE 10A - OWNER DECISIONS APPROVED + CANONICAL CONTINUATION",
+    "respondsTo": "evaluation/results/phase-10a-reason-decision-relation-closure/v1/OWNER_DECISION_PACKAGE_ITEMS_4_5_6_AND_7_8_V1.md",
+    "respondsToSha256": "7d36460adcbb450d1bcb5081c5202ffbd9c7f2218a11fb0292c84a71d993e71a",
+    "recordedBy": "PHASE-10A-CLOSURE-V1",
+    "fidelityNote": "ownerRulingVerbatim holds owner wording as issued. bindingEffect holds this unit's operative encoding of that wording and is subordinate to it: where they diverge, ownerRulingVerbatim controls and the divergence must be reported, not resolved silently."
+  },
+  "decisions": [
+    {
+      "id": "D1",
+      "subject": "Definition of standaloneAndIntegratedExactGates (roadmap item 4)",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "APPROVED - adopt the proposed definition for standaloneAndIntegratedExactGates.",
+      "governs": ["ROADMAP_ITEM_4"],
+      "bindingEffect": [
+        "The definition proposed in section 1 of the owner decision package becomes the operative definition for item 4.",
+        "Item 4 is no longer BLOCKED_MISSING_DEFINITION for want of a definition; it becomes evaluable.",
+        "Becoming evaluable is not becoming PASS: item 4 still requires the evidence its definition names."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D2",
+      "subject": "Item 4 structure: one criterion, two mandatory subchecks",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "APPROVED - item 4 remains ONE roadmap criterion with TWO mandatory subchecks: 4a standalone exact gates, 4b integrated exact gates. Both must PASS.",
+      "governs": ["ROADMAP_ITEM_4"],
+      "bindingEffect": [
+        "Item 4 is a MULTI_SUBCHECK criterion with exactly two subchecks, 4a and 4b.",
+        "Item 4 is PASS only if 4a is PASS and 4b is PASS.",
+        "Neither subcheck may be reported as satisfying item 4 on its own.",
+        "The subchecks may not be split into two separate roadmap criteria."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D3",
+      "subject": "Mandatory anti-circularity clause",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "APPROVED - the anti-circularity clause is mandatory: \"Expectation-fitting to previously observed analyzer behavior is development evidence only and cannot establish closure.\"",
+      "governs": ["ROADMAP_ITEM_4", "ROADMAP_ITEM_5", "ROADMAP_ITEM_6", "EVIDENCE_ADMISSIBILITY"],
+      "bindingEffect": [
+        "The clause is a mandatory element of the item 4 criterion text and a global admissibility rule.",
+        "Evidence whose expectations were derived from observed analyzer behavior is DEVELOPMENT_GOVERNANCE evidence and can never be counted as closure evidence.",
+        "An evidence artifact must state its own provenance class; unlabelled provenance is inadmissible for closure."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D4",
+      "subject": "Definition of frozenRuntime (roadmap item 5)",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "APPROVED - adopt the proposed definition for frozenRuntime.",
+      "governs": ["ROADMAP_ITEM_5"],
+      "bindingEffect": [
+        "The definition proposed in section 2 of the owner decision package becomes the operative definition for item 5.",
+        "Item 5 is no longer BLOCKED_MISSING_DEFINITION; it becomes evaluable and requires the freeze evidence its definition names."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D5",
+      "subject": "Freeze scope: which files the runtime freeze covers",
+      "status": "OWNER_SELECTION",
+      "ownerRulingVerbatim": "Use the broader existing WS1 precedent: freeze the complete 26-file governed runtime set, not only the three analyzer service files. The freeze must identify exact committed blob bytes and immutable digests.",
+      "governs": ["ROADMAP_ITEM_5", "FREEZE_SCOPE"],
+      "bindingEffect": [
+        "The freeze set is the complete 26-file governed runtime set per the WS1 precedent.",
+        "A freeze covering only the three analyzer service files is insufficient and must not be presented as satisfying item 5.",
+        "Each frozen path must be identified by exact committed blob bytes and an immutable digest.",
+        "Digests must be taken over canonical committed bytes so they are checkout-EOL independent (see crossPlatformHashing)."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D6",
+      "subject": "Staging runtime identity in freeze / post-freeze verification",
+      "status": "APPROVED_WITH_SCOPE",
+      "ownerRulingVerbatim": "Staging runtime identity is part of freeze/post-freeze verification. Production is NOT in scope. The staging deployment used for integrated/post-freeze evidence must be provably attributable to the frozen commit/runtime identity.",
+      "governs": ["ROADMAP_ITEM_5", "ROADMAP_ITEM_6", "SEQUENCING_STEP_5"],
+      "bindingEffect": [
+        "Integrated and post-freeze evidence drawn from staging is admissible only with proof that the staging deployment corresponds to the frozen commit/runtime identity.",
+        "Absent that attribution the evidence is BLOCKED_MISSING_EVIDENCE, not PASS.",
+        "Production is out of scope and must not be accessed.",
+        "A staging response that contradicts the frozen runtime contract is deployment-identity drift evidence and must be reported as such rather than accommodated."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D7",
+      "subject": "Definition of postFreezeEvidence (roadmap item 6)",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "APPROVED - adopt the proposed definition for postFreezeEvidence.",
+      "governs": ["ROADMAP_ITEM_6"],
+      "bindingEffect": [
+        "The definition proposed in section 3 of the owner decision package becomes the operative definition for item 6.",
+        "Item 6 is no longer BLOCKED_MISSING_DEFINITION; it becomes evaluable and requires genuinely post-freeze evidence."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D8",
+      "subject": "Mandatory unseen / holdout / blind post-freeze campaign",
+      "status": "APPROVED_MANDATORY",
+      "ownerRulingVerbatim": "At least one genuinely unseen / holdout / blind post-freeze campaign is required. R4 is NOT independent closure evidence. Do not relabel analyzer-informed evidence as unseen or holdout.",
+      "governs": ["ROADMAP_ITEM_6", "SEQUENCING_STEP_7", "EVIDENCE_ADMISSIBILITY"],
+      "bindingEffect": [
+        "At least one genuinely unseen/holdout/blind post-freeze campaign is a precondition of item 6 PASS.",
+        "R4 must never be represented as independent closure evidence.",
+        "Relabelling analyzer-informed evidence as unseen or holdout is prohibited and is an evidence-integrity violation, not a documentation choice.",
+        "If no admissible holdout source exists, the correct outcome is to report the minimum owner/data action required, not to substitute an available campaign."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D9",
+      "subject": "Split of roadmap items 7 and 8 into independent ledger rows",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "APPROVED - split roadmap items 7 and 8 into independent forward-looking ledger rows: \"Deterministic clean cycles closure\", \"Staging clean cycles closure\".",
+      "governs": ["ROADMAP_ITEM_7", "ROADMAP_ITEM_8", "LEDGER"],
+      "bindingEffect": [
+        "Two new forward-looking ledger rows are authorized: 'Deterministic clean cycles closure' and 'Staging clean cycles closure'.",
+        "The two rows are evaluated independently of each other.",
+        "Row labels are authorization-bearing: a successor contract must select on these exact labels."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D10",
+      "subject": "The split must be additive and must not rewrite history",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "Perform the split additively. Historical combined rows remain untouched. Do not break A15 V1. The new rows become authoritative only together with an authorized A15 successor contract that reads them.",
+      "governs": ["ROADMAP_ITEM_7", "ROADMAP_ITEM_8", "LEDGER", "A15_V1"],
+      "bindingEffect": [
+        "Historical combined ledger rows are immutable; the split is append-only.",
+        "A15 V1 must continue to evaluate exactly as it does today, including its selection of the historical combined row.",
+        "The new rows carry no authority until an authorized A15 successor contract reads them.",
+        "Until the append is truthful under real evidence, knowledge/CURRENT_STATE.md is not edited; the append block is held as a pending artifact."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D11",
+      "subject": "Status of the new per-row R3/R4 decision-reason-relation artifact",
+      "status": "APPROVED_WITH_LIMIT",
+      "ownerRulingVerbatim": "Accept the new R3/R4 per-row artifact as deterministic DEVELOPMENT-GOVERNANCE evidence. It is NOT independent closure evidence and does NOT by itself mark items 1-3 PASS.",
+      "governs": ["ROADMAP_ITEM_1", "ROADMAP_ITEM_2", "ROADMAP_ITEM_3", "EVIDENCE_ADMISSIBILITY"],
+      "bindingEffect": [
+        "PER_ROW_EVIDENCE_R3.json and PER_ROW_EVIDENCE_R4.json are admitted as deterministic development-governance evidence and are preserved.",
+        "They are classified DEVELOPMENT_GOVERNANCE, never INDEPENDENT_CLOSURE.",
+        "Items 1-3 may not be marked PASS on the strength of this artifact.",
+        "Any contract reading this artifact must carry the same classification through to its output."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D12",
+      "subject": "Dependency provisioning in the new worktree",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "Dependency provisioning is authorized in the new worktree. Prefer: npm ci using the committed lockfile. Do not modify package.json or package-lock.json merely to provision node_modules. Do not print secrets.",
+      "governs": ["WORKTREE_PROVISIONING"],
+      "bindingEffect": [
+        "npm ci against the committed lockfile is the authorized provisioning method.",
+        "package.json and package-lock.json must remain byte-identical to canonical.",
+        "No secret value may be printed in any output or evidence artifact."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D13",
+      "subject": "Relation closure requires exact-set equality, not containment",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "A bare relation score of 3720/3720 under containment semantics is NOT enough for Phase-10A relation closure. Closure evidence must explicitly report: total rows, substantive relation rows, vacuous zero-expectation rows, expected relation set, actual relation set, extras, omissions. For an EXACT Phase-10A relation closure: a relation-bearing row must satisfy exact-set equality. For a zero-expectation row, unexpected actual relations may NOT silently pass. If existing canonical semantics conflict with this owner ruling: do not weaken the rule; return SAFE_PAUSE with the exact conflict.",
+      "governs": ["RELATION_CLOSURE", "ROADMAP_ITEM_3", "ROADMAP_ITEM_4"],
+      "bindingEffect": [
+        "A relation score of 3720/3720 obtained under expected-set containment semantics is not relation closure and must not be reported as such.",
+        "Relation closure evidence must report all eight named figures explicitly: total rows, substantive relation rows, vacuous zero-expectation rows, expected relation set, actual relation set, extras, omissions.",
+        "A relation-bearing row passes only on exact-set equality between expected and actual relation sets.",
+        "A zero-expectation row with unexpected actual relations must not pass silently; extras must be surfaced.",
+        "Where canonical frozen scorer semantics (containment: extras never fail, empty expectations pass vacuously) conflict with this rule, the rule is not weakened; the conflict is reported and the outcome is SAFE_PAUSE."
+      ],
+      "knownConflict": {
+        "conflictExists": true,
+        "with": "Frozen R20 scorer relation semantics: expected-set CONTAINMENT, extras never fail, empty-expectation rows pass vacuously.",
+        "resolutionRule": "Do not weaken D13. Historical containment-scored figures remain valid as historical development-governance evidence under their own semantics; they are not relation closure. Exact-set relation closure must be evaluated by a new, separately identified exact evaluator against post-freeze evidence, and any attempt to satisfy D13 from the frozen containment scorer alone returns SAFE_PAUSE."
+      },
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D14",
+      "subject": "Reason closure may not rest on expectation revision",
+      "status": "APPROVED",
+      "ownerRulingVerbatim": "The 145 R3->R4 expectation changes cannot be used as proof of reason closure. Reason closure must be demonstrated against the frozen runtime by genuinely post-freeze independent/unseen/holdout evidence. No further expectation revision may be used merely to reach 3720/3720.",
+      "governs": ["REASON_CLOSURE", "ROADMAP_ITEM_2", "ROADMAP_ITEM_6"],
+      "bindingEffect": [
+        "The 145 R3->R4 expectation changes are development-governance history and are not proof of reason closure.",
+        "Reason closure requires genuinely post-freeze independent/unseen/holdout evidence measured against the frozen runtime.",
+        "Further expectation revision undertaken to reach a perfect score is prohibited and would itself be an anti-circularity violation under D3.",
+        "The R20 oracle lineage V1->R1->R2->R3->R4 is closed for revision for the purpose of reason closure."
+      ],
+      "closureAdmissibleByItself": false
+    },
+    {
+      "id": "D15",
+      "subject": "Preserve minimal /health; remediate the stale staging test instead",
+      "status": "PRESERVE_MINIMAL_ENDPOINT_REMEDIATE_TEST",
+      "ownerRulingVerbatim": "Do NOT add a service field or convert /health into readiness/dependency probing. The public /health contract remains minimal liveness. Investigate the inherited phase-09r staging test. If canonical governance confirms the test's service expectation is stale, prepare the smallest governed TEST remediation so it validates the actual minimal liveness contract. Do NOT change the endpoint merely to satisfy the old test.",
+      "governs": ["PUBLIC_HEALTH_CONTRACT", "BLOCKER_B2", "PHASE_09R_STAGING_SUITE"],
+      "bindingEffect": [
+        "security/public-health.js and the server /health route are not modified.",
+        "No service field is added and /health is not converted into a readiness or dependency probe.",
+        "The stale expectation is corrected in the TEST only, and only after canonical governance confirms staleness.",
+        "The remediated test must validate the actual minimal liveness contract, sourced from the contract module rather than a re-hardcoded literal.",
+        "A live staging payload that still carries service is deployment-identity drift under D6 and must fail loudly rather than be accommodated."
+      ],
+      "governanceFinding": {
+        "stalenessConfirmed": true,
+        "confirmingCommit": "68969f75",
+        "confirmingCommitDate": "2026-08-17",
+        "confirmingCommitSubject": "harden public health endpoint payload",
+        "evidence": "68969f75 removed PUBLIC_HEALTH_SERVICE and the service field from the public payload and updated three deterministic health suites, but not tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs, which the deterministic gate excludes via STAGING_SMOKE_RE. The phase-09r assertion was correct when authored (0f35b61e, 2026-07-07) and became stale on 2026-08-17.",
+        "blockerInteraction": "Independent of OPEN blockers B2 and B3. B2 covers deferred /health work; B3 quarantines tests/health-endpoint.test.mjs, which is absent from canonical. Neither is touched."
+      },
+      "closureAdmissibleByItself": false
+    }
+  ],
+  "crossPlatformHashing": {
+    "ownerInstructionVerbatim": "Remediate this in the smallest deterministic way. Preferred property: hash/verify canonical committed bytes independent of checkout EOL. Do not merely hide the mismatch. Add Windows/LF/CRLF behavioral coverage.",
+    "bindingEffect": [
+      "Hash-bound verification must be performed over canonical committed bytes and must be independent of checkout EOL.",
+      "Suppressing or tolerating a mismatch without removing its cause is prohibited.",
+      "Windows/LF/CRLF behavioral coverage is required, not optional."
+    ]
+  },
+  "sequencing": {
+    "mustNotBeReordered": true,
+    "note": "Freeze precedes post-freeze evidence. Evidence produced before its ordinal position is not post-freeze evidence and cannot be relabelled as such.",
+    "steps": [
+      { "n": 1, "step": "Approved criteria committed" },
+      { "n": 2, "step": "Standalone exact gates" },
+      { "n": 3, "step": "Integrated exact gates" },
+      { "n": 4, "step": "Freeze the 26-file governed runtime set" },
+      { "n": 5, "step": "Prove the staging deployment identity matches the frozen commit/runtime identity" },
+      { "n": 6, "step": "Perform post-freeze campaigns" },
+      { "n": 7, "step": "Include at least one genuine unseen/holdout campaign" },
+      { "n": 8, "step": "Evaluate decision/relation/reason closure from that evidence" },
+      { "n": 9, "step": "Deterministic clean cycle" },
+      { "n": 10, "step": "Staging clean cycle" },
+      { "n": 11, "step": "Fresh independent Phase-10A review, performed LAST" },
+      { "n": 12, "step": "A15 successor final evaluation" },
+      { "n": 13, "step": "Separate owner Phase-10A closure action" }
+    ]
+  },
+  "boundaries": {
+    "prohibited": [
+      "Modify A15 V1",
+      "Rewrite historical evidence",
+      "Fabricate unseen evidence",
+      "Claim R4 is independent",
+      "Claim relation 3720/3720 from vacuous containment is closure",
+      "Change /health merely to satisfy a staging test",
+      "Access production",
+      "Close Phase 10A",
+      "Authorize Phase 10B",
+      "Merge anything"
+    ],
+    "commitAndPush": "Withheld at the time this authorization was issued: 'Do not commit or push yet.'"
+  },
+  "authorizationScope": {
+    "grants": [
+      "Definitions for roadmap items 4, 5 and 6 (D1, D4, D7)",
+      "Item 4 dual-subcheck structure (D2)",
+      "Mandatory anti-circularity clause (D3)",
+      "26-file freeze scope with committed-blob digests (D5)",
+      "Staging-only runtime identity attribution (D6)",
+      "Mandatory holdout requirement (D8)",
+      "Additive items 7/8 ledger split (D9, D10)",
+      "Per-row R3/R4 artifact as development-governance evidence (D11)",
+      "npm ci dependency provisioning (D12)",
+      "Exact-set relation closure rule (D13)",
+      "Post-freeze-only reason closure rule (D14)",
+      "Test-only remediation of the stale phase-09r /health expectation (D15)"
+    ],
+    "withholds": [
+      "PHASE_10A_CLOSURE",
+      "PHASE_10B_AUTHORIZATION",
+      "MERGE",
+      "COMMIT_OR_PUSH",
+      "PRODUCTION_ACCESS",
+      "ANY_MODIFICATION_TO_A15_V1",
+      "ANY_EDIT_TO_knowledge/CURRENT_STATE.md_BEFORE_TRUTHFUL_EVIDENCE"
+    ]
+  },
+  "evidenceAdmissibility": {
+    "classes": {
+      "DEVELOPMENT_GOVERNANCE": "Deterministic, reproducible, and useful for engineering control, but analyzer-informed or expectation-fitted. Never closure evidence. (D3, D11)",
+      "INDEPENDENT_CLOSURE": "Genuinely post-freeze, unseen/holdout/blind, measured against the frozen runtime with proven runtime identity. (D6, D7, D8, D14)"
+    },
+    "rules": [
+      "Provenance class must be stated by the artifact itself; unlabelled provenance is inadmissible for closure.",
+      "Missing evidence is never converted into PASS.",
+      "A class may not be upgraded by relabelling.",
+      "Where an owner rule conflicts with existing canonical semantics, the rule is not weakened; the conflict is reported and the outcome is SAFE_PAUSE."
+    ]
+  },
+  "recordedState": {
+    "phase10aClosed": false,
+    "phase10bAuthorized": false,
+    "a15V1Modified": false,
+    "currentStateModified": false,
+    "committed": false,
+    "pushed": false
+  }
+}
