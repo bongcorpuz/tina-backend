@@ -1,0 +1,148 @@
+{
+  "artifact": "GOVERNED_IDENTITY_SUPERSESSION_C5R1C35_V1",
+  "version": 1,
+  "immutable": true,
+  "phase": "PHASE_10A",
+  "workUnit": "PHASE-10A-CLOSURE-V1",
+  "branch": "feature/phase10a-closure-v1",
+  "canonicalBaseCommit": "0de779cd529271b9235eba3a1e4a8b051bf4c987",
+  "recordedUtcDate": "2026-08-19",
+  "authorizedBy": "Owner ruling Decision 4 (stale a37f41c0... pin, governed correction). Separate supersession unit; historical R20 evidence is NOT edited.",
+
+  "role": "Governed supersession record for the PHASE-10A14-R20 COMMIT 5R1-C35 Candidate-1 active-base identity assertion for conflict-engine.js. The asserted digest is a historically unreproducible provisional working-tree identity that was superseded by the actually committed Candidate-2 state before commit. This record supplies the forward-looking replacement verification rule. It does not alter, reinterpret, or invalidate any historical R20 artifact.",
+
+  "subject": {
+    "path": "conflict-engine.js",
+    "assertionSite": "tests/phase-10a14-r20-commit5r1c35-answer-support-passage-binding.test.mjs",
+    "assertionName": "Candidate 1 active base is byte-identical during Candidate 2",
+    "assertionIntent": "Candidate 2 of COMMIT 5R1-C35 must not have modified conflict-engine.js; the Candidate-1 base must survive Candidate 2 unchanged.",
+    "assertionIntentRemainsValid": true,
+    "assertionMechanismWasDefective": true,
+    "whyDefective": "The intent (preservation across a candidate step) was expressed as equality against a digest of the then-live working tree rather than against a committed blob identity. A transient working-tree digest ceases to be checkable the moment the working tree advances, so the assertion became unverifiable the instant it was committed."
+  },
+
+  "originalExpectedDigest": {
+    "sha256": "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d",
+    "declaredByteLength": 40905,
+    "declaredIn": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_RESULT.json (candidateRuntimeHash, candidateRuntime.postCandidateSha256)",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_RESULT.json (startingCandidate1ActiveBase, cumulativeRuntime.components[conflict-engine.js].sha256)",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_ACTIVE_BASE_IDENTITY.json (candidate1ActiveBase, finalC35ActiveBase.components[conflict-engine.js].sha256)",
+      "tests/phase-10a14-r20-commit5r1c35-answer-support-passage-binding.test.mjs (asserted equality)"
+    ],
+    "historicalArtifactsEdited": false,
+    "historicalArtifactsEditedNote": "None of the artifacts above are modified by this unit. They remain byte-identical and continue to record what the C35 session observed."
+  },
+
+  "provenanceProvingItWasProvisionalAndUncommitted": {
+    "r20SelfDescription": [
+      "COMMIT_5R1C35_CANDIDATE_1_RESULT.json declares meaning = \"Provisional C35 working-tree selection only; not staged, committed, pushed, deployed, or independently approved.\"",
+      "COMMIT_5R1C35_CANDIDATE_1_RESULT.json declares candidateRuntime.runtimeInstalled = \"WORKTREE_ONLY_NO_SERVICE\".",
+      "COMMIT_5R1C35_CANDIDATE_2_RESULT.json declares meaning = \"Provisional cumulative C35 worktree selection pending final Opus review; not yet staged, committed, pushed, deployed, or served.\"",
+      "COMMIT_5R1C35_FINAL_ACTIVE_BASE_IDENTITY.json declares serviceRuntimeState = \"WORKTREE_ONLY_NO_SERVICE\" (recorded as WORKTREE_ONLY_NO_LOCAL_PROCESS)."
+    ],
+    "conclusion": "The digest was, by the evidence's own words, a working-tree-only identity that was explicitly not committed. It was never claimed to be a committed identity, and this record does not accuse the C35 session of asserting otherwise. The defect is that a test was written to require it after the working tree moved on."
+  },
+
+  "committedCandidate2StateThatSupersededIt": {
+    "commit": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+    "commitDateUtc": "2026-07-31",
+    "commitSubject": "PHASE-10A14-R20 COMMIT 5R1-C35 complete - correct authority-conflict calibration and preserve support independence",
+    "path": "conflict-engine.js",
+    "blobObjectId": "0616c927399cc50bb3c3d09c5d8964e5502ee5b9",
+    "committedBytes": 39850,
+    "committedNewlines": 1186,
+    "committedSha256Lf": "7d9009f82dcde07e1e3e9418a6a27c2b12d7515a85da34fe07b0ed01c69d474e",
+    "crlfRenderingSha256": "9ec588a87dc32e3e790629cfe4761a5b2305cf8a5808d75e3bc1ba8d05f9fb55",
+    "crlfRenderingBytes": 41036,
+    "unchangedAtCanonicalBase": {
+      "commit": "0de779cd529271b9235eba3a1e4a8b051bf4c987",
+      "blobObjectId": "0616c927399cc50bb3c3d09c5d8964e5502ee5b9",
+      "identical": true,
+      "note": "conflict-engine.js has not been modified since ee664eab, so the committed Candidate-2 identity is also the identity at the canonical base of this unit."
+    },
+    "isTheAuthoritativeIdentity": "The committed blob at ee664eab is the state that was reviewed, committed, and carried forward. It is the only C35 conflict-engine.js identity that exists in history."
+  },
+
+  "proofOriginalDigestIsNotReproducibleFromCommittedHistory": {
+    "method": "For every commit that touched conflict-engine.js (git log --follow, 13 commits), read the committed blob and compute sha256 over (a) the committed LF bytes and (b) the all-CRLF rendering of those bytes. Compare both against the original expected digest.",
+    "commitsExamined": 13,
+    "matchesFound": 0,
+    "verdict": "NOT_REPRODUCIBLE_FROM_COMMITTED_HISTORY",
+    "byteLengthDisproof": {
+      "declaredByteLength": 40905,
+      "committedLfByteLength": 39850,
+      "committedCrlfByteLength": 41036,
+      "conclusion": "40905 equals neither rendering, so no end-of-line normalisation of the committed Candidate-2 blob can produce the declared length, let alone the declared digest."
+    },
+    "eolExplanationRuledOut": {
+      "test": "The same COMMIT_5R1C35_FINAL_ACTIVE_BASE_IDENTITY.json manifest declares four runtime components. Three of them - ask-handler.js (147494 bytes, c10d913f3b6bd09b0a38ce319845bb2e908f46a6e829f02c13129d45b8827602), services/answer-support-evidence.js (9507 bytes, ed7a0873e9be3980092596946b5b765d90e459ee56fec3660c8fcbe8cd592d37) and services/answer-support-validator.js (142463 bytes, 885f0dd8666b979e478bc2be5218281f2cd91445368d5604b3fb7a46e53b764e) - verify EXACTLY against their committed LF bytes at ee664eab, in both digest and byte length.",
+      "conclusion": "Only conflict-engine.js fails to verify. A checkout end-of-line difference would have broken all four components identically, not one of four. Therefore this failure is NOT an end-of-line artifact and is NOT repaired by the CRLF/canonical-byte remediation recorded elsewhere in this work unit. The provisional conflict-engine.js content itself differed from what was committed.",
+      "residualDelta": "39850 committed LF bytes versus 40905 declared bytes: the provisional Candidate-1 working-tree content was substantively different from the committed Candidate-2 content, by roughly a kilobyte."
+    },
+    "predecessorCorroboration": {
+      "preCandidateSha256DeclaredByR20": "e68d72239bc8e1545392149e36b96d8b91d0b7546dbf4494e0302c0340240ec5",
+      "matchesCrlfRenderingOf": "conflict-engine.js at commit 65909417 (the predecessor commit; 36493 LF bytes, 1089 newlines, 37582 CRLF bytes, LF sha256 4ab3278c9da81d55...)",
+      "significance": "The pre-candidate digest IS reproducible from committed history (as the CRLF rendering of the predecessor blob), which confirms the C35 measurement method was sound and that only the post-candidate provisional state is unreproducible. This strengthens rather than undermines the historical record."
+    },
+    "failureOnsetAnalysis": {
+      "assertionIntroducedByCommit": "ee664eab4529c636f34cb6d37d23a6a497886a17",
+      "sameCommitThatSupersededTheState": true,
+      "consequence": "The assertion has been failing continuously since the commit that created it, on every platform. It is a long-standing inherited defect, not a regression introduced by this work unit.",
+      "rootCauseClass": "IDENTITY_ANCHORED_TO_TRANSIENT_WORKTREE_STATE_INSTEAD_OF_COMMITTED_BLOB"
+    }
+  },
+
+  "historicalEvidencePreservation": {
+    "historicalEvidencePreserved": true,
+    "historicalEvidenceRewritten": false,
+    "filesDeliberatelyNotModified": [
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_1_RESULT.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_CANDIDATE_2_RESULT.json",
+      "evaluation/results/phase-10a14-r20/COMMIT_5R1C35_FINAL_ACTIVE_BASE_IDENTITY.json",
+      "every other artifact under evaluation/results/phase-10a14-r20/",
+      "knowledge/CURRENT_STATE.md historical blocks referencing a37f41c0...",
+      "the Roadmap v9 document referencing a37f41c0..."
+    ],
+    "statement": "The historical record is PRESERVED, not rewritten. The 57 repository files that reference a37f41c0... continue to reference it and continue to be correct about what the C35 session observed in its working tree. This record adds a forward-looking correction alongside that history; it does not reach back into it.",
+    "whatIsSuperseded": "Only the FORWARD VERIFICATION OBLIGATION. The digest remains a true historical observation of a provisional state. It stops being a thing any test may require of the present working tree."
+  },
+
+  "forwardLookingReplacementVerificationRule": {
+    "ruleId": "C5R1C35_CONFLICT_ENGINE_IDENTITY_RULE_V1",
+    "supersedes": "Equality of the present conflict-engine.js bytes against a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d.",
+    "rule": "conflict-engine.js identity is verified against its COMMITTED BLOB BYTES, never against a working-tree snapshot digest. The committed identity of record is blob 0616c927399cc50bb3c3d09c5d8964e5502ee5b9, sha256 over committed LF bytes 7d9009f82dcde07e1e3e9418a6a27c2b12d7515a85da34fe07b0ed01c69d474e, 39850 bytes, first committed at ee664eab4529c636f34cb6d37d23a6a497886a17 and unchanged through 0de779cd529271b9235eba3a1e4a8b051bf4c987.",
+    "acceptanceCondition": "A verifier reads the working-tree bytes, derives the canonical (CRLF-to-LF) form, and requires the canonical digest to equal the committed blob digest. Equality proves the working tree is byte-faithful to the committed identity on any platform and under any checkout end-of-line policy.",
+    "implementedBy": "evaluation/runner/phase10a-closure-v1/canonical-bytes.mjs :: verifyCanonicalIdentity({ repoRoot, relPath, expectedSha, ref })",
+    "whyCommittedBytesRatherThanRawBytes": "Raw working-tree bytes are checkout-policy dependent on Windows. The committed blob is the single platform-independent identity, so it is the only sound anchor for a durable assertion.",
+    "generalisation": "Any future identity assertion in this repository must pin a committed blob digest, a tree digest, or a commit id. Pinning a digest of live working-tree bytes that are not yet committed is prohibited: it produces an assertion that is true only inside the authoring session and false forever afterwards.",
+    "whatThisRuleDoesNotDo": [
+      "It does not re-verify the C35 behavioural conclusions; those were reviewed on their own evidence.",
+      "It does not assert that the committed Candidate-2 content is correct, only that it is the identity of record.",
+      "It does not satisfy any Phase-10A closure criterion."
+    ]
+  },
+
+  "testRemediation": {
+    "file": "tests/phase-10a14-r20-commit5r1c35-answer-support-passage-binding.test.mjs",
+    "scope": "MINIMUM_NECESSARY",
+    "changed": "Only the single assertion that required the unreproducible transient digest. It now verifies this supersession record and the committed blob identity via the replacement rule.",
+    "unchanged": "Every other assertion in that file, including all answer-support, passage-binding and sanitizer behaviour assertions. No unrelated assertion is weakened, skipped, loosened or deleted.",
+    "strengthOfReplacement": "The replacement is not weaker in kind: it still pins an exact sha256 of conflict-engine.js. It differs by pinning the committed identity, which is reproducible on every platform, instead of a working-tree snapshot, which is reproducible nowhere."
+  },
+
+  "boundaries": {
+    "modifiesA15V1": false,
+    "modifiesHistoricalR20Evidence": false,
+    "authorizesPhase10AClosure": false,
+    "authorizesPhase10BClosure": false,
+    "constitutesClosureEvidence": false
+  },
+
+  "recordedState": {
+    "supersessionRecorded": true,
+    "historicalEvidenceIntact": true,
+    "staleAssertionRemediated": true,
+    "originalDigestReproducible": false
+  }
+}

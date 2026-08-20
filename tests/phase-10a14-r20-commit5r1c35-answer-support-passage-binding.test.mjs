@@ -782,10 +782,58 @@ test("authority conflict and proposition support remain independent axes", async
   assert.equal(verifiedConflict.authoritySupport, "CONFLICTING_AUTHORITY");
 });
 
+// PHASE-10A-CLOSURE-V1, owner ruling Decision 4: governed correction of a stale
+// identity pin. This assertion originally required conflict-engine.js to equal
+// sha256 a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d - the
+// C35 session's PROVISIONAL working-tree digest, which its own evidence records
+// as "not staged, committed, pushed, deployed". That state was superseded before
+// commit, so the digest is reproducible from no commit in this file's history and
+// the assertion has failed on every platform since the commit that introduced it.
+//
+// The intent - conflict-engine.js must be the C35 Candidate-2 base, unmodified -
+// is preserved and is still pinned to an exact sha256. Only the anchor changes:
+// from a transient working-tree snapshot to the committed blob identity, which is
+// reproducible everywhere. The governed supersession record carries the proof.
+// Historical R20 evidence is NOT modified.
 test("Candidate 1 active base is byte-identical during Candidate 2", () => {
-  const bytes = fs.readFileSync(new URL("../conflict-engine.js", import.meta.url));
+  const supersession = JSON.parse(
+    fs.readFileSync(
+      new URL(
+        "../evaluation/results/phase10a-identity-supersession-v1/GOVERNED_IDENTITY_SUPERSESSION_C5R1C35_V1.json",
+        import.meta.url
+      ),
+      "utf8"
+    )
+  );
+
+  // The supersession record must actually be the governed one, and must still
+  // record the original digest as unreproducible rather than quietly dropping it.
+  assert.equal(supersession.artifact, "GOVERNED_IDENTITY_SUPERSESSION_C5R1C35_V1");
+  assert.equal(supersession.historicalEvidencePreservation.historicalEvidenceRewritten, false);
   assert.equal(
-    crypto.createHash("sha256").update(bytes).digest("hex"),
+    supersession.originalExpectedDigest.sha256,
     "a37f41c01b3be16fb992f206f93dca67c8a5cbc79930997b416feaa5c7851e7d"
   );
+  assert.equal(
+    supersession.proofOriginalDigestIsNotReproducibleFromCommittedHistory.verdict,
+    "NOT_REPRODUCIBLE_FROM_COMMITTED_HISTORY"
+  );
+
+  const committed = supersession.committedCandidate2StateThatSupersededIt;
+  assert.equal(committed.path, "conflict-engine.js");
+  assert.equal(committed.commit, "ee664eab4529c636f34cb6d37d23a6a497886a17");
+
+  // The replacement pin: canonical bytes of the working tree must equal the
+  // committed Candidate-2 blob identity, on any platform and any checkout EOL
+  // policy. This is the assertion the original one was trying to make.
+  const bytes = fs.readFileSync(new URL("../conflict-engine.js", import.meta.url));
+  const canonical = bytes.toString("binary").split("\r\n").join("\n");
+  const canonicalSha = crypto.createHash("sha256").update(Buffer.from(canonical, "binary")).digest("hex");
+
+  assert.equal(canonicalSha, committed.committedSha256Lf);
+  assert.equal(
+    canonicalSha,
+    "7d9009f82dcde07e1e3e9418a6a27c2b12d7515a85da34fe07b0ed01c69d474e"
+  );
+  assert.equal(Buffer.from(canonical, "binary").length, committed.committedBytes);
 });

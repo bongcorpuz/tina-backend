@@ -34,6 +34,9 @@ import {
 } from "../workflow/tax-memo-runtime-integration-policy.js";
 import { validateWorkflowGovernanceGate } from "../workflow/workflow-output-governance-gate.js";
 import { validateWorkflowRuntimeWiringPolicy } from "../workflow/workflow-runtime-wiring-policy.js";
+// PHASE-10A-CLOSURE-V1 (owner ruling D15): validate /health against the canonical
+// public-health contract module instead of a stale hardcoded expectation.
+import { isPublicHealthMinimal, PUBLIC_HEALTH_ALLOWED_FIELDS } from "../security/public-health.js";
 
 const FIXTURE_PATH = "evaluation/fixtures/phase-09r-tax-memo-runtime-staging-smoke-1.fixture.json";
 const SELF_PATH = "tests/phase-09r-tax-memo-runtime-staging-smoke-1.test.mjs";
@@ -498,12 +501,33 @@ await test("perform safe staging HTTP smoke checks (health, root, routes, option
   check(typeof stagingReachable === "boolean", "staging reachability recorded");
 });
 
-await test("GET /health: 200, status ok, service tina-backend, no commitSha, security headers present, no X-Powered-By", () => {
+// PHASE-10A-CLOSURE-V1 (owner ruling D15): the assertion below previously
+// required `service === "tina-backend"`. Commit 68969f75 ("harden public health
+// endpoint payload", 2026-08-17) removed `service` from the public payload and
+// dropped PUBLIC_HEALTH_SERVICE, updating the three deterministic health suites
+// but not this staging-lane suite, which the deterministic gate excludes. The
+// expectation is therefore stale, not the endpoint. Per D15 the public /health
+// contract remains minimal liveness and is NOT changed; this TEST is corrected
+// to validate the actual contract, sourced from security/public-health.js rather
+// than re-hardcoding a literal, so it cannot drift from the module again.
+//
+// Note deliberately preserved behavior: if the live staging deployment still
+// returns `service`, this test now FAILS. That failure is a genuine deployment
+// identity drift signal (the deployed runtime predates 68969f75), not a test
+// defect, and it is exactly the attribution D6 requires. It is not softened.
+await test('GET /health: 200, canonical minimal liveness payload {"status":"ok"} only, no commitSha, security headers present, no X-Powered-By', () => {
   if (!stagingReachable) return;
   check(health.status === 200, "GET /health returns 200");
   const body = parseJsonSafe(health.bodyText);
   check(body.status === "ok", 'health body status is "ok"');
-  check(body.service === "tina-backend", 'health body service is "tina-backend"');
+  check(
+    isPublicHealthMinimal(body),
+    `health body is the canonical minimal payload (allowed fields: ${PUBLIC_HEALTH_ALLOWED_FIELDS.join(", ")}); got ${JSON.stringify(body)}`
+  );
+  check(
+    !("service" in body),
+    'health body does not expose "service" (removed from the public contract in 68969f75)'
+  );
   check(!("commitSha" in body), "health body does not expose commitSha");
   for (const h of SECURITY_HEADER_NAMES) check(headerPresent(health.headers, h), `health response includes header: ${h}`);
   check(!headerPresent(health.headers, "x-powered-by"), "health response has no X-Powered-By header");

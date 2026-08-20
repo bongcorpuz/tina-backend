@@ -1,0 +1,73 @@
+{
+  "artifact": "OWNER_CRITERIA_FIDELITY_CONFIRMATION_V1",
+  "version": 1,
+  "immutable": true,
+  "phase": "PHASE_10A",
+  "workUnit": "PHASE-10A-CLOSURE-V1",
+  "branch": "feature/phase10a-closure-v1",
+  "canonicalBaseCommit": "0de779cd529271b9235eba3a1e4a8b051bf4c987",
+  "recordedUtcDate": "2026-08-19",
+  "role": "Hash-verifiable owner record of the criteria-fidelity confirmation that PHASE10A_APPROVED_EXIT_CRITERIA_V1.json declares as a hard precondition on roadmap items 1-6. This artifact is the sole authority for that confirmation. The successor gate carries only this artifact's digest, never the approval itself.",
+
+  "confirms": {
+    "criteriaArtifactPath": "evaluation/results/phase10a-closure-v1/PHASE10A_APPROVED_EXIT_CRITERIA_V1.json",
+    "criteriaSha256": "33d303d5bc46d524abb710a005c8d90471f1d0669c32ff10a6fd48bd91f6d045",
+    "digestBinding": "This confirmation is valid ONLY for the criteria artifact whose digest equals criteriaSha256 above. If the approved criteria are ever re-authored, this confirmation lapses by construction and a fresh owner confirmation is required. The successor gate enforces that binding as a DEFINITION-class condition.",
+    "confirmedSections": [
+      "criteria.decisionClosure",
+      "criteria.relationClosure",
+      "criteria.reasonClosure",
+      "criteria.standaloneAndIntegratedExactGates",
+      "criteria.frozenRuntime",
+      "criteria.postFreezeEvidence"
+    ]
+  },
+
+  "ownerRulingVerbatim": "I confirm that the Phase-10A successor definitions implementing approved owner decisions D1-D15 are faithful to my intended criteria. This confirms the criteria/provenance definition only.",
+
+  "provenance": {
+    "ownerConfirmationOfFidelityRequired": true,
+    "ownerConfirmationOfFidelityStatus": "CONFIRMED",
+    "ownerConfirmationScope": "CRITERIA_AND_PROVENANCE_DEFINITION_ONLY",
+    "mechanism": "SEPARATE_HASH_PINNED_OWNER_ARTIFACT",
+    "supersedesFieldInCriteriaArtifact": "provenance.ownerConfirmationOfFidelityStatus",
+    "whyAdditiveRatherThanEditingTheCriteriaArtifact": "PHASE10A_APPROVED_EXIT_CRITERIA_V1.json declares immutable: true, and its digest is pinned by the successor gate and cited by tests/phase10a-closure-v1-successor-gate-1.test.mjs. Its own minimumOwnerActionToClear text describes an alternative path - edit the field in place and re-pin CRITERIA_SHA256 - which would require mutating an artifact that declares itself immutable. The owner instruction for this unit is to prefer a hash-verifiable owner-authorization artifact over hardcoding approval into executable source, so the confirmation is recorded here, additively, and the criteria artifact stays byte-identical. Both paths are hash-verifiable; this one does not require breaking a published immutability declaration.",
+    "resolutionOrderInGate": "The gate first reads provenance.ownerConfirmationOfFidelityStatus from the criteria artifact (unchanged mechanism). If that is not CONFIRMED, it reads this artifact - and accepts it only when this artifact is present, digest-pinned, parseable, declares CONFIRMED, and its confirms.criteriaSha256 equals the criteria digest the gate itself pins."
+  },
+
+  "explicitNonImplications": {
+    "note": "Stated by the owner in the same ruling. Recorded verbatim in effect so that no reader, gate, or downstream artifact can inflate this confirmation.",
+    "doesNotMean": [
+      "roadmap items 1-6 PASS",
+      "holdout evidence exists",
+      "Phase 10A is closed",
+      "Phase 10B is authorized"
+    ]
+  },
+
+  "doesNotWaive": [
+    "D3 anti-circularity: expectation-fitting to previously observed analyzer behavior remains development evidence only and cannot establish closure.",
+    "D8: at least one genuinely unseen/holdout/blind post-freeze campaign remains a precondition of item 6 PASS, and no such campaign exists yet.",
+    "D10: the additive items 7/8 ledger-row split remains additive; a historical combined row can never produce PASS for a split criterion.",
+    "D11: PER_ROW_EVIDENCE_R3.json and PER_ROW_EVIDENCE_R4.json remain DEVELOPMENT_GOVERNANCE, never INDEPENDENT_CLOSURE.",
+    "D14: the 145 R3-to-R4 expectation changes remain development-governance history and are not proof of reason closure.",
+    "Every EVIDENCE_PRESENCE and CONTENT condition on items 1-6. Clearing the fidelity precondition only removes the precondition; each item still has to be evidenced."
+  ],
+
+  "bindingEffect": [
+    "The PRECONDITION-class condition owner.criteriaFidelityConfirmed is satisfied for the criteria artifact digest named above.",
+    "Items 1-6 are no longer blocked on owner criteria fidelity. They remain blocked, failing, or unevidenced strictly according to their own remaining conditions.",
+    "This artifact confers no PASS on any roadmap item and authorizes no closure claim.",
+    "A15 V1 is not modified, re-run for approval, or superseded by this artifact."
+  ],
+
+  "modifiesA15V1": false,
+  "authorizesPhase10BClosure": false,
+  "authorizesPhase10AClosure": false,
+
+  "recordedState": {
+    "criteriaArtifactMutated": false,
+    "historicalEvidenceMutated": false,
+    "holdoutEvidenceAuthoredInThisUnit": false
+  }
+}

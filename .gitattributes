@@ -6,3 +6,25 @@ evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLO
 evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_2/** -text
 evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3/** -text
 evaluation/results/phase-10a14-r20/PHASE_10A14_E2_STRICT_CANONICAL_INVENTORY_CLOSURE_3_INTERNAL_REVIEW.md -text
+
+# PHASE-10A-CLOSURE-V1 (CRLF hash defect remediation).
+# Preserve committed byte identity for hash-bound R20 oracle evidence.
+# loadR3() in evaluation/runner/phase-10a14-r20/commit5r1c13-lib.mjs hashes RAW
+# working-tree bytes against the sealed digest R3_SHA. That harness is itself
+# hash-sealed in COMMIT_5R1C13_EVIDENCE_MANIFEST.sha256 and must not be modified,
+# so the EOL variance is removed at its source here instead: with -text these
+# paths are checked out as their committed bytes on every platform, making
+# raw-byte hash verification EOL-independent rather than merely tolerant.
+evaluation/oracles/** -text
+
+# PHASE-10A-CLOSURE-V1 hash-pinned governance inputs and evidence.
+# phase10a-a15-successor-gate.mjs pins the digests of the owner authorization,
+# approved criteria and owner criteria-fidelity confirmation artifacts, and writes
+# rehash-verifiable evidence under this tree. -text makes the checked-out bytes
+# equal the committed bytes on every platform, so the committed-blob digest agrees
+# with the working-tree digest instead of only the canonical form matching.
+evaluation/results/phase10a-closure-v1/** -text
+evaluation/results/phase-10a-reason-decision-relation-closure/** -text
+evaluation/runner/phase10a-closure-v1/** -text
+evaluation/runner/phase-10a-reason-decision-relation-closure/** -text
+evaluation/results/phase10a-identity-supersession-v1/** -text

@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 1,
+  "unit": "PHASE-10A-REASON-DECISION-RELATION-PER-ROW-CLOSURE-EVIDENCE-V1",
+  "classification": "CANDIDATE_EVIDENCE_PENDING_OWNER_AUTHORIZATION_AND_INDEPENDENT_REVIEW",
+  "preflight": {
+    "root": "C:\\Projects\\tina-backend-a15-v1",
+    "branch": "feature/a15-execution-contract-v1",
+    "head": "2956f6ceb0bc97b65151967b0f958be6dcf39a82",
+    "worktreeCleanAtStart": false,
+    "nodeVersion": "v24.19.0",
+    "platform": "win32",
+    "arch": "x64",
+    "networkUsed": false,
+    "servicesTreeMutated": false,
+    "modelInvoked": false
+  },
+  "inputs": {
+    "r3": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+      "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54",
+      "bytes": 6737848,
+      "gitBlobOid": "5d36b97468259e9f1cf95a7bcfb4c0c173c82583",
+      "verified": true,
+      "crlfCheckout": true
+    },
+    "r4": {
+      "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r4/R20_DEVELOPMENT_ORACLE_FROZEN_R4.json",
+      "sha256": "d10252f139923627efcfbb45d2f2f9b208139c5b183f1a5d175d4a5a192f9566",
+      "bytes": 6738864,
+      "gitBlobOid": "bd194888e1b560b2a6ea6b91767094320511e6ad",
+      "verified": true,
+      "crlfCheckout": true
+    },
+    "reasonContract": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.json",
+      "sha256": "41d185be42aacca00fdc67cd13b075ef1348cf0c46c12b157c0d9fc8ad72ca93",
+      "gitBlobOid": "095a86ff058bc0cec87deff7483d479b85b57bb9",
+      "verified": true
+    },
+    "rowAdjudication": {
+      "path": "evaluation/results/phase-10a14-r20/COMMIT_5R1C37_145_ROW_CONTRACT_ADJUDICATION.json",
+      "sha256": "74f30ec7a0a6bb0696323323c259659191299e123dd648c823a0da101acb684d",
+      "gitBlobOid": "76363340fed2dfcef58f0b18a1ec8369acfcce2d",
+      "verified": true
+    },
+    "frozenScorer": {
+      "path": "evaluation/runner/phase-10a14-r20/commit5r1c13-lib.mjs",
+      "sha256": "d15db1c99f392f51dac27ec87490fcdcdcce7b6b4d068107875848f6f53e2c9a",
+      "gitBlobOid": "dedfe3771485d1da31d96382cbd2e96f38e047f7",
+      "verified": true,
+      "usedBy": "IMPORTED_VERBATIM_NOT_REIMPLEMENTED"
+    }
+  },
+  "semanticBase": {
+    "dir": "evaluation/results/phase-10a14-r20/attempts/R20-domain_campaign-commit5r1c34-tr01-retry01-ord06-2026-07-30T03-24-56-403Z/runtime-snapshot",
+    "servicesOrder": [
+      "philippine-tax-intent-analyzer.js",
+      "philippine-tax-domain-boundary.js",
+      "philippine-tax-boundary-patterns.js"
+    ],
+    "files": {
+      "philippine-tax-intent-analyzer.js": {
+        "sha256": "bb48aa0f943fc1a5d081822f8661c356a0eb727c2e4b4cc0368fd42958d8a456",
+        "lfBytes": 183191,
+        "crlfCheckout": true
+      },
+      "philippine-tax-domain-boundary.js": {
+        "sha256": "0c894087c2ccb3eeb001492f57fc167758b219e440ad24f811a121c503e21039",
+        "lfBytes": 11976,
+        "crlfCheckout": true
+      },
+      "philippine-tax-boundary-patterns.js": {
+        "sha256": "3bdd5b853be7d007e3e36c52ef8ffe37bc3256ce76fb038e333598be99d496aa",
+        "lfBytes": 64424,
+        "crlfCheckout": true
+      }
+    },
+    "servicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "declaredServicesTreeDigest": "73601ff73b1420b825251056c67cba39989f3fd65db8c5febda9c0768db4a775",
+    "digestVerified": true,
+    "declaredScores": {
+      "reason": "3575/3720",
+      "decision": "3720/3720",
+      "relation": "3720/3720"
+    },
+    "note": "COMMIT_5R1C37_REASON_CONTRACT_SPECIFICATION.json names this snapshot the operative semantic base and states that the committed live services/ tree is a restored scaffold and NOT a substitute semantic base. Scoring against committed live services/ would therefore not reproduce the controlling metrics and must not be substituted."
+  },
+  "frozenScorerCounts": {
+    "r3": {
+      "total": 3720,
+      "canonicalPassed": 3575,
+      "decisionMismatches": 0,
+      "reasonMismatches": 145,
+      "relationMismatches": 0,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "relationRowsWithExpectations": 1623,
+      "relationRowsPassed": 1623,
+      "relationPassed": 3720,
+      "decisionPassed": 3720
+    },
+    "r4": {
+      "total": 3720,
+      "canonicalPassed": 3720,
+      "decisionMismatches": 0,
+      "reasonMismatches": 0,
+      "relationMismatches": 0,
+      "materialFalseAllows": 0,
+      "materialFalseRefusals": 0,
+      "clarifyMismatches": 0,
+      "relationRowsWithExpectations": 1623,
+      "relationRowsPassed": 1623,
+      "relationPassed": 3720,
+      "decisionPassed": 3720
+    }
+  },
+  "perRowAggregate": {
+    "r3": {
+      "total": 3720,
+      "decisionPass": 3720,
+      "decisionFail": 0,
+      "relationPass": 3720,
+      "relationFail": 0,
+      "relationScoredRows": 1623,
+      "relationScoredPass": 1623,
+      "relationVacuousRows": 2097,
+      "reasonPass": 3575,
+      "reasonFail": 145,
+      "allThreePass": 3575
+    },
+    "r4": {
+      "total": 3720,
+      "decisionPass": 3720,
+      "decisionFail": 0,
+      "relationPass": 3720,
+      "relationFail": 0,
+      "relationScoredRows": 1623,
+      "relationScoredPass": 1623,
+      "relationVacuousRows": 2097,
+      "reasonPass": 3720,
+      "reasonFail": 0,
+      "allThreePass": 3720
+    }
+  },
+  "crossCheck": [
+    {
+      "metric": "R3.decisionPassed",
+      "frozen": 3720,
+      "perRow": 3720,
+      "agree": true
+    },
+    {
+      "metric": "R3.relationPassed",
+      "frozen": 3720,
+      "perRow": 3720,
+      "agree": true
+    },
+    {
+      "metric": "R3.reasonPassed",
+      "frozen": 3575,
+      "perRow": 3575,
+      "agree": true
+    },
+    {
+      "metric": "R3.canonicalPassed",
+      "frozen": 3575,
+      "perRow": 3575,
+      "agree": true
+    },
+    {
+      "metric": "R3.relationRowsWithExpectations",
+      "frozen": 1623,
+      "perRow": 1623,
+      "agree": true
+    },
+    {
+      "metric": "R3.relationRowsPassed",
+      "frozen": 1623,
+      "perRow": 1623,
+      "agree": true
+    },
+    {
+      "metric": "R4.decisionPassed",
+      "frozen": 3720,
+      "perRow": 3720,
+      "agree": true
+    },
+    {
+      "metric": "R4.relationPassed",
+      "frozen": 3720,
+      "perRow": 3720,
+      "agree": true
+    },
+    {
+      "metric": "R4.reasonPassed",
+      "frozen": 3720,
+      "perRow": 3720,
+      "agree": true
+    },
+    {
+      "metric": "R4.canonicalPassed",
+      "frozen": 3720,
+      "perRow": 3720,
+      "agree": true
+    },
+    {
+      "metric": "R4.relationRowsWithExpectations",
+      "frozen": 1623,
+      "perRow": 1623,
+      "agree": true
+    },
+    {
+      "metric": "R4.relationRowsPassed",
+      "frozen": 1623,
+      "perRow": 1623,
+      "agree": true
+    }
+  ],
+  "crossCheckDisagreements": [],
+  "perRowFaithfulDecomposition": true,
+  "reproductionOfDeclaredScores": {
+    "r3ReasonDeclared": "3575/3720",
+    "r3ReasonComputed": "3575/3720",
+    "r3DecisionDeclared": "3720/3720",
+    "r3DecisionComputed": "3720/3720",
+    "r3RelationDeclared": "3720/3720",
+    "r3RelationComputed": "3720/3720",
+    "exactReproduction": true
+  },
+  "regressionComparison": {
+    "method": "SAME_ANALYZER_SAME_PROCESS_R3_BASELINE_VS_R4_CANDIDATE",
+    "transitionCount": 145,
+    "regressionCount": 0,
+    "regressions": [],
+    "newRegressionsIntroducedByR4": false
+  },
+  "expectationProvenanceAudit": {
+    "question": "Did reason 3575 -> 3720 result from changed runtime behavior, or from expectations being revised to equal observed behavior?",
+    "r3FailingRowCount": 145,
+    "c37AdjudicatedRowCount": 145,
+    "r3ToR4ExpectationChangeCount": 145,
+    "r3FailingRowsEqualC37AdjudicatedRows": true,
+    "expectationChangesEqualC37AdjudicatedRows": true,
+    "revisedExpectationEqualsSealedC37Actual": "145/145",
+    "revisedExpectationNotEqualSealedC37Actual": [],
+    "sealedC37ActualDifferedFromR3Expectation": "145/145",
+    "revisedExpectationEqualsReasonObservedInThisRun": "145/145",
+    "unauthorizedFieldDiffCount": 0,
+    "unauthorizedFieldDiffs": [],
+    "revisionWasBoundedToExpectedReasonCodeFamily": true,
+    "expectedDecisionChangesR3ToR4": 0,
+    "expectedRelationChangesR3ToR4": 0,
+    "finding": "Determined by the fields above; see interpretation. This audit states measurements, and the interpretation is entailed by them, not asserted independently of them.",
+    "interpretation": "EXPECTATION_FITTED_TO_OBSERVED_BEHAVIOR: every revised expectation equals the reason the semantic base emits for that row. The R4 reason score of 3720/3720 therefore carries no independent behavioral information about the 145 rows; it restates observed output as expectation. Runtime behavior is byte-identical between the R3 and R4 scoring runs (same servicesTreeDigest), so no behavioral improvement occurred."
+  },
+  "residuals": {
+    "r3": {
+      "count": 145,
+      "oracleIds": [
+        "S1-IR19-1007",
+        "S1-IR19-1014",
+        "S1-IR19-1026",
+        "S1-IR19-1028",
+        "S1-IR19-1030",
+        "S1-IR19-1032",
+        "S1-IR19-1033",
+        "S1-IR19-1034",
+        "S1-IR19-1036",
+        "S1-IR19-1038",
+        "S1-IR19-1040",
+        "S1-IR19-1047",
+        "S1-IR19-1054",
+        "S1-IR19-1066",
+        "S1-IR19-1068",
+        "S1-IR19-1070",
+        "S1-IR19-1072",
+        "S1-IR19-1073",
+        "S1-IR19-1074",
+        "S1-IR19-1076",
+        "S1-IR19-1078",
+        "S1-IR19-1080",
+        "S1-IR19-1087",
+        "S1-IR19-1094",
+        "S1-IR19-1106",
+        "S1-IR19-1108",
+        "S1-IR19-1110",
+        "S1-IR19-1112",
+        "S1-IR19-1113",
+        "S1-IR19-1114",
+        "S1-IR19-1116",
+        "S1-IR19-1118",
+        "S1-IR19-1120",
+        "S2-IR18-DOM-007",
+        "S2-IR18-DOM-021",
+        "S2-IR18-DOM-059",
+        "S2-IR18-DOM-061",
+        "S2-IR18-DOM-062",
+        "S2-IR18-DOM-072",
+        "S2-IR18-DOM-073",
+        "S2-IR18-DOM-113",
+        "S2-IR18-DOM-115",
+        "S2-IR18-DOM-120",
+        "S2-IR18-DOM-121",
+        "S2-IR18-DOM-134",
+        "S2-IR18-DOM-159",
+        "S2-IR18-DOM-160",
+        "S2-IR18-DOM-166",
+        "S2-IR18-DOM-192",
+        "S2-IR18-DOM-199",
+        "S2-IR18-DOM-204",
+        "S2-IR18-DOM-214",
+        "S2-IR18-DOM-221",
+        "S2-IR18-DOM-228",
+        "S2-IR18-DOM-229",
+        "S2-IR18-DOM-233",
+        "S2-IR18-DOM-240",
+        "S2-IR18-DOM-243",
+        "S2-IR18-DOM-244",
+        "S2-IR18-DOM-247",
+        "S2-IR18-DOM-251",
+        "S2-IR18-DOM-254",
+        "S2-IR18-DOM-258",
+        "S2-IR18-DOM-265",
+        "S2-IR18-DOM-268",
+        "S2-IR18-DOM-269",
+        "S2-IR18-DOM-272",
+        "S2-IR18-DOM-276",
+        "S2-IR18-DOM-279",
+        "S2-IR18-DOM-283",
+        "S2-IR18-DOM-290",
+        "S2-IR18-DOM-293",
+        "S2-IR18-DOM-294",
+        "S2-IR18-DOM-297",
+        "S2-IR18-DOM-301",
+        "S2-IR18-DOM-304",
+        "S2-IR18-DOM-308",
+        "S2-IR18-DOM-315",
+        "S2-IR18-DOM-318",
+        "S2-IR18-DOM-319",
+        "S2-IR18-DOM-322",
+        "S2-IR18-DOM-326",
+        "S2-IR18-DOM-329",
+        "S2-IR18-DOM-348",
+        "S2-IR18-DOM-368",
+        "S2-IR18-DOM-388",
+        "S2-IR18-DOM-408",
+        "S2-IR18-DOM-412",
+        "S2-IR18-DOM-432",
+        "S2-IR18-DOM-452",
+        "S2-IR18-DOM-475",
+        "S2-IR18-DOM-493",
+        "S2-IR18-DOM-503",
+        "S2-IR18-DOM-506",
+        "S2-IR18-DOM-515",
+        "S2-IR18-DOM-533",
+        "S2-IR18-DOM-541",
+        "S2-IR18-DOM-543",
+        "S2-IR18-DOM-545",
+        "S2-IR18-DOM-549",
+        "S2-IR18-DOM-565",
+        "S3-IR17-032",
+        "S3-IR17-073",
+        "S3-IR17-081",
+        "S3-IR17-095",
+        "S3-IR17-099",
+        "S3-IR17-127",
+        "S3-IR17-132",
+        "S3-IR17-134",
+        "S3-IR17-136",
+        "S3-IR17-139",
+        "S3-IR17-181",
+        "S3-IR17-186",
+        "S3-IR17-188",
+        "S3-IR17-208",
+        "R20N-ENT-0521",
+        "R20N-ENT-0526",
+        "R20N-ENT-0531",
+        "R20N-ENT-0536",
+        "R20N-ENT-0541",
+        "R20N-ENT-0546",
+        "R20N-ENT-0551",
+        "R20N-ENT-0556",
+        "R20N-ENT-0561",
+        "R20N-ENT-0566",
+        "R20N-ENT-0576",
+        "R20N-ENT-0591",
+        "R20N-ENT-0601",
+        "R20N-ENT-0606",
+        "R20N-ENT-0616",
+        "R20N-ENT-0621",
+        "R20N-ENT-0626",
+        "R20N-ENT-0631",
+        "R20N-ENT-0636",
+        "R20N-ENT-0641",
+        "R20N-ENT-0646",
+        "R20N-ENT-0651",
+        "R20N-ENT-0661",
+        "R20N-ENT-0666",
+        "R20N-ENT-0671",
+        "R20N-ENT-0681",
+        "R20N-ENT-0686",
+        "R20N-ENT-0691",
+        "R20N-ENT-0706",
+        "R20N-ENT-0716"
+      ]
+    },
+    "r4": {
+      "count": 0,
+      "oracleIds": []
+    }
+  },
+  "closureAdmissibility": {
+    "decisionPerRowEvidenceNowExists": true,
+    "relationPerRowEvidenceNowExists": true,
+    "reasonPerRowEvidenceNowExists": true,
+    "relationSubstantiveCoverage": {
+      "rowsWithNonEmptyExpectation": 1623,
+      "rowsPassingSubstantively": 1623,
+      "rowsPassingVacuously": 2097,
+      "caution": "A bare 'relation 3720/3720' conflates substantively tested rows with rows whose empty expectation passes vacuously under containment semantics. Both figures are reported so neither can be mistaken for the other."
+    },
+    "independent": false,
+    "holdout": false,
+    "unseen": false,
+    "blind": false,
+    "basis": "The R4 oracle revised expectedReasonCodeFamily on 145 rows to equal the sealed C37 actual reason values. R20_DEVELOPMENT_ORACLE_R4_INDEX.json records independent=false, holdout=false, blind=false, and CURRENT_STATE.md records the resulting 3720/3720 algebra as 'analyzer-informed expectation governance ... not independent, holdout, unseen, or blind closure evidence'. This runner reproduces that algebra from committed bytes; reproducing it does not convert it into independent evidence.",
+    "verdict": "PER_ROW_EVIDENCE_SUFFICIENT_FOR_DEVELOPMENT_GOVERNANCE_ALGEBRA; NOT_SUFFICIENT_FOR_INDEPENDENT_CLOSURE",
+    "whatIndependentClosureWouldStillRequire": [
+      "An unseen/holdout query corpus not used to derive or revise any expectation, scored against the same semantic base.",
+      "Or a runtime change that makes the semantic base emit the R3 expectations without expectation revision.",
+      "Either path is a separately governed unit requiring explicit owner authorization; neither is performed here."
+    ]
+  },
+  "doNotInfer": [
+    "This runner does not declare reasonClosure, decisionClosure, or relationClosure SATISFIED.",
+    "This runner does not modify A15 V1, knowledge/CURRENT_STATE.md, or the controlling roadmap.",
+    "This runner does not authorize any Phase 10A closure action."
+  ]
+}

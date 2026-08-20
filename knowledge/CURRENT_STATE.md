@@ -1,5 +1,35 @@
 ## TINA Controlling Continuity Status
 
+## PHASE-10A ADDITIVE CLEAN-CYCLES GATE-ROW SPLIT — OWNER DECISION D10 / OWNER RULING DECISION 2
+
+Last updated: 2026-08-19 (additive forward-only continuity update introducing two independent gate-state rows; no historical row rewritten, no runtime, test, `/health`, validator, oracle, deployment, or A15 V1 action).
+
+Owner ruling Decision 2 authorizes an **additive, forward-only** split of the previously combined deterministic/staging clean-cycles gate row into two independent rows, so that roadmap items 7 and 8 can be evaluated separately instead of sharing one disposition.
+
+### Scope of this update
+
+- **Additive only.** The two rows below are new. Every historical combined or hyphenated row elsewhere in this ledger — including `Deterministic clean/staging closure` and `Deterministic clean-staging closure` — is preserved exactly as written and is **not** rewritten, superseded in place, or deleted. Those historical rows remain historical.
+- The historical combined row is **diagnostic only** for the split criteria: it can never produce PASS for roadmap item 7 or item 8. Only the two rows below are authoritative for those items, and only under `PHASE-10A-A15-SUCCESSOR-CLOSURE-GATE-V1`.
+- A15 V1 (`PHASE-10A-A15-FINAL-CLOSURE-GATE-V1`) is untouched by this update and continues to read exactly what it read before.
+- Both rows are recorded at their honest current value. Neither row asserts progress; both record that the corresponding clean-cycles evidence does not yet exist.
+
+### New independent gate-state rows
+
+| Gate | Disposition |
+|---|---|
+| Deterministic clean cycles closure | `UNSATISFIED` |
+| Staging clean cycles closure | `UNSATISFIED` |
+
+### What this update does not do
+
+Phase 10A remains `OPEN`. Phase 10B remains `NOT_STARTED`. No closure is claimed, no evidence is asserted to exist, and no gate is advanced by recording these rows. Recording them makes items 7 and 8 evaluable and honestly failing rather than unevaluable; it does not move either item toward PASS.
+
+Next exact authorized operation: none required by this update. The deterministic and staging clean-cycles evidence remains separately gated and unproduced.
+
+---
+
+## TINA Controlling Continuity Status
+
 ## E2 PUBLICATION-GOVERNANCE FINALIZATION — OWNER AUTHORIZATION INDEPENDENTLY VERIFIED CANONICAL
 
 Last updated: 2026-08-17 (independent verification of owner-authorization push, PR #4, and canonical merge; git-plumbing-only continuity update; no working-tree or runtime change).
