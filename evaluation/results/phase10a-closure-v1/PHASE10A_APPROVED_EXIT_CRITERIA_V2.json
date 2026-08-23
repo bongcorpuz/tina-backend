@@ -1,0 +1,1185 @@
+{
+  "artifact": "PHASE10A_APPROVED_EXIT_CRITERIA_V2",
+  "version": 2,
+  "immutable": true,
+  "phase": "PHASE_10A",
+  "workUnit": "PHASE-10A-SEQUENCING-V2",
+  "branch": "feature/phase10a-sequencing-v2",
+  "canonicalBaseCommit": "86872e034911dad14d9886a7c411ce27804351c2",
+  "role": "OWNER_APPROVED_EXIT_CRITERIA_COMMIT_READY",
+  "sequencing": {
+    "step": 1,
+    "stepWording": "approved criteria finalized for commit",
+    "note": "This artifact is the commit-ready form of the owner-approved Phase-10A exit criteria, as corrected for the item-4 / item-5 sequencing contradiction. Before evaluation, its committed bytes MUST be pinned by SHA-256 in the A15 successor gate so they cannot be edited between authorization and evaluation without the gate failing closed."
+  },
+  "supersedes": {
+    "identity": "PHASE10A_APPROVED_EXIT_CRITERIA_V1",
+    "supersededArtifact": "evaluation/results/phase10a-closure-v1/PHASE10A_APPROVED_EXIT_CRITERIA_V1.json",
+    "supersededSha256": "33d303d5bc46d524abb710a005c8d90471f1d0669c32ff10a6fd48bd91f6d045",
+    "mode": "FORWARD_ONLY_ADDITIVE",
+    "v1Modified": false,
+    "v1RemainsReadable": true,
+    "a15V1Identity": "PHASE-10A-A15-FINAL-CLOSURE-GATE-V1",
+    "a15V1Modified": false,
+    "note": "V1 remains committed, unmodified and readable as the historical record of what was approved and where it went wrong. This artifact does not delete, rewrite or reinterpret V1 bytes; it supersedes V1 forward as the criteria the successor gate evaluates against."
+  },
+  "correction": {
+    "id": "PHASE10A_ITEM4_ITEM5_SEQUENCING_CORRECTION_V2",
+    "class": "SEQUENCING_CONTRADICTION",
+    "defect": "V1 required item 4 (standalone and integrated exact gates) to be demonstrated post-freeze, referencing the item-5 freeze manifest by digest, naming a post-freeze campaign, and carrying staging attribution to the frozen commit. The owner-approved freeze preconditions make P1 Criterion 4 SATISFIED, both subchecks 4a and 4b. Each item was therefore a precondition of the other and neither could ever be reached by any evidence.",
+    "corrections": [
+      "Item 4 is restored as a PRE_FREEZE criterion.",
+      "Item 4 no longer references a freeze manifest, a post-freeze campaign, or staging attribution; carrying those fields is now a detected sequencing inversion.",
+      "Subcheck 4b is restored as a local, in-process integrated /ask boundary-path measurement requiring no deployed staging and no external network.",
+      "The full owner-approved exact gate set G1-G12 is restored, including the split relation reporting.",
+      "The full owner-approved required artifact set A1-A5 is restored.",
+      "The owner-approved anti-circularity (i)/(ii) disjunction is restored alongside the expectationFittingUsed flag.",
+      "Item 5 regains the owner-mandated preconditions P1, P2 and P3 and the B1 blocked condition.",
+      "A fail-closed sequencing-inversion guard is added so a future inversion SAFE_PAUSEs instead of silently blocking."
+    ],
+    "doesNotDo": [
+      "It does not execute item 4.",
+      "It does not freeze the runtime.",
+      "It does not admit any D8 holdout campaign.",
+      "It does not modify A15 V1.",
+      "It does not close Phase 10A or authorize Phase 10B.",
+      "It does not weaken any V1 requirement; every change either restores an owner-approved requirement V1 dropped, or moves a requirement V1 imposed in the wrong stage to the stage the owner assigned it."
+    ],
+    "netStrengthAssessment": "Strictly stronger than V1 for item 4 on gate coverage (12 gates versus 3), artifact coverage (A1-A5 versus none), anti-circularity (disjunction plus flag versus flag alone) and envelope pinning; strictly stronger for item 5 (three mandatory preconditions restored). The only requirements removed from item 4 are the three later-stage dependencies that made the criterion unreachable, and each is retained in full at the stage the owner assigned it."
+  },
+  "restoreSource": {
+    "role": "AUTHORITATIVE_OWNER_APPROVED_TEXT",
+    "path": "evaluation/results/phase-10a-reason-decision-relation-closure/v1/OWNER_DECISION_PACKAGE_ITEMS_4_5_6_AND_7_8_V1.md",
+    "sha256": "7d36460adcbb450d1bcb5081c5202ffbd9c7f2218a11fb0292c84a71d993e71a",
+    "committed": true,
+    "sectionsRelied": [
+      "1.3 Proposed governing language - ITEM 4",
+      "2.4 Freeze position relative to items 4 and 6",
+      "2.5 ITEM 5 preconditions and BLOCKED conditions"
+    ],
+    "note": "V1 provenance recorded that the owner proposal text was NOT committed and therefore could not be hash-bound. That is no longer true: the decision package is committed at the path above and its digest is pinned here, so the operative definitions in this artifact can be checked against the approved text byte-for-byte."
+  },
+  "authorization": {
+    "artifact": "evaluation/results/phase10a-closure-v1/OWNER_AUTHORIZATION_D1_D15_V1.json",
+    "sha256": "ec6e6559645f277029c0fb7370940a1f58ca2b4fa5af07c50454a1daf1cf7b0f",
+    "decisionsRelied": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "D8",
+      "D9",
+      "D10",
+      "D11",
+      "D13",
+      "D14"
+    ],
+    "decisionsNotCriteriaBearing": {
+      "D12": "dependency provisioning authorization; operational, not an exit criterion",
+      "D15": "public /health contract preservation plus stale staging-test remediation; governs a test, not a Phase-10A exit criterion"
+    }
+  },
+  "modifiesA15V1": false,
+  "provenance": {
+    "operativeDefinitionsSource": "COMMITTED_OWNER_DECISION_PACKAGE_SECTIONS_1_3_2_4_2_5_PLUS_D1_D15_BINDING_EFFECTS",
+    "proposalTextCommitted": true,
+    "proposalTextPath": "evaluation/results/phase-10a-reason-decision-relation-closure/v1/OWNER_DECISION_PACKAGE_ITEMS_4_5_6_AND_7_8_V1.md",
+    "proposalTextSha256": "7d36460adcbb450d1bcb5081c5202ffbd9c7f2218a11fb0292c84a71d993e71a",
+    "proposalTextNote": "The governing language for item 4 and the item-5 preconditions is restored from the committed owner decision package pinned above, not paraphrased from an uncommitted session report. Where this artifact states a requirement more explicitly than the package (for example by structuring G1-G12 as machine-checkable fields), it is written to be no weaker than the approved text anywhere.",
+    "ownerConfirmationOfFidelityRequired": true,
+    "ownerConfirmationOfFidelityStatus": "PENDING",
+    "ownerConfirmationEnforcement": "This artifact declares immutable: true, so the confirmation is recorded additively in a separate hash-pinned owner artifact that binds this artifact digest, exactly as was done for V1. The successor gate MUST treat an absent, unpinned, unparseable, non-CONFIRMED, or wrongly-bound confirmation as a hard PRECONDITION block on items 1-6. No such item can reach PASS without it.",
+    "minimumOwnerActionToClear": "Read criteria.decisionClosure, criteria.relationClosure, criteria.reasonClosure, criteria.standaloneAndIntegratedExactGates, criteria.frozenRuntime and criteria.postFreezeEvidence below, together with correction and restoreSource; confirm each matches the committed owner decision package in substance or state the exact divergence; then authorize a unit to record CONFIRMED in the V2 confirmation artifact and re-pin both digests in the successor gate.",
+    "whyNotAssumed": "These definitions are the pass criteria themselves. Asserting fidelity that has not been confirmed would risk marking a Phase-10A exit item PASS against a criterion the owner never stated. Blocking is the fail-closed reading of D1/D4/D7 and of the standing prohibition on converting missing evidence into PASS."
+  },
+  "sequencingModel": {
+    "source": "Owner decision package sections 2.4 and 2.5.",
+    "orderedStages": [
+      {
+        "stage": 1,
+        "id": "PRE_FREEZE",
+        "roadmapItems": [
+          4
+        ],
+        "note": "Item 4 is measured before the freeze. It is the only closure criterion whose approved requirements can be satisfied without any freeze-derived input, and it is the freeze's own precondition P1."
+      },
+      {
+        "stage": 2,
+        "id": "FREEZE",
+        "roadmapItems": [
+          5
+        ],
+        "note": "The freeze is gated on item 4 being SATISFIED (P1)."
+      },
+      {
+        "stage": 3,
+        "id": "POST_FREEZE",
+        "roadmapItems": [
+          1,
+          2,
+          3,
+          6
+        ],
+        "note": "Items 1, 2, 3 and 6 all require evidence that cannot exist until the freeze exists. Roadmap NUMBERING is not execution ORDER: the roadmap lists decision, relation and reason closure first because they are the substantive closure claims, but their owner-approved evidence is a post-freeze INDEPENDENT_CLOSURE campaign pinned to the freeze digest, so they are measured after the freeze."
+      }
+    ],
+    "itemStage": {
+      "1": "POST_FREEZE",
+      "2": "POST_FREEZE",
+      "3": "POST_FREEZE",
+      "4": "PRE_FREEZE",
+      "5": "FREEZE",
+      "6": "POST_FREEZE"
+    },
+    "itemRequiresFreezeDerivedEvidence": {
+      "1": true,
+      "2": true,
+      "3": true,
+      "4": false,
+      "5": false,
+      "6": true
+    },
+    "itemRequiresFreezeDerivedEvidenceDerivation": {
+      "method": "Read each criterion's requires array and definition in this artifact and classify whether satisfying it requires an input that can only exist once the freeze exists. Negative requirements - requirements that a field MUST NOT be present - are not freeze dependencies; they are the opposite.",
+      "enforcedBy": "The gate MUST refuse any item whose contract stage is earlier than FREEZE while its entry here is true, as a PRECONDITION-class failure escalating to SAFE_PAUSE. A classification no gate reads would be decorative.",
+      "derivedFrom": {
+        "1": [
+          "requires: campaign produced after the freeze, pinned to the freeze digest",
+          "requires: campaign.expectationRevisionsSinceFreeze === 0",
+          "definition: demonstrated by a post-freeze INDEPENDENT_CLOSURE campaign with no expectation revision between freeze and evidence"
+        ],
+        "2": [
+          "requires: everything required by decisionClosure - which carries both of item 1's freeze-derived requirements transitively",
+          "definition: demonstrated by a post-freeze INDEPENDENT_CLOSURE campaign"
+        ],
+        "3": [
+          "requires: oracleRevision equal to the revision recorded in the freeze manifest",
+          "requires: campaign.expectationRevisionsSinceFreeze === 0"
+        ],
+        "4": [
+          "the only freeze-bearing entry in item 4's requires array is NEGATIVE: neither subcheck artifact carries freezeManifestSha256, postFreezeCampaignId, or stagingAttribution",
+          "4a is a standalone exact-gate measurement and 4b is an in-process /ask boundary measurement; neither reads a freeze artifact, a deployed staging environment or the external network"
+        ],
+        "5": [
+          "item 5 PRODUCES the freeze manifest rather than consuming one. Its P1/P2/P3 preconditions name item 4, a clean worktree and an explicit file set - none of which is freeze-derived."
+        ],
+        "6": [
+          "requires: freezeRef digest verifies against the freeze manifest bytes",
+          "requires: every campaign: producedAfterFreeze === true and freezeDigestAtProduction === the verified freeze digest"
+        ]
+      },
+      "v1RequiresArraysUnmodified": "The requires arrays for items 1, 2 and 3 in this artifact are byte-identical to V1, verified by structural equality against PHASE10A_APPROVED_EXIT_CRITERIA_V1.json. This classification reads them; it does not edit them."
+    },
+    "laterStageEvidenceFields": [
+      "freezeManifestSha256",
+      "postFreezeCampaignId",
+      "stagingAttribution"
+    ],
+    "rule": "A criterion in an earlier stage may never require evidence produced in a later stage. Freeze artifacts, post-freeze campaign identifiers and staging attribution to a frozen commit are LATER-STAGE evidence and are prohibited inputs to any PRE_FREEZE criterion."
+  },
+  "sequencingInversionGuard": {
+    "role": "FAIL_CLOSED_SEQUENCING_DETECTION",
+    "rule": "The gate MUST detect, at evaluation time, any criterion that requires evidence from a stage later than its own, and any pair of criteria that are each a precondition of the other. Such a configuration is not evaluated as a content failure and never as a PASS: it is refused as a governance defect.",
+    "detectionClass": "PRECONDITION",
+    "onDetection": {
+      "status": "BLOCKED_PRECONDITION",
+      "safePauseRequired": true,
+      "safePauseReason": "A sequencing inversion means the contract cannot be satisfied by any evidence, so continuing to evaluate it would report an unreachable criterion as though evidence were merely missing. Owner adjudication is required."
+    },
+    "detects": [
+      {
+        "id": "LATER_STAGE_EVIDENCE_IN_EARLIER_STAGE",
+        "description": "A PRE_FREEZE criterion requiring a freeze manifest digest, a post-freeze campaign identifier, or staging attribution to a frozen commit."
+      },
+      {
+        "id": "MUTUAL_PRECONDITION_CYCLE",
+        "description": "Criterion A requires criterion B to be satisfied while criterion B requires criterion A to be satisfied."
+      }
+    ],
+    "historicalInstance": {
+      "detected": "PHASE10A_APPROVED_EXIT_CRITERIA_V1 item 4 versus item 5",
+      "v1Sha256": "33d303d5bc46d524abb710a005c8d90471f1d0669c32ff10a6fd48bd91f6d045",
+      "resolution": "Corrected additively by this V2 artifact. V1 bytes are unmodified and V1 remains readable as history."
+    }
+  },
+  "stageAssignmentCorrection": {
+    "defect": "The first draft of this V2 artifact assigned roadmap items 1, 2 and 3 to PRE_FREEZE, in both sequencingModel.itemStage and criteria.<id>.phase.",
+    "whyItWasWrong": "Those three criteria require freeze-derived evidence in their own owner-approved requires arrays, carried forward byte-identically from V1: item 1 requires a campaign produced after the freeze and pinned to the freeze digest, item 3 requires an oracleRevision equal to the revision recorded in the freeze manifest, and item 2 requires everything item 1 requires. A PRE_FREEZE label over a post-freeze requirement list is the same class of contradiction this artifact was authored to remove from item 4, and leaving it would have made the sequencing-inversion guard fire on a faithful runner.",
+    "origin": "INTRODUCED_BY_THIS_CORRECTION, not inherited. V1 declares no phase field on any criterion and no sequencingModel at all, so no V1 byte states or implies a stage for items 1-3.",
+    "correction": "Items 1, 2 and 3 are POST_FREEZE. Item 4 remains PRE_FREEZE, item 5 remains FREEZE, item 6 remains POST_FREEZE.",
+    "howItWasFound": "Not by reading the prose. The stage of every wired item was compared against a mechanical classification of that item's own requires array for freeze-derived inputs, which is now recorded as sequencingModel.itemRequiresFreezeDerivedEvidence so the same comparison is available to any later reader and is enforced by the gate.",
+    "createsOrRemovesDeadlock": false,
+    "deadlockReasoning": "Item 5's precondition P1 names only item 4, and items 1-3 declare no dependsOnItems, so no mutual precondition cycle exists either before or after this relabel. The relabel changes what the artifact SAYS, not which evidence can satisfy it.",
+    "ownerReviewRequired": true,
+    "ownerReviewNote": "This is a stage assignment inside an owner-approved criteria set. It is derived from the owner's own approved requirement text rather than from a new decision, and the derivation is recorded field by field for external independent review. This artifact does not claim that review has occurred.",
+    "v1BytesModified": false
+  },
+  "antiCircularityClause": {
+    "mandatory": true,
+    "source": "D3",
+    "text": "Expectation-fitting to previously observed analyzer behavior is development evidence only and cannot establish closure.",
+    "enforcement": "Every closure-evidence artifact for items 1-4 must carry this clause verbatim in its antiCircularity.clause field and must declare antiCircularity.expectationFittingUsed === false. A missing or altered clause is a definitional block, not a warning."
+  },
+  "evidenceClasses": {
+    "DEVELOPMENT_GOVERNANCE": "Analyzer-informed evidence. Admissible to demonstrate deterministic development governance. Never admissible, alone or in combination, to establish Phase-10A closure for any item (D8, D11, D14).",
+    "INDEPENDENT_CLOSURE": "Genuinely unseen, holdout or blind evidence produced after the freeze against the frozen runtime, with no expectation revision between freeze and production. The only class that can establish closure."
+  },
+  "r4Exclusion": {
+    "source": "D8",
+    "rule": "R4 is not independent closure evidence. No campaign whose oracle lineage includes R4, and no artifact derived from the R3 to R4 expectation revision, may satisfy the unseen/holdout requirement or be relabelled as unseen, holdout or blind.",
+    "enforcement": "Lineage is checked structurally: a campaign whose oracleLineage array contains an R4 element, or whose analyzerInformed flag is true, is rejected as a holdout source. A campaign labelled UNSEEN, HOLDOUT or BLIND while analyzerInformed is true is a mislabelling FAIL, not a missing-evidence block."
+  },
+  "frozenGovernedRuntimeSet": {
+    "source": "D5",
+    "precedent": "evaluation/results/phase-10a14-e1/RUNTIME_HASH_LOCK.sha256",
+    "expectedFileCount": 26,
+    "selectionRule": "EXACT_SET_EQUALITY_WITH_WS1_PRECEDENT",
+    "digestReuseProhibited": true,
+    "digestReuseProhibitedRationale": "The WS1 lock supplies the SET of governed runtime paths, not the digests. Sixteen of the twenty-six files still match their WS1 digests at the base commit and ten legitimately do not, so reusing WS1 digests as the Phase-10A freeze would seal bytes that are no longer the runtime. Every freeze digest must be taken from the committed blob at the frozen commit.",
+    "paths": [
+      "adaptive-tina-master-prompt.js",
+      "answer-renderer.js",
+      "ask-handler.js",
+      "auth.js",
+      "legal-date-utils.js",
+      "pipeline.js",
+      "prompts/audit-mode-prompt.js",
+      "prompts/tax-mode-prompt.js",
+      "rag-answer-handler.js",
+      "reranker-engine.js",
+      "reranker-issue-signals.js",
+      "reranker-normalizers.js",
+      "retrieval-engine.js",
+      "section51-authority-chain.js",
+      "services/answer-support-validator.js",
+      "services/ask-handler-public-source-sanitizer.js",
+      "services/trust-contract.js",
+      "tests/phase-10a14-r1-filing-deadline-taxbase-source-sufficiency.test.mjs",
+      "tests/phase-10a14-r2-filing-estate-semantic-proposition-coverage.test.mjs",
+      "tests/phase-10a14-r3-multi-proposition-filing-authority-estate-sufficiency.test.mjs",
+      "tests/phase-10a14-r4-sec51-filing-authority-bridge.test.mjs",
+      "tests/phase-10a14-r5-section51-current-law-chain-and-imperative-filing.test.mjs",
+      "tests/phase-10a14-r6-temporal-card-propagation-and-51a-origin.test.mjs",
+      "tests/phase-10a14-r7-exact-date-section51c2-effectivity.test.mjs",
+      "tests/phase-10a14-r8-ra12214-qualifying-publication-strict-date-fail-closed.test.mjs",
+      "vector-store.js"
+    ],
+    "canonicalByteConvention": {
+      "policy": "CRLF_TO_LF_ONLY",
+      "loneCrPreserved": true,
+      "rule": "A freeze digest is the SHA-256 of the committed blob bytes at the frozen commit. Working-tree verification is EOL-independent: canonical (CRLF-to-LF normalized) worktree bytes must equal those committed bytes.",
+      "rationale": "Measured at the base commit, only 3 of the 26 governed runtime files hash to their sealed digest from RAW worktree bytes on a core.autocrlf=true Windows checkout, while 16 of 16 unchanged files match canonically. A raw-byte freeze check would therefore report false drift on 13 unmodified governed files. See evaluation/runner/phase10a-closure-v1/canonical-bytes.mjs and tests/phase10a-closure-v1-canonical-bytes-1.test.mjs."
+    }
+  },
+  "stagingIdentityScope": {
+    "source": "D6",
+    "inScope": [
+      "staging"
+    ],
+    "productionInScope": false,
+    "rule": "Any staging deployment used to produce POST-FREEZE evidence, and the staging runtime identity recorded in the freeze manifest, must be provably attributable to the frozen commit and runtime identity. Attribution must name the method and the evidence, not merely assert a match.",
+    "prohibition": "The gate never contacts production and never accepts production evidence for any Phase-10A exit item.",
+    "appliesToRoadmapItems": [
+      5,
+      6
+    ],
+    "doesNotApplyToRoadmapItems": [
+      4
+    ],
+    "item4Clarification": "Item 4 is a PRE_FREEZE criterion. Its integrated subcheck 4b is measured locally and in-process through the /ask boundary, with no deployed staging environment and no external network access, so no staging attribution obligation arises. V1 applied this scope to item 4 as well, which is the sequencing defect corrected by this artifact. The obligation itself is unchanged for items 5 and 6."
+  },
+  "criteria": {
+    "decisionClosure": {
+      "roadmapItem": 1,
+      "roadmapWording": "decision closure",
+      "decisions": [
+        "D3",
+        "D8",
+        "D11",
+        "D14"
+      ],
+      "definition": "Decision closure holds when, for every one of the 3720 rows of the frozen R20 oracle corpus, the analyzer's decision under the frozen runtime equals the frozen expected decision exactly, demonstrated by a post-freeze INDEPENDENT_CLOSURE campaign with no expectation revision between freeze and evidence production.",
+      "evidenceSource": "evaluation/results/phase10a-closure-v1/closure/DECISION_CLOSURE_MANIFEST.json",
+      "envelope": "CLOSURE_EVIDENCE_ENVELOPE_V1",
+      "requires": [
+        "criteria fidelity confirmed by the owner",
+        "closure evidence envelope present and schema-valid",
+        "counts.totalRows === 3720",
+        "semantics === EXACT_MATCH_PER_ROW",
+        "evidenceClass === INDEPENDENT_CLOSURE",
+        "campaign produced after the freeze, pinned to the freeze digest",
+        "campaign.expectationRevisionsSinceFreeze === 0",
+        "campaign kind is UNSEEN, HOLDOUT or BLIND, analyzerInformed === false, R4 lineage absent",
+        "anti-circularity clause present verbatim and expectationFittingUsed === false",
+        "counts.exactRows === counts.totalRows and counts.mismatchRows === 0",
+        "verdict === CLOSED"
+      ],
+      "insufficientByItself": [
+        "A total-count assertion of 3720 with no per-row resolution.",
+        "The deterministic per-row R3/R4 development-governance artifact produced by this work unit (D11).",
+        "Any analyzer-informed campaign, including R4 (D8)."
+      ],
+      "phase": "POST_FREEZE"
+    },
+    "relationClosure": {
+      "roadmapItem": 2,
+      "roadmapWording": "relation closure",
+      "decisions": [
+        "D3",
+        "D8",
+        "D11",
+        "D13",
+        "D14"
+      ],
+      "definition": "Relation closure holds when, for every one of the 3720 rows, the analyzer's ACTUAL relation set equals the EXPECTED relation set under exact-set equality - not containment - demonstrated by a post-freeze INDEPENDENT_CLOSURE campaign. Rows with an empty expected relation set are reported separately as vacuous zero-expectation rows and may NOT pass while carrying unexpected actual relations.",
+      "evidenceSource": "evaluation/results/phase10a-closure-v1/closure/RELATION_CLOSURE_MANIFEST.json",
+      "envelope": "CLOSURE_EVIDENCE_ENVELOPE_V1",
+      "requires": [
+        "everything required by decisionClosure",
+        "semantics === EXACT_SET_EQUALITY",
+        "explicit reporting of totalRows, substantiveRelationRows, vacuousZeroExpectationRows, expected relation set, actual relation set, extras and omissions",
+        "substantiveRelationRows + vacuousZeroExpectationRows === totalRows",
+        "counts.extras === 0 and counts.omissions === 0",
+        "counts.zeroExpectationRowsWithUnexpectedActuals === 0",
+        "perRowDetailSource present, row count equal to totalRows, and its recomputed extras/omissions equal to the declared aggregates"
+      ],
+      "semanticsConflict": {
+        "conflictExists": true,
+        "frozenScorerSemantics": "EXPECTED_SET_CONTAINMENT: the frozen R20 scorer treats a row as satisfied when every expected relation is present, so extra actual relations never fail and a row with an empty expected set passes vacuously.",
+        "ownerRuling": "D13 requires exact-set equality for a relation-bearing row and forbids a zero-expectation row from silently passing while carrying unexpected actual relations.",
+        "resolution": "The owner ruling is not weakened. Evidence that declares containment semantics is NOT evaluated as closure: the gate reports a definitional block naming the exact conflict and requiring SAFE_PAUSE, exactly as D13 directs.",
+        "doNotWeaken": true,
+        "safePauseRequired": true
+      },
+      "insufficientByItself": [
+        "A bare relation score of 3720/3720 obtained under containment semantics (D13).",
+        "Any evidence that does not separate substantive relation rows from vacuous zero-expectation rows (D13)."
+      ],
+      "phase": "POST_FREEZE"
+    },
+    "reasonClosure": {
+      "roadmapItem": 3,
+      "roadmapWording": "reason closure",
+      "decisions": [
+        "D3",
+        "D8",
+        "D11",
+        "D14"
+      ],
+      "definition": "Reason closure holds when, for every one of the 3720 rows, the analyzer's reason set under the FROZEN runtime equals the frozen expected reason set exactly, demonstrated by genuinely post-freeze independent, unseen or holdout evidence. No expectation revision may be used to reach 3720/3720.",
+      "evidenceSource": "evaluation/results/phase10a-closure-v1/closure/REASON_CLOSURE_MANIFEST.json",
+      "envelope": "CLOSURE_EVIDENCE_ENVELOPE_V1",
+      "requires": [
+        "everything required by decisionClosure",
+        "oracleRevision equal to the revision recorded in the freeze manifest",
+        "campaign.expectationRevisionsSinceFreeze === 0",
+        "derivedFromExpectationRevision === false",
+        "revisionLineageUsedAsProof === false"
+      ],
+      "insufficientByItself": [
+        "The 145 R3 to R4 expectation changes, in whole or in part (D14).",
+        "Any further expectation revision undertaken to reach 3720/3720 (D14).",
+        "R4 itself (D8)."
+      ],
+      "phase": "POST_FREEZE"
+    },
+    "standaloneAndIntegratedExactGates": {
+      "roadmapItem": 4,
+      "roadmapWording": "standalone and integrated exact gates",
+      "decisions": [
+        "D1",
+        "D2",
+        "D3",
+        "D13"
+      ],
+      "decisionsNoLongerRelied": {
+        "D6": "D6 governs staging runtime identity for the freeze (item 5) and post-freeze evidence (item 6). V1 applied it to item 4 as well, which forced a deployed staging deployment attributable to a frozen commit into a PRE-FREEZE criterion and produced the sequencing contradiction corrected here. D6 continues to bind items 5 and 6 unchanged and is not weakened."
+      },
+      "structure": "ONE_CRITERION_TWO_MANDATORY_SUBCHECKS",
+      "phase": "PRE_FREEZE",
+      "phaseRationale": "Owner decision package section 2.4 states that the freeze sits after item 4 and before item 6. Section 2.5 makes precondition P1 of the freeze Criterion 4 SATISFIED, both subchecks 4a and 4b. Item 4 therefore cannot lawfully depend on any freeze artifact, post-freeze campaign, or deployment attributable to a frozen commit; requiring it would make item 4 and item 5 each a precondition of the other.",
+      "definition": "The exact gates criterion holds when analyzer exactness against the frozen oracle corpus is demonstrated twice, BEFORE the runtime freeze, over the same analyzer bytes reached by two different call paths: 4a STANDALONE, with the analyzer measured in isolation by the evaluation harness, with no server, no /ask pipeline, no retrieval and no model call; and 4b INTEGRATED, with the identical gate set re-achieved with the analyzer reached through the production boundary path, that is via the /ask runtime rather than a harness-only path, executed locally and in-process so that no deployed staging environment and no external network access is required. Exactness means the complete gate set G1 through G12 holds, each figure recorded with numerator and denominator, and with the relation figure reported as two figures - the total 3720 and the substantively-scored subset 1623 - never as a bare total. The criterion is SATISFIED only if both subchecks are independently SATISFIED against separate evidence; neither subcheck may be inferred from the other; and the pair may not be split into two roadmap criteria. Item 4 is a PRE-FREEZE criterion and must not reference a freeze manifest, a post-freeze campaign identifier, or staging attribution to a frozen commit.",
+      "exactGateSet": {
+        "source": "Owner decision package section 1.3, Definition of the exact gate set (identical for 4a and 4b).",
+        "identicalForBothSubchecks": true,
+        "allTwelveMandatory": true,
+        "gateIds": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7",
+          "G8",
+          "G9",
+          "G10",
+          "G11",
+          "G12"
+        ],
+        "gates": {
+          "G1": {
+            "id": "G1",
+            "metric": "decision",
+            "kind": "RATIO",
+            "numerator": 3720,
+            "denominator": 3720,
+            "semantics": "EXACT_MATCH_PER_ROW",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G2": {
+            "id": "G2",
+            "metric": "relation",
+            "kind": "RATIO",
+            "numerator": 3720,
+            "denominator": 3720,
+            "semantics": "EXACT_SET_EQUALITY",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate.",
+            "splitReportingRequired": true,
+            "substantiveNumerator": 1623,
+            "substantiveDenominator": 1623,
+            "substantiveDefinition": "rows with a non-empty expected-relation set",
+            "vacuousRows": 2097,
+            "splitReportingRule": "The relation score MUST be reported as two figures, not one: the total (3720) and the substantively-scored subset (1623). A bare 3720/3720 conflates 1623 substantively-tested rows with 2097 vacuous passes. Reporting only the total is non-compliant."
+          },
+          "G3": {
+            "id": "G3",
+            "metric": "reason",
+            "kind": "RATIO",
+            "numerator": 3720,
+            "denominator": 3720,
+            "semantics": "EXACT_MATCH_PER_ROW",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate.",
+            "antiCircularityGoverned": true,
+            "antiCircularityRef": "criteria.standaloneAndIntegratedExactGates.antiCircularity"
+          },
+          "G4": {
+            "id": "G4",
+            "metric": "reasonSuite",
+            "kind": "RATIO",
+            "numerator": 344,
+            "denominator": 344,
+            "semantics": "SUITE_PASS_COUNT",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G5": {
+            "id": "G5",
+            "metric": "collisionProbes",
+            "kind": "RATIO",
+            "numerator": 196,
+            "denominator": 196,
+            "semantics": "PROBE_PASS_COUNT",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G6": {
+            "id": "G6",
+            "metric": "decisionCounterfactual",
+            "kind": "RATIO",
+            "numerator": 756,
+            "denominator": 756,
+            "semantics": "COUNTERFACTUAL_PASS_COUNT",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G7": {
+            "id": "G7",
+            "metric": "relationCounterfactual",
+            "kind": "RATIO",
+            "numerator": 282,
+            "denominator": 282,
+            "semantics": "COUNTERFACTUAL_PASS_COUNT",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G8": {
+            "id": "G8",
+            "metric": "clauseProbes",
+            "kind": "RATIO",
+            "numerator": 68,
+            "denominator": 68,
+            "semantics": "PROBE_PASS_COUNT",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G9": {
+            "id": "G9",
+            "metric": "richContextGuard",
+            "kind": "RATIO",
+            "numerator": 7,
+            "denominator": 7,
+            "semantics": "GUARD_PASS_COUNT",
+            "reportingRule": "Both numerator and denominator MUST be recorded. A bare verdict does not satisfy this gate."
+          },
+          "G10": {
+            "id": "G10",
+            "metric": "reasonIntegrity",
+            "kind": "VERDICT",
+            "expected": "PASS",
+            "reportingRule": "The verdict MUST be recorded explicitly as PASS. Absence is not a pass."
+          },
+          "G11": {
+            "id": "G11",
+            "metric": "antiMemorization",
+            "kind": "VERDICT",
+            "expected": "PASS",
+            "reportingRule": "The verdict MUST be recorded explicitly as PASS. Absence is not a pass."
+          },
+          "G12": {
+            "id": "G12",
+            "metric": "closedControls",
+            "kind": "BOOLEAN",
+            "field": "allClosed",
+            "expected": true,
+            "reportingRule": "allClosed MUST be recorded as boolean true. A truthy substitute is not accepted."
+          }
+        },
+        "v1Regression": {
+          "defect": "V1 collapsed this twelve-gate set to three bare aggregate counts (decision, relation, reason) and dropped G4 through G12 entirely.",
+          "restored": true
+        }
+      },
+      "antiCircularity": {
+        "source": "Owner decision package section 1.3, CRITERION 4 ANTI-CIRCULARITY.",
+        "governsGate": "G3",
+        "clause": "Expectation-fitting to previously observed analyzer behavior is development evidence only and cannot establish closure.",
+        "clauseMustBeVerbatim": true,
+        "expectationFittingUsedMustBeFalse": true,
+        "satisfiedBy": "EITHER_OF",
+        "alternatives": {
+          "i": "that for the runtime under test the expectations were fixed before that runtime was measured",
+          "ii": "that the score is reproduced against an unseen or holdout corpus not used to derive or revise any expectation"
+        },
+        "evidenceRule": "The evidence artifact MUST name which alternative it relies on, as antiCircularity.satisfiedByAlternative set to i or ii, and MUST carry the supporting record for that alternative. Declaring neither is a definitional block.",
+        "v1Regression": {
+          "defect": "V1 replaced the (i)/(ii) disjunction with the single bare requirement expectationFittingUsed === false. That flag is necessary but not sufficient: the owner ruling requires one of (i) or (ii) to be positively evidenced and named.",
+          "restored": true
+        }
+      },
+      "requiredArtifacts": {
+        "source": "Owner decision package section 1.3, Required artifacts (per subcheck), read together with step 1 of the deterministic verification method in the same section.",
+        "perSubcheck": true,
+        "artifactIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5"
+        ],
+        "declarationRule": "For each artifact id the evidence artifact MUST record an object under requiredArtifacts.<id> carrying path and sha256. A bare string path does not satisfy this, because a path alone carries no digest to verify against.",
+        "digestBasis": "SHA256_OF_LF_NORMALIZED_BYTES",
+        "digestRequiredPerArtifact": true,
+        "digestVerifiedFromBytesByGate": true,
+        "mustBeRegularFile": true,
+        "pathsMustBeDistinct": true,
+        "pathsMustBeRepoRelative": true,
+        "selfReferenceProhibited": true,
+        "verificationRule": "Each declared artifact path MUST resolve inside the repository to a regular file whose SHA-256, computed on LF-normalized bytes, equals the recorded sha256. A directory, a missing file, an absolute or escaping path, a digest mismatch, or the evidence artifact citing itself as one of its own inputs are each a hard block. The five declared paths MUST be five distinct paths: A2 and A4 in particular are required by the approved text to be separate runs, so a single file standing in for both is not a separate clean lock-verification run.",
+        "whyDigestsRatherThanPresence": "Every other item-4 condition compares the evidence artifact either to a contract constant or to another field of the same artifact, so every other condition is satisfiable by whoever writes the artifact. The per-artifact digest verification is the point at which the criterion first depends on bytes the author did not choose. Without it item 4 is satisfiable by assertion, and because item 4 SATISFIED is freeze precondition P1, a criterion satisfiable by assertion would discharge the freeze precondition by assertion.",
+        "artifacts": {
+          "A1": {
+            "id": "A1",
+            "requirement": "a governed campaign attempt directory with a recorded runtime identity and a verified servicesTreeDigest",
+            "digestRequired": true,
+            "mustBeFile": true,
+            "digestBasis": "SHA256_OF_LF_NORMALIZED_BYTES",
+            "declaredPathIsTheAttemptRecord": true,
+            "declaredPathNote": "The approved text names a campaign attempt DIRECTORY. The declared path for A1 is the attempt's own record file inside that directory, because a directory has no digest to verify and step 1 requires a digest. The directory is identified by the record's location.",
+            "mustCarry": [
+              "runtimeIdentity",
+              "servicesTreeDigest"
+            ],
+            "servicesTreeDigestMustBeRecomputed": true,
+            "appliesTo": [
+              "standalone",
+              "integrated"
+            ]
+          },
+          "A2": {
+            "id": "A2",
+            "requirement": "a result artifact recording every one of G1-G12 with numerator and denominator, plus the split relation figures required above",
+            "attemptIdField": "attemptId",
+            "digestRequired": true,
+            "mustBeFile": true,
+            "digestBasis": "SHA256_OF_LF_NORMALIZED_BYTES",
+            "appliesTo": [
+              "standalone",
+              "integrated"
+            ]
+          },
+          "A3": {
+            "id": "A3",
+            "requirement": "per-row expected-vs-actual evidence for decision, relation and reason, sufficient to recompute every aggregate in A2",
+            "digestRequired": true,
+            "mustBeFile": true,
+            "digestBasis": "SHA256_OF_LF_NORMALIZED_BYTES",
+            "rowCountMustEqual": 3720,
+            "rowsField": "rows",
+            "rowCountVerifiedFromBytesByGate": true,
+            "rowCountRule": "The gate MUST count the entries of A3.rows in A3's own digest-verified bytes and require exactly 3720. Naming the field that holds the rows is not a per-row schema and does not presume what a row contains; it is the minimum needed to make rowCountMustEqual checkable rather than decorative. An A3 that carries no countable rows array does not satisfy A3, because a declared row count that nothing verifies is the same as no row count at all.",
+            "sufficiencyRule": "Sufficient to recompute means the row evidence MUST cover the full oracle corpus - 3720 rows - and MUST carry expected and actual values for all three of decision, relation and reason. Row evidence covering a subset cannot support the aggregates in A2 and does not satisfy A3.",
+            "appliesTo": [
+              "standalone",
+              "integrated"
+            ]
+          },
+          "A4": {
+            "id": "A4",
+            "requirement": "a separate clean lock-verification run reproducing A2",
+            "cleanField": "clean",
+            "attemptIdField": "attemptId",
+            "digestRequired": true,
+            "mustBeFile": true,
+            "digestBasis": "SHA256_OF_LF_NORMALIZED_BYTES",
+            "mustBeDistinctFrom": [
+              "A2"
+            ],
+            "separatenessRule": "A4 is a SEPARATE run. Its declared path MUST differ from A2's and its recorded attempt identifier MUST differ from A2's; the same artifact cited twice is one run, not two.",
+            "appliesTo": [
+              "standalone",
+              "integrated"
+            ]
+          },
+          "A5": {
+            "id": "A5",
+            "requirement": "for 4b only, the integrated-path invocation record and runtime identity",
+            "digestRequired": true,
+            "mustBeFile": true,
+            "digestBasis": "SHA256_OF_LF_NORMALIZED_BYTES",
+            "mustCarry": [
+              "invocationPath",
+              "runtimeIdentity"
+            ],
+            "appliesTo": [
+              "integrated"
+            ]
+          }
+        },
+        "v1Regression": {
+          "defect": "V1 named no required artifacts at all; A1 through A5 were absent from the criteria artifact.",
+          "restored": true
+        },
+        "restorationRationale": {
+          "digestBinding": "Step 1 of the approved deterministic verification method requires each input artifact to be verified against its recorded SHA-256. The digest, file-kind and distinctness obligations above make that source requirement machine-checkable; they do not add a requirement the owner did not state."
+        }
+      },
+      "deterministicVerificationMethod": {
+        "method": "READ_MANIFEST_AND_VERDICT",
+        "scope": "A1-A5",
+        "constraints": [
+          "No network access.",
+          "No mutation of services/.",
+          "No writes outside the criterion's own results directory."
+        ],
+        "source": "Owner decision package section 1.3, Deterministic verification method.",
+        "stepsAreMandatoryAndComplete": true,
+        "stepIds": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "S6"
+        ],
+        "steps": {
+          "S1": {
+            "id": "S1",
+            "requirement": "verify each input artifact against its recorded SHA-256, computed on LF-normalized bytes",
+            "specRef": "criteria.standaloneAndIntegratedExactGates.requiredArtifacts",
+            "enforcedByConditionPrefix": "requiredArtifact",
+            "anchorsToBytesNotAssertions": true
+          },
+          "S2": {
+            "id": "S2",
+            "requirement": "verify servicesTreeDigest by recomputing sha256 over the concatenated LF-normalized governed service files in their recorded order",
+            "specRef": "criteria.standaloneAndIntegratedExactGates.deterministicVerificationMethod.servicesTreeDigest",
+            "enforcedByConditionPrefix": "servicesTreeDigest",
+            "anchorsToBytesNotAssertions": true
+          },
+          "S3": {
+            "id": "S3",
+            "requirement": "recompute every aggregate in A2 from A3 and require exact agreement",
+            "specRef": "criteria.standaloneAndIntegratedExactGates.deterministicVerificationMethod.aggregateRecomputation",
+            "enforcedByConditionPrefix": "aggregateRecomputation",
+            "anchorsToBytesNotAssertions": true,
+            "limitDeclared": true
+          },
+          "S4": {
+            "id": "S4",
+            "requirement": "require each of G1-G12 to equal its stated target",
+            "specRef": "criteria.standaloneAndIntegratedExactGates.exactGateSet",
+            "enforcedByConditionPrefix": "gate",
+            "anchorsToBytesNotAssertions": false
+          },
+          "S5": {
+            "id": "S5",
+            "requirement": "require A4 to equal A2 field for field",
+            "specRef": "criteria.standaloneAndIntegratedExactGates.deterministicVerificationMethod.a4EqualsA2",
+            "enforcedByConditionPrefix": "lockVerification",
+            "anchorsToBytesNotAssertions": false
+          },
+          "S6": {
+            "id": "S6",
+            "requirement": "require the anti-circularity condition to be evidenced, not asserted",
+            "specRef": "criteria.standaloneAndIntegratedExactGates.antiCircularity",
+            "enforcedByConditionPrefix": "antiCircularity",
+            "anchorsToBytesNotAssertions": false
+          }
+        },
+        "servicesTreeDigest": {
+          "source": "Owner decision package section 1.3, deterministic verification method step 2.",
+          "requirement": "verify servicesTreeDigest by recomputing sha256 over the concatenated LF-normalized governed service files in their recorded order",
+          "fileSetRef": "frozenGovernedRuntimeSet.paths",
+          "evidenceDigestField": "runtimeIdentity.servicesTreeDigest",
+          "evidenceFileSetField": "runtimeIdentity.servicesTreeFileSet",
+          "evidenceFileSetFieldNote": "The evidence artifact MUST record the ordered file list the digest was computed over, because step 2 verifies the digest against the RECORDED order. An artifact that records a digest but not the order it used cannot be verified and is a hard block.",
+          "expectedFileCount": 26,
+          "setEqualityRequired": true,
+          "setEqualityRule": "The file set recorded in the evidence artifact MUST equal the approved 26-path governed runtime set exactly - no additions, no omissions, no substitutions. A subset would let the author choose which bytes the digest covers.",
+          "orderSource": "AS_RECORDED_IN_ARTIFACT",
+          "orderRule": "The digest is recomputed over the files in the order the artifact records, so the recorded order is itself part of the claim being verified. Recomputing in a canonical order instead would accept an artifact whose recorded order does not produce its recorded digest.",
+          "digestBasis": "SHA256_OF_CONCATENATED_LF_NORMALIZED_WORKTREE_BYTES",
+          "canonicalByteConventionRef": "frozenGovernedRuntimeSet.canonicalByteConvention",
+          "recomputedByGate": true,
+          "recomputedFromArtifactFieldsProhibited": true,
+          "mustEqualAcrossSubchecks": true,
+          "crossSubcheckRule": "4a and 4b MUST record the same servicesTreeDigest. This is what makes the two subchecks a two-path measurement of the same analyzer bytes rather than two independent measurements of whatever each run happened to load.",
+          "whyThisIsTheAnchor": "Item 4 SATISFIED is freeze precondition P1. If every item-4 condition were a comparison between the evidence artifact and either a contract constant or another field of the same artifact, then item 4 - and through P1 the freeze itself - would be satisfiable by writing plausible numbers into a file. Step 2 is the point at which the criterion depends on bytes the evidence author did not author."
+        },
+        "aggregateRecomputation": {
+          "source": "Owner decision package section 1.3, deterministic verification method step 3.",
+          "requirement": "recompute every aggregate in A2 from A3 and require exact agreement",
+          "recomputationRecordRequired": true,
+          "recomputationRecordField": "aggregateRecomputation",
+          "a3DigestBindingField": "a3Sha256",
+          "rowCountField": "rowsRecomputed",
+          "figuresField": "gates",
+          "mustBindVerifiedA3Digest": true,
+          "a3RowCountMustEqual": 3720,
+          "perGateFiguresRequired": true,
+          "perGateFiguresMustEqualA2": true,
+          "gatesCovered": [
+            "G1",
+            "G2",
+            "G3"
+          ],
+          "gatesCoveredNote": "G1, G2 and G3 are the per-row aggregates that A3 supports. The split relation figures for G2 - total 3720 and substantive 1623 - MUST both be recomputed; recomputing only the total would reproduce the exact conflation D13 prohibits.",
+          "exactAgreementRequired": true,
+          "disagreementIsFail": true,
+          "gateRecomputesRowsItself": false,
+          "limitStatement": "The row-level recomputation is performed by the campaign that produces A3. This gate verifies it by four checks it can perform without a per-row schema: A3's digest is recomputed from bytes on disk by the gate; A3's row array is counted in those verified bytes and MUST hold exactly 3720 entries; the recomputation record binds that verified digest; and the recomputed per-gate figures equal A2's figures field for field. What the gate does NOT do is re-derive each row's decision, relation and reason from the row's own expected and actual values, because the owner-approved package does not define A3's row schema and an unapproved schema must not be introduced into a governance artifact through a gate implementation. The residual is therefore precise: a fabricated A3 must carry 3720 rows bound by digest into the evidence chain, and the gate does not read what those rows say. This limit is recorded here so a reviewer sees it rather than inferring a stronger check than exists.",
+          "limitClosureRoute": "To close the remaining limit the owner must approve a per-row schema for A3 naming the fields that carry expected and actual decision, relation and reason; the gate can then re-derive the aggregates from the rows directly and the recomputation record becomes redundant rather than relied upon. Until then the row count is verified from bytes and the row contents are not."
+        },
+        "a4EqualsA2": {
+          "source": "Owner decision package section 1.3, deterministic verification method step 5.",
+          "requirement": "require A4 to equal A2 field for field",
+          "comparisonMode": "FIELD_FOR_FIELD_EXACT",
+          "comparedFields": [
+            "envelope",
+            "mode",
+            "verdict",
+            "servicesTreeDigest",
+            "gates.G1.numerator",
+            "gates.G1.denominator",
+            "gates.G2.numerator",
+            "gates.G2.denominator",
+            "gates.G2.substantiveNumerator",
+            "gates.G2.substantiveDenominator",
+            "gates.G3.numerator",
+            "gates.G3.denominator",
+            "gates.G4.numerator",
+            "gates.G4.denominator",
+            "gates.G5.numerator",
+            "gates.G5.denominator",
+            "gates.G6.numerator",
+            "gates.G6.denominator",
+            "gates.G7.numerator",
+            "gates.G7.denominator",
+            "gates.G8.numerator",
+            "gates.G8.denominator",
+            "gates.G9.numerator",
+            "gates.G9.denominator",
+            "gates.G10.verdict",
+            "gates.G11.verdict",
+            "gates.G12.allClosed"
+          ],
+          "bareReproducedBooleanInsufficient": true,
+          "insufficiencyRule": "A field named reproducesA2 set to true does not satisfy step 5. The comparison MUST be over the figures themselves, so that a lock run which produced different numbers cannot be recorded as having reproduced A2.",
+          "distinctAttemptRequired": true,
+          "cleanRequired": true,
+          "cleanRule": "A4 MUST record that it ran clean - a lock-verification run that itself reported failures reproduces nothing - and MUST record an attempt identifier distinct from A2's."
+        },
+        "v1Regression": {
+          "defect": "V1 carried no deterministic verification method for item 4 at all. None of the six approved steps appeared in the criteria artifact, so nothing in V1 required item-4 evidence to be anchored to any byte the evidence author had not chosen.",
+          "restored": true
+        },
+        "coverageRationale": {
+          "allApprovedStepsRepresented": "All six steps in owner decision package section 1.3 are enumerated above with the condition family that must enforce each step. S1, S2 and S3 provide byte-bound verification, S4 checks the target values, S5 checks clean-run reproduction field for field, and S6 checks evidenced anti-circularity."
+        }
+      },
+      "prohibitedDependencies": {
+        "rule": "Each subcheck evidence artifact MUST NOT carry any of the fields below. Their presence is a sequencing inversion and is refused, not ignored, because an artifact carrying them was measured under a regime this criterion does not describe.",
+        "prohibitedFields": [
+          "freezeManifestSha256",
+          "postFreezeCampaignId",
+          "stagingAttribution"
+        ],
+        "detection": "FAIL_CLOSED_SEQUENCING_INVERSION",
+        "safePauseRequired": true
+      },
+      "subChecks": {
+        "standalone": {
+          "id": "standalone",
+          "roadmapWording": "standalone exact gates",
+          "envelope": "EXACT_GATE_RESULT_V2",
+          "exactGateSetRef": "criteria.standaloneAndIntegratedExactGates.exactGateSet",
+          "independentEvidenceRequired": true,
+          "inferenceFromSiblingProhibited": true,
+          "lockVerificationRequired": true,
+          "freezeManifestReferenceRequired": false,
+          "postFreezeCampaignRequired": false,
+          "stagingAttributionRequired": false,
+          "deployedStagingRequired": false,
+          "externalNetworkPermitted": false,
+          "mode": "STANDALONE",
+          "meaning": "analyzer measured in isolation by the evaluation harness, with no server, no /ask pipeline, no retrieval and no model call",
+          "invocationPath": "HARNESS_DIRECT",
+          "evidenceSource": "evaluation/results/phase10a-closure-v1/closure/EXACT_GATE_STANDALONE_V2.json",
+          "requiredArtifacts": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "passRule": "All of G1-G12 hold in a single governed campaign attempt, AND a separate clean lock-verification run reproduces the same figures from the same verified servicesTreeDigest, AND the criterion anti-circularity condition holds."
+        },
+        "integrated": {
+          "id": "integrated",
+          "roadmapWording": "integrated exact gates",
+          "envelope": "EXACT_GATE_RESULT_V2",
+          "exactGateSetRef": "criteria.standaloneAndIntegratedExactGates.exactGateSet",
+          "independentEvidenceRequired": true,
+          "inferenceFromSiblingProhibited": true,
+          "lockVerificationRequired": true,
+          "freezeManifestReferenceRequired": false,
+          "postFreezeCampaignRequired": false,
+          "stagingAttributionRequired": false,
+          "deployedStagingRequired": false,
+          "externalNetworkPermitted": false,
+          "mode": "INTEGRATED",
+          "meaning": "the identical gate set G1-G12 re-achieved with the analyzer reached through the production boundary path, that is via the /ask runtime rather than a harness-only path",
+          "invocationPath": "IN_PROCESS_ASK_BOUNDARY",
+          "evidenceSource": "evaluation/results/phase10a-closure-v1/closure/EXACT_GATE_INTEGRATED_V2.json",
+          "requiredArtifacts": [
+            "A1",
+            "A2",
+            "A3",
+            "A4",
+            "A5"
+          ],
+          "boundary": {
+            "requirement": "The measurement MUST enter through the same /ask request-handling entrypoint the production runtime uses, so that 4a and 4b demonstrably score the same analyzer bytes by two different call paths.",
+            "harnessOnlyPathProhibited": true,
+            "inProcess": true,
+            "deployedStagingRequired": false,
+            "externalNetworkPermitted": false,
+            "nonAnalyzerDependencySubstitution": "Retrieval and model calls outside the analyzer under test MUST be deterministically substituted in-process. Substitution is permitted only outside the analyzer boundary; substituting any part of the analyzer under test voids the subcheck."
+          },
+          "runtimeIdentityMustEqualStandalone": true,
+          "runtimeIdentityRule": "The integrated runtime identity MUST be recorded and MUST equal the standalone runtime identity for the analyzer files, so that 4a and 4b demonstrably score the same bytes by two different call paths. Equality is over the analyzer file identity, not over the surrounding pipeline.",
+          "passRule": "All of G1-G12 hold when measured through the integrated path, AND the integrated runtime identity is recorded and equals the standalone runtime identity for the analyzer files, AND the criterion anti-circularity condition holds."
+        }
+      },
+      "requires": [
+        "criteria fidelity confirmed by the owner",
+        "both subcheck artifacts present and schema-valid, each declaring envelope === EXACT_GATE_RESULT_V2",
+        "each declares its own mode, matching the subcheck it evidences",
+        "each records every one of G1-G12 with numerator and denominator, and G10/G11 as explicit PASS verdicts and G12 as allClosed === true",
+        "the relation figure is reported split: total 3720/3720 AND substantive 1623/1623",
+        "verdict === EXACT",
+        "the anti-circularity clause is present verbatim, expectationFittingUsed === false, AND one of alternatives (i) or (ii) is named and evidenced",
+        "each subcheck declares A1-A5 as path-plus-sha256 objects, each resolving inside the repository to a regular file whose LF-normalized SHA-256 matches, with the five paths distinct (method step 1)",
+        "each subcheck records the governed servicesTreeDigest, over the exact approved 26-path set, and that digest recomputes from the worktree bytes in the recorded order (method step 2)",
+        "each subcheck carries an aggregateRecomputation record bound to its verified A3 digest and declaring 3720 rows recomputed, A3's own digest-verified bytes are counted and MUST hold exactly 3720 rows, and the recomputed G1/G2/G3 figures - including both G2 split figures - equal A2's exactly (method step 3)",
+        "each subcheck names a separate clean lock-verification run whose figures equal A2's field for field, not merely a boolean asserting reproduction (method step 5)",
+        "the integrated subcheck records an in-process /ask boundary invocation record and a runtime identity equal to the standalone runtime identity for the analyzer files",
+        "neither subcheck artifact carries freezeManifestSha256, postFreezeCampaignId, or stagingAttribution"
+      ],
+      "insufficientByItself": [
+        "Either subcheck alone (D2).",
+        "A bare relation total of 3720/3720 without the substantive 1623 subset (D13).",
+        "Three aggregate counts without G4 through G12.",
+        "expectationFittingUsed === false without naming and evidencing alternative (i) or (ii).",
+        "An integrated result produced by a harness-only path rather than through the /ask boundary.",
+        "Evidence in which every checked figure is a field of the evidence artifact itself. At least one item-4 obligation must resolve against bytes the evidence author did not author, or the criterion is satisfiable by assertion - and because item 4 SATISFIED is freeze precondition P1, the freeze would be too. The servicesTreeDigest recomputation and the A1-A5 digest verifications are those obligations.",
+        "A4 recorded as reproducing A2 by a boolean rather than by matching figures.",
+        "A1-A5 declared as bare paths without digests, or as five names resolving to fewer than five distinct files."
+      ],
+      "v1Regression": {
+        "v1Artifact": "evaluation/results/phase10a-closure-v1/PHASE10A_APPROVED_EXIT_CRITERIA_V1.json",
+        "v1Sha256": "33d303d5bc46d524abb710a005c8d90471f1d0669c32ff10a6fd48bd91f6d045",
+        "v1DefectSummary": "V1 defined item 4 as demonstrated post-freeze, required each subcheck to reference the freeze manifest by digest and a post-freeze campaign, and required the integrated subcheck to carry staging attribution to the frozen commit. Because the owner-approved freeze precondition P1 is Criterion 4 SATISFIED, both subchecks, item 4 and item 5 each became a precondition of the other and neither could ever be reached. V1 additionally dropped gates G4-G12, dropped required artifacts A1-A5, and reduced the anti-circularity disjunction to a single boolean.",
+        "correctionMode": "FORWARD_ONLY_ADDITIVE",
+        "v1BytesModified": false
+      }
+    },
+    "frozenRuntime": {
+      "roadmapItem": 5,
+      "roadmapWording": "frozen runtime",
+      "decisions": [
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "definition": "The runtime is frozen only by a committed, immutable freeze record that pins one resolvable frozen commit and the exact ordered unique 26-file governed runtime set from the WS1 precedent; independently reproduces each per-file committed-blob digest and the servicesTreeDigest over concatenated LF-normalized committed blob bytes in that approved order; records runtimeMutable as literal false and is proven from complete all-parent Git history to be the first tracked machine-readable false record; binds a digest-verified current A3 drift snapshot from the frozen commit to the resolved evaluated HEAD with no governed committed-blob drift; pins the exact ordered V1/R1/R2/R3 canonical expectation set and proves those committed bytes unchanged at the frozen commit and HEAD; proves from complete full-history Git evidence that no enumerated governed runtime path and no pinned V1/R1/R2/R3 expectation path is edited after the frozen commit, even when a later commit restores earlier bytes; detects canonical worktree drift; and attributes any staging deployment used for integrated or post-freeze evidence to that frozen runtime identity. Production is out of scope.",
+      "evidenceSource": "evaluation/results/phase10a-closure-v1/freeze/FREEZE_MANIFEST_V1.json",
+      "envelope": "FREEZE_MANIFEST_V1",
+      "manifestFields": {
+        "servicesTreeDigest": "64-lowercase-hex SHA-256 over the concatenation, in approved path order and without separators, of each approved path's committed blob bytes at frozenCommit after CRLF-to-LF normalization with lone CR preserved",
+        "servicesTreeFileSet": "the exact ordered unique 26-path frozenGovernedRuntimeSet.paths array",
+        "runtimeMutabilityRequirement": {
+          "fieldName": "runtimeMutable",
+          "requiredLiteralValue": "BOOLEAN_FALSE"
+        },
+        "postFreezeDriftVerification": {
+          "artifactPath": "contained root-relative path to A3",
+          "sha256": "64-lowercase-hex SHA-256 over A3's LF-canonical bytes"
+        },
+        "canonicalExpectationSet": "the exact ordered unique four-entry path-plus-sha256 array declared below"
+      },
+      "canonicalExpectationSet": [
+        {
+          "path": "evaluation/oracles/phase-10a14-r20/R20_DEVELOPMENT_ORACLE_FROZEN.json",
+          "sha256": "0227a5b4b6c2eb552427e002b6a66d50b39a06635c84f74798de81ffa608b263"
+        },
+        {
+          "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r1/R20_DEVELOPMENT_ORACLE_FROZEN_R1.json",
+          "sha256": "ba0163932fc64d59070d8bba93a23645d03598abb07d612cea25607684503f1f"
+        },
+        {
+          "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r2/R20_DEVELOPMENT_ORACLE_FROZEN_R2.json",
+          "sha256": "1347a918ee643723531438bfe6d305756c6a43feffbe042ac1ddb2c6bf6c8ccd"
+        },
+        {
+          "path": "evaluation/oracles/phase-10a14-r20/revisions/reason-family-r3/R20_DEVELOPMENT_ORACLE_FROZEN_R3.json",
+          "sha256": "ddf5a603b84e67b3a6854232e8e36c24e6f5badd531daf2e55f031e480db6a54"
+        }
+      ],
+      "requires": [
+        "criteria fidelity confirmed by the owner",
+        "P1: criterion 4 SATISFIED, both subchecks 4a and 4b, evaluated before any freeze content condition is considered",
+        "P2: tracked worktree clean",
+        "P3: the runtime file set to be frozen enumerated explicitly by path in the freeze artifact",
+        "freeze manifest present, schema-valid, and declaring immutable === true",
+        "frozenCommit is a full 40-character object name and is resolvable in this repository",
+        "governedRuntimeSet is exactly the 26 declared paths: no extras, no omissions",
+        "every entry's committedBlobSha256 equals the gate's independent hash of the committed blob at frozenCommit",
+        "every entry's canonical worktree bytes equal those committed bytes (no drift)",
+        "F3: top-level servicesTreeFileSet is the exact ordered unique approved 26-path set and servicesTreeDigest is a 64-lowercase-hex digest independently recomputed over the concatenated LF-normalized committed Git blob bytes at frozenCommit in that order; missing, malformed, duplicate, reordered, unresolvable, wrong-digest, or worktree-drift cases fail closed",
+        "F4: top-level runtimeMutable is literal Boolean false in both the evaluated bounded worktree snapshot and the committed freeze-record blob at resolved HEAD; the committed record binds frozenCommit; frozenCommit is an ancestor of HEAD; complete non-shallow all-parent HEAD-reachable Git history, with no active replace-object ref or environment, contains no earlier or peer tracked machine-readable runtimeMutable:false artifact other than the exact immutable governed freeze-record Git object itself at its canonical path across later re-verification; a different blob at that path or the same blob at any peer path is not exempt; firstFalseCommit or any equivalent manifest assertion is never accepted as proof",
+        "F6/A3: top-level postFreezeDriftVerification is a path-plus-sha256 object whose contained bounded regular-file bytes match their LF-canonical digest and parse from that retained snapshot as exactly {fromCommit,toCommit,governedRuntimeSet}; fromCommit equals frozenCommit, toCommit equals resolved evaluated HEAD, the set is exact and unique over all 26 approved paths, frozenCommit is an ancestor of HEAD, git diff --quiet --no-ext-diff over that exact set is empty (including file modes), and every governed path resolves to identical committed blob content at both commits; F6 remains an endpoint current-drift check and never substitutes for X1 history integrity",
+        "X1 history: complete non-shallow HEAD-reachable Git history strictly after frozenCommit, scanned without history simplification and with no active replace-object refs or environment, records no commit that changes any enumerated governed runtime path; an edit later restored to its pre-freeze bytes still fails X1, and because no governed-unfreeze mechanism exists in committed repository governance, none is exempted",
+        "X4: top-level canonicalExpectationSet and this criteria entry's canonicalExpectationSet are identical ordered exact unique four-entry path-plus-sha256 arrays, equal to the fixed V1/R1/R2/R3 pins above; every frozenCommit and HEAD committed blob exists, has the pinned digest, and is byte-identical across the span",
+        "X4 history: complete non-shallow HEAD-reachable Git history strictly after frozenCommit, scanned without history simplification and with no active replace-object refs or environment, records no commit that edits any pinned V1/R1/R2/R3 canonical expectation path; an edit later restored to the pinned bytes still fails X4",
+        "canonicalByteConvention declared as CRLF_TO_LF_ONLY with loneCrPreserved === true",
+        "stagingIdentity.environment === staging, attributedCommit === frozenCommit, attributionMethod and attributionEvidence present, verified === true",
+        "productionInScope === false"
+      ],
+      "insufficientByItself": [
+        "Freezing only the three analyzer service files (D5 selected the broader 26-file WS1 set).",
+        "Reusing the WS1 digests instead of taking digests at the frozen commit.",
+        "A unit-scoped runtime lock from an earlier phase, which A15 V1 correctly refused to borrow as the Phase-10A gate.",
+        "A freeze taken while criterion 4 is unsatisfied, which P1 forbids.",
+        "A self-authored servicesTreeDigest, runtimeMutable:false, firstFalseCommit, no-drift boolean, or expectation-immutability assertion not independently reproduced from bounded artifact bytes and Git objects.",
+        "A servicesTreeFileSet or A3 governedRuntimeSet that merely contains the approved paths but changes order where order is required, duplicates an entry, omits a path, substitutes a path, or adds a path.",
+        "A worktree-only false record, a committed false record that does not bind the evaluated worktree snapshot and frozenCommit, a first-parent-only history scan, shallow history, or history affected by active replace objects.",
+        "An A3 whose digest, schema, fromCommit, toCommit, governed set, ancestry, or committed blob comparison is missing, stale, malformed, or unverifiable.",
+        "Expectation files whose freeze-manifest and criteria entries agree with each other but disagree with the fixed owner-approved path/digest pins.",
+        "A governed runtime or pinned oracle expectation edit after the freeze that a later commit restores before verification, so that endpoint-only drift checks pass while post-freeze history integrity is violated."
+      ],
+      "passConditions": {
+        "allMandatory": true,
+        "F1": "A committed RUNTIME_HASH_LOCK.sha256 exists over every enumerated path using LF-normalized bytes.",
+        "F2": "Every listed hash independently reproduces from the corresponding committed Git blob at frozenCommit.",
+        "F3": "The servicesTreeDigest and exact ordered servicesTreeFileSet are present and the digest independently reproduces from concatenated LF-normalized frozen Git blobs; canonical worktree bytes do not drift.",
+        "F4": "runtimeMutable is literal false in the committed HEAD freeze record bound to frozenCommit and to the evaluated worktree snapshot, and complete all-parent Git-object history proves no earlier or peer tracked machine-readable false record other than that exact immutable governed freeze-record object at its canonical path across later re-verification.",
+        "F5": "The full resolvable frozen commit SHA is recorded and is an ancestor of evaluated HEAD.",
+        "F6": "The digest-bound current A3 exactly names frozenCommit, resolved HEAD, and the unique approved governed set; Git diff over that exact set is empty including modes; and every governed committed blob is identical at both commits.",
+        "F7": "Any in-scope staging build identity is verified equal to frozenCommit by named evidence; production remains out of scope.",
+        "X4Guard": "The exact fixed V1/R1/R2/R3 expectation set is identically pinned by criteria and manifest, every pinned committed blob is unchanged and equals its digest at frozenCommit and HEAD, and no commit after frozenCommit has edited any pinned expectation path even if a later commit restored the pinned bytes."
+      },
+      "failConditions": {
+        "anySufficient": true,
+        "X1": "Any enumerated governed file changes after frozenCommit without a governed unfreeze; affected campaigns lose unseen status and may not be relabelled. Enforcement is history-based: a commit after frozenCommit that changes an enumerated governed path fails X1 even when HEAD later restores the original bytes, and empty endpoint drift alone never discharges X1.",
+        "X2": "Any independently recomputed per-file digest or servicesTreeDigest disagrees with the manifest, or any required blob/file cannot be resolved and verified within bounds.",
+        "X3": "runtimeMutable is not literal false in the committed bound freeze record, a prior/peer tracked machine-readable false record exists other than the exact immutable governed freeze-record object at its canonical path across later re-verification, or complete all-parent history cannot be established without shallow/replace-object ambiguity.",
+        "X4": "The criteria and manifest canonical expectation sets are missing, malformed, duplicate, reordered, extra, substituted, mutually unequal, or unequal to the fixed pins; any pinned expectation blob is missing, mutated, deleted, unverifiable, or digest-inconsistent at frozenCommit or HEAD; or any commit after frozenCommit edits a pinned V1/R1/R2/R3 expectation path even if a later commit restores the pinned bytes.",
+        "X5": "An in-scope staging runtime identity differs from frozenCommit or cannot be proved by the declared method and evidence.",
+        "F6A3FailureApplication": "This is an application of mandatory F6/A3 together with owner-numbered X1/X2, not a new owner-numbered failure condition: A3 is unmet when it is missing, malformed, stale, digest-inconsistent, non-exact, non-unique, anchored to a non-ancestor, contradicted by a non-empty/unverifiable exact-set Git diff (including mode-only drift), or contradicted by any governed committed blob at HEAD."
+      },
+      "requiredArtifacts": {
+        "A1": "RUNTIME_HASH_LOCK.sha256 over the exact enumerated 26-path set, with LF-normalized committed-blob digests.",
+        "A2": "The committed FREEZE_MANIFEST_V1 record at evaluated HEAD, recording frozenCommit, exact governed paths and per-file digests, servicesTreeDigest, servicesTreeFileSet, runtimeMutable:false, postFreezeDriftVerification, canonicalExpectationSet, deployment identity or explicit out-of-scope statement, and criterion-4 evidence relied upon.",
+        "A3": "A contained bounded post-freeze drift-verification JSON artifact with exactly top-level fromCommit, toCommit, and governedRuntimeSet, digest-pinned by A2 and re-runnable at later evaluated HEADs."
+      },
+      "deterministicVerificationMethod": {
+        "id": "READ_MANIFEST_AND_VERDICT",
+        "reportOnly": true,
+        "network": "No network access except an separately owner-authorized F7 staging build-identity probe; this runner performs no network access and never contacts production.",
+        "gitInvocation": "Read-only Git plumbing through spawnSync argument arrays only, with no shell and bounded buffers.",
+        "steps": [
+          "Read A1, the committed A2 blob at resolved HEAD, the bounded worktree A2 snapshot, and bounded A3 once; parse only retained verified bytes.",
+          "Resolve frozenCommit and HEAD as full commits, reject shallow history and active replace-object refs/environment where history cannot be trusted, and require frozenCommit to be an ancestor of HEAD.",
+          "Require the approved, A1/A2, servicesTreeFileSet, and A3 governed sets to be exact and unique; require approved order for servicesTreeFileSet; extract every frozen committed blob, LF-normalize, verify its per-file digest, concatenate in approved order, and recompute servicesTreeDigest.",
+          "Bind the evaluated worktree freeze manifest to the committed HEAD freeze-record bytes, Git object identity and structure, require committed frozenCommit equality and literal runtimeMutable:false, then scan every parent of every HEAD-reachable commit and conservatively reject any earlier or peer tracked machine-readable runtimeMutable:false object field except the exact same immutable governed freeze-record Git object at its canonical path across later re-verification; never exempt a different blob at that path or the same blob at a peer path, never read firstFalseCommit as proof, and never scan working-tree prose.",
+          "Verify A3's declared LF-canonical sha256 before parsing, require exact top-level {fromCommit,toCommit,governedRuntimeSet}, bind fromCommit to frozenCommit and toCommit to resolved HEAD, require an empty git diff --quiet --no-ext-diff over every exact approved governed path so mode-only drift cannot pass, then independently compare the committed bytes and digest of every exact governed path at both commits.",
+          "Require criteria and manifest canonicalExpectationSet arrays to be identical in exact order and equal the fixed V1/R1/R2/R3 path/digest list, then independently read each Git blob at frozenCommit and HEAD and require both bytes to equal the fixed digest.",
+          "Scan complete non-shallow HEAD-reachable history strictly after frozenCommit with full-history rev-list over every exact approved governed path and over every pinned expectation path, rejecting shallow history and active replace-object refs or environment; require no post-freeze commit to touch either path set, so an intermediate edit restored before verification still fails X1/X4 while F6 remains the independent endpoint-drift check.",
+          "Require canonical worktree bytes for every governed path to equal its frozen committed blob and verify staging identity only within the owner-authorized staging scope."
+        ],
+        "failClosed": "Any missing, malformed, duplicate, extra, reordered where order is material, stale, unresolvable, over-budget, ancestry-ambiguous, digest-inconsistent, deleted, or drifted input leaves Item 5 unmet; no malformed evidence is silently skipped."
+      },
+      "phase": "FREEZE",
+      "sequencingPosition": {
+        "after": [
+          4
+        ],
+        "before": [
+          6
+        ],
+        "source": "Owner decision package section 2.4: Freeze sits after item 4 and before item 6."
+      },
+      "preconditions": {
+        "source": "Owner decision package section 2.5, Preconditions (all mandatory; freeze is BLOCKED if any is unmet).",
+        "allMandatory": true,
+        "freezeBlockedIfAnyUnmet": true,
+        "P1": {
+          "id": "P1",
+          "requirement": "Criterion 4 SATISFIED, both subchecks 4a and 4b.",
+          "dependsOnCriterion": "standaloneAndIntegratedExactGates",
+          "requiresBothSubchecksPass": true,
+          "blocksFreeze": true,
+          "conditionClass": "PRECONDITION"
+        },
+        "P2": {
+          "id": "P2",
+          "requirement": "Tracked worktree clean.",
+          "blocksFreeze": true,
+          "conditionClass": "PRECONDITION"
+        },
+        "P3": {
+          "id": "P3",
+          "requirement": "The runtime file set to be frozen is enumerated explicitly, by path, in the freeze artifact.",
+          "blocksFreeze": true,
+          "conditionClass": "PRECONDITION"
+        }
+      },
+      "blockedConditions": {
+        "source": "Owner decision package section 2.5, BLOCKED conditions.",
+        "B1": {
+          "id": "B1",
+          "requirement": "Criterion 4 not SATISFIED.",
+          "ownerRecordedAsPresentState": true,
+          "note": "The owner decision package records this as the present state. Nothing in this artifact changes it: item 4 has not been executed."
+        }
+      },
+      "v1Regression": {
+        "v1DefectSummary": "V1 frozenRuntime omitted the owner-mandated precondition P1 entirely, so the gate could in principle have reached a freeze verdict without item 4 being SATISFIED, while V1 item 4 simultaneously required the freeze to already exist.",
+        "correctionMode": "FORWARD_ONLY_ADDITIVE",
+        "v1BytesModified": false
+      }
+    },
+    "postFreezeEvidence": {
+      "roadmapItem": 6,
+      "roadmapWording": "post-freeze evidence",
+      "decisions": [
+        "D6",
+        "D7",
+        "D8",
+        "D14"
+      ],
+      "definition": "Post-freeze evidence exists when a campaign ledger references the sealed freeze manifest by verified digest and records at least one campaign produced strictly after that freeze, pinned to the freeze digest at production time, with zero expectation revisions between freeze and production; at least one such campaign is genuinely unseen, holdout or blind, classified INDEPENDENT_CLOSURE, not analyzer-informed, and free of R4 lineage; every campaign's own result manifest verifies by rehash; and every staging-based campaign is attributable to the frozen commit.",
+      "evidenceSource": "evaluation/results/phase10a-closure-v1/freeze/POST_FREEZE_CAMPAIGN_LEDGER_V1.json",
+      "envelope": "POST_FREEZE_CAMPAIGN_LEDGER_V1",
+      "requires": [
+        "criteria fidelity confirmed by the owner",
+        "campaign ledger present and schema-valid",
+        "freezeRef digest verifies against the freeze manifest bytes",
+        "at least one campaign recorded",
+        "every campaign: producedAfterFreeze === true and freezeDigestAtProduction === the verified freeze digest",
+        "every campaign: expectationRevisionsSinceFreeze === 0",
+        "at least one campaign with kind in {UNSEEN, HOLDOUT, BLIND}, evidenceClass === INDEPENDENT_CLOSURE, analyzerInformed === false, and no R4 oracle lineage",
+        "no campaign labelled UNSEEN, HOLDOUT or BLIND while analyzerInformed === true",
+        "every campaign's resultManifest verifies by independent rehash of every entry",
+        "every staging-based campaign: stagingDeployment.attributedCommit === frozenCommit"
+      ],
+      "insufficientByItself": [
+        "R4, which is analyzer-informed development-governance evidence (D8).",
+        "Evidence produced before the freeze, or whose ordering relative to the freeze is asserted rather than pinned (D7).",
+        "Relabelling analyzer-informed evidence as unseen or holdout (D8)."
+      ],
+      "phase": "POST_FREEZE"
+    },
+    "deterministicCleanCycles": {
+      "roadmapItem": 7,
+      "roadmapWording": "deterministic clean cycles",
+      "decisions": [
+        "D9",
+        "D10"
+      ],
+      "definition": "Deterministic clean cycles closure is evidenced by its own forward-looking gate-state row, independent of the staging cycle row.",
+      "evidenceSource": "knowledge/CURRENT_STATE.md",
+      "ledgerRowLabel": "Deterministic clean cycles closure",
+      "expectedValue": "SATISFIED",
+      "historicalCombinedRowLabel": "Deterministic clean/staging closure",
+      "split": {
+        "mode": "ADDITIVE",
+        "historicalRowsRewritten": false,
+        "newRowAuthoritativeOnlyWithThisContract": true,
+        "fallbackCanProducePass": false,
+        "fallbackSemantics": "If the new row is absent, the historical combined row is read for DIAGNOSTIC context only. It can sharpen the report - naming the recorded historical disposition - but it can never satisfy this criterion, because a combined row cannot independently evidence two split criteria."
+      }
+    },
+    "stagingCleanCycles": {
+      "roadmapItem": 8,
+      "roadmapWording": "staging clean cycles",
+      "decisions": [
+        "D6",
+        "D9",
+        "D10"
+      ],
+      "definition": "Staging clean cycles closure is evidenced by its own forward-looking gate-state row, independent of the deterministic cycle row.",
+      "evidenceSource": "knowledge/CURRENT_STATE.md",
+      "ledgerRowLabel": "Staging clean cycles closure",
+      "expectedValue": "SATISFIED",
+      "historicalCombinedRowLabel": "Deterministic clean/staging closure",
+      "split": {
+        "mode": "ADDITIVE",
+        "historicalRowsRewritten": false,
+        "newRowAuthoritativeOnlyWithThisContract": true,
+        "fallbackCanProducePass": false,
+        "fallbackSemantics": "Same as deterministicCleanCycles."
+      }
+    }
+  },
+  "unchangedFromV1": {
+    "items123": "criteria.decisionClosure, criteria.relationClosure and criteria.reasonClosure are carried forward from V1 with every requirement, figure and wording unchanged - their requires arrays are byte-identical to V1 under structural comparison. The single addition is phase: \"POST_FREEZE\" on each entry, which names the stage their own requirements already imply: each demands a post-freeze INDEPENDENT_CLOSURE campaign pinned to the freeze digest. No condition, threshold or evidence requirement is added, removed or altered, and in particular the freeze dependency was ALREADY there in V1 - this artifact labels it rather than introducing it. They are therefore requirement-equivalent to V1 but not byte-equivalent, and this artifact says so rather than overclaiming.",
+    "item6": "criteria.postFreezeEvidence is carried forward from V1 with every requirement unchanged, plus phase: \"POST_FREEZE\" for the same reason. Post-freeze evidence remains post-freeze; that was never the defect.",
+    "items78": "criteria.deterministicCleanCycles and criteria.stagingCleanCycles are carried forward unchanged.",
+    "d8AndR4": "r4Exclusion and evidenceClasses are carried forward unchanged. NB2 still blocks any real D8 holdout admission.",
+    "frozenSet": "frozenGovernedRuntimeSet is carried forward unchanged: 26 paths, WS1 precedent, CRLF_TO_LF_ONLY canonical byte convention."
+  },
+  "unchangedFromA15V1": {
+    "independentReview": "Roadmap item 9 keeps A15 V1's LEDGER_ROW_EQUALS check on the 'Post-R4 independent external Phase 10A review' row. It was already PASS-capable and is deliberately not redefined.",
+    "e2": "Roadmap item 10 keeps A15 V1's READ_MANIFEST_AND_VERDICT check. Already PASS-capable.",
+    "a15": "Roadmap item 11 remains self-referential and NOT_APPLICABLE.",
+    "b2ThroughB6": "OPEN_UNCHANGED_OUT_OF_SCOPE, exactly as A15 V1 recorded."
+  },
+  "recordedState": {
+    "phase10AClosed": false,
+    "phase10BAuthorized": false,
+    "a15V1Modified": false,
+    "currentStateModified": false,
+    "committed": false,
+    "pushed": false
+  }
+}
