@@ -6,7 +6,7 @@ import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
 
-import { buildCorsOptionsDelegate } from "./security/cors-policy.js";
+import { buildCorsOptionsDelegate, isStagingBackendRuntime } from "./security/cors-policy.js";
 import { createSecurityHeadersMiddleware } from "./security/security-headers.js";
 import { createRateLimitMiddleware } from "./security/rate-limit.js";
 import { healthHandler } from "./security/public-health.js";
@@ -119,7 +119,15 @@ app.use(cors(buildCorsOptionsDelegate(process.env)));
 // API-only security headers (nosniff, DENY framing, strict referrer, locked-down
 // Permissions-Policy, COOP/CORP, api-only CSP, no-store) to every response.
 // Placed after CORS (so preflight is unaffected) and before body parsing/routes.
-app.use(createSecurityHeadersMiddleware());
+// Cross-site Vercel Preview requests are already constrained by the strict CORS
+// allowlist. Only a Render staging or pull-request Preview may opt out of CORP
+// same-site blocking; Production and local APIs retain the conservative default.
+const previewCrossOriginResourcePolicy = isStagingBackendRuntime(process.env)
+  ? "cross-origin"
+  : "same-site";
+app.use(createSecurityHeadersMiddleware({
+  crossOriginResourcePolicy: previewCrossOriginResourcePolicy
+}));
 
 /* ================= RATE LIMITING ================= */
 

@@ -23,14 +23,20 @@ export const BACKEND_CSP =
  *
  * @returns {Record<string,string>} a frozen header name -> value map
  */
-export function getSecurityHeaders() {
+export function getSecurityHeaders(options = {}) {
+  // The strict same-site default protects every local/staging/Production API.
+  // Only server.js may opt a Render pull-request Preview into cross-origin delivery.
+  const crossOriginResourcePolicy =
+    options && options.crossOriginResourcePolicy === "cross-origin"
+      ? "cross-origin"
+      : "same-site";
   return Object.freeze({
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
     "Cross-Origin-Opener-Policy": "same-origin",
-    "Cross-Origin-Resource-Policy": "same-site",
+    "Cross-Origin-Resource-Policy": crossOriginResourcePolicy,
     "Content-Security-Policy": BACKEND_CSP,
     // The backend is API/JSON-only; do not let authenticated JSON be cached.
     "Cache-Control": "no-store"
@@ -44,8 +50,8 @@ export function getSecurityHeaders() {
  *
  * @returns {(req: object, res: object, next: Function) => void}
  */
-export function createSecurityHeadersMiddleware() {
-  const headers = getSecurityHeaders();
+export function createSecurityHeadersMiddleware(options = {}) {
+  const headers = getSecurityHeaders(options);
   return function securityHeadersMiddleware(req, res, next) {
     // Defensive: suppress framework disclosure even if app.disable missed it.
     if (typeof res.removeHeader === "function") {
