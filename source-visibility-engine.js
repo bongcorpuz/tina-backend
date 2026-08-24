@@ -1232,6 +1232,12 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
     drive_download_url: sourceDownloadUrlOf(doc),
     driveDownloadUrl: sourceDownloadUrlOf(doc),
 
+    fileId: fileIdOf(doc),
+    source_path: sourcePathOf(doc),
+    sourcePath: sourcePathOf(doc),
+    documentId: fileIdOf(doc),
+    document_id: fileIdOf(doc),
+
     authority_type: authorityTypeOf(doc),
     authorityType: authorityTypeOf(doc),
     authority_level: authorityLevelOf(doc),

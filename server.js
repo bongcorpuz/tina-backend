@@ -28,6 +28,7 @@ import {
   listDriveFiles,
   extractTextFromFile
 } from "./drive-reader.js";
+import { getAuthenticatedSourceDocument } from "./services/source-document-service.js";
 
 import {
   loginUser,
@@ -378,6 +379,35 @@ app.get("/conversations/:conversationId/messages", authenticate, async (req, res
   } catch (error) {
     console.error("Get messages error:", error);
     return sendError(res, 500, error.message || "Failed to load messages");
+  }
+});
+
+/* ================= AUTHENTICATED SOURCE DOCUMENT ================= */
+
+app.get("/sources/:documentId/document", authenticate, async (req, res) => {
+  try {
+    const result = await getAuthenticatedSourceDocument({
+      supabase,
+      documentId: req.params.documentId,
+      userId: getUserId(req)
+    });
+
+    if (result.status === 200) {
+      res.set({
+        "Cache-Control": "private, no-store, max-age=0",
+        "Content-Disposition": "inline; filename=\"tina-source.pdf\"",
+        "Content-Type": "application/pdf",
+        "X-Content-Type-Options": "nosniff"
+      });
+      return res.status(200).send(result.fileBuffer);
+    }
+
+    if (result.status === 401) return sendError(res, 401, "Authentication required");
+    if (result.status === 415) return sendError(res, 415, "Source document format unavailable");
+    if (result.status === 503) return sendError(res, 503, "Source document retrieval unavailable");
+    return sendError(res, 404, "Source document unavailable");
+  } catch {
+    return sendError(res, 503, "Source document retrieval unavailable");
   }
 });
 
