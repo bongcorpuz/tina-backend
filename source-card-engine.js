@@ -183,6 +183,37 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
   });
 }
 
+export async function enrichSourceCardsWithVerifiedDocumentIdentity(cards = [], { exactAuthoritySearch, logger = console } = {}) {
+  const list = Array.isArray(cards) ? cards : [];
+  if (typeof exactAuthoritySearch !== "function") return list;
+  const cache = new Map();
+  const enriched = [];
+
+  for (const card of list) {
+    if (canonicalDocumentIdOf(card)) {
+      enriched.push(card);
+      continue;
+    }
+
+    const target = safeStr(card?.normalizedReference || card?.normalized_reference || card?.citation || card?.label || card?.title || "");
+    if (!target) {
+      enriched.push(card);
+      continue;
+    }
+
+    const key = canonicalSourceKey(target);
+    if (!cache.has(key)) {
+      cache.set(key, await resolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger }));
+    }
+
+    const matchedRecord = cache.get(key);
+    const documentId = matchedRecord ? canonicalDocumentIdOf(matchedRecord) : "";
+    enriched.push(documentId ? { ...card, documentId, document_id: documentId } : card);
+  }
+
+  return enriched;
+}
+
 export async function resolveIndexedSourceCardTarget(target = "", { exactAuthoritySearch, logger = console } = {}) {
   const cleanTarget = safeStr(target).trim();
   if (!cleanTarget) return null;
@@ -206,6 +237,7 @@ export async function resolveIndexedSourceCardTarget(target = "", { exactAuthori
 }
 
 export default {
+  enrichSourceCardsWithVerifiedDocumentIdentity,
   finalSourceCardCanonicalKey,
   mergeFinalSourceCards,
   resolveIndexedSourceCardTarget,

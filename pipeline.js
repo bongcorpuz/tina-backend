@@ -101,6 +101,7 @@ import {
   buildFirstSourceLabels
 }                                                 from "./pipeline-observability.js";
 import {
+  enrichSourceCardsWithVerifiedDocumentIdentity,
   finalSourceCardCanonicalKey,
   mergeFinalSourceCards,
   resolveIndexedSourceCardTarget,
@@ -5533,6 +5534,10 @@ export async function runPipeline({
     });
   }
   finalSourceCards = _033dR1DedupedCards;
+  finalSourceCards = await enrichSourceCardsWithVerifiedDocumentIdentity(finalSourceCards, {
+    exactAuthoritySearch,
+    logger: console
+  });
 
   diagnostics.partialPipelineState.displayedSourceCardCount = finalSourceCards.length;
   diagnostics.partialPipelineState.sourceLabelsBeforeTimeout = buildFirstSourceLabels(finalSourceCards.length ? finalSourceCards : ctx.rerankedChunks);
