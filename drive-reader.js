@@ -904,6 +904,11 @@ export async function listDriveFiles(folderId) {
   );
 }
 
+export async function getDrivePdfBuffer(fileId) {
+  if (!fileId) throw new Error("Invalid Drive file identifier.");
+  return downloadFileBuffer(fileId);
+}
+
 export async function extractTextFromFile(file) {
   if (!file?.id && !file?.fileId) {
     throw new Error("Invalid Google Drive file object.");
@@ -1126,6 +1131,7 @@ export default {
   extractTextFromFile,
   readDriveFile,
   listAndReadDriveFiles,
+  getDrivePdfBuffer,
 
   normalizeDriveFileMetadata,
   inferAuthorityTypeFromPath,

@@ -74,6 +74,11 @@ function compactSourceChunk(chunk = {}) {
     url:
       chunk.url || chunk.driveViewUrl || chunk.drive_view_url || chunk.metadata?.driveViewUrl || "",
 
+    documentId:
+      chunk.documentId || chunk.document_id || chunk.fileId || chunk.file_id ||
+      chunk.metadata?.documentId || chunk.metadata?.document_id ||
+      chunk.metadata?.fileId || chunk.metadata?.file_id || null,
+
     text: trimText(
       chunk.text || chunk.content || chunk.excerpt || chunk.preview || "", 1200
     ),
@@ -220,7 +225,7 @@ async function getBoundedQuizSourceChunks({
     .slice(0, safeLimit)
     .map(row => {
       const meta = row.metadata || {};
-      const driveViewUrl = meta.driveViewUrl || meta.drive_view_url || meta.url || null;
+      const documentId = meta.documentId || meta.document_id || meta.fileId || meta.file_id || null;
       return {
         id:                   row.id,
         source:               row.source,
@@ -233,9 +238,11 @@ async function getBoundedQuizSourceChunks({
         citation:             row.normalized_reference || "",
         normalized_reference: row.normalized_reference,
         chunk_index:          row.chunk_index,
-        url:                  driveViewUrl || "",
-        driveViewUrl:         driveViewUrl || "",
-        drive_view_url:       driveViewUrl || "",
+        url:                  meta.driveViewUrl || meta.drive_view_url || meta.url || "",
+        driveViewUrl:         meta.driveViewUrl || meta.drive_view_url || meta.url || "",
+        drive_view_url:       meta.driveViewUrl || meta.drive_view_url || meta.url || "",
+        documentId,
+        document_id:          documentId,
         text:                 trimText(row.text || "", 1200),
         content:              trimText(row.text || "", 1200),
         excerpt:              trimText(row.text || "", 1200),
@@ -243,7 +250,7 @@ async function getBoundedQuizSourceChunks({
         score:                0.7,
         sourceTitle:          row.document_title || row.original_source || row.source,
         sourcePath:           meta.path || row.original_source || row.source,
-        fileId:               meta.fileId || meta.file_id || null,
+        fileId:               documentId,
         compactOutput:        true
       };
     });

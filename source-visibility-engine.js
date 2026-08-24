@@ -1206,6 +1206,8 @@ function toVisibleSourceEntry(doc = {}, issueClassification = null) {
     fileId: fileIdOf(doc),
     source_path: sourcePathOf(doc),
     sourcePath: sourcePathOf(doc),
+    documentId: fileIdOf(doc),
+    document_id: fileIdOf(doc),
 
     authority_type: authorityTypeOf(doc),
     authorityType: authorityTypeOf(doc),
