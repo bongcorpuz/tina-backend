@@ -12,6 +12,8 @@
 
 "use strict";
 
+import { canonicalDocumentIdOf } from "./services/source-document-identity.js";
+
 import {
   classify,
   hasSemanticNoMatchGuard,
@@ -5014,7 +5016,7 @@ export async function runPipeline({
       meta.source_url   || "";
     const documentId =
       c.documentId || c.document_id || c.fileId || c.file_id ||
-      meta.documentId || meta.document_id || meta.fileId || meta.file_id || null;
+      meta.documentId || meta.document_id || meta.fileId || meta.file_id || canonicalDocumentIdOf(c) || null;
 
     if (_scSeen.has(dedupeKey)) continue;
 

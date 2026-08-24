@@ -1,6 +1,8 @@
 // FILE: source-visibility-engine.js
 "use strict";
 
+import { canonicalDocumentIdOf } from "./services/source-document-identity.js";
+
 /**
  * TINA Source Visibility Engine
  * Version: 3.3.0
@@ -279,14 +281,7 @@ export function sourceTitleOf(doc = {}) {
 }
 
 export function fileIdOf(doc = {}) {
-  return (
-    doc.fileId ||
-    doc.file_id ||
-    doc.id ||
-    doc.metadata?.fileId ||
-    doc.metadata?.file_id ||
-    null
-  );
+  return canonicalDocumentIdOf(doc);
 }
 
 export function sourceDriveUrlOf(doc = {}) {

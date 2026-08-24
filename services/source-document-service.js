@@ -3,22 +3,12 @@
 // file path, storage credential, or source-system diagnostic to the browser.
 
 import { getDrivePdfBuffer } from "../drive-reader.js";
+import { DOCUMENT_ID_PATTERN, canonicalDocumentIdOf } from "./source-document-identity.js";
 
-const DOCUMENT_ID_PATTERN = /^[A-Za-z0-9_-]{10,200}$/;
+
 
 function metadataFileId(row = {}) {
-  const metadata = row.metadata || {};
-  return (
-    row.document_id ||
-    row.documentId ||
-    row.file_id ||
-    row.fileId ||
-    metadata.documentId ||
-    metadata.document_id ||
-    metadata.fileId ||
-    metadata.file_id ||
-    null
-  );
+  return canonicalDocumentIdOf(row);
 }
 
 function isPdfSource(row = {}) {
@@ -36,6 +26,25 @@ async function findIndexedDocumentById(supabase, documentId) {
     { fileId: documentId },
     { file_id: documentId }
   ];
+
+  // Older indexed rows may retain only a server-stored Drive URL. These are
+  // exact metadata candidates derived from the validated opaque ID; no client
+  // URL is accepted, reflected, or returned.
+  const legacyUrls = [
+    `https://drive.google.com/file/d/${documentId}/view`,
+    `https://drive.google.com/uc?export=download&id=${documentId}`,
+    `https://docs.google.com/document/d/${documentId}/edit`,
+    `https://docs.google.com/spreadsheets/d/${documentId}/edit`,
+    `https://docs.google.com/presentation/d/${documentId}/edit`
+  ];
+  const legacyUrlFields = [
+    "driveViewUrl", "drive_view_url", "driveDownloadUrl", "drive_download_url",
+    "webViewLink", "web_view_link", "sourceUrl", "source_url", "url"
+  ];
+
+  for (const url of legacyUrls) {
+    for (const field of legacyUrlFields) metadataCandidates.push({ [field]: url });
+  }
 
   for (const metadata of metadataCandidates) {
     const { data, error } = await supabase

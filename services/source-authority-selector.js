@@ -1,6 +1,8 @@
 // FILE: services/source-authority-selector.js
 "use strict";
 
+import { canonicalDocumentIdOf } from "./source-document-identity.js";
+
 /**
  * Source Authority Selector — Stage 1: Passive Diagnostic
  * Version: 1.0.0-diagnostic
@@ -775,7 +777,7 @@ export function selectSourceAuthorities({
       const eligibilityFields = eligibility.fields;
       const documentId =
         c.documentId || c.document_id || c.fileId || c.file_id ||
-        meta.documentId || meta.document_id || meta.fileId || meta.file_id || null;
+        meta.documentId || meta.document_id || meta.fileId || meta.file_id || canonicalDocumentIdOf(c) || null;
 
       seen.set(dedupeKey, {
         _targetMatch,

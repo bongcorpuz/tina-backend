@@ -25,10 +25,11 @@ check(
 );
 check(
   service.includes("DOCUMENT_ID_PATTERN") &&
+    service.includes("canonicalDocumentIdOf") &&
+    service.includes("legacyUrls") &&
     service.includes('.contains("metadata", metadata)') &&
-    service.includes("returnsDriveUrls: false") &&
-    !/https?:\/\//.test(service),
-  "document service validates canonical IDs, resolves indexed metadata, and contains no external URL path"
+    service.includes("returnsDriveUrls: false"),
+  "document service validates canonical IDs and resolves only indexed metadata, including bounded legacy Drive identity"
 );
 check(
   driveReader.includes("export async function getDrivePdfBuffer") &&
