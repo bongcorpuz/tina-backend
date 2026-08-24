@@ -1941,6 +1941,9 @@ export async function runPipeline({
       meta.url          || meta.webViewLink      ||
       meta.web_view_link || meta.sourceUrl       ||
       meta.source_url   || "";
+    const documentId =
+      c.documentId || c.document_id || c.fileId || c.file_id ||
+      meta.documentId || meta.document_id || meta.fileId || meta.file_id || null;
 
     if (_scSeen.has(dedupeKey)) continue;
 
@@ -1956,6 +1959,8 @@ export async function runPipeline({
       web_view_link:       c.web_view_link || meta.web_view_link || "",
       sourceUrl:           c.sourceUrl     || c.source_url       || meta.sourceUrl || meta.source_url || "",
       source_url:          c.source_url    || meta.source_url    || "",
+      documentId,
+      document_id:         documentId,
       documentTitle:       c.document_title || c.documentTitle   || meta.documentTitle || docTitle || "",
       document_title:      c.document_title || meta.documentTitle || "",
       normalizedReference: provRef || c.normalizedReference || c.normalized_reference || meta.normalizedReference || "",
@@ -2049,6 +2054,9 @@ export async function runPipeline({
           _fbMeta.driveViewUrl || _fbMeta.drive_view_url || _fbMeta.url ||
           _fbMeta.webViewLink  || _fbMeta.web_view_link  ||
           _fbMeta.sourceUrl    || _fbMeta.source_url     || "";
+        const _fbDocumentId =
+          c.documentId || c.document_id || c.fileId || c.file_id ||
+          _fbMeta.documentId || _fbMeta.document_id || _fbMeta.fileId || _fbMeta.file_id || null;
         _scFilteredClean.push({
           title:               _fbRef || _fbDocTitle || "Source",
           citation:            _fbRef || c.citation || "",
@@ -2060,6 +2068,8 @@ export async function runPipeline({
           web_view_link:       c.web_view_link || _fbMeta.web_view_link || "",
           sourceUrl:           c.sourceUrl    || c.source_url || _fbMeta.sourceUrl || _fbMeta.source_url || "",
           source_url:          c.source_url   || _fbMeta.source_url || "",
+          documentId:          _fbDocumentId,
+          document_id:         _fbDocumentId,
           documentTitle:       c.document_title || _fbMeta.document_title || _fbDocTitle || "",
           document_title:      c.document_title || _fbMeta.document_title || "",
           normalizedReference: _fbRef || c.normalizedReference || c.normalized_reference || _fbMeta.normalizedReference || "",
