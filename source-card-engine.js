@@ -146,6 +146,7 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
       ""
   );
   if (!citation) return null;
+  const documentId = canonicalDocumentIdOf(doc);
 
   return sanitizePublicSourceCard({
     title: doc.title || doc.documentTitle || doc.document_title || meta.documentTitle || meta.document_title || citation,
@@ -164,6 +165,7 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
       meta.normalized_reference ||
       meta.normalizedReference ||
       citation,
+    ...(documentId ? { documentId, document_id: documentId } : {}),
     authorityType: doc.authorityType || doc.authority_type || meta.authorityType || meta.authority_type || "STATUTE",
     authorityRole: doc.authorityRole || doc.authority_role || meta.authorityRole || meta.authority_role || "",
     authorityMatchTier:
