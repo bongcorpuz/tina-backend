@@ -8,7 +8,10 @@ const indexed = {
   "nircsec105": { metadata: { driveViewUrl: `https://drive.google.com/file/d/${taxCodeId}/view` } },
   "nircsec106": { metadata: { driveViewUrl: `https://drive.google.com/file/d/${taxCodeId}/view` } },
   "nircsec108": { metadata: { driveViewUrl: `https://drive.google.com/file/d/${taxCodeId}/view` } },
-  "nircsec57": { metadata: { driveViewUrl: `https://drive.google.com/file/d/${ewtId}/view` } },
+  "nircsec57": [
+    { title: "NIRC Sec. 57 excerpt without a document identity" },
+    { metadata: { driveViewUrl: `https://drive.google.com/file/d/${ewtId}/view` } }
+  ],
   "nircsec84": { metadata: { driveViewUrl: `https://drive.google.com/file/d/${estateId}/view` } }
 };
 const key = (value) => String(value).toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -17,10 +20,10 @@ const cards = [
   "NIRC Sec. 105", "NIRC Sec. 106", "NIRC Sec. 108", "NIRC Sec. 57", "NIRC Sec. 84", "Unindexed Taxation Reference"
 ].map((citation) => ({ citation, normalizedReference: citation, authorityType: "STATUTE" }));
 const enriched = await enrichSourceCardsWithVerifiedDocumentIdentity(cards, {
-  exactAuthoritySearch: async ({ targetAuthorities }) => {
-    const target = targetAuthorities[0]; calls.push(target);
+  exactAuthoritySearch: async ({ targetAuthorities, topK }) => {
+    const target = targetAuthorities[0]; calls.push({ target, topK });
     const doc = indexed[key(target)];
-    return doc ? [doc] : [];
+    return doc ? (Array.isArray(doc) ? doc : [doc]) : [];
   },
   logger: { warn() {} }
 });
@@ -33,4 +36,5 @@ assert.equal(enriched[4].documentId, estateId, "estate-tax reference resolves on
 assert.equal("documentId" in enriched[5], false, "unmatched taxation reference remains explicitly without a document identity");
 assert.equal(enriched.filter((card) => Object.keys(card).some((field) => /drive|url|path|storage/i.test(field))).length, 0, "enrichment never adds raw source-system fields");
 assert.equal(calls.length, 6, "each previously unresolved visible reference is verified through the indexed lookup");
-console.log("TINA verified reference document contract checks: 8 assertions passed");
+assert.ok(calls.every(({ topK }) => topK > 1), "resolver considers multiple verified indexed candidates before declaring a card unavailable");
+console.log("TINA verified reference document contract checks: 9 assertions passed");

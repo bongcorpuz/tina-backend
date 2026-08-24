@@ -224,9 +224,10 @@ export async function resolveIndexedSourceCardTarget(target = "", { exactAuthori
       query: cleanTarget,
       keyword: cleanTarget,
       targetAuthorities: [cleanTarget],
-      topK: 1
+      topK: 8
     });
-    return Array.isArray(matches) && matches.length > 0 ? matches[0] : null;
+    if (!Array.isArray(matches)) return null;
+    return matches.find((match) => match && canonicalDocumentIdOf(match)) || null;
   } catch (error) {
     logger?.warn?.("[PATCH_033D_R1_INDEXED_SOURCE_CARD_LOOKUP_FAILED]", {
       target: cleanTarget.slice(0, 80),
