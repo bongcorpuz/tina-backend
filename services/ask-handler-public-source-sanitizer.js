@@ -37,7 +37,13 @@ export function publicSourceCardDocumentId(card = {}) {
 
 export function publicSourceCardUrl(value = "") {
   const url = normalizeText(value);
-  return /^https?:\/\//i.test(url) ? url : "";
+  if (!/^https?:\/\//i.test(url)) return "";
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === "drive.google.com" || host === "docs.google.com" ? "" : url;
+  } catch {
+    return "";
+  }
 }
 
 export function sanitizePublicSourceCard(card = {}) {

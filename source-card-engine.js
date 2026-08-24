@@ -3,6 +3,8 @@
 
 "use strict";
 
+import { canonicalDocumentIdOf } from "./services/source-document-identity.js";
+
 import { canonicalSourceKey } from "./source-visibility-engine.js";
 
 function safeStr(v) {
@@ -20,7 +22,13 @@ function publicText(value = "") {
 
 function publicUrl(value = "") {
   const url = safeStr(value).trim();
-  return /^https?:\/\//i.test(url) ? url : "";
+  if (!/^https?:\/\//i.test(url)) return "";
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === "drive.google.com" || host === "docs.google.com" ? "" : url;
+  } catch {
+    return "";
+  }
 }
 
 export function finalSourceCardCanonicalKey(card = {}) {
@@ -103,6 +111,7 @@ export function sanitizePublicSourceCard(card = {}) {
   const normalizedReference = publicText(card.normalizedReference || card.normalized_reference || "");
   const authorityRole = publicText(card.authorityRole || card.authority_role || "");
   const authorityMatchTier = Number(card.authorityMatchTier || card.authority_match_tier || 0);
+  const documentId = canonicalDocumentIdOf(card);
   const safeUrl = publicUrl(
     card.publicUrl    || card.public_url    ||
     card.driveViewUrl || card.drive_view_url ||
@@ -115,6 +124,7 @@ export function sanitizePublicSourceCard(card = {}) {
     displayLabel: displayLabel || title,
     citation,
     authorityType: publicText(card.authorityType || card.authority_type || ""),
+    ...(documentId ? { documentId, document_id: documentId } : {}),
     limitationRequired: card.limitationRequired === true,
     ...(normalizedReference ? { normalizedReference } : {}),
     ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? { authorityMatchTier } : {}),
