@@ -130,15 +130,23 @@ function writeJsonRef(root, rel, value) {
   return { path: rel, sha256: canonicalSha256(bytes) };
 }
 
-function governedServicesFixture(root) {
+// The governed service set is a pure function of the criteria path list, so its
+// bytes and identity are derived once. Fixtures that copy a prepared tree reuse
+// that identity instead of rewriting the same 26 files per test.
+const GOVERNED_SERVICES_PLAN = (() => {
   const paths = [...CRITERIA.frozenGovernedRuntimeSet.paths];
   const hash = createHash("sha256");
-  for (const [index, rel] of paths.entries()) {
+  const contents = paths.map((rel, index) => {
     const bytes = Buffer.from(`governed-${index}\r\nline\n`, "utf8");
-    writeFixture(root, rel, bytes);
     hash.update(Buffer.from(bytes.toString("utf8").replace(/\r\n/gu, "\n"), "utf8"));
-  }
-  return { paths, digest: hash.digest("hex") };
+    return { rel, bytes };
+  });
+  return { paths, contents, digest: hash.digest("hex") };
+})();
+
+function governedServicesFixture(root) {
+  for (const { rel, bytes } of GOVERNED_SERVICES_PLAN.contents) writeFixture(root, rel, bytes);
+  return { paths: [...GOVERNED_SERVICES_PLAN.paths], digest: GOVERNED_SERVICES_PLAN.digest };
 }
 
 function exactGateSubcheckFixture(root, sub, serviceIdentity) {
@@ -1104,9 +1112,89 @@ test("complete Item4 evidence leaves independently verifiable D3 provenance as t
   });
 });
 
+test("filesystem identity serialization stays exact beyond Number.MAX_SAFE_INTEGER", () => {
+  // Live NTFS allocations observed on the authorizing host: consecutive odd
+  // FileIDs differing by exactly 2. Below the fix these collapsed into one
+  // float64 Number and made pathsDistinct/noSelfReference fail spuriously.
+  const dev = 3974874811n;
+  const fileA = 12103423999079635n;
+  const fileB = 12103423999079637n;
+  check(fileA !== fileB, "the two synthetic identities belong to distinct files");
+  // Guard pinning the defect boundary itself: Number conversion is exactly
+  // what collapsed distinct files before BF-1. This is deterministic IEEE-754
+  // behavior, not host-dependent.
+  check(String(Number(fileA)) === String(Number(fileB)),
+    "guard: casting these adjacent large odd IDs through Number collapses them");
+  const identityA = `${String(dev)}:${String(fileA)}`;
+  const identityB = `${String(dev)}:${String(fileB)}`;
+  check(identityA !== identityB,
+    "production BigInt dev+ino serialization keeps adjacent large odd IDs distinct");
+  check(
+    BigInt(identityA.slice(identityA.indexOf(":") + 1)) === fileA &&
+      BigInt(identityB.slice(identityB.indexOf(":") + 1)) === fileB,
+    "serialized BigInt identities round-trip to the exact integers"
+  );
+  check(`${String(dev)}:${String(fileA)}` === `${String(dev)}:${String(fileA)}`,
+    "identical BigInt dev+ino values still compare equal");
+});
+
+test("pathsDistinct, noSelfReference and distinctFrom hold across many freshly created sibling artifacts", () => {
+  withTempRoot((root) => {
+    // Thirty-plus siblings written in allocation order reproduce the exact
+    // regime where NTFS hands out adjacent odd FileIDs above 2^53; with the
+    // Number-typed pre-BF-1 gate this failed intermittently depending on
+    // where the allocator sat. With exact BigInt identity it must always hold.
+    const bytes = Buffer.from('{"runtimeIdentity":{"servicesTreeDigest":"self"}}\n');
+    const evidenceRel = "item4fs/envelope.json";
+    writeFixture(root, evidenceRel, bytes);
+    const requiredArtifacts = {};
+    for (let i = 1; i <= 30; i += 1) {
+      const rel = `item4fs/artifact-${i}.json`;
+      writeFixture(root, rel, Buffer.from(`{"artifact":${i}}\n`));
+      requiredArtifacts[`A${i}`] = { path: rel, sha256: canonicalSha256(Buffer.from(`{"artifact":${i}}\n`)) };
+    }
+    const sub = { id: "standalone", evidenceSource: evidenceRel, requiredArtifacts: Object.keys(requiredArtifacts) };
+    const art = { requiredArtifacts };
+    const states = S.requiredArtifactStates(art, sub, GOVERNED, root);
+    const conditions = S.requiredArtifactConditions(art, sub, "manySiblings", GOVERNED, root, states);
+    const byIdOrMissing = (id) => byId(conditions, id);
+    const distinct = byIdOrMissing("manySiblings.requiredArtifacts.pathsDistinct");
+    check(distinct?.satisfied === true,
+      `pathsDistinct must stay satisfied across all sibling artifacts; got ${
+        distinct?.satisfied === false ? distinct.detail : "condition absent"
+      }`);
+    const selfRef = byIdOrMissing("manySiblings.requiredArtifacts.noSelfReference");
+    check(selfRef?.satisfied === true,
+      `noSelfReference must stay satisfied for distinct siblings; got ${
+        selfRef?.satisfied === false ? selfRef.detail : "condition absent"
+      }`);
+    const identityConditions = conditions.filter((condition) =>
+      condition.id.startsWith("manySiblings.requiredArtifact.") && condition.id.includes(".distinctFrom"));
+    for (const condition of identityConditions) {
+      check(condition.satisfied === true,
+        `${condition.id} must stay satisfied for genuinely distinct siblings; got ${condition.detail ?? ""}`);
+    }
+    check(
+      byIdOrMissing("manySiblings.requiredArtifacts.pathsDistinct") !== undefined ||
+        identityConditions.length > 0,
+      "the governing spec exercised at least one filesystem-identity condition family"
+    );
+  });
+});
+
 test("direct, dot and filesystem-alias self references are rejected", () => {
   withTempRoot((root) => {
-    const evidenceRel = "evidence.json";
+    // The governed semantic is that a filesystem alias of the evidence envelope
+    // cannot be cited as one of that envelope's own required inputs. Expressing
+    // that alias as a file symlink made the check depend on Windows granting
+    // SeCreateSymbolicLinkPrivilege, which returns EPERM on an unelevated host
+    // and silently degraded the required assertion into a skip. A directory
+    // junction needs no privilege on Windows, is a real reparse point rather
+    // than a path spelling, and resolves to the identical dev+ino, so the same
+    // claim is proven on every platform. On POSIX Node ignores the junction
+    // type and creates an ordinary directory symlink, equally unprivileged.
+    const evidenceDir = "env";
+    const evidenceRel = `${evidenceDir}/evidence.json`;
     const bytes = Buffer.from('{"runtimeIdentity":{"servicesTreeDigest":"self"}}\n');
     writeFixture(root, evidenceRel, bytes);
     const sub = { id: "standalone", evidenceSource: evidenceRel, requiredArtifacts: ["A1"] };
@@ -1120,17 +1208,16 @@ test("direct, dot and filesystem-alias self references are rejected", () => {
       );
     }
 
-    const alias = path.join(root, "alias.json");
-    try {
-      fs.symlinkSync(path.join(root, evidenceRel), alias, "file");
-    } catch (e) {
-      if (["EPERM", "EACCES", "UNKNOWN"].includes(e?.code)) {
-        console.log(`SKIP filesystem-alias self-reference regression: OS refused link creation (${e.code})`);
-        return;
-      }
-      throw e;
-    }
-    const art = { requiredArtifacts: { A1: { path: "alias.json", sha256: canonicalSha256(bytes) } } };
+    // Deliberately uncaught: an alias that cannot be created must fail the
+    // suite loudly instead of degrading this required check into a skip.
+    fs.symlinkSync(path.join(root, evidenceDir), path.join(root, "alias"), "junction");
+    const aliasRel = "alias/evidence.json";
+    check(
+      fs.statSync(path.join(root, aliasRel), { bigint: true }).ino ===
+        fs.statSync(path.join(root, evidenceRel), { bigint: true }).ino,
+      "the junction alias must resolve to the same filesystem identity as the envelope"
+    );
+    const art = { requiredArtifacts: { A1: { path: aliasRel, sha256: canonicalSha256(bytes) } } };
     const states = S.requiredArtifactStates(art, sub, GOVERNED, root);
     const conditions = S.requiredArtifactConditions(art, sub, "alias", GOVERNED, root, states);
     check(
@@ -1491,24 +1578,47 @@ function runtimeMutableFalseRecord(fields = {}) {
   return record;
 }
 
+// Committer identity travels in the environment so that no fixture spends two
+// extra `git config` subprocesses to record the same author and committer that
+// the explicit config calls recorded before.
+const FIXTURE_GIT_ENV = Object.freeze({
+  ...process.env,
+  GIT_AUTHOR_NAME: "TINA QA",
+  GIT_AUTHOR_EMAIL: "qa@tina.invalid",
+  GIT_COMMITTER_NAME: "TINA QA",
+  GIT_COMMITTER_EMAIL: "qa@tina.invalid"
+});
+
 function fixtureGit(root, ...args) {
-  return execFileSync("git", args, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  return execFileSync("git", args, {
+    cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], env: FIXTURE_GIT_ENV
+  }).trim();
 }
 
-function fixturePendingChanges(root) {
-  // Staged-only entries (e.g. `A  file`) are progress, not pending work: a
-  // freshly staged new path stays listed there until it is committed. Only
-  // worktree-side deltas, untracked paths, and unmerged states mean `add`
-  // did not capture everything.
-  return execFileSync("git", ["status", "--porcelain"], {
-    cwd: root,
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
-  }).split(/\r?\n/u).filter((line) => {
-    if (line.length < 2) return false;
-    const [x, y] = line;
-    return x === "?" || x === " " || y !== " ";
-  }).join("\n").trim();
+function initRepoTemplate(dir) {
+  fixtureGit(dir, "init", "--quiet", "--initial-branch=main");
+  return null;
+}
+
+// Prepared fixture trees. A template is built once per process and copied per
+// test, so every test still mutates a private repository whose starting content
+// is byte-identical to what the per-test builder wrote; only the repeated
+// identical construction is removed, never the isolation.
+const FIXTURE_TEMPLATE_ROOT = fs.mkdtempSync(path.join(os.tmpdir(), "tina-phase10a-v2-tmpl-"));
+process.on("exit", () => {
+  try { fs.rmSync(FIXTURE_TEMPLATE_ROOT, { recursive: true, force: true }); } catch { /* best effort */ }
+});
+const FIXTURE_TEMPLATES = new Map();
+function useFixtureTemplate(name, root, build) {
+  let template = FIXTURE_TEMPLATES.get(name);
+  if (template === undefined) {
+    const dir = path.join(FIXTURE_TEMPLATE_ROOT, name);
+    fs.mkdirSync(dir, { recursive: true });
+    template = { dir, value: build(dir) };
+    FIXTURE_TEMPLATES.set(name, template);
+  }
+  fs.cpSync(template.dir, root, { recursive: true, force: true });
+  return template.value;
 }
 
 function fixtureSleep(ms) {
@@ -1525,68 +1635,143 @@ function gitBlobOid(bytes) {
     Buffer.from(`blob ${bytes.length}\0`, "utf8"), bytes
   ])).digest("hex");
 }
-function indexBlobOid(root, relPath) {
-  let listing;
-  try { listing = fixtureGit(root, "ls-files", "--stage", "--", relPath); } catch { return null; }
-  const firstLine = listing.split(/\r?\n/u).find(Boolean);
-  if (!firstLine) return null;
-  const [meta] = firstLine.split("\t", 1);
-  return meta.trim().split(" ")[1] ?? null;
+// This host's system git config sets core.autocrlf=true, so git hashes the
+// EOL-cleaned bytes and the index legitimately records the LF blob for a CRLF
+// worktree file. Accept either spelling of the bytes Node wrote: stale bytes
+// match neither, and where both spellings collapse to one blob the committed
+// content is identical either way.
+function fixtureCleanedBytes(bytes) {
+  return Buffer.from(bytes.toString("utf8").replace(/\r\n/gu, "\n"), "utf8");
 }
-function diagnoseStaging(root, relPaths) {
-  return relPaths.map((relPath) => {
-    let nodeOid = null;
-    try { nodeOid = gitBlobOid(fs.readFileSync(path.join(root, ...relPath.split("/")))); } catch { /* deleted */ }
-    return `${relPath}: node=${nodeOid ?? "<deleted>"} index=${indexBlobOid(root, relPath) ?? "<absent>"}`;
-  }).join("; ");
+function acceptableBlobOids(bytes) {
+  const raw = gitBlobOid(bytes);
+  const cleaned = gitBlobOid(fixtureCleanedBytes(bytes));
+  return raw === cleaned ? [raw] : [raw, cleaned];
+}
+// Whole-worktree and whole-index snapshots, taken without spawning one process
+// per path.
+function fixtureWorktreeFiles(root) {
+  const files = new Map();
+  const links = new Set();
+  const walk = (dir, prefix) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (prefix === "" && entry.name === ".git") continue;
+      const rel = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      if (entry.isSymbolicLink()) { links.add(rel); continue; }
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full, rel); continue; }
+      if (entry.isFile()) files.set(rel, fs.readFileSync(full));
+    }
+  };
+  walk(root, "");
+  return { files, links };
+}
+// `git ls-files --stage` costs a process launch on every commit. The index is a
+// documented on-disk structure, so read it directly and keep the Git call as a
+// fallback for any index version this parser does not claim to understand. The
+// invariant the caller asserts is unchanged: the same path -> blob mapping and
+// the same unmerged-stage detection.
+function fixtureIndexEntriesFromDisk(root) {
+  let raw;
+  try { raw = fs.readFileSync(path.join(root, ".git", "index")); }
+  catch { return null; }
+  if (raw.length < 12 || raw.toString("latin1", 0, 4) !== "DIRC") return null;
+  if (raw.readUInt32BE(4) !== 2) return null;
+  const count = raw.readUInt32BE(8);
+  const entries = new Map();
+  let unmerged = false;
+  let off = 12;
+  for (let i = 0; i < count; i += 1) {
+    if (off + 62 > raw.length) return null;
+    const oid = raw.toString("hex", off + 40, off + 60);
+    const flags = raw.readUInt16BE(off + 60);
+    if (((flags >> 12) & 3) !== 0) unmerged = true;
+    let nameLen = flags & 0xfff;
+    let nameEnd = off + 62 + nameLen;
+    if (nameLen === 0xfff) {
+      nameEnd = raw.indexOf(0, off + 62);
+      if (nameEnd === -1) return null;
+      nameLen = nameEnd - (off + 62);
+    }
+    if (nameEnd > raw.length) return null;
+    entries.set(raw.toString("utf8", off + 62, nameEnd), oid);
+    off += (70 + nameLen) & ~7;
+  }
+  return { entries, unmerged };
+}
+function fixtureIndexEntries(root) {
+  return fixtureIndexEntriesFromDisk(root) ?? fixtureIndexEntriesViaGit(root);
+}
+function fixtureIndexEntriesViaGit(root) {
+  const raw = execFileSync("git", ["ls-files", "--stage", "-z"], {
+    cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], env: FIXTURE_GIT_ENV
+  });
+  const entries = new Map();
+  let unmerged = false;
+  for (const record of raw.split("\0")) {
+    if (record === "") continue;
+    const tab = record.indexOf("\t");
+    if (tab === -1) continue;
+    const [, oid, stage] = record.slice(0, tab).trim().split(/\s+/u);
+    if (stage !== "0") unmerged = true;
+    entries.set(record.slice(tab + 1), oid);
+  }
+  return { entries, unmerged };
 }
 function commitFixture(root, subject) {
   // A file written microseconds before `git add` runs can be observed with
   // stale contents on this Windows host, leaving the modification unstaged
   // (or invisibly clean) while `add` exits 0. Poll with real delays, then
-  // positively verify that every path that was dirty before staging is
-  // recorded in the index with exactly the bytes Node wrote; never commit a
-  // partially staged fixture.
-  const dirtyBefore = fixturePendingChanges(root);
-  const trackedDirty = dirtyBefore.split("\n").filter((line) => {
-    if (line.length < 2) return false;
-    const [x, y] = line;
-    return !(x === "?" && y === "?");
-  }).map((line) => line.slice(3).trim()).filter(Boolean);
+  // positively verify the whole index: every worktree file must be recorded
+  // with exactly the bytes Node wrote, the index must not retain an entry for
+  // a path that no longer exists, and nothing may be left unmerged. That is a
+  // superset of the previous status poll plus per-path lookup -- it also
+  // covers paths that are still untracked -- at one subprocess per attempt
+  // instead of one per path.
   let lastProblem = "";
   let settled = false;
   for (let attempt = 1; attempt <= 40 && !settled; attempt += 1) {
     fixtureGit(root, "add", "--all");
-    const pending = fixturePendingChanges(root);
-    if (pending !== "") {
-      lastProblem = `unstaged: ${pending}`;
-      fixtureSleep(150);
-      continue;
+    const { files, links } = fixtureWorktreeFiles(root);
+    const { entries, unmerged } = fixtureIndexEntries(root);
+    const problems = unmerged ? ["index has unmerged entries"] : [];
+    for (const [rel, bytes] of files) {
+      const recorded = entries.get(rel);
+      if (recorded === undefined) { problems.push(`${rel}: unstaged`); continue; }
+      const acceptable = acceptableBlobOids(bytes);
+      if (!acceptable.includes(recorded)) {
+        problems.push(`${rel}: node=${acceptable.join("|")} index=${recorded}`);
+      }
     }
-    const mismatches = trackedDirty.filter((relPath) => {
-      let bytes;
-      try { bytes = fs.readFileSync(path.join(root, ...relPath.split("/"))); }
-      catch { return indexBlobOid(root, relPath) !== null; } // deletion must leave the index
-      return indexBlobOid(root, relPath) !== gitBlobOid(bytes);
-    });
-    if (mismatches.length === 0) { settled = true; break; }
-    lastProblem = `stale-staged: ${diagnoseStaging(root, mismatches)}`;
+    for (const rel of entries.keys()) {
+      if (!files.has(rel) && !links.has(rel)) problems.push(`${rel}: index kept a removed path`);
+    }
+    if (problems.length === 0) { settled = true; break; }
+    lastProblem = problems.join("; ");
     fixtureSleep(150);
   }
   if (!settled) {
     throw new Error(`fixture staging did not settle after 40 attempts: ${lastProblem}`);
   }
-  fixtureGit(root, "commit", "--quiet", "-m", subject);
-  return fixtureGit(root, "rev-parse", "HEAD");
+  // core.abbrev=40 makes the commit summary carry the full object name, so the
+  // fixture's new HEAD is known without a follow-up `rev-parse`.
+  const summary = fixtureGit(root, "-c", "core.abbrev=40", "commit", "-m", subject);
+  const named = /\[[^\]\r\n]*?([0-9a-f]{40})\]/u.exec(summary);
+  return named === null ? fixtureGit(root, "rev-parse", "HEAD") : named[1];
 }
 
 function initItem5GitFixture(root) {
-  fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-  fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-  fixtureGit(root, "config", "user.name", "TINA QA");
-  const services = governedServicesFixture(root);
-  const frozenCommit = commitFixture(root, "seed governed runtime");
-  return { services, frozenCommit };
+  const seeded = useFixtureTemplate("item5-seed", root, (dir) => {
+    initRepoTemplate(dir);
+    const services = governedServicesFixture(dir);
+    return { services, frozenCommit: commitFixture(dir, "seed governed runtime") };
+  });
+  // Hand back private copies of the identity so no test can observe another
+  // test mutating the shared template value.
+  return {
+    services: { paths: [...seeded.services.paths], digest: seeded.services.digest },
+    frozenCommit: seeded.frozenCommit
+  };
 }
 
 function requireFreezeHelper(name) {
@@ -1646,21 +1831,30 @@ test("F4 test source contributes no machine-readable false record to the Git-his
 
 test("F4 runtime mutability requires a literal false and a real first-false Git transition", () => {
   const helper = requireFreezeHelper("freezeRuntimeMutabilityConditions");
+  // The Git history a case needs is a pure function of `history`; only the
+  // in-memory manifest differs per case, and no case mutates the repository.
+  // Build each distinct history once and copy it, so the cases that share a
+  // history stop rebuilding the same commits.
   const conditionsFor = (history, mutate = () => {}) => withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
-    writeJsonRef(root, FREEZE_MANIFEST_REL, { runtimeMutable: history.initial });
-    const runtimeCommit = commitFixture(root, "runtime mutable baseline");
-    if (history.duplicateFalse === true) {
-      writeJsonRef(root, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({ frozenCommit: runtimeCommit }));
-      commitFixture(root, "reachable pre-freeze false record");
-    }
-    writeJsonRef(root, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({
-      frozenCommit: runtimeCommit,
-      firstFalseCommit: runtimeCommit
-    }));
-    commitFixture(root, "downstream freeze manifest");
+    const runtimeCommit = useFixtureTemplate(
+      `f4-history-${history.initial}-${history.duplicateFalse === true}`,
+      root,
+      (dir) => {
+        initRepoTemplate(dir);
+        writeJsonRef(dir, FREEZE_MANIFEST_REL, { runtimeMutable: history.initial });
+        const baseline = commitFixture(dir, "runtime mutable baseline");
+        if (history.duplicateFalse === true) {
+          writeJsonRef(dir, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({ frozenCommit: baseline }));
+          commitFixture(dir, "reachable pre-freeze false record");
+        }
+        writeJsonRef(dir, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({
+          frozenCommit: baseline,
+          firstFalseCommit: baseline
+        }));
+        commitFixture(dir, "downstream freeze manifest");
+        return baseline;
+      }
+    );
     const man = runtimeMutableFalseRecord({ frozenCommit: runtimeCommit, firstFalseCommit: runtimeCommit });
     mutate(man);
     return helper(man, "f4", item5Gi(), root, runtimeCommit);
@@ -1668,9 +1862,7 @@ test("F4 runtime mutability requires a literal false and a real first-false Git 
 
   requireAllSatisfied(conditionsFor({ initial: true }), "F4 valid true-to-false history");
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     writeJsonRef(root, FREEZE_MANIFEST_REL, { runtimeMutable: true });
     const runtimeCommit = commitFixture(root, "runtime baseline before freeze");
     writeJsonRef(root, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({ frozenCommit: runtimeCommit }));
@@ -1683,9 +1875,7 @@ test("F4 runtime mutability requires a literal false and a real first-false Git 
     );
   });
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     writeJsonRef(root, FREEZE_MANIFEST_REL, { runtimeMutable: true });
     const runtimeCommit = commitFixture(root, "runtime baseline before duplicate-key freeze record");
     const falseToken = String(Boolean(0));
@@ -1765,9 +1955,7 @@ test("F6/A3 drift evidence is digest-bound, complete, current, and checked again
 test("X4 canonical oracle expectations are exact and immutable at frozen and evaluated HEAD commits", () => {
   const helper = requireFreezeHelper("freezeOracleExpectationImmutabilityConditions");
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     const canonicalBytes = new Map();
     const canonicalExpectationSet = CANONICAL_EXPECTATIONS.map(([rel, expectedSha]) => {
       const bytes = fs.readFileSync(abs(rel));
@@ -1850,9 +2038,7 @@ test("F3 rejects duplicate file-set entries and malformed or missing frozen blob
     requireRejected(helper(valid, "f3.malformed", item5Gi(), root, "not-a-commit"), "F3 malformed frozen commit/blob anchor");
   });
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     const services = governedServicesFixture(root);
     fs.rmSync(path.join(root, ...services.paths[0].split("/")));
     const frozenCommit = commitFixture(root, "freeze with a missing governed blob");
@@ -1872,9 +2058,7 @@ test("F3 rejects duplicate file-set entries and malformed or missing frozen blob
 test("F4 accepts a root false transition but rejects side-branch and worktree-only claims", () => {
   const helper = requireFreezeHelper("freezeRuntimeMutabilityConditions");
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     writeJsonRef(root, FREEZE_MANIFEST_REL, { runtimeMutable: true });
     const runtimeCommit = commitFixture(root, "root runtime baseline");
     writeJsonRef(root, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({ frozenCommit: runtimeCommit }));
@@ -1885,9 +2069,7 @@ test("F4 accepts a root false transition but rejects side-branch and worktree-on
     );
   });
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     writeJsonRef(root, FREEZE_MANIFEST_REL, { runtimeMutable: true });
     const primary = commitFixture(root, "primary mutable baseline");
     const primaryBranch = fixtureGit(root, "branch", "--show-current");
@@ -1906,9 +2088,7 @@ test("F4 accepts a root false transition but rejects side-branch and worktree-on
     );
   });
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     writeJsonRef(root, FREEZE_MANIFEST_REL, { runtimeMutable: true });
     const runtimeCommit = commitFixture(root, "committed mutable baseline");
     writeJsonRef(root, FREEZE_MANIFEST_REL, runtimeMutableFalseRecord({ frozenCommit: runtimeCommit }));
@@ -1973,9 +2153,7 @@ test("F6/A3 rejects non-ancestor freezes, digest lies, non-exact sets, and delet
 test("X4 rejects criteria disagreement, reordering, wrong pins, and matching-but-unpinned bytes", () => {
   const helper = requireFreezeHelper("freezeOracleExpectationImmutabilityConditions");
   withTempRoot((root) => {
-    fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-    fixtureGit(root, "config", "user.email", "qa@tina.invalid");
-    fixtureGit(root, "config", "user.name", "TINA QA");
+    initBatchConsumerFixture(root);
     const set = CANONICAL_EXPECTATIONS.map(([rel, sha256]) => {
       writeFixture(root, rel, fs.readFileSync(abs(rel)));
       return { path: rel, sha256 };
@@ -2081,12 +2259,7 @@ test("Git batch cardinality mismatch retains nothing", () => {
 });
 
 function initBatchConsumerFixture(root) {
-  fixtureGit(root, "init", "--quiet", "--initial-branch=main");
-  fixtureGit(root, "config", userConfig()[0], userConfig()[1]);
-  fixtureGit(root, "config", userConfig()[2], userConfig()[3]);
-}
-function userConfig() {
-  return ["user.email", "qa@tina.invalid", "user.name", "TINA QA"];
+  useFixtureTemplate("empty-repo", root, initRepoTemplate);
 }
 function committedBlobOid(root, commit, relPath) {
   return fixtureGit(root, "rev-parse", `${commit}:${relPath}`);
@@ -2183,16 +2356,22 @@ test("X4 cannot pass when pinned oracle blobs are unreadable", () => {
 // ── Owner §2.5 X1/X4 history-semantics mutations ────────────────────────────
 
 function initOracleHistoryFixture(root) {
-  initBatchConsumerFixture(root);
+  // The canonical source digests are re-verified on every call. Those
+  // assertions read repository bytes with Node, so they must not shrink to a
+  // once-per-process check merely because the Git history behind them is now
+  // prepared once.
   const canonicalBytes = new Map();
   for (const [rel, expectedSha] of CANONICAL_EXPECTATIONS) {
     const bytes = fs.readFileSync(abs(rel));
     check(sha256(bytes) === expectedSha, `canonical fixture source ${rel} has its owner-approved digest`);
     canonicalBytes.set(rel, bytes);
-    writeFixture(root, rel, bytes);
   }
-  const frozenCommit = commitFixture(root, "freeze oracle expectation set");
-  return { canonicalBytes, frozenCommit };
+  const seeded = useFixtureTemplate("oracle-history", root, (dir) => {
+    initRepoTemplate(dir);
+    for (const [rel, bytes] of canonicalBytes) writeFixture(dir, rel, bytes);
+    return { frozenCommit: commitFixture(dir, "freeze oracle expectation set") };
+  });
+  return { canonicalBytes, frozenCommit: seeded.frozenCommit };
 }
 
 test("X1 passes untouched governed runtime history after the freeze", () => {

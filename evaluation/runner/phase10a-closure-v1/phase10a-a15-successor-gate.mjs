@@ -421,6 +421,12 @@ export function topLevelRead(root, relPath, { kind = "TOP_LEVEL", maxBytes = TOP
         realPath
       });
     }
+    // Filesystem identity must stay exact: NTFS FileIDs routinely exceed
+    // Number.MAX_SAFE_INTEGER, and float64 rounding collapses distinct odd IDs
+    // that differ by one ulp into the same identity, which would make
+    // pathsDistinct / noSelfReference fail spuriously. BigInt keeps the full
+    // 64-bit dev+ino; the regular fstat above stays Number-typed for size math.
+    const idStat = fs.fstatSync(fd, { bigint: true });
     return {
       ok: true,
       present: true,
@@ -435,7 +441,7 @@ export function topLevelRead(root, relPath, { kind = "TOP_LEVEL", maxBytes = TOP
       size: before.size,
       realPath,
       statIdentity:
-        before.dev !== undefined && before.ino !== undefined ? `${String(before.dev)}:${String(before.ino)}` : null
+        idStat.dev !== undefined && idStat.ino !== undefined ? `${String(idStat.dev)}:${String(idStat.ino)}` : null
     };
   } catch (error) {
     return fail("INPUT_UNREADABLE", `unreadable ${kind} input: ${error.message}`, {
@@ -1893,15 +1899,17 @@ function pathIdentity(root, rel, readable) {
     return rel;
   }
   if (readable !== true) return inside;
+  // bigint: true keeps dev+ino exact beyond Number.MAX_SAFE_INTEGER; see the
+  // identity note in topLevelRead. Fallbacks below stay unchanged.
   try {
     const real = fs.realpathSync.native(inside);
-    const st = fs.statSync(real);
+    const st = fs.statSync(real, { bigint: true });
     if (st.dev !== undefined && st.ino !== undefined) return `fs:${String(st.dev)}:${String(st.ino)}`;
     return process.platform === "win32" ? real.toLowerCase() : real;
   } catch {
     try {
       const real = fs.realpathSync(inside);
-      const st = fs.statSync(real);
+      const st = fs.statSync(real, { bigint: true });
       if (st.dev !== undefined && st.ino !== undefined) return `fs:${String(st.dev)}:${String(st.ino)}`;
       return process.platform === "win32" ? real.toLowerCase() : real;
     } catch {
