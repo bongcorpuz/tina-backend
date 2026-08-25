@@ -2,6 +2,7 @@
 "use strict";
 
 import { buildSection51AmendmentChainMetadata } from "../section51-authority-chain.js";
+import { canonicalDocumentIdOf } from "./source-document-identity.js";
 
 /**
  * Pure public source/card sanitizer helpers for ask-handler responses.
@@ -30,9 +31,19 @@ export function publicSourceCardText(value = "") {
   return text;
 }
 
+export function publicSourceCardDocumentId(card = {}) {
+  return canonicalDocumentIdOf(card) || "";
+}
+
 export function publicSourceCardUrl(value = "") {
   const url = normalizeText(value);
-  return /^https?:\/\//i.test(url) ? url : "";
+  if (!/^https?:\/\//i.test(url)) return "";
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === "drive.google.com" || host === "docs.google.com" ? "" : url;
+  } catch {
+    return "";
+  }
 }
 
 export function sanitizePublicSourceCard(card = {}) {
@@ -40,6 +51,7 @@ export function sanitizePublicSourceCard(card = {}) {
   const title = publicSourceCardText(card.title) || citation || "Source";
   const displayLabel = publicSourceCardText(card.displayLabel || card.label || citation || title) || title;
   const safeUrl = publicSourceCardUrl(card.publicUrl || card.public_url || "");
+  const documentId = publicSourceCardDocumentId(card);
 
   // PHASE-10A14-R6 (P1-R5-001): the amendment-chain summary must survive to the public
   // source card. Upstream top-level fields do not survive the reranker/SAS/DSF
@@ -75,6 +87,7 @@ export function sanitizePublicSourceCard(card = {}) {
     authorityType: publicSourceCardText(card.authorityType || card.authority_type || ""),
     displayLabel,
     limitationRequired: card.limitationRequired === true,
+    ...(documentId ? { documentId, document_id: documentId } : {}),
     ...(safeUrl ? { publicUrl: safeUrl } : {}),
     ...(amendmentChain ? { amendmentChainReviewed: true, chainReviewed: true, amendmentChain } : {})
   };
@@ -87,6 +100,7 @@ export function sanitizePublicSourceCards(cards = []) {
 export default {
   publicSourceCardText,
   publicSourceCardUrl,
+  publicSourceCardDocumentId,
   sanitizePublicSourceCard,
   sanitizePublicSourceCards
 };

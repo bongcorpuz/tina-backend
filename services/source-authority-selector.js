@@ -1,6 +1,8 @@
 // FILE: services/source-authority-selector.js
 "use strict";
 
+import { canonicalDocumentIdOf } from "./source-document-identity.js";
+
 /**
  * Source Authority Selector — Stage 1: Passive Diagnostic
  * Version: 1.0.0-diagnostic
@@ -773,6 +775,9 @@ export function selectSourceAuthorities({
         meta.driveViewUrl || meta.drive_view_url || meta.url          || meta.webViewLink  ||
         meta.web_view_link || meta.sourceUrl     || meta.source_url   || "";
       const eligibilityFields = eligibility.fields;
+      const documentId =
+        c.documentId || c.document_id || c.fileId || c.file_id ||
+        meta.documentId || meta.document_id || meta.fileId || meta.file_id || canonicalDocumentIdOf(c) || null;
 
       seen.set(dedupeKey, {
         _targetMatch,
@@ -799,6 +804,8 @@ export function selectSourceAuthorities({
         web_view_link:       c.web_view_link  || meta.web_view_link  || "",
         sourceUrl:           c.sourceUrl      || c.source_url        || meta.sourceUrl   || meta.source_url || "",
         source_url:          c.source_url     || meta.source_url     || "",
+        documentId,
+        document_id:         documentId,
         documentTitle:       c.document_title || c.documentTitle     || meta.documentTitle || docTitle || "",
         document_title:      c.document_title || meta.documentTitle  || "",
         normalizedReference: provRef || c.normalizedReference || c.normalized_reference || meta.normalizedReference || "",

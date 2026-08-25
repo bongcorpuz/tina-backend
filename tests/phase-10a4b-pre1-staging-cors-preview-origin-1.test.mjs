@@ -57,6 +57,12 @@ const PROD = {
   CORS_ORIGIN: "https://tina-ai.vercel.app"
 };
 const LOCAL = { NODE_ENV: "development" };
+const RENDER_PR = {
+  NODE_ENV: "production",
+  RENDER_SERVICE_NAME: "tina-backend-pr-9",
+  IS_PULL_REQUEST: "true"
+};
+const RENDER_NON_PR = { ...RENDER_PR, IS_PULL_REQUEST: "false" };
 
 // SYNTHETIC approved Preview origins (pattern-matching; NOT the real private host).
 const APPROVED_PREVIEW_ALIAS = "https://tina-ai-git-example-bongcorpuzs-projects.vercel.app";
@@ -142,6 +148,15 @@ await test("no wildcard-with-credentials and no arbitrary reflection introduced"
   check(summary.stagingPreviewAuthorization === true, "staging summary reports preview-authorization boolean");
   check(summarizeCorsPolicy(PROD).stagingPreviewAuthorization === false, "production summary reports no preview authorization");
   check(!Object.keys(summary).some((k) => /origin|secret|key|url|host/i.test(k)), "summary keys expose no origin/host/secret values");
+});
+
+await test("Render PR Preview authorization requires the exact platform marker", () => {
+  check(isStagingBackendRuntime(RENDER_PR) === true, "Render PR runtime is Preview-eligible");
+  check(isStagingBackendRuntime(RENDER_NON_PR) === false, "non-PR Render runtime remains fail-closed");
+  const allowed = corsOriginDecision(APPROVED_PREVIEW_ALIAS, resolveCorsPolicy(RENDER_PR));
+  check(allowed.allow === true && allowed.credentials === true && allowed.reflect === true, "approved owner-team Preview origin is credentialed on the Render PR only");
+  assert.deepEqual(runDelegate(RENDER_PR, APPROVED_PREVIEW_ALIAS), { origin: APPROVED_PREVIEW_ALIAS, credentials: true }, "Render PR reflects the exact approved origin");
+  assert.deepEqual(runDelegate(RENDER_NON_PR, APPROVED_PREVIEW_ALIAS), { origin: false, credentials: false }, "non-PR Render runtime remains fail-closed");
 });
 
 console.log(`\nPHASE-10A4B-PRE1 staging CORS preview-origin tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);

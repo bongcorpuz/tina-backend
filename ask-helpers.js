@@ -1,6 +1,8 @@
 // FILE: ask-helpers.js
 "use strict";
 
+import { canonicalDocumentIdOf } from "./services/source-document-identity.js";
+
 /**
  * TINA Ask Helpers
  * Version: 5.1.0
@@ -870,6 +872,8 @@ export function buildVisibleSources(docs = [], options = {}) {
       source: trimText(getDocPath(doc), MAX_SOURCE_PATH_CHARS),
       sourcePath: trimText(getDocPath(doc), MAX_SOURCE_PATH_CHARS),
       sourceTitle: trimText(cleanDisplayTitle(doc), MAX_SOURCE_TITLE_CHARS),
+      documentId: canonicalDocumentIdOf(doc),
+      document_id: canonicalDocumentIdOf(doc),
       citation: trimText(
         doc.citation ||
           doc.reference ||

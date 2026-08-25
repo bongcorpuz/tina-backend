@@ -3,6 +3,8 @@
 
 "use strict";
 
+import { canonicalDocumentIdOf } from "./services/source-document-identity.js";
+
 import { canonicalSourceKey } from "./source-visibility-engine.js";
 
 function safeStr(v) {
@@ -20,7 +22,13 @@ function publicText(value = "") {
 
 function publicUrl(value = "") {
   const url = safeStr(value).trim();
-  return /^https?:\/\//i.test(url) ? url : "";
+  if (!/^https?:\/\//i.test(url)) return "";
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === "drive.google.com" || host === "docs.google.com" ? "" : url;
+  } catch {
+    return "";
+  }
 }
 
 export function finalSourceCardCanonicalKey(card = {}) {
@@ -103,6 +111,7 @@ export function sanitizePublicSourceCard(card = {}) {
   const normalizedReference = publicText(card.normalizedReference || card.normalized_reference || "");
   const authorityRole = publicText(card.authorityRole || card.authority_role || "");
   const authorityMatchTier = Number(card.authorityMatchTier || card.authority_match_tier || 0);
+  const documentId = canonicalDocumentIdOf(card);
   const safeUrl = publicUrl(
     card.publicUrl    || card.public_url    ||
     card.driveViewUrl || card.drive_view_url ||
@@ -115,6 +124,7 @@ export function sanitizePublicSourceCard(card = {}) {
     displayLabel: displayLabel || title,
     citation,
     authorityType: publicText(card.authorityType || card.authority_type || ""),
+    ...(documentId ? { documentId, document_id: documentId } : {}),
     limitationRequired: card.limitationRequired === true,
     ...(normalizedReference ? { normalizedReference } : {}),
     ...(Number.isFinite(authorityMatchTier) && authorityMatchTier > 0 ? { authorityMatchTier } : {}),
@@ -136,6 +146,7 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
       ""
   );
   if (!citation) return null;
+  const documentId = canonicalDocumentIdOf(doc);
 
   return sanitizePublicSourceCard({
     title: doc.title || doc.documentTitle || doc.document_title || meta.documentTitle || meta.document_title || citation,
@@ -154,6 +165,7 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
       meta.normalized_reference ||
       meta.normalizedReference ||
       citation,
+    ...(documentId ? { documentId, document_id: documentId } : {}),
     authorityType: doc.authorityType || doc.authority_type || meta.authorityType || meta.authority_type || "STATUTE",
     authorityRole: doc.authorityRole || doc.authority_role || meta.authorityRole || meta.authority_role || "",
     authorityMatchTier:
@@ -171,6 +183,37 @@ export function sourceCardFromRetrievedTarget(doc = {}, target = "") {
   });
 }
 
+export async function enrichSourceCardsWithVerifiedDocumentIdentity(cards = [], { exactAuthoritySearch, logger = console } = {}) {
+  const list = Array.isArray(cards) ? cards : [];
+  if (typeof exactAuthoritySearch !== "function") return list;
+  const cache = new Map();
+  const enriched = [];
+
+  for (const card of list) {
+    if (canonicalDocumentIdOf(card)) {
+      enriched.push(card);
+      continue;
+    }
+
+    const target = safeStr(card?.normalizedReference || card?.normalized_reference || card?.citation || card?.label || card?.title || "");
+    if (!target) {
+      enriched.push(card);
+      continue;
+    }
+
+    const key = canonicalSourceKey(target);
+    if (!cache.has(key)) {
+      cache.set(key, await resolveIndexedSourceCardTarget(target, { exactAuthoritySearch, logger }));
+    }
+
+    const matchedRecord = cache.get(key);
+    const documentId = matchedRecord ? canonicalDocumentIdOf(matchedRecord) : "";
+    enriched.push(documentId ? { ...card, documentId, document_id: documentId } : card);
+  }
+
+  return enriched;
+}
+
 export async function resolveIndexedSourceCardTarget(target = "", { exactAuthoritySearch, logger = console } = {}) {
   const cleanTarget = safeStr(target).trim();
   if (!cleanTarget) return null;
@@ -181,9 +224,10 @@ export async function resolveIndexedSourceCardTarget(target = "", { exactAuthori
       query: cleanTarget,
       keyword: cleanTarget,
       targetAuthorities: [cleanTarget],
-      topK: 1
+      topK: 8
     });
-    return Array.isArray(matches) && matches.length > 0 ? matches[0] : null;
+    if (!Array.isArray(matches)) return null;
+    return matches.find((match) => match && canonicalDocumentIdOf(match)) || null;
   } catch (error) {
     logger?.warn?.("[PATCH_033D_R1_INDEXED_SOURCE_CARD_LOOKUP_FAILED]", {
       target: cleanTarget.slice(0, 80),
@@ -194,6 +238,7 @@ export async function resolveIndexedSourceCardTarget(target = "", { exactAuthori
 }
 
 export default {
+  enrichSourceCardsWithVerifiedDocumentIdentity,
   finalSourceCardCanonicalKey,
   mergeFinalSourceCards,
   resolveIndexedSourceCardTarget,

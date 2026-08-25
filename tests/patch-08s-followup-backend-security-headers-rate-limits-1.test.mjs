@@ -301,5 +301,16 @@ await test("no TINA_ENABLE_MEMORY_* introduced and no live IO in helpers/test", 
   void combined;
 });
 
+await test("Preview CORP exception is explicit while strict same-site remains the default", () => {
+  check(getSecurityHeaders()["Cross-Origin-Resource-Policy"] === "same-site", "default CORP remains same-site");
+  check(getSecurityHeaders({ crossOriginResourcePolicy: "cross-origin" })["Cross-Origin-Resource-Policy"] === "cross-origin", "explicit Preview option permits cross-origin");
+  check(getSecurityHeaders({ crossOriginResourcePolicy: "same-origin" })["Cross-Origin-Resource-Policy"] === "same-site", "unsupported override fails back to same-site");
+  const res = mockRes();
+  createSecurityHeadersMiddleware({ crossOriginResourcePolicy: "cross-origin" })({}, res, () => {});
+  check(res.getHeader("Cross-Origin-Resource-Policy") === "cross-origin", "middleware applies only the explicit Preview override");
+  check(/isStagingBackendRuntime\(process\.env\)/.test(serverSrc), "server gates Preview override through the Render runtime classifier");
+  check(/crossOriginResourcePolicy:\s*previewCrossOriginResourcePolicy/.test(serverSrc), "server passes only the selected CORP policy to the middleware");
+});
+
 console.log(`\nPATCH-08S-FOLLOWUP-BACKEND-SECURITY-HEADERS-RATE-LIMITS-1 tests: ${passed} passed, ${failed} failed, ${assertions} assertions`);
 if (failed > 0) process.exit(1);

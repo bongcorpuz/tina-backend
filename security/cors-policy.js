@@ -49,6 +49,9 @@ const STAGING_BACKEND_HOST_RE = /(^|\.)tina-backend-staging\.onrender\.com$/i;
 export function isStagingBackendRuntime(env = process.env) {
   const e = env || {};
   const svc = String(e.RENDER_SERVICE_NAME || "").toLowerCase();
+  // Render injects this exact marker only for a pull-request Preview service.
+  // Require a Render service identity too, keeping local and Production fail-closed.
+  if (e.IS_PULL_REQUEST === "true" && svc) return true;
   if (svc.includes("staging")) return true;
   const ext = String(e.RENDER_EXTERNAL_URL || "");
   if (ext) {
