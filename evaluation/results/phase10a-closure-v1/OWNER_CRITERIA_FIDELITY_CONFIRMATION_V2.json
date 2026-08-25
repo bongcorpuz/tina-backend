@@ -1,0 +1,148 @@
+{
+  "artifact": "OWNER_CRITERIA_FIDELITY_CONFIRMATION_V2",
+  "version": 2,
+  "immutable": true,
+  "phase": "PHASE_10A",
+  "workUnit": "PHASE-10A-SEQUENCING-V2",
+  "branch": "feature/phase10a-sequencing-v2",
+  "canonicalBaseCommit": "86872e034911dad14d9886a7c411ce27804351c2",
+  "recordedUtcDate": "2026-08-22",
+  "role": "Hash-verifiable owner record of the criteria-fidelity confirmation that PHASE10A_APPROVED_EXIT_CRITERIA_V2.json declares as a hard precondition on roadmap items 1-6. This artifact is the sole authority for that confirmation as it applies to the V2 criteria. The successor gate MUST carry only this artifact's digest, never an embedded approval claim.",
+  "confirms": {
+    "criteriaArtifactPath": "evaluation/results/phase10a-closure-v1/PHASE10A_APPROVED_EXIT_CRITERIA_V2.json",
+    "criteriaSha256": "b528eb2b6e88de676407af017e5c023ae69c130020520809e6620e2f49beacf6",
+    "digestBinding": "This confirmation is valid ONLY for the criteria artifact whose digest equals criteriaSha256 above. If the approved criteria are ever re-authored, this confirmation lapses by construction and a fresh owner confirmation is required. The successor gate enforces that binding as a DEFINITION-class condition.",
+    "confirmedSections": [
+      "criteria.decisionClosure",
+      "criteria.relationClosure",
+      "criteria.reasonClosure",
+      "criteria.standaloneAndIntegratedExactGates",
+      "criteria.frozenRuntime",
+      "criteria.postFreezeEvidence"
+    ]
+  },
+  "supersedes": {
+    "identity": "OWNER_CRITERIA_FIDELITY_CONFIRMATION_V1",
+    "supersededArtifact": "evaluation/results/phase10a-closure-v1/OWNER_CRITERIA_FIDELITY_CONFIRMATION_V1.json",
+    "supersededSha256": "f7dfa05ee89f5b1b53ca46dd790d09aac49b1ba7a57a77a3e5dc9be2c0d89e81",
+    "mode": "FORWARD_ONLY_ADDITIVE",
+    "v1Modified": false,
+    "v1RemainsValidForV1Criteria": true,
+    "note": "The V1 confirmation remains committed, unmodified, and remains the valid confirmation for the V1 criteria digest it binds. It is not retracted and it is not reinterpreted. Because it binds the V1 criteria digest by construction, it does not and cannot carry over to the V2 criteria; this artifact is the V2 confirmation."
+  },
+  "ownerApprovedScope": {
+    "role": "OWNER_AUTHORIZATION_FOR_THE_V2_SEQUENCING_CORRECTION",
+    "scopeInstruction": "Resolve the confirmed Item-4 / Item-5 sequencing contradiction by implementing the owner-approved additive V2 correction.",
+    "directedPurpose": [
+      "Item 4 remains PRE-FREEZE.",
+      "4a = standalone exact gates.",
+      "4b = local/in-process integrated /ask boundary-path measurement before freeze.",
+      "4b requires no deployed staging and no external network.",
+      "Item 4 must not require a freeze manifest or post-freeze campaign.",
+      "Restore full owner-approved Item-4 G1-G12 / A1-A5 requirements.",
+      "Restore Item-5 precondition that both Item-4 subchecks must already PASS.",
+      "Staging attribution to frozen commit belongs downstream in Item 5/6.",
+      "Add fail-closed sequencing detection / SAFE_PAUSE for future inversions.",
+      "V1 artifacts and historical evidence remain immutable."
+    ],
+    "note": "Structured summary of the existing owner directive for this unit; it is not represented as a verbatim quotation. Each directed purpose maps to a specific, checkable requirement in the V2 criteria artifact; correction.corrections in that artifact enumerates the mapping. This reissue does not claim a new or broader owner authorization."
+  },
+  "fidelityBasis": {
+    "role": "WHY_THIS_CONFIRMATION_IS_CHECKABLE_RATHER_THAN_MERELY_ASSERTED",
+    "method": "RESTORATION_FROM_A_COMMITTED_HASH_PINNED_OWNER_APPROVED_SOURCE",
+    "restoreSourcePath": "evaluation/results/phase-10a-reason-decision-relation-closure/v1/OWNER_DECISION_PACKAGE_ITEMS_4_5_6_AND_7_8_V1.md",
+    "restoreSourceSha256": "7d36460adcbb450d1bcb5081c5202ffbd9c7f2218a11fb0292c84a71d993e71a",
+    "restoreSourceCommitted": true,
+    "sectionsRelied": [
+      "1.3 Proposed governing language - ITEM 4, including the G1-G12 gate set, the split relation reporting rule, the 4a and 4b meanings and PASS rules, CRITERION 4 ANTI-CIRCULARITY (i)/(ii), required artifacts A1-A5, and all six numbered steps of the READ_MANIFEST_AND_VERDICT deterministic verification method",
+      "2.4 Freeze sits after item 4 and before item 6",
+      "2.5 ITEM 5 preconditions P1, P2, P3, PASS conditions F1-F7, FAIL conditions X1-X5 and BLOCKED condition B1"
+    ],
+    "verificationAvailableToAnyReviewer": "Because the source is committed and pinned by digest above, a reviewer can trace every V2 item-4 and item-5 requirement to the owner-approved text without relying on this artifact's assertion. The structured JSON is not claimed to be byte-identical to the prose source. V1 could not offer this hash binding: V1's own provenance recorded that the owner proposal text was not committed and therefore could not be hash-bound.",
+    "remediationReissue": "An external CHANGES_REQUIRED finding identified that the prior V2 criteria bytes omitted owner section 2.5 controls F3, F4, F6/A3, and X4; a further external CHANGES_REQUIRED finding in the same uncommitted unit identified that those bytes still encoded owner section 2.5 X1 and X4 only as endpoint frozenCommit-versus-HEAD equality, so a governed runtime or pinned oracle expectation edit after the freeze that was restored before verification would have passed. The corrected criteria bytes restore those already-owner-approved controls and encode X1/X4 as history-integrity rules over complete post-freeze Git history while keeping F6 an endpoint current-drift check. The same finding also required the successor gate's Git batch reader to fail closed whole-batch on malformed responses; that gate-level correction does not change this artifact's bound criteria digest beyond the criteria text it accompanies. This reissue binds only the corrected bytes; it does not claim a new or broader owner approval, byte-level owner review, external approval, or completed internal review.",
+    "divergencesFromSource": [
+      "The approved prose is expressed as machine-checkable fields (for example each of G1-G12 carries kind, numerator, denominator or expected verdict). This is a change of form, not of requirement.",
+      "The G2 substantive subset is recorded as 1623/1623 with vacuousRows 2097, which is the approved split reported as a ratio.",
+      "Anti-circularity requires BOTH the expectationFittingUsed === false flag that V1 carried AND one named alternative (i) or (ii) from the approved text. This is stricter than either source read alone and weaker than neither.",
+      "Evidence paths for the two subchecks are versioned to _V2.json and the envelope is pinned to EXACT_GATE_RESULT_V2, so a V1-shaped artifact cannot be read as V2 evidence. The approved text does not name file paths, so this adds specificity without altering any requirement.",
+      "The six numbered steps of the deterministic verification method are enumerated as fields (steps.S1 through steps.S6), each naming the condition family that enforces it. The approved text states the steps as prose; recording which family enforces which step makes coverage checkable by a reviewer instead of inferable, and makes a declared-but-unenforced step visible as a gap.",
+      "Step 3 (recompute every aggregate in A2 from A3) is enforced as a bound recomputation record rather than as a row-by-row re-derivation, and the limit is recorded verbatim in the criteria artifact at deterministicVerificationMethod.aggregateRecomputation.limitStatement. The reason is that the approved package does not define A3's row schema, and introducing an unapproved schema through a gate implementation would put a definition into governance that the owner never stated. This is the one place where the V2 enforcement is weaker than the most literal reading of the approved prose, and it is declared rather than concealed.",
+      "Required artifacts A1-A5 must be declared as path-plus-sha256 objects rather than bare paths. The approved text lists the artifacts in section 1.3 and requires their digest verification in step 1 of the same section; expressing the artifact list in the shape step 1 needs joins two approved requirements rather than adding a third.",
+      "Step 5's field-for-field comparison is made between the A2 and A4 documents read from their own digest-verified bytes, and the gate additionally requires every gate figure the evidence envelope reports to appear in that digest-verified A2. The approved text requires A4 to equal A2 field for field and defines A2 as the result artifact recording G1-G12; requiring the reported figures to be present in A2 is what makes those two statements about the same numbers. Its practical effect is that the figures live inside byte-verified artifacts rather than as free-standing envelope fields.",
+      "Owner section 2.5 numbers X1 and X4 among the FAIL conditions but names no detection algorithm for them; the V2 criteria specify deterministic full-history rev-list scanning after frozenCommit as the enforcement method. This adds specificity without altering any requirement: any post-freeze commit touching an enumerated governed path or a pinned expectation path already fails the owner-numbered conditions, and the scan only makes that failure detectable when HEAD has been restored. No governed-unfreeze mechanism exists anywhere in committed repository governance, so none is implemented and none is exempted."
+    ]
+  },
+  "reviewStatus": {
+    "externalIndependentReviewRequired": true,
+    "externalIndependentReviewObtained": false,
+    "internalReviewOutcomeClaimed": false,
+    "note": "This artifact records no completed internal, independent, or external review outcome. External independent review remains required and must inspect the finalized criteria bytes, this digest binding, and the later successor-gate implementation before any review clearance is recorded."
+  },
+  "limitations": {
+    "role": "EXPLICIT_LIMITS_ON_WHAT_THIS_CONFIRMATION_RESTS_ON",
+    "ownerReviewOfThisArtifactText": "NO_BYTE_LEVEL_OWNER_REVIEW_CLAIMED",
+    "statement": "The item-4 and item-5 definitions, including the restored owner section 2.5 F3, F4, F6/A3, and X4 controls, are derived from the committed owner-approved source pinned by digest. This reissue does not claim a new or broader owner approval, a byte-level owner review of either V2 JSON, external approval, or completed internal review.",
+    "knownCriteriaLimit": "The criteria express approved step 3 less literally than its prose reads. Step 3 requires every aggregate in A2 to be recomputed from A3. The criteria require the successor gate to verify A3's digest from bytes, count A3's row array in those verified bytes and require exactly 3720 entries, require the recomputation record to bind that verified digest, and require the recomputed figures to equal A2's field for field. The criteria do NOT require the gate to re-derive each row's decision, relation and reason from that row's own expected and actual values, because the approved package defines no per-row schema for A3 and an unapproved schema must not enter through the criteria artifact. The residual is stated at deterministicVerificationMethod.aggregateRecomputation.limitStatement. This confirmation records the limitation; it does not claim that a runner or probe has verified its practical bound.",
+    "secondKnownVerificationLimit": "Item-5 precondition P2 requires the tracked worktree to be clean at the moment of freeze. This confirmation does not verify P2 and does not claim that any successor-gate implementation performs a live worktree query. P2 must be verified independently when the freeze is considered; P1 and P3 remain mandatory according to their own criteria.",
+    "consequenceIfDivergenceIsFound": "If independent review finds any divergence between the V2 criteria text and the committed owner-approved source, or between the V2 criteria text and the owner directive, this confirmation must be treated as lapsed and re-issued against the corrected criteria digest. Because the confirmation binds criteriaSha256, any correction to the criteria artifact invalidates it automatically rather than silently carrying over.",
+    "whyRecordedRatherThanWithheld": "The owner authorized this artifact by name within the V2 file scope, and V1 established that this artifact is the mechanism by which the confirmation is recorded at all. Withholding it would leave the mechanism unexercised while the directive stood. Recording it with its basis pinned and its limits stated keeps the claim auditable; recording it without them would not."
+  },
+  "provenance": {
+    "ownerConfirmationOfFidelityRequired": true,
+    "ownerConfirmationOfFidelityStatus": "CONFIRMED",
+    "ownerConfirmationScope": "CRITERIA_AND_PROVENANCE_DEFINITION_ONLY",
+    "mechanism": "SEPARATE_HASH_PINNED_OWNER_ARTIFACT",
+    "supersedesFieldInCriteriaArtifact": "provenance.ownerConfirmationOfFidelityStatus",
+    "whyAdditiveRatherThanEditingTheCriteriaArtifact": "PHASE10A_APPROVED_EXIT_CRITERIA_V2.json declares immutable: true and is designed to be pinned by the successor gate, exactly as V1 was. Editing its status field after binding would mutate the confirmed bytes and break the digest pin. The confirmation is therefore recorded here, additively, against the already-finalized criteria digest.",
+    "resolutionOrderInGate": "The successor gate MUST first read provenance.ownerConfirmationOfFidelityStatus from the criteria artifact. If that is not CONFIRMED, it MUST read this artifact and accept it only when this artifact is present, digest-pinned, parseable, declares CONFIRMED, and its confirms.criteriaSha256 equals the criteria digest the gate itself pins.",
+    "v1ConfirmationNotCarriedOver": "The V1 confirmation binds criteria digest 33d303d5bc46d524abb710a005c8d90471f1d0669c32ff10a6fd48bd91f6d045. The V2 criteria digest is b528eb2b6e88de676407af017e5c023ae69c130020520809e6620e2f49beacf6. The digest binding therefore refuses the V1 confirmation for the V2 criteria by construction, which is the intended behaviour and the reason this artifact exists."
+  },
+  "explicitNonImplications": {
+    "note": "Recorded so that no reader, gate, or downstream artifact can inflate this confirmation. The V1 non-implications continue to apply and are restated, not narrowed.",
+    "doesNotMean": [
+      "roadmap items 1-6 PASS",
+      "holdout evidence exists",
+      "Phase 10A is closed",
+      "Phase 10B is authorized",
+      "item 4 has been executed",
+      "the runtime has been frozen",
+      "the V2 criteria text has been independently reviewed"
+    ]
+  },
+  "doesNotWaive": [
+    "D3 anti-circularity: expectation-fitting to previously observed analyzer behavior remains development evidence only and cannot establish closure.",
+    "D8: at least one genuinely unseen/holdout/blind post-freeze campaign remains a precondition of item 6 PASS, and no such campaign exists yet.",
+    "D10: the additive items 7/8 ledger-row split remains additive; a historical combined row can never produce PASS for a split criterion.",
+    "D11: PER_ROW_EVIDENCE_R3.json and PER_ROW_EVIDENCE_R4.json remain DEVELOPMENT_GOVERNANCE, never INDEPENDENT_CLOSURE.",
+    "D14: the 145 R3-to-R4 expectation changes remain development-governance history and are not proof of reason closure.",
+    "Every EVIDENCE_PRESENCE and CONTENT condition on items 1-6. Clearing the fidelity precondition only removes the precondition; each item still has to be evidenced.",
+    "The sequencing correction does not lower item 4: V2 requires the full G1-G12 gate set, the split relation reporting, required artifacts A1-A5 per subcheck, a separate clean lock-verification run per subcheck, and a named anti-circularity alternative. V1 required three aggregate counts and a single boolean.",
+    "Item 5 P1 is restored, not relaxed: no freeze may be taken until criterion 4 is SATISFIED on both subchecks. B1 remains the present state because item 4 has not been executed.",
+    "Staging attribution to the frozen commit is not removed from the governance; it is relocated to the stage the owner assigned it. Items 5 and 6 carry it in full and unchanged.",
+    "NB2 is unchanged and continues to block any real D8 holdout admission."
+  ],
+  "bindingEffect": [
+    "The PRECONDITION-class condition owner.criteriaFidelityConfirmed is satisfied for the criteria artifact digest named in confirms.criteriaSha256, and for no other digest.",
+    "Items 1-6 are no longer blocked on owner criteria fidelity under the V2 criteria. They remain blocked, failing, or unevidenced strictly according to their own remaining conditions, which for items 4, 5 and 6 is the whole of their evidence requirement.",
+    "This artifact confers no PASS on any roadmap item and authorizes no closure claim.",
+    "A15 V1 is not modified, re-run for approval, or superseded by this artifact.",
+    "The V1 criteria artifact and the V1 confirmation are not modified, retracted, or reinterpreted by this artifact."
+  ],
+  "modifiesA15V1": false,
+  "modifiesV1Artifacts": false,
+  "authorizesPhase10BClosure": false,
+  "authorizesPhase10AClosure": false,
+  "authorizesItem4Execution": false,
+  "authorizesRuntimeFreeze": false,
+  "authorizesHoldoutAdmission": false,
+  "recordedState": {
+    "criteriaArtifactFinalizedBeforeBinding": true,
+    "criteriaArtifactMutatedAfterBinding": false,
+    "historicalEvidenceMutated": false,
+    "holdoutEvidenceAuthoredInThisUnit": false,
+    "item4ExecutedInThisUnit": false,
+    "runtimeFrozenInThisUnit": false,
+    "committed": false,
+    "pushed": false
+  }
+}
